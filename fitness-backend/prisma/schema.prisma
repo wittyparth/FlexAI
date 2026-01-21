@@ -1,0 +1,738 @@
+// Prisma Schema for Fitness App
+// Version: 1.0.0
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================================================
+// USER & AUTHENTICATION
+// ============================================================================
+
+model User {
+  id                Int       @id @default(autoincrement())
+  email             String    @unique @db.VarChar(255)
+  passwordHash      String?   @db.VarChar(255)
+  
+  // Profile
+  firstName         String?   @db.VarChar(100)
+  lastName          String?   @db.VarChar(100)
+  avatarUrl         String?   @db.VarChar(500)
+  
+  // Fitness profile
+  age               Int?
+  gender            String?   @db.VarChar(20)
+  height            Float?    // in cm
+  weight            Float?    // in kg
+  experienceLevel   String?   @db.VarChar(50) // beginner, intermediate, advanced, elite
+  primaryGoal       String?   @db.VarChar(50) // muscle_gain, fat_loss, strength, athletic, general
+  secondaryGoals    String[]  @db.VarChar(50)
+  trainingDaysPerWeek Int?
+  workoutDuration   Int?      // preferred duration in minutes
+  equipmentAvailable Json?    // ["barbell", "dumbbell", "machines", etc.]
+  injuryHistory     String?   @db.Text
+  
+  // Account status
+  emailVerified     Boolean   @default(false)
+  emailVerifyToken  String?   @db.VarChar(255)
+  emailVerifyExpiry DateTime?
+  isActive          Boolean   @default(true)
+  role              String    @default("user") @db.VarChar(20) // user, trainer, admin
+  
+  // OAuth
+  googleId          String?   @unique @db.VarChar(255)
+  appleId           String?   @unique @db.VarChar(255)
+  
+  // Gamification
+  xp                Int       @default(0)
+  level             Int       @default(1)
+  currentStreak     Int       @default(0)
+  longestStreak     Int       @default(0)
+  lastWorkoutDate   DateTime?
+  
+  // Timestamps
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  
+  // Relations
+  settings          UserSettings?
+  sessions          Session[]
+  workouts          Workout[]
+  routines          Routine[]
+  exercises         Exercise[]      @relation("CustomExercises")
+  formCheckSessions FormCheckSession[]
+  coachConversations CoachConversation[]
+  bodyWeights       BodyWeight[]
+  bodyMeasurements  BodyMeasurement[]
+  progressPhotos    ProgressPhoto[]
+  personalRecords   PersonalRecord[]
+  achievements      UserAchievement[]
+  posts             Post[]
+  comments          Comment[]
+  likes             Like[]
+  followers         Follower[]      @relation("following")
+  following         Follower[]      @relation("follower")
+  challengeParticipants ChallengeParticipant[]
+  
+  @@index([email])
+  @@index([googleId])
+  @@index([appleId])
+  @@index([createdAt])
+  @@map("users")
+}
+
+model UserSettings {
+  id                Int     @id @default(autoincrement())
+  userId            Int     @unique
+  
+  // Preferences
+  units             String  @default("metric") @db.VarChar(20) // metric, imperial
+  theme             String  @default("system") @db.VarChar(20) // light, dark, system
+  language          String  @default("en") @db.VarChar(10)
+  
+  // Notifications
+  pushEnabled       Boolean @default(true)
+  emailUpdates      Boolean @default(true)
+  workoutReminders  Boolean @default(true)
+  socialNotifications Boolean @default(true)
+  
+  // Privacy
+  profilePrivate    Boolean @default(false)
+  showStats         Boolean @default(true)
+  showWorkouts      Boolean @default(true)
+  
+  // Rest timer defaults
+  defaultRestTime   Int     @default(90) // seconds
+  autoStartRest     Boolean @default(true)
+  
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("user_settings")
+}
+
+model Session {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  token     String   @unique @db.VarChar(500)
+  expiresAt DateTime
+  deviceInfo Json?   // { userAgent, ip, deviceType }
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([userId])
+  @@index([token])
+  @@index([expiresAt])
+  @@map("sessions")
+}
+
+// ============================================================================
+// EXERCISES
+// ============================================================================
+
+model Exercise {
+  id                Int       @id @default(autoincrement())
+  name              String    @db.VarChar(255)
+  slug              String    @unique @db.VarChar(255)
+  description       String?   @db.Text
+  instructions      String[]  @db.Text
+  benefits          String[]  @db.Text
+  
+  // Muscle Groups
+  primaryMuscleGroups   String[]  @db.VarChar(100)
+  secondaryMuscleGroups String[]  @db.VarChar(100)
+  
+  // Classification
+  equipment         String[]  @db.VarChar(100) // barbell, dumbbell, cable, machine, bodyweight
+  difficulty        String    @db.VarChar(20)  // beginner, intermediate, advanced
+  exerciseType      String    @default("strength") @db.VarChar(50) // strength, cardio, flexibility, stretching
+  movementPattern   String?   @db.VarChar(50)  // push, pull, squat, hinge, carry, compound
+  exerciseClass     String?   @db.VarChar(50)  // compound, isolation
+  trainingGoals     String[]  @db.VarChar(50)  // strength, hypertrophy, endurance, mobility
+  
+  // Media (stored as JSON for flexibility)
+  media             Json?     // { thumbnail, images[], videos[], gifs[], youtubeId, muscleDiagram }
+  
+  // Metrics (tracked by system)
+  metrics           Json?     // { averageRating, totalRatings, popularityScore, usageCount, completionRate, averageDuration }
+  
+  // Default Training Parameters
+  defaultSets       Int?      @default(3)
+  defaultReps       Json?     // { min, max, target }
+  defaultRestTime   Int?      @default(60) // seconds
+  
+  // Intensity Guidance
+  intensityGuidance Json?     // { rpe: {min, max}, tempo, restRecommendation: {strength, hypertrophy, endurance} }
+  
+  // Safety Information
+  safety            Json?     // { warnings[], commonMistakes[], tips[], contraindications[], requiredSkills[] }
+  
+  // Variation & Progression
+  variations        String[]
+  progression       Json?     // { prerequisiteExercises[], nextLevelExercises[] }
+  
+  // Calorie Estimation
+  calories          Json?     // { perMinute, baseRate, met }
+  
+  // Tags & Search
+  tags              String[]  @db.VarChar(50)
+  
+  // Form check support
+  hasFormCheck      Boolean   @default(false)
+  formCheckMetrics  Json?     // { "depth": true, "kneeTracking": true, etc. }
+  
+  // Status
+  isActive          Boolean   @default(true)
+  isFeatured        Boolean   @default(false)
+  
+  // Source tracking
+  source            String    @default("imported") @db.VarChar(50) // imported, custom, system
+  sourceUrl         String?   @db.VarChar(500)
+  
+  // Custom exercise fields
+  isCustom          Boolean   @default(false)
+  createdById       Int?
+  isPublic          Boolean   @default(true)
+  
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  
+  creator           User?     @relation("CustomExercises", fields: [createdById], references: [id])
+  workoutExercises  WorkoutExercise[]
+  routineExercises  RoutineExercise[]
+  personalRecords   PersonalRecord[]
+  formCheckSessions FormCheckSession[]
+  
+  @@index([slug])
+  @@index([difficulty])
+  @@index([exerciseType])
+  @@index([isActive])
+  @@index([isFeatured])
+  @@map("exercises")
+}
+
+// ============================================================================
+// WORKOUTS
+// ============================================================================
+
+model Workout {
+  id              Int       @id @default(autoincrement())
+  userId          Int
+  routineId       Int?
+  
+  // Workout info
+  name            String?   @db.VarChar(255)
+  startedAt       DateTime  @default(now())
+  completedAt     DateTime?
+  duration        Int?      // minutes
+  
+  // Metrics
+  totalVolume     Float?    // weight × reps for all exercises
+  totalSets       Int?
+  totalReps       Int?
+  averageRPE      Float?
+  
+  // Notes & context
+  notes           String?   @db.Text
+  energyLevel     Int?      // 1-10
+  sleepQuality    Int?      // 1-10
+  stressLevel     Int?      // 1-10
+  
+  // Form check
+  formCheckUsed   Boolean   @default(false)
+  avgFormScore    Int?      // 0-100
+  
+  // Status
+  status          String    @default("in_progress") @db.VarChar(20) // in_progress, completed, cancelled
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  routine         Routine?  @relation(fields: [routineId], references: [id])
+  exercises       WorkoutExercise[]
+  posts           Post[]
+  
+  @@index([userId])
+  @@index([startedAt])
+  @@index([status])
+  @@map("workouts")
+}
+
+model WorkoutExercise {
+  id            Int       @id @default(autoincrement())
+  workoutId     Int
+  exerciseId    Int
+  orderIndex    Int       @default(0)
+  
+  // Performance summary
+  totalVolume   Float?
+  totalSets     Int?
+  totalReps     Int?
+  maxWeight     Float?
+  isPR          Boolean   @default(false)
+  
+  // Form check
+  formScore     Int?      // 0-100
+  
+  // Notes
+  notes         String?   @db.Text
+  
+  createdAt     DateTime  @default(now())
+  
+  workout       Workout   @relation(fields: [workoutId], references: [id], onDelete: Cascade)
+  exercise      Exercise  @relation(fields: [exerciseId], references: [id])
+  sets          WorkoutSet[]
+  
+  @@index([workoutId])
+  @@index([exerciseId])
+  @@map("workout_exercises")
+}
+
+model WorkoutSet {
+  id                Int       @id @default(autoincrement())
+  workoutExerciseId Int
+  setNumber         Int
+  
+  // Performance
+  weight            Float?    // in kg or lbs based on user setting
+  reps              Int?
+  rpe               Float?    // 1-10
+  rir               Int?      // Reps in Reserve
+  
+  // Set type
+  setType           String    @default("working") @db.VarChar(20) // warmup, working, drop, failure, amrap
+  
+  // Tempo (optional)
+  tempoEccentric    Int?      // seconds
+  tempoPause        Int?
+  tempoConcentric   Int?
+  
+  // Form check
+  formScore         Int?      // 0-100
+  
+  // Status
+  completed         Boolean   @default(false)
+  restTaken         Int?      // seconds
+  
+  createdAt         DateTime  @default(now())
+  
+  workoutExercise   WorkoutExercise @relation(fields: [workoutExerciseId], references: [id], onDelete: Cascade)
+  
+  @@index([workoutExerciseId])
+  @@map("workout_sets")
+}
+
+// ============================================================================
+// ROUTINES
+// ============================================================================
+
+model Routine {
+  id              Int       @id @default(autoincrement())
+  userId          Int
+  
+  name            String    @db.VarChar(255)
+  description     String?   @db.Text
+  
+  // Schedule
+  daysPerWeek     Int?
+  schedule        Json?     // { monday: true, tuesday: false, ... }
+  estimatedDuration Int?    // minutes
+  
+  // Classification
+  goal            String?   @db.VarChar(50) // muscle_gain, strength, fat_loss
+  difficulty      String?   @db.VarChar(20) // beginner, intermediate, advanced
+  splitType       String?   @db.VarChar(50) // ppl, upper_lower, full_body, bro
+  
+  // Sharing
+  isPublic        Boolean   @default(false)
+  isTemplate      Boolean   @default(false) // Pre-built template
+  likes           Int       @default(0)
+  copiedCount     Int       @default(0)
+  
+  // Status
+  isArchived      Boolean   @default(false)
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  exercises       RoutineExercise[]
+  workouts        Workout[]
+  
+  @@index([userId])
+  @@index([isPublic])
+  @@index([isTemplate])
+  @@map("routines")
+}
+
+model RoutineExercise {
+  id              Int       @id @default(autoincrement())
+  routineId       Int
+  exerciseId      Int
+  orderIndex      Int       @default(0)
+  dayOfWeek       Int?      // 0-6 for specific day assignment
+  
+  // Target
+  targetSets      Int
+  targetRepsMin   Int?
+  targetRepsMax   Int?
+  targetWeight    Float?
+  targetRPE       Float?
+  
+  // Rest
+  restSeconds     Int       @default(90)
+  
+  // Superset grouping
+  supersetGroup   Int?
+  
+  notes           String?   @db.Text
+  
+  routine         Routine   @relation(fields: [routineId], references: [id], onDelete: Cascade)
+  exercise        Exercise  @relation(fields: [exerciseId], references: [id])
+  
+  @@index([routineId])
+  @@map("routine_exercises")
+}
+
+// ============================================================================
+// FORM CHECK
+// ============================================================================
+
+model FormCheckSession {
+  id            Int       @id @default(autoincrement())
+  userId        Int
+  exerciseId    Int
+  workoutId     Int?
+  
+  // Video
+  videoUrl      String?   @db.VarChar(500)
+  thumbnailUrl  String?   @db.VarChar(500)
+  duration      Int?      // seconds
+  
+  // Analysis
+  overallScore  Int?      // 0-100
+  repCount      Int?
+  status        String    @default("pending") @db.VarChar(20) // pending, processing, completed, failed
+  
+  // Skeleton data (from mobile)
+  skeletonData  Json?     // Raw pose detection data
+  
+  // Summary
+  feedback      String?   @db.Text
+  improvements  Json?     // [{ area: "", suggestion: "" }]
+  
+  createdAt     DateTime  @default(now())
+  
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  exercise      Exercise  @relation(fields: [exerciseId], references: [id])
+  results       FormCheckResult[]
+  
+  @@index([userId])
+  @@index([exerciseId])
+  @@map("form_check_sessions")
+}
+
+model FormCheckResult {
+  id            Int       @id @default(autoincrement())
+  sessionId     Int
+  repNumber     Int
+  
+  // Score
+  score         Int       // 0-100
+  
+  // Issues detected
+  issues        Json?     // [{ type: "knee_valgus", severity: "high", frame: 45 }]
+  
+  // Metrics
+  metrics       Json?     // { depth: 85, kneeAngle: 92, spineAngle: 5 }
+  
+  // Feedback
+  feedback      String?   @db.Text
+  
+  session       FormCheckSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  
+  @@index([sessionId])
+  @@map("form_check_results")
+}
+
+// ============================================================================
+// AI COACH
+// ============================================================================
+
+model CoachConversation {
+  id            Int       @id @default(autoincrement())
+  userId        Int
+  title         String?   @db.VarChar(255)
+  
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  messages      CoachMessage[]
+  
+  @@index([userId])
+  @@map("coach_conversations")
+}
+
+model CoachMessage {
+  id              Int       @id @default(autoincrement())
+  conversationId  Int
+  role            String    @db.VarChar(20) // user, assistant
+  content         String    @db.Text
+  
+  // Context used
+  contextData     Json?     // What user data was included in prompt
+  
+  createdAt       DateTime  @default(now())
+  
+  conversation    CoachConversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  
+  @@index([conversationId])
+  @@map("coach_messages")
+}
+
+// ============================================================================
+// BODY TRACKING
+// ============================================================================
+
+model BodyWeight {
+  id        Int       @id @default(autoincrement())
+  userId    Int
+  weight    Float     // kg
+  source    String    @default("manual") @db.VarChar(50) // manual, apple_health, google_health
+  date      DateTime  @default(now())
+  
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([userId])
+  @@index([date])
+  @@map("body_weights")
+}
+
+model BodyMeasurement {
+  id        Int       @id @default(autoincrement())
+  userId    Int
+  
+  // Measurements in cm
+  chest     Float?
+  waist     Float?
+  hips      Float?
+  leftArm   Float?
+  rightArm  Float?
+  leftForearm Float?
+  rightForearm Float?
+  leftThigh Float?
+  rightThigh Float?
+  leftCalf  Float?
+  rightCalf Float?
+  shoulders Float?
+  neck      Float?
+  bodyFat   Float?    // percentage
+  
+  date      DateTime  @default(now())
+  notes     String?   @db.Text
+  
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([userId])
+  @@index([date])
+  @@map("body_measurements")
+}
+
+model ProgressPhoto {
+  id        Int       @id @default(autoincrement())
+  userId    Int
+  imageUrl  String    @db.VarChar(500)
+  pose      String?   @db.VarChar(50) // front, side, back
+  notes     String?   @db.Text
+  date      DateTime  @default(now())
+  
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([userId])
+  @@index([date])
+  @@map("progress_photos")
+}
+
+// ============================================================================
+// PERSONAL RECORDS
+// ============================================================================
+
+model PersonalRecord {
+  id          Int       @id @default(autoincrement())
+  userId      Int
+  exerciseId  Int
+  
+  recordType  String    @db.VarChar(50) // max_weight, max_reps, max_volume, estimated_1rm
+  value       Float
+  reps        Int?      // If max_weight at X reps
+  bodyWeight  Float?    // User's weight at time of PR
+  
+  // Source
+  workoutId   Int?
+  setId       Int?
+  
+  date        DateTime  @default(now())
+  
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  exercise    Exercise  @relation(fields: [exerciseId], references: [id])
+  
+  @@index([userId])
+  @@index([exerciseId])
+  @@index([date])
+  @@map("personal_records")
+}
+
+// ============================================================================
+// GAMIFICATION
+// ============================================================================
+
+model Achievement {
+  id          Int       @id @default(autoincrement())
+  code        String    @unique @db.VarChar(100)
+  name        String    @db.VarChar(255)
+  description String    @db.Text
+  iconUrl     String?   @db.VarChar(500)
+  
+  category    String    @db.VarChar(50) // strength, consistency, form, social
+  rarity      String    @default("common") @db.VarChar(20) // common, rare, epic, legendary
+  xpReward    Int       @default(100)
+  
+  // Criteria
+  criteria    Json      // { type: "workout_streak", value: 7 }
+  
+  users       UserAchievement[]
+  
+  @@map("achievements")
+}
+
+model UserAchievement {
+  id            Int       @id @default(autoincrement())
+  userId        Int
+  achievementId Int
+  unlockedAt    DateTime  @default(now())
+  
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  achievement   Achievement @relation(fields: [achievementId], references: [id])
+  
+  @@unique([userId, achievementId])
+  @@map("user_achievements")
+}
+
+// ============================================================================
+// SOCIAL
+// ============================================================================
+
+model Follower {
+  id          Int       @id @default(autoincrement())
+  followerId  Int
+  followingId Int
+  createdAt   DateTime  @default(now())
+  
+  follower    User      @relation("follower", fields: [followerId], references: [id], onDelete: Cascade)
+  following   User      @relation("following", fields: [followingId], references: [id], onDelete: Cascade)
+  
+  @@unique([followerId, followingId])
+  @@index([followerId])
+  @@index([followingId])
+  @@map("followers")
+}
+
+model Post {
+  id          Int       @id @default(autoincrement())
+  userId      Int
+  workoutId   Int?
+  
+  content     String    @db.Text
+  imageUrl    String?   @db.VarChar(500)
+  
+  visibility  String    @default("public") @db.VarChar(20) // public, friends, private
+  likesCount  Int       @default(0)
+  commentsCount Int     @default(0)
+  
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  workout     Workout?  @relation(fields: [workoutId], references: [id])
+  comments    Comment[]
+  likes       Like[]
+  
+  @@index([userId])
+  @@index([createdAt])
+  @@map("posts")
+}
+
+model Comment {
+  id        Int       @id @default(autoincrement())
+  postId    Int
+  userId    Int
+  content   String    @db.Text
+  createdAt DateTime  @default(now())
+  
+  post      Post      @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([postId])
+  @@map("comments")
+}
+
+model Like {
+  id        Int       @id @default(autoincrement())
+  postId    Int
+  userId    Int
+  createdAt DateTime  @default(now())
+  
+  post      Post      @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([postId, userId])
+  @@map("likes")
+}
+
+model Challenge {
+  id            Int       @id @default(autoincrement())
+  name          String    @db.VarChar(255)
+  description   String    @db.Text
+  
+  // Type
+  challengeType String    @db.VarChar(50) // volume, strength, consistency, form
+  targetMetric  String    @db.VarChar(50) // total_volume, max_weight, workout_count
+  targetValue   Float?
+  
+  // Duration
+  startDate     DateTime
+  endDate       DateTime
+  
+  // Status
+  isActive      Boolean   @default(true)
+  
+  createdAt     DateTime  @default(now())
+  
+  participants  ChallengeParticipant[]
+  
+  @@map("challenges")
+}
+
+model ChallengeParticipant {
+  id          Int       @id @default(autoincrement())
+  challengeId Int
+  userId      Int
+  progress    Float     @default(0)
+  rank        Int?
+  joinedAt    DateTime  @default(now())
+  
+  challenge   Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([challengeId, userId])
+  @@map("challenge_participants")
+}

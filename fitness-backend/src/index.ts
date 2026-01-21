@@ -1,0 +1,74 @@
+import { createApp } from './app';
+import { env, prisma, redis } from './config';
+import { logger } from './utils';
+
+// Extend Express Request type
+declare global {
+  namespace Express {
+    interface Request {
+      id?: string;
+      userId?: number;
+    }
+  }
+}
+
+/**
+ * Bootstrap and start the server
+ */
+async function bootstrap() {
+  try {
+    // Test database connection
+    await prisma.$connect();
+    logger.info('✅ Database connected');
+
+    // Test Redis connection
+    await redis.connect();
+    logger.info('✅ Redis connected');
+
+    // Create Express app
+    const app = createApp();
+
+    // Start server
+    const server = app.listen(env.PORT, () => {
+      logger.info(`🚀 Server running on port ${env.PORT}`);
+      logger.info(`📍 Environment: ${env.NODE_ENV}`);
+      logger.info(`🔗 Health check: http://localhost:${env.PORT}/health`);
+    });
+
+    // Graceful shutdown
+    const shutdown = async (signal: string) => {
+      logger.info(`\n${signal} received. Starting graceful shutdown...`);
+
+      // Stop accepting new connections
+      server.close(async () => {
+        logger.info('HTTP server closed');
+
+        // Close database connection
+        await prisma.$disconnect();
+        logger.info('Database disconnected');
+
+        // Close Redis connection
+        await redis.quit();
+        logger.info('Redis disconnected');
+
+        process.exit(0);
+      });
+
+      // Force exit after 10 seconds
+      setTimeout(() => {
+        logger.error('Forced shutdown after timeout');
+        process.exit(1);
+      }, 10000);
+    };
+
+    process.on('SIGTERM', () => shutdown('SIGTERM'));
+    process.on('SIGINT', () => shutdown('SIGINT'));
+
+  } catch (error) {
+    logger.error('Failed to start server:', error);
+    process.exit(1);
+  }
+}
+
+// Run the server
+bootstrap();

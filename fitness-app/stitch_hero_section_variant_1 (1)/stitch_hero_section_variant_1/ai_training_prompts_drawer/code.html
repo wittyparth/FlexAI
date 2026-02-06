@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI Training Prompts Drawer</title>
+<!-- Google Fonts: Inter for UI, Calistoga for Headlines -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Calistoga&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0da6f2",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#101c22",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "headline": ["Calistoga", "serif"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .gradient-border {
+            position: relative;
+            background: #ffffff;
+            background-clip: padding-box;
+            border: 2px solid transparent;
+        }
+        .gradient-border::before {
+            content: '';
+            position: absolute;
+            top: 0; right: 0; bottom: 0; left: 0;
+            z-index: -1;
+            margin: -2px;
+            border-radius: inherit;
+            background: linear-gradient(135deg, #0da6f2 0%, rgba(13, 166, 242, 0.1) 100%);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-slate-900 font-display flex flex-col justify-end min-h-screen">
+<!-- Backdrop Dimmer (Simulating iOS Modal Background) -->
+<div class="fixed inset-0 bg-black/40 backdrop-blur-sm z-0"></div>
+<!-- Bottom Drawer -->
+<div class="relative z-10 w-full max-w-[480px] mx-auto bg-background-light dark:bg-background-dark rounded-t-2xl shadow-2xl overflow-hidden flex flex-col max-h-[92vh]">
+<!-- BottomSheetHandle -->
+<div class="flex flex-col items-center pt-3 pb-1">
+<div class="h-1 w-10 rounded-full bg-slate-300 dark:bg-slate-700"></div>
+</div>
+<!-- Header / TopAppBar -->
+<div class="flex items-center justify-between px-6 py-4">
+<h1 class="font-headline text-2xl text-slate-900 dark:text-white">How can I help?</h1>
+<button class="flex items-center justify-center size-10 rounded-full text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined text-2xl">close</span>
+</button>
+</div>
+<!-- Scrollable Content -->
+<div class="overflow-y-auto pb-10">
+<!-- Category: Workout Advice -->
+<div class="px-6 py-4">
+<div class="gradient-border rounded-xl p-5 shadow-sm mb-4">
+<div class="flex items-center gap-3 mb-4">
+<div class="bg-primary/10 p-2 rounded-lg">
+<span class="material-symbols-outlined text-primary text-2xl">fitness_center</span>
+</div>
+<h2 class="font-display font-bold text-lg text-slate-900 dark:text-white">Workout Advice</h2>
+</div>
+<div class="space-y-3">
+<!-- Prompts -->
+<div class="flex items-center justify-between p-3 bg-white dark:bg-slate-800 rounded-lg border border-slate-100 dark:border-slate-700 hover:border-primary/50 cursor-pointer group">
+<p class="text-slate-700 dark:text-slate-200 font-medium text-sm">Suggest a 20-min HIIT routine</p>
+<span class="material-symbols-outlined text-slate-300 group-hover:text-primary text-xl">send</span>
+</div>
+<div class="flex items-center justify-between p-3 bg-white dark:bg-slate-800 rounded-lg border border-slate-100 dark:border-slate-700 hover:border-primary/50 cursor-pointer group">
+<p class="text-slate-700 dark:text-slate-200 font-medium text-sm">How do I improve my pull-up form?</p>
+<span class="material-symbols-outlined text-slate-300 group-hover:text-primary text-xl">send</span>
+</div>
+<div class="flex items-center justify-between p-3 bg-white dark:bg-slate-800 rounded-lg border border-slate-100 dark:border-slate-700 hover:border-primary/50 cursor-pointer group">
+<p class="text-slate-700 dark:text-slate-200 font-medium text-sm">Create a leg day finisher</p>
+<span class="material-symbols-outlined text-slate-300 group-hover:text-primary text-xl">send</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Category: Nutrition -->
+<div class="px-6 py-4">
+<div class="gradient-border rounded-xl p-5 shadow-sm mb-4">
+<div class="flex items-center gap-3 mb-4">
+<div class="bg-primary/10 p-2 rounded-lg">
+<span class="material-symbols-outlined text-primary text-2xl">nutrition</span>
+</div>
+<h2 class="font-display font-bold text-lg text-slate-900 dark:text-white">Nutrition</h2>
+</div>
+<div class="space-y-3">
+<div class="flex items-center justify-between p-3 bg-white dark:bg-slate-800 rounded-lg border border-slate-100 dark:border-slate-700 hover:border-primary/50 cursor-pointer group">
+<p class="text-slate-700 dark:text-slate-200 font-medium text-sm">What should I eat post-workout?</p>
+<span class="material-symbols-outlined text-slate-300 group-hover:text-primary text-xl">send</span>
+</div>
+<div class="flex items-center justify-between p-3 bg-white dark:bg-slate-800 rounded-lg border border-slate-100 dark:border-slate-700 hover:border-primary/50 cursor-pointer group">
+<p class="text-slate-700 dark:text-slate-200 font-medium text-sm">Calculate my daily macros</p>
+<span class="material-symbols-outlined text-slate-300 group-hover:text-primary text-xl">send</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Category: Recovery -->
+<div class="px-6 py-4">
+<div class="gradient-border rounded-xl p-5 shadow-sm mb-4">
+<div class="flex items-center gap-3 mb-4">
+<div class="bg-primary/10 p-2 rounded-lg">
+<span class="material-symbols-outlined text-primary text-2xl">self_improvement</span>
+</div>
+<h2 class="font-display font-bold text-lg text-slate-900 dark:text-white">Recovery &amp; Motivation</h2>
+</div>
+<div class="space-y-3">
+<div class="flex items-center justify-between p-3 bg-white dark:bg-slate-800 rounded-lg border border-slate-100 dark:border-slate-700 hover:border-primary/50 cursor-pointer group">
+<p class="text-slate-700 dark:text-slate-200 font-medium text-sm">I'm feeling sore, what should I do?</p>
+<span class="material-symbols-outlined text-slate-300 group-hover:text-primary text-xl">send</span>
+</div>
+<div class="flex items-center justify-between p-3 bg-white dark:bg-slate-800 rounded-lg border border-slate-100 dark:border-slate-700 hover:border-primary/50 cursor-pointer group">
+<p class="text-slate-700 dark:text-slate-200 font-medium text-sm">Give me a motivational quote</p>
+<span class="material-symbols-outlined text-slate-300 group-hover:text-primary text-xl">send</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Optional Card Illustration -->
+<div class="px-6">
+<div class="relative w-full aspect-[21/9] rounded-xl overflow-hidden bg-slate-200 dark:bg-slate-800 flex items-center justify-center">
+<div class="absolute inset-0 bg-cover bg-center opacity-30 mix-blend-overlay" data-alt="Abstract fitness energy patterns in blue" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBYFyAr0FHNgyY-zR_pyA4c94CwBo9KPRb_ALRse0cZYrcn8AXmC_IO195nMQxLUI2Jlegp0m_nH_JPef20X4N3c2qK6sbm3myVNfTGwAFduKaGBsLxyKewzNXxtv_XBJsMKN8DislME8c4-u6TTZ8sj3FFHDGf1CgCk2xPFLpLbTi22Kx8iSpXKMQmuAUukqr4fQ-xr9Ex_wPC6sbma9LHEMVTK7S25TVFB2Vx20gaqF-wgopnguI3Kusbe4Jz5mQEwvQrPHfRzLM');"></div>
+<div class="relative z-10 flex flex-col items-center gap-2">
+<p class="text-primary font-bold text-xs uppercase tracking-widest">Elite Performance AI</p>
+<p class="text-slate-600 dark:text-slate-400 text-xs italic">Trained on world-class calisthenics programs</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Safe Area Spacer for iOS -->
+<div class="h-8 bg-background-light dark:bg-background-dark"></div>
+</div>
+</body></html>

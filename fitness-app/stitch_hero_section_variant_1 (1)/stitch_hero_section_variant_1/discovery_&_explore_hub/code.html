@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Discovery &amp; Explore Hub</title>
+<!-- Fonts: Inter, Calistoga, Material Symbols -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Calistoga&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0da6f2", // Electric Blue
+                        "background-light": "#f8fbfc",
+                        "background-dark": "#101c22",
+                        "surface-light": "#ffffff",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "serif": ["Calistoga", "serif"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem", 
+                        "lg": "2rem", 
+                        "xl": "3rem", 
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 font-display min-h-screen">
+<div class="relative w-full max-w-md mx-auto bg-background-light dark:bg-background-dark min-h-screen flex flex-col pb-24">
+<!-- Header Section -->
+<header class="pt-8 px-6 pb-4">
+<!-- Discover Badge -->
+<div class="flex items-center mb-4">
+<div class="flex items-center gap-2 bg-primary/10 pl-1 pr-3 py-1 rounded-full border border-primary/20">
+<span class="relative flex h-3 w-3">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-3 w-3 bg-primary"></span>
+</span>
+<span class="text-[11px] font-bold tracking-widest text-primary uppercase">Discover</span>
+</div>
+</div>
+<h1 class="font-serif text-3xl text-slate-900 dark:text-white mb-6">Find your next<br/>challenge.</h1>
+<!-- Global Search Bar -->
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none z-10">
+<span class="material-symbols-outlined text-primary group-focus-within:text-primary transition-colors">search</span>
+</div>
+<input class="block w-full h-14 pl-12 pr-4 rounded-full bg-surface-light dark:bg-slate-800 border-0 text-slate-900 dark:text-white placeholder:text-slate-400 focus:ring-4 focus:ring-primary/20 shadow-[0_4px_20px_-4px_rgba(13,166,242,0.15)] transition-shadow duration-300 font-medium" placeholder="Search exercises, routines..." type="text"/>
+<div class="absolute inset-y-0 right-0 pr-2 flex items-center">
+<button class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-400 transition-colors">
+<span class="material-symbols-outlined text-[20px]">tune</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Featured Exercises Carousel -->
+<section class="mt-4 flex flex-col gap-4">
+<div class="flex items-center justify-between px-6">
+<h2 class="font-serif text-xl text-slate-900 dark:text-white">Featured Exercises</h2>
+<button class="text-sm font-semibold text-primary">See all</button>
+</div>
+<div class="flex overflow-x-auto gap-5 px-6 pb-6 no-scrollbar snap-x snap-mandatory">
+<!-- Card 1 -->
+<div class="snap-center shrink-0 w-[85%] relative rounded-[2rem] p-[2px] bg-gradient-to-br from-primary via-primary/40 to-transparent group cursor-pointer shadow-lg shadow-blue-500/10">
+<div class="relative h-64 w-full rounded-[1.9rem] overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" data-alt="Athletic man doing advanced calisthenics on bars" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAP8xEa9BVn_jkdCuW61cFuVGkZGGGYQdQEnVJt2xrUtzeyulz5KjN9FTr2GP7jtEZYc1A6BRa6y_x61gzWiRlpxyknCWe4AxBLjfxN_rs44GNI18ZfujPGlYswbcTzthcmYSxzOO38sQy-JaKcd3Rl6-uasufSxzHU66QSbtwJE13C6IQUqaF6_3B1CoBIQB_5nNwiv4Xa_UqNy-rnXsJSOTXQutpJeL2o4egwhcslsS-bUd-NUGIZbD1x6myZpvxJ0pmI0crmWZI');">
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent"></div>
+<div class="absolute top-4 left-4 flex gap-2">
+<span class="bg-white/20 backdrop-blur-md border border-white/30 text-white text-[10px] font-bold px-3 py-1.5 rounded-full uppercase tracking-wide">Expert</span>
+</div>
+<div class="absolute bottom-0 left-0 w-full p-5">
+<div class="flex gap-2 mb-2">
+<span class="bg-primary text-white text-[10px] font-bold px-2 py-1 rounded-full uppercase">Full Body</span>
+</div>
+<h3 class="text-white text-2xl font-bold leading-tight">Advanced Calisthenics Flow</h3>
+<p class="text-slate-300 text-sm mt-1 font-medium">45 min • High Intensity</p>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="snap-center shrink-0 w-[85%] relative rounded-[2rem] p-[2px] bg-gradient-to-br from-purple-500 via-purple-400/40 to-transparent group cursor-pointer shadow-lg shadow-purple-500/10">
+<div class="relative h-64 w-full rounded-[1.9rem] overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" data-alt="Woman sprinting on a track during sunset" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDOxpHDptu7NykNg6PZYt3WnoVLD63DaxX-GTNIpEJGDNiAsgKDcJ3YFY97RtQBSMm7w7ulL7PGfrxfuqAIprkCsHGU5EH4Ses_Qy_Pg0X3Xniv76atOVk0jgHm4xAgwQCrAwkVvIim-I6ML8t7xjUOJ1OEFI1rgvhmzP45HsMWGPuyae-FiRqW4QR7UT0vfS0h4IeTGO1EuCbFbTOv18HoxF623ejJPFySFmRRH6nX2k_SL3-3CiDxOB2oHNT4a6KUgejJIAcnuN4');">
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent"></div>
+<div class="absolute top-4 left-4 flex gap-2">
+<span class="bg-white/20 backdrop-blur-md border border-white/30 text-white text-[10px] font-bold px-3 py-1.5 rounded-full uppercase tracking-wide">Intermediate</span>
+</div>
+<div class="absolute bottom-0 left-0 w-full p-5">
+<div class="flex gap-2 mb-2">
+<span class="bg-purple-500 text-white text-[10px] font-bold px-2 py-1 rounded-full uppercase">Cardio</span>
+</div>
+<h3 class="text-white text-2xl font-bold leading-tight">HIIT Track Intervals</h3>
+<p class="text-slate-300 text-sm mt-1 font-medium">30 min • Endurance</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Browse by Muscle Grid -->
+<section class="mt-6 px-6">
+<h2 class="font-serif text-xl text-slate-900 dark:text-white mb-5">Browse by Muscle</h2>
+<div class="grid grid-cols-4 gap-4">
+<button class="flex flex-col items-center gap-2 group">
+<div class="h-16 w-16 rounded-full bg-white dark:bg-slate-800 shadow-sm border border-slate-100 dark:border-slate-700 flex items-center justify-center group-hover:border-primary group-hover:shadow-md group-hover:shadow-primary/20 transition-all duration-300">
+<span class="material-symbols-outlined text-3xl text-slate-700 dark:text-slate-300 group-hover:text-primary transition-colors">accessibility_new</span>
+</div>
+<span class="text-xs font-medium text-slate-600 dark:text-slate-400 group-hover:text-primary">Chest</span>
+</button>
+<button class="flex flex-col items-center gap-2 group">
+<div class="h-16 w-16 rounded-full bg-white dark:bg-slate-800 shadow-sm border border-slate-100 dark:border-slate-700 flex items-center justify-center group-hover:border-primary group-hover:shadow-md group-hover:shadow-primary/20 transition-all duration-300">
+<span class="material-symbols-outlined text-3xl text-slate-700 dark:text-slate-300 group-hover:text-primary transition-colors">fitbit</span>
+</div>
+<span class="text-xs font-medium text-slate-600 dark:text-slate-400 group-hover:text-primary">Back</span>
+</button>
+<button class="flex flex-col items-center gap-2 group">
+<div class="h-16 w-16 rounded-full bg-white dark:bg-slate-800 shadow-sm border border-slate-100 dark:border-slate-700 flex items-center justify-center group-hover:border-primary group-hover:shadow-md group-hover:shadow-primary/20 transition-all duration-300">
+<span class="material-symbols-outlined text-3xl text-slate-700 dark:text-slate-300 group-hover:text-primary transition-colors">directions_run</span>
+</div>
+<span class="text-xs font-medium text-slate-600 dark:text-slate-400 group-hover:text-primary">Legs</span>
+</button>
+<button class="flex flex-col items-center gap-2 group">
+<div class="h-16 w-16 rounded-full bg-white dark:bg-slate-800 shadow-sm border border-slate-100 dark:border-slate-700 flex items-center justify-center group-hover:border-primary group-hover:shadow-md group-hover:shadow-primary/20 transition-all duration-300">
+<span class="material-symbols-outlined text-3xl text-slate-700 dark:text-slate-300 group-hover:text-primary transition-colors">fitness_center</span>
+</div>
+<span class="text-xs font-medium text-slate-600 dark:text-slate-400 group-hover:text-primary">Arms</span>
+</button>
+</div>
+</section>
+<!-- Popular Routines -->
+<section class="mt-10 px-6">
+<h2 class="font-serif text-xl text-slate-900 dark:text-white mb-5">Popular Routines</h2>
+<div class="flex flex-col gap-4">
+<!-- List Item 1 -->
+<div class="flex p-3 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700/50 hover:border-primary/30 transition-colors cursor-pointer">
+<div class="h-20 w-20 shrink-0 rounded-xl bg-cover bg-center" data-alt="Person stretching on yoga mat indoors" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDZzYxCW61JQK_ecs7wR3QC-lciHq6dlyYNy9eVzv_HKZJRcuT7FtNxDG_Z1_iT1qveE5kIu91Ar1JzeqVJppg4Z2uJZk5s_dhMMC_e4_HHT0_heJiSuBYblAx5g-aJabKl77QARKvHMrehqYhgME1Q6Aa7RCSxDmCALsZ4KDtie3ts4BQmZ4vtOjcxlQIMxU__1cuPJ7iXLjed7hvY9rWQp9zbnWZQpMXS4Pagd0BAYEO8uKwna00aD_Nmva9wb6KM_7OcXMqrL9U');"></div>
+<div class="flex flex-col justify-center px-2 flex-1">
+<h4 class="font-bold text-slate-900 dark:text-white leading-tight mb-1">Morning Mobility</h4>
+<div class="flex items-center gap-3 text-sm text-slate-500 dark:text-slate-400">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">schedule</span> 15 min</span>
+<span class="w-1 h-1 rounded-full bg-slate-300"></span>
+<span>Beginner</span>
+</div>
+</div>
+<div class="flex items-center pr-2">
+<div class="h-8 w-8 rounded-full bg-slate-50 dark:bg-slate-700 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</div>
+</div>
+</div>
+<!-- List Item 2 -->
+<div class="flex p-3 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700/50 hover:border-primary/30 transition-colors cursor-pointer">
+<div class="h-20 w-20 shrink-0 rounded-xl bg-cover bg-center" data-alt="Man lifting heavy weights in gym" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBF7-8Vger3xzDGFMAnwj4nLa8WnZyJmId7iH2ezYCBYfkWmCDp69j9A6izfIo2VvXDfbG5scnCAg1EwATs-xzGhDuuK672MhfK28dn5C8knBtF58MpfNqr6m2fvHFl4QkLknA_bEXwC99cHZ3CrTP99NRGvTyUZ-nLjuBpgJucj8-f1OHc9bdOBHvIyC7njCvWWl7LINee9c3fLF7vVNdwK4GRFbz59NRs-DSOKAxaDGxPBjVTHHcGKjAk3Jg8O8LrPMxborK0ZAU');"></div>
+<div class="flex flex-col justify-center px-2 flex-1">
+<h4 class="font-bold text-slate-900 dark:text-white leading-tight mb-1">Power Lifting 101</h4>
+<div class="flex items-center gap-3 text-sm text-slate-500 dark:text-slate-400">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">schedule</span> 45 min</span>
+<span class="w-1 h-1 rounded-full bg-slate-300"></span>
+<span>Advanced</span>
+</div>
+</div>
+<div class="flex items-center pr-2">
+<div class="h-8 w-8 rounded-full bg-slate-50 dark:bg-slate-700 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</div>
+</div>
+</div>
+<!-- List Item 3 -->
+<div class="flex p-3 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700/50 hover:border-primary/30 transition-colors cursor-pointer">
+<div class="h-20 w-20 shrink-0 rounded-xl bg-cover bg-center" data-alt="Trainer instructing core workout" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC0MHybYbhaIGs9lqBK-2cXMjNJLrg4eiGzAcihvi1hSyCB8gh69OIO3MBpAhbjuV_gHVmOweNctji71kOeLHqh_EfQ_CYEJI2OCpI7JcoCIsr11aGW0THQaJGsv9ldEVq5U_pPhFhTTVfOWtJGaJtUy6GYnUT6FqMvO5yUfwO-zJ33hsZ9yydbUHkth2O-CL2SbCVw9Nti5n4LxaakIpSUQfRyB4aLTrxlE-Nx4zJEgmiWqbGmPFAOHhC3ZlIO-0XBCOe_w3mDGbY');"></div>
+<div class="flex flex-col justify-center px-2 flex-1">
+<h4 class="font-bold text-slate-900 dark:text-white leading-tight mb-1">Core Crusher</h4>
+<div class="flex items-center gap-3 text-sm text-slate-500 dark:text-slate-400">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">schedule</span> 20 min</span>
+<span class="w-1 h-1 rounded-full bg-slate-300"></span>
+<span>Intermediate</span>
+</div>
+</div>
+<div class="flex items-center pr-2">
+<div class="h-8 w-8 rounded-full bg-slate-50 dark:bg-slate-700 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Bottom Navigation Spacer -->
+<div class="h-10"></div>
+</div>
+<!-- Floating Bottom Nav (Simulated for Context) -->
+<div class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-full px-6 py-4 shadow-2xl flex items-center gap-8 z-50">
+<button class="flex flex-col items-center gap-1 opacity-50 hover:opacity-100">
+<span class="material-symbols-outlined">home</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-primary relative">
+<span class="material-symbols-outlined fill-current">explore</span>
+<span class="absolute -bottom-2 w-1 h-1 bg-primary rounded-full"></span>
+</button>
+<button class="flex flex-col items-center gap-1 opacity-50 hover:opacity-100">
+<span class="material-symbols-outlined">bar_chart</span>
+</button>
+<button class="flex flex-col items-center gap-1 opacity-50 hover:opacity-100">
+<span class="material-symbols-outlined">person</span>
+</button>
+</div>
+</body></html>

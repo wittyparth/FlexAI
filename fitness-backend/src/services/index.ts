@@ -3,3 +3,6 @@ export { userService } from './user.service';
 export { oauthService } from './oauth.service';
 export { exerciseService } from './exercise.service';
 export { workoutService } from './workout.service';
+export { routineService } from './routine.service';
+export * from './ai';
+

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Library Filter Drawer</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Calistoga&amp;family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0d6cf2",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#101722",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "headline": ["Calistoga", "serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>.custom-scrollbar::-webkit-scrollbar {
+    width: 4px
+    }
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #e2e8f0;
+    border-radius: 10px
+    }
+/* Custom radio styles to match minimalist theme */
+.custom-radio:checked {
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuA5YsnKCBdKewkpxzf77qSgcDqNi8oErgn5C_3-okn_ivtTR2dZ-4XzJDoEie7f6jOu6Pahc031s84GdHV9daIEiLgBpoUqReBU3POiSl_QgKEpQYG5e_2aNuS_WiL-xUr_uw9dU5Z-06kQs2MojprANiflkgbiKUfhGMGVj80XTxCh_MYBzucPUbr5vmbVjFw6H3QEjgcR_KAc6mCebonXUQmKQeUakgAh6seeeu5JZX0mBxu_nvWcm7DLra7UHuP1svCT_ozLQfk)
+    }</style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-gray-900 font-display text-[#0d131c]">
+<!-- Overlay Backdrop -->
+<div class="fixed inset-0 bg-black/40 backdrop-blur-sm z-0"></div>
+<!-- Bottom Sheet Container -->
+<div class="fixed inset-x-0 bottom-0 z-10 flex flex-col max-h-[92%] bg-background-light dark:bg-background-dark rounded-t-xl shadow-2xl border-t border-white/10 overflow-hidden">
+<!-- BottomSheetHandle -->
+<div class="flex flex-col items-center bg-background-light dark:bg-background-dark pt-3 pb-1">
+<div class="h-1.5 w-12 rounded-full bg-gray-300 dark:bg-gray-700"></div>
+</div>
+<!-- TopAppBar -->
+<div class="flex items-center bg-background-light dark:bg-background-dark px-6 py-4 justify-between border-b border-gray-100 dark:border-gray-800">
+<div class="text-[#0d131c] dark:text-white flex items-center">
+<span class="material-symbols-outlined cursor-pointer text-2xl">close</span>
+</div>
+<h2 class="text-[#0d131c] dark:text-white text-2xl font-headline leading-tight tracking-tight flex-1 text-center">Filter Library</h2>
+<div class="flex items-center justify-end">
+<button class="text-primary text-sm font-bold leading-normal tracking-wide hover:opacity-80 transition-opacity">Clear All</button>
+</div>
+</div>
+<!-- Chips / Active Badge -->
+<div class="flex justify-center bg-background-light dark:bg-background-dark pt-4">
+<div class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-primary/10 border border-primary/20 px-5">
+<span class="material-symbols-outlined text-primary text-sm">filter_alt</span>
+<p class="text-primary text-sm font-bold leading-normal">3 Filters Active</p>
+</div>
+</div>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto custom-scrollbar px-6 pb-32">
+<!-- Section: Muscle Group -->
+<div class="mt-4">
+<h3 class="text-[#0d131c] dark:text-white text-lg font-bold leading-tight tracking-tight pb-3 pt-4 font-display">Muscle Group</h3>
+<div class="space-y-1">
+<label class="flex gap-x-3 py-3 flex-row-reverse justify-between items-center group cursor-pointer">
+<input checked="" class="h-6 w-6 rounded-full border-gray-300 dark:border-gray-700 border-2 bg-transparent text-primary checked:bg-primary checked:border-primary focus:ring-0 focus:ring-offset-0 focus:outline-none transition-all cursor-pointer" type="checkbox"/>
+<p class="text-[#0d131c] dark:text-gray-200 text-base font-medium group-hover:text-primary transition-colors">Chest</p>
+</label>
+<label class="flex gap-x-3 py-3 flex-row-reverse justify-between items-center group cursor-pointer">
+<input class="h-6 w-6 rounded-full border-gray-300 dark:border-gray-700 border-2 bg-transparent text-primary checked:bg-primary checked:border-primary focus:ring-0 focus:ring-offset-0 focus:outline-none transition-all cursor-pointer" type="checkbox"/>
+<p class="text-[#0d131c] dark:text-gray-200 text-base font-medium group-hover:text-primary transition-colors">Back</p>
+</label>
+<label class="flex gap-x-3 py-3 flex-row-reverse justify-between items-center group cursor-pointer">
+<input checked="" class="h-6 w-6 rounded-full border-gray-300 dark:border-gray-700 border-2 bg-transparent text-primary checked:bg-primary checked:border-primary focus:ring-0 focus:ring-offset-0 focus:outline-none transition-all cursor-pointer" type="checkbox"/>
+<p class="text-[#0d131c] dark:text-gray-200 text-base font-medium group-hover:text-primary transition-colors">Shoulders</p>
+</label>
+<label class="flex gap-x-3 py-3 flex-row-reverse justify-between items-center group cursor-pointer">
+<input class="h-6 w-6 rounded-full border-gray-300 dark:border-gray-700 border-2 bg-transparent text-primary checked:bg-primary checked:border-primary focus:ring-0 focus:ring-offset-0 focus:outline-none transition-all cursor-pointer" type="checkbox"/>
+<p class="text-[#0d131c] dark:text-gray-200 text-base font-medium group-hover:text-primary transition-colors">Legs</p>
+</label>
+</div>
+</div>
+<div class="h-px bg-gray-100 dark:bg-gray-800 my-4"></div>
+<!-- Section: Equipment -->
+<div>
+<h3 class="text-[#0d131c] dark:text-white text-lg font-bold leading-tight tracking-tight pb-3 pt-2 font-display">Equipment</h3>
+<div class="space-y-1">
+<label class="flex gap-x-3 py-3 flex-row-reverse justify-between items-center group cursor-pointer">
+<input checked="" class="h-6 w-6 rounded-full border-gray-300 dark:border-gray-700 border-2 bg-transparent text-primary checked:bg-primary checked:border-primary focus:ring-0 focus:ring-offset-0 focus:outline-none transition-all cursor-pointer" type="checkbox"/>
+<p class="text-[#0d131c] dark:text-gray-200 text-base font-medium group-hover:text-primary transition-colors">None (Bodyweight)</p>
+</label>
+<label class="flex gap-x-3 py-3 flex-row-reverse justify-between items-center group cursor-pointer">
+<input class="h-6 w-6 rounded-full border-gray-300 dark:border-gray-700 border-2 bg-transparent text-primary checked:bg-primary checked:border-primary focus:ring-0 focus:ring-offset-0 focus:outline-none transition-all cursor-pointer" type="checkbox"/>
+<p class="text-[#0d131c] dark:text-gray-200 text-base font-medium group-hover:text-primary transition-colors">Pull-up Bar</p>
+</label>
+<label class="flex gap-x-3 py-3 flex-row-reverse justify-between items-center group cursor-pointer">
+<input class="h-6 w-6 rounded-full border-gray-300 dark:border-gray-700 border-2 bg-transparent text-primary checked:bg-primary checked:border-primary focus:ring-0 focus:ring-offset-0 focus:outline-none transition-all cursor-pointer" type="checkbox"/>
+<p class="text-[#0d131c] dark:text-gray-200 text-base font-medium group-hover:text-primary transition-colors">Parallel Bars</p>
+</label>
+</div>
+</div>
+<div class="h-px bg-gray-100 dark:bg-gray-800 my-4"></div>
+<!-- Section: Difficulty (Single Select / Radio) -->
+<div>
+<h3 class="text-[#0d131c] dark:text-white text-lg font-bold leading-tight tracking-tight pb-3 pt-2 font-display">Difficulty</h3>
+<div class="grid grid-cols-1 gap-2">
+<label class="flex gap-x-3 py-3 flex-row-reverse justify-between items-center group cursor-pointer">
+<input class="custom-radio h-6 w-6 rounded-full border-gray-300 dark:border-gray-700 border-2 bg-transparent text-primary checked:bg-primary checked:border-primary focus:ring-0 focus:ring-offset-0 focus:outline-none transition-all cursor-pointer" name="difficulty" type="radio"/>
+<p class="text-[#0d131c] dark:text-gray-200 text-base font-medium group-hover:text-primary transition-colors">Beginner</p>
+</label>
+<label class="flex gap-x-3 py-3 flex-row-reverse justify-between items-center group cursor-pointer">
+<input checked="" class="custom-radio h-6 w-6 rounded-full border-gray-300 dark:border-gray-700 border-2 bg-transparent text-primary checked:bg-primary checked:border-primary focus:ring-0 focus:ring-offset-0 focus:outline-none transition-all cursor-pointer" name="difficulty" type="radio"/>
+<p class="text-[#0d131c] dark:text-gray-200 text-base font-medium group-hover:text-primary transition-colors">Intermediate</p>
+</label>
+<label class="flex gap-x-3 py-3 flex-row-reverse justify-between items-center group cursor-pointer">
+<input class="custom-radio h-6 w-6 rounded-full border-gray-300 dark:border-gray-700 border-2 bg-transparent text-primary checked:bg-primary checked:border-primary focus:ring-0 focus:ring-offset-0 focus:outline-none transition-all cursor-pointer" name="difficulty" type="radio"/>
+<p class="text-[#0d131c] dark:text-gray-200 text-base font-medium group-hover:text-primary transition-colors">Advanced</p>
+</label>
+</div>
+</div>
+<div class="h-px bg-gray-100 dark:bg-gray-800 my-4"></div>
+<!-- Section: Workout Type -->
+<div>
+<h3 class="text-[#0d131c] dark:text-white text-lg font-bold leading-tight tracking-tight pb-3 pt-2 font-display">Workout Type</h3>
+<div class="flex flex-wrap gap-2">
+<div class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full border-2 border-primary bg-primary/5 px-4 cursor-pointer">
+<p class="text-primary text-sm font-bold">Strength</p>
+</div>
+<div class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full border-2 border-gray-200 dark:border-gray-800 bg-transparent px-4 cursor-pointer hover:border-primary/50 transition-colors">
+<p class="text-[#0d131c] dark:text-gray-300 text-sm font-medium">Skills</p>
+</div>
+<div class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full border-2 border-gray-200 dark:border-gray-800 bg-transparent px-4 cursor-pointer hover:border-primary/50 transition-colors">
+<p class="text-[#0d131c] dark:text-gray-300 text-sm font-medium">Endurance</p>
+</div>
+<div class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full border-2 border-gray-200 dark:border-gray-800 bg-transparent px-4 cursor-pointer hover:border-primary/50 transition-colors">
+<p class="text-[#0d131c] dark:text-gray-300 text-sm font-medium">Mobility</p>
+</div>
+</div>
+</div>
+<div class="h-20"></div> <!-- Bottom spacing -->
+</div>
+<!-- Sticky Footer with Action Button -->
+<div class="absolute bottom-0 inset-x-0 p-6 bg-gradient-to-t from-background-light via-background-light/95 to-transparent dark:from-background-dark dark:via-background-dark/95 dark:to-transparent pt-10">
+<button class="w-full h-14 bg-gradient-to-r from-primary to-[#0b5cd1] text-white font-bold text-lg rounded-full shadow-[0_10px_25px_-5px_rgba(13,108,242,0.4)] flex items-center justify-center gap-2 hover:scale-[0.98] transition-transform active:scale-95">
+                Apply Filters
+            </button>
+</div>
+</div>
+</body></html>

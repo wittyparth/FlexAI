@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Challenge Mastery Details</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Calistoga&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0da6f2",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#101c22",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "headline": ["Calistoga", "serif"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .gradient-border {
+            background: linear-gradient(#fff, #fff) padding-box,
+                        linear-gradient(135deg, #0da6f2, #80d4ff) border-box;
+            border: 2px solid transparent;
+        }
+        .dark .gradient-border {
+            background: linear-gradient(#101c22, #101c22) padding-box,
+                        linear-gradient(135deg, #0da6f2, #80d4ff) border-box;
+        }
+        .sticky-btn-gradient {
+            background: linear-gradient(135deg, #0da6f2 0%, #0077b3 100%);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#0d171c] dark:text-white min-h-screen pb-32">
+<!-- Top Navigation Bar -->
+<div class="sticky top-0 z-50 flex items-center bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md p-4 pb-2 justify-between">
+<div class="text-[#0d171c] dark:text-white flex size-12 shrink-0 items-center cursor-pointer">
+<span class="material-symbols-outlined">arrow_back_ios</span>
+</div>
+<h2 class="text-[#0d171c] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center font-display uppercase tracking-widest text-xs">Challenge Details</h2>
+<div class="flex w-12 items-center justify-end">
+<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 bg-transparent text-[#0d171c] dark:text-white gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0">
+<span class="material-symbols-outlined">share</span>
+</button>
+</div>
+</div>
+<!-- Header Image with Calistoga Title -->
+<div class="@container">
+<div class="px-4 py-3">
+<div class="bg-cover bg-center flex flex-col justify-end overflow-hidden bg-background-light dark:bg-background-dark rounded-xl min-h-80 relative shadow-2xl" data-alt="Intense athlete lifting heavy barbell in a modern gym setting" style='background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 60%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuAHjNs5PcHCWQm6K8W8ZIIaSujHv7526GQk-fMD3cTURA-SCFTfXi2f0aly6rlEsFcwr8vjCTu33zs0gKW6Xek4RcQVOg2txcTPR0_8OPCEXeuTaMKTdTHO6IbVj-FjAnm8Szvz7-rIoB8AN9_ry2C6yZE-NsMyIkoCzUjG_XfYwOradjhgFaqIQ_PtZs-cXvkfq5lG3NwKi59plZozud4QiYuxjNlNb7Q192xCwUWQlmQub3DHubJ169_nV382CaY5PuS3IBFspq8");'>
+<div class="flex flex-col p-6">
+<span class="text-primary font-bold text-sm uppercase tracking-[0.2em] mb-2">January Edition</span>
+<h1 class="text-white font-headline text-4xl leading-tight">January Volume Challenge</h1>
+</div>
+</div>
+</div>
+</div>
+<!-- Rules Section -->
+<div class="mt-4">
+<h2 class="text-[#0d171c] dark:text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5 font-display">Challenge Rules</h2>
+<div class="px-4">
+<div class="flex gap-x-4 py-4 border-b border-[#cee0e8]/30 items-start">
+<div class="mt-1 flex-shrink-0">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1">check_circle</span>
+</div>
+<div>
+<p class="text-[#0d171c] dark:text-white text-base font-semibold leading-normal">Full Range of Motion</p>
+<p class="text-sm text-gray-500 dark:text-gray-400">All reps must be performed with complete extension and contraction to count toward total volume.</p>
+</div>
+</div>
+<div class="flex gap-x-4 py-4 border-b border-[#cee0e8]/30 items-start">
+<div class="mt-1 flex-shrink-0">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1">check_circle</span>
+</div>
+<div>
+<p class="text-[#0d171c] dark:text-white text-base font-semibold leading-normal">24h Log Requirement</p>
+<p class="text-sm text-gray-500 dark:text-gray-400">Workouts must be logged within 24 hours of completion to ensure leaderboard accuracy.</p>
+</div>
+</div>
+<div class="flex gap-x-4 py-4 items-start">
+<div class="mt-1 flex-shrink-0">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1">check_circle</span>
+</div>
+<div>
+<p class="text-[#0d171c] dark:text-white text-base font-semibold leading-normal">Video Verification</p>
+<p class="text-sm text-gray-500 dark:text-gray-400">Top 5 participants may be asked to provide video evidence of their highest volume sets.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Your Progress Card -->
+<div class="mt-8 px-4">
+<div class="gradient-border rounded-xl p-6 bg-white dark:bg-background-dark shadow-sm">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-lg font-bold">Your Progress</h3>
+<span class="text-primary text-sm font-bold bg-primary/10 px-3 py-1 rounded-full">Top 12%</span>
+</div>
+<div class="grid grid-cols-2 gap-6">
+<div>
+<p class="text-xs uppercase tracking-wider text-gray-500 mb-1">Current Volume</p>
+<p class="text-2xl font-bold font-display">12,450<span class="text-sm ml-1 text-gray-400">kg</span></p>
+</div>
+<div>
+<p class="text-xs uppercase tracking-wider text-gray-500 mb-1">Target</p>
+<p class="text-2xl font-bold font-display">50,000<span class="text-sm ml-1 text-gray-400">kg</span></p>
+</div>
+<div class="col-span-2">
+<div class="w-full bg-gray-100 dark:bg-gray-800 h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[24.9%] rounded-full"></div>
+</div>
+<div class="flex justify-between mt-2">
+<p class="text-xs text-gray-500">24.9% complete</p>
+<p class="text-xs text-gray-500">18 days left</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Leaderboard Section -->
+<div class="mt-8 mb-12">
+<div class="flex justify-between items-end px-4 pb-3 pt-5">
+<h2 class="text-[#0d171c] dark:text-white text-[22px] font-bold leading-tight tracking-[-0.015em]">Participant Leaderboard</h2>
+<p class="text-primary text-sm font-semibold cursor-pointer">View All</p>
+</div>
+<div class="px-4">
+<div class="overflow-hidden rounded-xl border border-[#cee0e8]/30 bg-white dark:bg-background-dark">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-gray-50 dark:bg-gray-800/50">
+<th class="p-4 text-xs font-bold uppercase text-gray-500">Rank</th>
+<th class="p-4 text-xs font-bold uppercase text-gray-500">Athlete</th>
+<th class="p-4 text-xs font-bold uppercase text-gray-500 text-right">Volume</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#cee0e8]/20">
+<tr>
+<td class="p-4">
+<span class="flex items-center justify-center size-7 rounded-full bg-yellow-400/20 text-yellow-600 font-bold text-sm">1</span>
+</td>
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-gray-200 bg-cover" data-alt="Profile of athlete 1" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA0Up5dz5pHRaoo06zYsMh8M2Iy01LUbHyUQAlDkE7NmPHXxHUwn4GEr3UhrmKFCQEumAQQqpUlUdSuWYlut2VACu_vTYxZEEDCS2997MLdV5wz9w4Nqu8A1z_uV9xZMfbmLHdeP9v7okDbLjb5Yk0fMfc9xzFsE9LHkrsiLoMtj-Y--Xs13ure14U9f8nBpaqoPpG9UJ12lNFwZRQXVEVnMUsEIAft9i_8zBvwcCptApR8wJW02D1vVUMFiyurAoJ0eyyZ6sGcl3I')"></div>
+<span class="font-semibold text-sm">Alex Marcus</span>
+</div>
+</td>
+<td class="p-4 text-right font-bold text-sm">48,200kg</td>
+</tr>
+<tr>
+<td class="p-4">
+<span class="flex items-center justify-center size-7 rounded-full bg-gray-400/20 text-gray-600 font-bold text-sm">2</span>
+</td>
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-gray-200 bg-cover" data-alt="Profile of athlete 2" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCwdH3ccZaQ3qf9TAQDBhPGGoSwpWeedVSGqGOUJ2C_-e0Gbm5cLlHxazyWlm-an38N_B8EN5Sf9U_47JDprapR0ItHRIEEyQ7NhQbF9t6-8-8pd2H8LK844qO6Pu5JWme8ulAbhntQxS89vcQ_23RacwdyE7LZPQCuBU0WOLGnRKDSW-kH59TnJdURl69motOYnB5VaOBfguXG6CBgXB6Np3u7FdZAhDnuLH_Lo_blw7FaN6c_2xoVT6Mi7Fi19t7mWsXv91kzXS0')"></div>
+<span class="font-semibold text-sm">Sarah Jenkins</span>
+</div>
+</td>
+<td class="p-4 text-right font-bold text-sm">45,910kg</td>
+</tr>
+<tr>
+<td class="p-4">
+<span class="flex items-center justify-center size-7 rounded-full bg-orange-400/20 text-orange-600 font-bold text-sm">3</span>
+</td>
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-gray-200 bg-cover" data-alt="Profile of athlete 3" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBRc4S1aFe2_LjzhS6LA9U6AJpbMYfKVPByICteDw7XIDAwAaj45JVjE6IEL6aLVI7U6u1duI3D2stcqEag8q9NnZGzTjWwmAoCDx1U3v4FGf_cHsY11WYroKPtzsrM3BplF1O5X_qeYDij2qtuIALuWsT61SRhWNRRjo95bDO36fp3hBfYvoe140ez2SjJk5-pH9JQ2PA4dsuzmCbtrJH4tZrkGe6_4sD548ymSeRJX_qSiYQ50qc3gKQGfU-OzzP4vUeY7DvoGb0')"></div>
+<span class="font-semibold text-sm">David Chen</span>
+</div>
+</td>
+<td class="p-4 text-right font-bold text-sm">42,300kg</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Sticky Bottom Join Button -->
+<div class="fixed bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-background-light dark:from-background-dark via-background-light/95 dark:via-background-dark/95 to-transparent pt-10">
+<button class="sticky-btn-gradient w-full py-5 rounded-xl text-white font-bold text-lg shadow-xl shadow-primary/30 flex items-center justify-center gap-3 active:scale-[0.98] transition-transform">
+<span>JOIN CHALLENGE</span>
+<span class="material-symbols-outlined">bolt</span>
+</button>
+<!-- iOS Home Indicator Space -->
+<div class="h-4"></div>
+</div>
+</body></html>

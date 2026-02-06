@@ -2,11 +2,9 @@ import Redis from 'ioredis';
 import { env } from './env';
 
 // Create Redis client
-export const redis = new Redis({
-  host: env.REDIS_HOST,
-  port: env.REDIS_PORT,
-  password: env.REDIS_PASSWORD || undefined,
-  retryStrategy: (times) => {
+// Common Redis options
+const commonOptions = {
+  retryStrategy: (times: number) => {
     // Exponential backoff with max 2 seconds
     const delay = Math.min(times * 50, 2000);
     return delay;
@@ -14,7 +12,50 @@ export const redis = new Redis({
   maxRetriesPerRequest: 3,
   enableReadyCheck: true,
   lazyConnect: true,
-});
+};
+
+// Create Redis client based on configuration
+// Connection event handlers
+const getRedisConfig = () => {
+  if (env.REDIS_URL) {
+    return { url: env.REDIS_URL };
+  }
+
+  if (env.UPSTASH_REDIS_REST_URL && env.UPSTASH_REDIS_REST_TOKEN) {
+    console.log('🔌 Connecting to Upstash using REST credentials...');
+    const url = new URL(env.UPSTASH_REDIS_REST_URL);
+    return {
+      host: url.hostname,
+      port: 6379,
+      password: env.UPSTASH_REDIS_REST_TOKEN,
+      tls: {},
+    };
+  }
+
+  return {
+    host: env.REDIS_HOST,
+    port: env.REDIS_PORT,
+    password: env.REDIS_PASSWORD || undefined,
+    tls: env.REDIS_HOST.includes('upstash') ? {} : undefined,
+  };
+};
+
+const config = getRedisConfig();
+
+console.log('Redis config resolved. Instantiating Redis client...');
+try {
+    console.log('Config details:', { ...config, password: config.password ? '***' : undefined, url: (config as any).url });
+} catch (e) { console.log('Error logging config'); }
+
+// Create Redis client based on configuration
+export const redis = 'url' in config
+  ? new Redis(config.url as string, commonOptions)
+  : new Redis({
+      ...config,
+      ...commonOptions,
+    } as any);
+
+console.log('Redis client instantiated.');
 
 // Connection event handlers
 redis.on('connect', () => {

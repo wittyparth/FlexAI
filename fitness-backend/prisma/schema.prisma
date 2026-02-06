@@ -43,6 +43,7 @@ model User {
   emailVerifyToken  String?   @db.VarChar(255)
   emailVerifyExpiry DateTime?
   isActive          Boolean   @default(true)
+  onboardingCompleted Boolean @default(false)
   role              String    @default("user") @db.VarChar(20) // user, trainer, admin
   
   // OAuth
@@ -79,6 +80,8 @@ model User {
   followers         Follower[]      @relation("following")
   following         Follower[]      @relation("follower")
   challengeParticipants ChallengeParticipant[]
+  deviceTokens      DeviceToken[]
+  notifications     Notification[]
   
   @@index([email])
   @@index([googleId])
@@ -148,6 +151,9 @@ model Exercise {
   // Muscle Groups
   primaryMuscleGroups   String[]  @db.VarChar(100)
   secondaryMuscleGroups String[]  @db.VarChar(100)
+
+  // AI Embeddings
+  embedding             Unsupported("vector(768)")?
   
   // Classification
   equipment         String[]  @db.VarChar(100) // barbell, dumbbell, cable, machine, bodyweight
@@ -735,4 +741,39 @@ model ChallengeParticipant {
   
   @@unique([challengeId, userId])
   @@map("challenge_participants")
+}
+
+// ============================================================================
+// NOTIFICATIONS & DEVICES
+// ============================================================================
+
+model DeviceToken {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  token     String   @unique @db.VarChar(500)
+  platform  String   @default("android") @db.VarChar(20) // android, ios, web
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("device_tokens")
+}
+
+model Notification {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  title     String   @db.VarChar(255)
+  body      String   @db.Text
+  type      String   @db.VarChar(50) // system, social, workout, achievement
+  data      Json?    // Extra data for navigation
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([isRead])
+  @@map("notifications")
 }

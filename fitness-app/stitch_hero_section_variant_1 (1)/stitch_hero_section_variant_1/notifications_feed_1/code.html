@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Notifications Feed</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Calistoga&amp;family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0da6f2",
+                        "primary-dark": "#0b8acb",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#101c22",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "headline": ["Calistoga", "serif"],
+                        "mono": ["JetBrains Mono", "monospace"],
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar hiding for cleaner mobile look */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        /* Custom animation for pull to refresh ring */
+        @keyframes spin-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .animate-spin-slow {
+            animation: spin-slow 3s linear infinite;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white overflow-x-hidden selection:bg-primary/30">
+<div class="relative flex min-h-screen w-full flex-col max-w-md mx-auto bg-background-light dark:bg-background-dark shadow-2xl overflow-hidden">
+<!-- Pull to Refresh Visualization (Hidden visually mostly, but implies mechanism) -->
+<div class="absolute top-0 left-0 w-full h-16 flex items-center justify-center -mt-16 pointer-events-none opacity-0 transition-opacity">
+<div class="w-8 h-8 border-2 border-primary border-dashed rounded-full animate-spin-slow"></div>
+</div>
+<!-- Header -->
+<div class="sticky top-0 z-20 flex flex-col bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md p-6 pb-2 transition-all duration-200">
+<div class="flex items-center justify-between mb-4">
+<!-- Empty div for balance if needed, or back button -->
+<div class="w-8"></div>
+<!-- Action -->
+<button class="group flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-primary text-[18px]">done_all</span>
+<span class="text-primary text-xs font-bold tracking-wide uppercase group-hover:underline decoration-primary underline-offset-4">Mark All Read</span>
+</button>
+</div>
+<h1 class="text-slate-900 dark:text-white text-[32px] font-headline leading-tight">Activity</h1>
+</div>
+<!-- Scrollable Content -->
+<div class="flex-1 flex flex-col px-4 pb-8 pt-2 gap-6 overflow-y-auto no-scrollbar">
+<!-- Pull to Refresh Indicator (Static Demo) -->
+<div class="flex justify-center py-2 opacity-60">
+<div class="w-6 h-6 border-2 border-primary/40 border-t-primary rounded-full animate-spin"></div>
+</div>
+<!-- Group: Today -->
+<div class="flex flex-col gap-3">
+<div class="px-2">
+<p class="font-mono text-slate-400 text-xs font-medium tracking-wider">TODAY</p>
+</div>
+<!-- Notification Card 1 (Unread) -->
+<div class="group relative flex items-start gap-4 bg-white dark:bg-[#1a2c35] p-4 rounded border border-slate-200 dark:border-slate-700 shadow-[0_2px_8px_-4px_rgba(0,0,0,0.05)] active:scale-[0.98] transition-transform duration-150 cursor-pointer">
+<!-- Icon -->
+<div class="relative shrink-0">
+<div class="flex items-center justify-center size-12 rounded-full bg-gradient-to-br from-primary to-[#5cd6ff] shadow-sm shadow-primary/30 text-white">
+<span class="material-symbols-outlined" style="font-size: 24px;">emoji_events</span>
+</div>
+<!-- Status Badge (Icon Overlay) -->
+<div class="absolute -bottom-1 -right-1 bg-white dark:bg-[#1a2c35] rounded-full p-0.5">
+<span class="material-symbols-outlined text-green-500 text-[16px]">arrow_upward</span>
+</div>
+</div>
+<!-- Content -->
+<div class="flex flex-col flex-1 min-w-0 gap-1 pt-0.5">
+<div class="flex justify-between items-start gap-2">
+<p class="text-slate-900 dark:text-white text-base font-semibold leading-tight line-clamp-1">New Record: 5k Run</p>
+<span class="font-mono text-[10px] text-slate-400 shrink-0 pt-1">09:41 AM</span>
+</div>
+<p class="text-slate-500 dark:text-slate-300 text-sm font-normal leading-relaxed line-clamp-2">You crushed your previous time by <span class="text-primary font-medium">12s</span>. Keep pushing the limits!</p>
+</div>
+<!-- Unread Indicator -->
+<div class="absolute top-4 right-[-4px] translate-x-1/2 flex h-3 w-3">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-3 w-3 bg-primary"></span>
+</div>
+</div>
+<!-- Notification Card 2 (Unread) -->
+<div class="group relative flex items-start gap-4 bg-white dark:bg-[#1a2c35] p-4 rounded border border-slate-200 dark:border-slate-700 shadow-[0_2px_8px_-4px_rgba(0,0,0,0.05)] active:scale-[0.98] transition-transform duration-150 cursor-pointer">
+<!-- Icon -->
+<div class="relative shrink-0">
+<div class="flex items-center justify-center size-12 rounded-full bg-gradient-to-br from-primary to-[#5cd6ff] shadow-sm shadow-primary/30 text-white">
+<span class="material-symbols-outlined" style="font-size: 24px;">chat</span>
+</div>
+</div>
+<!-- Content -->
+<div class="flex flex-col flex-1 min-w-0 gap-1 pt-0.5">
+<div class="flex justify-between items-start gap-2">
+<p class="text-slate-900 dark:text-white text-base font-semibold leading-tight line-clamp-1">Coach Feedback</p>
+<span class="font-mono text-[10px] text-slate-400 shrink-0 pt-1">08:15 AM</span>
+</div>
+<p class="text-slate-500 dark:text-slate-300 text-sm font-normal leading-relaxed line-clamp-2">Dave commented on your deadlift form: "Back is looking much straighter..."</p>
+</div>
+<!-- Unread Indicator -->
+<div class="absolute top-4 right-[-4px] translate-x-1/2 flex h-3 w-3">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-3 w-3 bg-primary"></span>
+</div>
+</div>
+</div>
+<!-- Group: Yesterday -->
+<div class="flex flex-col gap-3 pt-2">
+<div class="px-2">
+<p class="font-mono text-slate-400 text-xs font-medium tracking-wider">YESTERDAY</p>
+</div>
+<!-- Notification Card 3 (Read) -->
+<div class="group relative flex items-start gap-4 bg-white dark:bg-[#1a2c35] p-4 rounded border border-slate-200 dark:border-slate-700 shadow-[0_2px_8px_-4px_rgba(0,0,0,0.05)] opacity-80 hover:opacity-100 transition-opacity active:scale-[0.98] duration-150 cursor-pointer">
+<!-- Icon -->
+<div class="relative shrink-0">
+<div class="flex items-center justify-center size-12 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-400 dark:text-slate-400 group-hover:bg-gradient-to-br group-hover:from-primary/20 group-hover:to-cyan-400/20 group-hover:text-primary transition-all duration-300">
+<span class="material-symbols-outlined" style="font-size: 24px;">fitness_center</span>
+</div>
+</div>
+<!-- Content -->
+<div class="flex flex-col flex-1 min-w-0 gap-1 pt-0.5">
+<div class="flex justify-between items-start gap-2">
+<p class="text-slate-700 dark:text-slate-200 text-base font-medium leading-tight line-clamp-1">Workout Complete</p>
+<span class="font-mono text-[10px] text-slate-400 shrink-0 pt-1">4:30 PM</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-normal leading-relaxed line-clamp-2">Leg Day: Hypertrophy finished. Total volume: 12,400 lbs.</p>
+</div>
+</div>
+<!-- Notification Card 4 (Read) -->
+<div class="group relative flex items-start gap-4 bg-white dark:bg-[#1a2c35] p-4 rounded border border-slate-200 dark:border-slate-700 shadow-[0_2px_8px_-4px_rgba(0,0,0,0.05)] opacity-80 hover:opacity-100 transition-opacity active:scale-[0.98] duration-150 cursor-pointer">
+<!-- Icon -->
+<div class="relative shrink-0">
+<div class="flex items-center justify-center size-12 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-400 dark:text-slate-400 group-hover:bg-gradient-to-br group-hover:from-primary/20 group-hover:to-cyan-400/20 group-hover:text-primary transition-all duration-300">
+<span class="material-symbols-outlined" style="font-size: 24px;">verified</span>
+</div>
+</div>
+<!-- Content -->
+<div class="flex flex-col flex-1 min-w-0 gap-1 pt-0.5">
+<div class="flex justify-between items-start gap-2">
+<p class="text-slate-700 dark:text-slate-200 text-base font-medium leading-tight line-clamp-1">Badge Earned</p>
+<span class="font-mono text-[10px] text-slate-400 shrink-0 pt-1">1:00 PM</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-normal leading-relaxed line-clamp-2">Consistency King: You've hit a 7 day streak!</p>
+</div>
+</div>
+<!-- Notification Card 5 (Read) -->
+<div class="group relative flex items-start gap-4 bg-white dark:bg-[#1a2c35] p-4 rounded border border-slate-200 dark:border-slate-700 shadow-[0_2px_8px_-4px_rgba(0,0,0,0.05)] opacity-80 hover:opacity-100 transition-opacity active:scale-[0.98] duration-150 cursor-pointer">
+<!-- Icon -->
+<div class="relative shrink-0">
+<div class="flex items-center justify-center size-12 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-400 dark:text-slate-400 group-hover:bg-gradient-to-br group-hover:from-primary/20 group-hover:to-cyan-400/20 group-hover:text-primary transition-all duration-300">
+<span class="material-symbols-outlined" style="font-size: 24px;">monitor_heart</span>
+</div>
+</div>
+<!-- Content -->
+<div class="flex flex-col flex-1 min-w-0 gap-1 pt-0.5">
+<div class="flex justify-between items-start gap-2">
+<p class="text-slate-700 dark:text-slate-200 text-base font-medium leading-tight line-clamp-1">Recovery Insight</p>
+<span class="font-mono text-[10px] text-slate-400 shrink-0 pt-1">06:00 AM</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-normal leading-relaxed line-clamp-2">Your HRV is up by 15% today. Great day for a heavy lift.</p>
+</div>
+</div>
+</div>
+<!-- Footer Spacing -->
+<div class="h-8"></div>
+</div>
+<!-- Bottom Navigation Bar Placeholder (Simulated) -->
+<div class="sticky bottom-0 z-20 h-20 bg-background-light dark:bg-background-dark border-t border-slate-200 dark:border-slate-800 flex items-center justify-around pb-4">
+<div class="flex flex-col items-center gap-1 opacity-50">
+<span class="material-symbols-outlined text-[28px]">home</span>
+</div>
+<div class="flex flex-col items-center gap-1 opacity-50">
+<span class="material-symbols-outlined text-[28px]">fitness_center</span>
+</div>
+<div class="flex flex-col items-center gap-1">
+<!-- Active Indicator -->
+<div class="w-12 h-8 rounded-full bg-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-[24px]">notifications</span>
+</div>
+</div>
+<div class="flex flex-col items-center gap-1 opacity-50">
+<span class="material-symbols-outlined text-[28px]">person</span>
+</div>
+</div>
+</div>
+</body></html>

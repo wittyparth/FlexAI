@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Premium Home Dashboard</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Calistoga&amp;family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0d59f2",
+                        "background-light": "#f8f9fc",
+                        "background-dark": "#101622",
+                        "card-light": "#ffffff",
+                        "card-dark": "#1a2332",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "calistoga": ["Calistoga", "cursive"],
+                        "mono": ["JetBrains Mono", "monospace"],
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar hiding for clean UI */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-[#0d121c] dark:text-white font-display antialiased transition-colors duration-200">
+<div class="relative flex h-full min-h-screen w-full flex-col overflow-x-hidden max-w-md mx-auto pb-24 shadow-2xl">
+<!-- Header -->
+<header class="flex items-center justify-between p-6 pb-2 pt-8 bg-background-light dark:bg-background-dark sticky top-0 z-10">
+<h2 class="text-2xl font-calistoga leading-tight text-[#0d121c] dark:text-white flex-1">
+                Good morning, John!
+            </h2>
+<div class="flex items-center justify-end">
+<button class="relative flex items-center justify-center w-10 h-10 rounded-full bg-white dark:bg-card-dark shadow-sm border border-gray-100 dark:border-gray-800 text-[#0d121c] dark:text-white transition-transform hover:scale-105 active:scale-95">
+<span class="material-symbols-outlined" style="font-size: 24px;">notifications</span>
+<!-- Pulsing Dot (Static representation) -->
+<span class="absolute top-2 right-2 flex h-2.5 w-2.5">
+<span class="absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-primary ring-2 ring-white dark:ring-card-dark"></span>
+</span>
+</button>
+</div>
+</header>
+<!-- Main Content Scroll -->
+<main class="flex flex-col gap-6 px-4 py-2">
+<!-- Elite Level Card (Featured) -->
+<!-- Using a gradient wrapper for the 2px border effect -->
+<div class="relative rounded-2xl bg-gradient-to-r from-primary via-blue-400 to-cyan-300 p-[2px] shadow-lg shadow-blue-500/10">
+<div class="flex flex-col gap-4 rounded-[14px] bg-card-light dark:bg-card-dark p-5 h-full">
+<div class="flex justify-between items-start">
+<div>
+<span class="inline-block px-2 py-1 mb-2 text-xs font-bold tracking-wider text-primary bg-blue-50 dark:bg-blue-900/20 rounded uppercase">Weekly Goal</span>
+<h3 class="text-2xl font-bold tracking-tight text-[#0d121c] dark:text-white font-display">Elite Level 15</h3>
+</div>
+<div class="h-10 w-10 rounded-full bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">military_tech</span>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-end">
+<p class="text-sm font-medium text-gray-500 dark:text-gray-400">Next: Master Class</p>
+<p class="font-mono text-sm font-medium text-[#0d121c] dark:text-white">
+<span class="text-primary font-bold">2450</span>/2500 XP
+                            </p>
+</div>
+<!-- Progress Bar -->
+<div class="h-3 w-full rounded-full bg-gray-100 dark:bg-gray-800 overflow-hidden">
+<div class="h-full rounded-full bg-gradient-to-r from-primary to-cyan-400" style="width: 98%;"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Heatmap Section -->
+<div class="flex flex-col gap-3">
+<div class="flex items-center justify-between px-1">
+<h3 class="font-calistoga text-xl text-[#0d121c] dark:text-white">Consistency</h3>
+<div class="flex items-center gap-1 text-xs text-gray-400">
+<span>Less</span>
+<div class="w-2 h-2 rounded-[2px] bg-gray-200 dark:bg-gray-800"></div>
+<div class="w-2 h-2 rounded-[2px] bg-primary/40"></div>
+<div class="w-2 h-2 rounded-[2px] bg-primary"></div>
+<span>More</span>
+</div>
+</div>
+<!-- GitHub Style Grid: 7 rows (days), ~10 cols (weeks) showing last 7 weeks approx -->
+<div class="p-4 bg-card-light dark:bg-card-dark rounded-xl shadow-sm border border-gray-100 dark:border-gray-800">
+<div class="flex gap-2 justify-between overflow-x-auto no-scrollbar pb-1">
+<!-- Labels Column -->
+<div class="grid grid-rows-7 gap-1 text-[10px] text-gray-400 font-medium h-[116px] py-0.5 leading-none justify-items-center w-4">
+<span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span>
+</div>
+<!-- Heatmap Columns -->
+<!-- Week 1 -->
+<div class="grid grid-rows-7 gap-1 h-[116px]">
+<div class="w-4 h-4 rounded-[3px] bg-gray-200 dark:bg-gray-800"></div>
+<div class="w-4 h-4 rounded-[3px] bg-primary/60"></div>
+<div class="w-4 h-4 rounded-[3px] bg-primary"></div>
+<div class="w-4 h-4 rounded-[3px] bg-gray-200 dark:bg-gray-800"></div>
+<div class="w-4 h-4 rounded-[3px] bg-primary/20"></div>
+<div class="w-4 h-4 rounded-[3px] bg-primary"></div>
+<div class="w-4 h-4 rounded-[3px] bg-gray-200 dark:bg-gray-800"></div>
+</div>
+<!-- Week 2 -->
+<div class="grid grid-rows-7 gap-1 h-[116px]">
+<div class="w-4 h-4 rounded-[3px] bg-primary/40"></div>
+<div class="w-4 h-4 rounded-[3px] bg-primary"></div>
+<div class="w-4 h-4 rounded-[3px] bg-primary"></div>
+<div class="w-4 h-4 rounded-[3px] bg-gray-200 dark:bg-gray-800"></div>
+<div class="w-4 h-4 rounded-[3px] bg-primary/80"></div>
+<div class="w-4 h-4 rounded-[3px] bg-primary/40"></div>
+<div class="w-4 h-4 rounded-[3px] bg-primary"></div>
+</div>
+<!-- Week 3 -->
+<div class="grid grid-rows-7 gap-1 h-[116px]">
+<div class="w-4 h-4 rounded-[3px] bg-gray-200 dark:bg-gray-800"></div>
+<div class="w-4 h-4 rounded-[3px] bg-gray-200 dark:bg-gray-800"></div>
+<div class="w-4 h-4 rounded-[3px] bg-primary/20"></div>
+<div class="w-4 h-4 rounded-[3px] bg-primary"></div>
+<div class="w-4 h-4 rounded-[3px] bg-primary"></div>
+<div class="w-4 h-4 rounded-[3px] bg-primary"></div>
+<div class="w-4 h-4 rounded-[3px] bg-gray-200 dark:bg-gray-800"></div>
+</div>
+<!-- Week 4 -->
+<div class="grid grid-rows-7 gap-1 h-[116px]">
+<div class="w-4 h-4 rounded-[3px] bg-primary"></div>
+<div class="w-4 h-4 rounded-[3px] bg-primary"></div>
+<div class="w-4 h-4 rounded-[3px] bg-gray-200 dark:bg-gray-800"></div>
+<div class="w-4 h-4 rounded-[3px] bg-primary/60"></div>
+<div class="w-4 h-4 rounded-[3px] bg-primary/90"></div>
+<div class="w-4 h-4 rounded-[3px] bg-gray-200 dark:bg-gray-800"></div>
+<div class="w-4 h-4 rounded-[3px] bg-gray-200 dark:bg-gray-800"></div>
+</div>
+<!-- Week 5 -->
+<div class="grid grid-rows-7 gap-1 h-[116px]">
+<div class="w-4 h-4 rounded-[3px] bg-primary/30"></div>
+<div class="w-4 h-4 rounded-[3px] bg-primary"></div>
+<div class="w-4 h-4 rounded-[3px] bg-primary"></div>
+<div class="w-4 h-4 rounded-[3px] bg-primary/40"></div>
+<div class="w-4 h-4 rounded-[3px] bg-primary"></div>
+<div class="w-4 h-4 rounded-[3px] bg-gray-200 dark:bg-gray-800"></div>
+<div class="w-4 h-4 rounded-[3px] bg-gray-200 dark:bg-gray-800"></div>
+</div>
+<!-- Week 6 -->
+<div class="grid grid-rows-7 gap-1 h-[116px]">
+<div class="w-4 h-4 rounded-[3px] bg-primary"></div>
+<div class="w-4 h-4 rounded-[3px] bg-primary"></div>
+<div class="w-4 h-4 rounded-[3px] bg-gray-200 dark:bg-gray-800"></div>
+<div class="w-4 h-4 rounded-[3px] bg-primary/60"></div>
+<div class="w-4 h-4 rounded-[3px] bg-gray-200 dark:bg-gray-800"></div>
+<div class="w-4 h-4 rounded-[3px] bg-primary"></div>
+<div class="w-4 h-4 rounded-[3px] bg-primary"></div>
+</div>
+<!-- Week 7 (Current) -->
+<div class="grid grid-rows-7 gap-1 h-[116px]">
+<div class="w-4 h-4 rounded-[3px] bg-primary"></div>
+<div class="w-4 h-4 rounded-[3px] bg-primary/80"></div>
+<div class="w-4 h-4 rounded-[3px] bg-gray-200 dark:bg-gray-800 border-2 border-primary/30"></div>
+<div class="w-4 h-4 rounded-[3px] bg-gray-100 dark:bg-gray-900 border border-dashed border-gray-300 dark:border-gray-700"></div>
+<div class="w-4 h-4 rounded-[3px] bg-gray-100 dark:bg-gray-900 border border-dashed border-gray-300 dark:border-gray-700"></div>
+<div class="w-4 h-4 rounded-[3px] bg-gray-100 dark:bg-gray-900 border border-dashed border-gray-300 dark:border-gray-700"></div>
+<div class="w-4 h-4 rounded-[3px] bg-gray-100 dark:bg-gray-900 border border-dashed border-gray-300 dark:border-gray-700"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Today's Workout Card -->
+<div class="flex flex-col gap-3 pt-2">
+<h3 class="font-calistoga text-xl text-[#0d121c] dark:text-white px-1">Today's Workout</h3>
+<div class="bg-card-light dark:bg-card-dark rounded-2xl p-5 shadow-sm border border-gray-100 dark:border-gray-800 flex flex-col gap-6">
+<!-- Card Header -->
+<div class="flex justify-between items-start">
+<div class="flex flex-col gap-1">
+<span class="text-xs font-semibold uppercase tracking-wider text-gray-500">Day 4 • Strength</span>
+<h4 class="text-2xl font-bold leading-tight text-[#0d121c] dark:text-white">Upper Body<br/>Hypertrophy</h4>
+</div>
+<div class="bg-gray-50 dark:bg-gray-800 p-2 rounded-lg">
+<span class="material-symbols-outlined text-gray-600 dark:text-gray-300" style="font-size: 28px;">fitness_center</span>
+</div>
+</div>
+<!-- Recovery Badges -->
+<div class="flex flex-wrap gap-2">
+<div class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-100 dark:border-emerald-900/50">
+<span class="material-symbols-outlined text-emerald-600 text-[16px]">bolt</span>
+<span class="text-xs font-bold text-emerald-700 dark:text-emerald-400">Pecs: Fresh</span>
+</div>
+<div class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-50 dark:bg-amber-900/20 border border-amber-100 dark:border-amber-900/50">
+<span class="material-symbols-outlined text-amber-600 text-[16px]">timelapse</span>
+<span class="text-xs font-bold text-amber-700 dark:text-amber-400">Delts: Recovering</span>
+</div>
+</div>
+<!-- Details Row -->
+<div class="flex items-center gap-6 text-sm text-gray-600 dark:text-gray-400">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[20px]">schedule</span>
+<span>65 min</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[20px]">weight</span>
+<span>8 Exercises</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[20px]">local_fire_department</span>
+<span>~450 kcal</span>
+</div>
+</div>
+<!-- CTA Button -->
+<button class="w-full group relative overflow-hidden rounded-xl bg-gradient-to-r from-primary to-blue-600 p-4 transition-all hover:shadow-lg hover:shadow-blue-500/25 active:scale-[0.98]">
+<div class="relative z-10 flex items-center justify-center gap-2">
+<span class="font-bold text-white tracking-wide text-lg">START WORKOUT</span>
+<span class="material-symbols-outlined text-white group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</div>
+</button>
+</div>
+</div>
+<!-- Quick Stats Scroll -->
+<div class="flex flex-col gap-3 pt-2">
+<h3 class="font-calistoga text-xl text-[#0d121c] dark:text-white px-1">Quick Stats</h3>
+<div class="flex overflow-x-auto gap-4 no-scrollbar pb-4 -mx-4 px-4">
+<!-- Stat Card 1 -->
+<div class="min-w-[140px] flex-col rounded-xl bg-card-light dark:bg-card-dark p-4 shadow-sm border border-gray-100 dark:border-gray-800 flex gap-1">
+<div class="flex items-center gap-2 text-gray-500 mb-2">
+<span class="material-symbols-outlined text-primary text-[20px]">monitor_weight</span>
+<span class="text-xs font-semibold uppercase">Total Vol</span>
+</div>
+<p class="text-xl font-bold text-[#0d121c] dark:text-white">12,500<span class="text-sm font-normal text-gray-400 ml-1">kg</span></p>
+<span class="text-xs text-emerald-500 font-medium flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[14px]">trending_up</span> +5%
+                        </span>
+</div>
+<!-- Stat Card 2 -->
+<div class="min-w-[140px] flex-col rounded-xl bg-card-light dark:bg-card-dark p-4 shadow-sm border border-gray-100 dark:border-gray-800 flex gap-1">
+<div class="flex items-center gap-2 text-gray-500 mb-2">
+<span class="material-symbols-outlined text-primary text-[20px]">timer</span>
+<span class="text-xs font-semibold uppercase">Active</span>
+</div>
+<p class="text-xl font-bold text-[#0d121c] dark:text-white">45<span class="text-sm font-normal text-gray-400 ml-1">min</span></p>
+<span class="text-xs text-gray-400 font-medium">Avg per session</span>
+</div>
+<!-- Stat Card 3 -->
+<div class="min-w-[140px] flex-col rounded-xl bg-card-light dark:bg-card-dark p-4 shadow-sm border border-gray-100 dark:border-gray-800 flex gap-1">
+<div class="flex items-center gap-2 text-gray-500 mb-2">
+<span class="material-symbols-outlined text-primary text-[20px]">local_fire_department</span>
+<span class="text-xs font-semibold uppercase">Streak</span>
+</div>
+<p class="text-xl font-bold text-[#0d121c] dark:text-white">12<span class="text-sm font-normal text-gray-400 ml-1">days</span></p>
+<span class="text-xs text-emerald-500 font-medium">Personal Best!</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation (Visual Mockup for iOS context) -->
+<nav class="fixed bottom-0 w-full max-w-md bg-white/90 dark:bg-background-dark/90 backdrop-blur-md border-t border-gray-200 dark:border-gray-800 flex justify-around items-center h-20 pb-4 z-50">
+<button class="flex flex-col items-center justify-center w-full h-full text-primary">
+<span class="material-symbols-outlined fill-current">home</span>
+<span class="text-[10px] font-medium mt-1">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center w-full h-full text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+<span class="material-symbols-outlined">bar_chart</span>
+<span class="text-[10px] font-medium mt-1">Stats</span>
+</button>
+<button class="flex flex-col items-center justify-center w-full h-full text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+<span class="material-symbols-outlined">fitness_center</span>
+<span class="text-[10px] font-medium mt-1">Workouts</span>
+</button>
+<button class="flex flex-col items-center justify-center w-full h-full text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-medium mt-1">Profile</span>
+</button>
+</nav>
+</div>
+</body></html>

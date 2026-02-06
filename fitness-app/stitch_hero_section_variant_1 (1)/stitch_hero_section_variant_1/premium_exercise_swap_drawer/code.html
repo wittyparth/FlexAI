@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Premium Exercise Swap Drawer</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Calistoga&amp;family=JetBrains+Mono:wght@400;500&amp;family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#25aff4",
+                        "primary-dark": "#1a94d1",
+                        "background-light": "#f8fafc",
+                        "background-dark": "#101c22",
+                        "surface-light": "#ffffff",
+                        "border-light": "#e2e8f0",
+                        "text-main": "#0f172a",
+                        "text-sub": "#64748b",
+                    },
+                    fontFamily: {
+                        "display": ["Calistoga", "serif"],
+                        "body": ["Lexend", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"],
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "1.5rem", "xl": "2rem", "2xl": "2.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-black/40 flex justify-center items-end min-h-screen">
+<!-- Bottom Sheet Container -->
+<div class="relative w-full max-w-md bg-background-light dark:bg-background-dark rounded-t-[2.5rem] shadow-2xl overflow-hidden flex flex-col max-h-[92vh]">
+<!-- Drag Handle Area -->
+<div class="flex items-center justify-center pt-4 pb-2 bg-background-light dark:bg-background-dark sticky top-0 z-10">
+<div class="h-1.5 w-12 rounded-full bg-slate-200 dark:bg-slate-700"></div>
+</div>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto px-6 pb-32">
+<!-- Header -->
+<div class="flex justify-between items-center mb-6 mt-2">
+<h1 class="font-body font-medium text-lg text-text-main dark:text-white">Swap Exercise</h1>
+<button class="text-text-sub hover:text-primary transition-colors">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<!-- Current Exercise Card -->
+<div class="mb-8 relative group">
+<div class="absolute -top-3 left-4 bg-primary text-white text-xs font-body font-semibold px-3 py-1 rounded-full shadow-sm z-10 uppercase tracking-wide">
+                    Currently Selected
+                </div>
+<div class="bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-border-light dark:border-gray-700 flex items-center gap-4">
+<div class="w-20 h-20 rounded-xl bg-slate-100 dark:bg-gray-700 flex-shrink-0 bg-cover bg-center" data-alt="athlete performing barbell bench press" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAKRTodFat28MPijB8nv2vUwIOrKGqVheuoWtUHIewEWhZliWGp_jVYaKtrZLdYbZTtAr8LdAtaRMVdvByldAkPkmREbVU_zjBUsA7Ujm-oOgJWaMp1Ww_w6Tmc8PX43TviinF9I114ig9MGFES9804jHwYpbVC9Mp6fzItKBGfHpOBvORFKVMctVHyr8nGGuCkAEQmL6iIRg_JYRrmv0A_ye5v_k-_INuNEk2NT0FGDJfPNAV3CWyf4J31v-i55LniUfSY_FdpWjU');">
+</div>
+<div class="flex-1 min-w-0">
+<h3 class="font-display text-xl text-text-main dark:text-white leading-tight mb-1 truncate">Barbell Bench Press</h3>
+<p class="font-body text-text-sub text-sm">Chest • Strength</p>
+</div>
+<div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-xl">check</span>
+</div>
+</div>
+</div>
+<!-- Alternatives Section -->
+<div class="mb-4">
+<h2 class="font-display text-2xl text-text-main dark:text-white mb-4">Alternatives</h2>
+<!-- Filter Pills -->
+<div class="flex gap-2 overflow-x-auto no-scrollbar pb-2 -mx-6 px-6 mb-4">
+<button class="flex-shrink-0 h-9 px-5 rounded-full bg-primary text-white font-body text-sm font-medium shadow-sm shadow-primary/30 transition-all">
+                        All
+                    </button>
+<button class="flex-shrink-0 h-9 px-5 rounded-full bg-white dark:bg-gray-800 border border-border-light dark:border-gray-700 text-text-sub hover:text-primary hover:border-primary transition-all font-body text-sm font-medium">
+                        Dumbbells
+                    </button>
+<button class="flex-shrink-0 h-9 px-5 rounded-full bg-white dark:bg-gray-800 border border-border-light dark:border-gray-700 text-text-sub hover:text-primary hover:border-primary transition-all font-body text-sm font-medium">
+                        Machines
+                    </button>
+<button class="flex-shrink-0 h-9 px-5 rounded-full bg-white dark:bg-gray-800 border border-border-light dark:border-gray-700 text-text-sub hover:text-primary hover:border-primary transition-all font-body text-sm font-medium">
+                        Cables
+                    </button>
+<button class="flex-shrink-0 h-9 px-5 rounded-full bg-white dark:bg-gray-800 border border-border-light dark:border-gray-700 text-text-sub hover:text-primary hover:border-primary transition-all font-body text-sm font-medium">
+                        Bodyweight
+                    </button>
+</div>
+</div>
+<!-- List of Alternatives -->
+<div class="flex flex-col gap-3">
+<!-- Item 1 (Selected State visual mockup) -->
+<label class="group cursor-pointer relative">
+<input checked="" class="peer sr-only" name="swap_option" type="radio"/>
+<div class="flex items-center gap-4 bg-white dark:bg-gray-800 p-3 pr-4 rounded-2xl border border-primary ring-1 ring-primary shadow-sm transition-all duration-200">
+<div class="w-16 h-16 rounded-lg bg-slate-50 dark:bg-gray-700 flex-shrink-0 bg-cover bg-center" data-alt="man lifting heavy dumbbells on bench" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCeMC7FaoQY6aIxRNQ9QVECr7UPy6Cn-iuujrj4zj-rkrjQCo1lVFTfyzsf94Fwxi3xqTxLSOQuVFAKfnKRr8hFXW5GS2Rijt4RXOZUfaOtxWSfilYiECkCA7EnHU1_bj9XW2m529Ne3vrO82oYevHAnBvjemgDXJaUSE_B--u5oMJAW2ii-lUJVxgRxEh0TaqoN3ZU4-Thjfc36wFL16Yow_dlHENwt0dFecAo2Ligt899LcIQB6-jvwNKJMu6N_9-_0H2h5dH31g');">
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="font-body font-semibold text-text-main dark:text-white text-base leading-snug mb-1">Dumbbell Bench Press</h4>
+<div class="flex items-center gap-2">
+<span class="font-mono text-xs font-medium text-primary bg-primary/10 px-1.5 py-0.5 rounded">98% Match</span>
+<span class="text-xs text-text-sub font-body">Free Weight</span>
+</div>
+</div>
+<div class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center bg-primary transition-colors">
+<span class="material-symbols-outlined text-white text-sm font-bold">check</span>
+</div>
+</div>
+</label>
+<!-- Item 2 -->
+<label class="group cursor-pointer relative">
+<input class="peer sr-only" name="swap_option" type="radio"/>
+<div class="flex items-center gap-4 bg-white dark:bg-gray-800 p-3 pr-4 rounded-2xl border border-border-light dark:border-gray-700 hover:border-primary/50 peer-checked:border-primary peer-checked:ring-1 peer-checked:ring-primary shadow-sm transition-all duration-200">
+<div class="w-16 h-16 rounded-lg bg-slate-50 dark:bg-gray-700 flex-shrink-0 bg-cover bg-center" data-alt="modern chest press machine in gym" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCP02GxuP6oJNl-0MtjfivpuqHH7zAesyINFwHsBSQQSAOdLpYDjWwYn89X33XXyMIyArWY8OsHLd8387rBZISkVEN-0WBIhLHOuXVZ7xIn4rPtVqKXR9uf8DGWDcS3EXJESXG_Defw8LqCGCq0Jd4ZbXaiY26tk8th_Pn1eGxBX1h-xMw7AIw7OeLiSnJ6D4W46zxtVgpoFAAEcgiEAYmUJXOhpMc3s4j8ux3LGYzl5vrvOGUCAJsXF1rtCTemb8vE25q_iqDIHd0');">
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="font-body font-semibold text-text-main dark:text-white text-base leading-snug mb-1">Chest Press Machine</h4>
+<div class="flex items-center gap-2">
+<span class="font-mono text-xs font-medium text-green-600 bg-green-100 dark:text-green-400 dark:bg-green-900/30 px-1.5 py-0.5 rounded">85% Match</span>
+<span class="text-xs text-text-sub font-body">Machine</span>
+</div>
+</div>
+<div class="w-6 h-6 rounded-full border-2 border-slate-300 dark:border-slate-600 flex items-center justify-center peer-checked:bg-primary peer-checked:border-primary transition-colors">
+<span class="material-symbols-outlined text-white text-sm font-bold opacity-0 peer-checked:opacity-100">check</span>
+</div>
+</div>
+</label>
+<!-- Item 3 -->
+<label class="group cursor-pointer relative">
+<input class="peer sr-only" name="swap_option" type="radio"/>
+<div class="flex items-center gap-4 bg-white dark:bg-gray-800 p-3 pr-4 rounded-2xl border border-border-light dark:border-gray-700 hover:border-primary/50 peer-checked:border-primary peer-checked:ring-1 peer-checked:ring-primary shadow-sm transition-all duration-200">
+<div class="w-16 h-16 rounded-lg bg-slate-50 dark:bg-gray-700 flex-shrink-0 bg-cover bg-center" data-alt="person performing weighted pushups on floor" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCggmJyBXdn4MdB-XOKCj1R8xN0RxCXs-P7EhVMe0-eibsgvm0_VSxYHwTrcOzUtsprbuneWAp1HS9VVNCo9a-p30GmuTuABLLEU_2ae4t3OdRtdI0FqVZIM77HyggaKgWhPf3QPGbHwfJf1LXO3KpR2_pmW44dbb3ykb7-dfI0oGaSfGCMJIw1o05EihN2dB4Y4WJC5h_emxpA9LX5taE1MDUDYq4-7R3NRIJPWAKPbxmEvy7GKGg-bY4ye6Faa1-YghZdPtWXcIQ');">
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="font-body font-semibold text-text-main dark:text-white text-base leading-snug mb-1">Weighted Push-up</h4>
+<div class="flex items-center gap-2">
+<span class="font-mono text-xs font-medium text-amber-600 bg-amber-100 dark:text-amber-400 dark:bg-amber-900/30 px-1.5 py-0.5 rounded">80% Match</span>
+<span class="text-xs text-text-sub font-body">Calisthenics</span>
+</div>
+</div>
+<div class="w-6 h-6 rounded-full border-2 border-slate-300 dark:border-slate-600 flex items-center justify-center peer-checked:bg-primary peer-checked:border-primary transition-colors">
+<span class="material-symbols-outlined text-white text-sm font-bold opacity-0 peer-checked:opacity-100">check</span>
+</div>
+</div>
+</label>
+<!-- Item 4 -->
+<label class="group cursor-pointer relative">
+<input class="peer sr-only" name="swap_option" type="radio"/>
+<div class="flex items-center gap-4 bg-white dark:bg-gray-800 p-3 pr-4 rounded-2xl border border-border-light dark:border-gray-700 hover:border-primary/50 peer-checked:border-primary peer-checked:ring-1 peer-checked:ring-primary shadow-sm transition-all duration-200">
+<div class="w-16 h-16 rounded-lg bg-slate-50 dark:bg-gray-700 flex-shrink-0 bg-cover bg-center" data-alt="cable crossover station in gym" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCSA9fcAuV360_hckt0SJ7hAZpGM05QTr-TXebe-76W6eMyHoh_G98LmbEL6wh3ukBtmaXpjA63I_QeUd5BSlHIdKgjRTE0At1kDHo0up58XWlYPfC21AO2drLNxfpDXmMlVBpquvzIpz2hK7CEwtccARRiX5CiWoLH79M5OjN5tIxavrZS9QGx_6dfTbzBLlRd17ZKP3UpAPlN09c3mEtHh1BPAjgDis7yTAPLUCGU2ym_yK8d-Gkggap2Q7m7ziGWZWnS_s0gkOg');">
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="font-body font-semibold text-text-main dark:text-white text-base leading-snug mb-1">Cable Chest Fly</h4>
+<div class="flex items-center gap-2">
+<span class="font-mono text-xs font-medium text-amber-600 bg-amber-100 dark:text-amber-400 dark:bg-amber-900/30 px-1.5 py-0.5 rounded">75% Match</span>
+<span class="text-xs text-text-sub font-body">Cable</span>
+</div>
+</div>
+<div class="w-6 h-6 rounded-full border-2 border-slate-300 dark:border-slate-600 flex items-center justify-center peer-checked:bg-primary peer-checked:border-primary transition-colors">
+<span class="material-symbols-outlined text-white text-sm font-bold opacity-0 peer-checked:opacity-100">check</span>
+</div>
+</div>
+</label>
+</div>
+</div>
+<!-- Sticky Footer -->
+<div class="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-background-light via-background-light to-transparent dark:from-background-dark dark:via-background-dark pt-12">
+<button class="w-full h-14 rounded-full bg-gradient-to-r from-primary to-[#5ecbf7] hover:from-primary-dark hover:to-[#4bb8e3] text-white font-body font-bold text-lg shadow-lg shadow-primary/25 transition-all transform active:scale-[0.98] flex items-center justify-center gap-2">
+<span>Confirm Swap</span>
+<span class="material-symbols-outlined text-[1.1em]">arrow_forward</span>
+</button>
+</div>
+</div>
+</body></html>

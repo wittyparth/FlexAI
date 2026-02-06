@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Body Composition Tracking Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0da6f2",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#101c22",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-[#0d171c] dark:text-white font-display overflow-x-hidden min-h-screen flex flex-col antialiased selection:bg-primary/20">
+<!-- Header -->
+<header class="flex items-center justify-between px-6 pt-6 pb-2 bg-background-light dark:bg-background-dark sticky top-0 z-10">
+<button class="flex size-10 items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-slate-900 dark:text-white">
+<span class="material-symbols-outlined text-2xl">arrow_back</span>
+</button>
+<h1 class="text-lg font-bold tracking-tight text-center">Body Tracking Hub</h1>
+<button class="flex size-10 items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-slate-900 dark:text-white">
+<span class="material-symbols-outlined text-2xl">more_horiz</span>
+</button>
+</header>
+<!-- Main Content -->
+<main class="flex-1 px-6 pt-8 pb-10 flex flex-col gap-14">
+<!-- Hero: Current Weight -->
+<!-- Massive display as requested -->
+<section class="flex flex-col items-center justify-center text-center animate-fade-in-up">
+<h2 class="text-xs font-bold tracking-[0.2em] text-slate-400 dark:text-slate-500 uppercase mb-6">Current Weight</h2>
+<div class="relative flex items-baseline justify-center">
+<!-- Using tabular-nums to simulate the requested monospace technical feel within the theme font -->
+<span class="text-[5rem] leading-[0.9] font-bold tracking-tighter tabular-nums text-[#0d171c] dark:text-white">
+                    82.5
+                </span>
+<span class="text-2xl font-medium text-slate-400 dark:text-slate-600 ml-2">kg</span>
+</div>
+<div class="mt-6 flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20">
+<span class="material-symbols-outlined text-primary text-lg" style="font-variation-settings: 'FILL' 1;">trending_down</span>
+<span class="text-primary font-bold text-sm tracking-wide">-1.2% this week</span>
+</div>
+</section>
+<!-- Chart Section -->
+<section class="w-full">
+<div class="flex items-end justify-between mb-8 px-1">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Weight Trend</h3>
+<div class="flex gap-2">
+<span class="text-xs font-bold text-primary bg-primary/10 border border-primary/20 px-3 py-1 rounded-full">1M</span>
+<span class="text-xs font-medium text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 px-3 py-1 rounded-full cursor-pointer transition-colors">3M</span>
+<span class="text-xs font-medium text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 px-3 py-1 rounded-full cursor-pointer transition-colors">YTD</span>
+</div>
+</div>
+<div class="w-full h-56 relative group">
+<!-- Gradient Background for chart area -->
+<div class="absolute inset-0 bg-gradient-to-b from-white to-transparent dark:from-white/5 opacity-50 rounded-xl"></div>
+<svg class="w-full h-full overflow-visible" fill="none" preserveaspectratio="none" viewbox="0 0 350 150">
+<defs>
+<lineargradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#0da6f2" stop-opacity="0.25"></stop>
+<stop offset="100%" stop-color="#0da6f2" stop-opacity="0"></stop>
+</lineargradient>
+<filter height="140%" id="glow" width="140%" x="-20%" y="-20%">
+<fegaussianblur result="coloredBlur" stddeviation="4"></fegaussianblur>
+<femerge>
+<femergenode in="coloredBlur"></femergenode>
+<femergenode in="SourceGraphic"></femergenode>
+</femerge>
+</filter>
+</defs>
+<!-- Grid Lines -->
+<line class="dark:stroke-white/10" stroke="#e2e8f0" stroke-dasharray="4 4" stroke-width="1" x1="0" x2="350" y1="0" y2="0"></line>
+<line class="dark:stroke-white/10" stroke="#e2e8f0" stroke-dasharray="4 4" stroke-width="1" x1="0" x2="350" y1="50" y2="50"></line>
+<line class="dark:stroke-white/10" stroke="#e2e8f0" stroke-dasharray="4 4" stroke-width="1" x1="0" x2="350" y1="100" y2="100"></line>
+<!-- Area Fill -->
+<path d="M0,110 C40,110 60,70 100,75 C140,80 160,45 200,50 C240,55 260,30 300,35 C330,38 340,65 350,65 V150 H0 Z" fill="url(#chartGradient)"></path>
+<!-- Trend Line -->
+<path d="M0,110 C40,110 60,70 100,75 C140,80 160,45 200,50 C240,55 260,30 300,35 C330,38 340,65 350,65" filter="url(#glow)" stroke="#0da6f2" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path>
+<!-- Current Point Indicator -->
+<circle class="dark:stroke-[#101c22]" cx="350" cy="65" fill="#0da6f2" r="6" stroke="white" stroke-width="3"></circle>
+</svg>
+<!-- X Axis Labels -->
+<div class="flex justify-between mt-4 text-xs text-slate-400 font-bold uppercase tracking-wider">
+<span>Mon</span>
+<span>Tue</span>
+<span>Wed</span>
+<span>Thu</span>
+<span>Fri</span>
+<span>Sat</span>
+<span>Sun</span>
+</div>
+</div>
+</section>
+<!-- Stats & Analysis Section -->
+<!-- Grouped vertically with separation as implied by "cards" plural -->
+<section class="flex flex-col gap-6">
+<!-- Weekly Rate Card -->
+<div class="bg-white dark:bg-white/5 p-6 rounded-xl border border-slate-100 dark:border-white/5 shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)] dark:shadow-none">
+<div class="flex items-center justify-between">
+<div class="flex flex-col gap-1">
+<p class="text-sm font-bold text-slate-500 dark:text-slate-400">Weekly Rate</p>
+<div class="flex items-baseline gap-2">
+<p class="text-2xl font-bold tabular-nums text-slate-900 dark:text-white">-0.5</p>
+<span class="text-sm font-medium text-slate-400">kg/wk</span>
+</div>
+</div>
+<!-- Subtle visual indicator -->
+<div class="h-10 w-10 rounded-full bg-slate-50 dark:bg-white/5 flex items-center justify-center">
+<span class="material-symbols-outlined text-slate-400 dark:text-slate-500">show_chart</span>
+</div>
+</div>
+</div>
+<!-- Analysis Card -->
+<div class="bg-white dark:bg-white/5 p-6 rounded-xl border border-slate-100 dark:border-white/5 shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)] dark:shadow-none">
+<div class="flex flex-col gap-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl">auto_awesome</span>
+<p class="text-sm font-bold text-slate-900 dark:text-white">Analysis</p>
+</div>
+<p class="text-base text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+                        You are on track to reach your goal by <span class="text-primary font-bold">Nov 12</span>. Based on current trends, no adjustments needed.
+                    </p>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Actions (Quick Actions Row) -->
+<footer class="p-6 bg-background-light dark:bg-background-dark pb-8">
+<div class="flex flex-col gap-4">
+<!-- Primary Action -->
+<button class="relative group w-full h-14 overflow-hidden rounded-xl shadow-lg shadow-primary/25 active:scale-[0.99] transition-all duration-200">
+<div class="absolute inset-0 bg-gradient-to-r from-[#0da6f2] to-[#3db9f5] transition-all group-hover:brightness-105"></div>
+<div class="relative flex items-center justify-center gap-2 h-full text-white font-bold text-lg tracking-wide">
+<span class="material-symbols-outlined">add</span>
+                    Log Weight
+                </div>
+</button>
+<!-- Secondary Actions (Ghost Buttons) -->
+<div class="grid grid-cols-2 gap-4">
+<button class="h-14 border border-slate-200 dark:border-white/10 rounded-xl text-slate-600 dark:text-slate-300 font-bold text-sm flex items-center justify-center gap-2 hover:bg-white dark:hover:bg-white/5 hover:border-slate-300 dark:hover:border-white/20 transition-all active:scale-[0.99]">
+<span class="material-symbols-outlined text-[20px]">straighten</span>
+                    Measurements
+                </button>
+<button class="h-14 border border-slate-200 dark:border-white/10 rounded-xl text-slate-600 dark:text-slate-300 font-bold text-sm flex items-center justify-center gap-2 hover:bg-white dark:hover:bg-white/5 hover:border-slate-300 dark:hover:border-white/20 transition-all active:scale-[0.99]">
+<span class="material-symbols-outlined text-[20px]">photo_camera</span>
+                    Photos
+                </button>
+</div>
+</div>
+</footer>
+</body></html>

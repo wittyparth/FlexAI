@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Find Members Search</title>
+<!-- Google Fonts: Space Grotesk, Calistoga, JetBrains Mono -->
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Calistoga&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0da6f2", // Electric Blue
+                        "background-light": "#fcfdfe",
+                        "background-dark": "#101c22",
+                        "ghost-grey": "#eef2f5",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "headline": ["Calistoga", "serif"],
+                        "mono": ["JetBrains Mono", "monospace"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .search-focus:focus-within {
+            box-shadow: 0 0 0 2px #0da6f2;
+        }
+        .btn-gradient-active {
+            background: linear-gradient(135deg, #0da6f2 0%, #0077b6 100%);
+        }
+        .loader-dashed {
+            border: 2px dashed #0da6f2;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            animation: spin 3s linear infinite;
+        }
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#0d171c] antialiased">
+<div class="relative flex min-h-screen w-full flex-col max-w-[480px] mx-auto overflow-x-hidden border-x border-gray-100 dark:border-gray-800">
+<!-- TopAppBar / Search Bar Row -->
+<header class="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md px-4 py-3">
+<div class="flex items-center gap-3">
+<button class="flex items-center justify-center size-10 rounded-full hover:bg-ghost-grey transition-colors">
+<span class="material-symbols-outlined text-[#0d171c] dark:text-white">arrow_back</span>
+</button>
+<div class="flex-1 h-12">
+<label class="relative flex items-center h-full w-full search-focus rounded-lg bg-ghost-grey dark:bg-gray-800 transition-all">
+<div class="pl-4 text-[#49819c] flex items-center">
+<span class="material-symbols-outlined text-xl">search</span>
+</div>
+<input class="form-input flex-1 bg-transparent border-none focus:ring-0 text-[#0d171c] dark:text-white placeholder:text-[#49819c] text-base px-3" placeholder="Find elite members..." type="text" value="Elite Athle"/>
+<button class="pr-3 text-[#49819c] hover:text-[#0d171c]">
+<span class="material-symbols-outlined text-xl">cancel</span>
+</button>
+</label>
+</div>
+</div>
+</header>
+<main class="flex-1">
+<!-- Recent Searches Section -->
+<section class="mt-4">
+<h3 class="text-[#0d171c] dark:text-white text-lg font-bold leading-tight tracking-tight px-6 pb-4">Recent Searches</h3>
+<div class="flex gap-2 px-6 flex-wrap">
+<button class="flex h-9 items-center justify-center rounded-lg border border-gray-200 dark:border-gray-700 bg-transparent px-4 py-1 hover:border-primary transition-colors">
+<p class="text-[#49819c] dark:text-gray-400 text-sm font-medium">Calisthenics King</p>
+</button>
+<button class="flex h-9 items-center justify-center rounded-lg border border-gray-200 dark:border-gray-700 bg-transparent px-4 py-1 hover:border-primary transition-colors">
+<p class="text-[#49819c] dark:text-gray-400 text-sm font-medium">Elite Yoga</p>
+</button>
+<button class="flex h-9 items-center justify-center rounded-lg border border-gray-200 dark:border-gray-700 bg-transparent px-4 py-1 hover:border-primary transition-colors">
+<p class="text-[#49819c] dark:text-gray-400 text-sm font-medium">Powerlifter</p>
+</button>
+</div>
+</section>
+<div class="h-8"></div>
+<!-- Results Section -->
+<section class="pb-20">
+<h3 class="text-[#0d171c] dark:text-white text-lg font-bold leading-tight tracking-tight px-6 pb-4">Results</h3>
+<div class="flex flex-col gap-1 px-4">
+<!-- User Card 1 -->
+<div class="flex items-center p-3 rounded-xl hover:bg-ghost-grey dark:hover:bg-gray-800 transition-colors">
+<div class="size-14 rounded-full overflow-hidden border-2 border-primary/20 bg-gray-200">
+<img alt="Athlete Avatar" class="w-full h-full object-cover" data-alt="Portrait of a focused fitness athlete" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKwmgNx6TgBFprvKNjOTiyYRWp98ZWIgxCih87eCXbUq72PCjLHnj-baGr2hU8cGCcQa5FSuj7Mka_3HR1VkDYaP1PZJF-ZbA9EBy7ts8Th-jq6_R_ZpxaWjUsh8i6plQCd7IG8Z4Bx-8IewBerQ22OsVbss3LEhiVS7Bn-DRgEef9XxIA0uArJm7xqLYR8OxfrD2WrteUXWFfW2H19gICWROOtI5ypo4Qa7C-xo8m8v6D0cMs4R4EizGyMkRxc_fyQgQgSo79How"/>
+</div>
+<div class="flex-1 ml-4 overflow-hidden">
+<div class="flex items-center gap-2">
+<span class="font-headline text-[#0d171c] dark:text-white text-lg truncate">Marcus Thorne</span>
+<span class="font-mono text-[10px] px-1.5 py-0.5 rounded bg-primary text-white font-bold">LVL 84</span>
+</div>
+<p class="text-sm text-gray-500 dark:text-gray-400 font-display">Elite Athlete • 12 mutuals</p>
+</div>
+<button class="ml-2 h-9 px-5 rounded-lg border border-primary text-primary font-bold text-sm hover:btn-gradient-active hover:text-white transition-all">
+                            Follow
+                        </button>
+</div>
+<!-- User Card 2 -->
+<div class="flex items-center p-3 rounded-xl hover:bg-ghost-grey dark:hover:bg-gray-800 transition-colors">
+<div class="size-14 rounded-full overflow-hidden border-2 border-primary/20 bg-gray-200">
+<img alt="Athlete Avatar" class="w-full h-full object-cover" data-alt="Portrait of an athletic woman in gym gear" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzlVYJVb5wh_cfkRQCupOqMZe3W1_CjZyxbJE8N-r4xvA6V3L9OrmmNr_vbJChx86dZQPxv1VqJ2Miq1i7Tz-xSCiEdEkihOSvxmIeTYUM8boT6PlkZv8oiO8_w7Q-E0HVDOpkURODbRdGObZqFaqEe-vVPMd94EhS-KTjvirBMgniX8vpLUfdskXB0sSdjfAnaEfLId1fvSzp8akygdTvXVV5PNwF_zuPZ0ArUcQVYguqkd2YVDIstZimEJ6-urAsFroTl7SBibE"/>
+</div>
+<div class="flex-1 ml-4 overflow-hidden">
+<div class="flex items-center gap-2">
+<span class="font-headline text-[#0d171c] dark:text-white text-lg truncate">Elena Volkov</span>
+<span class="font-mono text-[10px] px-1.5 py-0.5 rounded bg-primary text-white font-bold">LVL 42</span>
+</div>
+<p class="text-sm text-gray-500 dark:text-gray-400 font-display">Yoga Specialist • 8 mutuals</p>
+</div>
+<button class="ml-2 h-9 px-5 rounded-lg btn-gradient-active text-white font-bold text-sm shadow-lg shadow-primary/20">
+                            Following
+                        </button>
+</div>
+<!-- User Card 3 -->
+<div class="flex items-center p-3 rounded-xl hover:bg-ghost-grey dark:hover:bg-gray-800 transition-colors">
+<div class="size-14 rounded-full overflow-hidden border-2 border-primary/20 bg-gray-200">
+<img alt="Athlete Avatar" class="w-full h-full object-cover" data-alt="Close up of a muscular male fitness trainer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4N510f0zgObaeJ79pYkE1HaQmUSdIebvb5bxpXLV25d5Fafm0cf1HbfhuAMKDRcCmLpRaILtKUC2jlrxxj30xy2HPjhhv_AqEf4A0zoMlADu9ftOKp8RSaFSKuqA5h0Cp_o7egJU89RIT_tGGmu5QBY4-v3cw0ZMy57jOfmP83sY6DQLhD6acvAQ6L7pary7kcQPRBDkQr30v8rKXjPGtK-ElMoodhVY5Ii7eO9CKx0itRLpnk3-lypeWIxDjP0TTdEPIH0bFGo4"/>
+</div>
+<div class="flex-1 ml-4 overflow-hidden">
+<div class="flex items-center gap-2">
+<span class="font-headline text-[#0d171c] dark:text-white text-lg truncate">Jaxson Pierce</span>
+<span class="font-mono text-[10px] px-1.5 py-0.5 rounded bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-bold">LVL 12</span>
+</div>
+<p class="text-sm text-gray-500 dark:text-gray-400 font-display">New Member • 3 mutuals</p>
+</div>
+<button class="ml-2 h-9 px-5 rounded-lg border border-primary text-primary font-bold text-sm hover:btn-gradient-active hover:text-white transition-all">
+                            Follow
+                        </button>
+</div>
+<!-- User Card 4 -->
+<div class="flex items-center p-3 rounded-xl hover:bg-ghost-grey dark:hover:bg-gray-800 transition-colors">
+<div class="size-14 rounded-full overflow-hidden border-2 border-primary/20 bg-gray-200">
+<img alt="Athlete Avatar" class="w-full h-full object-cover" data-alt="Smiling female marathon runner" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIfkSXqcPWadtDOJOfsfBKn9nHpsFRmo7dfF4JwavBazJmiGOXJ2JLgJsBtaQtdaYRfjwx4o5lzDZo6W9jejTO-6iyJ85Pmmk2CPw5aKKdmyP4V-q66LjhI0ukEhBeDjzWvMmln2QdOWk7Xga405eW5GU-ZpuqIx-7nqboD_ooZIxrSVwKz6OQnO_t9MzYDlP7Q-hZHCxmY9-qD_9B8OXefKkf48aGTRN421iRIpv9vfMzy8lg7Wrcgo3m7-qGSborlum2tV8q0fs"/>
+</div>
+<div class="flex-1 ml-4 overflow-hidden">
+<div class="flex items-center gap-2">
+<span class="font-headline text-[#0d171c] dark:text-white text-lg truncate">Sarah Jenkins</span>
+<span class="font-mono text-[10px] px-1.5 py-0.5 rounded bg-primary text-white font-bold">LVL 67</span>
+</div>
+<p class="text-sm text-gray-500 dark:text-gray-400 font-display">Marathoner • 21 mutuals</p>
+</div>
+<button class="ml-2 h-9 px-5 rounded-lg border border-primary text-primary font-bold text-sm hover:btn-gradient-active hover:text-white transition-all">
+                            Follow
+                        </button>
+</div>
+</div>
+<!-- Infinite Scroll Loader -->
+<div class="flex flex-col items-center justify-center py-12 gap-4">
+<div class="loader-dashed"></div>
+<p class="text-xs font-mono text-[#49819c] uppercase tracking-widest">Searching Database</p>
+</div>
+</section>
+</main>
+<!-- Bottom Tab Bar (iOS Style) -->
+<nav class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[480px] bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-xl border-t border-gray-100 dark:border-gray-800 px-6 py-2 pb-6 flex justify-between items-center z-50">
+<button class="flex flex-col items-center gap-1 text-gray-400">
+<span class="material-symbols-outlined">home</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined">search</span>
+</button>
+<div class="size-12 -mt-8 flex items-center justify-center rounded-full bg-primary text-white shadow-xl shadow-primary/40">
+<span class="material-symbols-outlined">add</span>
+</div>
+<button class="flex flex-col items-center gap-1 text-gray-400">
+<span class="material-symbols-outlined">bolt</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-gray-400">
+<span class="material-symbols-outlined">person</span>
+</button>
+</nav>
+</div>
+</body></html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Smart Notification Access</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Calistoga&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#134dec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101522",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "calistoga": ["Calistoga", "serif"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    boxShadow: {
+                        "soft": "0 20px 40px -10px rgba(19, 77, 236, 0.15)",
+                        "card": "0 10px 30px -5px rgba(0, 0, 0, 0.05)",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', "Noto Sans", sans-serif;
+        }
+        .font-calistoga {
+            font-family: 'Calistoga', serif;
+        }
+        /* Custom scrollbar hide for cleaner UI */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen flex flex-col text-[#0d111b] dark:text-white transition-colors duration-200">
+<!-- Progress Bar -->
+<div class="w-full px-6 pt-6 pb-2">
+<div class="h-1.5 w-full bg-gray-200 dark:bg-gray-800 rounded-full overflow-hidden">
+<div class="h-full bg-primary transition-all duration-500 ease-out" style="width: 80%"></div>
+</div>
+</div>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col items-center justify-center px-6 py-4 w-full max-w-md mx-auto relative">
+<!-- Hero Illustration -->
+<div class="w-full flex justify-center mb-8 relative group/image">
+<div class="relative w-64 h-64">
+<!-- Decorative background blob -->
+<div class="absolute inset-0 bg-primary/5 dark:bg-primary/10 rounded-full blur-3xl transform scale-90"></div>
+<!-- Main Image Card -->
+<div class="relative w-full h-full bg-center bg-cover bg-no-repeat rounded-[2.5rem] shadow-soft dark:shadow-none z-10 transition-transform duration-700 hover:scale-[1.02]" data-alt="3D styled floating notification bubble with glassmorphism effect" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuArSKZqnDxvwDmvYDFKgXqqiyGOKkM2h0aq295eoAQTHPRMxJ4PHHSUnjTPpu2rU4yeneq0XMxbM87TFYWC34s0eDpG3g9LL0vjSNM7vGiwJDt17jNjhJy-bnH8_xqtqaGf854NZHbyAdSelf5uT8nJOT0Rjehw-XK81oXb076lLoZouKH08TuHYtOMmcsCbArJGbvzHz3klYVpsX8aPDNEEWJSMtk4nmGSYYh_5MkInG5CUy1CYN-c0WDtZ_VscsHZxn7z9_VRVuw");'>
+<!-- Overlay gradient to ensure text readability if needed or add depth -->
+<div class="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent dark:from-black/20 rounded-[2.5rem]"></div>
+</div>
+</div>
+</div>
+<!-- Headline -->
+<div class="text-center mb-10 space-y-3">
+<h1 class="text-4xl font-calistoga text-[#0d111b] dark:text-white leading-tight">
+                Stay on Track
+            </h1>
+<p class="text-gray-500 dark:text-gray-400 text-base font-normal leading-relaxed max-w-[280px] mx-auto">
+                Don't miss out on important updates about your fitness journey.
+            </p>
+</div>
+<!-- Benefits List -->
+<div class="w-full max-w-[300px] flex flex-col gap-5 mb-8">
+<!-- Item 1 -->
+<div class="flex items-center gap-4 group/item">
+<div class="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 dark:bg-primary/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px] font-bold">check</span>
+</div>
+<p class="text-[#0d111b] dark:text-white text-lg font-medium">Workout Reminders</p>
+</div>
+<!-- Item 2 -->
+<div class="flex items-center gap-4 group/item">
+<div class="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 dark:bg-primary/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px] font-bold">check</span>
+</div>
+<p class="text-[#0d111b] dark:text-white text-lg font-medium">PR Alerts</p>
+</div>
+<!-- Item 3 -->
+<div class="flex items-center gap-4 group/item">
+<div class="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 dark:bg-primary/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px] font-bold">check</span>
+</div>
+<p class="text-[#0d111b] dark:text-white text-lg font-medium">AI Coach Tips</p>
+</div>
+</div>
+</div>
+<!-- Footer Actions -->
+<div class="w-full px-6 pb-8 pt-2 max-w-md mx-auto">
+<div class="flex flex-col gap-4">
+<button class="relative w-full h-14 bg-primary hover:bg-blue-700 active:scale-[0.98] text-white text-[17px] font-bold rounded-full transition-all duration-200 shadow-lg shadow-primary/25 flex items-center justify-center overflow-hidden">
+<span class="z-10">Enable Notifications</span>
+<!-- Subtle gradient overlay for signature look -->
+<div class="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent opacity-50"></div>
+</button>
+<button class="w-full h-12 bg-transparent text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 text-[15px] font-semibold rounded-full transition-colors flex items-center justify-center">
+                Maybe Later
+            </button>
+</div>
+</div>
+</body></html>

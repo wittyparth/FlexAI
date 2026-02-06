@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Calistoga&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0da6f2",
+                        "background-light": "#fdfcfb", // Warm off-white
+                        "background-dark": "#101c22",
+                        "electric-blue": "#0da6f2",
+                        "jet-black": "#0d171c",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "headline": ["Calistoga", "cursive"],
+                        "mono": ["JetBrains Mono", "monospace"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .gradient-border-card {
+            position: relative;
+            background: #fff;
+            background-clip: padding-box;
+            border: 2px solid transparent;
+        }
+        .gradient-border-card::before {
+            content: '';
+            position: absolute;
+            top: -2px; bottom: -2px;
+            left: -2px; right: -2px;
+            background: linear-gradient(135deg, #0da6f2, #ffffff);
+            z-index: -1;
+            border-radius: inherit;
+        }
+        .radial-glow {
+            background: radial-gradient(circle at 50% 50%, rgba(13, 166, 242, 0.08) 0%, rgba(253, 252, 251, 0) 70%);
+        }
+        body {
+            -webkit-tap-highlight-color: transparent;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-jet-black dark:text-white min-h-screen relative overflow-x-hidden">
+<!-- Background Accents -->
+<div class="fixed inset-0 pointer-events-none overflow-hidden">
+<div class="absolute -top-20 -right-20 w-96 h-96 radial-glow rounded-full"></div>
+<div class="absolute top-1/2 -left-40 w-80 h-80 radial-glow rounded-full"></div>
+</div>
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md px-6 pt-6 pb-4 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="bg-primary p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-[20px]">insights</span>
+</div>
+<h1 class="font-headline text-xl tracking-wide">Stats Hub</h1>
+</div>
+<div class="flex gap-3">
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-white dark:bg-gray-800 shadow-sm border border-gray-100 dark:border-gray-700">
+<span class="material-symbols-outlined text-[22px]">notifications</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-white dark:bg-gray-800 shadow-sm border border-gray-100 dark:border-gray-700">
+<span class="material-symbols-outlined text-[22px]">account_circle</span>
+</button>
+</div>
+</header>
+<main class="relative z-10 px-6 pb-32">
+<!-- Lifetime Performance Header -->
+<section class="mt-4 mb-8">
+<div class="flex items-baseline justify-between mb-2">
+<p class="font-mono text-xs uppercase tracking-widest text-primary font-medium">Lifetime Performance</p>
+<span class="text-[10px] font-mono text-gray-400 bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded-full">EST. 2021</span>
+</div>
+<div class="flex flex-wrap gap-4">
+<div class="flex-1 min-w-[140px] bg-white dark:bg-gray-900 p-5 rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm">
+<p class="text-xs text-gray-500 dark:text-gray-400 font-medium mb-1">Total Volume</p>
+<div class="flex items-baseline gap-2">
+<span class="text-2xl font-bold font-display">1.2M</span>
+<span class="text-xs font-mono text-primary">lbs</span>
+</div>
+<div class="mt-2 flex items-center text-[10px] text-green-500 font-bold">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+<span class="ml-1">+12% vs last month</span>
+</div>
+</div>
+<div class="flex-1 min-w-[140px] bg-white dark:bg-gray-900 p-5 rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm">
+<p class="text-xs text-gray-500 dark:text-gray-400 font-medium mb-1">Elite Score</p>
+<div class="flex items-baseline gap-2">
+<span class="text-2xl font-bold font-display">98.4</span>
+<span class="text-xs font-mono text-primary">PCT</span>
+</div>
+<div class="mt-2 flex items-center text-[10px] text-primary font-bold">
+<span class="material-symbols-outlined text-sm">workspace_premium</span>
+<span class="ml-1">Top 2% Globally</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Recent PRs Carousel -->
+<section class="mb-10">
+<h3 class="font-headline text-2xl mb-4 px-1">Recent PRs</h3>
+<div class="flex overflow-x-auto gap-4 pb-4 -mx-6 px-6 scrollbar-hide no-scrollbar" style="scrollbar-width: none; -ms-overflow-style: none;">
+<!-- PR Card 1 -->
+<div class="flex-shrink-0 w-64 gradient-border-card rounded-xl p-4 shadow-lg overflow-hidden">
+<div class="w-full h-32 bg-gray-200 rounded-lg mb-4 bg-cover bg-center" data-alt="Muscular person performing a heavy deadlift" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBPTUOxtRHIToHeaBxfEvb57JW4fHEZ7UIpMHfaRJFNz66TXdWDFuGTEnbsG5JHtbwyaKaYaNLRuBFRCQySkVq3MTA6sSXgWlYX83mB_M5qtBeKg1vrMMExxWGdflfSmOAJVagb9iaWAiEeZRTHuz42GaMoAGBls8nOTDcq1soyQ64RMV-0_1vTkOQz4Xjo-Xn7AJjpimkdOU2aBNcdV0y8COY9Le7PFhjZe0G9o-kZYHywbAE9LpXDVntXcKQyEiG0rNYdECKKAKM');"></div>
+<div class="flex justify-between items-start">
+<div>
+<p class="text-sm font-bold font-headline">Deadlift Max</p>
+<p class="text-[10px] text-gray-500 font-mono">2 DAYS AGO</p>
+</div>
+<span class="bg-primary/10 text-primary text-[11px] font-bold px-2 py-1 rounded-full">405 LBS</span>
+</div>
+</div>
+<!-- PR Card 2 -->
+<div class="flex-shrink-0 w-64 gradient-border-card rounded-xl p-4 shadow-lg overflow-hidden">
+<div class="w-full h-32 bg-gray-200 rounded-lg mb-4 bg-cover bg-center" data-alt="Athlete performing calisthenics muscle ups on rings" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCRT2cuTaYrOtaWoDRPenLnRhuxmhavIJsnRDGltye-vXhh1Z-p7XSL460SRaPoR003fV9BOpcqfos-_LZdQgHofzbG5Gdn5-tdZ5mngRP0sNQapw5B0BZXBRz5lQh01mdT-7N2aoYQv_mNo2MIkzZ01UxE2x7vHncVZ3lC3HhotnbOK2Mde6PlXmAOCkvcTJcznb5F5KnnHRV8iKJtsjtG6FEk0bUrnOkBl8AHoJlUGxfeI3erCqaYXdXMgN2y1t1T-lhHPE3ionQ');"></div>
+<div class="flex justify-between items-start">
+<div>
+<p class="text-sm font-bold font-headline">Weighted Muscle Up</p>
+<p class="text-[10px] text-gray-500 font-mono">YESTERDAY</p>
+</div>
+<span class="bg-primary/10 text-primary text-[11px] font-bold px-2 py-1 rounded-full">+2 REPS</span>
+</div>
+</div>
+<!-- PR Card 3 -->
+<div class="flex-shrink-0 w-64 gradient-border-card rounded-xl p-4 shadow-lg overflow-hidden">
+<div class="w-full h-32 bg-gray-200 rounded-lg mb-4 bg-cover bg-center" data-alt="Person performing back squats in a gym" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAGFFy1UuwGI_KqZtpriDFA5ZdMNXZX_iOVJoX2c3s9lED0qYsKMWZkAxlnVcD3mrQTOnIse__njJXQgBjlhOtDHNUKqP56JgwPa5YU3OEZy-yertLuWyyOl1RFDPW9kzVhOAENkKc55Zil3sd8Qbd-gvHkFaNssiQAKeZNRhpSgGE2ih_ayceHopojtaVT0iZ6LJYHX_PfddhhT0v3np6Gkpdi8vByn7k1EOAFtKs3k0mWl2H5_kyxp4SdWMnk3NbtoRBub1PWbVA');"></div>
+<div class="flex justify-between items-start">
+<div>
+<p class="text-sm font-bold font-headline">Back Squat</p>
+<p class="text-[10px] text-gray-500 font-mono">4 DAYS AGO</p>
+</div>
+<span class="bg-primary/10 text-primary text-[11px] font-bold px-2 py-1 rounded-full">315 LBS</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Main Navigation Grid -->
+<section class="mb-10">
+<h3 class="font-headline text-2xl mb-4 px-1">Analytics Engine</h3>
+<div class="grid grid-cols-2 gap-4">
+<!-- Personal Records Card -->
+<div class="bg-white dark:bg-gray-900 p-5 rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm flex flex-col gap-3 group active:scale-95 transition-transform">
+<div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">military_tech</span>
+</div>
+<div>
+<h4 class="font-bold text-sm">Personal Records</h4>
+<p class="text-[10px] text-gray-500 dark:text-gray-400 font-mono leading-tight mt-1">12 New milestones this quarter</p>
+</div>
+</div>
+<!-- Strength Progression Card -->
+<div class="bg-white dark:bg-gray-900 p-5 rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm flex flex-col gap-3 group active:scale-95 transition-transform">
+<div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">trending_up</span>
+</div>
+<div>
+<h4 class="font-bold text-sm">Strength Growth</h4>
+<p class="text-[10px] text-gray-500 dark:text-gray-400 font-mono leading-tight mt-1">Peak Power: 92% potential</p>
+</div>
+</div>
+<!-- Volume Analytics Card -->
+<div class="bg-white dark:bg-gray-900 p-5 rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm flex flex-col gap-3 group active:scale-95 transition-transform">
+<div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">bar_chart</span>
+</div>
+<div>
+<h4 class="font-bold text-sm">Volume Load</h4>
+<p class="text-[10px] text-gray-500 dark:text-gray-400 font-mono leading-tight mt-1">32k lbs average weekly load</p>
+</div>
+</div>
+<!-- Muscle Distribution Card -->
+<div class="bg-white dark:bg-gray-900 p-5 rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm flex flex-col gap-3 group active:scale-95 transition-transform">
+<div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">accessibility_new</span>
+</div>
+<div>
+<h4 class="font-bold text-sm">Muscle Focus</h4>
+<p class="text-[10px] text-gray-500 dark:text-gray-400 font-mono leading-tight mt-1">Dominant: Posterior Chain</p>
+</div>
+</div>
+<!-- Recovery Status Card -->
+<div class="bg-white dark:bg-gray-900 p-5 rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm flex flex-col gap-3 col-span-2 group active:scale-95 transition-transform">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">rebase_edit</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-center">
+<h4 class="font-bold text-sm">Recovery Status</h4>
+<span class="bg-green-100 text-green-600 text-[10px] font-bold px-2 py-0.5 rounded-full">OPTIMAL</span>
+</div>
+<p class="text-[10px] text-gray-500 dark:text-gray-400 font-mono leading-tight mt-1">Ready for high-intensity stimulation</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Tab Bar -->
+<nav class="fixed bottom-0 left-0 right-0 z-50 px-6 pb-8 pt-4 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-xl border-t border-gray-100 dark:border-gray-800 flex justify-between items-center">
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined text-[28px] fill-[1]">grid_view</span>
+<span class="text-[10px] font-bold">HUB</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-gray-400 dark:text-gray-500">
+<span class="material-symbols-outlined text-[28px]">monitoring</span>
+<span class="text-[10px] font-bold">DATA</span>
+</button>
+<div class="relative -top-8">
+<button class="w-16 h-16 bg-primary rounded-full shadow-lg shadow-primary/40 flex items-center justify-center text-white border-4 border-background-light dark:border-background-dark">
+<span class="material-symbols-outlined text-[32px]">add</span>
+</button>
+</div>
+<button class="flex flex-col items-center gap-1 text-gray-400 dark:text-gray-500">
+<span class="material-symbols-outlined text-[28px]">history</span>
+<span class="text-[10px] font-bold">LOGS</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-gray-400 dark:text-gray-500">
+<span class="material-symbols-outlined text-[28px]">settings</span>
+<span class="text-[10px] font-bold">CORE</span>
+</button>
+</nav>
+</body></html>

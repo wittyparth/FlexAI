@@ -28,11 +28,12 @@ async function bootstrap() {
     // Create Express app
     const app = createApp();
 
-    // Start server
-    const server = app.listen(env.PORT, () => {
+    // Start server - bind to 0.0.0.0 to allow external connections
+    const server = app.listen(env.PORT, '0.0.0.0', () => {
       logger.info(`🚀 Server running on port ${env.PORT}`);
       logger.info(`📍 Environment: ${env.NODE_ENV}`);
-      logger.info(`🔗 Health check: http://localhost:${env.PORT}/health`);
+      logger.info(`🔗 Local: http://localhost:${env.PORT}/health`);
+      logger.info(`🔗 Network: http://192.168.1.6:${env.PORT}/health`);
     });
 
     // Graceful shutdown

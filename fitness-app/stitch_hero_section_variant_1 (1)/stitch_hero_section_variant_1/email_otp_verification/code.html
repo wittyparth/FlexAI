@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Email Verification</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Calistoga&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#134dec",
+                        "primary-light": "#4b7dff",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101522",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1a2133",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "serif": ["Calistoga", "serif"],
+                        "mono": ["JetBrains Mono", "monospace"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    boxShadow: {
+                        'glow': '0 0 15px rgba(19, 77, 236, 0.3)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom styles for specific gradient effects that are complex in utility classes */
+        .gradient-text-underline {
+            background-image: linear-gradient(to right, #134dec, rgba(19, 77, 236, 0));
+            background-size: 100% 2px;
+            background-position: 0 100%;
+            background-repeat: no-repeat;
+        }
+        
+        /* Hide number input arrows */
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen flex flex-col font-display antialiased selection:bg-primary/20">
+<!-- Top Bar -->
+<div class="flex items-center px-4 pt-6 pb-2 justify-between sticky top-0 z-10">
+<button class="text-gray-900 dark:text-white flex size-10 shrink-0 items-center justify-center rounded-full active:bg-gray-200 dark:active:bg-gray-800 transition-colors">
+<span class="material-symbols-outlined text-[24px]">arrow_back_ios_new</span>
+</button>
+</div>
+<!-- Main Content -->
+<div class="flex-1 flex flex-col px-6 pt-4 pb-8 max-w-md mx-auto w-full">
+<!-- Header Section -->
+<div class="mb-10 text-center">
+<h1 class="text-gray-900 dark:text-white text-3xl font-serif tracking-wide mb-4">
+                Check Your Inbox
+            </h1>
+<p class="text-gray-500 dark:text-gray-400 text-base font-normal leading-relaxed">
+                We sent a code to <br/>
+<span class="text-gray-900 dark:text-white font-medium gradient-text-underline pb-0.5">alex.fitness@example.com</span>
+</p>
+</div>
+<!-- OTP Input Section -->
+<div class="mb-12">
+<fieldset class="flex gap-2 justify-center sm:gap-3">
+<!-- Input 1 (Active/Filled Simulation) -->
+<div class="relative group">
+<div class="absolute -inset-[2px] rounded-xl bg-gradient-to-br from-primary to-primary-light opacity-100 blur-[1px]"></div>
+<input autofocus="" class="relative flex h-14 w-11 sm:h-16 sm:w-14 text-center bg-surface-light dark:bg-surface-dark text-gray-900 dark:text-white rounded-xl border-0 ring-0 focus:ring-0 text-2xl font-mono font-bold shadow-sm placeholder:text-gray-300 dark:placeholder:text-gray-600 outline-none caret-primary" type="number" value="4"/>
+</div>
+<!-- Input 2 -->
+<div class="relative group">
+<input class="relative flex h-14 w-11 sm:h-16 sm:w-14 text-center bg-surface-light dark:bg-surface-dark text-gray-900 dark:text-white rounded-xl border border-gray-200 dark:border-gray-700 focus:border-transparent focus:ring-2 focus:ring-primary focus:shadow-glow transition-all duration-200 text-2xl font-mono font-bold shadow-sm outline-none caret-primary" placeholder="•" type="number"/>
+</div>
+<!-- Input 3 -->
+<div class="relative group">
+<input class="relative flex h-14 w-11 sm:h-16 sm:w-14 text-center bg-surface-light dark:bg-surface-dark text-gray-900 dark:text-white rounded-xl border border-gray-200 dark:border-gray-700 focus:border-transparent focus:ring-2 focus:ring-primary focus:shadow-glow transition-all duration-200 text-2xl font-mono font-bold shadow-sm outline-none caret-primary" placeholder="•" type="number"/>
+</div>
+<!-- Input 4 -->
+<div class="relative group">
+<input class="relative flex h-14 w-11 sm:h-16 sm:w-14 text-center bg-surface-light dark:bg-surface-dark text-gray-900 dark:text-white rounded-xl border border-gray-200 dark:border-gray-700 focus:border-transparent focus:ring-2 focus:ring-primary focus:shadow-glow transition-all duration-200 text-2xl font-mono font-bold shadow-sm outline-none caret-primary" placeholder="•" type="number"/>
+</div>
+<!-- Input 5 -->
+<div class="relative group">
+<input class="relative flex h-14 w-11 sm:h-16 sm:w-14 text-center bg-surface-light dark:bg-surface-dark text-gray-900 dark:text-white rounded-xl border border-gray-200 dark:border-gray-700 focus:border-transparent focus:ring-2 focus:ring-primary focus:shadow-glow transition-all duration-200 text-2xl font-mono font-bold shadow-sm outline-none caret-primary" placeholder="•" type="number"/>
+</div>
+<!-- Input 6 -->
+<div class="relative group">
+<input class="relative flex h-14 w-11 sm:h-16 sm:w-14 text-center bg-surface-light dark:bg-surface-dark text-gray-900 dark:text-white rounded-xl border border-gray-200 dark:border-gray-700 focus:border-transparent focus:ring-2 focus:ring-primary focus:shadow-glow transition-all duration-200 text-2xl font-mono font-bold shadow-sm outline-none caret-primary" placeholder="•" type="number"/>
+</div>
+</fieldset>
+</div>
+<!-- Timer Section -->
+<div class="flex flex-col items-center justify-center gap-2 mb-12">
+<div class="flex items-center gap-2 bg-gray-100 dark:bg-surface-dark px-4 py-2 rounded-lg border border-transparent dark:border-gray-700">
+<div class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+</div>
+<span class="text-gray-900 dark:text-white text-lg font-mono tracking-wider font-medium">00:59</span>
+</div>
+<p class="text-xs text-gray-500 dark:text-gray-400 font-medium">Time remaining</p>
+</div>
+<!-- Action Section -->
+<div class="mt-auto flex flex-col items-center gap-6">
+<div class="flex flex-col items-center gap-4 w-full">
+<button class="w-full py-4 px-6 rounded-lg border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 font-medium hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-primary dark:hover:text-primary transition-all duration-200 flex items-center justify-center gap-2 group">
+<span class="material-symbols-outlined text-[20px] group-hover:scale-110 transition-transform">refresh</span>
+                    Resend Code
+                </button>
+</div>
+<!-- Keypad Placeholder Area (Visual balance for phone screen) -->
+<div class="h-6 w-full"></div>
+</div>
+</div>
+<!-- Background Decoration -->
+<div aria-hidden="true" class="fixed top-0 right-0 -z-10 opacity-40 dark:opacity-20 pointer-events-none overflow-hidden h-64 w-64">
+<div class="absolute -top-24 -right-24 h-64 w-64 rounded-full bg-primary blur-[80px]"></div>
+</div>
+<div aria-hidden="true" class="fixed bottom-0 left-0 -z-10 opacity-30 dark:opacity-10 pointer-events-none overflow-hidden h-48 w-48">
+<div class="absolute -bottom-12 -left-12 h-48 w-48 rounded-full bg-primary blur-[60px]"></div>
+</div>
+</body></html>

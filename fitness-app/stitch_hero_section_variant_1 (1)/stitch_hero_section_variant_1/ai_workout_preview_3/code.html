@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Premium Exercise Library</title>
+<link href="https://fonts.googleapis.com/css2?family=Calistoga&amp;family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0da6f2",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#101c22",
+                        "card-light": "#ffffff",
+                        "card-dark": "#1a2c35",
+                        "border-light": "#e2e8f0",
+                        "border-dark": "#2a3c46",
+                        "electric-blue": "#0da6f2",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "calistoga": ["Calistoga", "serif"],
+                        "mono": ["JetBrains Mono", "monospace"],
+                        "inter": ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+                    boxShadow: {
+                        'accent-lg': '0 10px 25px -5px rgba(13, 166, 242, 0.4), 0 8px 10px -6px rgba(13, 166, 242, 0.2)',
+                        'card': '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)',
+                        'glow': '0 0 15px rgba(13, 166, 242, 0.3)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            min-height: max(884px, 100dvh);
+        }.no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }.no-scrollbar {
+            -ms-overflow-style: none;scrollbar-width: none;}
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-[#0d171c] dark:text-gray-100 font-inter transition-colors duration-200 antialiased overflow-x-hidden">
+<div class="relative flex flex-col min-h-screen w-full max-w-md mx-auto pb-32">
+<div class="flex items-center px-6 py-4 justify-between sticky top-0 z-30 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md">
+<button class="flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined text-[#0d171c] dark:text-white" style="font-size: 24px;">arrow_back</span>
+</button>
+<div class="flex size-10 items-center justify-end">
+<div class="h-8 w-8 rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden border border-border-light dark:border-border-dark">
+<img alt="Profile" class="w-full h-full object-cover opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzqNpXL0bMLbtoGRo-XgvsXxLpeFHI4vnidf8xQSioj6tfppRzn163zJhmL1y3xnVwyQD4TnHMgxTiwqt5m4W_VrEjsmPXYoycd1Ys2NtnB45VaG0EiKgKSCHhSzhPG_fE3vjEa99yc2trDVbuiF0kjzPq8g2vtK--nbRxwnqnUEj-w9yIpYVH-NiUi6Sqh9hx_CU3ybsQgxwa1kFe8l-4HA15mbTa8O-s7NBVsoyyA8u9nA1UdKW5NAH9DmknnEhvhc-Okm8nngo"/>
+</div>
+</div>
+</div>
+<header class="px-6 pb-4">
+<h1 class="font-calistoga text-4xl text-[#0d171c] dark:text-white leading-tight mb-6">Exercise<br/>Library</h1>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none z-10">
+<span class="material-symbols-outlined text-gray-400 dark:text-gray-500">search</span>
+</div>
+<input class="block w-full h-14 pl-12 pr-4 bg-white dark:bg-card-dark border border-gray-200 dark:border-gray-700 rounded-2xl text-base font-medium text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0da6f2] focus:border-transparent transition-all shadow-sm dark:shadow-none" placeholder="Search movements, muscles..." type="text"/>
+<div class="absolute inset-y-0 right-0 flex items-center pr-3">
+<button class="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 text-gray-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined" style="font-size: 20px;">tune</span>
+</button>
+</div>
+</div>
+</header>
+<div class="px-6 mb-6">
+<div class="flex gap-2 overflow-x-auto no-scrollbar pb-2 mask-linear">
+<button class="flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#0da6f2] text-white text-sm font-semibold whitespace-nowrap shadow-md shadow-blue-500/20 active:scale-95 transition-transform">
+<span>Muscle</span>
+<span class="material-symbols-outlined text-[16px]">expand_more</span>
+</button>
+<button class="flex items-center gap-1.5 px-4 py-2 rounded-full bg-white dark:bg-card-dark border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 text-sm font-medium whitespace-nowrap hover:border-gray-300 dark:hover:border-gray-600 active:bg-gray-50 dark:active:bg-white/5 transition-colors">
+<span>Equipment</span>
+</button>
+<button class="flex items-center gap-1.5 px-4 py-2 rounded-full bg-white dark:bg-card-dark border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 text-sm font-medium whitespace-nowrap hover:border-gray-300 dark:hover:border-gray-600 active:bg-gray-50 dark:active:bg-white/5 transition-colors">
+<span>Difficulty</span>
+</button>
+<button class="flex items-center gap-1.5 px-4 py-2 rounded-full bg-white dark:bg-card-dark border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 text-sm font-medium whitespace-nowrap hover:border-gray-300 dark:hover:border-gray-600 active:bg-gray-50 dark:active:bg-white/5 transition-colors">
+<span>Type</span>
+</button>
+</div>
+</div>
+<div class="px-6 mb-4 flex justify-between items-end">
+<div class="font-mono text-xs font-bold text-gray-400 dark:text-gray-500 tracking-wider">
+            142 RESULTS FOUND
+        </div>
+<div class="text-xs font-medium text-primary cursor-pointer hover:underline">Clear all</div>
+</div>
+<div class="flex flex-col gap-3 px-6">
+<div class="group relative flex items-center p-3 bg-white dark:bg-card-dark rounded-2xl border border-gray-100 dark:border-border-dark shadow-sm hover:shadow-card hover:border-primary/20 transition-all cursor-pointer">
+<div class="w-16 h-16 shrink-0 rounded-xl bg-gray-100 dark:bg-gray-800 relative overflow-hidden">
+<img alt="Barbell Squat" class="w-full h-full object-cover mix-blend-multiply dark:mix-blend-normal opacity-90 group-hover:scale-110 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_T9bRg9MkrYOHKMhgqTmcedt9BKOtfiE1XDeowXLvK9rI8lROVJ9KpsYQU8InuPZ1pCV-RvGkts1UvjbdIvKisAzJEYXFw_-LgtuWxUHA5UnrpcSLeHTuq6z1OQwicVdMkm_MsTP51d95NgC7wSa_4Wv-PDK60sAXNXzpqjBEErbe-G5KHajBehjRPkAxEPFOxQu73LRlQAV0bzV9qDCktJ9FclyDi8-piXxxkbODy6qIOiBJcDaN-H-LlRlpzGX8sCATbLBYEs0"/>
+</div>
+<div class="ml-4 flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<h3 class="text-[15px] font-inter font-semibold text-[#0d171c] dark:text-white truncate">Barbell Back Squat</h3>
+</div>
+<div class="mt-1.5 flex flex-wrap gap-1.5">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-300">Quadriceps</span>
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400">Compound</span>
+</div>
+</div>
+<div class="pl-2">
+<button class="size-8 flex items-center justify-center rounded-full text-gray-300 hover:text-primary hover:bg-primary/5 dark:hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</button>
+</div>
+</div>
+<div class="group relative flex items-center p-3 bg-white dark:bg-card-dark rounded-2xl border border-gray-100 dark:border-border-dark shadow-sm hover:shadow-card hover:border-primary/20 transition-all cursor-pointer">
+<div class="w-16 h-16 shrink-0 rounded-xl bg-gray-100 dark:bg-gray-800 relative overflow-hidden">
+<img alt="Romanian Deadlift" class="w-full h-full object-cover mix-blend-multiply dark:mix-blend-normal opacity-90 group-hover:scale-110 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAtJ9WR-pUMmAsAKaE7CW9lAok5pMnvZb0oLGjp1ImRBBUfGoK7WtNyxuaqIFIJyy7pkqAL13mxTuSHnkyhmRi-yaUUWAsIiNR4XIlheyAS_Sf0mpz_4_Wjn11kgkBTIMvVmxTqX5lsVhIP-18CyJi5y8PvaDOwHbmk4ZI7a6MCfGe9t_ZWUxC7ZWU5gC-dYw_GYMz_HOfXJq-6-nLN6Sgh39i2K0zZdKdQS_G9c1OLCJ7oSl-TVXqWN_K_LU6qoJomQpZrPsY1X8"/>
+</div>
+<div class="ml-4 flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<h3 class="text-[15px] font-inter font-semibold text-[#0d171c] dark:text-white truncate">Romanian Deadlift</h3>
+</div>
+<div class="mt-1.5 flex flex-wrap gap-1.5">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-300">Hamstrings</span>
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400">Hinge</span>
+</div>
+</div>
+<div class="pl-2">
+<button class="size-8 flex items-center justify-center rounded-full text-gray-300 hover:text-primary hover:bg-primary/5 dark:hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</button>
+</div>
+</div>
+<div class="group relative flex items-center p-3 bg-white dark:bg-card-dark rounded-2xl border border-gray-100 dark:border-border-dark shadow-sm hover:shadow-card hover:border-primary/20 transition-all cursor-pointer">
+<div class="w-16 h-16 shrink-0 rounded-xl bg-gray-100 dark:bg-gray-800 relative overflow-hidden">
+<img alt="Leg Press" class="w-full h-full object-cover mix-blend-multiply dark:mix-blend-normal opacity-90 group-hover:scale-110 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDXlIxJY2l7L0nQQ3KgIZHxblLnIBbEwiD2gt_YXY9PdQG_N2PeAqnbcJphFuyqi31-s00lA0v4ECaH23FN3rACtH2D5vuzmv9gi_e3EpONV7CH2PPSKj5EiRQIfIFGToFAhE8yKyutI0CVlYNoP8rIbYt7BAba_34o8KnuhKVNg4BLUyGYpHWZsn1WuKXE8ggOUxhWp7McjTFM9Vr04vrHgHfS7ZnJIVSkqNn7jO0xd259-J2uTgJ537Sdkfzdi6DhDS9NPrMcCts"/>
+</div>
+<div class="ml-4 flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<h3 class="text-[15px] font-inter font-semibold text-[#0d171c] dark:text-white truncate">Leg Press</h3>
+</div>
+<div class="mt-1.5 flex flex-wrap gap-1.5">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-300">Legs</span>
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400">Machine</span>
+</div>
+</div>
+<div class="pl-2">
+<button class="size-8 flex items-center justify-center rounded-full text-gray-300 hover:text-primary hover:bg-primary/5 dark:hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</button>
+</div>
+</div>
+<div class="group relative flex items-center p-3 bg-white dark:bg-card-dark rounded-2xl border border-gray-100 dark:border-border-dark shadow-sm hover:shadow-card hover:border-primary/20 transition-all cursor-pointer">
+<div class="w-16 h-16 shrink-0 rounded-xl bg-gray-100 dark:bg-gray-800 relative overflow-hidden">
+<img alt="Walking Lunges" class="w-full h-full object-cover mix-blend-multiply dark:mix-blend-normal opacity-90 group-hover:scale-110 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzc6e4n5VZF5OLtxg6Bwf3-r1MPtGXoLU-eMMzqNlppOxdVhVvqec9ps2hbG2A79r-yZWsrMAR8IXJbDxyGQQDGCjB8tlikx1OXZK24XHky8vxLlTmTstHEsLjuuvKer39R3An3TLqyY6jtIU_0oJgUQpCFAyMft__-Ik5uY-MZE4M5LzMgm-zOtepMo3Cgia0tKFXAvTuHCyAVHP4ovBZ9wG4LO2M3YRy6Zwkqpa0nd2epEYTMH_yBSJw0u4lqf8rgi0WwrFkmEk"/>
+</div>
+<div class="ml-4 flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<h3 class="text-[15px] font-inter font-semibold text-[#0d171c] dark:text-white truncate">Walking Lunges</h3>
+</div>
+<div class="mt-1.5 flex flex-wrap gap-1.5">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-300">Glutes</span>
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400">Dumbbells</span>
+</div>
+</div>
+<div class="pl-2">
+<button class="size-8 flex items-center justify-center rounded-full text-gray-300 hover:text-primary hover:bg-primary/5 dark:hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</button>
+</div>
+</div>
+<div class="group relative flex items-center p-3 bg-white dark:bg-card-dark rounded-2xl border border-gray-100 dark:border-border-dark shadow-sm hover:shadow-card hover:border-primary/20 transition-all cursor-pointer">
+<div class="w-16 h-16 shrink-0 rounded-xl bg-gray-100 dark:bg-gray-800 relative flex items-center justify-center">
+<span class="material-symbols-outlined text-gray-300 dark:text-gray-600 text-3xl">fitness_center</span>
+</div>
+<div class="ml-4 flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<h3 class="text-[15px] font-inter font-semibold text-[#0d171c] dark:text-white truncate">Bulgarian Split Squat</h3>
+</div>
+<div class="mt-1.5 flex flex-wrap gap-1.5">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-300">Unilateral</span>
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide bg-rose-50 dark:bg-rose-900/20 text-rose-600 dark:text-rose-400">Hard</span>
+</div>
+</div>
+<div class="pl-2">
+<button class="size-8 flex items-center justify-center rounded-full text-gray-300 hover:text-primary hover:bg-primary/5 dark:hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<div class="fixed bottom-6 right-6 z-40">
+<button class="group flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-r from-[#0da6f2] to-[#0066cc] text-white shadow-accent-lg hover:scale-105 active:scale-95 transition-all duration-300">
+<span class="material-symbols-outlined text-[28px] group-hover:rotate-90 transition-transform duration-300">add</span>
+</button>
+</div>
+</div>
+
+</body></html>

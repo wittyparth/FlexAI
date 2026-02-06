@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Push Notification Controls</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Calistoga&amp;family=JetBrains+Mono:wght@400;500&amp;family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#0da6f2",
+              "background-light": "#ffffff",
+              "background-dark": "#101c22",
+              "neutral-100": "#f8fbfc",
+              "neutral-200": "#e2e8f0",
+              "text-main": "#0d171c",
+              "text-subtle": "#64748b",
+            },
+            fontFamily: {
+              "display": ["Space Grotesk", "sans-serif"],
+              "serif": ["Calistoga", "serif"],
+              "mono": ["JetBrains Mono", "monospace"],
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+            keyframes: {
+                pulseRing: {
+                    '0%': { transform: 'scale(0.8)', opacity: '0.5' },
+                    '100%': { transform: 'scale(1.2)', opacity: '0' },
+                }
+            },
+            animation: {
+                pulseRing: 'pulseRing 1.5s cubic-bezier(0.24, 0, 0.38, 1) infinite',
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        /* Custom Toggle Switch Styles for interaction feedback */
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #0da6f2;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #0da6f2;
+        }
+        
+        /* Simulating the pulsing animation requested on interaction */
+        .group:active .toggle-ring {
+            animation: pulseRing 0.5s ease-out;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-text-main font-display antialiased selection:bg-primary/20">
+<div class="relative flex h-full min-h-screen w-full max-w-md mx-auto flex-col overflow-x-hidden border-x border-neutral-100 shadow-sm bg-white dark:bg-background-dark">
+<!-- Navigation -->
+<div class="flex items-center px-4 pt-6 pb-2 justify-between sticky top-0 z-10 bg-white/90 backdrop-blur-md dark:bg-background-dark/90">
+<button class="text-text-main dark:text-white flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-neutral-100 dark:hover:bg-white/5 transition-colors group">
+<span class="material-symbols-outlined text-2xl group-hover:-translate-x-0.5 transition-transform" data-icon="arrow_back">arrow_back</span>
+</button>
+<button class="text-primary text-sm font-bold tracking-wide">SAVE</button>
+</div>
+<!-- Header Content -->
+<div class="px-6 pt-4 pb-6">
+<!-- Chips/Badge -->
+<div class="mb-4">
+<div class="inline-flex h-7 shrink-0 items-center justify-center rounded-full bg-neutral-100 border border-neutral-200 px-3 dark:bg-white/5 dark:border-white/10">
+<p class="text-text-subtle dark:text-neutral-400 text-[10px] font-mono tracking-wider font-medium uppercase">PREFERENCES</p>
+</div>
+</div>
+<!-- Headline -->
+<h1 class="text-text-main dark:text-white text-4xl font-serif leading-tight">Notifications</h1>
+<p class="text-text-subtle mt-2 text-sm max-w-xs dark:text-neutral-400">Manage how you receive alerts, reminders, and updates.</p>
+</div>
+<!-- Settings List -->
+<div class="flex flex-col px-6 pb-12">
+<!-- Item 1: Workout Reminders -->
+<div class="flex items-center justify-between py-5 border-b border-neutral-200 dark:border-white/10 group cursor-pointer">
+<div class="flex flex-col gap-1">
+<p class="text-text-main dark:text-white text-base font-bold leading-tight">Workout Reminders</p>
+<p class="text-text-subtle dark:text-neutral-500 text-xs font-medium">Daily nudges to keep you moving</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer group/toggle">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<!-- Ring animation container -->
+<div class="absolute -inset-2 bg-primary/20 rounded-full scale-0 opacity-0 transition-transform duration-300 peer-focus:scale-100 peer-focus:opacity-100 toggle-ring"></div>
+<!-- Track -->
+<div class="w-[52px] h-[32px] bg-neutral-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-primary/20 rounded-full peer dark:bg-white/10 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-[28px] after:w-[28px] after:transition-all after:shadow-sm peer-checked:bg-primary"></div>
+</label>
+</div>
+<!-- Item 2: PR Alerts -->
+<div class="flex items-center justify-between py-5 border-b border-neutral-200 dark:border-white/10 group cursor-pointer">
+<div class="flex flex-col gap-1">
+<p class="text-text-main dark:text-white text-base font-bold leading-tight">PR Alerts &amp; Achievements</p>
+<p class="text-text-subtle dark:text-neutral-500 text-xs font-medium">Badges, records, and milestones</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer group/toggle">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="absolute -inset-2 bg-primary/20 rounded-full scale-0 opacity-0 transition-transform duration-300 peer-focus:scale-100 peer-focus:opacity-100 toggle-ring"></div>
+<div class="w-[52px] h-[32px] bg-neutral-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-primary/20 rounded-full peer dark:bg-white/10 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-[28px] after:w-[28px] after:transition-all after:shadow-sm peer-checked:bg-primary"></div>
+</label>
+</div>
+<!-- Item 3: Friend Activity -->
+<div class="flex items-center justify-between py-5 border-b border-neutral-200 dark:border-white/10 group cursor-pointer">
+<div class="flex flex-col gap-1">
+<p class="text-text-main dark:text-white text-base font-bold leading-tight">Friend Activity</p>
+<p class="text-text-subtle dark:text-neutral-500 text-xs font-medium">When friends finish a workout</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer group/toggle">
+<input class="sr-only peer" type="checkbox"/>
+<div class="absolute -inset-2 bg-primary/20 rounded-full scale-0 opacity-0 transition-transform duration-300 peer-focus:scale-100 peer-focus:opacity-100 toggle-ring"></div>
+<div class="w-[52px] h-[32px] bg-neutral-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-primary/20 rounded-full peer dark:bg-white/10 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-[28px] after:w-[28px] after:transition-all after:shadow-sm peer-checked:bg-primary"></div>
+</label>
+</div>
+<!-- Item 4: Weekly Progress Report -->
+<div class="flex items-center justify-between py-5 border-b border-neutral-200 dark:border-white/10 group cursor-pointer">
+<div class="flex flex-col gap-1">
+<p class="text-text-main dark:text-white text-base font-bold leading-tight">Weekly Progress Report</p>
+<p class="text-text-subtle dark:text-neutral-500 text-xs font-medium">Stats delivered every Sunday</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer group/toggle">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="absolute -inset-2 bg-primary/20 rounded-full scale-0 opacity-0 transition-transform duration-300 peer-focus:scale-100 peer-focus:opacity-100 toggle-ring"></div>
+<div class="w-[52px] h-[32px] bg-neutral-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-primary/20 rounded-full peer dark:bg-white/10 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-[28px] after:w-[28px] after:transition-all after:shadow-sm peer-checked:bg-primary"></div>
+</label>
+</div>
+<!-- Item 5: Promotional Offers -->
+<div class="flex items-center justify-between py-5 border-b border-neutral-200 dark:border-white/10 group cursor-pointer">
+<div class="flex flex-col gap-1">
+<p class="text-text-main dark:text-white text-base font-bold leading-tight">Promotional Offers</p>
+<p class="text-text-subtle dark:text-neutral-500 text-xs font-medium">Discounts on gear and plans</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer group/toggle">
+<input class="sr-only peer" type="checkbox"/>
+<div class="absolute -inset-2 bg-primary/20 rounded-full scale-0 opacity-0 transition-transform duration-300 peer-focus:scale-100 peer-focus:opacity-100 toggle-ring"></div>
+<div class="w-[52px] h-[32px] bg-neutral-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-primary/20 rounded-full peer dark:bg-white/10 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-[28px] after:w-[28px] after:transition-all after:shadow-sm peer-checked:bg-primary"></div>
+</label>
+</div>
+<!-- Item 6: System Updates -->
+<div class="flex items-center justify-between py-5 border-b border-neutral-200 dark:border-white/10 group cursor-pointer">
+<div class="flex flex-col gap-1">
+<p class="text-text-main dark:text-white text-base font-bold leading-tight">System Updates</p>
+<p class="text-text-subtle dark:text-neutral-500 text-xs font-medium">App maintenance and changelogs</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer group/toggle">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="absolute -inset-2 bg-primary/20 rounded-full scale-0 opacity-0 transition-transform duration-300 peer-focus:scale-100 peer-focus:opacity-100 toggle-ring"></div>
+<div class="w-[52px] h-[32px] bg-neutral-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-primary/20 rounded-full peer dark:bg-white/10 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-[28px] after:w-[28px] after:transition-all after:shadow-sm peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+<!-- Bottom safe area spacing -->
+<div class="h-8 w-full bg-white dark:bg-background-dark"></div>
+</div>
+</body></html>

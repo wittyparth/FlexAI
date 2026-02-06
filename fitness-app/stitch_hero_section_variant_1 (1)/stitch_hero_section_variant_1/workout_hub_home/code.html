@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Workout Hub Home</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Calistoga&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#387ffa",
+                        "primary-dark": "#2b65cb",
+                        "background-light": "#FFFFFF",
+                        "background-dark": "#0f1623",
+                        "surface-light": "#F9FAFB",
+                        "text-main": "#111827",
+                        "text-sub": "#6B7280",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "serif": ["Calistoga", "serif"],
+                        "mono": ["JetBrains Mono", "monospace"],
+                    },
+                    borderRadius: {"DEFAULT": "0.375rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-text-main font-display antialiased selection:bg-primary/20">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden max-w-md mx-auto bg-white border-x border-gray-100 dark:bg-background-dark dark:border-gray-800">
+<!-- Status Bar Area (simulated height) -->
+<div class="h-12 w-full"></div>
+<!-- Search Bar Section -->
+<div class="px-5 py-2">
+<label class="flex flex-col w-full">
+<div class="relative flex w-full items-center rounded-xl h-12 bg-white border border-gray-200 shadow-sm focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-all duration-200">
+<div class="absolute left-4 text-gray-400 flex items-center justify-center pointer-events-none">
+<span class="material-symbols-outlined text-[22px]">search</span>
+</div>
+<input class="w-full h-full bg-transparent border-none focus:ring-0 pl-12 pr-4 text-base text-gray-900 placeholder:text-gray-400 font-display" placeholder="Search exercises or routines" type="text"/>
+</div>
+</label>
+</div>
+<!-- Primary CTA -->
+<div class="px-5 pt-4 pb-2">
+<button class="group relative flex w-full items-center justify-center overflow-hidden rounded-xl h-14 bg-gradient-to-r from-primary to-[#60a5fa] text-white shadow-lg shadow-primary/30 active:scale-[0.98] transition-all duration-200">
+<span class="absolute inset-0 bg-white/0 group-hover:bg-white/10 transition-colors"></span>
+<span class="material-symbols-outlined mr-2 text-[24px]">add_circle</span>
+<span class="text-lg font-bold tracking-wide">Start Empty Workout</span>
+</button>
+</div>
+<!-- Quick Actions -->
+<div class="px-5 py-3">
+<div class="flex gap-3 w-full">
+<button class="flex flex-1 items-center justify-center gap-2 h-11 rounded-lg bg-white border border-gray-200 text-gray-700 shadow-sm hover:bg-gray-50 active:bg-gray-100 transition-colors duration-200">
+<span class="material-symbols-outlined text-[20px] text-primary">auto_awesome</span>
+<span class="text-sm font-semibold">AI Generate</span>
+</button>
+<button class="flex flex-1 items-center justify-center gap-2 h-11 rounded-lg bg-white border border-gray-200 text-gray-700 shadow-sm hover:bg-gray-50 active:bg-gray-100 transition-colors duration-200">
+<span class="material-symbols-outlined text-[20px] text-primary">grid_view</span>
+<span class="text-sm font-semibold">Browse Templates</span>
+</button>
+</div>
+</div>
+<!-- My Routines Section -->
+<div class="pt-6 pb-2">
+<div class="px-5 flex justify-between items-end mb-4">
+<h2 class="text-text-main text-2xl font-serif">My Routines</h2>
+<button class="text-primary text-sm font-semibold hover:text-primary-dark transition-colors">See All</button>
+</div>
+<div class="flex overflow-x-auto no-scrollbar px-5 gap-4 pb-4">
+<!-- Routine Card 1 -->
+<div class="flex-none w-[280px] flex flex-col rounded-2xl border border-gray-100 bg-surface-light shadow-sm hover:shadow-md transition-shadow duration-200 p-4 relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-gray-400 hover:text-primary cursor-pointer">more_horiz</span>
+</div>
+<div class="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center mb-3 text-primary">
+<span class="material-symbols-outlined">fitness_center</span>
+</div>
+<h3 class="text-lg font-bold text-gray-900 mb-1">Upper Body Power</h3>
+<div class="flex items-center gap-2 mb-4">
+<span class="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded font-medium">Strength</span>
+<span class="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded font-medium">60m</span>
+</div>
+<div class="mt-auto pt-3 border-t border-gray-100 flex justify-between items-center">
+<span class="text-xs text-gray-500 font-medium">6 Exercises</span>
+<span class="text-xs text-gray-400 font-display">Last: 2 days ago</span>
+</div>
+</div>
+<!-- Routine Card 2 -->
+<div class="flex-none w-[280px] flex flex-col rounded-2xl border border-gray-100 bg-surface-light shadow-sm hover:shadow-md transition-shadow duration-200 p-4 relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-gray-400 hover:text-primary cursor-pointer">more_horiz</span>
+</div>
+<div class="h-10 w-10 rounded-full bg-orange-50 flex items-center justify-center mb-3 text-orange-500">
+<span class="material-symbols-outlined">directions_run</span>
+</div>
+<h3 class="text-lg font-bold text-gray-900 mb-1">Leg Day Crusher</h3>
+<div class="flex items-center gap-2 mb-4">
+<span class="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded font-medium">Hypertrophy</span>
+<span class="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded font-medium">75m</span>
+</div>
+<div class="mt-auto pt-3 border-t border-gray-100 flex justify-between items-center">
+<span class="text-xs text-gray-500 font-medium">8 Exercises</span>
+<span class="text-xs text-gray-400 font-display">Last: 5 days ago</span>
+</div>
+</div>
+<!-- Routine Card 3 -->
+<div class="flex-none w-[280px] flex flex-col rounded-2xl border border-gray-100 bg-surface-light shadow-sm hover:shadow-md transition-shadow duration-200 p-4 relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-gray-400 hover:text-primary cursor-pointer">more_horiz</span>
+</div>
+<div class="h-10 w-10 rounded-full bg-purple-50 flex items-center justify-center mb-3 text-purple-500">
+<span class="material-symbols-outlined">accessibility_new</span>
+</div>
+<h3 class="text-lg font-bold text-gray-900 mb-1">Full Body Mobility</h3>
+<div class="flex items-center gap-2 mb-4">
+<span class="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded font-medium">Mobility</span>
+<span class="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded font-medium">30m</span>
+</div>
+<div class="mt-auto pt-3 border-t border-gray-100 flex justify-between items-center">
+<span class="text-xs text-gray-500 font-medium">12 Exercises</span>
+<span class="text-xs text-gray-400 font-display">Last: 1 week ago</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Recent Workouts Section -->
+<div class="px-5 py-4 pb-24">
+<h2 class="text-text-main text-2xl font-serif mb-4">Recent Workouts</h2>
+<div class="flex flex-col gap-3">
+<!-- Recent Item 1 -->
+<div class="group flex items-center p-3.5 bg-white border border-gray-100 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-md transition-all cursor-pointer">
+<div class="h-12 w-12 rounded-lg bg-gray-50 flex-shrink-0 flex items-center justify-center text-gray-400 mr-4 border border-gray-100">
+<span class="material-symbols-outlined">calendar_today</span>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="font-bold text-gray-900 truncate">Monday Morning Lift</h4>
+<p class="text-xs text-gray-500 mt-0.5">Today, 7:00 AM</p>
+</div>
+<div class="text-right flex flex-col items-end pl-2">
+<span class="font-mono text-sm font-medium text-gray-700">1h 15m</span>
+<span class="font-mono text-xs text-gray-400 mt-0.5">8,400 kg</span>
+</div>
+<div class="ml-3 text-gray-300 group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</div>
+</div>
+<!-- Recent Item 2 -->
+<div class="group flex items-center p-3.5 bg-white border border-gray-100 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-md transition-all cursor-pointer">
+<div class="h-12 w-12 rounded-lg bg-gray-50 flex-shrink-0 flex items-center justify-center text-gray-400 mr-4 border border-gray-100">
+<span class="material-symbols-outlined">calendar_today</span>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="font-bold text-gray-900 truncate">Quick HIIT</h4>
+<p class="text-xs text-gray-500 mt-0.5">Yesterday, 6:30 PM</p>
+</div>
+<div class="text-right flex flex-col items-end pl-2">
+<span class="font-mono text-sm font-medium text-gray-700">25m 10s</span>
+<span class="font-mono text-xs text-gray-400 mt-0.5">--</span>
+</div>
+<div class="ml-3 text-gray-300 group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</div>
+</div>
+<!-- Recent Item 3 -->
+<div class="group flex items-center p-3.5 bg-white border border-gray-100 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-md transition-all cursor-pointer">
+<div class="h-12 w-12 rounded-lg bg-gray-50 flex-shrink-0 flex items-center justify-center text-gray-400 mr-4 border border-gray-100">
+<span class="material-symbols-outlined">calendar_today</span>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="font-bold text-gray-900 truncate">Leg Day</h4>
+<p class="text-xs text-gray-500 mt-0.5">Oct 24, 5:45 PM</p>
+</div>
+<div class="text-right flex flex-col items-end pl-2">
+<span class="font-mono text-sm font-medium text-gray-700">1h 05m</span>
+<span class="font-mono text-xs text-gray-400 mt-0.5">12,150 kg</span>
+</div>
+<div class="ml-3 text-gray-300 group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</div>
+</div>
+<!-- Recent Item 4 -->
+<div class="group flex items-center p-3.5 bg-white border border-gray-100 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-md transition-all cursor-pointer">
+<div class="h-12 w-12 rounded-lg bg-gray-50 flex-shrink-0 flex items-center justify-center text-gray-400 mr-4 border border-gray-100">
+<span class="material-symbols-outlined">calendar_today</span>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="font-bold text-gray-900 truncate">Recovery Run</h4>
+<p class="text-xs text-gray-500 mt-0.5">Oct 22, 8:00 AM</p>
+</div>
+<div class="text-right flex flex-col items-end pl-2">
+<span class="font-mono text-sm font-medium text-gray-700">45m 00s</span>
+<span class="font-mono text-xs text-gray-400 mt-0.5">--</span>
+</div>
+<div class="ml-3 text-gray-300 group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</div>
+</div>
+<!-- Recent Item 5 -->
+<div class="group flex items-center p-3.5 bg-white border border-gray-100 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-md transition-all cursor-pointer">
+<div class="h-12 w-12 rounded-lg bg-gray-50 flex-shrink-0 flex items-center justify-center text-gray-400 mr-4 border border-gray-100">
+<span class="material-symbols-outlined">calendar_today</span>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="font-bold text-gray-900 truncate">Chest &amp; Triceps</h4>
+<p class="text-xs text-gray-500 mt-0.5">Oct 20, 6:15 PM</p>
+</div>
+<div class="text-right flex flex-col items-end pl-2">
+<span class="font-mono text-sm font-medium text-gray-700">55m 20s</span>
+<span class="font-mono text-xs text-gray-400 mt-0.5">9,200 kg</span>
+</div>
+<div class="ml-3 text-gray-300 group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Simulated Tab Bar -->
+<div class="fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-t border-gray-200 h-20 pb-4 max-w-md mx-auto">
+<div class="flex justify-around items-center h-full">
+<button class="flex flex-col items-center justify-center w-16 gap-1 text-primary">
+<span class="material-symbols-outlined filled">home</span>
+<span class="text-[10px] font-semibold">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center w-16 gap-1 text-gray-400 hover:text-gray-600">
+<span class="material-symbols-outlined">history</span>
+<span class="text-[10px] font-medium">History</span>
+</button>
+<button class="flex flex-col items-center justify-center w-16 gap-1 text-gray-400 hover:text-gray-600">
+<span class="material-symbols-outlined">show_chart</span>
+<span class="text-[10px] font-medium">Measure</span>
+</button>
+<button class="flex flex-col items-center justify-center w-16 gap-1 text-gray-400 hover:text-gray-600">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px] font-medium">Settings</span>
+</button>
+</div>
+</div>
+</div>
+</body></html>

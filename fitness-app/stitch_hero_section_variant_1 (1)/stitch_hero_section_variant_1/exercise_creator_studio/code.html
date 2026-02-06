@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Exercise Creator Studio</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Calistoga&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#06edf9",
+                        "background-light": "#f5f8f8",
+                        "background-dark": "#0f2223",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "brand": ["Calistoga", "serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .custom-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .custom-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .signature-focus:focus {
+            border-color: #06edf9 !important;
+            box-shadow: 0 0 0 3px rgba(6, 237, 249, 0.2) !important;
+            outline: none !important;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#0d1b1c] dark:text-white transition-colors duration-300">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-[#cee8e9] dark:border-[#1e3a3b] px-4 py-4 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#0d1b1c] dark:text-white cursor-pointer">arrow_back_ios</span>
+</div>
+<h1 class="font-brand text-2xl text-[#0d1b1c] dark:text-white tracking-tight">New Exercise</h1>
+<div class="w-8"></div> <!-- Spacer for symmetry -->
+</header>
+<main class="max-w-md mx-auto pb-32">
+<!-- Exercise Name Section -->
+<div class="px-4 pt-6">
+<label class="flex flex-col gap-2">
+<span class="text-sm font-semibold uppercase tracking-wider text-[#479a9e] dark:text-[#a0c8ca]">Exercise Name</span>
+<input class="signature-focus h-14 w-full rounded-xl border border-[#cee8e9] dark:border-[#1e3a3b] bg-white dark:bg-[#152e2f] px-4 text-lg font-medium placeholder:text-[#479a9e]/50 dark:placeholder:text-[#479a9e]/30 transition-all" placeholder="e.g. Diamond Push-ups" type="text"/>
+</label>
+</div>
+<!-- Description Section -->
+<div class="px-4 pt-6">
+<label class="flex flex-col gap-2">
+<span class="text-sm font-semibold uppercase tracking-wider text-[#479a9e] dark:text-[#a0c8ca]">Description</span>
+<textarea class="signature-focus min-h-[120px] w-full rounded-xl border border-[#cee8e9] dark:border-[#1e3a3b] bg-white dark:bg-[#152e2f] p-4 text-base font-normal placeholder:text-[#479a9e]/50 dark:placeholder:text-[#479a9e]/30 transition-all resize-none" placeholder="Describe the technique and common cues..."></textarea>
+</label>
+</div>
+<!-- Muscle Groups Section -->
+<div class="pt-8">
+<div class="px-4 flex items-center justify-between mb-3">
+<h3 class="text-lg font-bold">Muscle Groups</h3>
+<span class="text-xs text-primary font-bold uppercase">Select Multiple</span>
+</div>
+<div class="flex gap-2 overflow-x-auto px-4 pb-2 custom-scrollbar">
+<div class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-primary px-6 shadow-lg shadow-primary/20">
+<p class="text-[#0d1b1c] text-sm font-bold">Chest</p>
+</div>
+<div class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-[#e6f3f4] dark:bg-[#1e3a3b] px-6">
+<p class="text-[#0d1b1c] dark:text-white text-sm font-medium">Triceps</p>
+</div>
+<div class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-[#e6f3f4] dark:bg-[#1e3a3b] px-6">
+<p class="text-[#0d1b1c] dark:text-white text-sm font-medium">Shoulders</p>
+</div>
+<div class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-primary px-6 shadow-lg shadow-primary/20">
+<p class="text-[#0d1b1c] text-sm font-bold">Core</p>
+</div>
+<div class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-[#e6f3f4] dark:bg-[#1e3a3b] px-6">
+<p class="text-[#0d1b1c] dark:text-white text-sm font-medium">Back</p>
+</div>
+</div>
+</div>
+<!-- Equipment Section -->
+<div class="pt-8">
+<div class="px-4 mb-3">
+<h3 class="text-lg font-bold">Equipment Needed</h3>
+</div>
+<div class="flex flex-wrap gap-2 px-4">
+<div class="flex h-10 items-center justify-center gap-x-2 rounded-xl bg-primary px-4 shadow-md shadow-primary/10">
+<span class="material-symbols-outlined text-sm">check_circle</span>
+<p class="text-[#0d1b1c] text-sm font-bold">Bodyweight</p>
+</div>
+<div class="flex h-10 items-center justify-center gap-x-2 rounded-xl border border-[#cee8e9] dark:border-[#1e3a3b] px-4 bg-white dark:bg-[#152e2f]">
+<p class="text-[#0d1b1c] dark:text-white text-sm font-medium">Dumbbells</p>
+</div>
+<div class="flex h-10 items-center justify-center gap-x-2 rounded-xl border border-[#cee8e9] dark:border-[#1e3a3b] px-4 bg-white dark:bg-[#152e2f]">
+<p class="text-[#0d1b1c] dark:text-white text-sm font-medium">Resistance Band</p>
+</div>
+<div class="flex h-10 items-center justify-center gap-x-2 rounded-xl border border-[#cee8e9] dark:border-[#1e3a3b] px-4 bg-white dark:bg-[#152e2f]">
+<p class="text-[#0d1b1c] dark:text-white text-sm font-medium">Pull-up Bar</p>
+</div>
+</div>
+</div>
+<!-- Segmented Control: Type -->
+<div class="px-4 pt-8">
+<h3 class="text-lg font-bold mb-3">Exercise Type</h3>
+<div class="grid grid-cols-2 p-1.5 bg-[#e6f3f4] dark:bg-[#1e3a3b] rounded-xl">
+<button class="py-2.5 rounded-lg bg-white dark:bg-background-dark shadow-sm text-sm font-bold">Strength</button>
+<button class="py-2.5 rounded-lg text-sm font-medium text-[#479a9e] dark:text-[#a0c8ca]">Mobility</button>
+</div>
+</div>
+<!-- Segmented Control: Difficulty -->
+<div class="px-4 pt-8 pb-8">
+<h3 class="text-lg font-bold mb-3">Difficulty Level</h3>
+<div class="grid grid-cols-3 p-1.5 bg-[#e6f3f4] dark:bg-[#1e3a3b] rounded-xl">
+<button class="py-2.5 rounded-lg text-sm font-medium text-[#479a9e]">Beg.</button>
+<button class="py-2.5 rounded-lg bg-primary text-[#0d1b1c] shadow-sm text-sm font-bold">Int.</button>
+<button class="py-2.5 rounded-lg text-sm font-medium text-[#479a9e]">Adv.</button>
+</div>
+</div>
+</main>
+<!-- Fixed Bottom Action -->
+<footer class="fixed bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-background-light dark:from-background-dark via-background-light dark:via-background-dark to-transparent">
+<div class="max-w-md mx-auto">
+<button class="w-full h-16 rounded-2xl bg-gradient-to-r from-primary to-[#00c6d1] flex items-center justify-center gap-2 shadow-[0_10px_30px_-10px_rgba(6,237,249,0.5)] active:scale-95 transition-transform">
+<span class="text-[#0d1b1c] font-display text-lg font-bold tracking-tight">Save Exercise</span>
+<span class="material-symbols-outlined text-[#0d1b1c]">save_as</span>
+</button>
+</div>
+</footer>
+</body></html>

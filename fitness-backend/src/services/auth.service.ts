@@ -12,7 +12,8 @@ import {
   NotFoundError,
   UnauthorizedError,
 } from '../utils/errors';
-import { logger } from '../utils/logger';
+// import { logger } from '../utils/logger';
+import { emailService } from './email.service';
 import type {
   RegisterInput,
   LoginInput,
@@ -69,8 +70,8 @@ export const authService = {
       },
     });
 
-    // TODO: Send verification email with OTP
-    logger.info(`📧 Verification OTP for ${user.email}: ${otp}`);
+    // Send verification email with OTP
+    await emailService.sendVerificationEmail(user.email, otp, user.firstName ?? undefined);
 
     return {
       user,
@@ -148,8 +149,8 @@ export const authService = {
       },
     });
 
-    // TODO: Send verification email with OTP
-    logger.info(`📧 New verification OTP for ${user.email}: ${otp}`);
+    // Send verification email with OTP
+    await emailService.sendVerificationEmail(user.email, otp, user.firstName ?? undefined);
 
     return { message: 'If the email exists, a verification code has been sent.' };
   },
@@ -199,6 +200,9 @@ export const authService = {
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,
+        avatarUrl: user.avatarUrl,
+        emailVerified: user.emailVerified,
+        onboardingCompleted: user.onboardingCompleted,
         role: user.role,
       },
       ...tokens,
@@ -336,8 +340,8 @@ export const authService = {
       },
     });
 
-    // TODO: Send password reset email with OTP
-    logger.info(`📧 Password reset OTP for ${user.email}: ${otp}`);
+    // Send password reset email with OTP
+    await emailService.sendPasswordResetEmail(user.email, otp, user.firstName ?? undefined);
 
     return { message: 'If the email exists, a password reset code has been sent.' };
   },

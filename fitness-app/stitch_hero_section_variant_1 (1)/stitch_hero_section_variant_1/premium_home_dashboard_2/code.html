@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Premium Home Dashboard 2</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Calistoga&amp;family=JetBrains+Mono:wght@400;700&amp;family=Space+Grotesk:wght@300;400;500;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom Scrollbar Hide for horizontal scroll */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0da6f2",
+                        "background-light": "#f8fafc", /* Slightly cooler off-white */
+                        "background-dark": "#101c22",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "serif": ["Calistoga", "serif"],
+                        "mono": ["JetBrains Mono", "monospace"],
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "3xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen relative font-display text-[#0d171c] dark:text-white pb-24 overflow-x-hidden selection:bg-primary/30">
+<!-- Ambient Background Glows -->
+<div class="fixed top-20 left-1/2 -translate-x-1/2 w-[300px] h-[300px] bg-primary/10 rounded-full blur-[100px] pointer-events-none z-0"></div>
+<div class="fixed bottom-40 right-[-100px] w-[200px] h-[200px] bg-purple-500/10 rounded-full blur-[80px] pointer-events-none z-0"></div>
+<!-- Header -->
+<header class="relative z-10 flex items-center justify-between px-6 pt-6 pb-2">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden ring-2 ring-white dark:ring-slate-800 shadow-sm">
+<img alt="User profile portrait" class="w-full h-full object-cover" data-alt="User profile portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0uR8t2Ejt6Zbll1aQ0o4aIWNx97IwNf3BwRyMQiIJBkbCEGXWJ2h420_I-GuNJmldQTnLtIc71QuBIjv6p70Y96M1DEcaLHy4vhKkAY8vtQSuncXddDK1gpp7Q-vj5_XE_gFHPxW6U5m2xU2zIOWKAdOlyvp1etkJI1yX8RTKn9VWiFWeqady5VhF1lsgFf6sSfgiqxQRrWew8K6FksHlVyZifPJKQglGtlHGJO_vNS1oWyLdbe01xK2PSROOYMbG2nokWXV7wvE"/>
+</div>
+<div class="flex flex-col">
+<span class="text-xs font-medium text-slate-500 dark:text-slate-400">Welcome back,</span>
+<span class="text-sm font-bold text-slate-900 dark:text-white">Sarah</span>
+</div>
+</div>
+<button class="relative flex items-center justify-center size-10 rounded-full bg-white dark:bg-slate-800 shadow-sm text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+<span class="absolute top-2 right-2.5 size-2 bg-red-500 rounded-full border border-white dark:border-slate-800"></span>
+</button>
+</header>
+<!-- Streak Section -->
+<section class="relative z-10 flex flex-col items-center justify-center pt-6 pb-8">
+<div class="flex items-center gap-3 animate-fade-in-up">
+<span class="text-5xl font-serif text-slate-900 dark:text-white">23 Days</span>
+<div class="relative size-12 flex items-center justify-center">
+<!-- Fire Icon Gradient -->
+<span class="material-symbols-outlined text-[48px] bg-gradient-to-t from-orange-500 via-red-500 to-primary bg-clip-text text-transparent" style="font-variation-settings: 'FILL' 1, 'wght' 700;">
+                    local_fire_department
+                </span>
+<!-- Subtle glow behind fire -->
+<div class="absolute inset-0 bg-orange-500/30 blur-xl rounded-full -z-10"></div>
+</div>
+</div>
+<p class="text-sm text-slate-500 dark:text-slate-400 mt-1 font-medium">Daily Streak</p>
+</section>
+<!-- AI Coach Section (Glassmorphic) -->
+<section class="relative z-10 px-6 mb-8">
+<h3 class="font-serif text-xl font-bold mb-4 pl-1 text-slate-900 dark:text-white">Your AI Coach</h3>
+<div class="relative overflow-hidden rounded-3xl group">
+<!-- Glassmorphic Background -->
+<div class="absolute inset-0 bg-white/60 dark:bg-slate-800/60 backdrop-blur-xl z-0 border border-white/40 dark:border-slate-600/40 shadow-[0_8px_32px_rgba(0,0,0,0.05)]"></div>
+<div class="relative z-10 p-6 flex flex-col gap-5">
+<div class="flex justify-between items-start">
+<div class="max-w-[70%]">
+<h4 class="text-2xl font-bold mb-1 leading-tight text-slate-900 dark:text-white">Ready to train?</h4>
+<p class="text-sm text-slate-600 dark:text-slate-300">Get personalized advice instantly.</p>
+</div>
+<div class="size-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">smart_toy</span>
+</div>
+</div>
+<div class="relative">
+<input class="w-full h-12 pl-4 pr-12 rounded-2xl bg-white/80 dark:bg-slate-900/50 border-none focus:ring-2 focus:ring-primary/50 text-sm placeholder:text-slate-400 dark:text-white shadow-inner" placeholder="Ask anything..." type="text"/>
+<button class="absolute right-1 top-1 h-10 w-10 bg-primary text-white rounded-xl flex items-center justify-center shadow-lg shadow-primary/30 hover:bg-primary/90 transition-all">
+<span class="material-symbols-outlined text-[20px]">arrow_upward</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Recent PRs (Horizontal Scroll) -->
+<section class="relative z-10 mb-8 overflow-hidden">
+<div class="flex items-center justify-between px-6 mb-4">
+<h3 class="font-serif text-xl font-bold text-slate-900 dark:text-white">Recent PRs</h3>
+<button class="text-primary text-sm font-bold flex items-center gap-0.5">
+                History
+                <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</div>
+<div class="flex overflow-x-auto no-scrollbar gap-4 px-6 pb-4 snap-x snap-mandatory">
+<!-- Card 1: Bench Press -->
+<div class="snap-start shrink-0 relative w-40 h-48 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden group hover:border-primary/50 transition-colors">
+<!-- Large background number -->
+<span class="absolute -right-6 -bottom-6 text-[100px] leading-none font-mono font-bold text-slate-100 dark:text-slate-700/50 select-none pointer-events-none group-hover:text-primary/10 transition-colors">
+                    105
+                </span>
+<div class="relative z-10 h-full p-4 flex flex-col justify-between">
+<div class="size-8 rounded-lg bg-blue-50 dark:bg-blue-900/30 text-blue-500 flex items-center justify-center mb-2">
+<span class="material-symbols-outlined text-[20px]">fitness_center</span>
+</div>
+<div>
+<p class="text-xs text-slate-500 dark:text-slate-400 font-medium mb-1">Bench Press</p>
+<p class="font-mono text-2xl font-bold text-slate-900 dark:text-white">105<span class="text-sm ml-1 text-slate-400 font-normal">kg</span></p>
+</div>
+</div>
+</div>
+<!-- Card 2: Squat -->
+<div class="snap-start shrink-0 relative w-40 h-48 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden group hover:border-primary/50 transition-colors">
+<!-- Large background number -->
+<span class="absolute -right-4 -bottom-6 text-[100px] leading-none font-mono font-bold text-slate-100 dark:text-slate-700/50 select-none pointer-events-none group-hover:text-primary/10 transition-colors">
+                    140
+                </span>
+<div class="relative z-10 h-full p-4 flex flex-col justify-between">
+<div class="size-8 rounded-lg bg-purple-50 dark:bg-purple-900/30 text-purple-500 flex items-center justify-center mb-2">
+<span class="material-symbols-outlined text-[20px]">accessibility_new</span>
+</div>
+<div>
+<p class="text-xs text-slate-500 dark:text-slate-400 font-medium mb-1">Back Squat</p>
+<p class="font-mono text-2xl font-bold text-slate-900 dark:text-white">140<span class="text-sm ml-1 text-slate-400 font-normal">kg</span></p>
+</div>
+</div>
+</div>
+<!-- Card 3: Deadlift -->
+<div class="snap-start shrink-0 relative w-40 h-48 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden group hover:border-primary/50 transition-colors">
+<!-- Large background number -->
+<span class="absolute -right-4 -bottom-6 text-[100px] leading-none font-mono font-bold text-slate-100 dark:text-slate-700/50 select-none pointer-events-none group-hover:text-primary/10 transition-colors">
+                    180
+                </span>
+<div class="relative z-10 h-full p-4 flex flex-col justify-between">
+<div class="size-8 rounded-lg bg-orange-50 dark:bg-orange-900/30 text-orange-500 flex items-center justify-center mb-2">
+<span class="material-symbols-outlined text-[20px]">monitor_weight</span>
+</div>
+<div>
+<p class="text-xs text-slate-500 dark:text-slate-400 font-medium mb-1">Deadlift</p>
+<p class="font-mono text-2xl font-bold text-slate-900 dark:text-white">180<span class="text-sm ml-1 text-slate-400 font-normal">kg</span></p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Today's Workout (Elevated Asymmetric) -->
+<section class="relative z-10 px-6 mb-8">
+<div class="flex items-center justify-between mb-4 pl-1">
+<h3 class="font-serif text-xl font-bold text-slate-900 dark:text-white">Today's Session</h3>
+</div>
+<div class="relative w-full h-[220px] rounded-3xl bg-white dark:bg-slate-800 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] dark:shadow-none overflow-hidden group cursor-pointer">
+<!-- Asymmetric background shape -->
+<div class="absolute top-0 right-0 w-[60%] h-full bg-slate-100 dark:bg-slate-700/50 transform skew-x-[-12deg] translate-x-12 z-0"></div>
+<!-- Image masked/positioned -->
+<div class="absolute bottom-0 right-[-20px] h-[110%] w-[60%] z-10">
+<!-- Using a specific fitness image -->
+<img alt="Athlete lifting weights with focus" class="w-full h-full object-cover object-left [mask-image:linear-gradient(to_left,black_70%,transparent_100%)]" data-alt="Athlete lifting weights with focus" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEWsNx3uIQU_WlIlmmVWhbeeStNJLI0mDfOjHf0PNv6nPGehCNyBqYiNjlJLFgBiqi5n3eKhPJP-E6i01roUvXYRviYb17PAoelqRJQ6zRZDuvhaBBHlbd0w5xblVL32u8HIhHVYOjpkcn5Cvz2FtWeuFLJGln36c7ayJ80OlrIPlXrPy5tSInihmJELloIzymckGI1Z-Sbd1N8blgZp4vWkHM8AqyOfmLagZNrslLSj3V-7ZSS8RFEud3YzJiO7lGbYRuclGPXgA"/>
+</div>
+<!-- Content Container -->
+<div class="absolute inset-0 z-20 p-6 flex flex-col justify-between items-start pointer-events-none">
+<!-- Status Badge -->
+<div class="flex items-center gap-2 bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm">
+<span class="relative flex h-2.5 w-2.5">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary"></span>
+</span>
+<span class="text-[10px] font-bold tracking-wider text-slate-900 dark:text-white">LIVE</span>
+</div>
+<!-- Text Content -->
+<div class="max-w-[60%]">
+<p class="font-mono text-xs text-slate-500 dark:text-slate-400 mb-1">STRENGTH • 45 MIN</p>
+<h2 class="font-serif text-2xl font-bold text-slate-900 dark:text-white leading-tight mb-4">Upper Body<br/>Power</h2>
+<button class="pointer-events-auto h-10 px-6 bg-primary text-white text-sm font-bold rounded-xl shadow-lg shadow-primary/30 hover:shadow-primary/50 hover:-translate-y-0.5 transition-all flex items-center gap-2">
+                        Start Now
+                        <span class="material-symbols-outlined text-[18px]">play_arrow</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Bottom Navigation -->
+<nav class="fixed bottom-0 left-0 w-full h-20 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 flex items-center justify-around z-50 pb-2">
+<a class="flex flex-col items-center gap-1 p-2 text-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="text-[10px] font-bold">Home</span>
+</a>
+<a class="flex flex-col items-center gap-1 p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors" href="#">
+<span class="material-symbols-outlined">bar_chart</span>
+<span class="text-[10px] font-medium">Activity</span>
+</a>
+<div class="relative -top-6">
+<button class="size-14 rounded-full bg-primary text-white shadow-xl shadow-primary/30 flex items-center justify-center hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[28px]">add</span>
+</button>
+</div>
+<a class="flex flex-col items-center gap-1 p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors" href="#">
+<span class="material-symbols-outlined">school</span>
+<span class="text-[10px] font-medium">Coach</span>
+</a>
+<a class="flex flex-col items-center gap-1 p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-medium">Profile</span>
+</a>
+</nav>
+</body></html>

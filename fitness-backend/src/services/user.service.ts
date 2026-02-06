@@ -38,6 +38,7 @@ export const userService = {
         // Meta
         role: true,
         emailVerified: true,
+        onboardingCompleted: true,
         createdAt: true,
         updatedAt: true,
       },
@@ -151,5 +152,74 @@ export const userService = {
     });
 
     return { message: 'Account deleted successfully' };
+  },
+
+  /**
+   * Complete onboarding and update profile with onboarding data
+   */
+  async completeOnboarding(userId: number, onboardingData: {
+    age?: number;
+    gender?: string;
+    height?: number;
+    weight?: number;
+    experienceLevel?: string;
+    primaryGoal?: string;
+    secondaryGoals?: string[];
+    workoutInterests?: string[];
+    trainingDaysPerWeek?: number;
+    workoutDuration?: number;
+    equipmentAvailable?: string[];
+    units?: string;
+    pushEnabled?: boolean;
+  }) {
+    // Build update data, filtering out undefined values
+    const updateData: Record<string, unknown> = {
+      onboardingCompleted: true,
+    };
+
+    if (onboardingData.age !== undefined) updateData.age = onboardingData.age;
+    if (onboardingData.gender !== undefined) updateData.gender = onboardingData.gender;
+    if (onboardingData.height !== undefined) updateData.height = onboardingData.height;
+    if (onboardingData.weight !== undefined) updateData.weight = onboardingData.weight;
+    if (onboardingData.experienceLevel !== undefined) updateData.experienceLevel = onboardingData.experienceLevel;
+    if (onboardingData.primaryGoal !== undefined) updateData.primaryGoal = onboardingData.primaryGoal;
+    if (onboardingData.secondaryGoals !== undefined) updateData.secondaryGoals = onboardingData.secondaryGoals;
+    if (onboardingData.trainingDaysPerWeek !== undefined) updateData.trainingDaysPerWeek = onboardingData.trainingDaysPerWeek;
+    if (onboardingData.workoutDuration !== undefined) updateData.workoutDuration = onboardingData.workoutDuration;
+    if (onboardingData.equipmentAvailable !== undefined) updateData.equipmentAvailable = onboardingData.equipmentAvailable;
+
+    const user = await prisma.user.update({
+      where: { id: userId },
+      data: updateData,
+      select: {
+        id: true,
+        email: true,
+        firstName: true,
+        lastName: true,
+        onboardingCompleted: true,
+        emailVerified: true,
+        age: true,
+        gender: true,
+        height: true,
+        weight: true,
+        experienceLevel: true,
+        primaryGoal: true,
+        secondaryGoals: true,
+        trainingDaysPerWeek: true,
+        workoutDuration: true,
+        equipmentAvailable: true,
+      },
+    });
+
+    // Update settings for units if provided
+    if (onboardingData.units) {
+      await prisma.userSettings.upsert({
+        where: { userId },
+        update: { units: onboardingData.units },
+        create: { userId, units: onboardingData.units },
+      });
+    }
+
+    return user;
   },
 };

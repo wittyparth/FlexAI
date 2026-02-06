@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Routine Template Preview</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Calistoga&amp;family=Inter:wght@400;500;700&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<!-- Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0d6cf2",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#101722",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "headline": ["Calistoga", "serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .fill-primary {
+            font-variation-settings: 'FILL' 1;
+            color: #0d6cf2;
+        }
+        .bg-electric-gradient {
+            background: linear-gradient(135deg, #0d6cf2 0%, #3b82f6 100%);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#0d131c] dark:text-slate-100">
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
+<!-- TopAppBar -->
+<div class="flex items-center bg-white/80 dark:bg-background-dark/80 backdrop-blur-md sticky top-0 z-50 p-4 pb-2 justify-between border-b border-slate-200 dark:border-slate-800">
+<div class="text-[#0d131c] dark:text-white flex size-12 shrink-0 items-center cursor-pointer">
+<span class="material-symbols-outlined">arrow_back_ios_new</span>
+</div>
+<div class="flex w-12 items-center justify-end">
+<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 bg-transparent text-[#0d131c] dark:text-white gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0">
+<span class="material-symbols-outlined">share</span>
+</button>
+</div>
+</div>
+<div class="flex flex-col px-4 pt-6 pb-2">
+<!-- HeadlineText (Calistoga) -->
+<h1 class="font-headline text-[#0d131c] dark:text-white tracking-tight text-[36px] font-normal leading-tight">Classic PPL</h1>
+<!-- BodyText (Inter) -->
+<div class="flex items-center gap-2 pt-1 pb-3">
+<p class="text-primary font-bold text-base">by FitPro</p>
+<span class="material-symbols-outlined text-primary text-[18px]">verified</span>
+</div>
+</div>
+<!-- ReactionBar -->
+<div class="flex flex-wrap gap-4 px-4 py-2">
+<div class="flex items-center justify-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 rounded-full border border-slate-200 dark:border-slate-700 shadow-sm">
+<span class="material-symbols-outlined fill-primary animate-pulse">favorite</span>
+<p class="text-[#496c9c] dark:text-slate-300 text-[14px] font-bold leading-normal tracking-[0.015em]">1.2k</p>
+</div>
+</div>
+<!-- Stats Row -->
+<div class="flex flex-wrap gap-3 p-4">
+<div class="flex min-w-[100px] flex-1 flex-col gap-1 rounded-xl p-4 bg-white dark:bg-slate-800 border border-[#ced9e8] dark:border-slate-700">
+<p class="text-slate-500 dark:text-slate-400 text-xs font-medium uppercase tracking-wider">Exercises</p>
+<p class="text-[#0d131c] dark:text-white tracking-tight text-xl font-bold">8</p>
+</div>
+<div class="flex min-w-[100px] flex-1 flex-col gap-1 rounded-xl p-4 bg-white dark:bg-slate-800 border border-[#ced9e8] dark:border-slate-700">
+<p class="text-slate-500 dark:text-slate-400 text-xs font-medium uppercase tracking-wider">Duration</p>
+<p class="text-[#0d131c] dark:text-white tracking-tight text-xl font-bold">75 min</p>
+</div>
+<div class="flex min-w-[100px] flex-1 flex-col gap-1 rounded-xl p-4 bg-white dark:bg-slate-800 border border-[#ced9e8] dark:border-slate-700">
+<p class="text-slate-500 dark:text-slate-400 text-xs font-medium uppercase tracking-wider">Difficulty</p>
+<p class="text-[#0d131c] dark:text-white tracking-tight text-xl font-bold">Advanced</p>
+</div>
+</div>
+<!-- Exercise List (Read-only) -->
+<div class="px-4 pt-4 pb-32 space-y-3">
+<h2 class="text-lg font-bold text-slate-900 dark:text-white mb-4">Exercise Breakdown</h2>
+<!-- Card 1 -->
+<div class="flex items-center gap-4 p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+<div class="font-mono text-primary text-xl font-bold w-8 shrink-0">01</div>
+<div class="flex flex-col flex-1">
+<p class="font-bold text-[#0d131c] dark:text-white">Barbell Bench Press</p>
+<p class="font-mono text-sm text-slate-500 dark:text-slate-400">4 Sets × 8 Reps</p>
+</div>
+<span class="material-symbols-outlined text-slate-400">info</span>
+</div>
+<!-- Card 2 -->
+<div class="flex items-center gap-4 p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+<div class="font-mono text-primary text-xl font-bold w-8 shrink-0">02</div>
+<div class="flex flex-col flex-1">
+<p class="font-bold text-[#0d131c] dark:text-white">Overhead Press</p>
+<p class="font-mono text-sm text-slate-500 dark:text-slate-400">3 Sets × 10 Reps</p>
+</div>
+<span class="material-symbols-outlined text-slate-400">info</span>
+</div>
+<!-- Card 3 -->
+<div class="flex items-center gap-4 p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+<div class="font-mono text-primary text-xl font-bold w-8 shrink-0">03</div>
+<div class="flex flex-col flex-1">
+<p class="font-bold text-[#0d131c] dark:text-white">Weighted Dips</p>
+<p class="font-mono text-sm text-slate-500 dark:text-slate-400">3 Sets to Failure</p>
+</div>
+<span class="material-symbols-outlined text-slate-400">info</span>
+</div>
+<!-- Card 4 -->
+<div class="flex items-center gap-4 p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+<div class="font-mono text-primary text-xl font-bold w-8 shrink-0">04</div>
+<div class="flex flex-col flex-1">
+<p class="font-bold text-[#0d131c] dark:text-white">Incline DB Fly</p>
+<p class="font-mono text-sm text-slate-500 dark:text-slate-400">3 Sets × 12 Reps</p>
+</div>
+<span class="material-symbols-outlined text-slate-400">info</span>
+</div>
+</div>
+<!-- Action Footer (Sticky) -->
+<div class="fixed bottom-0 left-0 right-0 p-6 bg-white/95 dark:bg-background-dark/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 flex flex-col gap-3">
+<button class="w-full h-14 bg-electric-gradient text-white rounded-xl font-bold text-lg shadow-lg shadow-primary/20 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">content_copy</span>
+                Copy to My Routines
+            </button>
+<button class="w-full h-14 border-2 border-primary text-primary bg-transparent rounded-xl font-bold text-lg flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">play_arrow</span>
+                Start Workout
+            </button>
+<!-- iPhone Bottom Indicator Safe Area Spacer -->
+<div class="h-4"></div>
+</div>
+</div>
+</body></html>

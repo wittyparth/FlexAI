@@ -1,5 +1,6 @@
 import { prisma } from '../config/database';
 import { NotFoundError, ForbiddenError, BadRequestError } from '../utils/errors';
+import { gamificationService } from './gamification.service';
 import type {
   GetWorkoutsQuery,
   StartWorkoutInput,
@@ -385,9 +386,21 @@ export const workoutService = {
     });
 
     // Update user's streak
-    await this.updateUserStreak(userId);
+    // Using centralized gamification service
+    await gamificationService.updateStreak(userId, now);
+    await gamificationService.processAction(userId, 'WORKOUT_COMPLETE');
 
-    return completed;
+    // Check for Personal Records
+    let newPRs: any[] = [];
+    try {
+        const { statsService } = await import('./stats/stats.service'); 
+        newPRs = await statsService.checkAndSavePRs(userId, workoutId);
+    } catch (error) {
+        console.error("Failed to check PRs:", error);
+        // Don't fail the whole request just because stats failed
+    }
+
+    return { ...completed, newPRs };
   },
 
   /**
@@ -447,45 +460,5 @@ export const workoutService = {
 
     return workout;
   },
-
-  async updateUserStreak(userId: number) {
-    const user = await prisma.user.findUnique({
-      where: { id: userId },
-    });
-
-    if (!user) return;
-
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    const yesterday = new Date(today);
-    yesterday.setDate(yesterday.getDate() - 1);
-
-    // Check if last workout was yesterday or today
-    const lastWorkoutDate = user.lastWorkoutDate;
-    let newStreak = 1;
-
-    if (lastWorkoutDate) {
-      const lastDate = new Date(lastWorkoutDate);
-      lastDate.setHours(0, 0, 0, 0);
-
-      if (lastDate.getTime() === today.getTime()) {
-        // Already worked out today, don't update
-        return;
-      } else if (lastDate.getTime() === yesterday.getTime()) {
-        // Streak continues
-        newStreak = user.currentStreak + 1;
-      }
-      // Otherwise streak resets to 1
-    }
-
-    await prisma.user.update({
-      where: { id: userId },
-      data: {
-        currentStreak: newStreak,
-        longestStreak: Math.max(newStreak, user.longestStreak),
-        lastWorkoutDate: new Date(),
-      },
-    });
-  },
 };
+

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Workout Duration Preference</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Calistoga&amp;family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#134dec",
+            "primary-light": "#eef2ff",
+            "background-light": "#f8f9fc",
+            "background-dark": "#101522",
+            "text-main": "#0d111b",
+            "text-secondary": "#4c619a",
+            "border-color": "#cfd6e7",
+          },
+          fontFamily: {
+            "display": ["Inter", "sans-serif"],
+            "calistoga": ["Calistoga", "serif"],
+            "mono": ["JetBrains Mono", "monospace"],
+          },
+          borderRadius: {"DEFAULT": "1rem", "lg": "1.5rem", "xl": "2rem", "2xl": "2.5rem", "full": "9999px"},
+          boxShadow: {
+            "accent-lg": "0 10px 25px -5px rgba(19, 77, 236, 0.4), 0 8px 10px -6px rgba(19, 77, 236, 0.2)",
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display antialiased text-text-main dark:text-white overflow-x-hidden selection:bg-primary selection:text-white">
+<!-- Main Container -->
+<div class="relative flex min-h-screen w-full flex-col max-w-md mx-auto bg-background-light dark:bg-background-dark pb-6">
+<!-- Top Bar -->
+<div class="flex items-center px-6 pt-12 pb-2 justify-between">
+<button class="flex size-10 items-center justify-center rounded-full bg-white dark:bg-gray-800 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors text-text-main dark:text-white">
+<span class="material-symbols-outlined text-[20px]">arrow_back</span>
+</button>
+<div class="flex items-center justify-end">
+<button class="text-text-secondary dark:text-gray-400 text-sm font-semibold hover:text-primary transition-colors">Skip</button>
+</div>
+</div>
+<!-- Progress -->
+<div class="px-6 py-4 flex flex-col gap-2">
+<div class="flex justify-between items-end">
+<span class="text-sm font-semibold text-primary">Step 6</span>
+<span class="text-xs font-medium text-text-secondary dark:text-gray-400">of 10</span>
+</div>
+<div class="h-1.5 w-full bg-gray-200 dark:bg-gray-800 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[60%] rounded-full"></div>
+</div>
+</div>
+<!-- Content -->
+<div class="flex-1 flex flex-col px-6">
+<!-- Headline -->
+<h1 class="font-calistoga text-[32px] leading-tight text-text-main dark:text-white pt-2 pb-8">
+        How long are<br/>your workouts?
+      </h1>
+<!-- Options -->
+<div class="flex flex-col gap-4">
+<!-- Option 1: Selected State Example -->
+<label class="group relative flex cursor-pointer items-center gap-5 rounded-2xl p-5 bg-white dark:bg-gray-800 shadow-sm transition-all duration-300">
+<input checked="" class="peer sr-only" name="duration" type="radio"/>
+<!-- Animated Border Gradient for Selected State -->
+<div class="absolute inset-0 rounded-2xl border-2 border-transparent peer-checked:border-primary peer-checked:bg-primary/[0.03] transition-all"></div>
+<!-- Radio Indicator (Hidden but could be used for accessibility) -->
+<div class="absolute right-5 top-1/2 -translate-y-1/2 opacity-0 peer-checked:opacity-100 transition-opacity text-primary">
+<span class="material-symbols-outlined text-[24px]">check_circle</span>
+</div>
+<!-- Content -->
+<div class="relative z-10 flex w-full items-center gap-5">
+<div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-gray-50 dark:bg-gray-700 peer-checked:bg-primary peer-checked:text-white transition-colors">
+<span class="font-mono text-xl font-bold tracking-tight">30</span>
+</div>
+<div class="flex flex-col">
+<span class="text-base font-bold text-text-main dark:text-white">30 mins</span>
+<span class="text-sm text-text-secondary dark:text-gray-400">Quick HIIT or express flows</span>
+</div>
+</div>
+</label>
+<!-- Option 2 -->
+<label class="group relative flex cursor-pointer items-center gap-5 rounded-2xl p-5 bg-white dark:bg-gray-800 shadow-sm border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition-all duration-300">
+<input class="peer sr-only" name="duration" type="radio"/>
+<div class="absolute inset-0 rounded-2xl border-2 border-transparent peer-checked:border-primary peer-checked:bg-primary/[0.03] transition-all"></div>
+<div class="absolute right-5 top-1/2 -translate-y-1/2 opacity-0 peer-checked:opacity-100 transition-opacity text-primary">
+<span class="material-symbols-outlined text-[24px]">check_circle</span>
+</div>
+<div class="relative z-10 flex w-full items-center gap-5">
+<div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-gray-50 dark:bg-gray-700 peer-checked:bg-primary peer-checked:text-white text-text-main dark:text-white transition-colors">
+<span class="font-mono text-xl font-bold tracking-tight">45</span>
+</div>
+<div class="flex flex-col">
+<span class="text-base font-bold text-text-main dark:text-white">45 mins</span>
+<span class="text-sm text-text-secondary dark:text-gray-400">Balanced strength &amp; cardio</span>
+</div>
+</div>
+</label>
+<!-- Option 3 -->
+<label class="group relative flex cursor-pointer items-center gap-5 rounded-2xl p-5 bg-white dark:bg-gray-800 shadow-sm border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition-all duration-300">
+<input class="peer sr-only" name="duration" type="radio"/>
+<div class="absolute inset-0 rounded-2xl border-2 border-transparent peer-checked:border-primary peer-checked:bg-primary/[0.03] transition-all"></div>
+<div class="absolute right-5 top-1/2 -translate-y-1/2 opacity-0 peer-checked:opacity-100 transition-opacity text-primary">
+<span class="material-symbols-outlined text-[24px]">check_circle</span>
+</div>
+<div class="relative z-10 flex w-full items-center gap-5">
+<div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-gray-50 dark:bg-gray-700 peer-checked:bg-primary peer-checked:text-white text-text-main dark:text-white transition-colors">
+<span class="font-mono text-xl font-bold tracking-tight">60</span>
+</div>
+<div class="flex flex-col">
+<span class="text-base font-bold text-text-main dark:text-white">60 mins</span>
+<span class="text-sm text-text-secondary dark:text-gray-400">Full functionality &amp; endurance</span>
+</div>
+</div>
+</label>
+<!-- Option 4 -->
+<label class="group relative flex cursor-pointer items-center gap-5 rounded-2xl p-5 bg-white dark:bg-gray-800 shadow-sm border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition-all duration-300">
+<input class="peer sr-only" name="duration" type="radio"/>
+<div class="absolute inset-0 rounded-2xl border-2 border-transparent peer-checked:border-primary peer-checked:bg-primary/[0.03] transition-all"></div>
+<div class="absolute right-5 top-1/2 -translate-y-1/2 opacity-0 peer-checked:opacity-100 transition-opacity text-primary">
+<span class="material-symbols-outlined text-[24px]">check_circle</span>
+</div>
+<div class="relative z-10 flex w-full items-center gap-5">
+<div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-gray-50 dark:bg-gray-700 peer-checked:bg-primary peer-checked:text-white text-text-main dark:text-white transition-colors">
+<span class="font-mono text-xl font-bold tracking-tight">75+</span>
+</div>
+<div class="flex flex-col">
+<span class="text-base font-bold text-text-main dark:text-white">75+ mins</span>
+<span class="text-sm text-text-secondary dark:text-gray-400">Pro-level marathon sessions</span>
+</div>
+</div>
+</label>
+</div>
+</div>
+<!-- Bottom Action -->
+<div class="sticky bottom-0 z-20 mt-auto p-6 bg-gradient-to-t from-background-light via-background-light to-transparent dark:from-background-dark dark:via-background-dark pt-12">
+<button class="relative w-full overflow-hidden rounded-full bg-primary h-14 text-white font-bold text-lg shadow-accent-lg hover:shadow-lg hover:translate-y-[-1px] active:translate-y-[1px] transition-all duration-200">
+<span class="relative z-10">Continue</span>
+<div class="absolute inset-0 bg-white/10 opacity-0 hover:opacity-100 transition-opacity"></div>
+</button>
+</div>
+</div>
+</body></html>

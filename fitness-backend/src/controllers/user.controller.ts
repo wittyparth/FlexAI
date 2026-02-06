@@ -104,4 +104,21 @@ export const userController = {
       next(error);
     }
   },
+
+  /**
+   * POST /api/v1/users/me/complete-onboarding
+   * Complete user onboarding and update profile with onboarding data
+   */
+  async completeOnboarding(req: Request, res: Response, next: NextFunction) {
+    try {
+      const onboardingData = req.body;
+      const user = await userService.completeOnboarding(req.userId!, onboardingData);
+      res.json({
+        success: true,
+        data: user,
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
 };

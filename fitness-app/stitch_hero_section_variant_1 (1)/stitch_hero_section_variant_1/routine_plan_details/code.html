@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Routine Plan Details</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Calistoga&amp;family=JetBrains+Mono:wght@400;700&amp;family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0d0df2",
+                        "background-light": "#f5f5f8",
+                        "background-dark": "#101022",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"],
+                        "headline": ["Calistoga", "serif"],
+                        "mono": ["JetBrains Mono", "monospace"],
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-filled {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 font-display selection:bg-primary/30">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden pb-32">
+<!-- Top App Bar -->
+<div class="sticky top-0 z-20 flex items-center bg-background-light/90 backdrop-blur-md p-4 pb-2 justify-between dark:bg-background-dark/90 dark:text-white border-b border-gray-200/50 dark:border-gray-800">
+<div class="flex size-10 shrink-0 items-center justify-center rounded-full active:bg-gray-200 dark:active:bg-gray-800 transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-[#0d0d1c] dark:text-white">arrow_back</span>
+</div>
+<h2 class="text-[#0d0d1c] dark:text-white text-base font-semibold leading-tight tracking-wide uppercase opacity-60">Routine Details</h2>
+<div class="size-10"></div> <!-- Spacer for centering -->
+</div>
+<!-- Headline Section -->
+<div class="px-5 pt-6 pb-2">
+<h1 class="font-headline text-4xl sm:text-5xl text-[#0d0d1c] dark:text-white leading-tight">Push Day</h1>
+</div>
+<!-- Info Row (Stats) -->
+<div class="flex flex-wrap items-center gap-6 px-5 py-4">
+<div class="flex items-center gap-2 rounded-full bg-white dark:bg-gray-800 px-3 py-1.5 shadow-sm border border-gray-100 dark:border-gray-700">
+<span class="material-symbols-outlined text-primary text-[20px] icon-filled">fitness_center</span>
+<p class="text-[#0d0d1c] dark:text-gray-200 text-sm font-medium">6 Exercises</p>
+</div>
+<div class="flex items-center gap-2 rounded-full bg-white dark:bg-gray-800 px-3 py-1.5 shadow-sm border border-gray-100 dark:border-gray-700">
+<span class="material-symbols-outlined text-primary text-[20px] icon-filled">timer</span>
+<p class="text-[#0d0d1c] dark:text-gray-200 text-sm font-medium">45 Minutes</p>
+</div>
+</div>
+<div class="h-4"></div>
+<!-- Exercise List -->
+<div class="flex flex-col gap-5 px-4 @container">
+<!-- Card 01 -->
+<div class="group relative flex flex-col overflow-hidden rounded-2xl bg-white p-4 shadow-sm ring-1 ring-gray-200 transition-all hover:shadow-md dark:bg-[#1a1a2e] dark:ring-gray-800">
+<div class="flex flex-row items-start gap-4">
+<!-- Image -->
+<div class="relative h-24 w-24 shrink-0 overflow-hidden rounded-xl bg-gray-100 dark:bg-gray-800">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Man performing bench press with barbell in gym" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAnDnwrwB53t1ZNWn-7RPjzpKDOehGNYsnxsT11plO9LIrslxnMR1EmuugfTgrMDDWs63WCaiiYYOZsXNUTKb5b6Fmeg4aum-T4cDJ7FZKwLLgPxBQQlFIuofbbyVMJcQwbNXvkWgJB3i0h-Q-ktzEiVyMpHjIaZGgbr0oIw1iM56OVXt9nYqdafkI3XFBuisfqvj-7TSwzWfiNrjlXwz27qhj0cil5KvDDfw8X9B4LIrJJH5htkKRIpc8FZgMHOvjdHVJNw8373no");'></div>
+</div>
+<!-- Content -->
+<div class="flex min-w-0 flex-1 flex-col justify-center">
+<div class="flex items-baseline gap-2">
+<span class="font-mono text-xl font-bold text-primary">01</span>
+<h3 class="line-clamp-1 text-lg font-bold text-[#0d0d1c] dark:text-white">Barbell Bench Press</h3>
+</div>
+<div class="mt-1 flex flex-col gap-1 text-sm font-medium text-slate-500 dark:text-slate-400">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">repeat</span>
+<span>4 Sets × 8-12 Reps</span>
+</div>
+<div class="flex items-center gap-1.5 text-primary">
+<span class="material-symbols-outlined text-[16px]">hourglass_top</span>
+<span>90s Rest</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Notes Section -->
+<div class="mt-4 flex items-start gap-3 rounded-lg bg-slate-50 p-3 text-sm text-slate-600 dark:bg-slate-800/50 dark:text-slate-300">
+<span class="material-symbols-outlined mt-0.5 text-[18px] text-slate-400">info</span>
+<p class="leading-relaxed">Keep elbows at 45 degrees relative to torso to protect shoulders. Arch back slightly.</p>
+</div>
+</div>
+<!-- Card 02 -->
+<div class="group relative flex flex-col overflow-hidden rounded-2xl bg-white p-4 shadow-sm ring-1 ring-gray-200 transition-all hover:shadow-md dark:bg-[#1a1a2e] dark:ring-gray-800">
+<div class="flex flex-row items-start gap-4">
+<div class="relative h-24 w-24 shrink-0 overflow-hidden rounded-xl bg-gray-100 dark:bg-gray-800">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Person lifting dumbbells overhead press gym" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDS0UHmYVGwAi9phV0wkZ3vPqYgK6hATq7Ujh4o6phJrv0TG7t5DYW4m19mIe4uyBw80VTLnj-B6UJN-KLmClK1LTxjDBh6EUFzJaKtnj2MOgjQkbroqKqjH7fD88pzxVPSvTPsMWMK-yHC8lp-DrNVXImPf385EL84zeX83rUE9EZKsyeE7UwSyj7Gj3pDu3O6PVlijd4Dh9iTrpxPBj6E1t9OuE4hllEWK5sVkrvc1L9ugfYGhl1NNJucx5S_WsfSr38nXJwh46o");'></div>
+</div>
+<div class="flex min-w-0 flex-1 flex-col justify-center">
+<div class="flex items-baseline gap-2">
+<span class="font-mono text-xl font-bold text-primary">02</span>
+<h3 class="line-clamp-1 text-lg font-bold text-[#0d0d1c] dark:text-white">Overhead Press</h3>
+</div>
+<div class="mt-1 flex flex-col gap-1 text-sm font-medium text-slate-500 dark:text-slate-400">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">repeat</span>
+<span>3 Sets × 10 Reps</span>
+</div>
+<div class="flex items-center gap-1.5 text-primary">
+<span class="material-symbols-outlined text-[16px]">hourglass_top</span>
+<span>60s Rest</span>
+</div>
+</div>
+</div>
+</div>
+<!-- No notes for this one, to vary UI -->
+</div>
+<!-- Card 03 -->
+<div class="group relative flex flex-col overflow-hidden rounded-2xl bg-white p-4 shadow-sm ring-1 ring-gray-200 transition-all hover:shadow-md dark:bg-[#1a1a2e] dark:ring-gray-800">
+<div class="flex flex-row items-start gap-4">
+<div class="relative h-24 w-24 shrink-0 overflow-hidden rounded-xl bg-gray-100 dark:bg-gray-800">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Close up of tricep dip exercise parallel bars" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCwNaipgf3aTqVMarFYgR3WiCy8Fh4oCtDzLWTa3NY8uXWgv6i7RUi2IXAAYEookvEWSLmCFJ8T0PSZocZVZ4-aEQqMJ7xZQzLPxcTM8Kw9Wt_V5OX3dmFswcDP8SDSk0cT74P8OmekRbc86mnaFmhHmkYZuDxFV89tTpst6TbDd-_KUEsv9KepDKS4E9EK9lGdG-K7ovAGwL7nVo3eaPwDxm8qcndQsS6ODqAdwNmAF79RzMUaAC3WsC3Qy5oY1KEENQJ9C9ETwdQ");'></div>
+</div>
+<div class="flex min-w-0 flex-1 flex-col justify-center">
+<div class="flex items-baseline gap-2">
+<span class="font-mono text-xl font-bold text-primary">03</span>
+<h3 class="line-clamp-1 text-lg font-bold text-[#0d0d1c] dark:text-white">Tricep Dips</h3>
+</div>
+<div class="mt-1 flex flex-col gap-1 text-sm font-medium text-slate-500 dark:text-slate-400">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">repeat</span>
+<span>3 Sets × 12-15 Reps</span>
+</div>
+<div class="flex items-center gap-1.5 text-primary">
+<span class="material-symbols-outlined text-[16px]">hourglass_top</span>
+<span>60s Rest</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Notes Section -->
+<div class="mt-4 flex items-start gap-3 rounded-lg bg-slate-50 p-3 text-sm text-slate-600 dark:bg-slate-800/50 dark:text-slate-300">
+<span class="material-symbols-outlined mt-0.5 text-[18px] text-slate-400">info</span>
+<p class="leading-relaxed">Use assisted machine if necessary. Maintain vertical posture.</p>
+</div>
+</div>
+<!-- Card 04 -->
+<div class="group relative flex flex-col overflow-hidden rounded-2xl bg-white p-4 shadow-sm ring-1 ring-gray-200 transition-all hover:shadow-md dark:bg-[#1a1a2e] dark:ring-gray-800">
+<div class="flex flex-row items-start gap-4">
+<div class="relative h-24 w-24 shrink-0 overflow-hidden rounded-xl bg-gray-100 dark:bg-gray-800">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Dumbbell lateral raise exercise shoulders" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDKl5zwVBwW7_G6ZA1ZrqQZ6ypS6SzLhSma0mVVFWYT6YXOeADd_mCT7HZwXL5wm6mG7c7QSeEwA_hJMuduBSkfG9iF3S8a4jyyiOuXLLj-pv4yjeEcm0P1Xv2JNQZ2lDv9FUGSfmv9GBf-QvypgFnf2ae6stJTAJ85FUIIqr3VOb9p4uCRsI-o9FJbSUXzn7b7jXy-WAi8VXYFtbsdXM_RWC7osZDaPvDXvT3NZ0-q-V5vVvYdHcudt4XIc68fyIApY6YbsppLyr0");'></div>
+</div>
+<div class="flex min-w-0 flex-1 flex-col justify-center">
+<div class="flex items-baseline gap-2">
+<span class="font-mono text-xl font-bold text-primary">04</span>
+<h3 class="line-clamp-1 text-lg font-bold text-[#0d0d1c] dark:text-white">Lateral Raises</h3>
+</div>
+<div class="mt-1 flex flex-col gap-1 text-sm font-medium text-slate-500 dark:text-slate-400">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">repeat</span>
+<span>4 Sets × 15 Reps</span>
+</div>
+<div class="flex items-center gap-1.5 text-primary">
+<span class="material-symbols-outlined text-[16px]">hourglass_top</span>
+<span>45s Rest</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Sticky Footer CTA -->
+<div class="fixed bottom-0 left-0 right-0 z-30 bg-gradient-to-t from-background-light via-background-light/95 to-transparent pb-8 pt-12 px-5 dark:from-background-dark dark:via-background-dark/95">
+<button class="relative w-full overflow-hidden rounded-2xl bg-primary py-4 text-center shadow-lg shadow-primary/25 transition-transform active:scale-[0.98]">
+<!-- Gradient overlay -->
+<div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-50"></div>
+<div class="relative flex items-center justify-center gap-2">
+<span class="font-bold tracking-widest text-white">START WORKOUT</span>
+<span class="material-symbols-outlined text-white">play_arrow</span>
+</div>
+</button>
+</div>
+</div>
+</body></html>

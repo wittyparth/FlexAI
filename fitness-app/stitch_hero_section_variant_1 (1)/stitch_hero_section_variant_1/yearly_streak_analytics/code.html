@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Yearly Streak Analytics</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Calistoga&amp;family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#257bf4",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#101722",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "headline": ["Calistoga", "serif"],
+                        "mono": ["JetBrains Mono", "monospace"],
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar hiding for clean UI */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-[#0d131c] dark:text-white transition-colors duration-200">
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden font-display pb-10">
+<!-- Navigation -->
+<div class="flex items-center p-6 justify-between sticky top-0 z-10 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md">
+<button class="flex items-center justify-center size-10 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined text-2xl">arrow_back</span>
+</button>
+<div class="flex h-8 items-center justify-center rounded-full bg-primary/10 px-4">
+<p class="text-primary text-xs font-bold tracking-widest uppercase">CONSISTENCY</p>
+</div>
+</div>
+<!-- Header -->
+<div class="px-6 pb-2">
+<h1 class="text-4xl font-headline text-slate-900 dark:text-white leading-tight">Year of<br/>Progress</h1>
+</div>
+<!-- Current Streak Card -->
+<div class="px-6 py-6 w-full">
+<div class="relative overflow-hidden rounded-[2.5rem] bg-white dark:bg-[#1a2636] shadow-sm p-8 flex flex-col items-center justify-center border border-slate-100 dark:border-slate-800">
+<!-- Background decorative glow -->
+<div class="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-primary/10 rounded-full blur-3xl"></div>
+<div class="absolute bottom-0 left-0 -mb-10 -ml-10 w-40 h-40 bg-blue-400/10 rounded-full blur-3xl"></div>
+<div class="z-10 flex flex-col items-center gap-2">
+<div class="size-16 rounded-full bg-gradient-to-br from-primary/20 to-blue-300/10 flex items-center justify-center mb-2">
+<span class="material-symbols-outlined text-4xl text-primary fill-1" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+</div>
+<span class="font-mono text-7xl font-bold text-slate-900 dark:text-white tracking-tighter">23</span>
+<p class="text-slate-500 dark:text-slate-400 font-medium text-sm uppercase tracking-wide mt-2">Current Day Streak</p>
+</div>
+</div>
+</div>
+<!-- Heatmap Section -->
+<div class="flex flex-col gap-4 py-6">
+<div class="px-6 flex justify-between items-end">
+<h2 class="text-xl font-bold text-slate-900 dark:text-white">Activity Map</h2>
+<div class="flex gap-1 items-center">
+<span class="text-[10px] text-slate-400 font-medium mr-1">LESS</span>
+<div class="w-2.5 h-2.5 rounded-[2px] bg-slate-200 dark:bg-slate-700"></div>
+<div class="w-2.5 h-2.5 rounded-[2px] bg-primary/30"></div>
+<div class="w-2.5 h-2.5 rounded-[2px] bg-primary/60"></div>
+<div class="w-2.5 h-2.5 rounded-[2px] bg-primary"></div>
+<span class="text-[10px] text-slate-400 font-medium ml-1">MORE</span>
+</div>
+</div>
+<div class="w-full overflow-x-auto no-scrollbar pl-6 pr-6">
+<div class="flex gap-1 min-w-max pb-4">
+<!-- Day Labels Column -->
+<div class="flex flex-col gap-1 justify-between mr-2 py-[2px] h-[116px]">
+<span class="text-[10px] text-slate-400 font-bold h-3 leading-3">M</span>
+<span class="text-[10px] text-slate-400 font-bold h-3 leading-3">W</span>
+<span class="text-[10px] text-slate-400 font-bold h-3 leading-3">F</span>
+</div>
+<!-- Heatmap Grid -->
+<div class="grid grid-rows-7 grid-flow-col gap-1 h-[116px]">
+<!-- We will generate columns of squares. Using JS-like repetition logic manually for HTML output -->
+<!-- Month Label Logic: Simulating a year view roughly -->
+<!-- Week 1 -->
+<div class="w-3.5 h-3.5 rounded-[3px] bg-slate-200 dark:bg-slate-800"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/30"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-slate-200 dark:bg-slate-800"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/60"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-slate-200 dark:bg-slate-800"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/30"></div>
+<!-- Week 2 -->
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/80"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/40"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-slate-200 dark:bg-slate-800"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/20"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary"></div>
+<!-- Week 3 -->
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/90"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/10"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-slate-200 dark:bg-slate-800"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/50"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/70"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-slate-200 dark:bg-slate-800"></div>
+<!-- Week 4 -->
+<div class="w-3.5 h-3.5 rounded-[3px] bg-slate-200 dark:bg-slate-800"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/30"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/60"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/20"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-slate-200 dark:bg-slate-800"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary"></div>
+<!-- Week 5 -->
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/80"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/90"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/50"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-slate-200 dark:bg-slate-800"></div>
+<!-- Week 6 -->
+<div class="w-3.5 h-3.5 rounded-[3px] bg-slate-200 dark:bg-slate-800"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/10"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/20"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/30"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/40"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/60"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary"></div>
+<!-- Week 7 -->
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/90"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/80"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/70"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/60"></div>
+<!-- Week 8 -->
+<div class="w-3.5 h-3.5 rounded-[3px] bg-slate-200 dark:bg-slate-800"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-slate-200 dark:bg-slate-800"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/20"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/60"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-slate-200 dark:bg-slate-800"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/30"></div>
+<!-- Week 9 -->
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/40"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/50"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/60"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/70"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/80"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/90"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary"></div>
+<!-- Week 10 -->
+<div class="w-3.5 h-3.5 rounded-[3px] bg-slate-200 dark:bg-slate-800"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-slate-200 dark:bg-slate-800"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/30"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/50"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/70"></div>
+<!-- Week 11 -->
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-slate-200 dark:bg-slate-800"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/20"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/90"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-slate-200 dark:bg-slate-800"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/10"></div>
+<!-- Week 12 -->
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/60"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/60"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/60"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/60"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/60"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/60"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/60"></div>
+<!-- Week 13 -->
+<div class="w-3.5 h-3.5 rounded-[3px] bg-slate-200 dark:bg-slate-800"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-slate-200 dark:bg-slate-800"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-slate-200 dark:bg-slate-800"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary"></div>
+<!-- Week 14 -->
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/40"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-slate-200 dark:bg-slate-800"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/80"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/20"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-slate-200 dark:bg-slate-800"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/60"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/90"></div>
+<!-- Week 15 -->
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/80"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/40"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-slate-200 dark:bg-slate-800"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/20"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary"></div>
+<!-- Week 16 -->
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/90"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/10"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-slate-200 dark:bg-slate-800"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/50"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/70"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-slate-200 dark:bg-slate-800"></div>
+<!-- Week 17 -->
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/60"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/60"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/60"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/60"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/60"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/60"></div>
+<div class="w-3.5 h-3.5 rounded-[3px] bg-primary/60"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Stats Cards -->
+<div class="flex flex-wrap gap-4 px-6 pt-2">
+<!-- Card 1 -->
+<div class="flex min-w-[158px] flex-1 flex-col gap-3 rounded-[2rem] p-6 bg-white dark:bg-[#1a2636] shadow-sm border border-slate-100 dark:border-slate-800">
+<div class="flex items-center justify-between">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium leading-normal">Total<br/>Workouts</p>
+<div class="size-8 rounded-full bg-slate-50 dark:bg-slate-800 flex items-center justify-center">
+<span class="material-symbols-outlined text-lg text-slate-400">fitness_center</span>
+</div>
+</div>
+<p class="text-slate-900 dark:text-white font-mono text-4xl font-bold leading-tight">142</p>
+</div>
+<!-- Card 2 -->
+<div class="flex min-w-[158px] flex-1 flex-col gap-3 rounded-[2rem] p-6 bg-white dark:bg-[#1a2636] shadow-sm border border-slate-100 dark:border-slate-800">
+<div class="flex items-center justify-between">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium leading-normal">Weekly<br/>Average</p>
+<div class="size-8 rounded-full bg-slate-50 dark:bg-slate-800 flex items-center justify-center">
+<span class="material-symbols-outlined text-lg text-slate-400">show_chart</span>
+</div>
+</div>
+<p class="text-slate-900 dark:text-white font-mono text-4xl font-bold leading-tight">4.5</p>
+</div>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>App Preferences</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0da6f2", // Electric Blue
+                        "primary-dark": "#0088cc",
+                        "background-light": "#f8fbfc",
+                        "background-dark": "#101c22",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1a262d",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem", 
+                        "lg": "0.5rem", 
+                        "xl": "0.75rem", 
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+                        'glow': '0 0 15px rgba(13, 166, 242, 0.3)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display antialiased bg-background-light dark:bg-background-dark text-slate-900 dark:text-white transition-colors duration-200">
+<div class="relative flex min-h-screen w-full flex-col max-w-md mx-auto bg-background-light dark:bg-background-dark group/design-root overflow-x-hidden border-x border-gray-100 dark:border-gray-800">
+<!-- Header -->
+<div class="flex items-center px-6 py-4 pt-12 pb-2 justify-between sticky top-0 z-10 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md">
+<button class="flex items-center justify-center size-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-slate-900 dark:text-white">
+<span class="material-symbols-outlined text-[24px]">arrow_back</span>
+</button>
+<div class="w-10"></div> <!-- Spacer for center alignment balance if needed -->
+</div>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col px-6 pb-10">
+<!-- Headline -->
+<h1 class="text-slate-900 dark:text-white text-[32px] font-bold leading-tight tracking-tight mb-8 mt-2">
+                App Preferences
+            </h1>
+<!-- Section: UNITS -->
+<section class="mb-10">
+<h2 class="text-gray-400 dark:text-gray-500 text-xs font-bold tracking-widest uppercase mb-5 ml-1">Units</h2>
+<!-- Weight Unit -->
+<div class="flex flex-col gap-3 mb-6">
+<div class="flex justify-between items-center mb-1 ml-1">
+<label class="text-slate-900 dark:text-white text-base font-medium">Weight Unit</label>
+</div>
+<div class="bg-gray-100 dark:bg-surface-dark p-1.5 rounded-xl flex relative h-12 shadow-inner">
+<label class="flex-1 relative cursor-pointer z-10">
+<input checked="" class="peer sr-only" name="weight_unit" type="radio" value="kg"/>
+<div class="w-full h-full flex items-center justify-center rounded-lg text-sm font-semibold transition-all duration-300 text-gray-500 dark:text-gray-400 peer-checked:text-white peer-checked:bg-gradient-to-r peer-checked:from-primary peer-checked:to-[#3bc2ff] peer-checked:shadow-md">
+                                KG
+                            </div>
+</label>
+<label class="flex-1 relative cursor-pointer z-10">
+<input class="peer sr-only" name="weight_unit" type="radio" value="lbs"/>
+<div class="w-full h-full flex items-center justify-center rounded-lg text-sm font-semibold transition-all duration-300 text-gray-500 dark:text-gray-400 peer-checked:text-white peer-checked:bg-gradient-to-r peer-checked:from-primary peer-checked:to-[#3bc2ff] peer-checked:shadow-md">
+                                LBS
+                            </div>
+</label>
+</div>
+</div>
+<!-- Measurement Unit -->
+<div class="flex flex-col gap-3">
+<div class="flex justify-between items-center mb-1 ml-1">
+<label class="text-slate-900 dark:text-white text-base font-medium">Measurement</label>
+</div>
+<div class="bg-gray-100 dark:bg-surface-dark p-1.5 rounded-xl flex relative h-12 shadow-inner">
+<label class="flex-1 relative cursor-pointer z-10">
+<input class="peer sr-only" name="measure_unit" type="radio" value="metric"/>
+<div class="w-full h-full flex items-center justify-center rounded-lg text-sm font-semibold transition-all duration-300 text-gray-500 dark:text-gray-400 peer-checked:text-white peer-checked:bg-gradient-to-r peer-checked:from-primary peer-checked:to-[#3bc2ff] peer-checked:shadow-md">
+                                Metric
+                            </div>
+</label>
+<label class="flex-1 relative cursor-pointer z-10">
+<input checked="" class="peer sr-only" name="measure_unit" type="radio" value="imperial"/>
+<div class="w-full h-full flex items-center justify-center rounded-lg text-sm font-semibold transition-all duration-300 text-gray-500 dark:text-gray-400 peer-checked:text-white peer-checked:bg-gradient-to-r peer-checked:from-primary peer-checked:to-[#3bc2ff] peer-checked:shadow-md">
+                                Imperial
+                            </div>
+</label>
+</div>
+</div>
+</section>
+<!-- Section: WORKOUT SETTINGS -->
+<section class="mb-10">
+<h2 class="text-gray-400 dark:text-gray-500 text-xs font-bold tracking-widest uppercase mb-5 ml-1">Workout Settings</h2>
+<div class="bg-surface-light dark:bg-surface-dark rounded-2xl p-5 shadow-soft border border-gray-100 dark:border-gray-800">
+<div class="flex flex-col">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h3 class="text-slate-900 dark:text-white text-lg font-bold">Default Rest Time</h3>
+<p class="text-gray-400 dark:text-gray-500 text-sm mt-1">Automatic timer between sets</p>
+</div>
+</div>
+<!-- Technical Stepper -->
+<div class="flex items-center justify-between bg-gray-50 dark:bg-background-dark rounded-xl p-2 border border-gray-200 dark:border-gray-700">
+<button class="size-12 flex items-center justify-center rounded-lg bg-white dark:bg-surface-dark shadow-sm text-slate-900 dark:text-white hover:text-primary active:scale-95 transition-all border border-gray-100 dark:border-gray-700">
+<span class="material-symbols-outlined">remove</span>
+</button>
+<div class="flex items-baseline gap-1">
+<span class="text-3xl font-mono font-bold text-slate-900 dark:text-white tracking-tight">60</span>
+<span class="text-sm font-mono text-gray-400 dark:text-gray-500 font-medium">s</span>
+</div>
+<button class="size-12 flex items-center justify-center rounded-lg bg-white dark:bg-surface-dark shadow-sm text-slate-900 dark:text-white hover:text-primary active:scale-95 transition-all border border-gray-100 dark:border-gray-700">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Section: APPEARANCE -->
+<section>
+<h2 class="text-gray-400 dark:text-gray-500 text-xs font-bold tracking-widest uppercase mb-5 ml-1">Appearance</h2>
+<div class="grid grid-cols-3 gap-3">
+<!-- Light Option -->
+<label class="cursor-pointer group">
+<input checked="" class="peer sr-only" name="theme" type="radio" value="light"/>
+<div class="relative flex flex-col items-center justify-center p-4 rounded-2xl bg-surface-light dark:bg-surface-dark border-2 border-transparent transition-all duration-200 shadow-soft group-hover:bg-gray-50 dark:group-hover:bg-gray-800 peer-checked:border-0">
+<!-- Gradient Border Wrapper for Active State -->
+<div class="absolute inset-0 rounded-2xl bg-gradient-to-tr from-primary to-[#3bc2ff] opacity-0 peer-checked:opacity-100 -z-10 m-[-2px]"></div>
+<div class="size-10 rounded-full bg-orange-50 dark:bg-orange-900/20 text-orange-500 flex items-center justify-center mb-3">
+<span class="material-symbols-outlined fill-1">light_mode</span>
+</div>
+<span class="text-sm font-medium text-slate-900 dark:text-white">Light</span>
+</div>
+</label>
+<!-- Dark Option -->
+<label class="cursor-pointer group">
+<input class="peer sr-only" name="theme" type="radio" value="dark"/>
+<div class="relative flex flex-col items-center justify-center p-4 rounded-2xl bg-surface-light dark:bg-surface-dark border-2 border-transparent transition-all duration-200 shadow-soft group-hover:bg-gray-50 dark:group-hover:bg-gray-800 peer-checked:border-0">
+<!-- Gradient Border Wrapper -->
+<div class="absolute inset-0 rounded-2xl bg-gradient-to-tr from-primary to-[#3bc2ff] opacity-0 peer-checked:opacity-100 -z-10 m-[-2px]"></div>
+<div class="size-10 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 flex items-center justify-center mb-3">
+<span class="material-symbols-outlined fill-1">dark_mode</span>
+</div>
+<span class="text-sm font-medium text-slate-900 dark:text-white">Dark</span>
+</div>
+</label>
+<!-- System Option -->
+<label class="cursor-pointer group">
+<input class="peer sr-only" name="theme" type="radio" value="system"/>
+<div class="relative flex flex-col items-center justify-center p-4 rounded-2xl bg-surface-light dark:bg-surface-dark border-2 border-transparent transition-all duration-200 shadow-soft group-hover:bg-gray-50 dark:group-hover:bg-gray-800 peer-checked:border-0">
+<!-- Gradient Border Wrapper -->
+<div class="absolute inset-0 rounded-2xl bg-gradient-to-tr from-primary to-[#3bc2ff] opacity-0 peer-checked:opacity-100 -z-10 m-[-2px]"></div>
+<div class="size-10 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-3">
+<span class="material-symbols-outlined">smartphone</span>
+</div>
+<span class="text-sm font-medium text-slate-900 dark:text-white">System</span>
+</div>
+</label>
+</div>
+</section>
+</main>
+<!-- Bottom Safe Area Spacer -->
+<div class="h-6 w-full"></div>
+</div>
+</body></html>

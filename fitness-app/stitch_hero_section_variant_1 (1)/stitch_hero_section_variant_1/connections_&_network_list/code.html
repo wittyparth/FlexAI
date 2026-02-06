@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Connections &amp; Network List</title>
+<!-- Fonts: Calistoga for headlines, Space Grotesk for UI, JetBrains Mono for levels -->
+<link href="https://fonts.googleapis.com/css2?family=Calistoga&amp;family=Space+Grotesk:wght@300..700&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0da6f2", // Electric Blue
+                        "background-light": "#ffffff",
+                        "background-dark": "#101c22",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "headline": ["Calistoga", "serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom loader simulation */
+        .dashed-ring {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 2px dashed #0da6f2;
+            opacity: 0.6;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#0d171c] dark:text-white antialiased">
+<div class="relative flex min-h-screen w-full flex-col max-w-[430px] mx-auto bg-background-light dark:bg-background-dark shadow-2xl">
+<!-- TopAppBar -->
+<header class="sticky top-0 z-10 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md px-4 py-4 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<button class="flex items-center justify-center size-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+<span class="material-symbols-outlined text-2xl">arrow_back_ios_new</span>
+</button>
+</div>
+<h1 class="font-headline text-3xl text-center tracking-tight">Followers</h1>
+<div class="flex items-center justify-end">
+<button class="flex items-center justify-center size-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+<span class="material-symbols-outlined text-2xl">search</span>
+</button>
+</div>
+</header>
+<!-- SegmentedButtons -->
+<div class="px-6 py-4">
+<div class="flex h-12 w-full items-center justify-center rounded-xl bg-gray-100 dark:bg-gray-800 p-1.5">
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-white dark:has-[:checked]:bg-gray-700 has-[:checked]:shadow-sm transition-all text-sm font-bold uppercase tracking-widest">
+<span class="truncate">Followers</span>
+<input checked="" class="invisible w-0" name="tabs" type="radio" value="Followers"/>
+</label>
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 has-[:checked]:bg-white dark:has-[:checked]:bg-gray-700 has-[:checked]:shadow-sm transition-all text-sm font-bold uppercase tracking-widest text-gray-400">
+<span class="truncate">Following</span>
+<input class="invisible w-0" name="tabs" type="radio" value="Following"/>
+</label>
+</div>
+</div>
+<!-- User List -->
+<main class="flex-1 flex flex-col px-6">
+<!-- ListItem 1 -->
+<div class="flex items-center justify-between py-6 border-b border-gray-100 dark:border-gray-800">
+<div class="flex items-center gap-4">
+<div class="size-14 rounded-full border border-gray-200 dark:border-gray-700 bg-center bg-no-repeat bg-cover" data-alt="Portrait of a female fitness athlete with gym background" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDzQFGcXsf0MHBIO3t_2MfUuxV6Zr7yrX3Rs7YjKxLq2RVfCHWaFZTh_O0Jl6wA5Rp0K8Zlst3xvWYeEm9UABnyJvDRHtpXMI2RTilyFj4Yk8CZby0CEJ13U6dM7qpCX4JZ5x44XZHPoT_cSdEnLFUIYXG6-W2OAQt6-v9Cz_BOVgR97tttXfuhtvpDt-Bg-W-12ZnkCs1RdLwsIa0AqDZ0B11Kc-EjWgGryQdeERLjbWxj__HhRSYPHpotEo8i1wJoKwzJTxA1gT8");'></div>
+<div class="flex flex-col">
+<p class="text-lg font-bold leading-tight">Alex Rivera</p>
+<p class="font-mono text-[10px] font-bold text-primary tracking-tighter uppercase">Elite — LVL 85</p>
+</div>
+</div>
+<button class="flex h-9 min-w-[100px] items-center justify-center rounded-lg border border-primary px-4 text-primary text-xs font-bold uppercase tracking-wider hover:bg-primary/5 transition-colors">
+                    Follow Back
+                </button>
+</div>
+<!-- ListItem 2 -->
+<div class="flex items-center justify-between py-6 border-b border-gray-100 dark:border-gray-800">
+<div class="flex items-center gap-4">
+<div class="size-14 rounded-full border border-gray-200 dark:border-gray-700 bg-center bg-no-repeat bg-cover" data-alt="Close up of a muscular man looking at the camera" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAW3tT2nlPTQ6X1wxvVTMaZDYzqdPz2Clz9cIgykOH40vc_Ra4XG7JsY5OgoIZ8QA5Zu8GTxmaQrGrZW1y1Vmq3xLkXVrLK13iePbsWUy2SXjPLIF9xa9a1VOyybRh-zXuPA1zlHqXQobtrd80Vbmze-zL5cfswIrvhwvF49XidvGyh8ytjqklL6n0iWCgAstIS8yTJ4sZ_SYCFULgei5-dcVqCSt5v6_e479XetUq6MLBy4gi__bR0gumbl6MV1wZU-okinW10z7g");'></div>
+<div class="flex flex-col">
+<p class="text-lg font-bold leading-tight">Jordan Smith</p>
+<p class="font-mono text-[10px] font-bold text-gray-400 tracking-tighter uppercase">Pro — LVL 42</p>
+</div>
+</div>
+<button class="flex h-9 min-w-[100px] items-center justify-center rounded-lg border border-primary px-4 text-primary text-xs font-bold uppercase tracking-wider hover:bg-primary/5 transition-colors">
+                    Follow Back
+                </button>
+</div>
+<!-- ListItem 3 -->
+<div class="flex items-center justify-between py-6 border-b border-gray-100 dark:border-gray-800">
+<div class="flex items-center gap-4">
+<div class="size-14 rounded-full border border-gray-200 dark:border-gray-700 bg-center bg-no-repeat bg-cover" data-alt="Portrait of a person in a minimalist urban setting" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBW63XRXHGB6Y-lBoHctTsbqpXRZBEe0Hh29_TCY1-qdkdYRTKSIbud0YSFgl8PxOvB8zbtz7TJyFB5pSAE3GUGCPWpSwx55KxPir0I2T4hq-Vmt2A0do-jCsFiEZ6ct0wGkKc8Crkn3xge_nqLHTWc-j8awdjJXaEaBxYyfnf0SdJQ1Uj_9m9-Pd34oeXt3wT_ZmKdgODpKRGhe9yXhp2jmdzhbGz7mKLnras8Bfxux5MC0yzFfn8UTz7V74qKfLWqQYeaMW3mWuA");'></div>
+<div class="flex flex-col">
+<p class="text-lg font-bold leading-tight">Casey Chen</p>
+<p class="font-mono text-[10px] font-bold text-primary tracking-tighter uppercase">Legend — LVL 91</p>
+</div>
+</div>
+<button class="flex h-9 min-w-[100px] items-center justify-center rounded-lg border border-gray-200 dark:border-gray-700 px-4 text-gray-400 text-xs font-bold uppercase tracking-wider">
+                    Following
+                </button>
+</div>
+<!-- ListItem 4 -->
+<div class="flex items-center justify-between py-6 border-b border-gray-100 dark:border-gray-800">
+<div class="flex items-center gap-4">
+<div class="size-14 rounded-full border border-gray-200 dark:border-gray-700 bg-center bg-no-repeat bg-cover" data-alt="Portrait of a smiling woman athlete" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD6bRf95xq65o0Fk1wOzf0a6GD2dy_5ws5g6vFGhwjdG4P9Qt4-0euaA36SiWiBSLyIGpd2GKCktF7u1ULbgF5Y978kLh1-7hMVhUUV34V8Mqklu_FwwMPZicyXoviUd3GWqxCQzs8SteD_CxhmJvkr9oHD0z6udhfkVQRBCYhABu2PbZ49k32LZyj8i9wc9wrp2gXJ3m81TeZEaQq9ILKNKt56EnGAKaHkNPqBAerTCMDHfW3QCQ-mXUojv6qBQU04XnBvWs0yI-o");'></div>
+<div class="flex flex-col">
+<p class="text-lg font-bold leading-tight">Sarah Vance</p>
+<p class="font-mono text-[10px] font-bold text-gray-400 tracking-tighter uppercase">Rookie — LVL 12</p>
+</div>
+</div>
+<button class="flex h-9 min-w-[100px] items-center justify-center rounded-lg border border-primary px-4 text-primary text-xs font-bold uppercase tracking-wider hover:bg-primary/5 transition-colors">
+                    Follow Back
+                </button>
+</div>
+<!-- ListItem 5 -->
+<div class="flex items-center justify-between py-6 border-b border-gray-100 dark:border-gray-800">
+<div class="flex items-center gap-4">
+<div class="size-14 rounded-full border border-gray-200 dark:border-gray-700 bg-center bg-no-repeat bg-cover" data-alt="Studio portrait of a fitness professional" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB8cVR7386njGHYFvMU-znPqvygeqsDBoUfPQAMnS_niiJe6DHNvbk0CCgSzZ1z7ttvEVQYM6Sb8VEPoLWjALMNXBL8fS4zzY9xB9x98EnNan4RI-ubJG5JTGAric1YgkIHZqWqigZzfCFMsiXZDt630XcXJ7D1XC02-LFueszqoKhOTrp7i8ARG6MFN79mfFWytjjFktA2QeR7oJPYZL_KwqjuNtMa9TAm1U1zn7UmgRn_CUYwz9g6z42BGcvHCxrCnXPsCGG5L4U");'></div>
+<div class="flex flex-col">
+<p class="text-lg font-bold leading-tight">Mila Kune</p>
+<p class="font-mono text-[10px] font-bold text-primary tracking-tighter uppercase">Elite — LVL 78</p>
+</div>
+</div>
+<button class="flex h-9 min-w-[100px] items-center justify-center rounded-lg border border-primary px-4 text-primary text-xs font-bold uppercase tracking-wider hover:bg-primary/5 transition-colors">
+                    Follow Back
+                </button>
+</div>
+<!-- Infinite Scroll Loader -->
+<div class="py-12 flex flex-col items-center justify-center">
+<div class="dashed-ring flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-primary text-lg">bolt</span>
+</div>
+<p class="font-mono text-[10px] uppercase tracking-widest text-gray-400">Loading Network...</p>
+</div>
+</main>
+<!-- iOS Home Indicator simulation -->
+<div class="h-8 w-full flex justify-center items-end pb-2">
+<div class="w-32 h-1 bg-gray-200 dark:bg-gray-800 rounded-full"></div>
+</div>
+</div>
+</body></html>

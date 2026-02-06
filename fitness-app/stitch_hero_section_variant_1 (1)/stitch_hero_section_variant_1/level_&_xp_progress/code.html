@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Level &amp; XP Progress</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0da6f2",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#101c22",
+                        "card-light": "#ffffff",
+                        "card-dark": "#182830",
+                        "text-main-light": "#0d171c",
+                        "text-main-dark": "#ffffff",
+                        "text-sub-light": "#49819c",
+                        "text-sub-dark": "#8daab9",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom utilities if needed */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+        }
+        .dark .glass-panel {
+            background: rgba(24, 40, 48, 0.7);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen flex flex-col font-display antialiased selection:bg-primary selection:text-white overflow-x-hidden">
+<!-- Top App Bar -->
+<header class="sticky top-0 z-50 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
+<div class="flex items-center p-4 justify-between max-w-md mx-auto w-full">
+<button class="text-text-main-light dark:text-text-main-dark flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h2 class="text-text-main-light dark:text-text-main-dark text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-10">Level Progress</h2>
+</div>
+</header>
+<main class="flex-1 flex flex-col items-center w-full max-w-md mx-auto pb-8">
+<!-- Hero Section: Level Badge -->
+<div class="w-full px-6 pt-8 pb-6 flex flex-col items-center justify-center relative">
+<!-- Badge Container -->
+<div class="relative flex items-center justify-center mb-6 group cursor-pointer">
+<!-- Pulsing outer ring simulation (static visual) -->
+<div class="absolute inset-[-12px] rounded-full border-2 border-primary/20 scale-100 z-0"></div>
+<div class="absolute inset-[-24px] rounded-full border border-primary/10 scale-100 z-0"></div>
+<!-- Main Badge Gradient -->
+<div aria-label="Level 15 Badge" class="relative size-40 rounded-full bg-gradient-to-br from-[#0da6f2] to-[#0066cc] shadow-[0_10px_40px_-10px_rgba(13,166,242,0.5)] flex flex-col items-center justify-center z-10 text-white border-4 border-white dark:border-[#1e2e36]" role="img">
+<span class="material-symbols-outlined text-4xl mb-1 opacity-90">bolt</span>
+<p class="text-4xl font-extrabold tracking-tight">15</p>
+<p class="text-[10px] font-bold uppercase tracking-widest mt-1 opacity-80">Level</p>
+</div>
+<!-- Decorative Badge Icon floating -->
+<div class="absolute -bottom-2 bg-white dark:bg-card-dark text-primary px-3 py-1 rounded-full shadow-lg border border-gray-100 dark:border-gray-700 flex items-center gap-1 z-20">
+<span class="material-symbols-outlined text-[16px]">military_tech</span>
+<span class="text-xs font-bold uppercase tracking-wide">Elite</span>
+</div>
+</div>
+<div class="text-center mt-2 space-y-1">
+<h1 class="text-text-main-light dark:text-text-main-dark text-2xl font-bold tracking-tight">Elite Fitness</h1>
+<p class="text-text-sub-light dark:text-text-sub-dark text-sm">Keep pushing! You're in the top 5%.</p>
+</div>
+</div>
+<!-- Progress Bar Section -->
+<div class="w-full px-6 mb-8">
+<div class="bg-white dark:bg-card-dark rounded-2xl p-5 shadow-sm border border-gray-100 dark:border-gray-800">
+<div class="flex justify-between items-end mb-3">
+<div class="flex flex-col">
+<span class="text-text-sub-light dark:text-text-sub-dark text-xs font-medium uppercase tracking-wider mb-1">Current XP</span>
+<span class="text-text-main-light dark:text-text-main-dark text-xl font-bold font-mono tracking-tight">2,450</span>
+</div>
+<div class="flex flex-col items-end">
+<span class="text-text-sub-light dark:text-text-sub-dark text-xs font-medium uppercase tracking-wider mb-1">Target</span>
+<span class="text-text-sub-light dark:text-text-sub-dark text-sm font-semibold">/ 2,500 XP</span>
+</div>
+</div>
+<!-- Progress Track -->
+<div class="h-4 w-full bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden relative">
+<div class="absolute top-0 left-0 h-full bg-primary rounded-full" style="width: 98%;">
+<div class="absolute inset-0 bg-white/20 w-full h-full animate-[shimmer_2s_infinite]"></div>
+</div>
+</div>
+<div class="flex justify-between items-center mt-3">
+<p class="text-primary text-xs font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">rocket_launch</span>
+                        50 XP to Level 16
+                    </p>
+<p class="text-text-sub-light dark:text-text-sub-dark text-xs">98% Complete</p>
+</div>
+</div>
+</div>
+<!-- Earning Guide (Featured Card) -->
+<div class="w-full px-6 mb-8">
+<div class="rounded-xl p-[2px] bg-gradient-to-r from-primary via-blue-400 to-primary/50 shadow-sm">
+<div class="bg-white dark:bg-card-dark rounded-[calc(0.75rem-2px)] p-4 flex items-center justify-between gap-4">
+<div class="flex items-center gap-4">
+<div class="size-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary">lightbulb</span>
+</div>
+<div class="flex flex-col">
+<h3 class="text-text-main-light dark:text-text-main-dark text-sm font-bold">Boost your XP</h3>
+<p class="text-text-sub-light dark:text-text-sub-dark text-xs leading-relaxed">Complete a 7-day streak to earn a 2x multiplier.</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-gray-400 dark:text-gray-500 text-lg">chevron_right</span>
+</div>
+</div>
+</div>
+<!-- Activity History -->
+<div class="w-full flex flex-col">
+<div class="px-6 pb-2">
+<h3 class="text-text-main-light dark:text-text-main-dark text-lg font-bold tracking-tight">Activity History</h3>
+</div>
+<!-- List Items -->
+<div class="flex flex-col divide-y divide-gray-100 dark:divide-gray-800">
+<!-- Item 1 -->
+<div class="flex items-center gap-4 px-6 py-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+<div class="flex items-center justify-center rounded-xl bg-blue-50 dark:bg-primary/10 text-primary shrink-0 size-12">
+<span class="material-symbols-outlined">fitness_center</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<p class="text-text-main-light dark:text-text-main-dark text-base font-medium truncate">Morning HIIT</p>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="size-1.5 rounded-full bg-green-500"></span>
+<p class="text-text-sub-light dark:text-text-sub-dark text-xs font-medium truncate">Today • 07:00 AM</p>
+</div>
+</div>
+<div class="shrink-0 flex items-center gap-1 bg-green-50 dark:bg-green-500/10 px-2 py-1 rounded-lg">
+<span class="material-symbols-outlined text-green-600 dark:text-green-400 text-sm">add</span>
+<p class="text-green-600 dark:text-green-400 text-sm font-bold">150 XP</p>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="flex items-center gap-4 px-6 py-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+<div class="flex items-center justify-center rounded-xl bg-amber-50 dark:bg-amber-500/10 text-amber-500 shrink-0 size-12">
+<span class="material-symbols-outlined">local_fire_department</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<p class="text-text-main-light dark:text-text-main-dark text-base font-medium truncate">Perfect Streak Bonus</p>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="size-1.5 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+<p class="text-text-sub-light dark:text-text-sub-dark text-xs font-medium truncate">Yesterday • 18:30 PM</p>
+</div>
+</div>
+<div class="shrink-0 flex items-center gap-1 bg-green-50 dark:bg-green-500/10 px-2 py-1 rounded-lg">
+<span class="material-symbols-outlined text-green-600 dark:text-green-400 text-sm">add</span>
+<p class="text-green-600 dark:text-green-400 text-sm font-bold">50 XP</p>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="flex items-center gap-4 px-6 py-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+<div class="flex items-center justify-center rounded-xl bg-purple-50 dark:bg-purple-500/10 text-purple-500 shrink-0 size-12">
+<span class="material-symbols-outlined">directions_run</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<p class="text-text-main-light dark:text-text-main-dark text-base font-medium truncate">Evening Run</p>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="size-1.5 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+<p class="text-text-sub-light dark:text-text-sub-dark text-xs font-medium truncate">Yesterday • 20:15 PM</p>
+</div>
+</div>
+<div class="shrink-0 flex items-center gap-1 bg-green-50 dark:bg-green-500/10 px-2 py-1 rounded-lg">
+<span class="material-symbols-outlined text-green-600 dark:text-green-400 text-sm">add</span>
+<p class="text-green-600 dark:text-green-400 text-sm font-bold">85 XP</p>
+</div>
+</div>
+<!-- Item 4 -->
+<div class="flex items-center gap-4 px-6 py-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors opacity-60">
+<div class="flex items-center justify-center rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-500 shrink-0 size-12">
+<span class="material-symbols-outlined">pool</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<p class="text-text-main-light dark:text-text-main-dark text-base font-medium truncate">Swimming</p>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="size-1.5 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+<p class="text-text-sub-light dark:text-text-sub-dark text-xs font-medium truncate">2 days ago • 07:00 AM</p>
+</div>
+</div>
+<div class="shrink-0 flex items-center gap-1 bg-green-50 dark:bg-green-500/10 px-2 py-1 rounded-lg">
+<span class="material-symbols-outlined text-green-600 dark:text-green-400 text-sm">add</span>
+<p class="text-green-600 dark:text-green-400 text-sm font-bold">200 XP</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom spacing for scroll -->
+<div class="h-8 w-full bg-background-light dark:bg-background-dark"></div>
+</body></html>

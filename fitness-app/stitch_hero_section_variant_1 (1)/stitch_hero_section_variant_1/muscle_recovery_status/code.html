@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Muscle Recovery Status</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0da6f2",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#101c22",
+                        "success": "#22c55e",
+                        "warning": "#eab308",
+                        "danger": "#ef4444",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .gradient-border-card {
+            position: relative;
+            background: white;
+            border-radius: 1.5rem;
+            z-index: 1;
+        }
+        .gradient-border-card::before {
+            content: "";
+            position: absolute;
+            inset: -2px;
+            z-index: -1;
+            border-radius: 1.6rem;
+            background: linear-gradient(45deg, #0da6f2, #60a5fa, #0da6f2);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#0d171c] dark:text-white antialiased">
+<div class="relative flex min-h-screen w-full flex-col max-w-[480px] mx-auto overflow-x-hidden">
+<!-- TopAppBar -->
+<header class="sticky top-0 z-50 flex items-center bg-white/80 dark:bg-background-dark/80 backdrop-blur-md p-4 pb-2 justify-between">
+<div class="flex size-12 shrink-0 items-center justify-start">
+<span class="material-symbols-outlined text-2xl">arrow_back_ios</span>
+</div>
+<h2 class="text-xl font-bold leading-tight tracking-tight flex-1 text-center">Recovery Status</h2>
+<div class="flex w-12 items-center justify-end">
+<button class="flex size-12 cursor-pointer items-center justify-center rounded-full bg-primary/10 text-primary">
+<span class="material-symbols-outlined">person</span>
+</button>
+</div>
+</header>
+<main class="flex-1 pb-40">
+<!-- SegmentedButtons -->
+<div class="px-4 py-4">
+<div class="flex h-12 flex-1 items-center justify-center rounded-full bg-white dark:bg-slate-800/50 p-1 shadow-sm">
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-full px-2 has-[:checked]:bg-primary has-[:checked]:text-white text-[#49819c] text-sm font-semibold transition-all">
+<span class="truncate">Anterior</span>
+<input checked="" class="invisible w-0" name="view-toggle" type="radio" value="front"/>
+</label>
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-full px-2 has-[:checked]:bg-primary has-[:checked]:text-white text-[#49819c] text-sm font-semibold transition-all">
+<span class="truncate">Posterior</span>
+<input class="invisible w-0" name="view-toggle" type="radio" value="back"/>
+</label>
+</div>
+</div>
+<!-- HeaderImage / Anatomical Diagram -->
+<div class="px-4 py-2">
+<div class="relative w-full aspect-[4/5] bg-white dark:bg-slate-800/40 rounded-xl overflow-hidden flex items-center justify-center border border-slate-100 dark:border-slate-800">
+<!-- Placeholder for anatomical SVG/Image -->
+<div class="absolute inset-0 opacity-10 flex items-center justify-center">
+<span class="material-symbols-outlined text-[200px]">accessibility_new</span>
+</div>
+<!-- Recovery Hotspots Visualization -->
+<div class="relative w-full h-full p-8 flex flex-col items-center justify-center">
+<!-- Head -->
+<div class="w-8 h-8 rounded-full bg-success/40 ring-4 ring-success/20 mb-2"></div>
+<!-- Chest -->
+<div class="w-20 h-16 rounded-lg bg-warning/40 ring-4 ring-warning/20 mb-4 flex items-center justify-center">
+<span class="text-[10px] font-mono font-bold">58%</span>
+</div>
+<!-- Quads -->
+<div class="flex gap-4">
+<div class="w-12 h-24 rounded-full bg-danger/40 ring-4 ring-danger/20 flex items-center justify-center">
+<span class="text-[10px] font-mono font-bold">22%</span>
+</div>
+<div class="w-12 h-24 rounded-full bg-danger/40 ring-4 ring-danger/20 flex items-center justify-center">
+<span class="text-[10px] font-mono font-bold">22%</span>
+</div>
+</div>
+</div>
+<!-- Legend -->
+<div class="absolute bottom-4 right-4 flex flex-col gap-1 bg-white/60 dark:bg-black/40 backdrop-blur px-3 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest">
+<div class="flex items-center gap-2"><div class="size-2 rounded-full bg-success"></div> Fresh</div>
+<div class="flex items-center gap-2"><div class="size-2 rounded-full bg-warning"></div> Recovering</div>
+<div class="flex items-center gap-2"><div class="size-2 rounded-full bg-danger"></div> Fatigued</div>
+</div>
+</div>
+</div>
+<!-- SectionHeader -->
+<div class="flex items-center justify-between px-4 pt-6 pb-2">
+<h3 class="text-lg font-bold tracking-tight">Muscle Data Points</h3>
+<span class="material-symbols-outlined text-primary">tune</span>
+</div>
+<!-- ListItems -->
+<div class="flex flex-col gap-px">
+<!-- Quads - Danger -->
+<div class="flex items-center gap-4 bg-white dark:bg-slate-800/20 px-4 min-h-[80px] py-2 justify-between border-b border-slate-100 dark:border-slate-800/50">
+<div class="flex items-center gap-4">
+<div class="text-danger flex items-center justify-center rounded-xl bg-danger/10 shrink-0 size-12">
+<span class="material-symbols-outlined">vital_signs</span>
+</div>
+<div class="flex flex-col justify-center">
+<p class="text-base font-bold leading-none mb-1">Quadriceps</p>
+<p class="text-[#49819c] text-[11px] font-mono uppercase tracking-tight">Last: Leg Day (48h ago)</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-danger font-mono text-base font-bold">22%</p>
+<p class="text-[10px] text-[#49819c] font-bold uppercase">Rest Req.</p>
+</div>
+</div>
+<!-- Chest - Warning -->
+<div class="flex items-center gap-4 bg-white dark:bg-slate-800/20 px-4 min-h-[80px] py-2 justify-between border-b border-slate-100 dark:border-slate-800/50">
+<div class="flex items-center gap-4">
+<div class="text-warning flex items-center justify-center rounded-xl bg-warning/10 shrink-0 size-12">
+<span class="material-symbols-outlined">ecg</span>
+</div>
+<div class="flex flex-col justify-center">
+<p class="text-base font-bold leading-none mb-1">Pectorals</p>
+<p class="text-[#49819c] text-[11px] font-mono uppercase tracking-tight">Last: Push (24h ago)</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-warning font-mono text-base font-bold">58%</p>
+<p class="text-[10px] text-[#49819c] font-bold uppercase">Optimum: 12h</p>
+</div>
+</div>
+<!-- Shoulders - Success -->
+<div class="flex items-center gap-4 bg-white dark:bg-slate-800/20 px-4 min-h-[80px] py-2 justify-between border-b border-slate-100 dark:border-slate-800/50">
+<div class="flex items-center gap-4">
+<div class="text-success flex items-center justify-center rounded-xl bg-success/10 shrink-0 size-12">
+<span class="material-symbols-outlined">bolt</span>
+</div>
+<div class="flex flex-col justify-center">
+<p class="text-base font-bold leading-none mb-1">Deltoids</p>
+<p class="text-[#49819c] text-[11px] font-mono uppercase tracking-tight">Last: Trained (72h ago)</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-success font-mono text-base font-bold">94%</p>
+<p class="text-[10px] text-[#49819c] font-bold uppercase">Ready</p>
+</div>
+</div>
+</div>
+</main>
+<!-- Recommended Session Card (Floating Bottom) -->
+<div class="fixed bottom-6 left-1/2 -translate-x-1/2 w-full max-w-[448px] px-4">
+<div class="gradient-border-card p-5 shadow-2xl dark:bg-background-dark">
+<div class="flex justify-between items-start mb-4">
+<div>
+<span class="bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded-full">Optimal Recommendation</span>
+<h4 class="text-xl font-bold mt-2">Active Recovery Flow</h4>
+<p class="text-[#49819c] text-sm mt-1">Focus: Lower body mobility &amp; blood flow.</p>
+</div>
+<div class="bg-primary size-12 rounded-full flex items-center justify-center text-white shadow-lg shadow-primary/40">
+<span class="material-symbols-outlined fill-1">play_arrow</span>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-2 border-t border-slate-100 dark:border-slate-800 pt-4">
+<div class="text-center">
+<p class="text-[10px] text-[#49819c] font-bold uppercase">Duration</p>
+<p class="text-sm font-mono font-bold">25m</p>
+</div>
+<div class="text-center border-x border-slate-100 dark:border-slate-800">
+<p class="text-[10px] text-[#49819c] font-bold uppercase">Intensity</p>
+<p class="text-sm font-mono font-bold">Low</p>
+</div>
+<div class="text-center">
+<p class="text-[10px] text-[#49819c] font-bold uppercase">Recovery+</p>
+<p class="text-sm font-mono font-bold text-success">+15%</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body></html>

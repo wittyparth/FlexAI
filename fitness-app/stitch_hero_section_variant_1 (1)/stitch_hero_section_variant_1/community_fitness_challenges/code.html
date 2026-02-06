@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Community Fitness Challenges</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Space Grotesk and JetBrains Mono -->
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0d7ff2",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .shadow-accent {
+            box-shadow: 0 4px 14px 0 rgba(13, 127, 242, 0.39);
+        }
+        .calistoga-style {
+            letter-spacing: -0.02em;
+            font-weight: 700;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#0d141c] dark:text-slate-100 min-h-screen">
+<div class="max-w-md mx-auto bg-background-light dark:bg-background-dark min-h-screen flex flex-col relative overflow-x-hidden">
+<!-- TopAppBar -->
+<header class="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
+<div class="flex items-center p-4 justify-between">
+<div class="text-[#0d141c] dark:text-white flex size-12 shrink-0 items-center justify-start">
+<span class="material-symbols-outlined">menu</span>
+</div>
+<h2 class="calistoga-style text-[#0d141c] dark:text-white text-2xl flex-1 text-center pr-12">Active Challenges</h2>
+</div>
+</header>
+<main class="flex-1 pb-24">
+<!-- Section: ACTIVE -->
+<div class="mt-4">
+<h3 class="text-[#0d141c] dark:text-white text-xs font-bold leading-tight tracking-[0.15em] px-6 pb-2 pt-4 uppercase opacity-60">Active</h3>
+<!-- Challenge Card 1 -->
+<div class="px-4 py-2">
+<div class="bg-white dark:bg-[#1a2632] rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden transition-all hover:shadow-md">
+<div class="w-full bg-center bg-no-repeat aspect-[16/7] bg-cover" data-alt="Athlete performing a muscle up on gymnastics rings" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDbczk2oweo7tAbL7Y_bcSt6oUmggAPU2JokKEzNVfQi7E-wrrho10inu53P92imJnMsBdxGphcReO4G9bAcgziwabIgVuZpapttL-TJW3DEPh3fjmavOWEKoyHLBee801bgru5MhVxdwmWou96CpMMoGQv-ji0TrPzkWjkAZ-pm3GVo52gNGbMqCy8eb6W2HjSrItHfcKwb18jTMmXm-RzpGBGkIuTJIslJzqEx47VNrNQ_rSnZWuEApLzW_P1mviq88_aQ_1PkvY");'>
+</div>
+<div class="p-4 flex flex-col gap-4">
+<div class="flex flex-col gap-1">
+<h4 class="text-[#0d141c] dark:text-white text-lg font-bold leading-tight">30-Day Muscle Up Prep</h4>
+<div class="flex items-center gap-2 text-[#49739c] dark:text-slate-400">
+<span class="material-symbols-outlined text-sm">groups</span>
+<span class="text-sm font-medium">1.2k Participants</span>
+</div>
+</div>
+<!-- Technical Progress Bar -->
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-end">
+<span class="text-[10px] font-bold uppercase tracking-wider text-[#49739c] dark:text-slate-500">Current Progress</span>
+<span class="font-mono text-primary text-sm font-medium">65%</span>
+</div>
+<div class="h-1.5 w-full bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+<div class="h-full bg-primary bg-gradient-to-r from-primary to-[#50a8ff] rounded-full" style="width: 65%;"></div>
+</div>
+</div>
+<button class="w-full h-11 bg-primary text-white rounded-lg font-bold text-sm shadow-accent flex items-center justify-center gap-2">
+<span>View Progress</span>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Challenge Card 2 -->
+<div class="px-4 py-2">
+<div class="bg-white dark:bg-[#1a2632] rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden">
+<div class="w-full bg-center bg-no-repeat aspect-[16/7] bg-cover" data-alt="Close up of person doing yoga stretching" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCTNdNoT1SwzJYklZoUWy4mJFoXyYtGgzNby2OREVqmh5ui3_XQsQZetOtvwH7j-JVA7hD8jPkJ_YbKfe4QwgVHFeI9q2RdYFKsoW3T4LOfOO3my7uaaQfZBvbsPmrxCvGv4G4VHFyo5Dpnt8tBNyRR2QOzZTZhbWpFS4Bp6CbosZ6MaAwAbS00k0kcQ1vBebkqLRQV-yLplskV3dhb5MPIXM9gVilzzoCbdrQehk4UOjzRBIv_rsJEJP_15rr97MWN7efemDvKcaY");'>
+</div>
+<div class="p-4 flex flex-col gap-4">
+<div class="flex flex-col gap-1">
+<h4 class="text-[#0d141c] dark:text-white text-lg font-bold leading-tight">Morning Mobility Streak</h4>
+<div class="flex items-center gap-2 text-[#49739c] dark:text-slate-400">
+<span class="material-symbols-outlined text-sm">groups</span>
+<span class="text-sm font-medium">850 Participants</span>
+</div>
+</div>
+<!-- Technical Progress Bar -->
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-end">
+<span class="text-[10px] font-bold uppercase tracking-wider text-[#49739c] dark:text-slate-500">Current Progress</span>
+<span class="font-mono text-primary text-sm font-medium">12%</span>
+</div>
+<div class="h-1.5 w-full bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+<div class="h-full bg-primary bg-gradient-to-r from-primary to-[#50a8ff] rounded-full" style="width: 12%;"></div>
+</div>
+</div>
+<button class="w-full h-11 bg-primary text-white rounded-lg font-bold text-sm shadow-accent flex items-center justify-center gap-2">
+<span>View Progress</span>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Spacer -->
+<div class="h-8"></div>
+<!-- Section: UPCOMING -->
+<div>
+<h3 class="text-[#0d141c] dark:text-white text-xs font-bold leading-tight tracking-[0.15em] px-6 pb-2 pt-4 uppercase opacity-60">Upcoming</h3>
+<!-- Upcoming Card 1 -->
+<div class="px-4 py-2">
+<div class="bg-white dark:bg-[#1a2632] rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden flex">
+<div class="w-24 h-24 shrink-0 bg-center bg-cover rounded-lg m-3" data-alt="Vibrant abstract orange and blue gradient" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAXOnVghRTjS7oYqYolrPShRm_sOq3X4y6LAxGhRsM1KKJSfZ63NAMWJ2W3_HXJZMU3jn2zwnlQJ19rELJNiNGShJnrECVUdXNAlBevG1Ctt3GCUC_s_2HEhK_YOpIQIRDJ62fh2ptid3rjhB0ndYpsiotntAFtiSai7XwmZZHRLE5fspuXu28zoOhyf5mxzAmwbEIQmdhrfkQaC_WYh7rpDZO5od4Y5I6eGsPAiRqX8JoTtCr8MKbYfLywhyQIW-tzmQz57uNlkQ8");'>
+</div>
+<div class="flex flex-col justify-center gap-1 pr-4 py-3">
+<h4 class="text-[#0d141c] dark:text-white text-base font-bold leading-tight">Summer Shred Circuit</h4>
+<p class="text-[#49739c] dark:text-slate-400 text-xs font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">calendar_today</span>
+                                Starts in 3 days
+                            </p>
+<div class="flex items-center gap-4 mt-2">
+<span class="text-[#49739c] dark:text-slate-400 text-xs font-mono">3.4k Interested</span>
+<button class="h-8 px-4 bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary rounded-lg font-bold text-xs uppercase tracking-wider">Join</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Upcoming Card 2 -->
+<div class="px-4 py-2">
+<div class="bg-white dark:bg-[#1a2632] rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden flex">
+<div class="w-24 h-24 shrink-0 bg-center bg-cover rounded-lg m-3" data-alt="Person practicing a handstand against a wall" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCX0lBVW08PwbB0VTHHwdguNtvC4SF-2-CRjn3L3u--tCUQWQzJ70J-_Z1uNlAuf6GV0u18Kphhv72t_DYYp0cuf_EUPjd649emCyftgfmZ7Uu3dF3YMXla1JDeAIKaXxE6pCCLn8omfufOujXsnWUUsS0aIeMaX1gB2ixvuR2lZ9BCEmn9-E0h6cdORjCmbK8UEvj5cu9hnGl7xEQaA7JBdEq5r209jFhSMiXnlg_x_V5dU8UlqgQhsEw60Eu1pFFoeQc4ENRC4ks");'>
+</div>
+<div class="flex flex-col justify-center gap-1 pr-4 py-3">
+<h4 class="text-[#0d141c] dark:text-white text-base font-bold leading-tight">Handstand Mastery</h4>
+<p class="text-[#49739c] dark:text-slate-400 text-xs font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">calendar_today</span>
+                                Starts in 1 week
+                            </p>
+<div class="flex items-center gap-4 mt-2">
+<span class="text-[#49739c] dark:text-slate-400 text-xs font-mono">500 Interested</span>
+<button class="h-8 px-4 bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary rounded-lg font-bold text-xs uppercase tracking-wider">Join</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- iOS Bottom Tab Bar -->
+<nav class="fixed bottom-0 w-full max-w-md bg-white/90 dark:bg-[#101922]/90 backdrop-blur-lg border-t border-gray-200 dark:border-gray-800 px-6 py-3 flex justify-between items-center z-50">
+<div class="flex flex-col items-center gap-1 text-[#49739c] dark:text-slate-400">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter">Home</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter">Challenges</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-[#49739c] dark:text-slate-400">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter">Profile</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-[#49739c] dark:text-slate-400">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter">Settings</span>
+</div>
+</nav>
+</div>
+</body></html>

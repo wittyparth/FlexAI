@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Premium Rest Timer</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Calistoga&amp;family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0d59f2",
+                        "primary-dark": "#0a46c2",
+                        "background-light": "#f8f9fc",
+                        "background-dark": "#101622",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1a2233",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "calistoga": ["Calistoga", "serif"],
+                        "mono": ["JetBrains Mono", "monospace"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem", 
+                        "lg": "1.5rem", 
+                        "xl": "2rem", 
+                        "full": "9999px"
+                    },
+                    boxShadow: {
+                        'glow': '0 0 20px -5px rgba(13, 89, 242, 0.5)',
+                        'card': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom styles for specific elements not easily handled by utilities */
+        .gradient-text {
+            background: linear-gradient(135deg, #0d59f2 0%, #00c6ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .timer-circle {
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+        
+        /* Smooth scrolling for chips */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Pulsing animation for active chip */
+        @keyframes subtle-pulse {
+            0%, 100% { box-shadow: 0 0 0 0px rgba(13, 89, 242, 0.2); }
+            50% { box-shadow: 0 0 0 4px rgba(13, 89, 242, 0.15); }
+        }
+        .animate-subtle-pulse {
+            animation: subtle-pulse 2s infinite;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-gray-900 dark:text-white font-display antialiased selection:bg-primary selection:text-white overflow-x-hidden">
+<div class="relative flex h-full min-h-screen w-full flex-col max-w-md mx-auto bg-background-light dark:bg-background-dark group/design-root">
+<!-- Header -->
+<header class="flex items-center p-4 pt-6 justify-between sticky top-0 z-10 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md">
+<button class="flex size-10 items-center justify-center rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors text-gray-900 dark:text-white">
+<span class="material-symbols-outlined" style="font-size: 24px;">arrow_back_ios_new</span>
+</button>
+<h2 class="text-xl font-calistoga text-center flex-1 text-gray-900 dark:text-white">Rest Timer</h2>
+<button class="flex h-10 px-3 items-center justify-center rounded-full text-primary font-bold text-sm hover:bg-primary/10 transition-colors">
+                Skip
+            </button>
+</header>
+<main class="flex-1 flex flex-col px-6 pb-6 pt-2">
+<!-- Timer Section -->
+<div class="relative flex flex-col items-center justify-center py-8">
+<!-- Circular Progress -->
+<div class="relative size-[280px]">
+<svg class="size-full timer-circle" viewbox="0 0 100 100">
+<!-- Track -->
+<circle class="text-gray-200 dark:text-gray-800 stroke-current" cx="50" cy="50" fill="transparent" r="46" stroke-width="4"></circle>
+<!-- Progress -->
+<circle class="text-primary stroke-current" cx="50" cy="50" fill="transparent" r="46" stroke-dasharray="289.02652413" stroke-dashoffset="72.25" stroke-linecap="round" stroke-width="4"></circle>
+<!-- Decor Gradient Definition (Simulated via class if needed, or keeping solid primary as requested for cleanness, can use gradient stroke via defs if desired but solid primary usually looks cleaner on 'Minimalist Modern') -->
+</svg>
+<!-- Timer Text Overlay -->
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<h1 class="font-mono text-[64px] leading-none tracking-tight font-bold text-gray-900 dark:text-white select-none">
+                            01:30
+                        </h1>
+<p class="text-gray-400 dark:text-gray-500 font-medium text-sm mt-2">Resting...</p>
+</div>
+</div>
+<!-- Quick Actions -->
+<div class="flex gap-4 mt-6">
+<button class="flex items-center gap-1 pl-3 pr-4 py-2 rounded-full bg-white dark:bg-surface-dark border border-gray-200 dark:border-gray-700 shadow-sm active:scale-95 transition-transform hover:border-primary/50">
+<span class="material-symbols-outlined text-gray-400 text-[18px]">remove</span>
+<span class="text-sm font-bold text-gray-700 dark:text-gray-300">10s</span>
+</button>
+<button class="flex items-center gap-1 pl-3 pr-4 py-2 rounded-full bg-primary/10 dark:bg-primary/20 border border-transparent active:scale-95 transition-transform hover:bg-primary/20">
+<span class="material-symbols-outlined text-primary text-[18px]">add</span>
+<span class="text-sm font-bold text-primary">30s</span>
+</button>
+</div>
+</div>
+<!-- Set Details Section -->
+<div class="flex flex-col gap-8 mt-4">
+<!-- Set Type Chips -->
+<div class="flex flex-col gap-3">
+<h3 class="font-calistoga text-lg text-gray-900 dark:text-white">Set Type</h3>
+<div class="flex gap-3 overflow-x-auto no-scrollbar pb-2 mask-linear-fade">
+<!-- Active Chip -->
+<button class="group relative flex shrink-0 items-center justify-center rounded-full bg-primary px-5 py-2.5 shadow-glow animate-subtle-pulse transition-all">
+<span class="text-white text-sm font-semibold tracking-wide">Working</span>
+<div class="absolute -bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-white/40 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+</button>
+<!-- Inactive Chips -->
+<button class="flex shrink-0 items-center justify-center rounded-full bg-white dark:bg-surface-dark border border-gray-200 dark:border-gray-700 px-5 py-2.5 transition-all hover:border-gray-400 dark:hover:border-gray-500">
+<span class="text-gray-600 dark:text-gray-400 text-sm font-medium">Warmup</span>
+</button>
+<button class="flex shrink-0 items-center justify-center rounded-full bg-white dark:bg-surface-dark border border-gray-200 dark:border-gray-700 px-5 py-2.5 transition-all hover:border-gray-400 dark:hover:border-gray-500">
+<span class="text-gray-600 dark:text-gray-400 text-sm font-medium">Drop Set</span>
+</button>
+<button class="flex shrink-0 items-center justify-center rounded-full bg-white dark:bg-surface-dark border border-gray-200 dark:border-gray-700 px-5 py-2.5 transition-all hover:border-gray-400 dark:hover:border-gray-500">
+<span class="text-gray-600 dark:text-gray-400 text-sm font-medium">Failure</span>
+</button>
+</div>
+</div>
+<!-- RPE Slider -->
+<div class="flex flex-col gap-4">
+<div class="flex justify-between items-end">
+<h3 class="font-calistoga text-lg text-gray-900 dark:text-white">RPE <span class="font-inter text-gray-400 text-sm font-normal ml-1">Intensity</span></h3>
+<span class="text-2xl font-bold text-primary tabular-nums">8<span class="text-gray-300 dark:text-gray-600 text-lg font-normal">/10</span></span>
+</div>
+<div class="relative h-12 flex items-center select-none touch-none">
+<!-- Custom Track Background -->
+<div class="absolute w-full h-3 rounded-full overflow-hidden bg-gray-100 dark:bg-gray-800">
+<div class="w-full h-full bg-gradient-to-r from-blue-200 via-primary to-indigo-900 opacity-20 dark:opacity-40"></div>
+</div>
+<!-- Track Fill (Dynamic Width) -->
+<div class="absolute h-3 rounded-full bg-gradient-to-r from-blue-400 to-primary shadow-sm" style="width: 80%;"></div>
+<!-- Thumb -->
+<div class="absolute size-7 bg-white dark:bg-surface-light border-2 border-primary rounded-full shadow-lg flex items-center justify-center cursor-pointer hover:scale-110 transition-transform z-10" style="left: calc(80% - 14px);">
+<div class="size-2 rounded-full bg-primary"></div>
+</div>
+<!-- Ticks -->
+<div class="absolute w-full flex justify-between px-1 pointer-events-none mt-8">
+<div class="flex flex-col items-center gap-1"><div class="h-1 w-px bg-gray-300 dark:bg-gray-700"></div><span class="text-[10px] text-gray-400">1</span></div>
+<div class="flex flex-col items-center gap-1"><div class="h-1 w-px bg-gray-300 dark:bg-gray-700"></div></div>
+<div class="flex flex-col items-center gap-1"><div class="h-1 w-px bg-gray-300 dark:bg-gray-700"></div></div>
+<div class="flex flex-col items-center gap-1"><div class="h-1 w-px bg-gray-300 dark:bg-gray-700"></div></div>
+<div class="flex flex-col items-center gap-1"><div class="h-1 w-px bg-gray-300 dark:bg-gray-700"></div><span class="text-[10px] text-gray-400">5</span></div>
+<div class="flex flex-col items-center gap-1"><div class="h-1 w-px bg-gray-300 dark:bg-gray-700"></div></div>
+<div class="flex flex-col items-center gap-1"><div class="h-1 w-px bg-gray-300 dark:bg-gray-700"></div></div>
+<div class="flex flex-col items-center gap-1"><div class="h-1 w-px bg-gray-300 dark:bg-gray-700"></div></div>
+<div class="flex flex-col items-center gap-1"><div class="h-1 w-px bg-gray-300 dark:bg-gray-700"></div></div>
+<div class="flex flex-col items-center gap-1"><div class="h-1 w-px bg-gray-300 dark:bg-gray-700"></div><span class="text-[10px] text-gray-400">10</span></div>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-auto pt-8 pb-4 flex flex-col gap-6">
+<!-- Next Exercise Preview -->
+<div class="flex flex-col gap-2">
+<p class="text-xs font-bold uppercase tracking-wider text-gray-400 pl-1">Up Next</p>
+<!-- Gradient Border Card -->
+<div class="relative rounded-2xl bg-gradient-to-r from-cyan-400 via-primary to-blue-600 p-[2px] shadow-card">
+<div class="flex items-center justify-between gap-4 rounded-2xl bg-white dark:bg-surface-dark p-4 h-full w-full">
+<div class="flex flex-col gap-1">
+<h4 class="text-lg font-calistoga text-gray-900 dark:text-white leading-tight">Barbell Bench Press</h4>
+<div class="flex items-center gap-3 text-sm text-gray-500 dark:text-gray-400 font-medium">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">fitness_center</span> 185 lbs</span>
+<span class="size-1 rounded-full bg-gray-300"></span>
+<span>3 x 8</span>
+</div>
+</div>
+<div class="flex size-10 shrink-0 items-center justify-center rounded-full bg-gray-50 dark:bg-gray-800 text-gray-400 dark:text-gray-500">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Primary CTA -->
+<button class="w-full rounded-xl bg-primary hover:bg-primary-dark text-white font-bold h-14 text-lg shadow-lg shadow-blue-500/30 active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">check_circle</span>
+                    Log Set &amp; Skip Rest
+                </button>
+</div>
+</main>
+</div>
+</body></html>

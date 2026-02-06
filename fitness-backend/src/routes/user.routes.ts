@@ -51,4 +51,11 @@ router.get('/me/settings', userController.getSettings);
  */
 router.patch('/me/settings', validate(updateSettingsSchema), userController.updateSettings);
 
+/**
+ * @route   POST /api/v1/users/me/complete-onboarding
+ * @desc    Complete user onboarding and update profile
+ * @access  Private
+ */
+router.post('/me/complete-onboarding', userController.completeOnboarding);
+
 export default router;

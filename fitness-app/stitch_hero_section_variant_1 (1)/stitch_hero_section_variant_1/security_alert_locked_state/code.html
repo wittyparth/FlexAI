@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Security Alert Locked State</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Calistoga&amp;family=Inter:wght@400;500;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0da6f2",
+                        "background-light": "#f5f7f8", // Not used in this specific inverted design, but required by prompt
+                        "background-dark": "#101c22",  // Deep slate approximation
+                        "slate-deep": "#1e293b",
+                        "electric-blue": "#0da6f2",
+                        "cyan-light": "#67e8f9",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "headline": ["Calistoga", "serif"],
+                        "mono": ["JetBrains Mono", "monospace"],
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                    backgroundImage: {
+                        'dot-pattern': "radial-gradient(#ffffff20 1px, transparent 1px)",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom Dot Pattern */
+        .bg-dots {
+            background-size: 20px 20px;
+        }
+        
+        /* Gentle Pulse Animation */
+        @keyframes pulse-slow {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+        .animate-pulse-slow {
+            animation: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        /* Gradient Border Button Trick */
+        .gradient-border-button {
+            position: relative;
+            background: linear-gradient(#1e293b, #1e293b) padding-box,
+                        linear-gradient(45deg, #0da6f2, #67e8f9) border-box;
+            border: 2px solid transparent;
+        }
+        
+        /* Custom Glow */
+        .icon-glow {
+            filter: drop-shadow(0 0 15px rgba(13, 166, 242, 0.3));
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display antialiased selection:bg-primary/30 selection:text-primary">
+<div class="relative flex min-h-screen w-full flex-col bg-slate-deep dark:bg-[#1e293b] overflow-hidden">
+<!-- Dot Pattern Overlay -->
+<div class="absolute inset-0 pointer-events-none bg-dot-pattern bg-dots opacity-20"></div>
+<!-- Main Content Container -->
+<main class="relative z-10 flex flex-col items-center justify-center flex-grow px-6 py-12 w-full max-w-md mx-auto">
+<!-- Hero Visual -->
+<div class="mb-8 flex items-center justify-center">
+<div class="relative flex items-center justify-center w-32 h-32 rounded-full bg-slate-800/50 backdrop-blur-sm ring-1 ring-white/5 icon-glow">
+<span class="material-symbols-outlined text-[64px] text-electric-blue" style="font-variation-settings: 'FILL' 0, 'wght' 300;">
+                        lock
+                    </span>
+<!-- Decorative subtle circle -->
+<div class="absolute inset-0 border border-electric-blue/20 rounded-full scale-110"></div>
+</div>
+</div>
+<!-- Headline -->
+<h1 class="font-headline text-white text-[32px] leading-tight text-center mb-6 drop-shadow-lg">
+                Account Temporarily Locked
+            </h1>
+<!-- Body Text -->
+<p class="text-slate-300 text-base font-normal leading-relaxed text-center mb-10 max-w-xs mx-auto">
+                For your security, we've paused access due to multiple failed login attempts. Please wait before trying again.
+            </p>
+<!-- Countdown Timer -->
+<div class="flex flex-col items-center justify-center gap-2 mb-12">
+<span class="text-slate-400 text-sm font-medium uppercase tracking-wider">Try again in</span>
+<div class="font-mono text-electric-blue text-4xl font-medium tracking-wide animate-pulse-slow tabular-nums">
+                    14:59
+                </div>
+</div>
+<!-- Primary Action -->
+<div class="w-full space-y-4">
+<button class="gradient-border-button w-full h-14 rounded-xl flex items-center justify-center group active:scale-[0.98] transition-transform duration-100">
+<span class="text-white font-bold text-lg tracking-wide group-hover:text-electric-blue transition-colors">Contact Support</span>
+</button>
+</div>
+</main>
+<!-- Footer Action -->
+<footer class="relative z-10 w-full p-6 pb-10 text-center">
+<button class="text-slate-400 hover:text-white text-sm font-medium transition-colors cursor-pointer flex items-center justify-center gap-2 mx-auto">
+<span class="material-symbols-outlined text-[18px]">arrow_back</span>
+                Return to Login
+            </button>
+</footer>
+</div>
+</body></html>

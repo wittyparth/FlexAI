@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Onboarding Success</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Calistoga&amp;family=Epilogue:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0da6f2",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#101c22",
+                    },
+                    fontFamily: {
+                        "display": ["Epilogue", "sans-serif"],
+                        "headline": ["Calistoga", "serif"],
+                    },
+                    borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" },
+                    boxShadow: {
+                        'accent-lg': '0 10px 25px -5px rgba(13, 166, 242, 0.4), 0 8px 10px -6px rgba(13, 166, 242, 0.1)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom Dot Pattern Background */
+        .bg-dot-pattern {
+            background-image: radial-gradient(#cbd5e1 1.5px, transparent 1.5px);
+            background-size: 24px 24px;
+        }
+        .dark .bg-dot-pattern {
+            background-image: radial-gradient(#1e293b 1.5px, transparent 1.5px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="antialiased">
+<div class="relative flex min-h-screen w-full flex-col bg-background-light dark:bg-background-dark group/design-root overflow-x-hidden font-display">
+<!-- Background Effects -->
+<div class="absolute inset-0 bg-dot-pattern opacity-40 pointer-events-none z-0"></div>
+<div class="absolute -top-[10%] -left-[10%] w-[50%] h-[50%] bg-primary/10 rounded-full blur-[100px] pointer-events-none z-0"></div>
+<div class="absolute top-[40%] -right-[10%] w-[40%] h-[40%] bg-primary/5 rounded-full blur-[80px] pointer-events-none z-0"></div>
+<!-- Main Content Container -->
+<div class="relative z-10 flex flex-col flex-grow w-full max-w-md mx-auto px-6 pt-12 pb-8 h-full">
+<!-- Header Section -->
+<div class="flex flex-col items-center mb-8">
+<div class="relative mb-2">
+<h1 class="text-[#0d171c] dark:text-white text-[36px] font-headline font-normal leading-tight text-center relative z-10">
+                        You’re All Set, John!
+                    </h1>
+<!-- Pulsing Dot -->
+<span class="absolute -top-1 -right-3 flex h-3 w-3">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-3 w-3 bg-primary"></span>
+</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-base font-normal leading-normal text-center max-w-[80%]">
+                    We've built a plan tailored just for you.
+                </p>
+</div>
+<!-- Illustration/Visual -->
+<div class="w-full flex justify-center mb-10">
+<div class="relative w-40 h-40">
+<div class="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent rounded-full blur-xl animate-pulse"></div>
+<!-- Abstract Success Image -->
+<div class="w-full h-full rounded-2xl overflow-hidden bg-white/50 dark:bg-white/5 backdrop-blur-sm shadow-sm flex items-center justify-center border border-white/40 dark:border-white/10">
+<div class="w-full h-full bg-center bg-contain bg-no-repeat" data-alt="Minimalist abstract 3D icon representing fitness success and growth" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDyv8E61NaPfVd1Y-TrkOekwrBNaddatWfIxXAHllwrr0ODCtcXjGg1e_6o0wRVUn99FKLCsi0xJ0p391l0-HMXLs0nJ4PalWxhZQHUDbhnh0ljEASFMjKeFfzGD1YyfGyL-VAL8rUYpLF8XbwFE6fgbsF-wt1is7BwYvbfbhUvWK8oNgganGe7v8qB-kD3N2RMcmFeUsrdzyAYp3-W42ChkyjWUWZx5F-q7Rw8omzC9GvkRa0DLj0jr75-ebiYSJlxISSBctvzjKc");'>
+</div>
+</div>
+</div>
+</div>
+<!-- Summary Card with Gradient Border -->
+<div class="w-full mb-auto">
+<div class="relative rounded-[2rem] p-[2px] bg-gradient-to-br from-primary via-primary/40 to-transparent shadow-lg shadow-slate-200/50 dark:shadow-black/20">
+<div class="bg-white/80 dark:bg-[#15232b]/90 backdrop-blur-md rounded-[calc(2rem-2px)] p-6 flex flex-col gap-6">
+<!-- Header inside card -->
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-primary text-2xl">fitness_center</span>
+<span class="text-slate-900 dark:text-white font-bold text-lg">Your Plan</span>
+</div>
+<!-- Stats Grid -->
+<div class="grid grid-cols-1 gap-5">
+<!-- Stat 1 -->
+<div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-xl">emoji_events</span>
+</div>
+<div class="flex flex-col">
+<span class="text-slate-500 dark:text-slate-400 text-xs font-medium uppercase tracking-wider">Goal</span>
+<span class="text-slate-900 dark:text-white text-lg font-bold">Muscle Gain</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-primary/40">check_circle</span>
+</div>
+<!-- Stat 2 -->
+<div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-xl">bar_chart</span>
+</div>
+<div class="flex flex-col">
+<span class="text-slate-500 dark:text-slate-400 text-xs font-medium uppercase tracking-wider">Level</span>
+<span class="text-slate-900 dark:text-white text-lg font-bold">Intermediate</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-primary/40">check_circle</span>
+</div>
+<!-- Stat 3 -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-xl">calendar_month</span>
+</div>
+<div class="flex flex-col">
+<span class="text-slate-500 dark:text-slate-400 text-xs font-medium uppercase tracking-wider">Frequency</span>
+<span class="text-slate-900 dark:text-white text-lg font-bold">4 days/week</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-primary/40">check_circle</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Fixed Bottom CTA -->
+<div class="mt-8">
+<button class="group relative w-full overflow-hidden rounded-full p-[2px] focus:outline-none focus:ring-4 focus:ring-primary/30 transition-all duration-300 hover:scale-[1.02]">
+<!-- Button Gradient Border/Background -->
+<div class="absolute inset-0 bg-gradient-to-r from-[#0da6f2] to-[#3dbdf5]"></div>
+<div class="relative flex items-center justify-center gap-2 rounded-full bg-transparent h-14 px-8 text-white shadow-accent-lg">
+<span class="material-symbols-outlined text-[20px] group-hover:animate-bounce">bolt</span>
+<span class="text-[17px] font-bold tracking-wide">Generate Your First Workout</span>
+</div>
+</button>
+</div>
+</div>
+</div>
+</body></html>

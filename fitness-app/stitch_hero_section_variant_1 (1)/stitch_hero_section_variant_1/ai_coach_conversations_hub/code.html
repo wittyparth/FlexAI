@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI Coach Conversations Hub</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Calistoga&amp;family=JetBrains+Mono&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0d59f2",
+                        "background-light": "#f5f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "headline": ["Calistoga", "serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .fab-gradient {
+            background: linear-gradient(135deg, #0d59f2 0%, #3b82f6 100%);
+        }
+        .dot-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#0d121c] dark:text-white antialiased">
+<div class="relative mx-auto min-h-screen max-w-md bg-background-light dark:bg-background-dark overflow-x-hidden">
+<!-- TopAppBar -->
+<header class="sticky top-0 z-10 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md px-6 pt-12 pb-4">
+<div class="flex items-center justify-between mb-2">
+<div class="size-10 bg-primary/10 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">fitness_center</span>
+</div>
+<button class="p-2 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-full transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+<h1 class="font-headline text-4xl text-[#0d121c] dark:text-white">AI Coach</h1>
+</header>
+<main class="px-4 pb-32">
+<!-- List Section -->
+<div class="space-y-3 mt-4">
+<!-- Conversation Item (Swipe Action Container) -->
+<div class="relative group">
+<!-- Swipe Background (Revealed) -->
+<div class="absolute inset-0 bg-slate-200 dark:bg-slate-800 rounded-xl flex items-center justify-end px-6">
+<span class="material-symbols-outlined text-slate-500">delete</span>
+</div>
+<!-- Main Card -->
+<div class="relative bg-white dark:bg-[#1a212e] p-4 rounded-xl shadow-sm border border-black/5 flex items-center gap-4 transition-transform active:translate-x-[-20%]">
+<div class="size-14 shrink-0 rounded-full bg-cover bg-center" data-alt="Abstract blue energy muscle pattern" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAYg6y5N1yKs3k38dSUufxmvHJ3Y5GbmZM2QWtxlCLvFs6MpWJZ-7E7fQFHwF7UD99zp9fkmJe7JV6zUo7DxBLY6GcS3z0IE68G2TiGAkyywbZrjuwTs1QYibXFrXEFaLXEF7nYS31j9MNDZ2OIOF1ImZ4aOoXtsl9_FjsC5cUeDN0WWKw2TnJ8RNh4l-SOa6PbFAb1IuUC2nHf6EtJUYtYWOOz544F5iOUPikXH7Ur9Cuz0Mk_d9k3-OARBa_cqIZ3K8JqTQ4LKqw");'></div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between mb-1">
+<h3 class="text-base font-semibold truncate">Muscle Recovery Plan</h3>
+<span class="font-mono text-[10px] text-[#49659c] dark:text-slate-400">14:22:05</span>
+</div>
+<p class="text-sm text-[#49659c] dark:text-slate-400 line-clamp-1">Your deload week starts tomorrow, focus on mobility...</p>
+</div>
+</div>
+</div>
+<!-- Conversation Item -->
+<div class="relative bg-white dark:bg-[#1a212e] p-4 rounded-xl shadow-sm border border-black/5 flex items-center gap-4">
+<div class="size-14 shrink-0 rounded-full bg-cover bg-center" data-alt="Abstract handstand silhouette graphic" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBQeWHCpn3b64TNMxFj5Pa75To0M1kuXb76ifAHUBnqLR6ukBZCG4yNdAyaV_f1QlJDa5AcPInOUWS-ZhiOXoKPlzXiftx4AOi3ohyIgBBQrCyPEMT9SuPXCNK_zNjcAjKprcrm6Te2vOkSzNcX8oqKstpG5vonhLcyRDzAmHpGjr_BLnFh3ObbYAPB9U17SDgWVUL_td4PWb4yecc8PU8Pu0vA31lkA3leiRSz_3rRxzfPCB0L-GaLxGtxiKKS2ZdZrGTmAAWtllc");'></div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between mb-1">
+<h3 class="text-base font-semibold truncate">Handstand Progression</h3>
+<span class="font-mono text-[10px] text-[#49659c] dark:text-slate-400">YESTERDAY_08:45</span>
+</div>
+<p class="text-sm text-[#49659c] dark:text-slate-400 line-clamp-1">Make sure to focus on finger tension when balancing...</p>
+</div>
+</div>
+<!-- Conversation Item -->
+<div class="relative bg-white dark:bg-[#1a212e] p-4 rounded-xl shadow-sm border border-black/5 flex items-center gap-4">
+<div class="size-14 shrink-0 rounded-full bg-cover bg-center" data-alt="Green healthy macro nutrition icon" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDc7xPV5F1I_rM1yBDdd6viy5J39Br6v3bQcHgAm82j_KyDisQH1kNfsR7bTifNrzIwU2nEUltmFshzHxp7YEdN5jK_rBI3JhESFldRBir6hklXXKnYxZtAL30QIPBb2m9TOVj_adXaTXYh4N2PnRi2EKkTd6vPg_5g7zeY-YYCyUQMq6j6pis0W1giMmALdxOCHEXiNs7kbN3jdH_E27OtBWY0U3julVkukmgcBe8abcXwHyul0aB9wyVmY2PrOeq11jY-MC2IA9k");'></div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between mb-1">
+<h3 class="text-base font-semibold truncate">Macros for cutting</h3>
+<span class="font-mono text-[10px] text-[#49659c] dark:text-slate-400">01_SEP_23</span>
+</div>
+<p class="text-sm text-[#49659c] dark:text-slate-400 line-clamp-1">Based on your height and weight, you should target...</p>
+</div>
+</div>
+</div>
+<!-- SectionHeader: Suggestions -->
+<div class="mt-12 mb-6">
+<div class="flex items-center gap-2 px-2">
+<div class="size-2 rounded-full bg-primary dot-pulse"></div>
+<h3 class="text-[#0d121c] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Try asking...</h3>
+</div>
+</div>
+<!-- Empty State Suggestions -->
+<div class="grid grid-cols-1 gap-4">
+<button class="flex items-center justify-between p-5 bg-primary/5 border border-primary/10 rounded-xl text-left hover:bg-primary/10 transition-colors group">
+<span class="font-headline text-xl text-primary">How do I deload?</span>
+<span class="material-symbols-outlined text-primary opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
+</button>
+<button class="flex items-center justify-between p-5 bg-primary/5 border border-primary/10 rounded-xl text-left hover:bg-primary/10 transition-colors group">
+<span class="font-headline text-xl text-primary">Perfect my form</span>
+<span class="material-symbols-outlined text-primary opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
+</button>
+<button class="flex items-center justify-between p-5 bg-primary/5 border border-primary/10 rounded-xl text-left hover:bg-primary/10 transition-colors group">
+<span class="font-headline text-xl text-primary">Nutrition for endurance</span>
+<span class="material-symbols-outlined text-primary opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
+</button>
+</div>
+</main>
+<!-- Signature Floating Action Button -->
+<div class="fixed bottom-8 right-8">
+<button class="fab-gradient size-16 rounded-full shadow-lg shadow-primary/40 flex items-center justify-center text-white hover:scale-105 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-3xl font-bold">add</span>
+</button>
+</div>
+<!-- Navigation Bar (iOS Style) -->
+<nav class="fixed bottom-0 left-0 right-0 bg-white/80 dark:bg-[#1a212e]/80 backdrop-blur-lg border-t border-black/5 px-8 py-4 flex justify-between items-center max-w-md mx-auto">
+<div class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">chat_bubble</span>
+<span class="text-[10px] font-bold uppercase tracking-wider">Chats</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-symbols-outlined">explore</span>
+<span class="text-[10px] font-bold uppercase tracking-wider">Plans</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-symbols-outlined">analytics</span>
+<span class="text-[10px] font-bold uppercase tracking-wider">Stats</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-slate-400">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-bold uppercase tracking-wider">Profile</span>
+</div>
+</nav>
+</div>
+</body></html>

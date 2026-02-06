@@ -18,7 +18,8 @@ import { fontFamilies } from '../../theme/typography';
 import { colors as themeColors } from '../../theme/colors';
 import { useWorkoutStore } from '../../store/workoutStore';
 import { useShallow } from 'zustand/react/shallow';
-import { useDashboardStats, useRoutines } from '../../hooks';
+// import { useDashboardStats, useRoutines } from '../../hooks';
+import { WORKOUT_STATS, ACTIVE_ROUTINES } from '../../data/mockData';
 // Native date formatter
 const formatDate = (dateString: string | Date) => {
     const d = new Date(dateString);
@@ -101,19 +102,30 @@ export function WorkoutHubScreen({ navigation }: any) {
     })));
 
     // Data Fetching
-    const {
-        data: dashboardStats,
-        isLoading: isStatsLoading,
-        refetch: refetchStats,
-        isRefetching: isStatsRefetching
-    } = useDashboardStats();
+    // const {
+    //     data: dashboardStats,
+    //     isLoading: isStatsLoading,
+    //     refetch: refetchStats,
+    //     isRefetching: isStatsRefetching
+    // } = useDashboardStats();
 
-    const {
-        data: routinesData,
-        isLoading: isRoutinesLoading,
-        refetch: refetchRoutines,
-        isRefetching: isRoutinesRefetching
-    } = useRoutines({ limit: 3, isTemplate: true });
+    // const {
+    //     data: routinesData,
+    //     isLoading: isRoutinesLoading,
+    //     refetch: refetchRoutines,
+    //     isRefetching: isRoutinesRefetching
+    // } = useRoutines({ limit: 3, isTemplate: true });
+
+    // Mock Data
+    const dashboardStats = WORKOUT_STATS;
+    const isStatsLoading = false;
+    const refetchStats = () => {};
+    const isStatsRefetching = false;
+
+    const routinesData = { data: { routines: ACTIVE_ROUTINES } };
+    const isRoutinesLoading = false;
+    const refetchRoutines = () => {};
+    const isRoutinesRefetching = false;
 
     // Combined refreshing state
     const isRefreshing = isStatsRefetching || isRoutinesRefetching;

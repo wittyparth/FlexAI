@@ -1,19 +1,22 @@
 /**
  * Card Component (Theme-Aware)
  * 
- * Elevated surface with optional gradient border for featured items
+ * Premium Design System Cards
+ * Variants: default, elevated, flat, glass, feature
  */
 
 import React from 'react';
 import { View, StyleSheet, ViewStyle, StyleProp } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useColors } from '../../hooks';
-import { borderRadius, shadows, spacing } from '../../constants';
+import { borderRadius, spacing } from '../../constants';
+// Shadows handling handled via useColors or direct import
+import { SHADOWS_LIGHT, SHADOWS_DARK } from '../../constants/shadows';
+import { useTheme } from '../../contexts';
 
 interface CardProps {
     children: React.ReactNode;
-    variant?: 'default' | 'elevated' | 'featured';
-    padding?: 'none' | 'sm' | 'md' | 'lg';
+    variant?: 'default' | 'elevated' | 'flat' | 'glass' | 'feature';
+    padding?: 'none' | 'sm' | 'md' | 'lg' | 'xl';
     style?: StyleProp<ViewStyle>;
 }
 
@@ -24,42 +27,63 @@ export function Card({
     style,
 }: CardProps) {
     const colors = useColors();
+    const { isDark } = useTheme();
+    const shadows = isDark ? SHADOWS_DARK : SHADOWS_LIGHT;
 
     const paddingValue = {
         none: 0,
-        sm: spacing[3],
-        md: spacing[5],
-        lg: spacing[6],
+        sm: spacing[2],  // 8px
+        md: spacing[4],  // 16px
+        lg: spacing[6],  // 24px
+        xl: spacing[8],  // 32px
     }[padding];
 
-    // Featured card with gradient border
-    if (variant === 'featured') {
-        return (
-            <LinearGradient
-                colors={(colors.primary.gradient || [colors.primary.main, colors.primary.light]) as any}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 1 }}
-                style={[styles.gradientBorder, shadows.accent]}
-            >
-                <View style={[
-                    styles.featuredInner,
-                    { padding: paddingValue, backgroundColor: colors.card }
-                ]}>
-                    {children}
-                </View>
-            </LinearGradient>
-        );
-    }
+    const getVariantStyle = (): ViewStyle => {
+        switch (variant) {
+            case 'elevated':
+                return {
+                    backgroundColor: colors.background.card,
+                    ...shadows.lg,
+                    borderWidth: 0,
+                };
+            case 'flat':
+                return {
+                    backgroundColor: colors.background.card,
+                    borderWidth: 1,
+                    borderColor: colors.border.default,
+                    elevation: 0,
+                    shadowOpacity: 0,
+                };
+            case 'glass':
+                return {
+                    backgroundColor: isDark ? 'rgba(31, 41, 55, 0.7)' : 'rgba(255, 255, 255, 0.7)',
+                    borderWidth: 1,
+                    borderColor: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.5)',
+                    ...shadows.md,
+                };
+            case 'feature':
+                return {
+                    backgroundColor: colors.primary[50] + '80', // Transparent primary
+                    borderColor: colors.primary[200],
+                    borderWidth: 1,
+                    ...shadows.colored,
+                };
+            case 'default':
+            default:
+                return {
+                    backgroundColor: colors.background.card,
+                    ...shadows.md,
+                    borderWidth: 0,
+                };
+        }
+    };
 
     return (
         <View style={[
             styles.base,
-            {
-                backgroundColor: colors.card,
-                borderColor: colors.border,
-                padding: paddingValue,
-            },
-            variant === 'elevated' && shadows.lg,
+            { borderRadius: borderRadius.xl }, // 20px
+            getVariantStyle(),
+            { padding: paddingValue },
             style,
         ]}>
             {children}
@@ -69,15 +93,7 @@ export function Card({
 
 const styles = StyleSheet.create({
     base: {
-        borderRadius: borderRadius.xl,
-        borderWidth: 1,
-        ...shadows.md,
-    },
-    gradientBorder: {
-        borderRadius: borderRadius.xl,
-        padding: 2,
-    },
-    featuredInner: {
-        borderRadius: borderRadius.xl - 2,
+        width: '100%',
+        overflow: 'hidden', // For borderRadius
     },
 });

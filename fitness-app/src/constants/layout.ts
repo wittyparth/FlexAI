@@ -1,112 +1,81 @@
 /**
- * FitTrack Design System - Spacing & Layout
+ * Premium FitTrack Design System - Layout Tokens
+ * 
+ * Spacing: 8pt grid (base unit: 4px)
+ * Radius: Consistent rounded corners
  */
 
-// ==========================================
-// Spacing Scale (4px base unit)
-// ==========================================
+// Spacing System (multiples of 4)
+export const SPACING = {
+  xs: 4,
+  sm: 8,
+  md: 12,
+  base: 16,
+  lg: 20,
+  xl: 24,
+  xxl: 32,
+  xxxl: 40,
+  huge: 48,
+  massive: 64,
+} as const;
+
+// Border Radius System
+export const RADIUS = {
+  none: 0,
+  xs: 4,
+  sm: 8,
+  md: 12,
+  lg: 16,
+  xl: 20,
+  xxl: 24,
+  full: 999, // Pills/Circles
+} as const;
+
+// Legacy mappings for backward compatibility
 export const spacing = {
   0: 0,
-  1: 4,
-  2: 8,
-  3: 12,
-  4: 16,
-  5: 20,
-  6: 24,
-  7: 28,
-  8: 32,
-  10: 40,
-  12: 48,
-  14: 56,
-  16: 64,
-  20: 80,
-  24: 96,
-} as const;
+  1: SPACING.xs,      // 4
+  2: SPACING.sm,      // 8
+  3: SPACING.md,      // 12
+  4: SPACING.base,    // 16
+  5: SPACING.lg,      // 20
+  6: SPACING.xl,      // 24
+  8: SPACING.xxl,     // 32
+  10: SPACING.xxxl,   // 40
+  12: SPACING.huge,   // 48
+  16: SPACING.massive,// 64
+};
 
-// ==========================================
-// Border Radius
-// ==========================================
 export const borderRadius = {
-  none: 0,
-  sm: 4,
-  md: 8,
-  lg: 12,
-  xl: 16,
-  '2xl': 20,
-  '3xl': 24,
-  full: 999,
-} as const;
+  none: RADIUS.none,
+  sm: RADIUS.xs,    // 4
+  md: RADIUS.sm,    // 8
+  lg: RADIUS.md,    // 12
+  xl: RADIUS.lg,    // 16
+  '2xl': RADIUS.xl, // 20
+  '3xl': RADIUS.xxl,// 24
+  full: RADIUS.full,
+};
 
-// ==========================================
-// Shadows (React Native compatible)
-// ==========================================
-export const shadows = {
-  sm: {
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.06,
-    shadowRadius: 3,
-    elevation: 2,
-  },
-  md: {
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.07,
-    shadowRadius: 6,
-    elevation: 4,
-  },
-  lg: {
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.08,
-    shadowRadius: 15,
-    elevation: 8,
-  },
-  xl: {
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 20 },
-    shadowOpacity: 0.1,
-    shadowRadius: 25,
-    elevation: 12,
-  },
-  accent: {
-    shadowColor: '#0052FF',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 14,
-    elevation: 6,
-  },
-  accentLarge: {
-    shadowColor: '#0052FF',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.35,
-    shadowRadius: 24,
-    elevation: 10,
-  },
-} as const;
-
-// ==========================================
-// Component Sizing
-// ==========================================
 export const sizing = {
-  touchTarget: 44,      // Minimum touch target (44x44)
-  touchTargetLarge: 56, // Large touch target (buttons)
-  inputHeight: 56,      // Standard input height
-  buttonHeight: 56,     // Standard button height
-  iconSmall: 20,
-  iconMedium: 24,
-  iconLarge: 28,
-  avatarSmall: 32,
-  avatarMedium: 48,
-  avatarLarge: 80,
-} as const;
+  icon: {
+    sm: 16,
+    md: 24,
+    lg: 32,
+    xl: 48,
+  },
+  touchTarget: 48,
+  inputHeight: 48, // Added for Input component
+  buttonHeight: 48, // Added for Button component
+};
 
-// ==========================================
-// Animation Durations (ms)
-// ==========================================
+export const layout = {
+    spacing,
+    radius: borderRadius,
+    sizing,
+};
 export const duration = {
-  fast: 150,
-  normal: 200,
-  slow: 300,
-  entrance: 700,
-} as const;
+  fast: 200,
+  normal: 300,
+  slow: 500,
+};

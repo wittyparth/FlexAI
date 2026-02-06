@@ -58,6 +58,13 @@ import {
 // Main Navigation with Drawer
 import { AppDrawerNavigator } from './src/navigation/AppDrawerNavigator';
 
+// ============================================================================
+// DEV MODE: Auth Bypass Flag
+// Set to true to skip authentication and go directly to dashboard
+// Set to false when ready to integrate backend authentication
+// ============================================================================
+const DEV_BYPASS_AUTH = true;
+
 type AuthStackParamList = {
   Welcome: undefined;
   Login: undefined;
@@ -152,24 +159,39 @@ function RootNavigator() {
   const isLoading = authStore((state) => state.isLoading);
   const { isDark } = useTheme();
 
-  // Hydrate auth state on mount
+  // Hydrate auth state on mount (only when not bypassing auth)
   useEffect(() => {
-    console.log('🚀 [ROOT NAV] Mounting, hydrating auth state...');
-    authStore.getState().hydrate();
+    if (!DEV_BYPASS_AUTH) {
+      console.log('🚀 [ROOT NAV] Mounting, hydrating auth state...');
+      authStore.getState().hydrate();
+    } else {
+      console.log('🔧 [DEV MODE] Auth bypass enabled - skipping hydration');
+    }
   }, []);
 
   // Log auth state changes
   useEffect(() => {
-    console.log('🔄 [ROOT NAV] Auth state changed:', {
-      isAuthenticated,
-      isLoading,
-      hasUser: !!user,
-      isOnboarded: user?.onboardingCompleted,
-    });
+    if (!DEV_BYPASS_AUTH) {
+      console.log('🔄 [ROOT NAV] Auth state changed:', {
+        isAuthenticated,
+        isLoading,
+        hasUser: !!user,
+        isOnboarded: user?.onboardingCompleted,
+      });
+    }
   }, [isAuthenticated, isLoading, user]);
 
-  // Authentication is now properly integrated
-  // Disable the dev bypass to enable proper auth flow
+  // DEV MODE: Bypass auth and go directly to dashboard
+  if (DEV_BYPASS_AUTH) {
+    console.log('🔧 [DEV MODE] Bypassing auth - going directly to dashboard');
+    return (
+      <NavigationContainer>
+        <RootStack.Navigator screenOptions={{ headerShown: false }}>
+          <RootStack.Screen name="Main" component={AppDrawerNavigator} />
+        </RootStack.Navigator>
+      </NavigationContainer>
+    );
+  }
 
   // Show loading while checking auth state - MUST wait for hydration
   if (isLoading) {

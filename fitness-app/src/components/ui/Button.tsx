@@ -1,10 +1,8 @@
 /**
  * Button Component (Theme-Aware)
  * 
- * Variants:
- * - primary: Gradient background with accent shadow
- * - secondary: Outline style with border
- * - ghost: No background, minimal style
+ * Premium Design System Buttons
+ * Variants match style guide: primary, secondary, tertiary (ghost), destructive
  */
 
 import React from 'react';
@@ -13,19 +11,20 @@ import {
     Text,
     StyleSheet,
     ViewStyle,
-    TextStyle,
     ActivityIndicator,
-    View
+    View,
+    TextStyle
 } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useColors } from '../../hooks';
-import { fonts, fontSize, borderRadius, shadows, sizing } from '../../constants';
+import { typography, borderRadius, spacing } from '../../constants';
+// shadows import might be needed if not using colors.shadow
+import { SHADOWS_LIGHT as SHADOWS } from '../../constants/shadows';
 
 interface ButtonProps {
     title: string;
     onPress: () => void;
-    variant?: 'primary' | 'secondary' | 'ghost';
-    size?: 'default' | 'large';
+    variant?: 'primary' | 'secondary' | 'tertiary' | 'destructive' | 'ghost'; // ghost alias for tertiary
+    size?: 'default' | 'small' | 'large';
     disabled?: boolean;
     loading?: boolean;
     icon?: React.ReactNode;
@@ -49,118 +48,132 @@ export function Button({
     const colors = useColors();
     const isDisabled = disabled || loading;
 
-    const content = (
-        <View style={styles.content}>
-            {loading ? (
-                <ActivityIndicator
-                    color={variant === 'primary' ? '#FFFFFF' : colors.primary.main}
-                />
-            ) : (
-                <>
-                    {icon && iconPosition === 'left' && <View style={styles.iconLeft}>{icon}</View>}
-                    <Text style={[
-                        styles.text,
-                        size === 'large' && styles.textLarge,
-                        variant === 'secondary' && { color: colors.foreground },
-                        variant === 'ghost' && { color: colors.mutedForeground },
-                        isDisabled && { color: colors.slate[400] },
-                    ]}>
-                        {title}
-                    </Text>
-                    {icon && iconPosition === 'right' && <View style={styles.iconRight}>{icon}</View>}
-                </>
-            )}
-        </View>
-    );
+    // Map 'ghost' to 'tertiary' for backward compatibility
+    const activeVariant = variant === 'ghost' ? 'tertiary' : variant;
 
-    const baseStyle: ViewStyle[] = [
-        styles.base,
-        fullWidth && styles.fullWidth,
-        isDisabled && styles.disabled,
-        style,
-    ].filter(Boolean) as ViewStyle[];
+    // Dynamic Styles based on variant
+    const getVariantStyle = (): ViewStyle => {
+        switch (activeVariant) {
+            case 'primary':
+                return {
+                    backgroundColor: colors.primary[500],
+                    ...SHADOWS.md, // Use token shadow directly
+                };
+            case 'secondary':
+                return {
+                    backgroundColor: 'transparent',
+                    borderWidth: 1.5,
+                    borderColor: colors.primary[500],
+                };
+            case 'tertiary':
+                return {
+                    backgroundColor: 'transparent',
+                };
+            case 'destructive':
+                return {
+                    backgroundColor: colors.error,
+                    ...SHADOWS.md, // Use token shadow directly
+                };
+            default:
+                return {};
+        }
+    };
 
-    if (variant === 'primary') {
-        return (
-            <TouchableOpacity
-                onPress={onPress}
-                disabled={isDisabled}
-                activeOpacity={0.9}
-                style={[...baseStyle, shadows.accent]}
-            >
-                <LinearGradient
-                    colors={(isDisabled ? ['#94A3B8', '#94A3B8'] : (colors.primary.gradient || [colors.primary.main || '#0052FF', colors.primary.light || '#4D7CFF'])) as any}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 0 }}
-                    style={styles.gradient}
-                >
-                    {content}
-                </LinearGradient>
-            </TouchableOpacity>
-        );
-    }
+    const getTextStyle = (): TextStyle => {
+        switch (activeVariant) {
+            case 'primary':
+            case 'destructive':
+                return { 
+                    color: colors.text.inverse 
+                };
+            case 'secondary':
+            case 'tertiary':
+                return { 
+                    color: colors.primary[500] 
+                };
+            default:
+                return { color: colors.text.primary };
+        }
+    };
 
-    if (variant === 'secondary') {
-        return (
-            <TouchableOpacity
-                onPress={onPress}
-                disabled={isDisabled}
-                activeOpacity={0.7}
-                style={[
-                    ...baseStyle,
-                    styles.secondary,
-                    { borderColor: colors.border },
-                ]}
-            >
-                {content}
-            </TouchableOpacity>
-        );
-    }
+    const getSizeStyle = (): ViewStyle => {
+        switch (size) {
+            case 'small':
+                return {
+                    paddingVertical: spacing[2], // 8px
+                    paddingHorizontal: spacing[4], // 16px
+                    minHeight: 36,
+                };
+            case 'large':
+                return {
+                    paddingVertical: spacing[4], // 16px
+                    paddingHorizontal: spacing[8], // 32px
+                    minHeight: 56,
+                };
+            case 'default':
+            default:
+                return {
+                    paddingVertical: spacing[3], // 12px
+                    paddingHorizontal: spacing[6], // 24px
+                    minHeight: 48,
+                };
+        }
+    };
 
-    // Ghost variant
     return (
         <TouchableOpacity
             onPress={onPress}
             disabled={isDisabled}
-            activeOpacity={0.7}
-            style={[...baseStyle, styles.ghost]}
+            activeOpacity={0.8}
+            style={[
+                styles.base,
+                getVariantStyle(),
+                getSizeStyle(),
+                fullWidth && styles.fullWidth,
+                isDisabled && styles.disabled,
+                style,
+            ]}
         >
-            {content}
+            <View style={styles.content}>
+                {loading ? (
+                    <ActivityIndicator
+                        color={activeVariant === 'secondary' || activeVariant === 'tertiary' ? colors.primary[500] : '#FFFFFF'}
+                        size="small"
+                    />
+                ) : (
+                    <>
+                        {icon && iconPosition === 'left' && <View style={styles.iconLeft}>{icon}</View>}
+                        <Text style={[
+                            styles.text,
+                            size === 'small' && styles.textSmall,
+                            getTextStyle(),
+                            isDisabled && { color: colors.text.tertiary },
+                        ]}>
+                            {title}
+                        </Text>
+                        {icon && iconPosition === 'right' && <View style={styles.iconRight}>{icon}</View>}
+                    </>
+                )}
+            </View>
         </TouchableOpacity>
     );
 }
 
 const styles = StyleSheet.create({
     base: {
-        borderRadius: borderRadius.xl,
-        overflow: 'hidden',
+        borderRadius: borderRadius.md, // Match Premium Guide (12px)
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
     },
     fullWidth: {
         width: '100%',
     },
     disabled: {
-        opacity: 0.6,
-    },
-    gradient: {
-        height: sizing.buttonHeight,
-        justifyContent: 'center',
-        alignItems: 'center',
-        paddingHorizontal: 24,
-    },
-    secondary: {
-        height: sizing.buttonHeight,
-        justifyContent: 'center',
-        alignItems: 'center',
-        paddingHorizontal: 24,
-        borderWidth: 1,
-        backgroundColor: 'transparent',
-    },
-    ghost: {
-        height: sizing.buttonHeight,
-        justifyContent: 'center',
-        alignItems: 'center',
-        paddingHorizontal: 16,
-        backgroundColor: 'transparent',
+        opacity: 0.5,
+        backgroundColor: '#E2E8F0', // Slate 200 fallback
+        borderWidth: 0,
+        elevation: 0,
     },
     content: {
         flexDirection: 'row',
@@ -168,12 +181,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     text: {
-        fontFamily: fonts.bodyMedium,
-        fontSize: fontSize.base,
-        color: '#FFFFFF',
+        ...typography.button,
+        textAlign: 'center',
     },
-    textLarge: {
-        fontSize: fontSize.lg,
+    textSmall: {
+        fontSize: 14,
     },
     iconLeft: {
         marginRight: 8,

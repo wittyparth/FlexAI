@@ -80,48 +80,12 @@ const FONTS = {
     mono: 'JetBrainsMono',
 };
 
-// =============================================================================
-// DUMMY DATA - For UI demonstration
-// =============================================================================
 
-const DUMMY_USER = {
-    firstName: 'John',
-    streak: 23,
-    bestStreak: 45,
-};
-
-const DUMMY_METRICS = {
-    weeklyVolume: 52400,
-    bestStreak: 45,
-    recovery: 'Fresh',
-};
-
-const DUMMY_RECENT_WORKOUTS = [
-    {
-        id: '1',
-        name: 'Push Day A',
-        date: 'Yesterday',
-        volume: 12450,
-        hasPR: true,
-        iconName: 'ruler' as const,
-    },
-    {
-        id: '2',
-        name: 'Pull Hypertrophy',
-        date: '3 days ago',
-        volume: 10200,
-        hasPR: false,
-        iconName: 'yoga' as const,
-    },
-    {
-        id: '3',
-        name: 'Legs & Core',
-        date: '5 days ago',
-        volume: 15600,
-        hasPR: true,
-        iconName: 'run' as const,
-    },
-];
+import {
+    DUMMY_USER,
+    DUMMY_METRICS,
+    DUMMY_RECENT_WORKOUTS,
+} from '../../data/mockData';
 
 const QUICK_ACTIONS = [
     { id: 'templates', label: 'Templates', iconName: 'file-document-outline' as const, route: 'RoutineList' },
@@ -129,6 +93,7 @@ const QUICK_ACTIONS = [
     { id: 'progress', label: 'Progress', iconName: 'chart-line' as const, route: 'StatsScreen' },
     { id: 'coach', label: 'Coach', iconName: 'account-outline' as const, route: 'AICoachChat' },
 ];
+
 
 // =============================================================================
 // HELPER FUNCTIONS

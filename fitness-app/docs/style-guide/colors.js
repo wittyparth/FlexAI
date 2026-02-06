@@ -1,9 +1,5 @@
-/**
- * Premium FitTrack Design System - Color Tokens
- * 
- * Design: Premium Fintech / Banking Aesthetic
- * Philosophy: Trust (Blue), Growth (Green), Professionalism (Neutrals)
- */
+// theme/colors.js
+// Premium Banking App Color System
 
 export const COLORS_LIGHT = {
   // Primary Colors (Blue - Trust & Finance)
@@ -13,7 +9,7 @@ export const COLORS_LIGHT = {
     200: '#90CAF9',
     300: '#64B5F6',
     400: '#42A5F5',
-    500: '#2196F3', // Main primary
+    500: '#2196F3', // Main primary color
     600: '#1E88E5',
     700: '#1976D2',
     800: '#1565C0',
@@ -27,7 +23,7 @@ export const COLORS_LIGHT = {
     200: '#A5D6A7',
     300: '#81C784',
     400: '#66BB6A',
-    500: '#4CAF50', // Main secondary
+    500: '#4CAF50', // Main secondary color
     600: '#43A047',
     700: '#388E3C',
     800: '#2E7D32',
@@ -93,9 +89,6 @@ export const COLORS_LIGHT = {
     xl: 'rgba(0, 0, 0, 0.2)',
     colored: 'rgba(33, 150, 243, 0.2)',
   },
-
-  // Legacy/Migration Support
-  transparent: 'transparent',
 };
 
 export const COLORS_DARK = {
@@ -113,7 +106,7 @@ export const COLORS_DARK = {
     900: '#E3F2FD',
   },
 
-  // Secondary Colors
+  // Secondary Colors (Lighter in dark mode)
   secondary: {
     50: '#1B5E20',
     100: '#2E7D32',
@@ -143,7 +136,7 @@ export const COLORS_DARK = {
     950: '#FFFFFF',   // Pure white
   },
 
-  // Semantic Colors
+  // Semantic Colors (Lighter for dark mode)
   success: '#34D399',
   warning: '#FBBF24',
   error: '#F87171',
@@ -178,7 +171,7 @@ export const COLORS_DARK = {
     focus: '#42A5F5',
   },
 
-  // Shadow Colors
+  // Shadow Colors (More pronounced in dark mode)
   shadow: {
     sm: 'rgba(0, 0, 0, 0.3)',
     md: 'rgba(0, 0, 0, 0.4)',
@@ -186,90 +179,47 @@ export const COLORS_DARK = {
     xl: 'rgba(0, 0, 0, 0.6)',
     colored: 'rgba(66, 165, 245, 0.3)',
   },
-
-  // Legacy/Migration Support
-  transparent: 'transparent',
 };
 
 // Gradient Definitions
 export const GRADIENTS = {
+  // Primary Gradient (Blue)
   primary: {
-    light: ['#2196F3', '#1976D2'] as const,
-    dark: ['#42A5F5', '#2196F3'] as const,
+    light: ['#2196F3', '#1976D2'],
+    dark: ['#42A5F5', '#2196F3'],
+    start: { x: 0, y: 0 },
+    end: { x: 1, y: 1 },
   },
+
+  // Success Gradient (Green)
   success: {
-    light: ['#4CAF50', '#388E3C'] as const,
-    dark: ['#66BB6A', '#4CAF50'] as const,
+    light: ['#4CAF50', '#388E3C'],
+    dark: ['#66BB6A', '#4CAF50'],
+    start: { x: 0, y: 0 },
+    end: { x: 1, y: 1 },
   },
+
+  // Warm Gradient (Red-Orange)
   warm: {
-    light: ['#FF6B6B', '#FF8E53'] as const,
-    dark: ['#FF8E53', '#FF6B6B'] as const,
+    light: ['#FF6B6B', '#FF8E53'],
+    dark: ['#FF8E53', '#FF6B6B'],
+    start: { x: 0, y: 0 },
+    end: { x: 1, y: 1 },
   },
+
+  // Cool Gradient (Purple)
   cool: {
-    light: ['#667EEA', '#764BA2'] as const,
-    dark: ['#764BA2', '#667EEA'] as const,
+    light: ['#667EEA', '#764BA2'],
+    dark: ['#764BA2', '#667EEA'],
+    start: { x: 0, y: 0 },
+    end: { x: 1, y: 1 },
   },
+
+  // Dark Overlay (for images)
   darkOverlay: {
-    light: ['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.7)'] as const,
-    dark: ['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.9)'] as const,
+    light: ['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.7)'],
+    dark: ['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.9)'],
+    start: { x: 0, y: 0 },
+    end: { x: 0, y: 1 },
   },
 };
-
-// Default export for backward compatibility during migration
-export const colors = {
-    ...COLORS_LIGHT,
-    
-    // Mapped Aliases for Legacy Code
-    primary: {
-        ...COLORS_LIGHT.primary,
-        main: COLORS_LIGHT.primary[500],
-        light: COLORS_LIGHT.primary[400],
-        dark: COLORS_LIGHT.primary[600],
-        lighter: COLORS_LIGHT.primary[300],
-        gradient: GRADIENTS.primary.light,
-    },
-    
-    // Legacy objects
-    stats: {
-        pr: '#8B5CF6',
-        volume: COLORS_LIGHT.info,
-        consistency: COLORS_LIGHT.success,
-        strength: COLORS_LIGHT.error,
-    },
-    workout: {
-        active: COLORS_LIGHT.error,
-        rest: COLORS_LIGHT.warning,
-        complete: COLORS_LIGHT.success,
-        warmup: COLORS_LIGHT.info,
-    },
-    gamification: {
-        xp: '#8B5CF6',
-        streak: COLORS_LIGHT.warning,
-        level: COLORS_LIGHT.primary[500],
-        pr: COLORS_LIGHT.success,
-    },
-    
-    // Legacy Semantic mappings
-    background: COLORS_LIGHT.background.primary, // String alias
-    card: COLORS_LIGHT.background.card,          // String alias
-    border: COLORS_LIGHT.border.default,         // String alias
-    foreground: COLORS_LIGHT.text.primary,
-    muted: COLORS_LIGHT.neutral[100],
-    mutedForeground: COLORS_LIGHT.text.secondary,
-    accent: COLORS_LIGHT.primary[500],
-    accentForeground: COLORS_LIGHT.text.inverse,
-    
-    // Sidebar fallback
-    menu: {
-        item: COLORS_LIGHT.neutral[100],
-        itemActive: COLORS_LIGHT.primary[50],
-        text: COLORS_LIGHT.text.primary,
-        textActive: COLORS_LIGHT.primary[600],
-        icon: COLORS_LIGHT.primary[500],
-        iconActive: COLORS_LIGHT.primary[600],
-    },
-};
-
-export type ColorsLight = typeof COLORS_LIGHT;
-export type ColorsDark = typeof COLORS_DARK;
-export type Colors = ColorsLight; // Export Colors type for backward compatibility

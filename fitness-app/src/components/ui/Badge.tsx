@@ -1,17 +1,18 @@
 /**
  * Badge Component (Theme-Aware)
  * 
- * Section labels and status indicators
+ * Premium Design System Badges
+ * Styles: Subtle backgrounds (20% opacity) with strong text
  */
 
 import React from 'react';
 import { View, Text, StyleSheet, ViewStyle } from 'react-native';
 import { useColors } from '../../hooks';
-import { fonts, fontSize, borderRadius, spacing, letterSpacing } from '../../constants';
+import { typography, borderRadius, spacing } from '../../constants';
 
 interface BadgeProps {
     text: string;
-    variant?: 'primary' | 'success' | 'warning' | 'error' | 'muted';
+    variant?: 'primary' | 'success' | 'warning' | 'error' | 'muted' | 'info';
     showDot?: boolean;
     style?: ViewStyle;
 }
@@ -25,60 +26,59 @@ export function Badge({
     const colors = useColors();
 
     const getVariantStyles = () => {
+        // Opacity helpers would be ideal, but we'll use string concat for hex + opacity
+        // '20' = ~12% opacity (approx for subtle background)
+        // '33' = ~20% opacity
+        
+        const opacity = '33'; 
+
         switch (variant) {
             case 'success':
                 return {
-                    background: colors.successLight,
-                    border: colors.success + '30',
-                    dot: colors.success,
+                    bg: colors.success + opacity,
                     text: colors.success,
                 };
             case 'warning':
                 return {
-                    background: colors.warningLight,
-                    border: colors.warning + '30',
-                    dot: colors.warning,
+                    bg: colors.warning + opacity,
                     text: colors.warning,
                 };
             case 'error':
                 return {
-                    background: colors.errorLight,
-                    border: colors.error + '30',
-                    dot: colors.error,
+                    bg: colors.error + opacity,
                     text: colors.error,
+                };
+            case 'info':
+                return {
+                    bg: colors.info + opacity,
+                    text: colors.info,
                 };
             case 'muted':
                 return {
-                    background: colors.backgroundSecondary,
-                    border: colors.border,
-                    dot: colors.textTertiary,
-                    text: colors.textSecondary,
+                    bg: colors.neutral[100],
+                    text: colors.text.secondary,
                 };
+            case 'primary':
             default:
                 return {
-                    background: colors.primary + '08',
-                    border: colors.primary + '30',
-                    dot: colors.primary,
-                    text: colors.primary,
+                    bg: colors.primary[500] + '20',
+                    text: colors.primary[500],
                 };
         }
     };
 
-    const variantStyles = getVariantStyles();
+    const stylesValues = getVariantStyles();
 
     return (
         <View style={[
             styles.container,
-            {
-                backgroundColor: variantStyles.background,
-                borderColor: variantStyles.border,
-            },
+            { backgroundColor: stylesValues.bg },
             style,
         ]}>
-            {showDot && (
-                <View style={[styles.dot, { backgroundColor: variantStyles.dot }]} />
+            {showDot && variant !== 'muted' && (
+                <View style={[styles.dot, { backgroundColor: stylesValues.text }]} />
             )}
-            <Text style={[styles.text, { color: variantStyles.text }]}>
+            <Text style={[styles.text, { color: stylesValues.text }]}>
                 {text}
             </Text>
         </View>
@@ -89,22 +89,20 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         alignItems: 'center',
-        paddingHorizontal: spacing[5],
-        paddingVertical: spacing[2],
+        paddingHorizontal: spacing[3], // 12px
+        paddingVertical: spacing[1], // 4px
         borderRadius: borderRadius.full,
-        borderWidth: 1,
         alignSelf: 'flex-start',
     },
     dot: {
-        width: 8,
-        height: 8,
-        borderRadius: 4,
-        marginRight: spacing[3],
+        width: 6,
+        height: 6,
+        borderRadius: 3,
+        marginRight: spacing[2],
     },
     text: {
-        fontFamily: fonts.mono,
-        fontSize: fontSize.xs,
-        letterSpacing: letterSpacing.wide,
+        ...typography.caption,
+        fontWeight: '600',
         textTransform: 'uppercase',
     },
 });

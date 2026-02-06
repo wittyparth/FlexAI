@@ -13,10 +13,11 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useColors, useGlobalFeed, useToggleLike } from '../../hooks';
+import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { colors as themeColors } from '../../theme/colors';
 import { FeedPost } from '../../api/feed.api';
+import { SOCIAL_POSTS } from '../../data/mockData';
 
 const { width } = Dimensions.get('window');
 
@@ -40,32 +41,42 @@ export function SocialHomeScreen({ navigation }: any) {
     const insets = useSafeAreaInsets();
 
     // Fetch feed from backend
-    const {
-        data: feedData,
-        isLoading,
-        isError,
-        refetch,
-        isFetching,
-        fetchNextPage,
-        hasNextPage,
-    } = useGlobalFeed();
+    // Fetch feed from backend
+    // const {
+    //     data: feedData,
+    //     isLoading,
+    //     isError,
+    //     refetch,
+    //     isFetching,
+    //     fetchNextPage,
+    //     hasNextPage,
+    // } = useGlobalFeed();
+
+    // Mock Data
+    const isLoading = false;
+    const isFetching = false;
+    const hasNextPage = false;
+    const fetchNextPage = () => {};
+    const refetch = () => {};
+    const posts = SOCIAL_POSTS;
 
     // Like mutation
-    const toggleLikeMutation = useToggleLike();
+    // const toggleLikeMutation = useToggleLike();
 
     // Flatten paginated data
-    const posts = useMemo(() => {
-        if (!feedData?.pages) return [];
-        return feedData.pages.flatMap(page => page.posts);
-    }, [feedData]);
+    // const posts = useMemo(() => {
+    //     if (!feedData?.pages) return [];
+    //     return feedData.pages.flatMap(page => page.posts);
+    // }, [feedData]);
 
     const onRefresh = useCallback(() => {
-        refetch();
-    }, [refetch]);
+        // refetch();
+    }, []);
 
     const handleToggleLike = useCallback((postId: string) => {
-        toggleLikeMutation.mutate(postId);
-    }, [toggleLikeMutation]);
+        // toggleLikeMutation.mutate(postId);
+        console.log('Like toggled for', postId);
+    }, []);
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>

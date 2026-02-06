@@ -1,168 +1,199 @@
 /**
- * FitTrack Design System - Typography
+ * Premium FitTrack Design System - Typography Tokens
  * 
- * Dual-Font System:
- * - Display: Calistoga (warm, characterful serif for headlines)
- * - Body: Inter (clean, legible sans-serif for UI)
- * - Mono: JetBrains Mono (for badges, labels, technical callouts)
+ * Fonts: System (Apple/Roboto) + Monospace (Courier/Mono)
+ * Scale: H1-H5, Body, Caption, Financial
  */
 
-import { TextStyle } from 'react-native';
-import { colors } from './colors';
+import { Platform, TextStyle } from 'react-native';
 
-// ==========================================
+// Font Weights
+export const FONT_WEIGHTS = {
+  regular: '400',
+  medium: '500',
+  semibold: '600',
+  bold: '700',
+  extrabold: '800',
+} as const;
+
 // Font Families
-// ==========================================
-export const fonts = {
-  display: 'Calistoga',         // Headlines, hero text
-  body: 'Inter',                // Body text, UI elements
-  bodyMedium: 'Inter-Medium',   // Medium weight body
-  bodySemibold: 'Inter-SemiBold', // Semibold body (buttons, card titles)
-  bodyBold: 'Inter-Bold',       // Bold body
-  mono: 'JetBrainsMono',        // Section labels, badges, code
-} as const;
+export const FONTS = {
+  primary: {
+    regular: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    medium: Platform.OS === 'ios' ? 'System' : 'Roboto-Medium',
+    semibold: Platform.OS === 'ios' ? 'System' : 'Roboto-Medium', // Android fallback
+    bold: Platform.OS === 'ios' ? 'System' : 'Roboto-Bold',
+  },
+  mono: Platform.OS === 'ios' ? 'Courier' : 'monospace',
+  // Legacy backward compatibility
+  calistoga: Platform.OS === 'ios' ? 'System' : 'Roboto-Bold',
+  inter: Platform.OS === 'ios' ? 'System' : 'Roboto',
+  interMedium: Platform.OS === 'ios' ? 'System' : 'Roboto-Medium',
+  interSemiBold: Platform.OS === 'ios' ? 'System' : 'Roboto-Medium',
+  interBold: Platform.OS === 'ios' ? 'System' : 'Roboto-Bold',
+};
 
-// ==========================================
-// Font Sizes (in pixels)
-// ==========================================
-export const fontSize = {
-  xs: 12,      // Section labels (monospace, uppercase)
-  sm: 14,      // Small body text, captions
-  base: 16,    // Body text (minimum for mobile)
-  lg: 18,      // Large body, card descriptions
-  xl: 20,      // Small headings
-  '2xl': 24,   // Card titles
-  '3xl': 30,   // Section headlines (mobile)
-  '4xl': 36,   // Section headlines (tablet)
-  '5xl': 48,   // Hero headline (mobile)
-  '6xl': 60,   // Hero headline (tablet)
-} as const;
+// Typography Scale
+export const TYPOGRAPHY = {
+  // Display (Hero Text)
+  display: {
+    fontSize: 48,
+    lineHeight: 56,
+    fontWeight: FONT_WEIGHTS.bold,
+    letterSpacing: -1.5,
+    fontFamily: FONTS.primary.bold,
+  } as TextStyle,
 
-// ==========================================
-// Letter Spacing (tracking)
-// ==========================================
-export const letterSpacing = {
-  tighter: -0.8,   // Hero headlines (-0.02em equivalent)
-  tight: -0.4,     // Card titles (-0.01em equivalent)
-  normal: 0,       // Body text
-  wide: 2.4,       // Uppercase labels (0.15em for 12px)
-} as const;
+  // Headings
+  h1: {
+    fontSize: 32,
+    lineHeight: 40,
+    fontWeight: FONT_WEIGHTS.bold,
+    letterSpacing: -0.5,
+    fontFamily: FONTS.primary.bold,
+  } as TextStyle,
+  h2: {
+    fontSize: 28,
+    lineHeight: 36,
+    fontWeight: FONT_WEIGHTS.bold,
+    letterSpacing: -0.3,
+    fontFamily: FONTS.primary.bold,
+  } as TextStyle,
+  h3: {
+    fontSize: 24,
+    lineHeight: 32,
+    fontWeight: FONT_WEIGHTS.semibold,
+    letterSpacing: 0,
+    fontFamily: FONTS.primary.semibold,
+  } as TextStyle,
+  h4: {
+    fontSize: 20,
+    lineHeight: 28,
+    fontWeight: FONT_WEIGHTS.semibold,
+    letterSpacing: 0.15,
+    fontFamily: FONTS.primary.semibold,
+  } as TextStyle,
+  h5: {
+    fontSize: 18,
+    lineHeight: 24,
+    fontWeight: FONT_WEIGHTS.medium,
+    letterSpacing: 0.15,
+    fontFamily: FONTS.primary.medium,
+  } as TextStyle,
 
-// ==========================================
-// Typography Presets (Ready-to-use styles)
-// ==========================================
-export const typography = {
-  // Hero Headlines (Calistoga)
-  heroHeadline: {
-    fontFamily: fonts.display,
-    fontSize: fontSize['5xl'],
-    color: colors.text.primary,
-    letterSpacing: letterSpacing.tighter,
-  } as TextStyle,
-  
-  // Section Headlines (Calistoga)
-  sectionHeadline: {
-    fontFamily: fonts.display,
-    fontSize: fontSize['3xl'],
-    color: colors.text.primary,
-  } as TextStyle,
-  
-  // Card Titles (Inter Semibold)
-  cardTitle: {
-    fontFamily: fonts.bodySemibold,
-    fontSize: fontSize['2xl'],
-    color: colors.text.primary,
-    letterSpacing: letterSpacing.tight,
-  } as TextStyle,
-  
-  // Large Body (Inter)
+  // Body Text
   bodyLarge: {
-    fontFamily: fonts.body,
-    fontSize: fontSize.lg,
-    color: colors.text.secondary,
+    fontSize: 16,
+    lineHeight: 24,
+    fontWeight: FONT_WEIGHTS.regular,
+    letterSpacing: 0.5,
+    fontFamily: FONTS.primary.regular,
   } as TextStyle,
-  
-  // Body (Inter)
-  body: {
-    fontFamily: fonts.body,
-    fontSize: fontSize.base,
-    color: colors.text.primary,
+  bodyRegular: {
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: FONT_WEIGHTS.regular,
+    letterSpacing: 0.25,
+    fontFamily: FONTS.primary.regular,
   } as TextStyle,
-  
-  // Body Secondary (Inter)
-  bodySecondary: {
-    fontFamily: fonts.body,
-    fontSize: fontSize.base,
-    color: colors.text.secondary,
+  bodySmall: {
+    fontSize: 12,
+    lineHeight: 16,
+    fontWeight: FONT_WEIGHTS.regular,
+    letterSpacing: 0.4,
+    fontFamily: FONTS.primary.regular,
   } as TextStyle,
-  
-  // Caption (Inter)
+
+  // UI Text
+  label: {
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: FONT_WEIGHTS.medium,
+    letterSpacing: 0.1,
+    fontFamily: FONTS.primary.medium,
+  } as TextStyle,
   caption: {
-    fontFamily: fonts.body,
-    fontSize: fontSize.sm,
-    color: colors.text.secondary,
+    fontSize: 12,
+    lineHeight: 16,
+    fontWeight: FONT_WEIGHTS.regular,
+    letterSpacing: 0.4,
+    fontFamily: FONTS.primary.regular,
   } as TextStyle,
-  
-  // Section Labels (JetBrains Mono - UPPERCASE)
-  sectionLabel: {
-    fontFamily: fonts.mono,
-    fontSize: fontSize.xs,
-    color: colors.primary,
-    letterSpacing: letterSpacing.wide,
+  overline: {
+    fontSize: 10,
+    lineHeight: 16,
+    fontWeight: FONT_WEIGHTS.semibold,
+    letterSpacing: 1.5,
     textTransform: 'uppercase',
+    fontFamily: FONTS.primary.semibold,
   } as TextStyle,
-  
-  // Button Text (Inter Medium)
+
+  // Button Text
   button: {
-    fontFamily: fonts.bodyMedium,
-    fontSize: fontSize.base,
-    color: colors.accentForeground,
+    fontSize: 16,
+    lineHeight: 24,
+    fontWeight: FONT_WEIGHTS.semibold,
+    letterSpacing: 0.5,
+    fontFamily: FONTS.primary.semibold,
   } as TextStyle,
-  
-  // Button Large (Inter Medium)
-  buttonLarge: {
-    fontFamily: fonts.bodyMedium,
-    fontSize: fontSize.lg,
-    color: colors.accentForeground,
+  buttonSmall: {
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: FONT_WEIGHTS.semibold,
+    letterSpacing: 0.5,
+    fontFamily: FONTS.primary.semibold,
   } as TextStyle,
-  
-  // Input Text (Inter)
-  input: {
-    fontFamily: fonts.body,
-    fontSize: fontSize.base,
-    color: colors.text.primary,
-  } as TextStyle,
-  
-  // Input Label (Inter Semibold)
-  inputLabel: {
-    fontFamily: fonts.bodySemibold,
-    fontSize: fontSize.sm,
-    color: colors.text.primary,
-  } as TextStyle,
-  
-  // Stat Value (Inter Semibold)
-  statValue: {
-    fontFamily: fonts.bodySemibold,
-    fontSize: fontSize['2xl'],
-    color: colors.text.primary,
-  } as TextStyle,
-  
-  // Stat Label (Inter)
-  statLabel: {
-    fontFamily: fonts.body,
-    fontSize: fontSize.xs,
-    color: colors.text.secondary,
-    textTransform: 'uppercase',
-  } as TextStyle,
-  
-  // Badge (JetBrains Mono)
-  badge: {
-    fontFamily: fonts.mono,
-    fontSize: fontSize.xs,
-    letterSpacing: letterSpacing.wide,
-    textTransform: 'uppercase',
+
+  // Financial (Monospace)
+  financialLarge: {
+    fontSize: 32,
+    lineHeight: 40,
+    fontWeight: FONT_WEIGHTS.bold,
+    letterSpacing: -0.5,
+    fontFamily: FONTS.mono,
   } as TextStyle,
 };
 
-// Type export
-export type Typography = typeof typography;
+// Legacy exports for backward compatibility
+export const fonts = {
+  display: FONTS.primary.bold,
+  body: FONTS.primary.regular,
+  bodyMedium: FONTS.primary.medium,
+  bodyBold: FONTS.primary.bold,
+  bodySemibold: FONTS.primary.semibold,
+  mono: FONTS.mono,
+};
+
+export const fontSize = {
+  xs: 12,
+  sm: 14,
+  base: 16,
+  lg: 18,
+  xl: 20,
+  '2xl': 24,
+  '3xl': 28,
+  '4xl': 32,
+  '5xl': 48,
+};
+
+export const letterSpacing = {
+  tighter: -0.8,
+  tight: -0.4,
+  normal: 0,
+  wide: 0.4,
+  wider: 0.8,
+  widest: 1.6,
+};
+
+export const typography = {
+    // Mapping legacy usage to new system
+    h1: TYPOGRAPHY.h1,
+    h2: TYPOGRAPHY.h2,
+    h3: TYPOGRAPHY.h3,
+    body: TYPOGRAPHY.bodyLarge,
+    bodyLarge: TYPOGRAPHY.bodyLarge, // Added for compatibility
+    caption: TYPOGRAPHY.caption,
+    button: TYPOGRAPHY.button,
+    sectionLabel: TYPOGRAPHY.overline,
+    label: TYPOGRAPHY.label, // Added for compatibility
+};

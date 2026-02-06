@@ -1,7 +1,8 @@
 /**
  * Input Component (Theme-Aware)
  * 
- * Form input with icon support and proper styling
+ * Premium Design System Inputs
+ * Style: Clean, accessible, focus states matching Premium Guide
  */
 
 import React, { useState } from 'react';
@@ -16,11 +17,12 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
-import { fonts, fontSize, borderRadius, spacing, sizing } from '../../constants';
+import { typography, borderRadius, spacing, sizing } from '../../constants';
 
 interface InputProps extends Omit<TextInputProps, 'style'> {
     label?: string;
     error?: string;
+    helperText?: string;
     leftIcon?: keyof typeof Ionicons.glyphMap;
     rightIcon?: keyof typeof Ionicons.glyphMap;
     onRightIconPress?: () => void;
@@ -30,6 +32,7 @@ interface InputProps extends Omit<TextInputProps, 'style'> {
 export function Input({
     label,
     error,
+    helperText,
     leftIcon,
     rightIcon,
     onRightIconPress,
@@ -47,25 +50,28 @@ export function Input({
     return (
         <View style={[styles.container, containerStyle]}>
             {label && (
-                <Text style={[styles.label, { color: colors.text }]}>
+                <Text style={[styles.label, { color: colors.text.secondary }]}>
                     {label}
                 </Text>
             )}
 
             <View style={[
                 styles.inputContainer,
-                { backgroundColor: colors.inputBackground },
-                isFocused && {
-                    backgroundColor: colors.inputBackgroundFocused,
-                    borderColor: colors.primary + '30',
+                { 
+                    backgroundColor: colors.inputBackground,
+                    borderColor: error 
+                        ? colors.error 
+                        : isFocused 
+                            ? colors.ring 
+                            : colors.border,
                 },
-                error && { borderColor: colors.error + '50' },
+                isFocused && styles.inputFocused,
             ]}>
                 {leftIcon && (
                     <Ionicons
                         name={leftIcon}
                         size={20}
-                        color={isFocused ? colors.primary : colors.textTertiary}
+                        color={isFocused ? colors.primary[500] : colors.text.tertiary}
                         style={styles.leftIcon}
                     />
                 )}
@@ -75,11 +81,11 @@ export function Input({
                     secureTextEntry={actualSecureTextEntry}
                     style={[
                         styles.input,
-                        { color: colors.text },
+                        { color: colors.text.primary },
                         leftIcon && styles.inputWithLeftIcon,
                         (rightIcon || isPassword) && styles.inputWithRightIcon,
                     ]}
-                    placeholderTextColor={colors.textTertiary}
+                    placeholderTextColor={colors.text.tertiary}
                     onFocus={(e) => {
                         setIsFocused(true);
                         textInputProps.onFocus?.(e);
@@ -98,7 +104,7 @@ export function Input({
                         <Ionicons
                             name={showPassword ? 'eye-off-outline' : 'eye-outline'}
                             size={22}
-                            color={colors.textTertiary}
+                            color={colors.text.tertiary}
                         />
                     </TouchableOpacity>
                 ) : rightIcon ? (
@@ -110,17 +116,22 @@ export function Input({
                         <Ionicons
                             name={rightIcon}
                             size={22}
-                            color={colors.textTertiary}
+                            color={colors.text.tertiary}
                         />
                     </TouchableOpacity>
                 ) : null}
             </View>
 
-            {error && (
-                <Text style={[styles.error, { color: colors.error }]}>
+            {/* Error or Helper Text */}
+            {error ? (
+                <Text style={[styles.errorText, { color: colors.error }]}>
                     {error}
                 </Text>
-            )}
+            ) : helperText ? (
+                <Text style={[styles.helperText, { color: colors.text.tertiary }]}>
+                    {helperText}
+                </Text>
+            ) : null}
         </View>
     );
 }
@@ -130,24 +141,25 @@ const styles = StyleSheet.create({
         marginBottom: spacing[4],
     },
     label: {
-        fontFamily: fonts.bodySemibold,
-        fontSize: fontSize.sm,
-        marginBottom: spacing[2],
-        marginLeft: spacing[1],
+        ...typography.label,
+        marginBottom: spacing[1], // 4px
     },
     inputContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        height: sizing.inputHeight,
-        borderRadius: borderRadius.xl,
-        borderWidth: 2,
-        borderColor: 'transparent',
+        height: sizing.inputHeight || 48,
+        borderRadius: borderRadius.md, // 12px
+        borderWidth: 1,
+        overflow: 'hidden',
+    },
+    inputFocused: {
+        borderWidth: 1.5,
+        // Shadow handled by color prop logic usually, or here if needed
     },
     input: {
         flex: 1,
         height: '100%',
-        fontFamily: fonts.body,
-        fontSize: fontSize.base,
+        ...typography.bodyLarge,
         paddingHorizontal: spacing[4],
     },
     inputWithLeftIcon: {
@@ -165,10 +177,12 @@ const styles = StyleSheet.create({
         height: '100%',
         justifyContent: 'center',
     },
-    error: {
-        fontFamily: fonts.body,
-        fontSize: fontSize.sm,
-        marginTop: spacing[2],
-        marginLeft: spacing[1],
+    helperText: {
+        ...typography.caption,
+        marginTop: spacing[1],
+    },
+    errorText: {
+        ...typography.caption,
+        marginTop: spacing[1],
     },
 });

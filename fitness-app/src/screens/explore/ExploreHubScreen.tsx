@@ -19,32 +19,14 @@ import { colors as themeColors } from '../../theme/colors';
 
 const { width } = Dimensions.get('window');
 
-// ============================================================
-// MOCK DATA
-// ============================================================
-const CATEGORIES = [
-    { id: 'exercises', icon: 'dumbbell', label: 'Exercises', count: 500, color: '#3B82F6' },
-    { id: 'routines', icon: 'clipboard-list-outline', label: 'Routines', count: 150, color: '#10B981' },
-    { id: 'programs', icon: 'calendar-month', label: 'Programs', count: 25, color: '#F59E0B' },
-    { id: 'challenges', icon: 'trophy-outline', label: 'Challenges', count: 12, color: '#EF4444' },
-];
 
-const FEATURED = [
-    { id: 1, title: '12-Week Muscle Builder', type: 'Program', rating: 4.9, users: 2400, gradient: ['#6366F1', '#8B5CF6'] },
-    { id: 2, title: 'PPL Split Mastery', type: 'Routine', rating: 4.8, users: 3100, gradient: ['#EC4899', '#F43F5E'] },
-    { id: 3, title: '30-Day Core Challenge', type: 'Challenge', rating: 4.9, users: 890, gradient: ['#14B8A6', '#10B981'] },
-];
+import {
+    EXPLORE_CATEGORIES,
+    EXPLORE_FEATURED,
+    EXPLORE_TRENDING,
+    EXPLORE_COACH_PICKS,
+} from '../../data/mockData';
 
-const TRENDING_EXERCISES = [
-    { id: 1, name: 'Bulgarian Split Squat', muscle: 'Legs', trending: '+42%', icon: 'leg' },
-    { id: 2, name: 'Face Pull', muscle: 'Shoulders', trending: '+38%', icon: 'human-handsup' },
-    { id: 3, name: 'Pallof Press', muscle: 'Core', trending: '+31%', icon: 'human' },
-];
-
-const COACHES_PICKS = [
-    { id: 1, name: 'Hip Hinge Mastery', coach: 'Dr. Movement', avatar: 'https://i.pravatar.cc/100?img=11' },
-    { id: 2, name: 'Scapular Health', coach: 'Coach Mike', avatar: 'https://i.pravatar.cc/100?img=12' },
-];
 
 export function ExploreHubScreen({ navigation }: any) {
     const colors = useColors();
@@ -93,7 +75,7 @@ export function ExploreHubScreen({ navigation }: any) {
             <ScrollView showsVerticalScrollIndicator={false}>
                 {/* Categories Grid */}
                 <Animated.View style={[styles.categoriesGrid, { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }]}>
-                    {CATEGORIES.map((cat, index) => (
+                    {EXPLORE_CATEGORIES.map((cat, index) => (
                         <TouchableOpacity
                             key={cat.id}
                             style={[styles.categoryCard, { backgroundColor: colors.card, borderColor: colors.border }]}
@@ -124,7 +106,7 @@ export function ExploreHubScreen({ navigation }: any) {
                         decelerationRate="fast"
                         snapToInterval={width * 0.75 + 12}
                     >
-                        {FEATURED.map((item) => (
+                        {EXPLORE_FEATURED.map((item) => (
                             <TouchableOpacity
                                 key={item.id}
                                 style={styles.featuredCard}
@@ -170,7 +152,7 @@ export function ExploreHubScreen({ navigation }: any) {
                             <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Trending Now</Text>
                         </View>
                     </View>
-                    {TRENDING_EXERCISES.map((ex, index) => (
+                    {EXPLORE_TRENDING.map((ex, index) => (
                         <TouchableOpacity
                             key={ex.id}
                             style={[styles.trendingCard, { backgroundColor: colors.card, borderColor: colors.border }]}
@@ -204,7 +186,7 @@ export function ExploreHubScreen({ navigation }: any) {
                         </View>
                     </View>
                     <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.coachScroll}>
-                        {COACHES_PICKS.map((pick) => (
+                        {EXPLORE_COACH_PICKS.map((pick) => (
                             <TouchableOpacity
                                 key={pick.id}
                                 style={[styles.coachCard, { backgroundColor: colors.card, borderColor: colors.border }]}

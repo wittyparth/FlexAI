@@ -1,27 +1,33 @@
 import React from 'react';
 import { View, StyleSheet, ViewStyle, Animated } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useColors } from '../../hooks';
+import { borderRadius } from '../../constants';
 
 interface ProgressBarProps {
     progress: number; // 0 to 1
     height?: number;
+    color?: string;
+    trackColor?: string;
     style?: ViewStyle;
 }
 
 export const ProgressBar: React.FC<ProgressBarProps> = ({
     progress,
-    height = 8,
+    height = 6, // Premium look is slightly thinner
+    color,
+    trackColor,
     style,
 }) => {
     const colors = useColors();
+    const activeColor = color || colors.primary[500];
+    const track = trackColor || colors.neutral[200];
 
     // Animated width
     const animatedWidth = React.useRef(new Animated.Value(0)).current;
 
     React.useEffect(() => {
         Animated.timing(animatedWidth, {
-            toValue: progress,
+            toValue: Math.max(0, Math.min(1, progress)),
             duration: 500,
             useNativeDriver: false,
         }).start();
@@ -33,15 +39,18 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
     });
 
     return (
-        <View style={[styles.container, { height, backgroundColor: colors.border + '30' }, style]}>
-            <Animated.View style={[styles.progress, { width: widthInterpolation }]}>
-                <LinearGradient
-                    colors={[colors.primary.main, '#5ea1ff'] as any}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 0 }}
-                    style={styles.gradient}
-                />
-            </Animated.View>
+        <View style={[
+            styles.container, 
+            { height, backgroundColor: track }, 
+            style
+        ]}>
+            <Animated.View style={[
+                styles.progress, 
+                { 
+                    width: widthInterpolation,
+                    backgroundColor: activeColor
+                }
+            ]} />
         </View>
     );
 };
@@ -49,14 +58,11 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
 const styles = StyleSheet.create({
     container: {
         width: '100%',
-        borderRadius: 4,
+        borderRadius: borderRadius.full,
         overflow: 'hidden',
     },
     progress: {
         height: '100%',
-        borderRadius: 4,
-    },
-    gradient: {
-        flex: 1,
+        borderRadius: borderRadius.full,
     },
 });

@@ -20,23 +20,11 @@ const { width } = Dimensions.get('window');
 // ============================================================
 // MOCK DATA
 // ============================================================
-const USER_DATA = {
-    name: 'Alex Johnson',
-    username: '@alexfit',
-    avatar: null,
-    level: 42,
-    xp: 12450,
-    xpToNext: 15000,
-    streak: 127,
-    totalWorkouts: 342,
-    joinedDate: 'Jan 2024',
-};
+import {
+    DUMMY_USER,
+    PROFILE_STATS,
+} from '../../data/mockData';
 
-const QUICK_STATS = [
-    { label: 'Workouts', value: '342', icon: 'barbell-outline', color: '#6366F1' },
-    { label: 'PRs', value: '47', icon: 'trophy', color: '#F59E0B' },
-    { label: 'Streak', value: '127', icon: 'flame', color: '#EF4444' },
-];
 
 const MENU_SECTIONS = [
     {
@@ -78,7 +66,7 @@ export function ProfileHubScreen({ navigation }: any) {
         Animated.timing(fadeAnim, { toValue: 1, duration: 500, useNativeDriver: true }).start();
     }, []);
 
-    const xpProgress = (USER_DATA.xp / USER_DATA.xpToNext) * 100;
+    const xpProgress = (DUMMY_USER.xp / DUMMY_USER.xpToNext) * 100;
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
@@ -99,20 +87,20 @@ export function ProfileHubScreen({ navigation }: any) {
                     <View style={styles.profileSection}>
                         <View style={styles.avatarContainer}>
                             <LinearGradient colors={['#FFF', '#E5E7EB'] as [string, string]} style={styles.avatarBg}>
-                                <Text style={styles.avatarText}>{USER_DATA.name.charAt(0)}</Text>
+                                <Text style={styles.avatarText}>{DUMMY_USER.firstName.charAt(0)}</Text>
                             </LinearGradient>
                             <View style={styles.levelBadge}>
-                                <Text style={styles.levelText}>{USER_DATA.level}</Text>
+                                <Text style={styles.levelText}>{DUMMY_USER.level}</Text>
                             </View>
                         </View>
-                        <Text style={styles.userName}>{USER_DATA.name}</Text>
-                        <Text style={styles.userHandle}>{USER_DATA.username}</Text>
+                        <Text style={styles.userName}>{DUMMY_USER.firstName} {DUMMY_USER.surname}</Text>
+                        <Text style={styles.userHandle}>{DUMMY_USER.username}</Text>
 
                         {/* XP Progress */}
                         <View style={styles.xpContainer}>
                             <View style={styles.xpHeader}>
-                                <Text style={styles.xpLabel}>Level {USER_DATA.level}</Text>
-                                <Text style={styles.xpValue}>{USER_DATA.xp.toLocaleString()} / {USER_DATA.xpToNext.toLocaleString()} XP</Text>
+                                <Text style={styles.xpLabel}>Level {DUMMY_USER.level}</Text>
+                                <Text style={styles.xpValue}>{DUMMY_USER.xp.toLocaleString()} / {DUMMY_USER.xpToNext.toLocaleString()} XP</Text>
                             </View>
                             <View style={styles.xpBar}>
                                 <View style={[styles.xpFill, { width: `${xpProgress}%` }]} />
@@ -123,7 +111,7 @@ export function ProfileHubScreen({ navigation }: any) {
 
                 {/* Quick Stats */}
                 <Animated.View style={[styles.quickStatsRow, { opacity: fadeAnim, marginTop: -30 }]}>
-                    {QUICK_STATS.map((stat) => (
+                    {PROFILE_STATS.map((stat) => (
                         <View key={stat.label} style={[styles.quickStatCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
                             <View style={[styles.quickStatIcon, { backgroundColor: `${stat.color}15` }]}>
                                 <Ionicons name={stat.icon as any} size={22} color={stat.color} />

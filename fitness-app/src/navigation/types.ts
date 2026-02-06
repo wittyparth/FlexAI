@@ -12,7 +12,7 @@ import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 // ==========================================
 export type RootStackParamList = {
   Auth: NavigatorScreenParams<AuthStackParamList>;
-  Main: NavigatorScreenParams<MainTabParamList>;
+  Main: NavigatorScreenParams<MainDrawerParamList>;
   Onboarding: NavigatorScreenParams<OnboardingStackParamList>;
 };
 
@@ -128,47 +128,76 @@ export type SocialStackParamList = {
 };
 
 // ==========================================
-// Profile Stack (Screens 59-88)
+// Analytics Stack (Screens 65-72)
 // ==========================================
-export type ProfileStackParamList = {
-  ProfileHome: undefined;
-  EditProfile: undefined;
-  Achievements: undefined;
-  MyFollowers: undefined;
-  MyFollowing: undefined;
-  XPHistory: undefined;
-  
-  // Stats Hub (Screens 65-72)
-  StatsHub: undefined;
+export type AnalyticsStackParamList = {
+  AnalyticsHub: undefined;
   PersonalRecords: undefined;
   StrengthProgression: { exerciseId?: number };
   VolumeAnalytics: undefined;
   WorkoutFrequency: undefined;
   MuscleDistribution: undefined;
+  MuscleHeatmap: undefined; // Added this
   RecoveryStatus: undefined;
   StrengthMetrics: undefined;
-  
-  // AI Coach (Screens 73-75)
-  CoachConversations: undefined;
+};
+
+// ==========================================
+// Coach Stack (Screens 73-75)
+// ==========================================
+export type CoachStackParamList = {
+  CoachHub: undefined;
   CoachChat: { conversationId?: number };
+  FormAnalysis: undefined;
   CoachPrompts: undefined;
-  
-  // Body Tracking (Screens 76-80)
+};
+
+// ==========================================
+// Body Tracking Stack (Screens 76-80)
+// ==========================================
+export type BodyTrackingStackParamList = {
   BodyTrackingHub: undefined;
-  LogWeight: undefined;
-  LogMeasurements: undefined;
+  WeightLog: undefined;
+  Measurements: undefined;
   ProgressPhotos: undefined;
   TakeProgressPhoto: undefined;
-  
-  // Settings (Screens 81-88)
+};
+
+// ==========================================
+// Settings Stack (Screens 81-88) - NEW
+// ==========================================
+export type SettingsStackParamList = {
   Settings: undefined;
   NotificationSettings: undefined;
   PrivacySettings: undefined;
   UnitsPreferences: undefined;
-  AccountSettings: undefined;
+  AccountSecurity: undefined;
   ChangePassword: undefined;
   HelpSupport: undefined;
   About: undefined;
+};
+
+// ==========================================
+// Profile Stack (Screens 59-88) - SLIMMED DOWN
+// ==========================================
+export type ProfileStackParamList = {
+  ProfileHub: undefined;
+  EditProfile: undefined;
+  Achievements: undefined;
+  MyFollowers: undefined;
+  MyFollowing: undefined;
+  XPHistory: undefined;
+};
+
+// ==========================================
+// Main Drawer (Root of Authenticated App)
+// ==========================================
+export type MainDrawerParamList = {
+  MainTabs: NavigatorScreenParams<MainTabParamList>;
+  Analytics: NavigatorScreenParams<AnalyticsStackParamList>;
+  Coach: NavigatorScreenParams<CoachStackParamList>;
+  BodyTracking: NavigatorScreenParams<BodyTrackingStackParamList>;
+  SettingsNavigator: NavigatorScreenParams<SettingsStackParamList>;
 };
 
 // ==========================================
@@ -186,9 +215,22 @@ export type SocialStackScreenProps<T extends keyof SocialStackParamList> = Stack
 
 export type ProfileStackScreenProps<T extends keyof ProfileStackParamList> = StackScreenProps<ProfileStackParamList, T>;
 
+export type AnalyticsStackScreenProps<T extends keyof AnalyticsStackParamList> = StackScreenProps<AnalyticsStackParamList, T>;
+
+export type CoachStackScreenProps<T extends keyof CoachStackParamList> = StackScreenProps<CoachStackParamList, T>;
+
+export type BodyTrackingStackScreenProps<T extends keyof BodyTrackingStackParamList> = StackScreenProps<BodyTrackingStackParamList, T>;
+
 export type AuthStackScreenProps<T extends keyof AuthStackParamList> = StackScreenProps<AuthStackParamList, T>;
 
 export type OnboardingStackScreenProps<T extends keyof OnboardingStackParamList> = StackScreenProps<OnboardingStackParamList, T>;
+
+// Navigation Prop Types (for useNavigation hook)
+import { StackNavigationProp } from '@react-navigation/stack';
+export type AnalyticsNavigationProp = StackNavigationProp<AnalyticsStackParamList>;
+export type CoachNavigationProp = StackNavigationProp<CoachStackParamList>;
+export type BodyTrackingNavigationProp = StackNavigationProp<BodyTrackingStackParamList>;
+export type ProfileNavigationProp = StackNavigationProp<ProfileStackParamList>;
 
 // Main Tab Props
 export type MainTabScreenProps<T extends keyof MainTabParamList> = BottomTabScreenProps<MainTabParamList, T>;

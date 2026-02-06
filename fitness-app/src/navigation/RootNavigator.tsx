@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { RootStackParamList } from './types';
 import { AuthStack } from './AuthStack';
-import { MainTabs } from './MainTabs';
+import { MainDrawer } from './MainDrawer';
 import { authStore } from '../store/authStore';
 import { View, ActivityIndicator } from 'react-native';
 
@@ -31,7 +31,7 @@ export function RootNavigator() {
         <NavigationContainer>
             <Stack.Navigator screenOptions={{ headerShown: false }}>
                 {isAuthenticated ? (
-                    <Stack.Screen name="Main" component={MainTabs} />
+                    <Stack.Screen name="Main" component={MainDrawer} />
                 ) : (
                     <Stack.Screen name="Auth" component={AuthStack} />
                 )}

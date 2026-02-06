@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import {
     View,
     Text,
@@ -8,13 +8,16 @@ import {
     Dimensions,
     Animated,
 } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useNavigation } from '@react-navigation/native';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { LineChart, BarChart } from 'react-native-gifted-charts';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
+import { spacing } from '../../theme/spacing';
 import { colors as themeColors } from '../../theme/colors';
+import { AnalyticsNavigationProp } from '../../navigation/types';
 
 const { width } = Dimensions.get('window');
 
@@ -42,10 +45,11 @@ const STRENGTH_TREND = [
 ];
 
 const QUICK_STATS = {
-    streak: 127,
-    totalVolume: 52340,
-    prsThisMonth: 8,
-    workoutsThisWeek: 4,
+    pr: "+15%",
+    volume: "42.5 tons",
+    consistency: "92%",
+    strength: "Elite",
+    streak: "5 Days" // Added missing property
 };
 
 const NAV_CARDS = [
@@ -55,7 +59,8 @@ const NAV_CARDS = [
     { id: 'records', title: 'Personal Records', subtitle: 'All-time achievements', icon: 'trophy', color: '#F59E0B', route: 'PersonalRecords' },
 ];
 
-export function StatsHubScreen({ navigation }: any) {
+export function AnalyticsHubScreen() { // Renamed function and removed navigation prop
+    const navigation = useNavigation<AnalyticsNavigationProp>(); // Added navigation hook
     const colors = useColors();
     const insets = useSafeAreaInsets();
     const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -223,7 +228,7 @@ export function StatsHubScreen({ navigation }: any) {
                         >
                             <TouchableOpacity
                                 style={[styles.navCard, { backgroundColor: colors.card, borderColor: colors.border }]}
-                                onPress={() => navigation.navigate(card.route)}
+                                onPress={() => navigation.navigate(card.route as any)}
                                 activeOpacity={0.9}
                             >
                                 <View style={[styles.navIcon, { backgroundColor: `${card.color}15` }]}>

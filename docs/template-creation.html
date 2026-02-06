@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Master Program Builder Studio</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Calistoga&amp;family=Inter:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Material Symbols -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Theme Configuration -->
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0d59f2",
+                        "primary-dark": "#0a46c2",
+                        "background-light": "#f8f9fc",
+                        "background-dark": "#101622",
+                        "surface": "#ffffff",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "serif": ["Calistoga", "serif"],
+                    },
+                    boxShadow: {
+                        "soft": "0 4px 20px -2px rgba(0, 0, 0, 0.05)",
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .font-calistoga {
+            font-family: 'Calistoga', serif;
+        }
+
+        /* Hide scrollbar for tabs */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white antialiased min-h-screen pb-24">
+    <!-- Header -->
+    <header
+        class="sticky top-0 z-40 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 transition-colors">
+        <div class="flex items-center justify-between px-4 h-16 max-w-md mx-auto">
+            <button
+                class="flex items-center justify-center w-10 h-10 rounded-full text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                <span class="material-symbols-outlined" style="font-size: 24px;">close</span>
+            </button>
+            <h1 class="text-xl font-calistoga text-slate-900 dark:text-white tracking-wide">New Masterpiece</h1>
+            <button
+                class="flex items-center justify-center px-5 h-9 rounded-full bg-gradient-to-r from-primary to-[#4da6ff] text-white text-sm font-bold shadow-lg shadow-primary/30 hover:shadow-primary/50 transition-all transform hover:scale-105 active:scale-95">
+                Save
+            </button>
+        </div>
+    </header>
+    <!-- Main Content -->
+    <main class="w-full max-w-md mx-auto p-4 flex flex-col gap-6">
+        <!-- Metadata Section -->
+        <section class="space-y-4">
+            <div class="space-y-1">
+                <label class="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Program Title</label>
+                <input
+                    class="w-full h-14 px-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-surface dark:bg-slate-800 text-lg font-semibold placeholder:text-slate-400 focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all shadow-sm"
+                    placeholder="e.g. Hypertrophy Phase 1" type="text" value="Summer Shred Protocol" />
+            </div>
+            <div class="space-y-1">
+                <label class="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Primary Goal</label>
+                <div class="relative">
+                    <select
+                        class="w-full h-14 pl-4 pr-10 rounded-xl border border-slate-200 dark:border-slate-700 bg-surface dark:bg-slate-800 text-base font-medium text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-primary/20 focus:border-primary appearance-none shadow-sm transition-all">
+                        <option>Muscle Hypertrophy</option>
+                        <option>Strength &amp; Power</option>
+                        <option>Fat Loss</option>
+                        <option>Endurance</option>
+                    </select>
+                    <span
+                        class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">expand_more</span>
+                </div>
+            </div>
+        </section>
+        <!-- Day Tabs -->
+        <section class="overflow-hidden">
+            <div
+                class="flex items-center justify-between bg-surface dark:bg-slate-800 p-1.5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-x-auto no-scrollbar">
+                <button
+                    class="flex-1 min-w-[44px] h-10 flex flex-col items-center justify-center rounded-xl text-xs font-bold text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                    M
+                </button>
+                <button
+                    class="flex-1 min-w-[44px] h-10 flex flex-col items-center justify-center rounded-xl text-xs font-bold text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                    T
+                </button>
+                <button
+                    class="flex-1 min-w-[44px] h-10 flex flex-col items-center justify-center rounded-xl bg-primary text-white shadow-md shadow-primary/30 transition-all transform scale-105">
+                    W
+                </button>
+                <button
+                    class="flex-1 min-w-[44px] h-10 flex flex-col items-center justify-center rounded-xl text-xs font-bold text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                    T
+                </button>
+                <button
+                    class="flex-1 min-w-[44px] h-10 flex flex-col items-center justify-center rounded-xl text-xs font-bold text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                    F
+                </button>
+                <button
+                    class="flex-1 min-w-[44px] h-10 flex flex-col items-center justify-center rounded-xl text-xs font-bold text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                    S
+                </button>
+                <button
+                    class="flex-1 min-w-[44px] h-10 flex flex-col items-center justify-center rounded-xl text-xs font-bold text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                    S
+                </button>
+            </div>
+            <div class="mt-2 text-center">
+                <p class="text-sm font-medium text-slate-500 dark:text-slate-400">Wednesday • Lower Body Focus</p>
+            </div>
+        </section>
+        <hr class="border-slate-200 dark:border-slate-800 border-dashed" />
+        <!-- Exercise List -->
+        <section class="space-y-4">
+            <!-- Exercise Card 1 -->
+            <div
+                class="bg-surface dark:bg-slate-800 rounded-2xl p-4 shadow-soft border border-slate-100 dark:border-slate-700/50 group select-none">
+                <div class="flex items-start gap-3 mb-4">
+                    <!-- Drag Handle -->
+                    <div class="text-slate-300 dark:text-slate-600 cursor-grab active:cursor-grabbing mt-1">
+                        <span class="material-symbols-outlined text-2xl">drag_indicator</span>
+                    </div>
+                    <!-- Image & Title -->
+                    <div class="flex-1 flex gap-3">
+                        <div
+                            class="w-12 h-12 rounded-lg bg-slate-100 dark:bg-slate-700 overflow-hidden flex-shrink-0 relative">
+                            <div class="absolute inset-0 bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-slate-700 dark:to-slate-600"
+                                data-alt="Abstract gradient representing exercise thumbnail"></div>
+                            <span
+                                class="material-symbols-outlined absolute inset-0 flex items-center justify-center text-primary/40 dark:text-white/20">fitness_center</span>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex justify-between items-start">
+                                <h3 class="text-base font-bold text-slate-900 dark:text-white leading-tight">Barbell
+                                    Back Squat</h3>
+                                <button class="text-slate-400 hover:text-red-500 transition-colors">
+                                    <span class="material-symbols-outlined text-[20px]">delete</span>
+                                </button>
+                            </div>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Quadriceps • Compound</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Metrics Grid -->
+                <div class="grid grid-cols-4 gap-2">
+                    <div class="space-y-1">
+                        <label class="text-[10px] font-bold text-slate-400 uppercase text-center block">Sets</label>
+                        <input
+                            class="w-full h-10 text-center rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700/50 font-semibold text-slate-900 dark:text-white focus:border-primary focus:ring-1 focus:ring-primary text-sm p-0"
+                            type="text" value="3" />
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-[10px] font-bold text-slate-400 uppercase text-center block">Reps</label>
+                        <input
+                            class="w-full h-10 text-center rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700/50 font-semibold text-slate-900 dark:text-white focus:border-primary focus:ring-1 focus:ring-primary text-sm p-0"
+                            type="text" value="5-8" />
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-[10px] font-bold text-slate-400 uppercase text-center block">RPE</label>
+                        <input
+                            class="w-full h-10 text-center rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700/50 font-semibold text-slate-900 dark:text-white focus:border-primary focus:ring-1 focus:ring-primary text-sm p-0"
+                            type="text" value="8" />
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-[10px] font-bold text-slate-400 uppercase text-center block">Rest</label>
+                        <input
+                            class="w-full h-10 text-center rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700/50 font-semibold text-slate-900 dark:text-white focus:border-primary focus:ring-1 focus:ring-primary text-sm p-0"
+                            type="text" value="180s" />
+                    </div>
+                </div>
+            </div>
+            <!-- Exercise Card 2 -->
+            <div
+                class="bg-surface dark:bg-slate-800 rounded-2xl p-4 shadow-soft border border-slate-100 dark:border-slate-700/50 group select-none">
+                <div class="flex items-start gap-3 mb-4">
+                    <!-- Drag Handle -->
+                    <div class="text-slate-300 dark:text-slate-600 cursor-grab active:cursor-grabbing mt-1">
+                        <span class="material-symbols-outlined text-2xl">drag_indicator</span>
+                    </div>
+                    <!-- Image & Title -->
+                    <div class="flex-1 flex gap-3">
+                        <div
+                            class="w-12 h-12 rounded-lg bg-slate-100 dark:bg-slate-700 overflow-hidden flex-shrink-0 relative">
+                            <div class="absolute inset-0 bg-gradient-to-br from-orange-50 to-red-100 dark:from-slate-700 dark:to-slate-600"
+                                data-alt="Abstract gradient representing exercise thumbnail"></div>
+                            <span
+                                class="material-symbols-outlined absolute inset-0 flex items-center justify-center text-orange-400 dark:text-white/20">directions_run</span>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex justify-between items-start">
+                                <h3 class="text-base font-bold text-slate-900 dark:text-white leading-tight">Romanian
+                                    Deadlift</h3>
+                                <button class="text-slate-400 hover:text-red-500 transition-colors">
+                                    <span class="material-symbols-outlined text-[20px]">delete</span>
+                                </button>
+                            </div>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Hamstrings • Compound</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Metrics Grid -->
+                <div class="grid grid-cols-4 gap-2">
+                    <div class="space-y-1">
+                        <label class="text-[10px] font-bold text-slate-400 uppercase text-center block">Sets</label>
+                        <input
+                            class="w-full h-10 text-center rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700/50 font-semibold text-slate-900 dark:text-white focus:border-primary focus:ring-1 focus:ring-primary text-sm p-0"
+                            type="text" value="3" />
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-[10px] font-bold text-slate-400 uppercase text-center block">Reps</label>
+                        <input
+                            class="w-full h-10 text-center rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700/50 font-semibold text-slate-900 dark:text-white focus:border-primary focus:ring-1 focus:ring-primary text-sm p-0"
+                            type="text" value="8-12" />
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-[10px] font-bold text-slate-400 uppercase text-center block">RPE</label>
+                        <input
+                            class="w-full h-10 text-center rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700/50 font-semibold text-slate-900 dark:text-white focus:border-primary focus:ring-1 focus:ring-primary text-sm p-0"
+                            type="text" value="9" />
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-[10px] font-bold text-slate-400 uppercase text-center block">Rest</label>
+                        <input
+                            class="w-full h-10 text-center rounded-lg border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700/50 font-semibold text-slate-900 dark:text-white focus:border-primary focus:ring-1 focus:ring-primary text-sm p-0"
+                            type="text" value="120s" />
+                    </div>
+                </div>
+            </div>
+            <!-- Add Exercise Button (Ghost) -->
+            <button
+                class="w-full h-16 rounded-2xl border-2 border-dashed border-primary/30 hover:border-primary/60 bg-primary/5 hover:bg-primary/10 flex items-center justify-center gap-2 group transition-all mt-2">
+                <div
+                    class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary group-hover:text-white text-primary transition-colors">
+                    <span class="material-symbols-outlined text-xl">add</span>
+                </div>
+                <span class="text-primary font-bold text-sm">Add Movement</span>
+            </button>
+        </section>
+        <!-- Coach's Notes Section -->
+        <section class="space-y-1 pt-4">
+            <label class="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Coach's Notes</label>
+            <textarea
+                class="w-full min-h-[120px] p-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-surface dark:bg-slate-800 text-sm leading-relaxed text-slate-700 dark:text-slate-300 placeholder:text-slate-400 focus:ring-2 focus:ring-primary/20 focus:border-primary resize-none shadow-sm"
+                placeholder="Add specific instructions for this workout day (e.g. Focus on eccentric control for squats...)"></textarea>
+        </section>
+    </main>
+    <!-- Simulated Modal Bottom Sheet (for demonstration of overlay) -->
+    <!-- Initially hidden or translated down to show 'ready state' of standard view -->
+    <div class="hidden fixed inset-0 z-50 bg-slate-900/20 backdrop-blur-sm flex items-end justify-center">
+        <!-- This would be the picker modal, hidden for now to focus on the builder view -->
+    </div>
+</body>
+
+</html>

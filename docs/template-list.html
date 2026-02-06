@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Personal Routine Library</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Calistoga&amp;family=Inter:wght@300;400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <style type="text/tailwindcss">
+        @layer base {
+            :root {
+                --primary: #0d59f2;--primary-dark: #0b4ecf;
+                --background: #f8fafc;
+                --surface: #ffffff;
+                --text-main: #0f172a;
+                --text-subtle: #64748b;
+                --border: #f1f5f9;
+            }
+        }
+        .font-mono-metrics {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .gradient-btn {
+            background: linear-gradient(135deg, #0d59f2 0%, #3b82f6 100%);
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0d59f2",
+                        "text-main": "#0f172a",
+                        "text-subtle": "#64748b",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "headline": ["Calistoga", "serif"],
+                    },
+                    borderRadius: {
+                        "2xl": "1.5rem",
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body class="bg-[var(--background)] text-text-main font-display antialiased">
+    <div
+        class="relative flex h-full min-h-screen w-full flex-col max-w-md mx-auto bg-[var(--background)] shadow-2xl overflow-hidden">
+        <header class="px-6 pt-14 pb-6 bg-[var(--background)]">
+            <div class="flex items-center justify-between mb-8">
+                <h1 class="font-headline text-4xl text-text-main">My Routines</h1>
+                <button
+                    class="gradient-btn text-white px-5 py-2.5 rounded-full text-sm font-bold flex items-center gap-1.5 shadow-lg shadow-primary/20 hover:scale-105 transition-transform">
+                    <span class="material-symbols-outlined text-[18px]">add</span>
+                    Create
+                </button>
+            </div>
+            <div class="flex flex-col gap-6">
+                <div class="flex items-center justify-between">
+                    <div class="flex bg-slate-100 p-1 rounded-xl">
+                        <button class="bg-white px-4 py-1.5 rounded-lg shadow-sm flex items-center gap-2">
+                            <span class="material-symbols-outlined text-[20px] text-primary">grid_view</span>
+                            <span class="text-xs font-bold">Grid</span>
+                        </button>
+                        <button class="px-4 py-1.5 rounded-lg flex items-center gap-2 text-text-subtle">
+                            <span class="material-symbols-outlined text-[20px]">format_list_bulleted</span>
+                            <span class="text-xs font-bold">List</span>
+                        </button>
+                    </div>
+                    <button
+                        class="w-10 h-10 flex items-center justify-center rounded-full border border-slate-200 text-text-subtle">
+                        <span class="material-symbols-outlined">search</span>
+                    </button>
+                </div>
+                <div class="flex gap-2 overflow-x-auto no-scrollbar pb-2">
+                    <button class="whitespace-nowrap px-5 py-2 rounded-full bg-primary text-white text-xs font-bold">All
+                        Goals</button>
+                    <button
+                        class="whitespace-nowrap px-5 py-2 rounded-full bg-white border border-slate-200 text-text-subtle text-xs font-bold hover:border-primary/50 transition-colors">Hypertrophy</button>
+                    <button
+                        class="whitespace-nowrap px-5 py-2 rounded-full bg-white border border-slate-200 text-text-subtle text-xs font-bold hover:border-primary/50 transition-colors">Strength</button>
+                    <button
+                        class="whitespace-nowrap px-5 py-2 rounded-full bg-white border border-slate-200 text-text-subtle text-xs font-bold hover:border-primary/50 transition-colors">PPL
+                        Split</button>
+                </div>
+            </div>
+        </header>
+        <main class="flex-1 px-6 pb-24">
+            <div class="grid grid-cols-1 gap-5">
+                <div
+                    class="bg-white rounded-3xl p-6 border border-[var(--border)] shadow-sm hover:shadow-md transition-shadow group">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="flex flex-col gap-1">
+                            <span class="text-[10px] font-bold uppercase tracking-[0.15em] text-primary">Push Pull
+                                Legs</span>
+                            <h3
+                                class="text-xl font-bold tracking-tight text-text-main group-hover:text-primary transition-colors">
+                                Aesthetic Peak 2.0</h3>
+                        </div>
+                        <button class="p-1 -mr-1 text-text-subtle hover:text-text-main">
+                            <span class="material-symbols-outlined">more_horiz</span>
+                        </button>
+                    </div>
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="flex items-center gap-1.5 px-3 py-1.5 bg-slate-50 rounded-lg">
+                            <span class="material-symbols-outlined text-[18px] text-text-subtle">calendar_today</span>
+                            <span class="text-xs font-bold">6 Days/Week</span>
+                        </div>
+                        <div class="flex items-center gap-1.5 px-3 py-1.5 bg-slate-50 rounded-lg">
+                            <span class="material-symbols-outlined text-[18px] text-text-subtle">timer</span>
+                            <span class="text-xs font-bold">75m</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-50">
+                        <div class="flex flex-col gap-1">
+                            <span class="text-[9px] uppercase tracking-wider text-text-subtle font-bold">Times
+                                Completed</span>
+                            <span class="font-mono-metrics text-sm font-medium text-text-main">124</span>
+                        </div>
+                        <div class="flex flex-col gap-1 items-end">
+                            <span class="text-[9px] uppercase tracking-wider text-text-subtle font-bold">Last
+                                Used</span>
+                            <span class="font-mono-metrics text-sm font-medium text-text-main uppercase">Today</span>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="bg-white rounded-3xl p-6 border border-[var(--border)] shadow-sm hover:shadow-md transition-shadow group">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="flex flex-col gap-1">
+                            <span class="text-[10px] font-bold uppercase tracking-[0.15em] text-primary">Full
+                                Body</span>
+                            <h3
+                                class="text-xl font-bold tracking-tight text-text-main group-hover:text-primary transition-colors">
+                                Foundation Build</h3>
+                        </div>
+                        <button class="p-1 -mr-1 text-text-subtle hover:text-text-main">
+                            <span class="material-symbols-outlined">more_horiz</span>
+                        </button>
+                    </div>
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="flex items-center gap-1.5 px-3 py-1.5 bg-slate-50 rounded-lg">
+                            <span class="material-symbols-outlined text-[18px] text-text-subtle">calendar_today</span>
+                            <span class="text-xs font-bold">3 Days/Week</span>
+                        </div>
+                        <div class="flex items-center gap-1.5 px-3 py-1.5 bg-slate-50 rounded-lg">
+                            <span class="material-symbols-outlined text-[18px] text-text-subtle">timer</span>
+                            <span class="text-xs font-bold">45m</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-50">
+                        <div class="flex flex-col gap-1">
+                            <span class="text-[9px] uppercase tracking-wider text-text-subtle font-bold">Times
+                                Completed</span>
+                            <span class="font-mono-metrics text-sm font-medium text-text-main">48</span>
+                        </div>
+                        <div class="flex flex-col gap-1 items-end">
+                            <span class="text-[9px] uppercase tracking-wider text-text-subtle font-bold">Last
+                                Used</span>
+                            <span class="font-mono-metrics text-sm font-medium text-text-main uppercase">2d ago</span>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="bg-white rounded-3xl p-6 border border-[var(--border)] shadow-sm hover:shadow-md transition-shadow group">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="flex flex-col gap-1">
+                            <span
+                                class="text-[10px] font-bold uppercase tracking-[0.15em] text-primary">Upper/Lower</span>
+                            <h3
+                                class="text-xl font-bold tracking-tight text-text-main group-hover:text-primary transition-colors">
+                                Strength Vault</h3>
+                        </div>
+                        <button class="p-1 -mr-1 text-text-subtle hover:text-text-main">
+                            <span class="material-symbols-outlined">more_horiz</span>
+                        </button>
+                    </div>
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="flex items-center gap-1.5 px-3 py-1.5 bg-slate-50 rounded-lg">
+                            <span class="material-symbols-outlined text-[18px] text-text-subtle">calendar_today</span>
+                            <span class="text-xs font-bold">4 Days/Week</span>
+                        </div>
+                        <div class="flex items-center gap-1.5 px-3 py-1.5 bg-slate-50 rounded-lg">
+                            <span class="material-symbols-outlined text-[18px] text-text-subtle">timer</span>
+                            <span class="text-xs font-bold">60m</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-50">
+                        <div class="flex flex-col gap-1">
+                            <span class="text-[9px] uppercase tracking-wider text-text-subtle font-bold">Times
+                                Completed</span>
+                            <span class="font-mono-metrics text-sm font-medium text-text-main">89</span>
+                        </div>
+                        <div class="flex flex-col gap-1 items-end">
+                            <span class="text-[9px] uppercase tracking-wider text-text-subtle font-bold">Last
+                                Used</span>
+                            <span class="font-mono-metrics text-sm font-medium text-text-main uppercase">1w ago</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <nav
+            class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white/80 backdrop-blur-xl border-t border-slate-100 pb-8 pt-3 px-8 z-50">
+            <div class="flex items-center justify-between">
+                <div class="flex flex-col items-center gap-1">
+                    <span class="material-symbols-outlined text-primary">home</span>
+                    <span class="text-[10px] font-bold text-primary uppercase tracking-tighter">Home</span>
+                </div>
+                <div class="flex flex-col items-center gap-1">
+                    <span class="material-symbols-outlined text-text-subtle">explore</span>
+                    <span class="text-[10px] font-bold text-text-subtle uppercase tracking-tighter">Explore</span>
+                </div>
+                <div class="flex flex-col items-center gap-1">
+                    <div
+                        class="w-8 h-8 rounded-full bg-primary flex items-center justify-center -mt-4 shadow-lg shadow-primary/30">
+                        <span class="material-symbols-outlined text-white text-[20px]">add</span>
+                    </div>
+                    <span class="text-[10px] font-bold text-text-subtle uppercase tracking-tighter">New Log</span>
+                </div>
+                <div class="flex flex-col items-center gap-1">
+                    <span class="material-symbols-outlined text-text-main">fitness_center</span>
+                    <span class="text-[10px] font-bold text-text-main uppercase tracking-tighter">Library</span>
+                </div>
+                <div class="flex flex-col items-center gap-1">
+                    <span class="material-symbols-outlined text-text-subtle">person</span>
+                    <span class="text-[10px] font-bold text-text-subtle uppercase tracking-tighter">Profile</span>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Elite Program Split Detail</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Calistoga&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0d59f2",
+                        "background-light": "#FAFAFA",
+                        "background-dark": "#101622",
+                        "surface-light": "#FFFFFF",
+                        "text-main": "#0d121c",
+                        "text-muted": "#49659c",
+                        "border-light": "#E5E5E5",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "serif-lux": ["Calistoga", "serif"],
+                        "mono-tech": ["JetBrains Mono", "monospace"],
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        /* Custom scrollbar hiding for horizontal scroll areas */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark text-text-main dark:text-white font-display antialiased selection:bg-primary/20">
+    <!-- Wrapper -->
+    <div
+        class="relative flex h-full min-h-screen w-full flex-col max-w-md mx-auto bg-background-light dark:bg-background-dark border-x border-border-light dark:border-gray-800 shadow-xl overflow-hidden">
+        <!-- Header -->
+        <header class="flex flex-col pt-6 px-6 pb-2 bg-background-light dark:bg-background-dark z-10">
+            <div class="flex items-center justify-between mb-6">
+                <button
+                    class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-text-main dark:text-white">
+                    <span class="material-symbols-outlined text-[24px]">arrow_back</span>
+                </button>
+                <button
+                    class="flex items-center justify-center h-10 px-4 rounded-full bg-primary/10 text-primary font-bold text-sm hover:bg-primary/20 transition-colors">
+                    Save
+                </button>
+            </div>
+            <h1 class="font-serif-lux text-4xl text-text-main dark:text-white leading-tight mb-2">Elite PPL</h1>
+            <div class="flex items-center gap-2">
+                <div class="h-[1px] w-4 bg-primary"></div>
+                <p class="text-text-muted text-sm font-medium tracking-wide uppercase">Designed by Apex Performance</p>
+            </div>
+        </header>
+        <!-- Stats Block -->
+        <section class="px-6 py-6">
+            <div class="flex gap-4">
+                <div
+                    class="flex-1 bg-surface-light dark:bg-gray-900 border border-border-light dark:border-gray-800 rounded-xl p-5 shadow-sm">
+                    <p class="text-text-muted text-xs uppercase tracking-wider font-semibold mb-2">Frequency</p>
+                    <p class="font-mono-tech text-text-main dark:text-white text-lg font-bold">6-Day Split</p>
+                </div>
+                <div
+                    class="flex-1 bg-surface-light dark:bg-gray-900 border border-border-light dark:border-gray-800 rounded-xl p-5 shadow-sm">
+                    <p class="text-text-muted text-xs uppercase tracking-wider font-semibold mb-2">Volume</p>
+                    <p class="font-mono-tech text-text-main dark:text-white text-lg font-bold">42 Exercises</p>
+                </div>
+            </div>
+        </section>
+        <!-- Day Selector (Sticky) -->
+        <section
+            class="sticky top-0 z-20 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md border-b border-border-light dark:border-gray-800 pb-4 pt-2">
+            <div class="flex gap-3 px-6 overflow-x-auto no-scrollbar snap-x">
+                <!-- Active Day -->
+                <button
+                    class="snap-center shrink-0 flex flex-col items-center justify-center w-[4.5rem] h-16 rounded-xl bg-primary text-white shadow-lg shadow-primary/30 transition-transform active:scale-95">
+                    <span class="text-xs font-medium opacity-80">MON</span>
+                    <span class="font-mono-tech text-lg font-bold">01</span>
+                </button>
+                <!-- Inactive Day -->
+                <button
+                    class="snap-center shrink-0 flex flex-col items-center justify-center w-[4.5rem] h-16 rounded-xl bg-surface-light dark:bg-gray-800 border border-border-light dark:border-gray-700 text-text-main dark:text-gray-400 hover:border-primary/50 transition-colors">
+                    <span class="text-xs font-medium text-text-muted">TUE</span>
+                    <span class="font-mono-tech text-lg font-medium">02</span>
+                </button>
+                <!-- Inactive Day -->
+                <button
+                    class="snap-center shrink-0 flex flex-col items-center justify-center w-[4.5rem] h-16 rounded-xl bg-surface-light dark:bg-gray-800 border border-border-light dark:border-gray-700 text-text-main dark:text-gray-400 hover:border-primary/50 transition-colors">
+                    <span class="text-xs font-medium text-text-muted">WED</span>
+                    <span class="font-mono-tech text-lg font-medium">03</span>
+                </button>
+                <!-- Rest Day -->
+                <button
+                    class="snap-center shrink-0 flex flex-col items-center justify-center w-[4.5rem] h-16 rounded-xl bg-gray-100 dark:bg-gray-900 border border-transparent text-gray-400 dark:text-gray-600 opacity-60">
+                    <span class="text-xs font-medium">THU</span>
+                    <span class="material-symbols-outlined text-xl pt-1">spa</span>
+                </button>
+                <!-- Inactive Day -->
+                <button
+                    class="snap-center shrink-0 flex flex-col items-center justify-center w-[4.5rem] h-16 rounded-xl bg-surface-light dark:bg-gray-800 border border-border-light dark:border-gray-700 text-text-main dark:text-gray-400 hover:border-primary/50 transition-colors">
+                    <span class="text-xs font-medium text-text-muted">FRI</span>
+                    <span class="font-mono-tech text-lg font-medium">04</span>
+                </button>
+                <!-- Inactive Day -->
+                <button
+                    class="snap-center shrink-0 flex flex-col items-center justify-center w-[4.5rem] h-16 rounded-xl bg-surface-light dark:bg-gray-800 border border-border-light dark:border-gray-700 text-text-main dark:text-gray-400 hover:border-primary/50 transition-colors">
+                    <span class="text-xs font-medium text-text-muted">SAT</span>
+                    <span class="font-mono-tech text-lg font-medium">05</span>
+                </button>
+                <!-- Rest Day -->
+                <button
+                    class="snap-center shrink-0 flex flex-col items-center justify-center w-[4.5rem] h-16 rounded-xl bg-gray-100 dark:bg-gray-900 border border-transparent text-gray-400 dark:text-gray-600 opacity-60">
+                    <span class="text-xs font-medium">SUN</span>
+                    <span class="material-symbols-outlined text-xl pt-1">spa</span>
+                </button>
+            </div>
+        </section>
+        <!-- Main Content -->
+        <main class="flex-1 px-6 pt-6 pb-28">
+            <h2 class="text-xl font-bold text-text-main dark:text-white mb-6 flex items-center gap-2">
+                <span>Monday: Push Focus</span>
+                <span class="h-1 w-1 rounded-full bg-primary"></span>
+                <span class="text-sm font-normal text-text-muted font-mono-tech">45m</span>
+            </h2>
+            <div class="flex flex-col gap-4">
+                <!-- Exercise Card 01 -->
+                <article
+                    class="group relative overflow-hidden bg-surface-light dark:bg-gray-900 rounded-2xl shadow-sm border border-border-light dark:border-gray-800 p-5 transition-all hover:shadow-md">
+                    <div class="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-primary to-transparent"></div>
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="flex items-center gap-4">
+                            <span
+                                class="font-mono-tech text-2xl font-bold text-gray-200 dark:text-gray-700 group-hover:text-primary transition-colors">01</span>
+                            <div>
+                                <h3 class="text-lg font-bold text-text-main dark:text-white leading-tight">Incline
+                                    Barbell Press</h3>
+                                <p class="text-sm text-text-muted mt-1">Upper Pectorals</p>
+                            </div>
+                        </div>
+                        <div
+                            class="h-10 w-10 rounded-full bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-primary">
+                            <span class="material-symbols-outlined">fitness_center</span>
+                        </div>
+                    </div>
+                    <div
+                        class="grid grid-cols-3 gap-2 border-t border-dashed border-gray-200 dark:border-gray-700 pt-4">
+                        <div>
+                            <p class="text-[10px] uppercase text-text-muted font-bold tracking-wider mb-1">Sets</p>
+                            <p class="font-mono-tech font-bold text-text-main dark:text-white">4</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] uppercase text-text-muted font-bold tracking-wider mb-1">Reps</p>
+                            <p class="font-mono-tech font-bold text-text-main dark:text-white">8-10</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] uppercase text-text-muted font-bold tracking-wider mb-1">RPE</p>
+                            <p class="font-mono-tech font-bold text-primary">9</p>
+                        </div>
+                    </div>
+                </article>
+                <!-- Exercise Card 02 -->
+                <article
+                    class="group relative overflow-hidden bg-surface-light dark:bg-gray-900 rounded-2xl shadow-sm border border-border-light dark:border-gray-800 p-5 transition-all hover:shadow-md">
+                    <div
+                        class="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-primary to-transparent opacity-70">
+                    </div>
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="flex items-center gap-4">
+                            <span
+                                class="font-mono-tech text-2xl font-bold text-gray-200 dark:text-gray-700 group-hover:text-primary transition-colors">02</span>
+                            <div>
+                                <h3 class="text-lg font-bold text-text-main dark:text-white leading-tight">Seated DB
+                                    Press</h3>
+                                <p class="text-sm text-text-muted mt-1">Anterior Deltoids</p>
+                            </div>
+                        </div>
+                        <div
+                            class="h-10 w-10 rounded-full bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-primary">
+                            <span class="material-symbols-outlined">accessibility_new</span>
+                        </div>
+                    </div>
+                    <div
+                        class="grid grid-cols-3 gap-2 border-t border-dashed border-gray-200 dark:border-gray-700 pt-4">
+                        <div>
+                            <p class="text-[10px] uppercase text-text-muted font-bold tracking-wider mb-1">Sets</p>
+                            <p class="font-mono-tech font-bold text-text-main dark:text-white">3</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] uppercase text-text-muted font-bold tracking-wider mb-1">Reps</p>
+                            <p class="font-mono-tech font-bold text-text-main dark:text-white">10-12</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] uppercase text-text-muted font-bold tracking-wider mb-1">RPE</p>
+                            <p class="font-mono-tech font-bold text-primary">8.5</p>
+                        </div>
+                    </div>
+                </article>
+                <!-- Exercise Card 03 -->
+                <article
+                    class="group relative overflow-hidden bg-surface-light dark:bg-gray-900 rounded-2xl shadow-sm border border-border-light dark:border-gray-800 p-5 transition-all hover:shadow-md">
+                    <div
+                        class="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-primary to-transparent opacity-50">
+                    </div>
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="flex items-center gap-4">
+                            <span
+                                class="font-mono-tech text-2xl font-bold text-gray-200 dark:text-gray-700 group-hover:text-primary transition-colors">03</span>
+                            <div>
+                                <h3 class="text-lg font-bold text-text-main dark:text-white leading-tight">Cable Lateral
+                                    Raises</h3>
+                                <p class="text-sm text-text-muted mt-1">Lateral Deltoids</p>
+                            </div>
+                        </div>
+                        <div
+                            class="h-10 w-10 rounded-full bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-primary">
+                            <span class="material-symbols-outlined">airline_stops</span>
+                        </div>
+                    </div>
+                    <div
+                        class="grid grid-cols-3 gap-2 border-t border-dashed border-gray-200 dark:border-gray-700 pt-4">
+                        <div>
+                            <p class="text-[10px] uppercase text-text-muted font-bold tracking-wider mb-1">Sets</p>
+                            <p class="font-mono-tech font-bold text-text-main dark:text-white">3</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] uppercase text-text-muted font-bold tracking-wider mb-1">Reps</p>
+                            <p class="font-mono-tech font-bold text-text-main dark:text-white">12-15</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] uppercase text-text-muted font-bold tracking-wider mb-1">RPE</p>
+                            <p class="font-mono-tech font-bold text-primary">9</p>
+                        </div>
+                    </div>
+                </article>
+                <!-- Exercise Card 04 -->
+                <article
+                    class="group relative overflow-hidden bg-surface-light dark:bg-gray-900 rounded-2xl shadow-sm border border-border-light dark:border-gray-800 p-5 transition-all hover:shadow-md">
+                    <div
+                        class="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-primary to-transparent opacity-40">
+                    </div>
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="flex items-center gap-4">
+                            <span
+                                class="font-mono-tech text-2xl font-bold text-gray-200 dark:text-gray-700 group-hover:text-primary transition-colors">04</span>
+                            <div>
+                                <h3 class="text-lg font-bold text-text-main dark:text-white leading-tight">Tricep
+                                    Pushdowns</h3>
+                                <p class="text-sm text-text-muted mt-1">Triceps Brachii</p>
+                            </div>
+                        </div>
+                        <div
+                            class="h-10 w-10 rounded-full bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-primary">
+                            <span class="material-symbols-outlined">offline_bolt</span>
+                        </div>
+                    </div>
+                    <div
+                        class="grid grid-cols-3 gap-2 border-t border-dashed border-gray-200 dark:border-gray-700 pt-4">
+                        <div>
+                            <p class="text-[10px] uppercase text-text-muted font-bold tracking-wider mb-1">Sets</p>
+                            <p class="font-mono-tech font-bold text-text-main dark:text-white">3</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] uppercase text-text-muted font-bold tracking-wider mb-1">Reps</p>
+                            <p class="font-mono-tech font-bold text-text-main dark:text-white">10-12</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] uppercase text-text-muted font-bold tracking-wider mb-1">RPE</p>
+                            <p class="font-mono-tech font-bold text-primary">8</p>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </main>
+        <!-- Fixed Bottom Action Bar -->
+        <div
+            class="fixed bottom-0 left-0 right-0 z-50 flex justify-center pb-6 pt-4 px-6 bg-gradient-to-t from-background-light dark:from-background-dark via-background-light dark:via-background-dark to-transparent pointer-events-none max-w-md mx-auto">
+            <button
+                class="pointer-events-auto w-full bg-gradient-to-r from-primary to-blue-600 text-white rounded-xl h-14 font-display font-bold text-lg shadow-xl shadow-blue-500/20 active:scale-[0.98] transition-all flex items-center justify-between px-6">
+                <span>Start Monday Session</span>
+                <div class="bg-white/20 h-8 w-8 rounded-full flex items-center justify-center">
+                    <span class="material-symbols-outlined text-[20px]">play_arrow</span>
+                </div>
+            </button>
+        </div>
+    </div>
+</body>
+
+</html>

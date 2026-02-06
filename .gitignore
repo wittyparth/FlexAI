@@ -4,6 +4,6 @@ walkthrough.md
 .agent/rules/
 .gemini/
 LOCAL_CONFIG.md
-docs/
+# docs/
 scripts/
 

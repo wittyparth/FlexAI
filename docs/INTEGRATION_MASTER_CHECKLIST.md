@@ -16,7 +16,7 @@ Every integration PR must update this file.
 
 ## Current Status
 - Current Phase: Phase 3
-- Overall Completion: 84%
+- Overall Completion: 86%
 - Blockers: None
 
 ## Global Exit Criteria
@@ -104,6 +104,7 @@ Every integration PR must update this file.
   - [x] Switch `TemplateListScreen` to backend template routines with local custom fallback.
   - [x] Remove seeded mock templates from `templateStore` initial state.
   - [x] Replace workout hub recent-activity cards with backend workout history data.
+  - [x] Replace workout hub metric tiles and consistency heatmap mock sources with backend workout history derivation.
   - [x] Remove hardcoded workout mock dataset from `WorkoutDetailScreen`.
   - [x] Replace exercise query mocks with backend exercise API (search/detail/filters/featured).
 - [ ] Integrate full workout lifecycle:
@@ -252,6 +253,7 @@ Every integration PR must update this file.
 - 2026-02-20 | PR: `b71859b` | Phase: 3 | Removed `MOCK_ROUTINES` fallback from template day assignment and resolved linked routines from backend routine/public-routine query data.
 - 2026-02-20 | PR: `3b5fdeb` | Phase: 3 | Migrated `TemplateListScreen` to backend template routines (`isTemplate=true`) with local custom fallback and removed default mock templates from `templateStore` initial state.
 - 2026-02-20 | PR: `df0b73d` | Phase: 3 | Replaced Workout Hub recent-activity mock cards with API-backed workout history rows using `useWorkouts`, including computed duration/volume/exercise counts.
+- 2026-02-20 | PR: `ed672ea` | Phase: 3 | Replaced Workout Hub `DUMMY_METRICS`/`DUMMY_USER`/`HEATMAP_DATA` dependencies with backend-derived weekly metrics, streak, and one-year heatmap data from workout history.
 - 2026-02-20 | PR: `2b5db45` | Phase: 3 | Removed the large hardcoded `MOCK_WORKOUTS` dataset from `WorkoutDetailScreen`, leaving the screen fully backend-driven via `useWorkout`.
 - 2026-02-20 | PR: `aa8ad31` | Phase: 3 | Replaced `useExerciseQueries` mock-backed implementations with backend `exerciseApi` calls for filters, featured, search, and exercise detail lookups.
 

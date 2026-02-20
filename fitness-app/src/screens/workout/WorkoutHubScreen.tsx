@@ -16,7 +16,6 @@ import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { WorkoutHeatmap } from '../../components/WorkoutHeatmap';
-import { HEATMAP_DATA, DUMMY_METRICS, DUMMY_USER } from '../../data/mockData';
 import { useWorkoutStore } from '../../store/workoutStore';
 import { useShallow } from 'zustand/react/shallow';
 import type { ThemeColors } from '../../hooks/useColors';
@@ -29,6 +28,86 @@ const fmtVol = (v: number) => v >= 1000 ? `${(v / 1000).toFixed(1)}k` : v.toStri
 const fmtDuration = (s: number) => `${Math.floor(s / 60)}m`;
 const toTitleCase = (value?: string | null) =>
     value ? `${value.charAt(0).toUpperCase()}${value.slice(1).replace('_', ' ')}` : 'General';
+
+const startOfDay = (date: Date) => new Date(date.getFullYear(), date.getMonth(), date.getDate());
+const formatDateKey = (date: Date) =>
+    `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+const addDays = (date: Date, days: number) => {
+    const next = new Date(date);
+    next.setDate(next.getDate() + days);
+    return next;
+};
+
+const getWorkoutVolume = (workout: any): number => {
+    const exercises = Array.isArray(workout?.exercises) ? workout.exercises : [];
+    return exercises.reduce((totalVolume: number, exercise: any) => {
+        const sets = Array.isArray(exercise?.sets) ? exercise.sets : [];
+        const exerciseVolume = sets.reduce((setVolume: number, setItem: any) => {
+            const weight = Number(setItem?.weight || 0);
+            const reps = Number(setItem?.reps || 0);
+            return setVolume + (weight * reps);
+        }, 0);
+        return totalVolume + exerciseVolume;
+    }, 0);
+};
+
+const getWorkoutDurationSeconds = (workout: any): number => {
+    const startTime = workout?.startTime ? new Date(workout.startTime) : null;
+    const endTime = workout?.endTime ? new Date(workout.endTime) : null;
+    if (!startTime || !endTime) return 0;
+    return Math.max(0, Math.floor((endTime.getTime() - startTime.getTime()) / 1000));
+};
+
+const isCompletedWorkout = (workout: any) => workout?.status === 'completed';
+
+const buildHeatmapData = (workouts: any[]) => {
+    const dayVolume = new Map<string, number>();
+
+    workouts.forEach((workout) => {
+        if (!isCompletedWorkout(workout) || !workout?.startTime) return;
+        const dayKey = formatDateKey(new Date(workout.startTime));
+        const volume = getWorkoutVolume(workout);
+        dayVolume.set(dayKey, (dayVolume.get(dayKey) || 0) + volume);
+    });
+
+    const today = startOfDay(new Date());
+    const data: { date: string; intensity: 0 | 1 | 2 | 3 }[] = [];
+
+    for (let i = 364; i >= 0; i--) {
+        const day = addDays(today, -i);
+        const dayKey = formatDateKey(day);
+        const volume = dayVolume.get(dayKey) || 0;
+        let intensity: 0 | 1 | 2 | 3 = 0;
+        if (volume > 0 && volume <= 3000) intensity = 1;
+        if (volume > 3000 && volume <= 7000) intensity = 2;
+        if (volume > 7000) intensity = 3;
+        data.push({ date: dayKey, intensity });
+    }
+
+    return data;
+};
+
+const calculateStreak = (workouts: any[]) => {
+    const workoutDays = new Set<string>();
+
+    workouts.forEach((workout) => {
+        if (!isCompletedWorkout(workout) || !workout?.startTime) return;
+        workoutDays.add(formatDateKey(new Date(workout.startTime)));
+    });
+
+    const today = startOfDay(new Date());
+    const todayKey = formatDateKey(today);
+    const startingDay = workoutDays.has(todayKey) ? today : addDays(today, -1);
+
+    let streak = 0;
+    let cursor = startingDay;
+    while (workoutDays.has(formatDateKey(cursor))) {
+        streak += 1;
+        cursor = addDays(cursor, -1);
+    }
+
+    return streak;
+};
 
 const DIFF_COLOR: Record<string, string> = {
     Beginner: '#10B981',
@@ -132,32 +211,62 @@ export function WorkoutHubScreen({ navigation }: any) {
         totalSets: Object.keys(state.sets).length,
     })));
 
+    const oneYearRange = useMemo(() => {
+        const start = startOfDay(addDays(new Date(), -364));
+        const end = new Date();
+        end.setHours(23, 59, 59, 999);
+        return {
+            startDate: start.toISOString(),
+            endDate: end.toISOString(),
+        };
+    }, []);
+
     const { data: routinesResponse, isLoading: isRoutinesLoading } = useRoutines({ page: 1, limit: 5, isTemplate: false });
     const { data: templatesResponse, isLoading: isTemplatesLoading } = useRoutines({ page: 1, limit: 5, isTemplate: true });
-    const { data: workoutsResponse, isLoading: isRecentLoading } = useWorkouts({ page: 1, limit: 10 });
+    const { data: workoutsResponse, isLoading: isRecentLoading } = useWorkouts({
+        page: 1,
+        limit: 500,
+        startDate: oneYearRange.startDate,
+        endDate: oneYearRange.endDate,
+    });
 
     const myRoutines = routinesResponse?.data?.routines || [];
     const myTemplates = templatesResponse?.data?.routines || [];
-    const recentActivity = useMemo(() => {
-        const workouts = workoutsResponse?.data || [];
-        return workouts.slice(0, 3).map((workout: any) => {
-            const exercises = Array.isArray(workout.exercises) ? workout.exercises : [];
-            const volume = exercises.reduce((totalVolume: number, exercise: any) => {
-                const sets = Array.isArray(exercise.sets) ? exercise.sets : [];
-                const exerciseVolume = sets.reduce((setVolume: number, setItem: any) => {
-                    const weight = Number(setItem?.weight || 0);
-                    const reps = Number(setItem?.reps || 0);
-                    return setVolume + (weight * reps);
-                }, 0);
-                return totalVolume + exerciseVolume;
-            }, 0);
+    const workoutHistory = workoutsResponse?.data || [];
+    const completedWorkouts = useMemo(
+        () => workoutHistory.filter((workout: any) => isCompletedWorkout(workout)),
+        [workoutHistory],
+    );
 
+    const weeklyMetrics = useMemo(() => {
+        const today = startOfDay(new Date());
+        const sevenDaysAgo = addDays(today, -6);
+        let weeklyWorkouts = 0;
+        let weeklyVolume = 0;
+
+        completedWorkouts.forEach((workout: any) => {
+            if (!workout?.startTime) return;
+            const workoutDay = startOfDay(new Date(workout.startTime));
+            if (workoutDay < sevenDaysAgo || workoutDay > today) return;
+            weeklyWorkouts += 1;
+            weeklyVolume += getWorkoutVolume(workout);
+        });
+
+        return {
+            weeklyWorkouts,
+            weeklyVolume,
+            streak: calculateStreak(completedWorkouts),
+        };
+    }, [completedWorkouts]);
+
+    const heatmapData = useMemo(() => buildHeatmapData(completedWorkouts), [completedWorkouts]);
+
+    const recentActivity = useMemo(() => {
+        return completedWorkouts.slice(0, 3).map((workout: any) => {
+            const exercises = Array.isArray(workout.exercises) ? workout.exercises : [];
+            const volume = getWorkoutVolume(workout);
             const startTime = workout.startTime ? new Date(workout.startTime) : null;
-            const endTime = workout.endTime ? new Date(workout.endTime) : null;
-            const durationSeconds =
-                startTime && endTime
-                    ? Math.max(0, Math.floor((endTime.getTime() - startTime.getTime()) / 1000))
-                    : 0;
+            const durationSeconds = getWorkoutDurationSeconds(workout);
 
             return {
                 id: String(workout.id),
@@ -170,7 +279,7 @@ export function WorkoutHubScreen({ navigation }: any) {
                 hasPR: false,
             };
         });
-    }, [workoutsResponse]);
+    }, [completedWorkouts]);
 
     useEffect(() => {
         Animated.timing(fade, { toValue: 1, duration: 500, useNativeDriver: true }).start();
@@ -228,15 +337,15 @@ export function WorkoutHubScreen({ navigation }: any) {
                     )}
 
                     <View style={[styles.px, styles.statsRow]}>
-                        <StatTile value={DUMMY_METRICS.weeklyWorkouts.toString()} label="This Week" icon="clipboard-check" color={colors.chart4} colors={colors} />
-                        <StatTile value={`${(DUMMY_METRICS.weeklyVolume / 1000).toFixed(0)}k`} label="Volume (lbs)" icon="weight" color={colors.chart1} colors={colors} />
-                        <StatTile value={`${DUMMY_USER.streak}d`} label="Streak" icon="fire" color={colors.warning} colors={colors} />
+                        <StatTile value={weeklyMetrics.weeklyWorkouts.toString()} label="This Week" icon="clipboard-check" color={colors.chart4} colors={colors} />
+                        <StatTile value={`${(weeklyMetrics.weeklyVolume / 1000).toFixed(0)}k`} label="Volume (lbs)" icon="weight" color={colors.chart1} colors={colors} />
+                        <StatTile value={`${weeklyMetrics.streak}d`} label="Streak" icon="fire" color={colors.warning} colors={colors} />
                     </View>
 
                     <View style={styles.px}>
                         <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
                             <WorkoutHeatmap
-                                data={HEATMAP_DATA}
+                                data={heatmapData}
                                 showToggle
                                 defaultRange="week"
                                 containerPaddingH={56}

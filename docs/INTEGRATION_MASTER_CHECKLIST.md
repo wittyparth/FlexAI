@@ -15,8 +15,8 @@ Every integration PR must update this file.
 - If scope changes, add a `Change Note` entry before implementation.
 
 ## Current Status
-- Current Phase: Phase 4
-- Overall Completion: 96%
+- Current Phase: Phase 5
+- Overall Completion: 97%
 - Blockers: Global TypeScript type drift outside current integration scope (auth/home/theme typing mismatches) still prevents clean `tsc`.
 
 ## Global Exit Criteria
@@ -141,6 +141,7 @@ Every integration PR must update this file.
 
 ### Checklist
 - [ ] Integrate stats endpoints in analytics screens.
+  - [x] `AnalyticsHubScreen`: quick stats + volume snapshot now derive from `/stats/dashboard` (`useDashboardStats`) and backend recent workouts.
 - [ ] Integrate body tracking endpoints (weight/measurements/photos).
 - [ ] Normalize units and chart payload shaping.
 - [ ] Ensure PR/volume/consistency metrics reflect completed workouts.
@@ -259,6 +260,7 @@ Every integration PR must update this file.
 - 2026-02-20 | PR: `c025080` | Phase: 4 | Integrated `AIGeneratorScreen` with live `/routines/generate`, normalized AI response enrichment in `ai.api.ts`, and wired `AIPreviewScreen` to API-generated workout data/save flow (removed local mock fallback).
 - 2026-02-20 | PR: `c9bd2f7` | Phase: 4 | Hardened AI generation error handling for backend error envelopes/provider outages, validated generated exercise IDs before mapping, and added API-backed `AIPreviewScreen` start-workout flow that creates a live workout and injects generated exercises with partial-failure handling.
 - 2026-02-20 | PR: `58ce791` | Phase: Hardening | Repaired malformed JSX tokens in analytics/social/workout screens (`PersonalRecords`, `VolumeAnalytics`, `CreatePost`, `PostDetail`, `SetConfig`) and fixed social post visibility enum mismatch (`followers` -> `friends`) to unblock parser-level compile failures.
+- 2026-02-20 | PR: `ae4b0d3` | Phase: 5 | Integrated `AnalyticsHubScreen` with backend dashboard stats (`useDashboardStats`), replacing mock quick stats and deriving 7D/30D/90D volume snapshot bars from API recent workout history.
 - 2026-02-20 | PR: `2b5db45` | Phase: 3 | Removed the large hardcoded `MOCK_WORKOUTS` dataset from `WorkoutDetailScreen`, leaving the screen fully backend-driven via `useWorkout`.
 - 2026-02-20 | PR: `aa8ad31` | Phase: 3 | Replaced `useExerciseQueries` mock-backed implementations with backend `exerciseApi` calls for filters, featured, search, and exercise detail lookups.
 

@@ -58,8 +58,8 @@ export function useLogWeight() {
   return useMutation({
     mutationFn: (data: LogWeightRequest) => BodyApi.logWeight(data),
     onSuccess: () => {
-      // Invalidate weight history to trigger refetch
-      queryClient.invalidateQueries({ queryKey: BODY_KEYS.weight() });
+      // Refetch all body-related views (hub + scoped date-range history queries)
+      queryClient.invalidateQueries({ queryKey: BODY_KEYS.all });
     },
   });
 }
@@ -73,7 +73,7 @@ export function useLogMeasurements() {
   return useMutation({
     mutationFn: (data: LogMeasurementRequest) => BodyApi.logMeasurements(data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: BODY_KEYS.measurements() });
+      queryClient.invalidateQueries({ queryKey: BODY_KEYS.all });
     },
   });
 }
@@ -87,8 +87,7 @@ export function useLogProgressPhoto() {
   return useMutation({
     mutationFn: (data: LogPhotoRequest) => BodyApi.logProgressPhoto(data),
     onSuccess: () => {
-      // Invalidate photos list to trigger refetch
-      queryClient.invalidateQueries({ queryKey: BODY_KEYS.photos() });
+      queryClient.invalidateQueries({ queryKey: BODY_KEYS.all });
     },
   });
 }

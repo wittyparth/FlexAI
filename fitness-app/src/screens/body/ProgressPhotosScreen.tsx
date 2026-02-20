@@ -3,45 +3,47 @@ import {
     View,
     Text,
     StyleSheet,
-    ScrollView,
     TouchableOpacity,
     Image,
     Dimensions,
     FlatList,
     Modal,
     ActivityIndicator,
+    TextInput,
+    Alert,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
-import { useProgressPhotos } from '../../hooks/queries/useBodyQueries';
+import { useLogProgressPhoto, useProgressPhotos } from '../../hooks/queries/useBodyQueries';
 import { ProgressPhoto } from '../../api/body.api';
-
 
 const { width } = Dimensions.get('window');
 const SPACING = 16;
-// 2 Columns for larger images
 const ITEM_WIDTH = (width - SPACING * 3) / 2;
+
+type PhotoPose = 'front' | 'side' | 'back';
 
 export function ProgressPhotosScreen({ navigation }: any) {
     const colors = useColors();
     const insets = useSafeAreaInsets();
-    const [viewMode, setViewMode] = useState<'grid' | 'compare'>('grid');
+
     const [selectedPhoto, setSelectedPhoto] = useState<ProgressPhoto | null>(null);
+    const [showLogModal, setShowLogModal] = useState(false);
+    const [photoUrl, setPhotoUrl] = useState('');
+    const [photoType, setPhotoType] = useState<PhotoPose>('front');
+    const [photoNotes, setPhotoNotes] = useState('');
 
-    // Fetch Real Data
     const { data: photos = [], isLoading, isError, refetch } = useProgressPhotos();
+    const logPhotoMutation = useLogProgressPhoto();
 
-    // Group photos by Month
     const photosByMonth = React.useMemo(() => {
-        const groups: { [key: string]: ProgressPhoto[] } = {};
+        const groups: Record<string, ProgressPhoto[]> = {};
 
-        photos.forEach(photo => {
-            // Check if photo.date is valid before formatting
+        photos.forEach((photo) => {
             const dateObj = new Date(photo.date);
-            // Fallback for invalid dates
-            if (isNaN(dateObj.getTime())) return;
+            if (Number.isNaN(dateObj.getTime())) return;
 
             const monthYear = dateObj.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
             if (!groups[monthYear]) {
@@ -50,11 +52,30 @@ export function ProgressPhotosScreen({ navigation }: any) {
             groups[monthYear].push(photo);
         });
 
-        return Object.entries(groups).map(([title, data]) => ({
-            title,
-            data
-        }));
+        return Object.entries(groups).map(([title, data]) => ({ title, data }));
     }, [photos]);
+
+    const handleSavePhoto = async () => {
+        if (!photoUrl.trim()) {
+            Alert.alert('Missing URL', 'Paste a valid image URL to save this progress photo.');
+            return;
+        }
+
+        try {
+            await logPhotoMutation.mutateAsync({
+                photoUrl: photoUrl.trim(),
+                type: photoType,
+                notes: photoNotes.trim() || undefined,
+                date: new Date().toISOString(),
+            });
+            setPhotoUrl('');
+            setPhotoNotes('');
+            setPhotoType('front');
+            setShowLogModal(false);
+        } catch (error: any) {
+            Alert.alert('Unable to save', error?.message ?? 'Failed to log progress photo.');
+        }
+    };
 
     const renderPhotoItem = ({ item }: { item: ProgressPhoto }) => (
         <TouchableOpacity
@@ -68,13 +89,13 @@ export function ProgressPhotosScreen({ navigation }: any) {
                     {new Date(item.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                 </Text>
             </View>
-            <View style={[styles.photoTypeBadge, { backgroundColor: colors.primary.main }]}>
+            <View style={[styles.photoTypeBadge, { backgroundColor: colors.primary.main }]}> 
                 <Text style={styles.photoTypeText}>{item.type}</Text>
             </View>
         </TouchableOpacity>
     );
 
-    const renderSection = ({ item }: { item: { title: string, data: ProgressPhoto[] } }) => (
+    const renderSection = ({ item }: { item: { title: string; data: ProgressPhoto[] } }) => (
         <View style={styles.monthSection}>
             <Text style={[styles.monthTitle, { color: colors.foreground }]}>{item.title}</Text>
             <View style={styles.photoGrid}>
@@ -99,7 +120,7 @@ export function ProgressPhotosScreen({ navigation }: any) {
         return (
             <View style={[styles.container, { backgroundColor: colors.background, justifyContent: 'center', alignItems: 'center' }]}>
                 <Text style={{ color: colors.error, marginBottom: 16 }}>Failed to load photos</Text>
-                <TouchableOpacity onPress={() => refetch()} style={[styles.retryBtn, { backgroundColor: colors.primary.main }]}>
+                <TouchableOpacity onPress={() => refetch()} style={[styles.retryBtn, { backgroundColor: colors.primary.main }]}> 
                     <Text style={{ color: '#FFF', fontWeight: 'bold' }}>Retry</Text>
                 </TouchableOpacity>
             </View>
@@ -108,27 +129,23 @@ export function ProgressPhotosScreen({ navigation }: any) {
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
-            {/* Header - Standardized */}
-            <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.card, borderBottomColor: colors.border }]}>
+            <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.card, borderBottomColor: colors.border }]}> 
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerBtn}>
                     <Ionicons name="arrow-back" size={24} color={colors.foreground} />
                 </TouchableOpacity>
                 <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Progress Photos</Text>
-                <TouchableOpacity style={styles.headerBtn}>
-                    <Ionicons name="ellipsis-horizontal" size={24} color={colors.foreground} />
+                <TouchableOpacity style={styles.headerBtn} onPress={() => setShowLogModal(true)}>
+                    <Ionicons name="add" size={24} color={colors.foreground} />
                 </TouchableOpacity>
             </View>
 
-            {/* Content */}
             {photos.length === 0 ? (
                 <View style={styles.emptyState}>
-                    <View style={[styles.emptyIcon, { backgroundColor: `${colors.primary.main}15` }]}>
+                    <View style={[styles.emptyIcon, { backgroundColor: `${colors.primary.main}15` }]}> 
                         <Ionicons name="camera" size={48} color={colors.primary.main} />
                     </View>
                     <Text style={[styles.emptyTitle, { color: colors.foreground }]}>No Photos Yet</Text>
-                    <Text style={[styles.emptyText, { color: colors.mutedForeground }]}>
-                        Take your first progress photo to start tracking your transformation!
-                    </Text>
+                    <Text style={[styles.emptyText, { color: colors.mutedForeground }]}>Paste a photo URL to start tracking visual progress.</Text>
                 </View>
             ) : (
                 <FlatList
@@ -140,16 +157,12 @@ export function ProgressPhotosScreen({ navigation }: any) {
                 />
             )}
 
-            {/* FAB */}
-            <TouchableOpacity style={styles.fab} activeOpacity={0.9}>
-                <View
-                    style={styles.fabGradient}
-                >
+            <TouchableOpacity style={styles.fab} activeOpacity={0.9} onPress={() => setShowLogModal(true)}>
+                <View style={[styles.fabGradient, { backgroundColor: colors.primary.main }]}> 
                     <Ionicons name="camera" size={28} color="#FFF" />
                 </View>
             </TouchableOpacity>
 
-            {/* Detail Modal */}
             <Modal visible={!!selectedPhoto} transparent animationType="fade">
                 <View style={styles.modalOverlay}>
                     <TouchableOpacity style={styles.modalClose} onPress={() => setSelectedPhoto(null)}>
@@ -158,6 +171,66 @@ export function ProgressPhotosScreen({ navigation }: any) {
                     {selectedPhoto && (
                         <Image source={{ uri: selectedPhoto.url }} style={styles.fullImage} resizeMode="contain" />
                     )}
+                </View>
+            </Modal>
+
+            <Modal visible={showLogModal} transparent animationType="slide" onRequestClose={() => setShowLogModal(false)}>
+                <View style={styles.sheetBackdrop}>
+                    <View style={[styles.sheetCard, { backgroundColor: colors.card, borderColor: colors.border }]}> 
+                        <Text style={[styles.sheetTitle, { color: colors.foreground }]}>Log Progress Photo</Text>
+
+                        <TextInput
+                            value={photoUrl}
+                            onChangeText={setPhotoUrl}
+                            placeholder="Image URL"
+                            placeholderTextColor={colors.mutedForeground}
+                            autoCapitalize="none"
+                            style={[styles.input, { color: colors.foreground, borderColor: colors.border, backgroundColor: colors.background }]}
+                        />
+
+                        <View style={styles.poseRow}>
+                            {(['front', 'side', 'back'] as PhotoPose[]).map((pose) => (
+                                <TouchableOpacity
+                                    key={pose}
+                                    onPress={() => setPhotoType(pose)}
+                                    style={[
+                                        styles.poseChip,
+                                        {
+                                            borderColor: photoType === pose ? colors.primary.main : colors.border,
+                                            backgroundColor: photoType === pose ? `${colors.primary.main}15` : colors.background,
+                                        },
+                                    ]}
+                                >
+                                    <Text style={{ color: photoType === pose ? colors.primary.main : colors.foreground, fontWeight: '600' }}>{pose}</Text>
+                                </TouchableOpacity>
+                            ))}
+                        </View>
+
+                        <TextInput
+                            value={photoNotes}
+                            onChangeText={setPhotoNotes}
+                            placeholder="Notes (optional)"
+                            placeholderTextColor={colors.mutedForeground}
+                            style={[styles.input, { color: colors.foreground, borderColor: colors.border, backgroundColor: colors.background }]}
+                        />
+
+                        <View style={styles.sheetActions}>
+                            <TouchableOpacity
+                                style={[styles.sheetBtn, { borderColor: colors.border }]}
+                                onPress={() => setShowLogModal(false)}
+                                disabled={logPhotoMutation.isPending}
+                            >
+                                <Text style={{ color: colors.foreground, fontWeight: '600' }}>Cancel</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={[styles.sheetBtn, { backgroundColor: colors.primary.main }]}
+                                onPress={handleSavePhoto}
+                                disabled={logPhotoMutation.isPending}
+                            >
+                                <Text style={{ color: '#FFF', fontWeight: '700' }}>{logPhotoMutation.isPending ? 'Saving...' : 'Save'}</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
                 </View>
             </Modal>
         </View>
@@ -174,7 +247,7 @@ const styles = StyleSheet.create({
     photoGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: SPACING },
     photoCard: {
         width: ITEM_WIDTH,
-        height: ITEM_WIDTH * 1.3, // 4:5 aspect ratio roughly
+        height: ITEM_WIDTH * 1.3,
         borderRadius: 16,
         overflow: 'hidden',
         borderWidth: 1,
@@ -225,4 +298,12 @@ const styles = StyleSheet.create({
     emptyIcon: { width: 80, height: 80, borderRadius: 40, alignItems: 'center', justifyContent: 'center', marginBottom: 16 },
     emptyTitle: { fontSize: 20, fontWeight: '700', marginBottom: 8 },
     emptyText: { textAlign: 'center', fontSize: 15, lineHeight: 22 },
+    sheetBackdrop: { flex: 1, justifyContent: 'flex-end', backgroundColor: 'rgba(0,0,0,0.45)' },
+    sheetCard: { borderTopLeftRadius: 18, borderTopRightRadius: 18, borderWidth: 1, padding: 16, gap: 12 },
+    sheetTitle: { fontSize: 18, fontWeight: '700', marginBottom: 4 },
+    input: { borderWidth: 1, borderRadius: 10, paddingHorizontal: 12, paddingVertical: 10 },
+    poseRow: { flexDirection: 'row', gap: 8 },
+    poseChip: { flex: 1, paddingVertical: 10, borderRadius: 10, borderWidth: 1, alignItems: 'center' },
+    sheetActions: { flexDirection: 'row', gap: 10, marginTop: 4 },
+    sheetBtn: { flex: 1, borderRadius: 10, borderWidth: 1, paddingVertical: 12, alignItems: 'center' },
 });

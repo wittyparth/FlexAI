@@ -16,7 +16,7 @@ Every integration PR must update this file.
 
 ## Current Status
 - Current Phase: Phase 0
-- Overall Completion: 0%
+- Overall Completion: 6%
 - Blockers: None
 
 ## Global Exit Criteria
@@ -30,8 +30,8 @@ Every integration PR must update this file.
 - Freeze API contracts and remove architecture ambiguity.
 
 ### Checklist
-- [ ] Finalize one active root navigation architecture (remove duplicate root flow risk).
-- [ ] Remove auth bypass paths from app entry flow.
+- [x] Finalize one active root navigation architecture (remove duplicate root flow risk).
+- [x] Remove auth bypass paths from app entry flow.
 - [ ] Audit and fix route mismatches between frontend API clients and backend routers:
   - [ ] `social.api.ts`
   - [ ] `feed.api.ts`
@@ -59,7 +59,7 @@ Every integration PR must update this file.
 - [ ] Implement stable token attach + refresh queue logic in API client.
 - [ ] Persist and restore session on app boot.
 - [ ] Ensure route guards: unauth -> auth stack, auth+not-onboarded -> onboarding, auth+onboarded -> main app.
-- [ ] Remove all dev-only auth bypass behavior.
+- [x] Remove all dev-only auth bypass behavior.
 
 ### Acceptance
 - [ ] Register -> verify -> login flow passes.
@@ -229,6 +229,7 @@ Every integration PR must update this file.
 
 ### Log
 - 2026-02-20 | PR: N/A | Phase: Planning | Created master checklist and execution order.
+- 2026-02-20 | PR: Pending commit (Phase 0 - Nav/Auth cleanup) | Phase: 0 | Unified app entry to `src/navigation/RootNavigator`, added dedicated onboarding stack, expanded auth stack registration, removed auth bypass mode.
 
 ## Change Notes
 - 2026-02-20: Added mandatory backend persistence of `workoutInterests` in onboarding (Phase 2).

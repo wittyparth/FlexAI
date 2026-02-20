@@ -23,27 +23,29 @@ export type AuthStackParamList = {
   Welcome: undefined;
   Login: undefined;
   Register: undefined;
-  EmailVerification: { email: string };
+  VerifyEmail: { email: string };
   ForgotPassword: undefined;
-  ResetPassword: { email: string };
-  GoogleOAuth: undefined;
-  AccountLocked: undefined;
+  ResetVerify: { email: string };
+  ResetPassword: { email: string; otp: string };
+  AccountLocked: { waitTime?: number } | undefined;
 };
 
 // ==========================================
 // Onboarding Stack (Screens 9-18)
 // ==========================================
 export type OnboardingStackParamList = {
-  OnboardingGoals: undefined;
-  OnboardingExperience: undefined;
-  OnboardingBodyInfo: undefined;
-  OnboardingEquipment: undefined;
-  OnboardingSchedule: undefined;
-  OnboardingDuration: undefined;
-  OnboardingUnits: undefined;
-  OnboardingNotifications: undefined;
-  OnboardingTour: undefined;
-  OnboardingComplete: undefined;
+  GoalSelection: undefined;
+  ExperienceLevel: undefined;
+  PhysicalProfile: undefined;
+  SecondaryGoals: undefined;
+  WorkoutInterests: undefined;
+  WorkoutFrequency: undefined;
+  WorkoutDuration: undefined;
+  Equipment: undefined;
+  Units: undefined;
+  Notification: undefined;
+  AppTour: undefined;
+  FinalSuccess: undefined;
 };
 
 // ==========================================

@@ -16,7 +16,7 @@ Every integration PR must update this file.
 
 ## Current Status
 - Current Phase: Phase 3
-- Overall Completion: 66%
+- Overall Completion: 69%
 - Blockers: None
 
 ## Global Exit Criteria
@@ -100,6 +100,7 @@ Every integration PR must update this file.
   - [x] Switch workout query hooks and routine query hooks to backend endpoints.
   - [x] Replace mock workout start and add-exercise paths with backend mutations.
   - [x] Wire routine list/detail and workout hub routine/template sections to backend routine data.
+  - [x] Remove `MOCK_ROUTINES` dependency from template day assignment flow.
 - [ ] Integrate full workout lifecycle:
   - [x] Start workout
   - [x] Add/remove exercises
@@ -242,7 +243,8 @@ Every integration PR must update this file.
 - 2026-02-20 | PR: `b6d8e32` | Phase: 3 | Replaced routine query mocks with real routine APIs, wired `RoutineListScreen` and `RoutineDetailScreen` to backend routine data, and switched Workout Hub routine/template sections to seeded backend routines/templates.
 - 2026-02-20 | PR: `cca2f06` | Phase: 3 | Added active-workout remove-exercise UI with confirmation, exposed remove action through `useActiveWorkout`, and hardened store remove-exercise error propagation with optimistic rollback.
 - 2026-02-20 | PR: `065ef08` | Phase: 3 | Added workout-store `updateSet` mutation with optimistic rollback, wired active-workout hook edit mode, and enabled set editing from completed-set rows with save flow through backend API.
-- 2026-02-20 | PR: Pending commit (Phase 3 - backend current-workout sync integration) | Phase: 3 | Added `syncCurrentWorkout` store action using `/workouts/current`, wired it into Workout Hub mount, and added `useCurrentWorkout` query hook for API-backed current session retrieval.
+- 2026-02-20 | PR: `8988fd3` | Phase: 3 | Added `syncCurrentWorkout` store action using `/workouts/current`, wired it into Workout Hub mount, and added `useCurrentWorkout` query hook for API-backed current session retrieval.
+- 2026-02-20 | PR: Pending commit (Phase 3 - template editor backend routine source) | Phase: 3 | Removed `MOCK_ROUTINES` fallback from template day assignment and resolved linked routines from backend routine/public-routine query data.
 
 ## Change Notes
 - 2026-02-20: Added mandatory backend persistence of `workoutInterests` in onboarding (Phase 2).

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
     View,
     Text,
@@ -16,7 +16,7 @@ import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { useTemplateStore } from '../../store/templateStore';
 import { Template, TemplateDay } from '../../types/backend.types';
-import { MOCK_ROUTINES } from '../../data/mockRoutines';
+import { usePublicRoutines, useRoutines } from '../../hooks/queries/useRoutineQueries';
 
 const DAYS_OF_WEEK = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
@@ -46,6 +46,21 @@ export function TemplateEditorScreen({ navigation, route }: any) {
     );
 
     const [showDayActionOptions, setShowDayActionOptions] = useState(false);
+
+    const { data: myRoutinesResponse } = useRoutines({ page: 1, limit: 100, isTemplate: false });
+    const { data: publicRoutinesResponse } = usePublicRoutines({ page: 1, limit: 100 });
+
+    const routineLookup = useMemo(() => {
+        const lookup: Record<number, any> = {};
+        const routines = myRoutinesResponse?.data?.routines || [];
+        const publicRoutines = publicRoutinesResponse?.data?.routines || [];
+
+        [...routines, ...publicRoutines].forEach((routine: any) => {
+            lookup[Number(routine.id)] = routine;
+        });
+
+        return lookup;
+    }, [myRoutinesResponse, publicRoutinesResponse]);
 
     // Sync if editing existing and it changes in store (unlikely but good practice)
     useEffect(() => {
@@ -234,7 +249,9 @@ export function TemplateEditorScreen({ navigation, route }: any) {
                         {!selectedDay.isRestDay ? (
                             <View style={styles.dayContent}>
                                 {(selectedDay.routineId || selectedDay.routineData) ? (() => {
-                                    const assignedRoutine = selectedDay.routineData || MOCK_ROUTINES.find(r => r.id === selectedDay.routineId);
+                                    const assignedRoutine =
+                                        selectedDay.routineData ||
+                                        (selectedDay.routineId ? routineLookup[Number(selectedDay.routineId)] : null);
                                     
                                     return (
                                         <View style={styles.routineAssigned}>

@@ -94,7 +94,7 @@ export type WorkoutStackParamList = {
   WorkoutDetail: { workoutId: number };
   SessionInsights: { workoutId: number };
   AIGenerator: { presetGoal?: string; presetDuration?: number; customPrompt?: string };
-  AIPreview: { workoutData: any };
+  AIPreview: { workout: any; input?: any };
   AIPrompts: undefined;
   AIRoutinePlanner: undefined;
   AITemplateGenerator: { customPrompt?: string };

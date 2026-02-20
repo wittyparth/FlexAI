@@ -8,10 +8,11 @@ import {
     TextInput,
     Animated,
     Dimensions,
+    Alert,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { useColors } from '../../hooks';
+import { useColors, useGenerateWorkout } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { colors as themeColors } from '../../theme/colors';
 
@@ -51,6 +52,21 @@ const EQUIPMENT = [
     { id: 'minimal', label: 'Minimal', icon: 'home' },
 ];
 
+const mapEquipmentToApi = (equipmentId: string): string[] => {
+    switch (equipmentId) {
+        case 'full':
+            return ['barbell', 'dumbbell', 'machine', 'cable', 'bodyweight'];
+        case 'dumbbells':
+            return ['dumbbell'];
+        case 'bodyweight':
+            return ['bodyweight'];
+        case 'minimal':
+            return ['bodyweight', 'dumbbell', 'resistance_band', 'kettlebell'];
+        default:
+            return ['bodyweight'];
+    }
+};
+
 export function AIGeneratorScreen({ navigation, route }: any) {
     const colors = useColors();
     const insets = useSafeAreaInsets();
@@ -66,74 +82,49 @@ export function AIGeneratorScreen({ navigation, route }: any) {
     const [customPrompt, setCustomPrompt] = useState(initPrompt || '');
 
     const [loading, setLoading] = useState(false);
+    const generateWorkoutMutation = useGenerateWorkout();
 
-    const pulseAnim = useRef(new Animated.Value(1)).current;
     const spinAnim = useRef(new Animated.Value(0)).current;
 
     const startLoadingAnimation = () => {
-        Animated.loop(
-            Animated.sequence([
-                Animated.timing(pulseAnim, { toValue: 1.05, duration: 500, useNativeDriver: true }),
-                Animated.timing(pulseAnim, { toValue: 1, duration: 500, useNativeDriver: true }),
-            ])
-        ).start();
-
         Animated.loop(
             Animated.timing(spinAnim, { toValue: 1, duration: 2000, useNativeDriver: true })
         ).start();
     };
 
     const stopLoadingAnimation = () => {
-        pulseAnim.stopAnimation();
         spinAnim.stopAnimation();
-        pulseAnim.setValue(1);
         spinAnim.setValue(0);
     };
 
-    const generate = () => {
+    const generate = async () => {
         setLoading(true);
         startLoadingAnimation();
 
         const input = {
             goal,
             duration,
-            equipment: [equipment], // Pass as array
-            experienceLevel: 'intermediate', // Default for now
-            preferences: `Focus area: ${focus}. ${customPrompt}`, // Combine focus and custom prompt
+            equipment: mapEquipmentToApi(equipment),
+            experienceLevel: 'intermediate',
+            preferences: `Focus area: ${focus}. ${customPrompt}`.trim(),
         };
 
-        // Simulate API taking some time then returning dummy elegant data
-        setTimeout(() => {
-            const selectedGoalLabel = GOALS.find(g => g.id === goal)?.label || 'Workout';
-            
-            const dummyWorkout = {
-                workoutName: `AI ${selectedGoalLabel} Session`,
-                goal: input.goal,
-                duration: input.duration,
-                difficulty: 'Intermediate',
-                description: `A highly optimized ${input.duration} min workout focusing on ${focus.toUpperCase()} with ${equipment.toUpperCase()}. ${customPrompt ? 'Tailored to your specific requests.' : ''}`,
-                warmup: [
-                    { id: 'temp-1', notes: '', reps: '1', rest: 0, sets: 1, exercise: { id: 1, name: 'Jumping Jacks', muscle: 'Full Body' } },
-                    { id: 'temp-2', notes: '', reps: '10', rest: 0, sets: 2, exercise: { id: 2, name: 'Arm Circles', muscle: 'Shoulders' } },
-                ],
-                main: [
-                    { id: 'temp-3', notes: '', reps: '8-12', rest: 60, sets: 3, exercise: { id: 3, name: 'Dumbbell Bench Press', muscle: 'Chest' } },
-                    { id: 'temp-4', notes: '', reps: '10-15', rest: 60, sets: 3, exercise: { id: 4, name: 'Dumbbell Row', muscle: 'Back' } },
-                    { id: 'temp-5', notes: '', reps: '12-15', rest: 60, sets: 3, exercise: { id: 5, name: 'Lateral Raises', muscle: 'Shoulders' } },
-                ],
-                cooldown: [
-                    { id: 'temp-6', notes: '', reps: '30s', rest: 0, sets: 1, exercise: { id: 6, name: 'Childs Pose', muscle: 'Back' } },
-                ]
-            };
-
+        try {
+            const generatedWorkout = await generateWorkoutMutation.mutateAsync(input as any);
             setLoading(false);
             stopLoadingAnimation();
-
-            navigation.navigate('RoutineEditor', {
-                mode: 'create',
-                routineData: dummyWorkout
+            navigation.navigate('AIPreview', {
+                workout: generatedWorkout,
+                input,
             });
-        }, 2000);
+        } catch (error: any) {
+            setLoading(false);
+            stopLoadingAnimation();
+            Alert.alert(
+                'Generation failed',
+                error?.response?.data?.error || error?.message || 'Unable to generate workout right now. Please try again.',
+            );
+        }
     };
 
     const selectedGoal = GOALS.find(g => g.id === goal);

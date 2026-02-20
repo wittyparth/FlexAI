@@ -5,7 +5,6 @@ import {
     StyleSheet,
     ScrollView,
     TouchableOpacity,
-    Dimensions,
     Animated,
     Alert,
 } from 'react-native';
@@ -16,66 +15,70 @@ import { fontFamilies } from '../../theme/typography';
 import { colors as themeColors } from '../../theme/colors';
 import { GOALS } from './AIGeneratorScreen';
 
-const { width } = Dimensions.get('window');
-
-// ============================================================
-// MOCK DATA
-// ============================================================
-const AI_WORKOUT = {
-    name: 'AI Push Power Session',
-    goal: 'Build Muscle',
-    duration: 60,
-    difficulty: 'Intermediate',
-    exercises: [
-        { id: 1, name: 'Barbell Bench Press', sets: 4, reps: '8-10', rest: 90, muscle: 'Chest', icon: 'dumbbell' },
-        { id: 2, name: 'Incline Dumbbell Press', sets: 3, reps: '10-12', rest: 75, muscle: 'Upper Chest', icon: 'dumbbell' },
-        { id: 3, name: 'Overhead Press', sets: 4, reps: '8-10', rest: 90, muscle: 'Shoulders', icon: 'weight-lifter' },
-        { id: 4, name: 'Cable Fly', sets: 3, reps: '12-15', rest: 60, muscle: 'Chest', icon: 'cable-data' },
-        { id: 5, name: 'Lateral Raises', sets: 3, reps: '12-15', rest: 60, muscle: 'Shoulders', icon: 'human-handsup' },
-        { id: 6, name: 'Tricep Pushdown', sets: 3, reps: '10-12', rest: 60, muscle: 'Triceps', icon: 'arm-flex' },
-    ],
-    aiNotes: 'This workout is optimized for hypertrophy with progressive compound movements followed by isolation work. Rest periods are calibrated for muscle growth.',
-};
-
 export function AIPreviewScreen({ navigation, route }: any) {
     const colors = useColors();
     const insets = useSafeAreaInsets();
     const [saving, setSaving] = useState(false);
     const fadeAnim = useRef(new Animated.Value(0)).current;
     const { workout: generatedWorkout, input } = route.params || {};
-    const workout = generatedWorkout || AI_WORKOUT;
 
-    // Calculate total sets if it's the real workout
-    const totalSets = generatedWorkout
-        ? (generatedWorkout.warmup?.length || 0) + (generatedWorkout.main?.length || 0) + (generatedWorkout.cooldown?.length || 0)
-        : workout.exercises.reduce((sum: any, e: any) => sum + e.sets, 0);
+    const createRoutineMutation = useCreateRoutine();
+    const addExerciseMutation = useAddExerciseToRoutine();
 
-    const exerciseCount = generatedWorkout
-        ? (generatedWorkout.warmup?.length || 0) + (generatedWorkout.main?.length || 0) + (generatedWorkout.cooldown?.length || 0)
-        : workout.exercises.length;
+    const totalSets =
+        (generatedWorkout?.warmup?.length || 0) +
+        (generatedWorkout?.main?.length || 0) +
+        (generatedWorkout?.cooldown?.length || 0);
 
-    const displayGoal = input?.goal ? GOALS.find((g: any) => g.id === input.goal)?.label : workout.goal;
-    const displayDuration = input?.duration || workout.duration;
+    const exerciseCount = totalSets;
+
+    const displayGoal = input?.goal ? GOALS.find((g: any) => g.id === input.goal)?.label : 'Generated Workout';
+    const displayDuration = input?.duration || 60;
+
+    useEffect(() => {
+        Animated.timing(fadeAnim, {
+            toValue: 1,
+            duration: 500,
+            useNativeDriver: true,
+        }).start();
+    }, [fadeAnim]);
+
+    const parseReps = (repsValue: string | number) => {
+        const value = String(repsValue || '');
+        if (value.includes('-')) {
+            const [min, max] = value.split('-').map((part) => Number(part.trim()));
+            return {
+                min: Number.isFinite(min) ? min : 0,
+                max: Number.isFinite(max) ? max : 0,
+            };
+        }
+
+        const asNumber = Number.parseInt(value, 10);
+        return {
+            min: Number.isFinite(asNumber) ? asNumber : 0,
+            max: Number.isFinite(asNumber) ? asNumber : 0,
+        };
+    };
 
     const renderExerciseSection = (title: string, exercises: any[], startIndex: number) => {
-        if (!exercises || exercises.length === 0) return null;
+        if (!Array.isArray(exercises) || exercises.length === 0) return null;
 
         return (
-            <View style={styles.section} key={title}>
+            <View style={styles.section}>
                 <Text style={[styles.sectionTitle, { color: colors.foreground }]}>{title}</Text>
-                {exercises.map((ex: any, index: number) => {
-                    const exerciseData = ex.exercise || ex; // Handle both real and mock
+                {exercises.map((exerciseItem: any, index: number) => {
+                    const exercise = exerciseItem.exercise || {};
                     return (
                         <Animated.View
-                            key={ex.exerciseId || ex.id}
+                            key={`${exerciseItem.exerciseId || index}`}
                             style={{
                                 opacity: fadeAnim,
                                 transform: [{
                                     translateY: fadeAnim.interpolate({
                                         inputRange: [0, 1],
-                                        outputRange: [20 + index * 5, 0]
-                                    })
-                                }]
+                                        outputRange: [20 + index * 5, 0],
+                                    }),
+                                }],
                             }}
                         >
                             <TouchableOpacity
@@ -86,18 +89,20 @@ export function AIPreviewScreen({ navigation, route }: any) {
                                     <Text style={styles.exerciseNumText}>{startIndex + index + 1}</Text>
                                 </View>
                                 <View style={styles.exerciseInfo}>
-                                    <Text style={[styles.exerciseName, { color: colors.foreground }]}>{exerciseData.name}</Text>
+                                    <Text style={[styles.exerciseName, { color: colors.foreground }]}>
+                                        {exercise.name || `Exercise ${exerciseItem.exerciseId}`}
+                                    </Text>
                                     <Text style={[styles.exerciseMuscle, { color: colors.mutedForeground }]}>
-                                        {exerciseData.targetMuscle || exerciseData.muscle}
+                                        {exercise.targetMuscle || 'General'}
                                     </Text>
                                 </View>
                                 <View style={styles.exerciseMeta}>
                                     <View style={[styles.metaBadge, { backgroundColor: colors.muted }]}>
-                                        <Text style={[styles.metaText, { color: colors.foreground }]}>{ex.sets}×{ex.reps}</Text>
+                                        <Text style={[styles.metaText, { color: colors.foreground }]}>{exerciseItem.sets}x{exerciseItem.reps}</Text>
                                     </View>
                                     <View style={[styles.restBadge, { backgroundColor: `${colors.success}15` }]}>
                                         <Ionicons name="time-outline" size={12} color={colors.success} />
-                                        <Text style={[styles.restText, { color: colors.success }]}>{ex.rest}s</Text>
+                                        <Text style={[styles.restText, { color: colors.success }]}>{exerciseItem.rest}s</Text>
                                     </View>
                                 </View>
                             </TouchableOpacity>
@@ -108,128 +113,126 @@ export function AIPreviewScreen({ navigation, route }: any) {
         );
     };
 
-    const createRoutineMutation = useCreateRoutine();
-    const addExerciseMutation = useAddExerciseToRoutine();
-
-    const parseReps = (repsStr: string | number) => {
-        const s = String(repsStr);
-        if (s.includes('-')) {
-            const [min, max] = s.split('-').map(v => parseInt(v.trim()));
-            return { min: isNaN(min) ? 0 : min, max: isNaN(max) ? 0 : max };
-        }
-        const val = parseInt(s);
-        return { min: isNaN(val) ? 0 : val, max: isNaN(val) ? 0 : val };
-    };
-
     const handleSave = async () => {
-        if (!generatedWorkout) {
+        if (!generatedWorkout || !generatedWorkout.workoutName) {
             Alert.alert('Error', 'No workout data to save');
             return;
         }
 
         setSaving(true);
+
         try {
-            // 1. Create Routine
-            // Map frontend goal IDs to backend enum values
             const goalMapping: Record<string, string> = {
-                'muscle': 'muscle_gain',
-                'fat': 'fat_loss',
-                'strength': 'strength',
-                'endurance': 'endurance',
-                'general': 'general'
+                muscle: 'muscle_gain',
+                fat: 'fat_loss',
+                strength: 'strength',
+                endurance: 'endurance',
+                general: 'general',
             };
 
             const selectedGoal = input?.goal || 'general';
             const backendGoal = goalMapping[selectedGoal] || 'general';
 
-            const routineData = {
+            const routinePayload = {
                 name: generatedWorkout.workoutName || 'AI Generated Workout',
-                description: generatedWorkout.description || 'Generated by FitAI',
+                description: generatedWorkout.description || 'Generated by FlexAI',
                 difficulty: (input?.experienceLevel || 'intermediate').toLowerCase(),
                 goal: backendGoal,
                 isPublic: false,
                 estimatedDuration: input?.duration || 60,
             };
 
-            // Map string inputs to valid enums if needed, or rely on loose matching if backend is flexible
-            // For safety, let's keep it simple or cast to any if types are strict
+            const routineResult = await createRoutineMutation.mutateAsync(routinePayload as any);
+            const routineId = Number(routineResult?.data?.id);
 
-            const result = await createRoutineMutation.mutateAsync(routineData as any);
-            const newRoutineId = result.data.id;
-
-            // 2. Add Exercises
-            const sections = [
+            const allExercises = [
                 ...(generatedWorkout.warmup || []),
                 ...(generatedWorkout.main || []),
-                ...(generatedWorkout.cooldown || [])
+                ...(generatedWorkout.cooldown || []),
             ];
 
-            // Use Promise.all for parallel adding (or sequential if order matters strictly and backend doesn't handle concurrency well)
-            // We'll use sequential to be safe regarding orderIndex
             let orderIndex = 0;
-            for (const ex of sections) {
-                const { min, max } = parseReps(ex.reps);
-                // ex.exerciseId is string in GeneratedExercise, but backend expects number
-                const exerciseId = startWith(ex.exerciseId, 'temp') ? 0 : parseInt(ex.exerciseId);
+            for (const exerciseItem of allExercises) {
+                const exerciseId = Number(exerciseItem.exerciseId || exerciseItem.exercise?.id);
+                if (!exerciseId) continue;
 
-                // If exerciseId is invalid (e.g. UUID string), this will fail if backend expects number.
-                // Assuming backend migration to string IDs is in progress or we need to handle this.
-                // For now, let's try parseInt.
-
-                if (exerciseId) {
-                    await addExerciseMutation.mutateAsync({
-                        routineId: newRoutineId,
-                        data: {
-                            exerciseId: exerciseId,
-                            orderIndex: orderIndex++,
-                            targetSets: ex.sets || 3,
-                            targetRepsMin: min,
-                            targetRepsMax: max,
-                            restSeconds: ex.rest || 60,
-                            notes: ex.notes || ''
-                        }
-                    });
-                }
+                const reps = parseReps(exerciseItem.reps);
+                await addExerciseMutation.mutateAsync({
+                    routineId,
+                    data: {
+                        exerciseId,
+                        orderIndex: orderIndex++,
+                        targetSets: Number(exerciseItem.sets || 3),
+                        targetRepsMin: reps.min,
+                        targetRepsMax: reps.max,
+                        restSeconds: Number(exerciseItem.rest || 60),
+                        notes: exerciseItem.notes || '',
+                    },
+                });
             }
 
-            Alert.alert('Success', 'Workout saved to your routines!');
-            navigation.navigate('RoutineDetail', { routineId: newRoutineId });
+            Alert.alert('Saved', 'Workout saved to your routines.');
+            navigation.navigate('RoutineDetail', { routineId });
         } catch (error) {
-            console.error('Failed to save workout:', error);
+            console.error('Failed to save generated workout:', error);
             Alert.alert('Error', 'Failed to save workout. Please try again.');
         } finally {
             setSaving(false);
         }
     };
 
-    function startWith(str: any, prefix: string) {
-        return String(str).startsWith(prefix);
+    if (!generatedWorkout || !generatedWorkout.workoutName) {
+        return (
+            <View style={[styles.container, { backgroundColor: colors.background }]}> 
+                <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.card, borderBottomColor: colors.border }]}> 
+                    <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerBtn}>
+                        <Ionicons name="arrow-back" size={24} color={colors.foreground} />
+                    </TouchableOpacity>
+                    <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>AI Preview</Text>
+                    <View style={styles.headerBtn} />
+                </View>
+                <View style={styles.emptyState}>
+                    <MaterialCommunityIcons name="alert-circle-outline" size={40} color={colors.mutedForeground} />
+                    <Text style={[styles.emptyStateTitle, { color: colors.foreground }]}>No generated workout found</Text>
+                    <Text style={[styles.emptyStateSubtitle, { color: colors.mutedForeground }]}>Generate a workout first to preview and save it.</Text>
+                    <TouchableOpacity
+                        style={[styles.emptyStateButton, { backgroundColor: colors.primary.main }]}
+                        onPress={() => navigation.navigate('AIGenerator')}
+                    >
+                        <Text style={styles.emptyStateButtonText}>Generate Workout</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        );
     }
 
     return (
-        <View style={[styles.container, { backgroundColor: colors.background }]}>
-            {/* Header */}
-            <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.card, borderBottomColor: colors.border }]}>
+        <View style={[styles.container, { backgroundColor: colors.background }]}> 
+            <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.card, borderBottomColor: colors.border }]}> 
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerBtn}>
                     <Ionicons name="arrow-back" size={24} color={colors.foreground} />
                 </TouchableOpacity>
                 <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>AI Preview</Text>
-                <TouchableOpacity style={styles.headerBtn}>
+                <TouchableOpacity
+                    style={styles.headerBtn}
+                    onPress={() => navigation.navigate('AIGenerator', {
+                        presetGoal: displayGoal,
+                        presetDuration: displayDuration,
+                        customPrompt: input?.preferences,
+                    })}
+                >
                     <Ionicons name="refresh" size={22} color={colors.primary.main} />
                 </TouchableOpacity>
             </View>
 
             <ScrollView showsVerticalScrollIndicator={false}>
-                {/* AI Banner */}
                 <Animated.View style={{ opacity: fadeAnim }}>
-                    <View
-                        style={styles.aiCard}
-                    >
+                    <View style={styles.aiCard}>
                         <View style={styles.aiBadge}>
                             <MaterialCommunityIcons name="robot-excited" size={20} color={colors.primary.main} />
                             <Text style={[styles.aiBadgeText, { color: colors.primary.main }]}>AI Generated</Text>
                         </View>
-                        <Text style={styles.aiTitle}>{generatedWorkout?.workoutName || workout.name}</Text>
+                        <Text style={styles.aiTitle}>{generatedWorkout.workoutName}</Text>
                         <View style={styles.aiStats}>
                             <View style={styles.aiStat}>
                                 <MaterialCommunityIcons name="target" size={18} color="rgba(255,255,255,0.8)" />
@@ -241,13 +244,12 @@ export function AIPreviewScreen({ navigation, route }: any) {
                             </View>
                             <View style={styles.aiStat}>
                                 <MaterialCommunityIcons name="signal-cellular-3" size={18} color="rgba(255,255,255,0.8)" />
-                                <Text style={styles.aiStatText}>{input?.experienceLevel || workout.difficulty}</Text>
+                                <Text style={styles.aiStatText}>{input?.experienceLevel || 'intermediate'}</Text>
                             </View>
                         </View>
                     </View>
                 </Animated.View>
 
-                {/* Quick Stats */}
                 <View style={styles.quickStats}>
                     <View style={[styles.quickStat, { backgroundColor: colors.card, borderColor: colors.border }]}>
                         <Text style={[styles.quickStatValue, { color: colors.primary.main }]}>{exerciseCount}</Text>
@@ -263,35 +265,24 @@ export function AIPreviewScreen({ navigation, route }: any) {
                     </View>
                 </View>
 
-                {/* AI Notes */}
                 <View style={styles.section}>
                     <View style={[styles.notesCard, { backgroundColor: `${colors.primary.main}08`, borderColor: `${colors.primary.main}20` }]}>
                         <View style={styles.notesHeader}>
                             <MaterialCommunityIcons name="lightbulb-on" size={20} color={colors.primary.main} />
                             <Text style={[styles.notesTitle, { color: colors.primary.main }]}>AI Insights</Text>
                         </View>
-                        <Text style={[styles.notesText, { color: colors.foreground }]}>
-                            {generatedWorkout?.description || workout.aiNotes}
-                        </Text>
+                        <Text style={[styles.notesText, { color: colors.foreground }]}>{generatedWorkout.description}</Text>
                     </View>
                 </View>
 
-                {/* Exercises Sections */}
-                {generatedWorkout ? (
-                    <>
-                        {renderExerciseSection('Warm Up', generatedWorkout.warmup, 0)}
-                        {renderExerciseSection('Main Workout', generatedWorkout.main, (generatedWorkout.warmup?.length || 0))}
-                        {renderExerciseSection('Cool Down', generatedWorkout.cooldown, (generatedWorkout.warmup?.length || 0) + (generatedWorkout.main?.length || 0))}
-                    </>
-                ) : (
-                    renderExerciseSection('Exercises', workout.exercises, 0)
-                )}
+                {renderExerciseSection('Warm Up', generatedWorkout.warmup, 0)}
+                {renderExerciseSection('Main Workout', generatedWorkout.main, (generatedWorkout.warmup?.length || 0))}
+                {renderExerciseSection('Cool Down', generatedWorkout.cooldown, (generatedWorkout.warmup?.length || 0) + (generatedWorkout.main?.length || 0))}
 
                 <View style={{ height: 180 }} />
             </ScrollView>
 
-            {/* Footer Actions */}
-            <View style={[styles.footer, { paddingBottom: insets.bottom + 16, backgroundColor: colors.card, borderTopColor: colors.border }]}>
+            <View style={[styles.footer, { paddingBottom: insets.bottom + 16, backgroundColor: colors.card, borderTopColor: colors.border }]}> 
                 <TouchableOpacity
                     style={[styles.saveBtn, { borderColor: colors.primary.main }]}
                     onPress={handleSave}
@@ -304,9 +295,7 @@ export function AIPreviewScreen({ navigation, route }: any) {
                     onPress={() => navigation.navigate('ActiveWorkout')}
                     activeOpacity={0.9}
                 >
-                    <View
-                        style={styles.startGradient}
-                    >
+                    <View style={styles.startGradient}>
                         <Ionicons name="play" size={22} color="#FFF" />
                         <Text style={styles.startText}>Start Workout</Text>
                     </View>
@@ -321,6 +310,13 @@ const styles = StyleSheet.create({
     header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 12, paddingBottom: 16, borderBottomWidth: 1 },
     headerBtn: { width: 44, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center' },
     headerTitle: { fontSize: 20, fontWeight: '700' },
+
+    emptyState: { flex: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 32, gap: 10 },
+    emptyStateTitle: { fontSize: 20, fontWeight: '700', textAlign: 'center' },
+    emptyStateSubtitle: { fontSize: 14, textAlign: 'center' },
+    emptyStateButton: { marginTop: 8, borderRadius: 12, paddingHorizontal: 16, paddingVertical: 10 },
+    emptyStateButtonText: { color: '#FFFFFF', fontSize: 14, fontWeight: '700' },
+
     aiCard: { margin: 16, borderRadius: 24, padding: 24, elevation: 8, shadowColor: themeColors.primary.main, shadowOffset: { width: 0, height: 8 }, shadowOpacity: 0.3, shadowRadius: 16 },
     aiBadge: { flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-start', backgroundColor: '#FFF', paddingHorizontal: 14, paddingVertical: 8, borderRadius: 14, gap: 6, marginBottom: 16 },
     aiBadgeText: { fontSize: 14, fontWeight: '700' },
@@ -328,16 +324,19 @@ const styles = StyleSheet.create({
     aiStats: { flexDirection: 'row', gap: 20 },
     aiStat: { flexDirection: 'row', alignItems: 'center', gap: 6 },
     aiStatText: { color: 'rgba(255,255,255,0.9)', fontSize: 14 },
+
     quickStats: { flexDirection: 'row', paddingHorizontal: 16, gap: 12 },
     quickStat: { flex: 1, paddingVertical: 16, borderRadius: 16, borderWidth: 1, alignItems: 'center' },
     quickStatValue: { fontSize: 24, fontWeight: '800', fontFamily: fontFamilies.mono },
     quickStatLabel: { fontSize: 13, marginTop: 4 },
+
     section: { marginTop: 24, paddingHorizontal: 16 },
     sectionTitle: { fontSize: 18, fontWeight: '700', marginBottom: 14 },
     notesCard: { borderRadius: 18, borderWidth: 1, padding: 18 },
     notesHeader: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 10 },
     notesTitle: { fontSize: 15, fontWeight: '700' },
     notesText: { fontSize: 14, lineHeight: 22 },
+
     exerciseCard: { flexDirection: 'row', alignItems: 'center', padding: 16, borderRadius: 18, borderWidth: 1, marginBottom: 10 },
     exerciseNum: { width: 36, height: 36, borderRadius: 12, alignItems: 'center', justifyContent: 'center', marginRight: 14 },
     exerciseNumText: { color: '#FFF', fontSize: 16, fontWeight: '800' },
@@ -349,6 +348,7 @@ const styles = StyleSheet.create({
     metaText: { fontSize: 14, fontWeight: '700', fontFamily: fontFamilies.mono },
     restBadge: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 10, paddingVertical: 4, borderRadius: 8, gap: 4 },
     restText: { fontSize: 12, fontWeight: '600' },
+
     footer: { position: 'absolute', bottom: 0, left: 0, right: 0, flexDirection: 'row', padding: 16, gap: 12, borderTopWidth: 1 },
     saveBtn: { flex: 0.35, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingVertical: 16, borderRadius: 16, borderWidth: 2, gap: 8 },
     saveBtnText: { fontSize: 16, fontWeight: '700' },

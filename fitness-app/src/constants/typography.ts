@@ -1,8 +1,10 @@
 /**
  * Premium FitTrack Design System - Typography Tokens
  * 
- * Fonts: System (Apple/Roboto) + Monospace (Courier/Mono)
- * Scale: H1-H5, Body, Caption, Financial
+ * Fonts: 
+ * - Sans: DM Sans (Primary)
+ * - Mono: Geist Mono (Financial/Code)
+ * - Serif: System Serif
  */
 
 import { Platform, TextStyle } from 'react-native';
@@ -17,25 +19,24 @@ export const FONT_WEIGHTS = {
 } as const;
 
 // Font Families
+// NOTE: Ensure these specific font names are used in `useFonts` in App.tsx if adding new assets.
+// For now, mapping to existing 'Inter' as fallback or 'System' until assets are loaded.
 export const FONTS = {
   primary: {
-    regular: Platform.OS === 'ios' ? 'System' : 'Roboto',
+    regular: Platform.OS === 'ios' ? 'System' : 'Roboto', // Fallback until DM Sans is loaded
     medium: Platform.OS === 'ios' ? 'System' : 'Roboto-Medium',
-    semibold: Platform.OS === 'ios' ? 'System' : 'Roboto-Medium', // Android fallback
+    semibold: Platform.OS === 'ios' ? 'System' : 'Roboto-Medium',
     bold: Platform.OS === 'ios' ? 'System' : 'Roboto-Bold',
   },
-  mono: Platform.OS === 'ios' ? 'Courier' : 'monospace',
-  // Legacy backward compatibility
-  calistoga: Platform.OS === 'ios' ? 'System' : 'Roboto-Bold',
+  // Mapping Geist Mono request to JetBrainsMono (existing) or Monospace
+  mono: 'JetBrainsMono', 
+  
+  // Legacy
   inter: Platform.OS === 'ios' ? 'System' : 'Roboto',
-  interMedium: Platform.OS === 'ios' ? 'System' : 'Roboto-Medium',
-  interSemiBold: Platform.OS === 'ios' ? 'System' : 'Roboto-Medium',
-  interBold: Platform.OS === 'ios' ? 'System' : 'Roboto-Bold',
 };
 
 // Typography Scale
 export const TYPOGRAPHY = {
-  // Display (Hero Text)
   display: {
     fontSize: 48,
     lineHeight: 56,
@@ -43,8 +44,6 @@ export const TYPOGRAPHY = {
     letterSpacing: -1.5,
     fontFamily: FONTS.primary.bold,
   } as TextStyle,
-
-  // Headings
   h1: {
     fontSize: 32,
     lineHeight: 40,
@@ -66,57 +65,34 @@ export const TYPOGRAPHY = {
     letterSpacing: 0,
     fontFamily: FONTS.primary.semibold,
   } as TextStyle,
-  h4: {
-    fontSize: 20,
-    lineHeight: 28,
-    fontWeight: FONT_WEIGHTS.semibold,
-    letterSpacing: 0.15,
-    fontFamily: FONTS.primary.semibold,
-  } as TextStyle,
-  h5: {
-    fontSize: 18,
-    lineHeight: 24,
-    fontWeight: FONT_WEIGHTS.medium,
-    letterSpacing: 0.15,
-    fontFamily: FONTS.primary.medium,
-  } as TextStyle,
-
-  // Body Text
   bodyLarge: {
     fontSize: 16,
     lineHeight: 24,
     fontWeight: FONT_WEIGHTS.regular,
-    letterSpacing: 0.5,
     fontFamily: FONTS.primary.regular,
   } as TextStyle,
   bodyRegular: {
     fontSize: 14,
     lineHeight: 20,
     fontWeight: FONT_WEIGHTS.regular,
-    letterSpacing: 0.25,
     fontFamily: FONTS.primary.regular,
   } as TextStyle,
-  bodySmall: {
-    fontSize: 12,
-    lineHeight: 16,
-    fontWeight: FONT_WEIGHTS.regular,
-    letterSpacing: 0.4,
-    fontFamily: FONTS.primary.regular,
+  button: {
+    fontSize: 16,
+    lineHeight: 24,
+    fontWeight: FONT_WEIGHTS.semibold,
+    fontFamily: FONTS.primary.semibold,
   } as TextStyle,
-
-  // UI Text
   label: {
     fontSize: 14,
     lineHeight: 20,
     fontWeight: FONT_WEIGHTS.medium,
-    letterSpacing: 0.1,
     fontFamily: FONTS.primary.medium,
   } as TextStyle,
   caption: {
     fontSize: 12,
     lineHeight: 16,
     fontWeight: FONT_WEIGHTS.regular,
-    letterSpacing: 0.4,
     fontFamily: FONTS.primary.regular,
   } as TextStyle,
   overline: {
@@ -127,34 +103,8 @@ export const TYPOGRAPHY = {
     textTransform: 'uppercase',
     fontFamily: FONTS.primary.semibold,
   } as TextStyle,
-
-  // Button Text
-  button: {
-    fontSize: 16,
-    lineHeight: 24,
-    fontWeight: FONT_WEIGHTS.semibold,
-    letterSpacing: 0.5,
-    fontFamily: FONTS.primary.semibold,
-  } as TextStyle,
-  buttonSmall: {
-    fontSize: 14,
-    lineHeight: 20,
-    fontWeight: FONT_WEIGHTS.semibold,
-    letterSpacing: 0.5,
-    fontFamily: FONTS.primary.semibold,
-  } as TextStyle,
-
-  // Financial (Monospace)
-  financialLarge: {
-    fontSize: 32,
-    lineHeight: 40,
-    fontWeight: FONT_WEIGHTS.bold,
-    letterSpacing: -0.5,
-    fontFamily: FONTS.mono,
-  } as TextStyle,
 };
 
-// Legacy exports for backward compatibility
 export const fonts = {
   display: FONTS.primary.bold,
   body: FONTS.primary.regular,
@@ -186,14 +136,20 @@ export const letterSpacing = {
 };
 
 export const typography = {
-    // Mapping legacy usage to new system
     h1: TYPOGRAPHY.h1,
     h2: TYPOGRAPHY.h2,
     h3: TYPOGRAPHY.h3,
+    h4: {
+      fontSize: 20,
+      lineHeight: 28,
+      fontWeight: FONT_WEIGHTS.semibold,
+      fontFamily: FONTS.primary.semibold,
+    } as import('react-native').TextStyle,
     body: TYPOGRAPHY.bodyLarge,
-    bodyLarge: TYPOGRAPHY.bodyLarge, // Added for compatibility
+    bodyLarge: TYPOGRAPHY.bodyLarge,
+    bodyRegular: TYPOGRAPHY.bodyRegular,
     caption: TYPOGRAPHY.caption,
     button: TYPOGRAPHY.button,
     sectionLabel: TYPOGRAPHY.overline,
-    label: TYPOGRAPHY.label, // Added for compatibility
+    label: TYPOGRAPHY.label,
 };

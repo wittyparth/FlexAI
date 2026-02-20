@@ -5,13 +5,8 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useTheme } from '../../contexts';
-
-const C = {
-    dark:  { bg: '#0A0E1A', card: '#131C2E', border: '#1F2D45', text: '#F1F5FF', muted: '#7A8BAA', primary: '#3B82F6', surface: '#1A2540' },
-    light: { bg: '#F0F4FF', card: '#FFFFFF', border: '#E2E8F8', text: '#0D1526', muted: '#64748B', primary: '#2563EB', surface: '#EEF2FF' },
-};
-const FNT = { display: 'Calistoga', mono: 'JetBrainsMono', bold: 'Inter-Bold', semi: 'Inter-SemiBold' };
+import { useColors } from '../../hooks';
+import { fontFamilies } from '../../theme/typography';
 
 interface AIOptionProps {
     icon: string;
@@ -62,8 +57,8 @@ function AIOptionCard({ icon, title, subtitle, gradient, badge, onPress }: AIOpt
 
 export function AIRoutinePlannerScreen({ navigation }: any) {
     const insets = useSafeAreaInsets();
-    const { isDark } = useTheme();
-    const c = isDark ? C.dark : C.light;
+    const colors = useColors();
+    const c = { bg: colors.background, card: colors.card, border: colors.border, text: colors.foreground, muted: colors.mutedForeground, primary: colors.primary.main, surface: colors.muted };
     const fade = useRef(new Animated.Value(0)).current;
     const slide = useRef(new Animated.Value(20)).current;
 
@@ -100,11 +95,11 @@ export function AIRoutinePlannerScreen({ navigation }: any) {
                 </TouchableOpacity>
                 <View style={styles.headerCenter}>
                     <Text style={[styles.headerSub, { color: c.muted }]}>POWERED BY AI</Text>
-                    <Text style={[styles.headerTitle, { color: c.text, fontFamily: FNT.display }]}>AI Planner</Text>
+                    <Text style={[styles.headerTitle, { color: c.text, fontFamily: fontFamilies.display }]}>AI Planner</Text>
                 </View>
                 <View style={styles.headerRight}>
-                    <View style={[styles.sparkleContainer, { backgroundColor: '#7C3AED20' }]}>
-                        <Ionicons name="sparkles" size={20} color="#7C3AED" />
+                    <View style={[styles.sparkleContainer, { backgroundColor: colors.chart4 + '20' }]}>
+                        <Ionicons name="sparkles" size={20} color={colors.chart4} />
                     </View>
                 </View>
             </View>

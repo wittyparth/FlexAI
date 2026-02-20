@@ -71,7 +71,7 @@ export function Input({
                     <Ionicons
                         name={leftIcon}
                         size={20}
-                        color={isFocused ? colors.primary[500] : colors.text.tertiary}
+                        color={isFocused ? colors.primary.main : colors.text.tertiary}
                         style={styles.leftIcon}
                     />
                 )}

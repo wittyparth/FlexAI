@@ -1,11 +1,10 @@
 /**
  * Premium FitTrack Design System - Layout Tokens
  * 
- * Spacing: 8pt grid (base unit: 4px)
- * Radius: Consistent rounded corners
+ * Radius: 1rem (16px) base
  */
 
-// Spacing System (multiples of 4)
+// Spacing System (0.25rem = 4px)
 export const SPACING = {
   xs: 4,
   sm: 8,
@@ -19,16 +18,16 @@ export const SPACING = {
   massive: 64,
 } as const;
 
-// Border Radius System
+// Border Radius System (Global Radius: 1rem = 16px)
 export const RADIUS = {
   none: 0,
-  xs: 4,
-  sm: 8,
-  md: 12,
-  lg: 16,
-  xl: 20,
+  xs: 4,               // calc(var(--radius) - 12px) approx? No, let's stick to safe smalls
+  sm: 12,              // calc(var(--radius) - 4px) -> 16 - 4
+  md: 14,              // calc(var(--radius) - 2px) -> 16 - 2
+  lg: 16,              // var(--radius)
+  xl: 20,              // calc(var(--radius) + 4px) -> 16 + 4
   xxl: 24,
-  full: 999, // Pills/Circles
+  full: 999,
 } as const;
 
 // Legacy mappings for backward compatibility
@@ -48,25 +47,25 @@ export const spacing = {
 
 export const borderRadius = {
   none: RADIUS.none,
-  sm: RADIUS.xs,    // 4
-  md: RADIUS.sm,    // 8
-  lg: RADIUS.md,    // 12
-  xl: RADIUS.lg,    // 16
-  '2xl': RADIUS.xl, // 20
-  '3xl': RADIUS.xxl,// 24
+  sm: RADIUS.sm,    // 12
+  md: RADIUS.md,    // 14
+  lg: RADIUS.lg,    // 16
+  xl: RADIUS.xl,    // 20
+  '2xl': RADIUS.xxl,// 24
+  '3xl': 28,
   full: RADIUS.full,
 };
 
 export const sizing = {
   icon: {
     sm: 16,
-    md: 24,
+    md: 24, // Typically 1.5rem
     lg: 32,
     xl: 48,
   },
   touchTarget: 48,
-  inputHeight: 48, // Added for Input component
-  buttonHeight: 48, // Added for Button component
+  inputHeight: 48, 
+  buttonHeight: 48, 
 };
 
 export const layout = {

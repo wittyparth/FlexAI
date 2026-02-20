@@ -52,7 +52,7 @@ export function ScreenHeader({
         {onBack ? (
           <TouchableOpacity
             onPress={onBack}
-            style={[styles.backButton, { backgroundColor: colors.neutral[100] }]}
+            style={[styles.backButton, { backgroundColor: colors.neutral?.[100] || colors.muted }]}
           >
             <Ionicons name={backIcon} size={24} color={colors.text.primary} />
           </TouchableOpacity>

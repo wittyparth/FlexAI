@@ -42,15 +42,15 @@ export function Card({
         switch (variant) {
             case 'elevated':
                 return {
-                    backgroundColor: colors.background.card,
+                    backgroundColor: colors.card,
                     ...shadows.lg,
                     borderWidth: 0,
                 };
             case 'flat':
                 return {
-                    backgroundColor: colors.background.card,
+                    backgroundColor: colors.card,
                     borderWidth: 1,
-                    borderColor: colors.border.default,
+                    borderColor: colors.border,
                     elevation: 0,
                     shadowOpacity: 0,
                 };
@@ -63,15 +63,15 @@ export function Card({
                 };
             case 'feature':
                 return {
-                    backgroundColor: colors.primary[50] + '80', // Transparent primary
-                    borderColor: colors.primary[200],
+                    backgroundColor: colors.primary.light + '80', // Transparent primary
+                    borderColor: colors.primary.lighter,
                     borderWidth: 1,
                     ...shadows.colored,
                 };
             case 'default':
             default:
                 return {
-                    backgroundColor: colors.background.card,
+                    backgroundColor: colors.card,
                     ...shadows.md,
                     borderWidth: 0,
                 };

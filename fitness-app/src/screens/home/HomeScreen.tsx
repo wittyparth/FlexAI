@@ -11,7 +11,8 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useTheme } from '../../contexts';
+import { useColors } from '../../hooks';
+import { fontFamilies } from '../../theme/typography';
 import { WorkoutHeatmap } from '../../components/WorkoutHeatmap';
 import {
     DUMMY_USER,
@@ -23,49 +24,6 @@ import {
 } from '../../data/mockData';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
-
-// ============================================================
-// DESIGN TOKENS
-// ============================================================
-const C = {
-    dark: {
-        bg: '#0A0E1A',
-        card: '#131C2E',
-        cardBorder: '#1F2D45',
-        text: '#F1F5FF',
-        muted: '#7A8BAA',
-        primary: '#3B82F6',
-        primaryGlow: 'rgba(59,130,246,0.25)',
-        orange: '#F97316',
-        orangeBg: '#1A0D00',
-        green: '#34D399',
-        greenBg: '#001A10',
-        surface: '#1A2540',
-    },
-    light: {
-        bg: '#F0F4FF',
-        card: '#FFFFFF',
-        cardBorder: '#E2E8F8',
-        text: '#0D1526',
-        muted: '#64748B',
-        primary: '#2563EB',
-        primaryGlow: 'rgba(37,99,235,0.15)',
-        orange: '#EA6C00',
-        orangeBg: '#FFF3E0',
-        green: '#059669',
-        greenBg: '#ECFDF5',
-        surface: '#EEF2FF',
-    },
-};
-
-const FNT = {
-    display: 'Calistoga',
-    mono: 'JetBrainsMono',
-    bold: 'Inter-Bold',
-    semi: 'Inter-SemiBold',
-    medium: 'Inter-Medium',
-    regular: 'Inter',
-};
 
 const getGreeting = () => {
     const h = new Date().getHours();
@@ -123,7 +81,7 @@ function ActiveWorkoutBanner({ workout, onPress }: { workout: typeof ACTIVE_WORK
 // ============================================================
 // TODAY'S PLAN SECTION
 // ============================================================
-function TodaysPlanCard({ plan, onPress, c }: { plan: typeof TODAYS_PLANNED_WORKOUT; onPress: () => void; c: typeof C.dark }) {
+function TodaysPlanCard({ plan, onPress, c }: { plan: typeof TODAYS_PLANNED_WORKOUT; onPress: () => void; c: any }) {
     const MUSCLE_COLORS: Record<string, string> = {
         Chest: '#3B82F6', Shoulders: '#8B5CF6', Triceps: '#10B981',
         Back: '#F59E0B', Biceps: '#EC4899', Legs: '#EF4444', Core: '#14B8A6',
@@ -150,7 +108,7 @@ function TodaysPlanCard({ plan, onPress, c }: { plan: typeof TODAYS_PLANNED_WORK
                     <View key={ex.id} style={styles.todayExRow}>
                         <View style={[styles.todayExDot, { backgroundColor: MUSCLE_COLORS[ex.muscle] || c.primary }]} />
                         <Text style={[styles.todayExName, { color: c.text }]}>{ex.name}</Text>
-                        <Text style={[styles.todayExSets, { color: c.muted, fontFamily: FNT.mono }]}>{ex.sets}×{ex.reps}</Text>
+                        <Text style={[styles.todayExSets, { color: c.muted, fontFamily: fontFamilies.mono }]}>{ex.sets}×{ex.reps}</Text>
                     </View>
                 ))}
                 {plan.exercises.length > 4 && (
@@ -180,7 +138,7 @@ function MetricCard({ icon, label, value, unit, accent, bg }: {
 // ============================================================
 // RECENT WORKOUT ROW
 // ============================================================
-function WorkoutRow({ workout, onPress, c }: { workout: any; onPress: () => void; c: typeof C.dark }) {
+function WorkoutRow({ workout, onPress, c }: { workout: any; onPress: () => void; c: any }) {
     return (
         <TouchableOpacity style={[styles.wkRow, { backgroundColor: c.card, borderColor: c.cardBorder }]} onPress={onPress} activeOpacity={0.75}>
             <View style={[styles.wkIcon, { backgroundColor: c.surface }]}>
@@ -191,7 +149,7 @@ function WorkoutRow({ workout, onPress, c }: { workout: any; onPress: () => void
                 <Text style={[styles.wkDate, { color: c.muted }]}>{workout.date} • {fmtDuration(workout.duration || 3600)}</Text>
             </View>
             <View style={styles.wkRight}>
-                <Text style={[styles.wkVol, { color: c.text, fontFamily: FNT.mono }]}>{fmtVol(workout.volume)}</Text>
+                <Text style={[styles.wkVol, { color: c.text, fontFamily: fontFamilies.mono }]}>{fmtVol(workout.volume)}</Text>
                 <Text style={[styles.wkVolUnit, { color: c.muted }]}>kg</Text>
                 {workout.hasPR && (
                     <View style={[styles.prBadge, { backgroundColor: c.primary + '22' }]}>
@@ -208,8 +166,15 @@ function WorkoutRow({ workout, onPress, c }: { workout: any; onPress: () => void
 // ============================================================
 export function HomeScreen({ navigation }: any) {
     const insets = useSafeAreaInsets();
-    const { isDark } = useTheme();
-    const c = isDark ? C.dark : C.light;
+    const colors = useColors();
+    const c = {
+        bg: colors.background, card: colors.card, cardBorder: colors.border,
+        text: colors.foreground, muted: colors.mutedForeground, primary: colors.primary.main,
+        primaryGlow: colors.primary.main + '40', orange: colors.warning,
+        orangeBg: colors.warning + '15', green: colors.success,
+        greenBg: colors.success + '15', surface: colors.muted,
+    };
+    const FNT = { display: fontFamilies.display, mono: fontFamilies.mono, bold: fontFamilies.display, semi: fontFamilies.body, medium: fontFamilies.body, regular: fontFamilies.body };
 
     const fadeAnim = useRef(new Animated.Value(0)).current;
     useEffect(() => {

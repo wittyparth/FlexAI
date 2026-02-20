@@ -1,98 +1,128 @@
 /**
- * useColors Hook - Returns theme-aware colors
+ * useColors Hook — Centralized Theme-Aware Color Provider
  * 
- * ⚠️ USE THIS HOOK IN ALL SCREENS FOR CONSISTENT THEMING
- * Returns Premium Design System colors with legacy compatibility.
+ * ⚠️  THIS IS THE SINGLE SOURCE OF TRUTH FOR ALL COLORS.
+ *     Every screen and component MUST use this hook.
+ *     DO NOT define local color constants in screens.
+ * 
+ * Access Patterns:
+ *   colors.background        → string (background surface)
+ *   colors.foreground         → string (primary text)
+ *   colors.card               → string (card surface)
+ *   colors.cardForeground     → string (text on cards)
+ *   colors.popover            → string (popover surface)
+ *   colors.popoverForeground  → string (text on popovers)
+ *   colors.primary.main       → string (primary brand)
+ *   colors.primary.foreground → string (text on primary)
+ *   colors.secondary          → string (secondary surface)
+ *   colors.muted              → string (muted surface)
+ *   colors.mutedForeground    → string (muted text)
+ *   colors.accent             → string (accent surface)
+ *   colors.destructive        → string (error/destructive)
+ *   colors.border             → string (border color)
+ *   colors.input              → string (input background)
+ *   colors.ring               → string (focus ring)
+ *   colors.chart1–5           → string (chart palette — colorful)
+ *   colors.neutral[100–900]   → string (neutral scale)
+ *   colors.slate[100–900]     → string (alias for neutral)
+ *   colors.success/warning/error/info → string (semantic)
+ *   colors.sidebar.*          → sidebar-specific tokens
+ *   colors.text.primary/secondary/tertiary/inverse → legacy text
  */
 
 import { useMemo } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 import { COLORS_LIGHT, COLORS_DARK, GRADIENTS } from '../constants/colors';
 
-// Helper to create the full legacy-compatible theme object
-const createThemePalette = (baseColors: typeof COLORS_LIGHT) => {
+const createThemePalette = (baseColors: typeof COLORS_LIGHT, isDark: boolean) => {
   return {
+    // ── All flat tokens from base ──
     ...baseColors,
-    
-    // Mapped Aliases for Backward Compatibility
-    primary: {
-      ...baseColors.primary,
-      main: baseColors.primary[500],
-      light: baseColors.primary[400],
-      lighter: baseColors.primary[300],
-      dark: baseColors.primary[600],
-      gradient: baseColors.primary[500] === COLORS_LIGHT.primary[500] 
-        ? GRADIENTS.primary.light 
-        : GRADIENTS.primary.dark,
-    },
-    
-    // Semantic aliases
-    background: baseColors.background.primary,
-    card: baseColors.background.card,
-    border: baseColors.border.default,
-    foreground: baseColors.text.primary,
-    muted: baseColors.neutral[100],
-    mutedForeground: baseColors.text.secondary,
-    accent: baseColors.primary[500],
-    accentForeground: baseColors.text.inverse,
-    ring: baseColors.border.focus,
 
-    // Legacy Objects
+    // ── Override primary: string → object for .main/.foreground ──
+    primary: {
+      main:       baseColors.primary,
+      foreground: baseColors.primaryForeground,
+      light:      baseColors.muted,
+      lighter:    baseColors.secondary,
+      dark:       baseColors.foreground,
+      gradient:   isDark ? GRADIENTS.primary.dark : GRADIENTS.primary.light,
+    },
+
+    // ── Legacy text object ──
+    text: {
+      primary:   baseColors.foreground,
+      secondary: baseColors.mutedForeground,
+      tertiary:  baseColors.mutedForeground,
+      inverse:   baseColors.primaryForeground,
+      link:      baseColors.chart1,
+    },
+
+    // ── Slate alias → neutral (prevents runtime crashes) ──
+    slate: baseColors.neutral,
+
+    // ── Semantic stat colors ──
     stats: {
-      pr: '#8B5CF6',
-      volume: baseColors.info,
-      consistency: baseColors.success,
-      strength: baseColors.error,
+      pr:          baseColors.chart4,
+      volume:      baseColors.chart1,
+      consistency: baseColors.chart2,
+      strength:    baseColors.destructive,
     },
     workout: {
-      active: baseColors.error,
-      rest: baseColors.warning,
-      complete: baseColors.success,
-      warmup: baseColors.info,
+      active:   baseColors.destructive,
+      rest:     baseColors.chart5,
+      complete: baseColors.chart2,
+      warmup:   baseColors.chart1,
     },
     gamification: {
-      xp: '#8B5CF6',
-      streak: baseColors.warning,
-      level: baseColors.primary[500],
-      pr: baseColors.success,
-    },
-    menu: {
-      item: baseColors.neutral[100],
-      itemActive: baseColors.primary[50], // Check contrast for dark mode
-      text: baseColors.text.primary,
-      textActive: baseColors.primary[600],
-      icon: baseColors.primary[500],
-      iconActive: baseColors.primary[600],
+      xp:     baseColors.chart4,
+      streak:  baseColors.chart5,
+      level:   baseColors.primary,
+      pr:      baseColors.chart2,
     },
 
-    // Navigation / Tab Bar
-    tabBarBackground: baseColors.background.primary,
-    tabBarBorder: baseColors.border.light,
-    tabBarActive: baseColors.primary[500],
-    tabBarInactive: baseColors.text.secondary,
-    
-    // Input Fields
-    inputBackground: baseColors.background.input,
-    inputBackgroundFocused: baseColors.background.primary,
-    placeholder: baseColors.text.tertiary,
+    // ── Sidebar / Menu ──
+    menu: {
+      item:       baseColors.sidebar.foreground,
+      itemActive: baseColors.sidebar.accent,
+      text:       baseColors.sidebar.foreground,
+      textActive: baseColors.sidebar.primary,
+      icon:       baseColors.sidebar.foreground,
+      iconActive: baseColors.sidebar.primary,
+    },
+
+    // ── Navigation / Tab Bar ──
+    tabBarBackground: baseColors.background,
+    tabBarBorder:     baseColors.border,
+    tabBarActive:     baseColors.primary,
+    tabBarInactive:   baseColors.mutedForeground,
+
+    // ── Input Fields ──
+    inputBackground:        baseColors.input,
+    inputBackgroundFocused:  baseColors.background,
+    placeholder:            baseColors.mutedForeground,
+
+    // ── Gradients ──
+    gradients: isDark ? {
+      primary:     GRADIENTS.primary.dark,
+      subtle:      GRADIENTS.subtle.dark,
+      chart:       GRADIENTS.chart.dark,
+      darkOverlay: GRADIENTS.darkOverlay.dark,
+    } : {
+      primary:     GRADIENTS.primary.light,
+      subtle:      GRADIENTS.subtle.light,
+      chart:       GRADIENTS.chart.light,
+      darkOverlay: GRADIENTS.darkOverlay.light,
+    },
   };
 };
 
-const lightTheme = createThemePalette(COLORS_LIGHT);
-const darkTheme = createThemePalette(COLORS_DARK);
-
-// Fix specific Dark Mode overrides that createThemePalette might miss
-darkTheme.menu.item = COLORS_DARK.neutral[200];      // Dark sidebar item
-darkTheme.menu.itemActive = COLORS_DARK.primary[900]; // Dark active item
-darkTheme.menu.textActive = COLORS_DARK.primary[400]; // Lighter blue text
-darkTheme.menu.iconActive = COLORS_DARK.primary[400]; // Lighter blue icon
+const lightTheme = createThemePalette(COLORS_LIGHT, false);
+const darkTheme  = createThemePalette(COLORS_DARK, true);
 
 export type ThemeColors = typeof lightTheme;
 
 export function useColors(): ThemeColors {
   const { isDark } = useTheme();
-  
-  return useMemo(() => {
-    return isDark ? darkTheme : lightTheme;
-  }, [isDark]);
+  return useMemo(() => isDark ? darkTheme : lightTheme, [isDark]);
 }

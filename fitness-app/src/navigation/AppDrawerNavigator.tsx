@@ -91,10 +91,10 @@ function CustomDrawerContent(props: DrawerContentComponentProps) {
     // Safe gradient colors
     const gradientColors = colors.primary.gradient 
         ? (colors.primary.gradient as unknown as [string, string, ...string[]])
-        : [colors.primary[500], colors.primary[700]] as unknown as [string, string, ...string[]];
+        : [colors.primary.main, colors.primary.dark] as unknown as [string, string, ...string[]];
 
     return (
-        <View style={[styles.container, { backgroundColor: colors.background.primary }]}>
+        <View style={[styles.container, { backgroundColor: colors.background }]}>
             {/* User Profile Header */}
             <LinearGradient
                 colors={gradientColors}
@@ -108,7 +108,7 @@ function CustomDrawerContent(props: DrawerContentComponentProps) {
                             {firstName.charAt(0)}{lastName.charAt(0) || firstName.charAt(1) || ''}
                         </Text>
                     </View>
-                    <View style={[styles.statusDot, { backgroundColor: colors.success, borderColor: colors.primary[600] }]} />
+                    <View style={[styles.statusDot, { backgroundColor: colors.success, borderColor: colors.primary.dark }]} />
                 </View>
                 <Text style={styles.userName}>{firstName} {lastName}</Text>
                 <Text style={styles.userEmail}>{email}</Text>
@@ -145,7 +145,7 @@ function CustomDrawerContent(props: DrawerContentComponentProps) {
                                 <MaterialCommunityIcons
                                     name={item.icon}
                                     size={20}
-                                    color={colors.primary[500]}
+                                    color={colors.primary.main}
                                 />
                             </View>
                             <Text style={[styles.menuLabel, { color: colors.text.primary }]}>
@@ -185,7 +185,7 @@ function CustomDrawerContent(props: DrawerContentComponentProps) {
                                         : item.icon
                                     }
                                     size={20}
-                                    color={item.action === 'logout' ? colors.error : colors.primary[500]}
+                                    color={item.action === 'logout' ? colors.error : colors.primary.main}
                                 />
                             </View>
                             <Text style={[
@@ -200,7 +200,7 @@ function CustomDrawerContent(props: DrawerContentComponentProps) {
                             {item.action === 'theme' ? (
                                 <View style={[
                                     styles.toggleContainer,
-                                    { backgroundColor: isDark ? colors.primary[500] : colors.border.default }
+                                    { backgroundColor: isDark ? colors.primary.main : colors.border }
                                 ]}>
                                     <View style={[
                                         styles.toggleDot,
@@ -223,7 +223,7 @@ function CustomDrawerContent(props: DrawerContentComponentProps) {
             </ScrollView>
 
             {/* App Version */}
-            <View style={[styles.footer, { borderTopColor: colors.border.light }]}>
+            <View style={[styles.footer, { borderTopColor: colors.border }]}>
                 <Text style={[styles.versionText, { color: colors.text.tertiary }]}>
                     FitTrack v1.0.0
                 </Text>
@@ -249,7 +249,7 @@ export function AppDrawerNavigator() {
                 drawerType: 'front',
                 drawerStyle: {
                     width: 320,
-                    backgroundColor: colors.background.primary,
+                    backgroundColor: colors.background,
                 },
                 overlayColor: 'rgba(0, 0, 0, 0.5)',
             }}

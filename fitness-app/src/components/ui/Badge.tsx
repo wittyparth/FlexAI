@@ -55,14 +55,14 @@ export function Badge({
                 };
             case 'muted':
                 return {
-                    bg: colors.neutral[100],
+                    bg: colors.neutral[100] || colors.muted,
                     text: colors.text.secondary,
                 };
             case 'primary':
             default:
                 return {
-                    bg: colors.primary[500] + '20',
-                    text: colors.primary[500],
+                    bg: colors.primary.main + '20',
+                    text: colors.primary.main,
                 };
         }
     };

@@ -19,8 +19,8 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
     style,
 }) => {
     const colors = useColors();
-    const activeColor = color || colors.primary[500];
-    const track = trackColor || colors.neutral[200];
+    const activeColor = color || colors.primary.main;
+    const track = trackColor || (colors.neutral?.[200] || colors.muted);
 
     // Animated width
     const animatedWidth = React.useRef(new Animated.Value(0)).current;

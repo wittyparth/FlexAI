@@ -56,20 +56,21 @@ function formatTimeAgo(dateString: string): string {
 function getXPSourceIcon(source: XPGain['source']): {
     name: keyof typeof Ionicons.glyphMap;
     color: string;
+    getColor: (c: any) => string;
 } {
     switch (source) {
         case 'WORKOUT':
-            return { name: 'barbell-outline', color: '#0052FF' };
+            return { name: 'barbell-outline', color: '#1A1A1A', getColor: (c: any) => c.primary.main };
         case 'STREAK':
-            return { name: 'flame', color: '#f97316' };
+            return { name: 'flame', color: '#F59E0B', getColor: (c: any) => c.warning };
         case 'ACHIEVEMENT':
-            return { name: 'trophy', color: '#eab308' };
+            return { name: 'trophy', color: '#F59E0B', getColor: (c: any) => c.warning };
         case 'PR':
-            return { name: 'trophy-outline', color: '#22c55e' };
+            return { name: 'trophy-outline', color: '#10B981', getColor: (c: any) => c.success };
         case 'CHALLENGE':
-            return { name: 'flag', color: '#8b5cf6' };
+            return { name: 'flag', color: '#7C3AED', getColor: (c: any) => c.chart4 };
         default:
-            return { name: 'star', color: '#0052FF' };
+            return { name: 'star', color: '#1A1A1A', getColor: (c: any) => c.primary.main };
     }
 }
 
@@ -125,8 +126,8 @@ export function LevelXpModalScreen({ navigation }: HomeStackScreenProps<'XPLevel
     if (error || !stats) {
         return (
             <View style={[styles.centerContainer, { backgroundColor: colors.background }]}>
-                <Ionicons name="alert-circle-outline" size={48} color="#ef4444" />
-                <Text style={[styles.errorText, { color: '#ef4444' }]}>
+                <Ionicons name="alert-circle-outline" size={48} color={colors.destructive} />
+                <Text style={[styles.errorText, { color: colors.destructive }]}>
                     {error || 'Failed to load stats'}
                 </Text>
                 <TouchableOpacity
@@ -247,8 +248,8 @@ export function LevelXpModalScreen({ navigation }: HomeStackScreenProps<'XPLevel
                         </Card>
 
                         <Card style={styles.methodCard}>
-                            <View style={[styles.methodIcon, { backgroundColor: '#f97316' + '20' }]}>
-                                <Ionicons name="flame" size={24} color="#f97316" />
+                            <View style={[styles.methodIcon, { backgroundColor: colors.warning + '20' }]}>
+                                <Ionicons name="flame" size={24} color={colors.warning} />
                             </View>
                             <View style={styles.methodContent}>
                                 <Text style={[styles.methodTitle, { color: colors.foreground }]}>Maintain Streak</Text>
@@ -257,8 +258,8 @@ export function LevelXpModalScreen({ navigation }: HomeStackScreenProps<'XPLevel
                         </Card>
 
                         <Card style={styles.methodCard}>
-                            <View style={[styles.methodIcon, { backgroundColor: '#eab308' + '20' }]}>
-                                <MaterialCommunityIcons name="star-four-points" size={24} color="#eab308" />
+                            <View style={[styles.methodIcon, { backgroundColor: colors.warning + '20' }]}>
+                                <MaterialCommunityIcons name="star-four-points" size={24} color={colors.warning} />
                             </View>
                             <View style={styles.methodContent}>
                                 <Text style={[styles.methodTitle, { color: colors.foreground }]}>Hit Personal Records</Text>
@@ -267,8 +268,8 @@ export function LevelXpModalScreen({ navigation }: HomeStackScreenProps<'XPLevel
                         </Card>
 
                         <Card style={styles.methodCard}>
-                            <View style={[styles.methodIcon, { backgroundColor: '#8b5cf6' + '20' }]}>
-                                <Ionicons name="flag" size={24} color="#8b5cf6" />
+                            <View style={[styles.methodIcon, { backgroundColor: colors.chart4 + '20' }]}>
+                                <Ionicons name="flag" size={24} color={colors.chart4} />
                             </View>
                             <View style={styles.methodContent}>
                                 <Text style={[styles.methodTitle, { color: colors.foreground }]}>Complete Challenges</Text>
@@ -308,7 +309,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
     },
     retryText: {
-        color: '#FFFFFF',
+        color: '#FAFAFA',
         fontWeight: '600',
         fontSize: 14,
     },

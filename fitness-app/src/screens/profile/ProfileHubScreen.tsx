@@ -45,7 +45,7 @@ function SectionHeader({ title, onViewAll }: { title: string; onViewAll?: () => 
             <Text style={[styles.sectionTitle, { color: colors.foreground }]}>{title}</Text>
             {onViewAll && (
                 <TouchableOpacity onPress={onViewAll}>
-                    <Text style={[styles.viewAllText, { color: colors.primary?.main || '#2196F3' }]}>View All</Text>
+                    <Text style={[styles.viewAllText, { color: colors.primary.main }]}>View All</Text>
                 </TouchableOpacity>
             )}
         </View>
@@ -126,7 +126,7 @@ export function ProfileHubScreen({ navigation }: any) {
                     <View style={styles.heroTopBar}>
                         <Text style={[styles.heroPageTitle, { fontFamily: fontFamilies.display }]}>Profile</Text>
                         <TouchableOpacity style={styles.heroIconBtn} onPress={() => getDrawerNav().navigate('SettingsNavigator', { screen: 'Settings' })}>
-                            <Ionicons name="settings-outline" size={22} color="rgba(255,255,255,0.9)" />
+                            <Ionicons name="settings-outline" size={22} color={colors.mutedForeground} />
                         </TouchableOpacity>
                     </View>
 
@@ -138,7 +138,7 @@ export function ProfileHubScreen({ navigation }: any) {
                                     <Text style={styles.avatarText}>{DUMMY_USER.firstName.charAt(0)}</Text>
                                 </View>
                             </View>
-                            <View style={[styles.levelBadge, { backgroundColor: '#F59E0B' }]}>
+                            <View style={[styles.levelBadge, { backgroundColor: colors.warning }]}>
                                 <Text style={styles.levelBadgeText}>{DUMMY_USER.level}</Text>
                             </View>
                         </View>
@@ -147,7 +147,7 @@ export function ProfileHubScreen({ navigation }: any) {
                             <Text style={styles.heroName}>{DUMMY_USER.firstName} {DUMMY_USER.surname}</Text>
                             <Text style={styles.heroHandle}>{DUMMY_USER.username}</Text>
                             <View style={styles.streakPill}>
-                                <Ionicons name="flame" size={13} color="#F97316" />
+                                <Ionicons name="flame" size={13} color={colors.warning} />
                                 <Text style={styles.streakPillText}>{DUMMY_USER.streak} day streak</Text>
                             </View>
                         </View>
@@ -170,11 +170,11 @@ export function ProfileHubScreen({ navigation }: any) {
                     styles.statsStrip,
                     { backgroundColor: colors.card, borderColor: colors.border, opacity: fadeAnim, transform: [{ translateY: slideAnim }] }
                 ]}>
-                    <StatStrip value="342" label="Workouts" color="#6366F1" />
+                    <StatStrip value="342" label="Workouts" color={colors.chart4} />
                     <View style={[styles.statDivider, { backgroundColor: colors.border }]} />
-                    <StatStrip value="1.2M" label="Volume (lbs)" color="#3B82F6" />
+                    <StatStrip value="1.2M" label="Volume (lbs)" color={colors.chart1} />
                     <View style={[styles.statDivider, { backgroundColor: colors.border }]} />
-                    <StatStrip value="4/wk" label="This Week" color="#10B981" />
+                    <StatStrip value="4/wk" label="This Week" color={colors.success} />
                 </Animated.View>
 
                 {/* ─── WORKOUT HEATMAP ─── */}
@@ -285,20 +285,20 @@ const styles = StyleSheet.create({
     avatarWrapper: { position: 'relative' },
     avatarRing: { width: 80, height: 80, borderRadius: 40, alignItems: 'center', justifyContent: 'center' },
     avatarInner: { width: 72, height: 72, borderRadius: 36, alignItems: 'center', justifyContent: 'center' },
-    avatarText: { fontSize: 30, fontWeight: '800', color: '#6366F1' },
-    levelBadge: { position: 'absolute', bottom: -2, right: -2, width: 26, height: 26, borderRadius: 13, alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: '#0A1628' },
-    levelBadgeText: { fontSize: 11, fontWeight: '800', color: '#FFF' },
+    avatarText: { fontSize: 30, fontWeight: '800', color: '#7C3AED' },
+    levelBadge: { position: 'absolute', bottom: -2, right: -2, width: 26, height: 26, borderRadius: 13, alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: '#262626' },
+    levelBadgeText: { fontSize: 11, fontWeight: '800', color: '#FAFAFA' },
     heroInfo: { flex: 1, gap: 4 },
-    heroName: { fontSize: 22, fontWeight: '800', color: '#FFF' },
+    heroName: { fontSize: 22, fontWeight: '800', color: '#FAFAFA' },
     heroHandle: { fontSize: 14, color: 'rgba(255,255,255,0.65)' },
     streakPill: { flexDirection: 'row', alignItems: 'center', gap: 4, backgroundColor: 'rgba(249,115,22,0.15)', paddingHorizontal: 10, paddingVertical: 4, borderRadius: 20, alignSelf: 'flex-start' },
-    streakPillText: { fontSize: 13, fontWeight: '600', color: '#F97316' },
+    streakPillText: { fontSize: 13, fontWeight: '600', color: '#F59E0B' },
     xpSection: { gap: 8 },
     xpLabelRow: { flexDirection: 'row', justifyContent: 'space-between' },
     xpLevelText: { fontSize: 13, fontWeight: '700', color: 'rgba(255,255,255,0.8)' },
     xpValueText: { fontSize: 12, color: 'rgba(255,255,255,0.6)' },
     xpBarBg: { height: 8, backgroundColor: 'rgba(255,255,255,0.15)', borderRadius: 4, overflow: 'hidden' },
-    xpBarFill: { height: '100%', borderRadius: 4, backgroundColor: '#3B82F6' },
+    xpBarFill: { height: '100%', borderRadius: 4, backgroundColor: '#1A1A1A' },
 
     // Stats Strip
     statsStrip: {
@@ -317,7 +317,7 @@ const styles = StyleSheet.create({
     },
     statItem: { flex: 1, alignItems: 'center', gap: 4 },
     statValue: { fontSize: 20, fontWeight: '800' },
-    statLabel: { fontSize: 11, color: '#6B7280', fontWeight: '500' },
+    statLabel: { fontSize: 11, color: '#737373', fontWeight: '500' },
     statDivider: { width: 1, height: 32, marginHorizontal: 4 },
 
     // Sections
@@ -347,7 +347,7 @@ const styles = StyleSheet.create({
     coachGradient: { padding: 20 },
     coachContent: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
     coachLabel: { fontSize: 10, fontWeight: '800', color: 'rgba(255,255,255,0.7)', letterSpacing: 1.5, marginBottom: 4 },
-    coachTitle: { fontSize: 20, fontWeight: '800', color: '#FFF', marginBottom: 6 },
+    coachTitle: { fontSize: 20, fontWeight: '800', color: '#FAFAFA', marginBottom: 6 },
     coachSub: { fontSize: 13, color: 'rgba(255,255,255,0.75)', maxWidth: 220, lineHeight: 18 },
     coachIconBg: { width: 56, height: 56, borderRadius: 28, backgroundColor: 'rgba(255,255,255,0.15)', alignItems: 'center', justifyContent: 'center' },
 

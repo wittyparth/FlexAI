@@ -1,275 +1,213 @@
 /**
- * Premium FitTrack Design System - Color Tokens
+ * Centralized Design System — Color Tokens
  * 
- * Design: Premium Fintech / Banking Aesthetic
- * Philosophy: Trust (Blue), Growth (Green), Professionalism (Neutrals)
+ * Source: shadcn/ui CSS variables (oklch → hex)
+ * 
+ * ⚠️  ALL screens and components MUST use these tokens via useColors() hook.
+ *     DO NOT define local color constants in screens.
+ * 
+ * oklch conversion reference:
+ *   Achromatic: oklch(L 0 0) → grayscale hex
+ *   Chromatic:  oklch(L C H) → computed via oklab→sRGB
  */
 
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// LIGHT THEME
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 export const COLORS_LIGHT = {
-  // Primary Colors (Blue - Trust & Finance)
-  primary: {
-    50: '#E3F2FD',
-    100: '#BBDEFB',
-    200: '#90CAF9',
-    300: '#64B5F6',
-    400: '#42A5F5',
-    500: '#2196F3', // Main primary
-    600: '#1E88E5',
-    700: '#1976D2',
-    800: '#1565C0',
-    900: '#0D47A1',
+  // Core surfaces
+  background:           '#FFFFFF',   // oklch(1 0 0)
+  foreground:           '#171717',   // oklch(0.145 0 0)
+
+  // Card
+  card:                 '#FDFDFD',   // oklch(0.995 0 0)
+  cardForeground:       '#171717',   // oklch(0.145 0 0)
+
+  // Popover
+  popover:              '#FFFFFF',   // oklch(1 0 0)
+  popoverForeground:    '#171717',   // oklch(0.145 0 0)
+
+  // Primary (monochrome per shadcn zinc)
+  primary:              '#1A1A1A',   // oklch(0.205 0 0)
+  primaryForeground:    '#FAFAFA',   // oklch(0.985 0 0)
+
+  // Secondary
+  secondary:            '#D4D4D4',   // oklch(0.87 0 0)
+  secondaryForeground:  '#171717',   // oklch(0.145 0 0)
+
+  // Muted
+  muted:                '#ECECEC',   // oklch(0.95 0 0)
+  mutedForeground:      '#737373',   // oklch(0.556 0 0)
+
+  // Accent
+  accent:               '#ECECEC',   // oklch(0.95 0 0)
+  accentForeground:     '#1A1A1A',   // oklch(0.205 0 0)
+
+  // Destructive
+  destructive:          '#DC2626',   // oklch(0.577 0.245 27.325)
+  destructiveForeground:'#FFFFFF',   // oklch(1 0 0)
+
+  // Borders & Inputs
+  border:               '#ECECEC',   // oklch(0.95 0 0)
+  input:                '#F5F5F5',   // oklch(0.97 0 0)
+  ring:                 '#A3A3A3',   // oklch(0.708 0 0)
+
+  // Chart palette (chromatic — the ONLY colorful tokens)
+  chart1:               '#4B91F1',   // oklch(0.81 0.10 252) — blue
+  chart2:               '#2563EB',   // oklch(0.62 0.19 260) — vivid blue
+  chart3:               '#6D28D9',   // oklch(0.55 0.22 263) — indigo
+  chart4:               '#7C3AED',   // oklch(0.49 0.22 264) — purple
+  chart5:               '#5B21B6',   // oklch(0.42 0.18 266) — deep purple
+
+  // Sidebar
+  sidebar: {
+    background:           '#FAFAFA',   // oklch(0.985 0 0)
+    foreground:           '#171717',   // oklch(0.145 0 0)
+    primary:              '#1A1A1A',   // oklch(0.205 0 0)
+    primaryForeground:    '#FAFAFA',   // oklch(0.985 0 0)
+    accent:               '#F5F5F5',   // oklch(0.97 0 0)
+    accentForeground:     '#1A1A1A',   // oklch(0.205 0 0)
+    border:               '#E5E5E5',   // oklch(0.922 0 0)
+    ring:                 '#A3A3A3',   // oklch(0.708 0 0)
   },
 
-  // Secondary Colors (Green - Success & Growth)
-  secondary: {
-    50: '#E8F5E9',
-    100: '#C8E6C9',
-    200: '#A5D6A7',
-    300: '#81C784',
-    400: '#66BB6A',
-    500: '#4CAF50', // Main secondary
-    600: '#43A047',
-    700: '#388E3C',
-    800: '#2E7D32',
-    900: '#1B5E20',
-  },
+  // Semantic (legacy bridges)
+  success:  '#10B981',
+  warning:  '#F59E0B',
+  error:    '#DC2626',
+  info:     '#4B91F1',
 
-  // Neutral Colors (Grayscale)
+  // Neutral scale (zinc-mapped)
   neutral: {
-    0: '#FFFFFF',     // Pure white
-    50: '#FAFBFC',    // Off white background
-    100: '#F5F7FA',   // Light background
-    200: '#E4E9F2',   // Border light
-    300: '#C5CEE0',   // Border
-    400: '#8F9BB3',   // Text tertiary
-    500: '#6B7280',   // Text secondary
-    600: '#4B5563',   // Text secondary dark
-    700: '#374151',   // Text primary
-    800: '#1F2937',   // Text primary dark
-    900: '#111827',   // Almost black
-    950: '#0A0E1A',   // Pure black alternative
+     50: '#FAFAFA',
+    100: '#F5F5F5',
+    200: '#ECECEC',
+    300: '#D4D4D4',
+    400: '#A3A3A3',
+    500: '#737373',
+    600: '#525252',
+    700: '#404040',
+    800: '#262626',
+    900: '#171717',
   },
-
-  // Semantic Colors
-  success: '#10B981',
-  warning: '#F59E0B',
-  error: '#EF4444',
-  info: '#3B82F6',
-
-  // Background Colors
-  background: {
-    primary: '#FFFFFF',
-    secondary: '#F5F7FA',
-    tertiary: '#FAFBFC',
-    card: '#FFFFFF',
-    input: '#F5F7FA',
-  },
-
-  // Text Colors
-  text: {
-    primary: '#111827',
-    secondary: '#6B7280',
-    tertiary: '#9CA3AF',
-    inverse: '#FFFFFF',
-    link: '#2196F3',
-    success: '#10B981',
-    error: '#EF4444',
-    warning: '#F59E0B',
-  },
-
-  // Border Colors
-  border: {
-    light: '#E4E9F2',
-    default: '#C5CEE0',
-    dark: '#8F9BB3',
-    focus: '#2196F3',
-  },
-
-  // Shadow Colors
-  shadow: {
-    sm: 'rgba(0, 0, 0, 0.05)',
-    md: 'rgba(0, 0, 0, 0.1)',
-    lg: 'rgba(0, 0, 0, 0.15)',
-    xl: 'rgba(0, 0, 0, 0.2)',
-    colored: 'rgba(33, 150, 243, 0.2)',
-  },
-
-  // Legacy/Migration Support
-  transparent: 'transparent',
 };
 
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// DARK THEME
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 export const COLORS_DARK = {
-  // Primary Colors (Lighter in dark mode)
-  primary: {
-    50: '#0D47A1',
-    100: '#1565C0',
-    200: '#1976D2',
-    300: '#1E88E5',
-    400: '#2196F3',
-    500: '#42A5F5', // Main primary (lighter)
-    600: '#64B5F6',
-    700: '#90CAF9',
-    800: '#BBDEFB',
-    900: '#E3F2FD',
+  // Core surfaces
+  background:           '#262626',   // oklch(0.205 0 0)
+  foreground:           '#FAFAFA',   // oklch(0.985 0 0)
+
+  // Card
+  card:                 '#1F1F1F',   // oklch(0.165 0 0)
+  cardForeground:       '#FAFAFA',   // oklch(0.985 0 0)
+
+  // Popover
+  popover:              '#262626',   // oklch(0.205 0 0)
+  popoverForeground:    '#FAFAFA',   // oklch(0.985 0 0)
+
+  // Primary
+  primary:              '#E5E5E5',   // oklch(0.922 0 0)
+  primaryForeground:    '#262626',   // oklch(0.205 0 0)
+
+  // Secondary
+  secondary:            '#3B3B3B',   // oklch(0.269 0 0)
+  secondaryForeground:  '#FAFAFA',   // oklch(0.985 0 0)
+
+  // Muted
+  muted:                '#3B3B3B',   // oklch(0.269 0 0)
+  mutedForeground:      '#A3A3A3',   // oklch(0.708 0 0)
+
+  // Accent
+  accent:               '#525252',   // oklch(0.371 0 0)
+  accentForeground:     '#FAFAFA',   // oklch(0.985 0 0)
+
+  // Destructive
+  destructive:          '#F87171',   // oklch(0.704 0.191 22.216)
+  destructiveForeground:'#FAFAFA',   // oklch(0.985 0 0)
+
+  // Borders & Inputs
+  border:               '#3B3B3B',   // oklch(0.269 0 0)
+  input:                '#3B3B3B',   // oklch(0.269 0 0)
+  ring:                 '#737373',   // oklch(0.556 0 0)
+
+  // Chart palette (same in both themes)
+  chart1:               '#4B91F1',   // oklch(0.81 0.10 252)
+  chart2:               '#2563EB',   // oklch(0.62 0.19 260)
+  chart3:               '#6D28D9',   // oklch(0.55 0.22 263)
+  chart4:               '#7C3AED',   // oklch(0.49 0.22 264)
+  chart5:               '#5B21B6',   // oklch(0.42 0.18 266)
+
+  // Sidebar
+  sidebar: {
+    background:           '#3B3B3B',   // oklch(0.269 0 0)
+    foreground:           '#FAFAFA',   // oklch(0.985 0 0)
+    primary:              '#7C3AED',   // oklch(0.488 0.243 264.376) — purple
+    primaryForeground:    '#FAFAFA',   // oklch(0.985 0 0)
+    accent:               '#3B3B3B',   // oklch(0.269 0 0)
+    accentForeground:     '#FAFAFA',   // oklch(0.985 0 0)
+    border:               '#3D3D3D',   // oklch(0.275 0 0)
+    ring:                 '#666666',   // oklch(0.439 0 0)
   },
 
-  // Secondary Colors
-  secondary: {
-    50: '#1B5E20',
-    100: '#2E7D32',
-    200: '#388E3C',
-    300: '#43A047',
-    400: '#4CAF50',
-    500: '#66BB6A',
-    600: '#81C784',
-    700: '#A5D6A7',
-    800: '#C8E6C9',
-    900: '#E8F5E9',
-  },
+  // Semantic (legacy bridges)
+  success:  '#34D399',
+  warning:  '#FBBF24',
+  error:    '#F87171',
+  info:     '#60A5FA',
 
-  // Neutral Colors (Inverted)
+  // Neutral scale (inverted for dark)
   neutral: {
-    0: '#000000',     // Pure black
-    50: '#0A0E1A',    // Almost black
-    100: '#111827',   // Dark background
-    200: '#1F2937',   // Border dark
-    300: '#374151',   // Border
-    400: '#4B5563',   // Text tertiary
-    500: '#6B7280',   // Text secondary
-    600: '#8F9BB3',   // Text secondary light
-    700: '#C5CEE0',   // Text primary light
-    800: '#E4E9F2',   // Text primary
-    900: '#F5F7FA',   // Off white
-    950: '#FFFFFF',   // Pure white
+     50: '#171717',
+    100: '#262626',
+    200: '#3B3B3B',
+    300: '#525252',
+    400: '#737373',
+    500: '#A3A3A3',
+    600: '#D4D4D4',
+    700: '#E5E5E5',
+    800: '#ECECEC',
+    900: '#FAFAFA',
   },
-
-  // Semantic Colors
-  success: '#34D399',
-  warning: '#FBBF24',
-  error: '#F87171',
-  info: '#60A5FA',
-
-  // Background Colors
-  background: {
-    primary: '#0A0E1A',    // Main dark background
-    secondary: '#111827',  // Slightly lighter
-    tertiary: '#1F2937',   // Card background
-    card: '#1F2937',       // Card background
-    input: '#111827',      // Input background
-  },
-
-  // Text Colors
-  text: {
-    primary: '#F5F7FA',
-    secondary: '#C5CEE0',
-    tertiary: '#8F9BB3',
-    inverse: '#0A0E1A',
-    link: '#60A5FA',
-    success: '#34D399',
-    error: '#F87171',
-    warning: '#FBBF24',
-  },
-
-  // Border Colors
-  border: {
-    light: '#1F2937',
-    default: '#374151',
-    dark: '#4B5563',
-    focus: '#42A5F5',
-  },
-
-  // Shadow Colors
-  shadow: {
-    sm: 'rgba(0, 0, 0, 0.3)',
-    md: 'rgba(0, 0, 0, 0.4)',
-    lg: 'rgba(0, 0, 0, 0.5)',
-    xl: 'rgba(0, 0, 0, 0.6)',
-    colored: 'rgba(66, 165, 245, 0.3)',
-  },
-
-  // Legacy/Migration Support
-  transparent: 'transparent',
 };
 
-// Gradient Definitions
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// GRADIENTS
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 export const GRADIENTS = {
   primary: {
-    light: ['#2196F3', '#1976D2'] as const,
-    dark: ['#42A5F5', '#2196F3'] as const,
+    light: [COLORS_LIGHT.primary, COLORS_LIGHT.primary] as const,
+    dark:  [COLORS_DARK.primary, COLORS_DARK.primary] as const,
   },
-  success: {
-    light: ['#4CAF50', '#388E3C'] as const,
-    dark: ['#66BB6A', '#4CAF50'] as const,
+  subtle: {
+    light: [COLORS_LIGHT.background, COLORS_LIGHT.muted] as const,
+    dark:  [COLORS_DARK.background, COLORS_DARK.muted] as const,
   },
-  warm: {
-    light: ['#FF6B6B', '#FF8E53'] as const,
-    dark: ['#FF8E53', '#FF6B6B'] as const,
-  },
-  cool: {
-    light: ['#667EEA', '#764BA2'] as const,
-    dark: ['#764BA2', '#667EEA'] as const,
+  chart: {
+    light: [COLORS_LIGHT.chart1, COLORS_LIGHT.chart4] as const,
+    dark:  [COLORS_DARK.chart1, COLORS_DARK.chart4] as const,
   },
   darkOverlay: {
-    light: ['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.7)'] as const,
-    dark: ['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.9)'] as const,
+    light: ['rgba(0,0,0,0)', 'rgba(0,0,0,0.7)'] as const,
+    dark:  ['rgba(0,0,0,0)', 'rgba(0,0,0,0.9)'] as const,
   },
 };
 
-// Default export for backward compatibility during migration
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// LEGACY EXPORTS (backward compat)
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 export const colors = {
+  ...COLORS_LIGHT,
+  primary: {
+    main: COLORS_LIGHT.primary,
+    light: COLORS_LIGHT.muted,
+    dark: COLORS_LIGHT.foreground,
     ...COLORS_LIGHT,
-    
-    // Mapped Aliases for Legacy Code
-    primary: {
-        ...COLORS_LIGHT.primary,
-        main: COLORS_LIGHT.primary[500],
-        light: COLORS_LIGHT.primary[400],
-        dark: COLORS_LIGHT.primary[600],
-        lighter: COLORS_LIGHT.primary[300],
-        gradient: GRADIENTS.primary.light,
-    },
-    
-    // Legacy objects
-    stats: {
-        pr: '#8B5CF6',
-        volume: COLORS_LIGHT.info,
-        consistency: COLORS_LIGHT.success,
-        strength: COLORS_LIGHT.error,
-    },
-    workout: {
-        active: COLORS_LIGHT.error,
-        rest: COLORS_LIGHT.warning,
-        complete: COLORS_LIGHT.success,
-        warmup: COLORS_LIGHT.info,
-    },
-    gamification: {
-        xp: '#8B5CF6',
-        streak: COLORS_LIGHT.warning,
-        level: COLORS_LIGHT.primary[500],
-        pr: COLORS_LIGHT.success,
-    },
-    
-    // Legacy Semantic mappings
-    background: COLORS_LIGHT.background.primary, // String alias
-    card: COLORS_LIGHT.background.card,          // String alias
-    border: COLORS_LIGHT.border.default,         // String alias
-    foreground: COLORS_LIGHT.text.primary,
-    muted: COLORS_LIGHT.neutral[100],
-    mutedForeground: COLORS_LIGHT.text.secondary,
-    accent: COLORS_LIGHT.primary[500],
-    accentForeground: COLORS_LIGHT.text.inverse,
-    
-    // Sidebar fallback
-    menu: {
-        item: COLORS_LIGHT.neutral[100],
-        itemActive: COLORS_LIGHT.primary[50],
-        text: COLORS_LIGHT.text.primary,
-        textActive: COLORS_LIGHT.primary[600],
-        icon: COLORS_LIGHT.primary[500],
-        iconActive: COLORS_LIGHT.primary[600],
-    },
+  },
 };
 
 export type ColorsLight = typeof COLORS_LIGHT;
 export type ColorsDark = typeof COLORS_DARK;
-export type Colors = ColorsLight; // Export Colors type for backward compatibility
+export type Colors = ColorsLight;

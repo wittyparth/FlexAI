@@ -56,14 +56,14 @@ export function Button({
         switch (activeVariant) {
             case 'primary':
                 return {
-                    backgroundColor: colors.primary[500],
+                    backgroundColor: colors.primary.main,
                     ...SHADOWS.md, // Use token shadow directly
                 };
             case 'secondary':
                 return {
                     backgroundColor: 'transparent',
                     borderWidth: 1.5,
-                    borderColor: colors.primary[500],
+                    borderColor: colors.primary.main,
                 };
             case 'tertiary':
                 return {
@@ -89,7 +89,7 @@ export function Button({
             case 'secondary':
             case 'tertiary':
                 return { 
-                    color: colors.primary[500] 
+                    color: colors.primary.main 
                 };
             default:
                 return { color: colors.text.primary };
@@ -137,7 +137,7 @@ export function Button({
             <View style={styles.content}>
                 {loading ? (
                     <ActivityIndicator
-                        color={activeVariant === 'secondary' || activeVariant === 'tertiary' ? colors.primary[500] : '#FFFFFF'}
+                        color={activeVariant === 'secondary' || activeVariant === 'tertiary' ? colors.primary.main : '#FFFFFF'}
                         size="small"
                     />
                 ) : (

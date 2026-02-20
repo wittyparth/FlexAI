@@ -193,7 +193,7 @@ export function HomeDashboardScreen({ navigation }: HomeStackScreenProps<'HomeDa
                             <Text style={[styles.sectionTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Consistency</Text>
                             <View style={styles.legend}>
                                 <Text style={[styles.legendText, { color: colors.mutedForeground }]}>Less</Text>
-                                <View style={[styles.legendDot, { backgroundColor: mode === 'dark' ? '#1f2937' : '#e5e7eb' }]} />
+                                <View style={[styles.legendDot, { backgroundColor: colors.muted }]} />
                                 <View style={[styles.legendDot, { backgroundColor: colors.primary.main + '60' }]} />
                                 <View style={[styles.legendDot, { backgroundColor: colors.primary.main }]} />
                                 <Text style={[styles.legendText, { color: colors.mutedForeground }]}>More</Text>
@@ -608,7 +608,7 @@ const styles = StyleSheet.create({
     startBtnContainer: {
         borderRadius: 12,
         overflow: 'hidden',
-        shadowColor: '#0052FF',
+        shadowColor: '#000',
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.25,
         shadowRadius: 8,
@@ -622,7 +622,7 @@ const styles = StyleSheet.create({
         gap: 8,
     },
     startBtnText: {
-        color: '#fff',
+        color: '#FAFAFA',
         fontSize: 18,
         fontWeight: 'bold',
         letterSpacing: 0.5,
@@ -649,7 +649,7 @@ const styles = StyleSheet.create({
     statLabel: {
         fontSize: 12,
         fontWeight: '600',
-        color: '#64748B',
+        color: '#737373',
         textTransform: 'uppercase',
     },
     statMainValue: {

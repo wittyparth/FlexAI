@@ -1,72 +1,313 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useMemo } from 'react';
 import {
     View,
     Text,
     StyleSheet,
     ScrollView,
     TouchableOpacity,
-    Dimensions,
     Animated,
+    ActivityIndicator,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { useColors } from '../../hooks';
+import { useColors, useWorkout, useWorkouts } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { colors as themeColors } from '../../theme/colors';
 
-const { width } = Dimensions.get('window');
+const MUSCLE_COLORS = ['#6366F1', '#EC4899', '#10B981', '#F59E0B', '#3B82F6', '#14B8A6'];
 
-// ============================================================
-// MOCK DATA
-// ============================================================
-const MOCK_INSIGHTS = {
-    summary: {
-        volumeChange: '+12%',
-        intensityTrend: 'Higher',
-        consistencyScore: 94,
-        rating: 'Excellent',
-    },
-    volumeByMuscle: [
-        { muscle: 'Chest', volume: 4500, percentage: 36, color: '#6366F1' },
-        { muscle: 'Shoulders', volume: 3200, percentage: 26, color: '#EC4899' },
-        { muscle: 'Triceps', volume: 2800, percentage: 22, color: '#10B981' },
-        { muscle: 'Core', volume: 2000, percentage: 16, color: '#F59E0B' },
-    ],
-    prs: [
-        { exercise: 'Bench Press', value: '215 lbs × 6', previous: '205 lbs × 6' },
-        { exercise: 'Overhead Press', value: '105 lbs × 6', previous: '105 lbs × 5' },
-    ],
-    aiRecommendations: [
-        { icon: 'trending-up', title: 'Progressive Overload', text: 'Great job increasing bench weight! Try adding 5lbs next week for continued growth.', color: '#10B981' },
-        { icon: 'alert-circle', title: 'Rest Optimization', text: 'Your rest periods were slightly shorter. Consider 90-120s for compound lifts.', color: '#F59E0B' },
-        { icon: 'refresh', title: 'Recovery Focus', text: 'High RPE session. Ensure adequate protein intake and quality sleep tonight.', color: '#6366F1' },
-    ],
-    comparison: {
-        thisWeek: { workouts: 4, volume: 52000, avgDuration: 62 },
-        lastWeek: { workouts: 3, volume: 45000, avgDuration: 58 },
-    }
+const startOfDay = (date: Date) => new Date(date.getFullYear(), date.getMonth(), date.getDate());
+const addDays = (date: Date, days: number) => {
+    const next = new Date(date);
+    next.setDate(next.getDate() + days);
+    return next;
+};
+
+const getSetWeight = (setItem: any) => Number(setItem?.weight || 0);
+const getSetReps = (setItem: any) => Number(setItem?.reps || 0);
+
+const getWorkoutVolume = (workout: any) => {
+    const exercises = Array.isArray(workout?.exercises) ? workout.exercises : [];
+    return exercises.reduce((totalVolume: number, exercise: any) => {
+        const sets = Array.isArray(exercise?.sets) ? exercise.sets : [];
+        const exerciseVolume = sets.reduce((setVolume: number, setItem: any) => {
+            return setVolume + (getSetWeight(setItem) * getSetReps(setItem));
+        }, 0);
+        return totalVolume + exerciseVolume;
+    }, 0);
+};
+
+const getWorkoutDurationMins = (workout: any) => {
+    const start = workout?.startTime ? new Date(workout.startTime) : null;
+    const end = workout?.endTime ? new Date(workout.endTime) : null;
+    if (!start || !end) return 0;
+    return Math.max(0, Math.round((end.getTime() - start.getTime()) / 1000 / 60));
+};
+
+const isCompletedWorkout = (workout: any) => workout?.status === 'completed';
+
+const aggregateWeek = (workouts: any[]) => {
+    const volume = workouts.reduce((sum: number, workout: any) => sum + getWorkoutVolume(workout), 0);
+    const totalDuration = workouts.reduce((sum: number, workout: any) => sum + getWorkoutDurationMins(workout), 0);
+    return {
+        workouts: workouts.length,
+        volume,
+        avgDuration: workouts.length > 0 ? Math.round(totalDuration / workouts.length) : 0,
+    };
+};
+
+const buildMuscleVolume = (workout: any) => {
+    const grouped = new Map<string, number>();
+    const exercises = Array.isArray(workout?.exercises) ? workout.exercises : [];
+
+    exercises.forEach((exerciseItem: any) => {
+        const muscle = exerciseItem?.exercise?.muscleGroup || 'Other';
+        const sets = Array.isArray(exerciseItem?.sets) ? exerciseItem.sets : [];
+        const volume = sets.reduce((sum: number, setItem: any) => sum + (getSetWeight(setItem) * getSetReps(setItem)), 0);
+        grouped.set(muscle, (grouped.get(muscle) || 0) + volume);
+    });
+
+    const totalVolume = Array.from(grouped.values()).reduce((sum, value) => sum + value, 0);
+    return Array.from(grouped.entries())
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 4)
+        .map(([muscle, volume], index) => ({
+            muscle,
+            volume,
+            percentage: totalVolume > 0 ? Math.max(1, Math.round((volume / totalVolume) * 100)) : 0,
+            color: MUSCLE_COLORS[index % MUSCLE_COLORS.length],
+        }));
+};
+
+const buildPrs = (workout: any, allWorkouts: any[]) => {
+    if (!workout) return [];
+
+    const currentStartTime = workout?.startTime ? new Date(workout.startTime).getTime() : Number.MAX_SAFE_INTEGER;
+    const historical = allWorkouts.filter((item: any) => {
+        if (!isCompletedWorkout(item)) return false;
+        if (item?.id === workout?.id) return false;
+        if (!item?.startTime) return true;
+        return new Date(item.startTime).getTime() < currentStartTime;
+    });
+
+    const historicalMaxByExercise = new Map<number, { weight: number; reps: number }>();
+    historical.forEach((item: any) => {
+        const exercises = Array.isArray(item?.exercises) ? item.exercises : [];
+        exercises.forEach((exerciseItem: any) => {
+            const exerciseId = Number(exerciseItem?.exerciseId || exerciseItem?.exercise?.id);
+            if (!exerciseId) return;
+            const sets = Array.isArray(exerciseItem?.sets) ? exerciseItem.sets : [];
+            sets.forEach((setItem: any) => {
+                const weight = getSetWeight(setItem);
+                const reps = getSetReps(setItem);
+                const previous = historicalMaxByExercise.get(exerciseId);
+                const shouldReplace =
+                    !previous ||
+                    weight > previous.weight ||
+                    (weight === previous.weight && reps > previous.reps);
+                if (shouldReplace) {
+                    historicalMaxByExercise.set(exerciseId, { weight, reps });
+                }
+            });
+        });
+    });
+
+    const prs: { exercise: string; value: string; previous: string }[] = [];
+    const currentExercises = Array.isArray(workout?.exercises) ? workout.exercises : [];
+    currentExercises.forEach((exerciseItem: any) => {
+        const exerciseId = Number(exerciseItem?.exerciseId || exerciseItem?.exercise?.id);
+        if (!exerciseId) return;
+
+        const currentBest = { weight: 0, reps: 0 };
+        const sets = Array.isArray(exerciseItem?.sets) ? exerciseItem.sets : [];
+        sets.forEach((setItem: any) => {
+            const weight = getSetWeight(setItem);
+            const reps = getSetReps(setItem);
+            if (weight > currentBest.weight || (weight === currentBest.weight && reps > currentBest.reps)) {
+                currentBest.weight = weight;
+                currentBest.reps = reps;
+            }
+        });
+
+        if (currentBest.weight <= 0) return;
+        const historicalBest = historicalMaxByExercise.get(exerciseId);
+        const isPr =
+            !historicalBest ||
+            currentBest.weight > historicalBest.weight ||
+            (currentBest.weight === historicalBest.weight && currentBest.reps > historicalBest.reps);
+        if (!isPr) return;
+
+        prs.push({
+            exercise: exerciseItem?.exercise?.name || 'Exercise',
+            value: `${currentBest.weight} lbs x ${currentBest.reps}`,
+            previous: historicalBest ? `${historicalBest.weight} lbs x ${historicalBest.reps}` : 'No previous record',
+        });
+    });
+
+    return prs.slice(0, 2);
+};
+
+const getRating = (score: number) => {
+    if (score >= 85) return 'Excellent';
+    if (score >= 65) return 'Good';
+    if (score >= 45) return 'Fair';
+    return 'Needs Work';
 };
 
 export function SessionInsightsScreen({ navigation, route }: any) {
     const colors = useColors();
     const insets = useSafeAreaInsets();
     const fadeAnim = useRef(new Animated.Value(0)).current;
-    const insights = MOCK_INSIGHTS;
+    const workoutId = Number(route?.params?.workoutId || 0);
+
+    const range = useMemo(() => {
+        const end = new Date();
+        const start = startOfDay(addDays(end, -20));
+        return {
+            startDate: start.toISOString(),
+            endDate: end.toISOString(),
+        };
+    }, []);
+
+    const { data: workoutResponse, isLoading: isWorkoutLoading, error: workoutError } = useWorkout(workoutId);
+    const { data: workoutsResponse, isLoading: isHistoryLoading } = useWorkouts({
+        page: 1,
+        limit: 250,
+        startDate: range.startDate,
+        endDate: range.endDate,
+    });
+
+    const workout = workoutResponse?.data;
+    const completedWorkouts = useMemo(
+        () => (workoutsResponse?.data || []).filter((item: any) => isCompletedWorkout(item)),
+        [workoutsResponse],
+    );
+
+    const insights = useMemo(() => {
+        const today = startOfDay(new Date());
+        const thisWeekStart = addDays(today, -6);
+        const lastWeekStart = addDays(thisWeekStart, -7);
+        const lastWeekEnd = addDays(thisWeekStart, -1);
+
+        const thisWeek = completedWorkouts.filter((item: any) => {
+            if (!item?.startTime) return false;
+            const day = startOfDay(new Date(item.startTime));
+            return day >= thisWeekStart && day <= today;
+        });
+
+        const lastWeek = completedWorkouts.filter((item: any) => {
+            if (!item?.startTime) return false;
+            const day = startOfDay(new Date(item.startTime));
+            return day >= lastWeekStart && day <= lastWeekEnd;
+        });
+
+        const thisWeekSummary = aggregateWeek(thisWeek);
+        const lastWeekSummary = aggregateWeek(lastWeek);
+
+        const volumeDelta = thisWeekSummary.volume - lastWeekSummary.volume;
+        const volumeChangePct = lastWeekSummary.volume > 0
+            ? Math.round((volumeDelta / lastWeekSummary.volume) * 100)
+            : (thisWeekSummary.volume > 0 ? 100 : 0);
+        const volumeChange = volumeChangePct > 0 ? `+${volumeChangePct}%` : `${volumeChangePct}%`;
+
+        const intensityTrend = volumeChangePct > 5 ? 'Higher' : (volumeChangePct < -5 ? 'Lower' : 'Steady');
+        const consistencyScore = Math.min(100, Math.round((thisWeekSummary.workouts / 4) * 100));
+        const rating = getRating(consistencyScore);
+
+        const volumeByMuscle = buildMuscleVolume(workout);
+        const prs = buildPrs(workout, completedWorkouts);
+
+        const aiRecommendations = [
+            prs.length > 0
+                ? {
+                    icon: 'trending-up',
+                    title: 'Progressive Overload',
+                    text: `You set ${prs.length} new PR${prs.length > 1 ? 's' : ''} this session. Keep load progression gradual in your next session.`,
+                    color: '#10B981',
+                }
+                : {
+                    icon: 'barbell',
+                    title: 'Strength Progression',
+                    text: 'No new PR this session. Add a top set and track load and reps week-over-week for progression.',
+                    color: '#3B82F6',
+                },
+            consistencyScore >= 75
+                ? {
+                    icon: 'calendar',
+                    title: 'Consistency',
+                    text: `Strong weekly consistency (${thisWeekSummary.workouts} workouts this week). Maintain your current cadence.`,
+                    color: '#10B981',
+                }
+                : {
+                    icon: 'calendar',
+                    title: 'Consistency',
+                    text: `You logged ${thisWeekSummary.workouts} workouts this week. Aim for 4+ sessions to improve consistency.`,
+                    color: '#F59E0B',
+                },
+            thisWeekSummary.avgDuration > 75
+                ? {
+                    icon: 'timer',
+                    title: 'Session Efficiency',
+                    text: 'Average session duration is high this week. Keep rest intervals intentional for better session efficiency.',
+                    color: '#F59E0B',
+                }
+                : {
+                    icon: 'checkmark-done',
+                    title: 'Session Efficiency',
+                    text: 'Session duration looks controlled. Keep your pacing and recovery strategy consistent.',
+                    color: '#6366F1',
+                },
+        ];
+
+        return {
+            summary: {
+                volumeChange,
+                intensityTrend,
+                consistencyScore,
+                rating,
+            },
+            volumeByMuscle,
+            prs,
+            aiRecommendations,
+            comparison: {
+                thisWeek: thisWeekSummary,
+                lastWeek: lastWeekSummary,
+            },
+        };
+    }, [completedWorkouts, workout]);
 
     useEffect(() => {
         Animated.timing(fadeAnim, { toValue: 1, duration: 500, useNativeDriver: true }).start();
-    }, []);
+    }, [fadeAnim]);
 
-    const getProgressColor = (val: string) => {
-        if (val.startsWith('+')) return colors.success;
-        if (val.startsWith('-')) return colors.error;
-        return colors.foreground;
-    };
+    if (isWorkoutLoading || (isHistoryLoading && !workoutsResponse)) {
+        return (
+            <View style={[styles.loadingContainer, { backgroundColor: colors.background }]}> 
+                <ActivityIndicator size="large" color={colors.primary.main} />
+                <Text style={[styles.loadingText, { color: colors.mutedForeground }]}>Loading session insights...</Text>
+            </View>
+        );
+    }
+
+    if (workoutError || !workout) {
+        return (
+            <View style={[styles.loadingContainer, { backgroundColor: colors.background }]}> 
+                <MaterialCommunityIcons name="alert-circle-outline" size={46} color={colors.mutedForeground} />
+                <Text style={[styles.errorTitle, { color: colors.foreground }]}>Insights unavailable</Text>
+                <Text style={[styles.errorSubtitle, { color: colors.mutedForeground }]}>Unable to load this workout session.</Text>
+                <TouchableOpacity
+                    style={[styles.backButton, { backgroundColor: colors.primary.main }]}
+                    onPress={() => navigation.goBack()}
+                >
+                    <Text style={styles.backButtonText}>Go Back</Text>
+                </TouchableOpacity>
+            </View>
+        );
+    }
 
     return (
-        <View style={[styles.container, { backgroundColor: colors.background }]}>
-            {/* Header */}
-            <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.card, borderBottomColor: colors.border }]}>
+        <View style={[styles.container, { backgroundColor: colors.background }]}> 
+            <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.card, borderBottomColor: colors.border }]}> 
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerBtn}>
                     <Ionicons name="arrow-back" size={24} color={colors.foreground} />
                 </TouchableOpacity>
@@ -77,11 +318,8 @@ export function SessionInsightsScreen({ navigation, route }: any) {
             </View>
 
             <ScrollView showsVerticalScrollIndicator={false}>
-                {/* Performance Summary */}
                 <Animated.View style={{ opacity: fadeAnim }}>
-                    <View
-                        style={styles.summaryCard}
-                    >
+                    <View style={[styles.summaryCard, { backgroundColor: colors.primary.main }]}> 
                         <View style={styles.summaryHeader}>
                             <View style={styles.ratingBadge}>
                                 <MaterialCommunityIcons name="star" size={20} color="#FFC107" />
@@ -93,7 +331,9 @@ export function SessionInsightsScreen({ navigation, route }: any) {
                         <View style={styles.summaryStats}>
                             <View style={styles.summaryStat}>
                                 <Text style={styles.summaryStatLabel}>Volume</Text>
-                                <Text style={[styles.summaryStatValue, { color: '#4ADE80' }]}>{insights.summary.volumeChange}</Text>
+                                <Text style={[styles.summaryStatValue, { color: insights.summary.volumeChange.startsWith('+') ? '#4ADE80' : '#FCA5A5' }]}>
+                                    {insights.summary.volumeChange}
+                                </Text>
                             </View>
                             <View style={styles.summaryDivider} />
                             <View style={styles.summaryStat}>
@@ -104,7 +344,6 @@ export function SessionInsightsScreen({ navigation, route }: any) {
                     </View>
                 </Animated.View>
 
-                {/* PRs Achieved */}
                 {insights.prs.length > 0 && (
                     <View style={styles.section}>
                         <View style={styles.sectionHeader}>
@@ -113,7 +352,7 @@ export function SessionInsightsScreen({ navigation, route }: any) {
                         </View>
                         <View style={styles.prCards}>
                             {insights.prs.map((pr, i) => (
-                                <View key={i} style={[styles.prCard, { backgroundColor: `${colors.stats.pr}10`, borderColor: `${colors.stats.pr}30` }]}>
+                                <View key={`${pr.exercise}-${i}`} style={[styles.prCard, { backgroundColor: `${colors.stats.pr}10`, borderColor: `${colors.stats.pr}30` }]}> 
                                     <View style={[styles.prIcon, { backgroundColor: colors.stats.pr }]}>
                                         <MaterialCommunityIcons name="crown" size={20} color="#FFF" />
                                     </View>
@@ -126,47 +365,51 @@ export function SessionInsightsScreen({ navigation, route }: any) {
                     </View>
                 )}
 
-                {/* Volume Distribution */}
                 <View style={styles.section}>
                     <View style={styles.sectionHeader}>
                         <MaterialCommunityIcons name="chart-pie" size={22} color={colors.primary.main} />
                         <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Volume by Muscle</Text>
                     </View>
-                    <View style={[styles.volumeCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-                        {insights.volumeByMuscle.map((item, i) => (
-                            <View key={i} style={styles.volumeRow}>
-                                <View style={styles.volumeInfo}>
-                                    <View style={[styles.volumeDot, { backgroundColor: item.color }]} />
-                                    <Text style={[styles.volumeMuscle, { color: colors.foreground }]}>{item.muscle}</Text>
+                    <View style={[styles.volumeCard, { backgroundColor: colors.card, borderColor: colors.border }]}> 
+                        {insights.volumeByMuscle.length === 0 ? (
+                            <Text style={[styles.emptyStateText, { color: colors.mutedForeground }]}>No volume data available for this workout.</Text>
+                        ) : (
+                            insights.volumeByMuscle.map((item, i) => (
+                                <View key={`${item.muscle}-${i}`} style={styles.volumeRow}>
+                                    <View style={styles.volumeInfo}>
+                                        <View style={[styles.volumeDot, { backgroundColor: item.color }]} />
+                                        <Text style={[styles.volumeMuscle, { color: colors.foreground }]}>{item.muscle}</Text>
+                                    </View>
+                                    <View style={styles.volumeBar}>
+                                        <Animated.View
+                                            style={[
+                                                styles.volumeFill,
+                                                {
+                                                    backgroundColor: item.color,
+                                                    width: fadeAnim.interpolate({
+                                                        inputRange: [0, 1],
+                                                        outputRange: ['0%', `${item.percentage}%`],
+                                                    }),
+                                                },
+                                            ]}
+                                        />
+                                    </View>
+                                    <Text style={[styles.volumeValue, { color: colors.foreground }]}> 
+                                        {item.volume > 0 ? `${(item.volume / 1000).toFixed(1)}k` : '0'}
+                                    </Text>
                                 </View>
-                                <View style={styles.volumeBar}>
-                                    <Animated.View
-                                        style={[
-                                            styles.volumeFill,
-                                            {
-                                                backgroundColor: item.color,
-                                                width: fadeAnim.interpolate({
-                                                    inputRange: [0, 1],
-                                                    outputRange: ['0%', `${item.percentage}%`]
-                                                })
-                                            }
-                                        ]}
-                                    />
-                                </View>
-                                <Text style={[styles.volumeValue, { color: colors.foreground }]}>{(item.volume / 1000).toFixed(1)}k</Text>
-                            </View>
-                        ))}
+                            ))
+                        )}
                     </View>
                 </View>
 
-                {/* AI Recommendations */}
                 <View style={styles.section}>
                     <View style={styles.sectionHeader}>
                         <MaterialCommunityIcons name="robot-excited" size={22} color={colors.primary.main} />
                         <Text style={[styles.sectionTitle, { color: colors.foreground }]}>AI Recommendations</Text>
                     </View>
                     {insights.aiRecommendations.map((rec, i) => (
-                        <View key={i} style={[styles.recCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+                        <View key={`${rec.title}-${i}`} style={[styles.recCard, { backgroundColor: colors.card, borderColor: colors.border }]}> 
                             <View style={[styles.recIconContainer, { backgroundColor: `${rec.color}15` }]}>
                                 <Ionicons name={rec.icon as any} size={22} color={rec.color} />
                             </View>
@@ -178,13 +421,12 @@ export function SessionInsightsScreen({ navigation, route }: any) {
                     ))}
                 </View>
 
-                {/* Week Comparison */}
                 <View style={styles.section}>
                     <View style={styles.sectionHeader}>
                         <MaterialCommunityIcons name="compare" size={22} color={colors.mutedForeground} />
                         <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Week Comparison</Text>
                     </View>
-                    <View style={[styles.compCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+                    <View style={[styles.compCard, { backgroundColor: colors.card, borderColor: colors.border }]}> 
                         <View style={styles.compRow}>
                             <Text style={[styles.compLabel, { color: colors.mutedForeground }]}></Text>
                             <Text style={[styles.compHeader, { color: colors.primary.main }]}>This Week</Text>
@@ -216,6 +458,12 @@ export function SessionInsightsScreen({ navigation, route }: any) {
 
 const styles = StyleSheet.create({
     container: { flex: 1 },
+    loadingContainer: { flex: 1, justifyContent: 'center', alignItems: 'center', gap: 12, paddingHorizontal: 24 },
+    loadingText: { fontSize: 14 },
+    errorTitle: { fontSize: 18, fontWeight: '700' },
+    errorSubtitle: { fontSize: 14, textAlign: 'center' },
+    backButton: { marginTop: 12, borderRadius: 10, paddingHorizontal: 18, paddingVertical: 10 },
+    backButtonText: { color: '#FFFFFF', fontSize: 14, fontWeight: '700' },
     header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 12, paddingBottom: 16, borderBottomWidth: 1 },
     headerBtn: { width: 44, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center' },
     headerTitle: { fontSize: 20, fontWeight: '700' },
@@ -238,9 +486,10 @@ const styles = StyleSheet.create({
     prIcon: { width: 44, height: 44, borderRadius: 14, alignItems: 'center', justifyContent: 'center', marginBottom: 10 },
     prExercise: { fontSize: 14, fontWeight: '600', textAlign: 'center', marginBottom: 6 },
     prValue: { fontSize: 16, fontWeight: '800', fontFamily: fontFamilies.mono, marginBottom: 4 },
-    prPrevious: { fontSize: 12 },
+    prPrevious: { fontSize: 12, textAlign: 'center' },
     volumeCard: { borderRadius: 20, borderWidth: 1, padding: 18 },
     volumeRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: 10 },
+    emptyStateText: { fontSize: 13 },
     volumeInfo: { flexDirection: 'row', alignItems: 'center', width: 100, gap: 10 },
     volumeDot: { width: 12, height: 12, borderRadius: 6 },
     volumeMuscle: { fontSize: 14, fontWeight: '600' },

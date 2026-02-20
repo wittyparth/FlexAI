@@ -17,7 +17,7 @@ Every integration PR must update this file.
 ## Current Status
 - Current Phase: Phase 4
 - Overall Completion: 96%
-- Blockers: None
+- Blockers: Global TypeScript type drift outside current integration scope (auth/home/theme typing mismatches) still prevents clean `tsc`.
 
 ## Global Exit Criteria
 - [ ] Frontend TypeScript passes (`tsc`) with no integration-related errors.
@@ -258,6 +258,7 @@ Every integration PR must update this file.
 - 2026-02-20 | PR: `f199428` | Phase: 3 | Replaced `SessionInsightsScreen` mock payload with live workout APIs (`useWorkout` + `useWorkouts`) and computed summary, PRs, muscle-volume, recommendations, and week comparison.
 - 2026-02-20 | PR: `c025080` | Phase: 4 | Integrated `AIGeneratorScreen` with live `/routines/generate`, normalized AI response enrichment in `ai.api.ts`, and wired `AIPreviewScreen` to API-generated workout data/save flow (removed local mock fallback).
 - 2026-02-20 | PR: `c9bd2f7` | Phase: 4 | Hardened AI generation error handling for backend error envelopes/provider outages, validated generated exercise IDs before mapping, and added API-backed `AIPreviewScreen` start-workout flow that creates a live workout and injects generated exercises with partial-failure handling.
+- 2026-02-20 | PR: `58ce791` | Phase: Hardening | Repaired malformed JSX tokens in analytics/social/workout screens (`PersonalRecords`, `VolumeAnalytics`, `CreatePost`, `PostDetail`, `SetConfig`) and fixed social post visibility enum mismatch (`followers` -> `friends`) to unblock parser-level compile failures.
 - 2026-02-20 | PR: `2b5db45` | Phase: 3 | Removed the large hardcoded `MOCK_WORKOUTS` dataset from `WorkoutDetailScreen`, leaving the screen fully backend-driven via `useWorkout`.
 - 2026-02-20 | PR: `aa8ad31` | Phase: 3 | Replaced `useExerciseQueries` mock-backed implementations with backend `exerciseApi` calls for filters, featured, search, and exercise detail lookups.
 

@@ -15,8 +15,8 @@ Every integration PR must update this file.
 - If scope changes, add a `Change Note` entry before implementation.
 
 ## Current Status
-- Current Phase: Phase 2
-- Overall Completion: 29%
+- Current Phase: Phase 3
+- Overall Completion: 35%
 - Blockers: None
 
 ## Global Exit Criteria
@@ -90,10 +90,10 @@ Every integration PR must update this file.
 
 ### Checklist
 #### Seeding
-- [ ] Create missing backend seed script (`fitness-backend/prisma/seed.ts`).
-- [ ] Ensure seed script is idempotent.
-- [ ] Seed template/public routines referencing existing seeded exercises.
-- [ ] Seed optional sample workout history for dev/test users.
+- [x] Create missing backend seed script (`fitness-backend/prisma/seed.ts`).
+- [x] Ensure seed script is idempotent.
+- [x] Seed template/public routines referencing existing seeded exercises.
+- [x] Seed optional sample workout history for dev/test users.
 
 #### Workout Integration
 - [ ] Replace workout mocks in hooks/screens/stores with real API calls.
@@ -232,7 +232,8 @@ Every integration PR must update this file.
 - 2026-02-20 | PR: `78fb2a0` | Phase: 0 | Unified app entry to `src/navigation/RootNavigator`, added dedicated onboarding stack, expanded auth stack registration, removed auth bypass mode.
 - 2026-02-20 | PR: `0c8b9d5` | Phase: 0 | Aligned frontend API clients with backend route paths/contracts for social, feed, leaderboards, gamification, exercises, and routines; added safe fallbacks where backend endpoints are not yet exposed.
 - 2026-02-20 | PR: `3f9e3cc` | Phase: 1 | Aligned auth contracts (verify/register response handling), fixed verification flow to login handoff, added single-flight refresh queue/retry behavior, and hardened session hydration rules.
-- 2026-02-20 | PR: Pending commit (Phase 2 - workoutInterests persistence) | Phase: 2 | Added `workoutInterests` to backend schema and migration, persisted it via onboarding service, returned it in profile/onboarding responses, added onboarding request validation, and aligned frontend onboarding payload/types.
+- 2026-02-20 | PR: `701a9b9` | Phase: 2 | Added `workoutInterests` to backend schema and migration, persisted it via onboarding service, returned it in profile/onboarding responses, added onboarding request validation, and aligned frontend onboarding payload/types.
+- 2026-02-20 | PR: Pending commit (Phase 3 - seed templates/workouts) | Phase: 3 | Added deterministic idempotent seed script to create template/public routines and sample completed workout history using existing exercise data, with stable seed users.
 
 ## Change Notes
 - 2026-02-20: Added mandatory backend persistence of `workoutInterests` in onboarding (Phase 2).

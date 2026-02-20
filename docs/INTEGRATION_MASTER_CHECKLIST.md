@@ -16,7 +16,7 @@ Every integration PR must update this file.
 
 ## Current Status
 - Current Phase: Phase 3
-- Overall Completion: 80%
+- Overall Completion: 84%
 - Blockers: None
 
 ## Global Exit Criteria
@@ -105,6 +105,7 @@ Every integration PR must update this file.
   - [x] Remove seeded mock templates from `templateStore` initial state.
   - [x] Replace workout hub recent-activity cards with backend workout history data.
   - [x] Remove hardcoded workout mock dataset from `WorkoutDetailScreen`.
+  - [x] Replace exercise query mocks with backend exercise API (search/detail/filters/featured).
 - [ ] Integrate full workout lifecycle:
   - [x] Start workout
   - [x] Add/remove exercises
@@ -252,6 +253,7 @@ Every integration PR must update this file.
 - 2026-02-20 | PR: `3b5fdeb` | Phase: 3 | Migrated `TemplateListScreen` to backend template routines (`isTemplate=true`) with local custom fallback and removed default mock templates from `templateStore` initial state.
 - 2026-02-20 | PR: `df0b73d` | Phase: 3 | Replaced Workout Hub recent-activity mock cards with API-backed workout history rows using `useWorkouts`, including computed duration/volume/exercise counts.
 - 2026-02-20 | PR: `2b5db45` | Phase: 3 | Removed the large hardcoded `MOCK_WORKOUTS` dataset from `WorkoutDetailScreen`, leaving the screen fully backend-driven via `useWorkout`.
+- 2026-02-20 | PR: Pending commit (Phase 3 - exercise query API migration) | Phase: 3 | Replaced `useExerciseQueries` mock-backed implementations with backend `exerciseApi` calls for filters, featured, search, and exercise detail lookups.
 
 ## Change Notes
 - 2026-02-20: Added mandatory backend persistence of `workoutInterests` in onboarding (Phase 2).

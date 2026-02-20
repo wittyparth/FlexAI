@@ -16,22 +16,59 @@ interface ApiResponse<T> {
   message?: string;
 }
 
+const normalizeSet = (set: any) => ({
+  ...set,
+  id: String(set.id),
+});
+
+const normalizeWorkoutExercise = (exercise: any) => ({
+  ...exercise,
+  sets: Array.isArray(exercise?.sets) ? exercise.sets.map(normalizeSet) : [],
+});
+
+const normalizeWorkout = (workout: any) => ({
+  ...workout,
+  startTime: workout?.startTime ?? workout?.startedAt,
+  endTime: workout?.endTime ?? workout?.completedAt,
+  exercises: Array.isArray(workout?.exercises)
+    ? workout.exercises.map(normalizeWorkoutExercise)
+    : [],
+});
+
 export const workoutApi = {
   // Queries
   // --------------------------------------------------------------------------
   getWorkouts: async (params?: GetWorkoutsQuery) => {
     const response = await apiClient.get<ApiResponse<any>>('/workouts', { params });
+
+    const payload = response.data.data;
+    if (Array.isArray(payload?.workouts)) {
+      return {
+        ...response.data,
+        data: {
+          ...payload,
+          workouts: payload.workouts.map(normalizeWorkout),
+        },
+      };
+    }
+
     return response.data;
   },
 
   getWorkoutById: async (id: number) => {
     const response = await apiClient.get<ApiResponse<any>>(`/workouts/${id}`);
-    return response.data;
+    return {
+      ...response.data,
+      data: normalizeWorkout(response.data.data),
+    };
   },
 
   getCurrentWorkout: async () => {
     const response = await apiClient.get<ApiResponse<any>>('/workouts/current');
-    return response.data;
+    return {
+      ...response.data,
+      data: response.data.data ? normalizeWorkout(response.data.data) : null,
+    };
   },
 
   // Commands
@@ -42,7 +79,10 @@ export const workoutApi = {
    */
   startWorkout: async (data: StartWorkoutInput) => {
     const response = await apiClient.post<ApiResponse<any>>('/workouts', data);
-    return response.data;
+    return {
+      ...response.data,
+      data: normalizeWorkout(response.data.data),
+    };
   },
 
   /**
@@ -50,6 +90,23 @@ export const workoutApi = {
    */
   updateWorkout: async (id: number, data: UpdateWorkoutInput) => {
     const response = await apiClient.patch<ApiResponse<any>>(`/workouts/${id}`, data);
+
+    const payload = response.data.data;
+    if (payload?.startedAt || payload?.startTime) {
+      return {
+        ...response.data,
+        data: normalizeWorkout(payload),
+      };
+    }
+
+    return response.data;
+  },
+
+  /**
+   * Delete workout
+   */
+  deleteWorkout: async (id: number) => {
+    const response = await apiClient.delete<ApiResponse<any>>(`/workouts/${id}`);
     return response.data;
   },
 
@@ -58,7 +115,10 @@ export const workoutApi = {
    */
   cancelWorkout: async (id: number) => {
     const response = await apiClient.post<ApiResponse<any>>(`/workouts/${id}/cancel`);
-    return response.data;
+    return {
+      ...response.data,
+      data: normalizeWorkout(response.data.data),
+    };
   },
 
   /**
@@ -66,7 +126,10 @@ export const workoutApi = {
    */
   completeWorkout: async (id: number, data: CompleteWorkoutInput) => {
     const response = await apiClient.post<ApiResponse<any>>(`/workouts/${id}/complete`, data);
-    return response.data;
+    return {
+      ...response.data,
+      data: normalizeWorkout(response.data.data),
+    };
   },
 
   /**
@@ -98,7 +161,10 @@ export const workoutApi = {
       `/workouts/${workoutId}/exercises/${exerciseId}/sets`, 
       data
     );
-    return response.data;
+    return {
+      ...response.data,
+      data: normalizeSet(response.data.data),
+    };
   },
 
   /**
@@ -109,7 +175,10 @@ export const workoutApi = {
       `/workouts/${workoutId}/sets/${setId}`, 
       data
     );
-    return response.data;
+    return {
+      ...response.data,
+      data: normalizeSet(response.data.data),
+    };
   },
 
   /**

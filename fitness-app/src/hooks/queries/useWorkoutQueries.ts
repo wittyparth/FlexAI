@@ -1,35 +1,32 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { workoutApi } from '../../api/workout.api';
-import { CreateWorkoutInput, UpdateWorkoutInput, LogExerciseInput } from '../../types/backend.types';
-
-import { MOCK_WORKOUT_HISTORY } from '../../data/workoutMockData';
-
-// Helper to simulate API delay
-const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+import {
+    GetWorkoutsQuery,
+    LogSetInput,
+    StartWorkoutInput,
+    UpdateWorkoutInput,
+} from '../../types/backend.types';
 
 export const useWorkouts = (params?: { page?: number; limit?: number; startDate?: string; endDate?: string }) => {
     return useQuery({
         queryKey: ['workouts', params],
-        // MOCK IMPLEMENTATION
         queryFn: async () => {
-             await delay(500);
-             return { data: MOCK_WORKOUT_HISTORY, total: MOCK_WORKOUT_HISTORY.length };
-        }
-        // queryFn: () => workoutApi.getWorkouts(params),
+            const response = await workoutApi.getWorkouts(params as GetWorkoutsQuery);
+            return {
+                data: response.data?.workouts ?? [],
+                pagination: response.data?.pagination,
+            };
+        },
     });
 };
 
 export const useWorkout = (id: number) => {
     return useQuery({
         queryKey: ['workout', id],
-        // MOCK IMPLEMENTATION
         queryFn: async () => {
-             await delay(300);
-             const workout = MOCK_WORKOUT_HISTORY.find(w => w.id === Number(id));
-             if (!workout) throw new Error('Workout not found');
-             return { data: workout };
+            const response = await workoutApi.getWorkoutById(id);
+            return { data: response.data };
         },
-        // queryFn: () => workoutApi.getWorkoutById(id),
         enabled: !!id,
     });
 };
@@ -37,7 +34,7 @@ export const useWorkout = (id: number) => {
 export const useCreateWorkout = () => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: (data: CreateWorkoutInput) => workoutApi.createWorkout(data),
+        mutationFn: (data: StartWorkoutInput) => workoutApi.startWorkout(data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['workouts'] });
             queryClient.invalidateQueries({ queryKey: ['stats'] }); // Stats might change
@@ -71,8 +68,8 @@ export const useDeleteWorkout = () => {
 export const useLogSet = () => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: ({ workoutId, data }: { workoutId: number; data: LogExerciseInput }) => 
-            workoutApi.logExercise(workoutId, data),
+        mutationFn: ({ workoutId, exerciseId, data }: { workoutId: number; exerciseId: number; data: LogSetInput }) => 
+            workoutApi.logSet(workoutId, exerciseId, data),
         onSuccess: (_, { workoutId }) => {
             queryClient.invalidateQueries({ queryKey: ['workout', workoutId] });
         },

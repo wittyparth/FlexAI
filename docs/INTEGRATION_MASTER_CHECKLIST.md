@@ -16,7 +16,7 @@ Every integration PR must update this file.
 
 ## Current Status
 - Current Phase: Phase 3
-- Overall Completion: 35%
+- Overall Completion: 38%
 - Blockers: None
 
 ## Global Exit Criteria
@@ -233,7 +233,8 @@ Every integration PR must update this file.
 - 2026-02-20 | PR: `0c8b9d5` | Phase: 0 | Aligned frontend API clients with backend route paths/contracts for social, feed, leaderboards, gamification, exercises, and routines; added safe fallbacks where backend endpoints are not yet exposed.
 - 2026-02-20 | PR: `3f9e3cc` | Phase: 1 | Aligned auth contracts (verify/register response handling), fixed verification flow to login handoff, added single-flight refresh queue/retry behavior, and hardened session hydration rules.
 - 2026-02-20 | PR: `701a9b9` | Phase: 2 | Added `workoutInterests` to backend schema and migration, persisted it via onboarding service, returned it in profile/onboarding responses, added onboarding request validation, and aligned frontend onboarding payload/types.
-- 2026-02-20 | PR: Pending commit (Phase 3 - seed templates/workouts) | Phase: 3 | Added deterministic idempotent seed script to create template/public routines and sample completed workout history using existing exercise data, with stable seed users.
+- 2026-02-20 | PR: `9adfdef` | Phase: 3 | Added deterministic idempotent seed script to create template/public routines and sample completed workout history using existing exercise data, with stable seed users.
+- 2026-02-20 | PR: Pending commit (Phase 3 - workout query hook API switch) | Phase: 3 | Replaced workout history/detail query hooks with real backend endpoints, added workout response normalization in API client (`startedAt`/`completedAt` mapping), and aligned create/delete/log-set query mutations to backend workout routes.
 
 ## Change Notes
 - 2026-02-20: Added mandatory backend persistence of `workoutInterests` in onboarding (Phase 2).

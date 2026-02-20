@@ -141,6 +141,12 @@ export function WorkoutHubScreen({ navigation }: any) {
         Animated.timing(fade, { toValue: 1, duration: 500, useNativeDriver: true }).start();
     }, [fade]);
 
+    useEffect(() => {
+        useWorkoutStore.getState().syncCurrentWorkout().catch(() => {
+            // Non-blocking sync; UI continues with local state if this fails.
+        });
+    }, []);
+
     const nav = (screen: string, params?: any) => navigation.navigate(screen, params);
 
     return (

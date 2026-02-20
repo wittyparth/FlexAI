@@ -16,7 +16,7 @@ Every integration PR must update this file.
 
 ## Current Status
 - Current Phase: Phase 3
-- Overall Completion: 61%
+- Overall Completion: 66%
 - Blockers: None
 
 ## Global Exit Criteria
@@ -106,7 +106,7 @@ Every integration PR must update this file.
   - [x] Log/update/delete sets
   - [x] Complete workout
   - [x] Cancel workout
-  - [ ] Fetch history/detail/current workout
+  - [x] Fetch history/detail/current workout
 - [ ] Validate routine library/template browsing from seeded data.
 
 ### Acceptance
@@ -241,7 +241,8 @@ Every integration PR must update this file.
 - 2026-02-20 | PR: `988bd0a` | Phase: 3 | Removed remaining mock-start pathways, wired routine/hub start to backend create-workout API, enabled active-workout add-exercise flow through ExercisePicker return navigation, and added store/API normalization/error handling for exercise insertion.
 - 2026-02-20 | PR: `b6d8e32` | Phase: 3 | Replaced routine query mocks with real routine APIs, wired `RoutineListScreen` and `RoutineDetailScreen` to backend routine data, and switched Workout Hub routine/template sections to seeded backend routines/templates.
 - 2026-02-20 | PR: `cca2f06` | Phase: 3 | Added active-workout remove-exercise UI with confirmation, exposed remove action through `useActiveWorkout`, and hardened store remove-exercise error propagation with optimistic rollback.
-- 2026-02-20 | PR: Pending commit (Phase 3 - set update/edit integration) | Phase: 3 | Added workout-store `updateSet` mutation with optimistic rollback, wired active-workout hook edit mode, and enabled set editing from completed-set rows with save flow through backend API.
+- 2026-02-20 | PR: `065ef08` | Phase: 3 | Added workout-store `updateSet` mutation with optimistic rollback, wired active-workout hook edit mode, and enabled set editing from completed-set rows with save flow through backend API.
+- 2026-02-20 | PR: Pending commit (Phase 3 - backend current-workout sync integration) | Phase: 3 | Added `syncCurrentWorkout` store action using `/workouts/current`, wired it into Workout Hub mount, and added `useCurrentWorkout` query hook for API-backed current session retrieval.
 
 ## Change Notes
 - 2026-02-20: Added mandatory backend persistence of `workoutInterests` in onboarding (Phase 2).

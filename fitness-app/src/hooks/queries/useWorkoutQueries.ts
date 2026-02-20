@@ -31,6 +31,16 @@ export const useWorkout = (id: number) => {
     });
 };
 
+export const useCurrentWorkout = () => {
+    return useQuery({
+        queryKey: ['workout', 'current'],
+        queryFn: async () => {
+            const response = await workoutApi.getCurrentWorkout();
+            return { data: response.data };
+        },
+    });
+};
+
 export const useCreateWorkout = () => {
     const queryClient = useQueryClient();
     return useMutation({

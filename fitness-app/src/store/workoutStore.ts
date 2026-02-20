@@ -46,6 +46,7 @@ interface WorkoutState {
 interface WorkoutActions {
   // Core Actions
   startWorkout: (input: StartWorkoutInput) => Promise<void>;
+  syncCurrentWorkout: () => Promise<void>;
   resumeWorkout: () => Promise<void>;
   cancelWorkout: () => Promise<void>;
   completeWorkout: (input: any) => Promise<void>;
@@ -139,6 +140,51 @@ export const useWorkoutStore = create<WorkoutState & WorkoutActions>()(
           const message = error.message || 'Failed to start workout';
           set({ isLoading: false, error: message });
           throw new Error(message);
+        }
+      },
+
+      syncCurrentWorkout: async () => {
+        const { activeWorkoutId, status } = get();
+        if (activeWorkoutId && status === 'in_progress') {
+          return;
+        }
+
+        set({ isLoading: true, error: null });
+        try {
+          const response = await workoutApi.getCurrentWorkout();
+          const currentWorkout = response.data as unknown as Workout | null;
+
+          if (!currentWorkout) {
+            set((state) => {
+              state.isLoading = false;
+            });
+            return;
+          }
+
+          set((state) => {
+            state.isLoading = false;
+            state.activeWorkoutId = currentWorkout.id;
+            state.workoutName = currentWorkout.name;
+            state.startTime = currentWorkout.startTime || new Date().toISOString();
+            state.status = currentWorkout.status === 'in_progress' ? 'in_progress' : 'idle';
+            state.exercises = {};
+            state.sets = {};
+
+            if (Array.isArray(currentWorkout.exercises)) {
+              currentWorkout.exercises.forEach((ex) => {
+                const { sets, ...rest } = ex;
+                state.exercises[ex.id] = { ...rest, sets: [] } as WorkoutExercise;
+
+                if (Array.isArray(sets)) {
+                  sets.forEach((setItem) => {
+                    state.sets[setItem.id] = setItem;
+                  });
+                }
+              });
+            }
+          });
+        } catch (error: any) {
+          set({ isLoading: false, error: error.message || 'Failed to sync current workout' });
         }
       },
 

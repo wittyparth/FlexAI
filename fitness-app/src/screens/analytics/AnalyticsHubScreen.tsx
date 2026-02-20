@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useMemo } from 'react';
 import {
     View,
     Text,
@@ -9,32 +9,23 @@ import {
     Animated,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { LineChart, BarChart } from 'react-native-gifted-charts';
-import { useColors } from '../../hooks';
+import { useColors, useDashboardStats } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
-import { spacing } from '../../theme/spacing';
-import { colors as themeColors } from '../../theme/colors';
 import { AnalyticsNavigationProp } from '../../navigation/types';
 
 const { width } = Dimensions.get('window');
 
-// ============================================================
-// MOCK DATA
-// ============================================================
-const WEEKLY_VOLUME = {
-    '7D': [
-        { value: 42000, label: 'Mon' }, { value: 38000, label: 'Tue' }, { value: 0, label: 'Wed' },
-        { value: 52000, label: 'Thu' }, { value: 0, label: 'Fri' }, { value: 48000, label: 'Sat' }, { value: 55000, label: 'Sun' },
-    ],
-    '30D': [
-        { value: 152000, label: 'Week 1' }, { value: 148000, label: 'Week 2' },
-        { value: 165000, label: 'Week 3' }, { value: 180000, label: 'Week 4' }
-    ],
-    '90D': [
-        { value: 650000, label: 'Month 1' }, { value: 720000, label: 'Month 2' }, { value: 810000, label: 'Month 3' }
-    ]
+type Period = '7D' | '30D' | '90D';
+
+type RecentWorkout = {
+    id: string;
+    name: string;
+    date: string;
+    volume: number;
+    prCount: number;
 };
 
 const STRENGTH_TREND = [
@@ -42,10 +33,62 @@ const STRENGTH_TREND = [
     { value: 205, label: '' }, { value: 210, label: 'Mar' }, { value: 215, label: '' }, { value: 220, label: 'Apr' }
 ];
 
-const QUICK_STATS = {
-    prsThisMonth: 8,
-    totalVolume: 840000,
-    streak: "5 Days"
+const DAY_LABELS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+const startOfDay = (date: Date) => new Date(date.getFullYear(), date.getMonth(), date.getDate());
+const addDays = (date: Date, days: number) => {
+    const next = new Date(date);
+    next.setDate(next.getDate() + days);
+    return next;
+};
+
+const buildVolumeSeries = (workouts: RecentWorkout[], period: Period) => {
+    const now = startOfDay(new Date());
+    const series =
+        period === '7D'
+            ? Array.from({ length: 7 }, (_, i) => {
+                const day = addDays(now, i - 6);
+                return { label: DAY_LABELS[day.getDay()], value: 0, date: day };
+            })
+            : period === '30D'
+                ? Array.from({ length: 4 }, (_, i) => {
+                    const start = addDays(now, -27 + i * 7);
+                    return { label: `W${i + 1}`, value: 0, date: start };
+                })
+                : Array.from({ length: 3 }, (_, i) => {
+                    const start = addDays(now, -89 + i * 30);
+                    return { label: `M${i + 1}`, value: 0, date: start };
+                });
+
+    const startDate = series[0]?.date ? startOfDay(series[0].date) : now;
+
+    workouts.forEach((workout) => {
+        const workoutDate = startOfDay(new Date(workout.date));
+        if (Number.isNaN(workoutDate.getTime()) || workoutDate < startDate || workoutDate > now) return;
+
+        if (period === '7D') {
+            const index = Math.floor((workoutDate.getTime() - startDate.getTime()) / (24 * 60 * 60 * 1000));
+            if (index >= 0 && index < series.length) {
+                series[index].value += Number(workout.volume || 0);
+            }
+            return;
+        }
+
+        if (period === '30D') {
+            const index = Math.floor((workoutDate.getTime() - startDate.getTime()) / (7 * 24 * 60 * 60 * 1000));
+            if (index >= 0 && index < series.length) {
+                series[index].value += Number(workout.volume || 0);
+            }
+            return;
+        }
+
+        const index = Math.floor((workoutDate.getTime() - startDate.getTime()) / (30 * 24 * 60 * 60 * 1000));
+        if (index >= 0 && index < series.length) {
+            series[index].value += Number(workout.volume || 0);
+        }
+    });
+
+    return series.map(({ label, value }) => ({ label, value }));
 };
 
 const NAV_CARDS = [
@@ -60,7 +103,13 @@ export function AnalyticsHubScreen() { // Renamed function and removed navigatio
     const colors = useColors();
     const insets = useSafeAreaInsets();
     const fadeAnim = useRef(new Animated.Value(0)).current;
-    const [period, setPeriod] = useState<'7D' | '30D' | '90D'>('7D');
+    const [period, setPeriod] = useState<Period>('7D');
+    const { data: dashboardStats, isLoading: isStatsLoading } = useDashboardStats();
+
+    const recentWorkouts = useMemo<RecentWorkout[]>(
+        () => dashboardStats?.recentWorkouts || [],
+        [dashboardStats?.recentWorkouts],
+    );
 
     useEffect(() => {
         Animated.timing(fadeAnim, { toValue: 1, duration: 500, useNativeDriver: true }).start();
@@ -74,8 +123,22 @@ export function AnalyticsHubScreen() { // Renamed function and removed navigatio
         gradientEnd: `${colors.primary.main}00`,
     };
 
-    const currentChartData = WEEKLY_VOLUME[period];
+    const currentChartData = useMemo(
+        () => buildVolumeSeries(recentWorkouts, period),
+        [recentWorkouts, period],
+    );
     const totalCurrentVolume = currentChartData.reduce((a, b) => a + b.value, 0);
+    const quickStats = useMemo(() => {
+        const totalVolume = recentWorkouts.reduce((sum, workout) => sum + Number(workout.volume || 0), 0);
+        const totalPRs = recentWorkouts.reduce((sum, workout) => sum + Number(workout.prCount || 0), 0);
+        const streakDays = dashboardStats?.streak?.current || 0;
+
+        return {
+            streak: `${streakDays} Days`,
+            totalVolume,
+            prsThisMonth: totalPRs,
+        };
+    }, [dashboardStats?.streak?.current, recentWorkouts]);
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
@@ -97,21 +160,27 @@ export function AnalyticsHubScreen() { // Renamed function and removed navigatio
                         <View style={[styles.quickStatIcon, { backgroundColor: `${colors.stats.consistency}15` }]}>
                             <MaterialCommunityIcons name="fire" size={22} color={colors.stats.consistency} />
                         </View>
-                        <Text style={[styles.quickStatValue, { color: colors.foreground }]}>{QUICK_STATS.streak}</Text>
+                        <Text style={[styles.quickStatValue, { color: colors.foreground }]}>
+                            {isStatsLoading ? '--' : quickStats.streak}
+                        </Text>
                         <Text style={[styles.quickStatLabel, { color: colors.mutedForeground }]}>Streak</Text>
                     </View>
                     <View style={[styles.quickStatCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
                         <View style={[styles.quickStatIcon, { backgroundColor: `${colors.primary.main}15` }]}>
                             <MaterialCommunityIcons name="weight" size={22} color={colors.primary.main} />
                         </View>
-                        <Text style={[styles.quickStatValue, { color: colors.foreground }]}>{(QUICK_STATS.totalVolume / 1000).toFixed(1)}k</Text>
+                        <Text style={[styles.quickStatValue, { color: colors.foreground }]}>
+                            {isStatsLoading ? '--' : `${(quickStats.totalVolume / 1000).toFixed(1)}k`}
+                        </Text>
                         <Text style={[styles.quickStatLabel, { color: colors.mutedForeground }]}>Volume</Text>
                     </View>
                     <View style={[styles.quickStatCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
                         <View style={[styles.quickStatIcon, { backgroundColor: `${colors.stats.pr}15` }]}>
                             <MaterialCommunityIcons name="trophy" size={22} color={colors.stats.pr} />
                         </View>
-                        <Text style={[styles.quickStatValue, { color: colors.foreground }]}>{QUICK_STATS.prsThisMonth}</Text>
+                        <Text style={[styles.quickStatValue, { color: colors.foreground }]}>
+                            {isStatsLoading ? '--' : quickStats.prsThisMonth}
+                        </Text>
                         <Text style={[styles.quickStatLabel, { color: colors.mutedForeground }]}>PRs</Text>
                     </View>
                 </Animated.View>

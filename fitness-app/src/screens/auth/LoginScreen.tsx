@@ -21,7 +21,6 @@ import {
     ScrollView,
     Alert,
 } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { Input } from '../../components/ui';
 import { useColors } from '../../hooks';
@@ -102,8 +101,7 @@ export function LoginScreen({ navigation }: LoginScreenProps) {
             >
                 {/* Header Section - Dark with gradient */}
                 <View style={styles.headerSection}>
-                    <LinearGradient
-                        colors={['#1E293B', '#0F1423']}
+                    <View
                         style={StyleSheet.absoluteFill}
                     />
 
@@ -195,16 +193,13 @@ export function LoginScreen({ navigation }: LoginScreenProps) {
                                 activeOpacity={0.9}
                                 style={[styles.loginButton, shadows.accent, loading && styles.buttonDisabled]}
                             >
-                                <LinearGradient
-                                    colors={(loading ? ['#94A3B8', '#94A3B8'] : (colors.primary.gradient || [colors.primary.main || '#0052FF', colors.primary.light || '#4D7CFF'])) as any}
-                                    start={{ x: 0, y: 0 }}
-                                    end={{ x: 1, y: 0 }}
+                                <View
                                     style={styles.loginButtonGradient}
                                 >
                                     <Text style={styles.loginButtonText}>
                                         {loading ? 'Logging in...' : 'Log In'}
                                     </Text>
-                                </LinearGradient>
+                                </View>
                             </TouchableOpacity>
                         </View>
 

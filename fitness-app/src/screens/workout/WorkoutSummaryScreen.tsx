@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 
@@ -51,10 +50,7 @@ export function WorkoutSummaryScreen({ navigation }: any) {
 
                 {/* Major Stats Card */}
                 <View style={styles.statsCardContainer}>
-                    <LinearGradient
-                        colors={['#0da6f2', '#93c5fd']}
-                        start={{ x: 0, y: 0 }}
-                        end={{ x: 1, y: 1 }}
+                    <View
                         style={styles.statsCardGradient}
                     >
                         <View style={[styles.statsCardInner, { backgroundColor: colors.background }]}>
@@ -70,7 +66,7 @@ export function WorkoutSummaryScreen({ navigation }: any) {
                                 <Text style={[styles.xpValue]}>+150</Text>
                             </View>
                         </View>
-                    </LinearGradient>
+                    </View>
                 </View>
 
                 {/* Achievements */}
@@ -137,10 +133,7 @@ export function WorkoutSummaryScreen({ navigation }: any) {
                         <Text style={[styles.levelText, { color: colors.mutedForeground }]}>LEVEL 13</Text>
                     </View>
                     <View style={[styles.levelBarBg, { backgroundColor: colors.muted }]}>
-                        <LinearGradient
-                            colors={['#0da6f2', '#60a5fa']}
-                            start={{ x: 0, y: 0 }}
-                            end={{ x: 1, y: 0 }}
+                        <View
                             style={[styles.levelBarFill, { width: '75%' }]}
                         />
                     </View>
@@ -151,13 +144,12 @@ export function WorkoutSummaryScreen({ navigation }: any) {
                     style={styles.doneButton}
                     onPress={() => navigation.navigate('WorkoutHub')}
                 >
-                    <LinearGradient
-                        colors={['#0da6f2', '#3b82f6']}
+                    <View
                         style={styles.doneGradient}
                     >
                         <Text style={styles.doneText}>Done</Text>
                         <Ionicons name="checkmark" size={20} color="#FFFFFF" />
-                    </LinearGradient>
+                    </View>
                 </TouchableOpacity>
             </View>
         </View>

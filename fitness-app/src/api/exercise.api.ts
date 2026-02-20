@@ -4,22 +4,8 @@ import apiClient from './client';
 // TYPES
 // ============================================================================
 
-export interface Exercise {
-    id: number;
-    name: string;
-    slug: string;
-    description?: string;
-    instructions?: string[];
-    difficulty: 'beginner' | 'intermediate' | 'advanced';
-    exerciseType: 'strength' | 'cardio' | 'flexibility' | 'stretching';
-    exerciseClass?: 'compound' | 'isolation';
-    primaryMuscleGroups: string[];
-    secondaryMuscleGroups?: string[];
-    equipment?: string[];
-    videoUrl?: string;
-    thumbnailUrl?: string;
-    isFeatured?: boolean;
-}
+import { Exercise } from '../types/backend.types';
+export type { Exercise };
 
 export interface ExerciseFilterOptions {
     muscleGroups: string[];

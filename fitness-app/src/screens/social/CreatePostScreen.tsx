@@ -13,7 +13,6 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { useCreatePost } from '../../hooks/queries/useFeedQueries';
@@ -69,8 +68,7 @@ export function CreatePostScreen({ navigation }: any) {
                     disabled={!canPost}
                     style={[styles.postButton, !canPost && { opacity: 0.5 }]}
                 >
-                    <LinearGradient
-                        colors={canPost ? (colors.primary.gradient as [string, string]) : [colors.muted, colors.muted]}
+                    <View
                         style={styles.postButtonGradient}
                     >
                         {createPostMutation.isPending ? (
@@ -78,7 +76,7 @@ export function CreatePostScreen({ navigation }: any) {
                         ) : (
                             <Text style={styles.postButtonText}>Post</Text>
                         )}
-                    </LinearGradient>
+                    </View>
                 </TouchableOpacity>
             </View>
 
@@ -126,8 +124,7 @@ export function CreatePostScreen({ navigation }: any) {
                     {/* Selected Workout */}
                     {selectedWorkout && (
                         <View style={[styles.selectedWorkout, { borderColor: colors.primary.main }]}>
-                            <LinearGradient
-                                colors={[`${colors.primary.main}08`, `${colors.primary.main}02`]}
+                            <View
                                 style={styles.workoutGradient}
                             >
                                 <View style={styles.workoutHeader}>
@@ -155,7 +152,7 @@ export function CreatePostScreen({ navigation }: any) {
                                         {selectedWorkout.volume.toLocaleString()} lbs
                                     </Text>
                                 </View>
-                            </LinearGradient>
+                            </View>
                         </View>
                     )}
 

@@ -5,19 +5,14 @@ import {
     StyleSheet,
     ScrollView,
     TouchableOpacity,
-    Image,
     Dimensions,
     TextInput,
-    ActivityIndicator,
-    RefreshControl
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
-import { useColors, useRoutines, usePublicRoutines } from '../../hooks';
+import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
-import { colors as themeColors } from '../../theme/colors';
-import { Routine } from '../../types/backend.types';
+import { MOCK_ROUTINES } from '../../data/mockRoutines';
 
 const { width } = Dimensions.get('window');
 const CARD_WIDTH = (width - 48) / 2;
@@ -25,49 +20,44 @@ const CARD_WIDTH = (width - 48) / 2;
 const TABS = ['My Plans', 'Discover'];
 const FILTERS = ['All', 'Strength', 'Hypertrophy', 'Cardio', 'Mobility'];
 
+// Map mock routines to the list shape
+const MY_PLAN_ROUTINES = MOCK_ROUTINES.map(r => ({
+    id: r.id,
+    name: r.name,
+    difficulty: r.difficulty,
+    splitType: r.splitType,
+    daysPerWeek: r.daysPerWeek,
+    exerciseCount: r.exercises.length,
+    color: r.color,
+}));
+
+// Discover tab pulls from same data for now (would be community routines in prod)
+const DISCOVER_ROUTINES = MY_PLAN_ROUTINES;
+
 export function RoutineListScreen({ navigation, route }: any) {
     const colors = useColors();
     const insets = useSafeAreaInsets();
-    const [activeTab, setActiveTab] = useState(route.params?.initialTab || 'My Plans');
+    const { mode, onSelect, initialTab } = route.params || {};
+    const [activeTab, setActiveTab] = useState(initialTab || 'My Plans');
     const [searchQuery, setSearchQuery] = useState('');
     const [activeFilter, setActiveFilter] = useState('All');
 
-    // Queries
-    const {
-        data: myRoutinesData,
-        isLoading: isLoadingMyRoutines,
-        refetch: refetchMyRoutines,
-        isRefetching: isRefetchingMyRoutines
-    } = useRoutines({
-        search: searchQuery,
-        // If "My Plans", we might generally want all routines specific to user
-    });
-
-    const {
-        data: publicRoutinesData,
-        isLoading: isLoadingPublic,
-        refetch: refetchPublic,
-        isRefetching: isRefetchingPublic
-    } = usePublicRoutines({
-        search: searchQuery,
-        goal: activeFilter !== 'All' ? activeFilter : undefined
-    });
-
-    const activeData = activeTab === 'My Plans' ? myRoutinesData?.data?.routines : publicRoutinesData?.data?.routines;
-    const isLoading = activeTab === 'My Plans' ? isLoadingMyRoutines : isLoadingPublic;
-    const isRefetching = activeTab === 'My Plans' ? isRefetchingMyRoutines : isRefetchingPublic;
-
-    const onRefresh = () => {
-        if (activeTab === 'My Plans') refetchMyRoutines();
-        else refetchPublic();
-    };
+    const allRoutines = activeTab === 'My Plans' ? MY_PLAN_ROUTINES : DISCOVER_ROUTINES;
+    const activeData = allRoutines.filter(r =>
+        searchQuery.length === 0 || r.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
     const handleCreateRoutine = () => {
         navigation.navigate('RoutineEditor', { mode: 'create' });
     };
 
     const handleRoutinePress = (routineId: number) => {
-        navigation.navigate('RoutineDetail', { routineId, isPublic: activeTab === 'Discover' });
+        if (mode === 'select' && onSelect) {
+            // Pass the selection mode to Detail screen so they can preview then select
+            navigation.navigate('RoutineDetail', { routineId, mode: 'select', onSelect });
+        } else {
+            navigation.navigate('RoutineDetail', { routineId });
+        }
     };
 
     return (
@@ -158,69 +148,61 @@ export function RoutineListScreen({ navigation, route }: any) {
             </View>
 
             {/* Content list */}
-            {isLoading ? (
-                <View style={styles.loadingContainer}>
-                    <ActivityIndicator size="large" color={colors.primary.main} />
-                </View>
-            ) : (
-                <ScrollView
-                    showsVerticalScrollIndicator={false}
-                    contentContainerStyle={[styles.contentContainer, { paddingBottom: insets.bottom + 100 }]}
-                    refreshControl={
-                        <RefreshControl refreshing={isRefetching} onRefresh={onRefresh} tintColor={colors.primary.main} />
-                    }
-                >
-                    {activeData?.length === 0 ? (
-                        <View style={styles.emptyState}>
-                            <MaterialCommunityIcons name="dumbbell" size={48} color={colors.mutedForeground} />
-                            <Text style={[styles.emptyStateText, { color: colors.foreground }]}>No routines found</Text>
-                            {activeTab === 'My Plans' && (
-                                <Text style={[styles.emptyStateSub, { color: colors.mutedForeground }]}>
-                                    Create a new plan to get started!
-                                </Text>
-                            )}
-                        </View>
-                    ) : (
-                        <View style={styles.grid}>
-                            {activeData?.map((routine: any) => ( // Using any for now if strict type mismatch, assumes API matches logic
-                                <TouchableOpacity
-                                    key={routine.id}
-                                    style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}
-                                    activeOpacity={0.8}
-                                    onPress={() => handleRoutinePress(routine.id)}
-                                >
-                                    {/* Placeholder Gradient if no image (Backend might not have images yet) */}
-                                    <View style={[styles.cardImageContainer, { backgroundColor: colors.muted }]}>
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={[styles.contentContainer, { paddingBottom: insets.bottom + 160 }]}
+            >
+                {activeData.length === 0 ? (
+                    <View style={styles.emptyState}>
+                        <MaterialCommunityIcons name="dumbbell" size={48} color={colors.mutedForeground} />
+                        <Text style={[styles.emptyStateText, { color: colors.foreground }]}>No routines found</Text>
+                        {activeTab === 'My Plans' && (
+                            <Text style={[styles.emptyStateSub, { color: colors.mutedForeground }]}>
+                                Create a new plan to get started!
+                            </Text>
+                        )}
+                    </View>
+                ) : (
+                    <View style={styles.grid}>
+                        {activeData.map((routine: any) => (
+                            <TouchableOpacity
+                                key={routine.id}
+                                style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}
+                                activeOpacity={0.8}
+                                onPress={() => handleRoutinePress(routine.id)}
+                            >
+                                {/* Color-coded header block */}
+                                <View style={[styles.cardImageContainer, { backgroundColor: routine.color + '22' }]}>
+                                    <View
+                                        style={[StyleSheet.absoluteFill, { backgroundColor: routine.color, opacity: 0.12 }]}
+                                    />
+                                    <MaterialCommunityIcons name="notebook" size={32} color={routine.color} style={{ opacity: 0.7 }} />
 
-                                        <View
-                                            style={[StyleSheet.absoluteFill, { backgroundColor: colors.primary.main, opacity: 0.1 }]}
-                                        />
-                                        <MaterialCommunityIcons name="notebook" size={32} color={colors.primary.main} style={{ opacity: 0.5 }} />
-
-                                        {/* Overlay Info */}
-                                        <LinearGradient
-                                            colors={['transparent', 'rgba(0,0,0,0.8)']}
-                                            style={styles.cardOverlay}
-                                        />
-                                        <View style={styles.cardOverlayContent}>
-                                            <Text style={styles.cardDays}>{routine.daysPerWeek || '?'} Days / Week</Text>
-                                        </View>
+                                    {/* Overlay Info */}
+                                    <View
+                                        style={styles.cardOverlay}
+                                    />
+                                    <View style={styles.cardOverlayContent}>
+                                        <Text style={styles.cardDays}>{routine.daysPerWeek} Days / Week</Text>
                                     </View>
+                                </View>
 
-                                    <View style={styles.cardBody}>
-                                        <Text style={[styles.cardTitle, { color: colors.foreground }]} numberOfLines={1}>
-                                            {routine.name}
-                                        </Text>
-                                        <Text style={[styles.cardSubtitle, { color: colors.mutedForeground }]} numberOfLines={1}>
-                                            {routine.difficulty} • {routine.splitType || 'General'}
-                                        </Text>
-                                    </View>
-                                </TouchableOpacity>
-                            ))}
-                        </View>
-                    )}
-                </ScrollView>
-            )}
+                                <View style={styles.cardBody}>
+                                    <Text style={[styles.cardTitle, { color: colors.foreground }]} numberOfLines={1}>
+                                        {routine.name}
+                                    </Text>
+                                    <Text style={[styles.cardSubtitle, { color: colors.mutedForeground }]} numberOfLines={1}>
+                                        {routine.difficulty} • {routine.splitType || 'General'}
+                                    </Text>
+                                    <Text style={[styles.cardSubtitle, { color: routine.color, marginTop: 2 }]}>
+                                        {routine.exerciseCount} exercises
+                                    </Text>
+                                </View>
+                            </TouchableOpacity>
+                        ))}
+                    </View>
+                )}
+            </ScrollView>
 
             {/* FAB for Create */}
             {activeTab === 'My Plans' && (
@@ -229,12 +211,11 @@ export function RoutineListScreen({ navigation, route }: any) {
                     onPress={handleCreateRoutine}
                     activeOpacity={0.9}
                 >
-                    <LinearGradient
-                        colors={colors.primary.gradient as [string, string]}
+                    <View
                         style={styles.fabGradient}
                     >
                         <Ionicons name="add" size={28} color="#FFFFFF" />
-                    </LinearGradient>
+                    </View>
                 </TouchableOpacity>
             )}
         </View>

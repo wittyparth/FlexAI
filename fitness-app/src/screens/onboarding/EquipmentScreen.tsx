@@ -3,7 +3,6 @@ import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-nati
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import { OnboardingStackParamList } from '../../../App';
 import { useAuthStore } from '../../store/authStore';
 import { useTheme } from '../../contexts/ThemeContext';
@@ -197,15 +196,12 @@ export const EquipmentScreen: React.FC<Props> = ({ navigation }) => {
             >
                 <View pointerEvents="none" style={[StyleSheet.absoluteFill, { backgroundColor: colors.background, opacity: 0.9 }]} />
                 <TouchableOpacity onPress={handleContinue}>
-                    <LinearGradient
-                        colors={(colors.primary.gradient || [colors.primary.main || '#0052FF', colors.primary.light || '#4D7CFF']) as any}
-                        start={{ x: 0, y: 0 }}
-                        end={{ x: 1, y: 0 }}
+                    <View
                         style={styles.continueButton}
                     >
                         <Text style={styles.continueButtonText}>Continue</Text>
                         <Ionicons name="arrow-forward" size={20} color="#ffffff" />
-                    </LinearGradient>
+                    </View>
                 </TouchableOpacity>
             </View>
         </View>

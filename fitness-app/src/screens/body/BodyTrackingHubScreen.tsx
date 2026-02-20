@@ -11,7 +11,6 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native'; // Added this line
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import { LineChart } from 'react-native-gifted-charts';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
@@ -50,8 +49,7 @@ export function BodyTrackingHubScreen({ navigation }: any) {
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
             {/* Header */}
-            <LinearGradient
-                colors={['#10B981', '#059669'] as [string, string]}
+            <View
                 style={[styles.header, { paddingTop: insets.top + 8 }]}
             >
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerBtn}>
@@ -59,7 +57,7 @@ export function BodyTrackingHubScreen({ navigation }: any) {
                 </TouchableOpacity>
                 <Text style={[styles.headerTitle, { fontFamily: fontFamilies.display }]}>Body Tracking</Text>
                 <View style={styles.headerBtn} />
-            </LinearGradient>
+            </View>
 
             <ScrollView showsVerticalScrollIndicator={false}>
                 {/* Stats Cards */}
@@ -172,9 +170,9 @@ export function BodyTrackingHubScreen({ navigation }: any) {
 
             {/* FAB */}
             <TouchableOpacity style={styles.fab} activeOpacity={0.9}>
-                <LinearGradient colors={['#10B981', '#059669'] as [string, string]} style={styles.fabGradient}>
+                <View style={styles.fabGradient}>
                     <Ionicons name="add" size={30} color="#FFF" />
-                </LinearGradient>
+                </View>
             </TouchableOpacity>
         </View>
     );

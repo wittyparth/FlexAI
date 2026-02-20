@@ -13,7 +13,6 @@ import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { Card } from '../../components/ui/Card';
 import { ProgressBar } from '../../components/ui/ProgressBar';
-import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { gamificationApi, GamificationStats, XPGain } from '../../api/gamification.api';
 
@@ -151,7 +150,6 @@ export function LevelXpModalScreen({ navigation }: HomeStackScreenProps<'XPLevel
                         refreshing={refreshing}
                         onRefresh={onRefresh}
                         tintColor={colors.primary.main}
-                        colors={[colors.primary.main]}
                     />
                 }
             >
@@ -169,10 +167,7 @@ export function LevelXpModalScreen({ navigation }: HomeStackScreenProps<'XPLevel
                     {/* Progress Section */}
                     <View style={styles.progressSection}>
                         <View style={[styles.progressBarBg, { backgroundColor: colors.slate[200] }]}>
-                            <LinearGradient
-                                colors={(colors.primary.gradient || [colors.primary.main, colors.primary.light]) as any}
-                                start={{ x: 0, y: 0 }}
-                                end={{ x: 1, y: 0 }}
+                            <View
                                 style={[styles.progressBarFill, { width: `${stats.levelProgress * 100}%` }]}
                             />
                         </View>

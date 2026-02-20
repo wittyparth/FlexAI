@@ -20,7 +20,6 @@ import {
     Platform,
     Alert,
 } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
 import { useTheme } from '../../contexts';
@@ -203,16 +202,13 @@ export function VerifyEmailScreen({ navigation, route }: VerifyEmailScreenProps)
                             (loading || otp.join('').length !== OTP_LENGTH) && styles.buttonDisabled
                         ]}
                     >
-                        <LinearGradient
-                            colors={(loading ? ['#94A3B8', '#94A3B8'] : (colors.primary.gradient || [colors.primary.main, colors.primary.light])) as any}
-                            start={{ x: 0, y: 0 }}
-                            end={{ x: 1, y: 0 }}
+                        <View
                             style={styles.verifyButtonGradient}
                         >
                             <Text style={styles.verifyButtonText}>
                                 {loading ? 'Verifying...' : 'Verify Email'}
                             </Text>
-                        </LinearGradient>
+                        </View>
                     </TouchableOpacity>
 
                     {/* Resend */}

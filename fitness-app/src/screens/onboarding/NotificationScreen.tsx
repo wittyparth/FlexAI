@@ -2,7 +2,6 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import { OnboardingStackParamList } from '../../../App';
 import { useAuthStore } from '../../store/authStore';
 import { useTheme } from '../../contexts/ThemeContext';
@@ -49,21 +48,19 @@ export const NotificationScreen: React.FC<Props> = ({ navigation }) => {
             <View style={styles.content}>
                 {/* Hero Section */}
                 <View style={styles.imageContainer}>
-                    <LinearGradient
-                        colors={[(colors.primary.main || '#0052FF') + '10', 'transparent']}
+                    <View
                         style={styles.blob}
                     />
                     <View style={[styles.imageCard, { shadowColor: colors.primary.main, backgroundColor: colors.card }]}>
                         {/* Placeholder for the 3D notification image - using a gradient/icon composition instead of external URL */}
-                        <LinearGradient
-                            colors={[isDark ? colors.slate[800] : colors.slate[50], isDark ? colors.slate[900] : colors.slate[100]] as any}
+                        <View
                             style={styles.imagePlaceholder}
                         >
                             <Ionicons name="notifications-outline" size={80} color={colors.primary.main} />
                             <View style={[styles.badge, { backgroundColor: colors.primary.main }]}>
                                 <Text style={styles.badgeText}>1</Text>
                             </View>
-                        </LinearGradient>
+                        </View>
                     </View>
                 </View>
 
@@ -94,14 +91,11 @@ export const NotificationScreen: React.FC<Props> = ({ navigation }) => {
             {/* Footer */}
             <View style={styles.footer}>
                 <TouchableOpacity onPress={handleEnableNotifications} style={styles.buttonContainer}>
-                    <LinearGradient
-                        colors={(colors.primary.gradient || [colors.primary.main || '#0052FF', colors.primary.light || '#4D7CFF']) as any}
-                        start={{ x: 0, y: 0 }}
-                        end={{ x: 1, y: 0 }}
+                    <View
                         style={styles.primaryButton}
                     >
                         <Text style={styles.primaryButtonText}>Enable Notifications</Text>
-                    </LinearGradient>
+                    </View>
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={handleSkip} style={styles.secondaryButton}>

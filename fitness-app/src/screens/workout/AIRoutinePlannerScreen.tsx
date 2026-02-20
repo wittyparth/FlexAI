@@ -4,7 +4,6 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 
@@ -12,44 +11,42 @@ interface AIOptionProps {
     icon: string;
     title: string;
     subtitle: string;
-    gradient: [string, string];
+    accentColor: string;
     badge?: string;
     onPress: () => void;
+    c: any;
 }
 
-function AIOptionCard({ icon, title, subtitle, gradient, badge, onPress }: AIOptionProps) {
+function AIOptionCard({ icon, title, subtitle, accentColor, badge, onPress, c }: AIOptionProps) {
     const scale = useRef(new Animated.Value(1)).current;
     const handlePressIn = () => Animated.spring(scale, { toValue: 0.97, useNativeDriver: true, speed: 30 }).start();
     const handlePressOut = () => Animated.spring(scale, { toValue: 1, useNativeDriver: true, speed: 30 }).start();
 
     return (
-        <Animated.View style={[styles.optionWrapper, { transform: [{ scale }] }]}>
+        <Animated.View style={[styles.optionWrapper, { transform: [{ scale }], shadowColor: c.shadow }]}>
             <TouchableOpacity
                 onPress={onPress}
                 onPressIn={handlePressIn}
                 onPressOut={handlePressOut}
                 activeOpacity={1}
             >
-                <LinearGradient colors={gradient} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.optionCard}>
+                <View style={[styles.optionCard, { backgroundColor: c.card, borderColor: c.border, borderWidth: 1 }]}>
                     {badge && (
-                        <View style={styles.optionBadge}>
-                            <Text style={styles.optionBadgeText}>{badge}</Text>
+                        <View style={[styles.optionBadge, { backgroundColor: `${accentColor}15` }]}>
+                            <Text style={[styles.optionBadgeText, { color: accentColor }]}>{badge}</Text>
                         </View>
                     )}
-                    <View style={styles.optionIconBg}>
-                        <MaterialCommunityIcons name={icon as any} size={32} color="#FFF" />
+                    <View style={[styles.optionIconBg, { backgroundColor: `${accentColor}15` }]}>
+                        <MaterialCommunityIcons name={icon as any} size={32} color={accentColor} />
                     </View>
                     <View style={styles.optionTextBlock}>
-                        <Text style={styles.optionTitle}>{title}</Text>
-                        <Text style={styles.optionSubtitle}>{subtitle}</Text>
+                        <Text style={[styles.optionTitle, { color: c.text }]}>{title}</Text>
+                        <Text style={[styles.optionSubtitle, { color: c.muted }]}>{subtitle}</Text>
                     </View>
                     <View style={styles.optionArrow}>
-                        <Ionicons name="arrow-forward" size={18} color="rgba(255,255,255,0.8)" />
+                        <Ionicons name="arrow-forward" size={18} color={c.muted} />
                     </View>
-                    {/* Decorative circles */}
-                    <View style={styles.deco1} />
-                    <View style={styles.deco2} />
-                </LinearGradient>
+                </View>
             </TouchableOpacity>
         </Animated.View>
     );
@@ -58,7 +55,16 @@ function AIOptionCard({ icon, title, subtitle, gradient, badge, onPress }: AIOpt
 export function AIRoutinePlannerScreen({ navigation }: any) {
     const insets = useSafeAreaInsets();
     const colors = useColors();
-    const c = { bg: colors.background, card: colors.card, border: colors.border, text: colors.foreground, muted: colors.mutedForeground, primary: colors.primary.main, surface: colors.muted };
+    const c = { 
+        bg: colors.background, 
+        card: colors.card, 
+        border: colors.border, 
+        text: colors.foreground, 
+        muted: colors.mutedForeground, 
+        primary: colors.primary.main, 
+        surface: colors.muted,
+        shadow: '#000'
+    };
     const fade = useRef(new Animated.Value(0)).current;
     const slide = useRef(new Animated.Value(20)).current;
 
@@ -80,7 +86,7 @@ export function AIRoutinePlannerScreen({ navigation }: any) {
     };
 
     const goToTemplateGenerator = () => {
-        navigation.navigate('RoutineEditor', { routineId: undefined });
+        navigation.navigate('AITemplateGenerator');
     };
 
     return (
@@ -106,29 +112,24 @@ export function AIRoutinePlannerScreen({ navigation }: any) {
 
             <ScrollView
                 showsVerticalScrollIndicator={false}
-                contentContainerStyle={{ paddingBottom: insets.bottom + 40 }}
+                contentContainerStyle={{ paddingBottom: insets.bottom + 100 }}
             >
                 <Animated.View style={[styles.content, { opacity: fade, transform: [{ translateY: slide }] }]}>
 
                     {/* Intro Banner */}
                     <View style={styles.introSection}>
-                        <LinearGradient
-                            colors={['#1E1B4B', '#312E81']}
-                            style={styles.introBanner}
-                        >
+                        <View style={[styles.introBanner, { backgroundColor: c.card, borderColor: c.primary, borderWidth: 1 }]}>
                             <View style={styles.introContent}>
-                                <Text style={styles.introLabel}>YOUR PERSONAL AI TRAINER</Text>
-                                <Text style={styles.introHeadline}>Let AI build your{'\n'}perfect program</Text>
-                                <Text style={styles.introBody}>
+                                <Text style={[styles.introLabel, { color: c.primary }]}>YOUR PERSONAL AI TRAINER</Text>
+                                <Text style={[styles.introHeadline, { color: c.text }]}>Let AI build your{'\n'}perfect program</Text>
+                                <Text style={[styles.introBody, { color: c.muted }]}>
                                     Create personalized routines, templates and get expert coaching — all powered by AI.
                                 </Text>
                             </View>
-                            <View style={styles.introBrainBubble}>
-                                <MaterialCommunityIcons name="brain" size={40} color="#A78BFA" />
+                            <View style={[styles.introBrainBubble, { backgroundColor: `${c.primary}15` }]}>
+                                <MaterialCommunityIcons name="brain" size={40} color={c.primary} />
                             </View>
-                            <View style={styles.introDeco1} />
-                            <View style={styles.introDeco2} />
-                        </LinearGradient>
+                        </View>
                     </View>
 
                     {/* Options Label */}
@@ -139,9 +140,10 @@ export function AIRoutinePlannerScreen({ navigation }: any) {
                         icon="robot-outline"
                         title="AI Coach"
                         subtitle="Chat with your personal AI coach for advice, form tips & motivation"
-                        gradient={['#1E40AF', '#3B82F6']}
+                        accentColor={colors.chart1 || '#3B82F6'}
                         badge="CHAT"
                         onPress={goToAICoach}
+                        c={c}
                     />
 
                     {/* Option 2: Generate Routine */}
@@ -149,9 +151,10 @@ export function AIRoutinePlannerScreen({ navigation }: any) {
                         icon="clipboard-list-outline"
                         title="Generate Routine with AI"
                         subtitle="Build a full weekly training program based on your goals, level & schedule"
-                        gradient={['#065F46', '#10B981']}
+                        accentColor={colors.chart2 || '#10B981'}
                         badge="BUILD"
                         onPress={goToAIGenerator}
+                        c={c}
                     />
 
                     {/* Option 3: Generate Template */}
@@ -159,15 +162,16 @@ export function AIRoutinePlannerScreen({ navigation }: any) {
                         icon="file-document-edit-outline"
                         title="Generate Template with AI"
                         subtitle="Create a single workout template — exercises, sets & reps auto-selected"
-                        gradient={['#92400E', '#F59E0B']}
+                        accentColor={colors.chart3 || '#F59E0B'}
                         badge="CREATE"
                         onPress={goToTemplateGenerator}
+                        c={c}
                     />
 
                     {/* Tips section */}
                     <View style={[styles.tipsCard, { backgroundColor: c.card, borderColor: c.border }]}>
                         <View style={styles.tipsTitleRow}>
-                            <MaterialCommunityIcons name="lightbulb-outline" size={18} color="#F59E0B" />
+                            <MaterialCommunityIcons name="lightbulb-outline" size={18} color={c.primary} />
                             <Text style={[styles.tipsTitle, { color: c.text }]}>Pro Tips</Text>
                         </View>
                         {[
@@ -176,7 +180,7 @@ export function AIRoutinePlannerScreen({ navigation }: any) {
                             'Mention your experience level (beginner, intermediate, advanced)',
                         ].map((tip, i) => (
                             <View key={i} style={styles.tipRow}>
-                                <View style={styles.tipDot} />
+                                <View style={[styles.tipDot, { backgroundColor: c.primary }]} />
                                 <Text style={[styles.tipText, { color: c.muted }]}>{tip}</Text>
                             </View>
                         ))}
@@ -222,22 +226,19 @@ const styles = StyleSheet.create({
 
     // Intro
     introSection: { marginBottom: 28 },
-    introBanner: { borderRadius: 20, padding: 22, overflow: 'hidden', flexDirection: 'row', alignItems: 'center' },
+    introBanner: { borderRadius: 20, padding: 22, flexDirection: 'row', alignItems: 'center' },
     introContent: { flex: 1 },
-    introLabel: { fontSize: 10, fontWeight: '800', color: 'rgba(255,255,255,0.6)', letterSpacing: 1.5, marginBottom: 6 },
-    introHeadline: { fontSize: 24, fontWeight: '800', color: '#FFF', lineHeight: 30, marginBottom: 8 },
-    introBody: { fontSize: 13, color: 'rgba(255,255,255,0.7)', lineHeight: 18 },
+    introLabel: { fontSize: 10, fontWeight: '800', letterSpacing: 1.5, marginBottom: 6 },
+    introHeadline: { fontSize: 24, fontWeight: '800', lineHeight: 30, marginBottom: 8 },
+    introBody: { fontSize: 13, lineHeight: 18 },
     introBrainBubble: {
         width: 72,
         height: 72,
         borderRadius: 36,
-        backgroundColor: 'rgba(167,139,250,0.15)',
         alignItems: 'center',
         justifyContent: 'center',
         marginLeft: 12,
     },
-    introDeco1: { position: 'absolute', width: 80, height: 80, borderRadius: 40, backgroundColor: 'rgba(255,255,255,0.04)', right: -15, top: -15 },
-    introDeco2: { position: 'absolute', width: 50, height: 50, borderRadius: 25, backgroundColor: 'rgba(255,255,255,0.04)', left: -10, bottom: -10 },
 
     sectionLabel: { fontSize: 11, fontWeight: '700', letterSpacing: 1.5, marginBottom: 16 },
 
@@ -245,11 +246,10 @@ const styles = StyleSheet.create({
     optionWrapper: {
         marginBottom: 14,
         borderRadius: 20,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 8 },
-        shadowOpacity: 0.25,
-        shadowRadius: 14,
-        elevation: 8,
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.1,
+        shadowRadius: 10,
+        elevation: 4,
     },
     optionCard: {
         borderRadius: 20,
@@ -264,24 +264,22 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 14,
         right: 14,
-        backgroundColor: 'rgba(255,255,255,0.2)',
         paddingHorizontal: 10,
         paddingVertical: 4,
         borderRadius: 12,
     },
-    optionBadgeText: { fontSize: 10, fontWeight: '800', color: '#FFF', letterSpacing: 1 },
+    optionBadgeText: { fontSize: 10, fontWeight: '800', letterSpacing: 1 },
     optionIconBg: {
         width: 60,
         height: 60,
         borderRadius: 18,
-        backgroundColor: 'rgba(255,255,255,0.15)',
         alignItems: 'center',
         justifyContent: 'center',
         flexShrink: 0,
     },
     optionTextBlock: { flex: 1, paddingRight: 30 },
-    optionTitle: { fontSize: 18, fontWeight: '800', color: '#FFF', marginBottom: 5 },
-    optionSubtitle: { fontSize: 13, color: 'rgba(255,255,255,0.75)', lineHeight: 18 },
+    optionTitle: { fontSize: 18, fontWeight: '800', marginBottom: 5 },
+    optionSubtitle: { fontSize: 13, lineHeight: 18 },
     optionArrow: {
         position: 'absolute',
         bottom: 20,
@@ -289,12 +287,9 @@ const styles = StyleSheet.create({
         width: 32,
         height: 32,
         borderRadius: 10,
-        backgroundColor: 'rgba(255,255,255,0.15)',
         alignItems: 'center',
         justifyContent: 'center',
     },
-    deco1: { position: 'absolute', width: 100, height: 100, borderRadius: 50, backgroundColor: 'rgba(255,255,255,0.06)', right: -20, bottom: -30 },
-    deco2: { position: 'absolute', width: 60, height: 60, borderRadius: 30, backgroundColor: 'rgba(255,255,255,0.04)', left: -10, top: -15 },
 
     // Tips
     tipsCard: {
@@ -308,6 +303,7 @@ const styles = StyleSheet.create({
     tipsTitleRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
     tipsTitle: { fontSize: 15, fontWeight: '700' },
     tipRow: { flexDirection: 'row', alignItems: 'flex-start', gap: 10 },
-    tipDot: { width: 6, height: 6, borderRadius: 3, backgroundColor: '#F59E0B', marginTop: 6 },
+    tipDot: { width: 6, height: 6, borderRadius: 3, marginTop: 6 },
     tipText: { flex: 1, fontSize: 13, lineHeight: 19 },
 });
+

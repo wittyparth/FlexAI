@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
     View,
     Text,
@@ -6,506 +6,408 @@ import {
     ScrollView,
     TouchableOpacity,
     Dimensions,
-    ActivityIndicator,
     Platform
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
-import { useColors, useRoutine } from '../../hooks';
+import { useColors } from '../../hooks';
 import { useWorkoutStore } from '../../store/workoutStore';
 import { fontFamilies } from '../../theme/typography';
-import { colors as themeColors } from '../../theme/colors';
-import { Routine } from '../../types/backend.types';
+import { MOCK_ROUTINES } from '../../data/mockRoutines';
 
 const { width } = Dimensions.get('window');
-
-// Extended Mock Data for "Usage" stats which isn't in backend type yet
-const MOCK_STATS = {
-    usageCount: 24,
-    lastPerformed: '2 days ago'
-};
 
 export function RoutineDetailScreen({ route, navigation }: any) {
     const colors = useColors();
     const insets = useSafeAreaInsets();
-    const { routineId, isPublic } = route.params || { routineId: 0 };
+    const { routineId, mode, onSelect } = route.params || { routineId: 1 };
 
-    const { data: routineData, isLoading, error } = useRoutine(routineId);
-    // Cast to expected type, ensuring we handle the response structure
-    const routine = routineData?.data as Routine;
-
-    if (isLoading) {
-        return (
-            <View style={[styles.loadingContainer, { backgroundColor: colors.background }]}>
-                <ActivityIndicator size="large" color={colors.primary.main} />
-            </View>
-        );
-    }
-
-    if (error || !routine) {
-        return (
-            <View style={[styles.loadingContainer, { backgroundColor: colors.background }]}>
-                <Text style={{ color: colors.foreground }}>Failed to load routine details.</Text>
-                <TouchableOpacity onPress={() => navigation.goBack()} style={{ marginTop: 20 }}>
-                    <Text style={{ color: colors.primary.main }}>Go Back</Text>
-                </TouchableOpacity>
-            </View>
-        );
-    }
+    // Find routine from mock data (supports both string and number ids)
+    const routine = MOCK_ROUTINES.find(r => r.id === routineId || r.id === Number(routineId))
+        ?? MOCK_ROUTINES[0];
 
     const exercises = routine.exercises || [];
-    const exerciseCount = exercises.length;
 
-    // Derived state
-    const isSingleSession = !routine.daysPerWeek || routine.daysPerWeek === 1;
+    const handlePrimaryAction = () => {
+        if (mode === 'select' && onSelect) {
+            onSelect(routine.id);
+            // Need to go back to TemplateEditor (2 screens back: Detail -> List -> TemplateEditor)
+            // or we could just pass a return navigation logic
+            // Assuming the picker flow was TemplateEditor -> RoutineList -> RoutineDetail
+            // We can pop two screens off the stack
+            navigation.pop(2); 
+            return;
+        }
+
+        const exercisePayload = exercises.map((item: any, i: number) => {
+            const ex = item.exercise || item;
+            return {
+                id: item.id || i + 1,
+                orderIndex: i,
+                targetSets: item.targetSets || 3,
+                targetRepsMin: item.targetRepsMin || 8,
+                targetRepsMax: item.targetRepsMax || 12,
+                targetWeight: item.targetWeight || 0,
+                restSeconds: item.restSeconds || 90,
+                notes: item.notes || '',
+                exercise: {
+                    id: ex.id || i + 1,
+                    name: ex.name || 'Exercise',
+                    muscleGroup: ex.muscleGroup || 'Full Body',
+                    exerciseType: ex.exerciseType || 'Strength',
+                },
+            };
+        });
+        useWorkoutStore.getState().startMockWorkout(routine.name, exercisePayload);
+        navigation.navigate('ActiveWorkout');
+    };
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
-            {/* Top Navigation - Transparent/Blurred feel */}
-            <View style={[
-                styles.topBar,
-                {
-                    paddingTop: insets.top + 12,
-                    backgroundColor: colors.background + 'E6', // 90% opacity
-                }
-            ]}>
+            {/* ── TOP NAV BAR ── */}
+            <View style={[styles.topBar, { paddingTop: insets.top + 12, backgroundColor: colors.background + 'F0' }]}>
                 <TouchableOpacity
                     onPress={() => navigation.goBack()}
-                    style={[styles.circleButton, { backgroundColor: colors.card, borderColor: colors.border }]}
+                    style={[styles.iconBtn, { backgroundColor: colors.card, borderColor: colors.border }]}
                 >
                     <Ionicons name="arrow-back" size={20} color={colors.foreground} />
                 </TouchableOpacity>
-
-                <View style={styles.topBarActions}>
-                    {!isPublic && (
-                        <TouchableOpacity
-                            style={[styles.circleButton, { backgroundColor: 'transparent' }]}
-                            onPress={() => navigation.navigate('RoutineEditor', { routineId: routine.id, mode: 'edit' })}
-                        >
-                            <MaterialCommunityIcons name="dots-horizontal" size={24} color={colors.mutedForeground} />
-                        </TouchableOpacity>
-                    )}
-                </View>
+                <Text style={[styles.topBarTitle, { color: colors.foreground }]} numberOfLines={1}>
+                    {routine.name}
+                </Text>
+                <View style={{ width: 40 }} />
             </View>
 
             <ScrollView
                 showsVerticalScrollIndicator={false}
-                contentContainerStyle={[styles.scrollContent, { paddingBottom: insets.bottom + 120 }]}
+                contentContainerStyle={{ paddingBottom: insets.bottom + 140, paddingTop: insets.top + 72 }}
             >
-                {/* Header Content */}
+                {/* ── HEADER ── */}
                 <View style={styles.headerSection}>
-                    <View style={styles.badgeRow}>
-                        <View style={[styles.badge, { backgroundColor: colors.primary.main + '1A', borderColor: colors.primary.main + '33' }]}>
-                            <Text style={[styles.badgeText, { color: colors.primary.main }]}>
-                                {isSingleSession ? 'SINGLE SESSION' : `${routine.daysPerWeek} DAY SPLIT`}
-                            </Text>
-                        </View>
-                    </View>
-
-                    <Text style={[styles.title, { color: colors.foreground }]}>
-                        {routine.name}
-                    </Text>
-
-                    {routine.description ? (
-                        <Text style={[styles.description, { color: colors.mutedForeground }]}>
-                            {routine.description}
+                    <View style={[styles.splitBadge, { backgroundColor: colors.primary.main + '20', borderColor: colors.primary.main + '40' }]}>
+                        <Text style={[styles.splitBadgeText, { color: colors.primary.main }]}>
+                            {routine.splitType || 'ROUTINE'} • {routine.daysPerWeek} DAYS/WEEK
                         </Text>
-                    ) : (
-                        <Text style={[styles.description, { color: colors.mutedForeground }]}>
-                            Focus on compound movements to build raw strength and muscle density.
-                        </Text>
-                    )}
+                    </View>
+                    <Text style={[styles.routineTitle, { color: colors.foreground }]}>{routine.name}</Text>
+                    <Text style={[styles.routineDesc, { color: colors.mutedForeground }]}>{routine.description}</Text>
                 </View>
 
-                {/* Stats Row */}
-                <View style={styles.statsGrid}>
-                    {/* Stat 1: Total Work */}
-                    <View style={[styles.statCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-                        <View style={styles.statHeader}>
-                            <MaterialCommunityIcons name="dumbbell" size={18} color={colors.mutedForeground} />
-                            <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>TOTAL WORK</Text>
-                        </View>
-                        <Text style={[styles.statValue, { color: colors.foreground }]}>{exerciseCount} Exercises</Text>
+                {/* ── STATS STRIP ── */}
+                <View style={[styles.statsStrip, { backgroundColor: colors.card, borderColor: colors.border }]}>
+                    <View style={styles.statItem}>
+                        <MaterialCommunityIcons name="dumbbell" size={20} color={colors.primary.main} />
+                        <Text style={[styles.statValue, { color: colors.foreground }]}>{exercises.length}</Text>
+                        <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>Exercises</Text>
                     </View>
-
-                    {/* Stat 2: Usage */}
-                    <View style={[styles.statCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-                        <View style={styles.statHeader}>
-                            <MaterialCommunityIcons name="history" size={18} color={colors.mutedForeground} />
-                            <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>USAGE</Text>
-                        </View>
-                        <Text style={[styles.statValue, { color: colors.foreground }]}>{MOCK_STATS.usageCount} Times</Text>
+                    <View style={[styles.statDivider, { backgroundColor: colors.border }]} />
+                    <View style={styles.statItem}>
+                        <MaterialCommunityIcons name="clock-outline" size={20} color={colors.primary.main} />
+                        <Text style={[styles.statValue, { color: colors.foreground }]}>{routine.estimatedDuration}</Text>
+                        <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>Min</Text>
+                    </View>
+                    <View style={[styles.statDivider, { backgroundColor: colors.border }]} />
+                    <View style={styles.statItem}>
+                        <MaterialCommunityIcons name="signal" size={20} color={colors.primary.main} />
+                        <Text style={[styles.statValue, { color: colors.foreground }]}>{routine.difficulty}</Text>
+                        <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>Level</Text>
                     </View>
                 </View>
 
-                {/* Exercise List Header */}
-                <View style={styles.listHeader}>
-                    <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Routine</Text>
-                    <Text style={[styles.durationText, { color: colors.mutedForeground }]}>
-                        Est. {routine.estimatedDuration || 60} mins
-                    </Text>
+                {/* ── START/SELECT BUTTON ── */}
+                <View style={styles.startSection}>
+                    <TouchableOpacity
+                        onPress={handlePrimaryAction}
+                        activeOpacity={0.88}
+                        style={styles.startBtnWrapper}
+                    >
+                        <View
+                            style={styles.startBtn}
+                        >
+                            <Ionicons name={mode === 'select' ? 'checkmark-circle' : 'play-circle'} size={26} color="#FFFFFF" />
+                            <Text style={styles.startBtnText}>{mode === 'select' ? 'SELECT WORKOUT' : 'START WORKOUT'}</Text>
+                        </View>
+                    </TouchableOpacity>
                 </View>
 
-                {/* Exercise List */}
+                {/* ── EXERCISES LIST ── */}
+                <View style={styles.sectionHeader}>
+                    <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Exercises</Text>
+                    <Text style={[styles.sectionCount, { color: colors.mutedForeground }]}>{exercises.length} movements</Text>
+                </View>
+
                 <View style={styles.exerciseList}>
-                    {exercises.map((exerciseItem: any, index: number) => {
-                        const exercise = exerciseItem.exercise || exerciseItem;
-                        const sets = exerciseItem.targetSets || exerciseItem.sets || 3;
-                        const reps = exerciseItem.targetReps || exerciseItem.reps || '8-12';
-                        // Default muscle groups if missing
-                        const primaryMuscle = exercise.muscleGroup || 'Full Body';
-                        const type = exercise.exerciseType || 'Strength';
+                    {exercises.map((item: any, index: number) => {
+                        const ex = item.exercise || item;
+                        const sets = item.targetSets || 3;
+                        const repsMin = item.targetRepsMin || 8;
+                        const repsMax = item.targetRepsMax || 12;
+                        const weight = item.targetWeight;
+                        const rest = item.restSeconds || 90;
+                        const muscle = ex.muscleGroup || 'Full Body';
 
                         return (
-                            <TouchableOpacity
-                                key={exercise.id + '-' + index}
+                            <View
+                                key={ex.id + '-' + index}
                                 style={[styles.exerciseCard, { backgroundColor: colors.card, borderColor: colors.border }]}
-                                activeOpacity={0.95}
-                                onPress={() => navigation.navigate('ExerciseDetail', { exerciseId: exercise.id })}
                             >
-                                {/* Left Column: Number & Icon */}
-                                <View style={styles.exerciseLeftCol}>
-                                    <Text style={[styles.indexText, { color: colors.mutedForeground }]}>
-                                        {(index + 1).toString().padStart(2, '0')}
+                                {/* Index number */}
+                                <View style={[styles.exerciseIndex, { backgroundColor: colors.primary.main + '15' }]}>
+                                    <Text style={[styles.exerciseIndexText, { color: colors.primary.main }]}>
+                                        {String(index + 1).padStart(2, '0')}
                                     </Text>
-                                    <View style={[styles.iconBox, { backgroundColor: colors.muted }]}>
-                                        <MaterialCommunityIcons
-                                            name={getIconForMuscle(primaryMuscle)}
-                                            size={24}
-                                            color={colors.mutedForeground}
-                                        />
-                                    </View>
                                 </View>
 
-                                {/* Right Content */}
-                                <View style={styles.exerciseContent}>
-                                    <View style={styles.exerciseHeader}>
-                                        <Text style={[styles.exerciseName, { color: colors.foreground }]} numberOfLines={1}>
-                                            {exercise.name}
-                                        </Text>
-                                        <MaterialCommunityIcons name="drag-horizontal" size={20} color={colors.border} />
-                                    </View>
-
-                                    {/* Tags */}
-                                    <View style={styles.tagsRow}>
+                                {/* Main info */}
+                                <View style={styles.exerciseInfo}>
+                                    <Text style={[styles.exerciseName, { color: colors.foreground }]} numberOfLines={1}>
+                                        {ex.name}
+                                    </Text>
+                                    <View style={styles.exerciseMeta}>
                                         <View style={[styles.tag, { backgroundColor: colors.muted }]}>
-                                            <Text style={[styles.tagText, { color: colors.mutedForeground }]}>{primaryMuscle}</Text>
+                                            <Text style={[styles.tagText, { color: colors.mutedForeground }]}>{muscle}</Text>
                                         </View>
                                         <View style={[styles.tag, { backgroundColor: colors.muted }]}>
-                                            <Text style={[styles.tagText, { color: colors.mutedForeground }]}>{type}</Text>
+                                            <Text style={[styles.tagText, { color: colors.mutedForeground }]}>{ex.exerciseType}</Text>
                                         </View>
                                     </View>
 
-                                    {/* Stats (Sets/Reps) */}
-                                    <View style={styles.exerciseStatsRow}>
-                                        <View style={[styles.statPill, { backgroundColor: colors.background, borderColor: colors.border }]}>
-                                            <MaterialCommunityIcons name="replay" size={14} color={colors.primary.main} />
-                                            <Text style={[styles.statPillText, { color: colors.foreground }]}>{sets} Sets</Text>
+                                    {/* Sets / Reps / Rest pills */}
+                                    <View style={styles.pillRow}>
+                                        <View style={[styles.pill, { backgroundColor: colors.background, borderColor: colors.border }]}>
+                                            <MaterialCommunityIcons name="replay" size={12} color={colors.primary.main} />
+                                            <Text style={[styles.pillText, { color: colors.foreground }]}>{sets} sets</Text>
                                         </View>
-                                        <View style={[styles.statPill, { backgroundColor: colors.background, borderColor: colors.border }]}>
-                                            <MaterialCommunityIcons name="pound" size={14} color={colors.primary.main} />
-                                            <Text style={[styles.statPillText, { color: colors.foreground }]}>{reps} Reps</Text>
+                                        <View style={[styles.pill, { backgroundColor: colors.background, borderColor: colors.border }]}>
+                                            <MaterialCommunityIcons name="pound" size={12} color={colors.primary.main} />
+                                            <Text style={[styles.pillText, { color: colors.foreground }]}>{repsMin}–{repsMax} reps</Text>
+                                        </View>
+                                        {weight > 0 && (
+                                            <View style={[styles.pill, { backgroundColor: colors.background, borderColor: colors.border }]}>
+                                                <MaterialCommunityIcons name="weight-kilogram" size={12} color={colors.primary.main} />
+                                                <Text style={[styles.pillText, { color: colors.foreground }]}>{weight} kg</Text>
+                                            </View>
+                                        )}
+                                        <View style={[styles.pill, { backgroundColor: colors.background, borderColor: colors.border }]}>
+                                            <MaterialCommunityIcons name="timer-outline" size={12} color={colors.mutedForeground} />
+                                            <Text style={[styles.pillText, { color: colors.mutedForeground }]}>{rest}s rest</Text>
                                         </View>
                                     </View>
                                 </View>
-                            </TouchableOpacity>
+                            </View>
                         );
                     })}
                 </View>
-            </ScrollView>
 
-            {/* Sticky Footer CTA */}
-            <View style={styles.footerContainer}>
-                {/* Gradient Fade */}
-                <LinearGradient
-                    colors={[
-                        colors.background + '00', // Transparent
-                        colors.background // Solid background color
-                    ]}
-                    style={styles.gradientOverlay}
-                    pointerEvents="none"
-                />
-
-                <View style={styles.footerContent}>
+                {/* ── BOTTOM START/SELECT BUTTON (repeat at end of list) ── */}
+                <View style={[styles.startSection, { marginTop: 8 }]}>
                     <TouchableOpacity
-                        style={[styles.startButton, {
-                            backgroundColor: colors.primary.main,
-                            shadowColor: colors.primary.main
-                        }]}
-                        activeOpacity={0.9}
-                        onPress={() => {
-                            // Use mock workout mode for demo (no backend needed)
-                            // Build exercises from routine data
-                            const exercises = routine.exercises?.map((item: any, i: number) => {
-                                const ex = item.exercise || item;
-                                return {
-                                    id: item.id || i + 1,
-                                    orderIndex: i,
-                                    targetSets: item.targetSets || 3,
-                                    targetRepsMin: item.targetRepsMin || 8,
-                                    targetRepsMax: item.targetRepsMax || 12,
-                                    targetWeight: item.targetWeight || 0,
-                                    restSeconds: item.restSeconds || 90,
-                                    notes: item.notes,
-                                    exercise: {
-                                        id: ex.id || i + 1,
-                                        name: ex.name || 'Exercise',
-                                        muscleGroup: ex.muscleGroup || 'Full Body',
-                                        exerciseType: ex.exerciseType || 'Strength',
-                                    }
-                                };
-                            });
-                            useWorkoutStore.getState().startMockWorkout(routine.name, exercises);
-                            navigation.navigate('ActiveWorkout');
-                        }}
+                        onPress={handlePrimaryAction}
+                        activeOpacity={0.88}
+                        style={styles.startBtnWrapper}
                     >
-                        <MaterialCommunityIcons name="play-circle-outline" size={24} color="#FFFFFF" />
-                        <Text style={styles.startButtonText}>START SESSION</Text>
+                        <View
+                            style={styles.startBtn}
+                        >
+                            <Ionicons name={mode === 'select' ? 'checkmark-circle' : 'play-circle'} size={26} color="#FFFFFF" />
+                            <Text style={styles.startBtnText}>{mode === 'select' ? 'SELECT WORKOUT' : 'START WORKOUT'}</Text>
+                        </View>
                     </TouchableOpacity>
                 </View>
-            </View>
+            </ScrollView>
         </View>
     );
 }
-
-// Helper to get icon
-function getIconForMuscle(muscle: string): keyof typeof MaterialCommunityIcons.glyphMap {
-    const lower = muscle.toLowerCase();
-    if (lower.includes('chest')) return 'human-male-height-variant'; // Approx
-    if (lower.includes('leg') || lower.includes('quad') || lower.includes('glute')) return 'human-male-height'; // Approx
-    if (lower.includes('warmup') || lower.includes('cardio')) return 'run';
-    if (lower.includes('arm') || lower.includes('bicep') || lower.includes('tricep')) return 'arm-flex';
-    if (lower.includes('back')) return 'rowing';
-    return 'dumbbell';
-}
-
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
-    loadingContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
     topBar: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
         paddingHorizontal: 16,
         paddingBottom: 12,
         zIndex: 10,
-        position: 'absolute', // Sticky header feel
-        top: 0,
-        left: 0,
-        right: 0,
     },
-    topBarActions: {
-        flexDirection: 'row',
-        gap: 8,
+    topBarTitle: {
+        flex: 1,
+        textAlign: 'center',
+        fontSize: 16,
+        fontWeight: '700',
+        marginHorizontal: 8,
     },
-    circleButton: {
+    iconBtn: {
         width: 40,
         height: 40,
         borderRadius: 20,
         alignItems: 'center',
         justifyContent: 'center',
         borderWidth: 1,
-        borderColor: 'transparent', // Overridden in render
-    },
-    scrollContent: {
-        paddingTop: 80, // Space for header
     },
     headerSection: {
-        paddingHorizontal: 24,
-        paddingVertical: 12,
-        marginBottom: 8,
+        paddingHorizontal: 20,
+        paddingBottom: 16,
     },
-    badgeRow: {
-        flexDirection: 'row',
-        marginBottom: 16,
-    },
-    badge: {
+    splitBadge: {
+        alignSelf: 'flex-start',
         paddingHorizontal: 12,
-        paddingVertical: 6,
+        paddingVertical: 5,
         borderRadius: 100,
         borderWidth: 1,
-    },
-    badgeText: {
-        fontSize: 11,
-        fontWeight: '700',
-        letterSpacing: 1,
-        fontFamily: fontFamilies.mono,
-        textTransform: 'uppercase',
-    },
-    title: {
-        fontSize: 36, // ~text-4xl
-        lineHeight: 40,
-        fontFamily: fontFamilies.display,
         marginBottom: 12,
     },
-    description: {
+    splitBadgeText: {
+        fontSize: 11,
+        fontWeight: '700',
+        letterSpacing: 0.8,
+    },
+    routineTitle: {
+        fontSize: 30,
+        fontWeight: '800',
+        marginBottom: 8,
+        lineHeight: 36,
+    },
+    routineDesc: {
         fontSize: 14,
-        lineHeight: 22,
-        maxWidth: '90%',
+        lineHeight: 21,
     },
-    statsGrid: {
-        paddingHorizontal: 24,
-        marginBottom: 32,
-        flexDirection: 'row',
-        gap: 16,
-    },
-    statCard: {
-        flex: 1,
-        padding: 16,
+    statsStrip: {
+        marginHorizontal: 20,
         borderRadius: 16,
         borderWidth: 1,
-        gap: 4,
-    },
-    statHeader: {
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 8,
-        marginBottom: 4,
+        paddingVertical: 16,
+        marginBottom: 20,
     },
-    statLabel: {
-        fontSize: 10,
-        fontWeight: '700',
-        textTransform: 'uppercase',
-        letterSpacing: 0.5,
+    statItem: {
+        flex: 1,
+        alignItems: 'center',
+        gap: 4,
     },
     statValue: {
-        fontSize: 20,
+        fontSize: 16,
         fontWeight: '700',
-        fontFamily: fontFamilies.mono,
     },
-    listHeader: {
-        paddingHorizontal: 24,
-        marginBottom: 16,
+    statLabel: {
+        fontSize: 11,
+        fontWeight: '500',
+    },
+    statDivider: {
+        width: 1,
+        height: 36,
+    },
+    startSection: {
+        paddingHorizontal: 20,
+        marginBottom: 24,
+    },
+    startBtnWrapper: {
+        borderRadius: 16,
+        overflow: 'hidden',
+        elevation: 8,
+        shadowColor: '#2563EB',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.35,
+        shadowRadius: 12,
+    },
+    startBtn: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 10,
+        paddingVertical: 18,
+        borderRadius: 16,
+    },
+    startBtnText: {
+        color: '#FFFFFF',
+        fontSize: 17,
+        fontWeight: '800',
+        letterSpacing: 1,
+    },
+    sectionHeader: {
+        paddingHorizontal: 20,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'baseline',
+        marginBottom: 12,
     },
     sectionTitle: {
         fontSize: 18,
-        fontFamily: fontFamilies.display,
+        fontWeight: '700',
     },
-    durationText: {
-        fontSize: 12,
-        fontWeight: '500',
+    sectionCount: {
+        fontSize: 13,
     },
     exerciseList: {
         paddingHorizontal: 16,
-        gap: 12,
+        gap: 10,
     },
     exerciseCard: {
         flexDirection: 'row',
-        padding: 16,
-        borderRadius: 16,
+        borderRadius: 14,
         borderWidth: 1,
-        gap: 16,
+        padding: 14,
+        gap: 12,
+        alignItems: 'flex-start',
     },
-    exerciseLeftCol: {
-        alignItems: 'center',
-        gap: 8,
-        paddingTop: 4,
-    },
-    indexText: {
-        fontSize: 12,
-        fontFamily: fontFamilies.mono,
-        fontWeight: '700',
-    },
-    iconBox: {
-        width: 40,
-        height: 40,
-        borderRadius: 12,
+    exerciseIndex: {
+        width: 36,
+        height: 36,
+        borderRadius: 10,
         alignItems: 'center',
         justifyContent: 'center',
+        flexShrink: 0,
+        marginTop: 2,
     },
-    exerciseContent: {
+    exerciseIndexText: {
+        fontSize: 13,
+        fontWeight: '800',
+    },
+    exerciseInfo: {
         flex: 1,
-    },
-    exerciseHeader: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'flex-start',
-        marginBottom: 4,
     },
     exerciseName: {
-        fontSize: 16,
+        fontSize: 15,
         fontWeight: '700',
-        flex: 1,
-        marginRight: 8,
+        marginBottom: 6,
     },
-    tagsRow: {
+    exerciseMeta: {
         flexDirection: 'row',
+        gap: 6,
+        marginBottom: 8,
         flexWrap: 'wrap',
-        gap: 8,
-        marginBottom: 12,
     },
     tag: {
         paddingHorizontal: 8,
-        paddingVertical: 2,
+        paddingVertical: 3,
         borderRadius: 6,
     },
     tagText: {
-        fontSize: 10,
+        fontSize: 11,
         fontWeight: '600',
     },
-    exerciseStatsRow: {
+    pillRow: {
         flexDirection: 'row',
-        gap: 12,
+        flexWrap: 'wrap',
+        gap: 6,
     },
-    statPill: {
+    pill: {
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 6,
+        gap: 4,
         paddingHorizontal: 8,
         paddingVertical: 4,
-        borderRadius: 6,
+        borderRadius: 8,
         borderWidth: 1,
     },
-    statPillText: {
+    pillText: {
         fontSize: 12,
-        fontFamily: fontFamilies.mono,
-        fontWeight: '700',
-    },
-    footerContainer: {
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        zIndex: 50,
-    },
-    gradientOverlay: {
-        height: 128, // ~h-32
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
-    },
-    footerContent: {
-        padding: 24,
-        paddingBottom: Platform.OS === 'ios' ? 40 : 24, // Safe area
-    },
-    startButton: {
-        height: 56,
-        borderRadius: 16,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: 8,
-        shadowOffset: { width: 0, height: 10 },
-        shadowOpacity: 0.3,
-        shadowRadius: 20,
-        elevation: 10,
-    },
-    startButtonText: {
-        color: '#FFFFFF',
-        fontSize: 16,
-        fontWeight: '700',
-        letterSpacing: 1,
+        fontWeight: '600',
     },
 });

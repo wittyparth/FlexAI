@@ -7,7 +7,6 @@ import { useAuthStore } from '../../store/authStore';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useColors } from '../../hooks/useColors';
 import { UnitSystem } from '../../types/user';
-import { LinearGradient } from 'expo-linear-gradient';
 import { fontFamilies } from '../../theme/typography';
 
 type UnitsScreenNavigationProp = StackNavigationProp<OnboardingStackParamList, 'Units'>;
@@ -72,11 +71,8 @@ export const UnitsScreen: React.FC<Props> = ({ navigation }) => {
                                 onPress={() => handleSystemChange('metric')}
                             >
                                 {unitSystem === 'metric' && (
-                                    <LinearGradient
-                                        colors={colors.primary.gradient || [colors.primary.main || '#0052FF', colors.primary.light || '#4D7CFF']}
+                                    <View
                                         style={StyleSheet.absoluteFill}
-                                        start={{ x: 0, y: 0 }}
-                                        end={{ x: 1, y: 1 }}
                                     />
                                 )}
                                 <Text style={[styles.optionText, { color: unitSystem === 'metric' ? '#fff' : colors.mutedForeground }]}>kg</Text>
@@ -86,11 +82,8 @@ export const UnitsScreen: React.FC<Props> = ({ navigation }) => {
                                 onPress={() => handleSystemChange('imperial')}
                             >
                                 {unitSystem === 'imperial' && (
-                                    <LinearGradient
-                                        colors={(colors.primary.gradient || [colors.primary.main || '#0052FF', colors.primary.light || '#4D7CFF']) as any}
+                                    <View
                                         style={StyleSheet.absoluteFill}
-                                        start={{ x: 0, y: 0 }}
-                                        end={{ x: 1, y: 1 }}
                                     />
                                 )}
                                 <Text style={[styles.optionText, { color: unitSystem === 'imperial' ? '#fff' : colors.mutedForeground }]}>lbs</Text>
@@ -107,11 +100,8 @@ export const UnitsScreen: React.FC<Props> = ({ navigation }) => {
                                 onPress={() => handleSystemChange('metric')}
                             >
                                 {unitSystem === 'metric' && (
-                                    <LinearGradient
-                                        colors={(colors.primary.gradient || [colors.primary.main || '#0052FF', colors.primary.light || '#4D7CFF']) as any}
+                                    <View
                                         style={StyleSheet.absoluteFill}
-                                        start={{ x: 0, y: 0 }}
-                                        end={{ x: 1, y: 1 }}
                                     />
                                 )}
                                 <Text style={[styles.optionText, { color: unitSystem === 'metric' ? '#fff' : colors.mutedForeground }]}>cm / km</Text>
@@ -121,11 +111,8 @@ export const UnitsScreen: React.FC<Props> = ({ navigation }) => {
                                 onPress={() => handleSystemChange('imperial')}
                             >
                                 {unitSystem === 'imperial' && (
-                                    <LinearGradient
-                                        colors={colors.primary.gradient || [colors.primary.main || '#0052FF', colors.primary.light || '#4D7CFF']}
+                                    <View
                                         style={StyleSheet.absoluteFill}
-                                        start={{ x: 0, y: 0 }}
-                                        end={{ x: 1, y: 1 }}
                                     />
                                 )}
                                 <Text style={[styles.optionText, { color: unitSystem === 'imperial' ? '#fff' : colors.mutedForeground }]}>ft / mi</Text>
@@ -175,15 +162,12 @@ export const UnitsScreen: React.FC<Props> = ({ navigation }) => {
             {/* Footer */}
             <View style={styles.footer}>
                 <TouchableOpacity onPress={handleContinue} style={styles.buttonContainer}>
-                    <LinearGradient
-                        colors={(colors.primary.gradient || [colors.primary.main, colors.primary.light]) as any}
-                        start={{ x: 0, y: 0 }}
-                        end={{ x: 1, y: 0 }}
+                    <View
                         style={styles.continueButton}
                     >
                         <Text style={styles.continueButtonText}>Continue</Text>
                         <Ionicons name="arrow-forward" size={20} color="#ffffff" />
-                    </LinearGradient>
+                    </View>
                 </TouchableOpacity>
             </View>
         </View>

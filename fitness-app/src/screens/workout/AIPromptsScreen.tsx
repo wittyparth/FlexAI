@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { colors as themeColors } from '../../theme/colors';
@@ -21,12 +20,12 @@ const { width } = Dimensions.get('window');
 // QUICK PROMPTS
 // ============================================================
 const QUICK_PROMPTS = [
-    { id: 1, title: 'Hypertrophy Focus', description: 'Maximize muscle growth', icon: 'arm-flex', gradient: ['#6366F1', '#8B5CF6'], duration: 60 },
-    { id: 2, title: 'Strength Builder', description: 'Get stronger, lift heavier', icon: 'weight-lifter', gradient: ['#EC4899', '#F43F5E'], duration: 75 },
-    { id: 3, title: 'HIIT Circuit', description: 'High intensity fat burn', icon: 'fire', gradient: ['#EF4444', '#F97316'], duration: 30 },
-    { id: 4, title: 'Quick Pump', description: 'Get in, get out, look great', icon: 'lightning-bolt', gradient: ['#10B981', '#14B8A6'], duration: 20 },
-    { id: 5, title: 'Full Body Blast', description: 'Hit every muscle group', icon: 'human', gradient: ['#F59E0B', '#FBBF24'], duration: 45 },
-    { id: 6, title: 'Upper Power', description: 'Chest, back, shoulders', icon: 'human-handsup', gradient: ['#06B6D4', '#22D3EE'], duration: 50 },
+    { id: 1, title: 'Hypertrophy Focus', description: 'Maximize muscle growth', icon: 'arm-flex', accent: '#6366F1', duration: 60 },
+    { id: 2, title: 'Strength Builder', description: 'Get stronger, lift heavier', icon: 'weight-lifter', accent: '#EC4899', duration: 75 },
+    { id: 3, title: 'HIIT Circuit', description: 'High intensity fat burn', icon: 'fire', accent: '#EF4444', duration: 30 },
+    { id: 4, title: 'Quick Pump', description: 'Get in, get out, look great', icon: 'lightning-bolt', accent: '#10B981', duration: 20 },
+    { id: 5, title: 'Full Body Blast', description: 'Hit every muscle group', icon: 'human', accent: '#F59E0B', duration: 45 },
+    { id: 6, title: 'Upper Power', description: 'Chest, back, shoulders', icon: 'human-handsup', accent: '#06B6D4', duration: 50 },
 ];
 
 const RECENT_PROMPTS = [
@@ -91,26 +90,21 @@ export function AIPromptsScreen({ navigation, route }: any) {
                                 }}
                             >
                                 <TouchableOpacity
-                                    style={styles.promptCard}
+                                    style={[styles.promptCard, { shadowColor: '#000' }]}
                                     onPress={() => handlePromptSelect(prompt)}
                                     activeOpacity={0.95}
                                 >
-                                    <LinearGradient
-                                        colors={prompt.gradient as [string, string]}
-                                        style={styles.promptGradient}
-                                        start={{ x: 0, y: 0 }}
-                                        end={{ x: 1, y: 1 }}
-                                    >
-                                        <View style={styles.promptIconContainer}>
-                                            <MaterialCommunityIcons name={prompt.icon as any} size={28} color="#FFF" />
+                                    <View style={[styles.promptGradient, { backgroundColor: colors.card, borderColor: colors.border, borderWidth: 1 }]}>
+                                        <View style={[styles.promptIconContainer, { backgroundColor: `${prompt.accent}15` }]}>
+                                            <MaterialCommunityIcons name={prompt.icon as any} size={28} color={prompt.accent} />
                                         </View>
-                                        <Text style={styles.promptTitle}>{prompt.title}</Text>
-                                        <Text style={styles.promptDesc}>{prompt.description}</Text>
+                                        <Text style={[styles.promptTitle, { color: colors.foreground }]}>{prompt.title}</Text>
+                                        <Text style={[styles.promptDesc, { color: colors.mutedForeground }]}>{prompt.description}</Text>
                                         <View style={styles.promptMeta}>
-                                            <Ionicons name="time-outline" size={14} color="rgba(255,255,255,0.8)" />
-                                            <Text style={styles.promptDuration}>{prompt.duration} min</Text>
+                                            <Ionicons name="time-outline" size={14} color={colors.mutedForeground} />
+                                            <Text style={[styles.promptDuration, { color: colors.mutedForeground }]}>{prompt.duration} min</Text>
                                         </View>
-                                    </LinearGradient>
+                                    </View>
                                 </TouchableOpacity>
                             </Animated.View>
                         ))}
@@ -160,7 +154,7 @@ export function AIPromptsScreen({ navigation, route }: any) {
                     </TouchableOpacity>
                 </View>
 
-                <View style={{ height: 100 }} />
+                <View style={{ height: 140 }} />
             </ScrollView>
         </View>
     );
@@ -181,16 +175,16 @@ const styles = StyleSheet.create({
     sectionTitle: { fontSize: 18, fontWeight: '700', marginBottom: 14 },
     clearText: { fontSize: 14 },
     promptsGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 12 },
-    promptCard: { width: (width - 44) / 2, height: 160, borderRadius: 22, overflow: 'hidden', elevation: 6, shadowColor: '#000', shadowOffset: { width: 0, height: 6 }, shadowOpacity: 0.15, shadowRadius: 12 },
-    promptGradient: { flex: 1, padding: 18, justifyContent: 'space-between' },
-    promptIconContainer: { width: 48, height: 48, borderRadius: 14, backgroundColor: 'rgba(255,255,255,0.2)', alignItems: 'center', justifyContent: 'center' },
-    promptTitle: { color: '#FFF', fontSize: 17, fontWeight: '800', marginTop: 8 },
-    promptDesc: { color: 'rgba(255,255,255,0.85)', fontSize: 13 },
+    promptCard: { width: (width - 44) / 2, height: 160, borderRadius: 22, overflow: 'hidden', elevation: 4, shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.1, shadowRadius: 10 },
+    promptGradient: { flex: 1, padding: 18, justifyContent: 'space-between', borderRadius: 22 },
+    promptIconContainer: { width: 48, height: 48, borderRadius: 14, alignItems: 'center', justifyContent: 'center' },
+    promptTitle: { fontSize: 17, fontWeight: '800', marginTop: 8 },
+    promptDesc: { fontSize: 13 },
     promptMeta: { flexDirection: 'row', alignItems: 'center', gap: 4 },
-    promptDuration: { color: 'rgba(255,255,255,0.8)', fontSize: 13 },
+    promptDuration: { fontSize: 13 },
     recentCard: { flexDirection: 'row', alignItems: 'center', padding: 16, borderRadius: 16, borderWidth: 1, marginBottom: 10, gap: 12 },
     recentText: { flex: 1, fontSize: 15 },
-    customCard: { flexDirection: 'row', alignItems: 'center', padding: 20, borderRadius: 20, borderWidth: 2, borderStyle: 'dashed', gap: 16 },
+    customCard: { flexDirection: 'row', alignItems: 'center', padding: 20, borderRadius: 20, borderWidth: 1, borderStyle: 'dashed', gap: 16 },
     customIcon: { width: 56, height: 56, borderRadius: 18, alignItems: 'center', justifyContent: 'center' },
     customContent: { flex: 1 },
     customTitle: { fontSize: 17, fontWeight: '700', marginBottom: 4 },

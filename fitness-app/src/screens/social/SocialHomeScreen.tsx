@@ -87,7 +87,7 @@ export function SocialHomeScreen({ navigation }: any) {
 
     return (
         <View style={[st.container, { backgroundColor: colors.background }]}>
-            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: insets.bottom + 100 }}>
+            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: insets.bottom + 140 }}>
                 <View style={[st.header, { paddingTop: insets.top + 16 }]}>
                     <View><Text style={[st.headerSub, { color: colors.mutedForeground }]}>FITNESS COMMUNITY</Text><Text style={[st.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Community</Text></View>
                     <View style={st.headerBtns}>

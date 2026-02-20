@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import { PieChart } from 'react-native-gifted-charts';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
@@ -20,14 +19,40 @@ const { width } = Dimensions.get('window');
 // ============================================================
 // MOCK DATA - Muscle distribution
 // ============================================================
-const MUSCLE_DATA = [
-    { name: 'Chest', value: 25, color: '#6366F1', icon: 'chest', status: 'balanced' },
-    { name: 'Back', value: 22, color: '#10B981', icon: 'human-male-height-variant', status: 'balanced' },
-    { name: 'Shoulders', value: 18, color: '#F59E0B', icon: 'human-handsup', status: 'balanced' },
-    { name: 'Legs', value: 15, color: '#EC4899', icon: 'leg', status: 'undertrained', recommended: 25 },
-    { name: 'Arms', value: 12, color: '#8B5CF6', icon: 'arm-flex', status: 'balanced' },
-    { name: 'Core', value: 8, color: '#14B8A6', icon: 'human', status: 'balanced' },
-];
+const MUSCLE_DATA: Record<string, any[]> = {
+    '7D': [
+        { name: 'Chest', value: 30, color: '#6366F1', icon: 'chess-knight', status: 'balanced' },
+        { name: 'Back', value: 25, color: '#10B981', icon: 'human-male-height-variant', status: 'balanced' },
+        { name: 'Shoulders', value: 20, color: '#F59E0B', icon: 'yoga', status: 'balanced' },
+        { name: 'Legs', value: 10, color: '#EC4899', icon: 'run', status: 'undertrained', recommended: 25 },
+        { name: 'Arms', value: 10, color: '#8B5CF6', icon: 'arm-flex', status: 'balanced' },
+        { name: 'Core', value: 5, color: '#14B8A6', icon: 'human', status: 'balanced' },
+    ],
+    '30D': [
+        { name: 'Chest', value: 25, color: '#6366F1', icon: 'chess-knight', status: 'balanced' },
+        { name: 'Back', value: 22, color: '#10B981', icon: 'human-male-height-variant', status: 'balanced' },
+        { name: 'Shoulders', value: 18, color: '#F59E0B', icon: 'yoga', status: 'balanced' },
+        { name: 'Legs', value: 15, color: '#EC4899', icon: 'run', status: 'undertrained', recommended: 25 },
+        { name: 'Arms', value: 12, color: '#8B5CF6', icon: 'arm-flex', status: 'balanced' },
+        { name: 'Core', value: 8, color: '#14B8A6', icon: 'human', status: 'balanced' },
+    ],
+    '90D': [
+        { name: 'Chest', value: 24, color: '#6366F1', icon: 'chess-knight', status: 'balanced' },
+        { name: 'Back', value: 24, color: '#10B981', icon: 'human-male-height-variant', status: 'balanced' },
+        { name: 'Legs', value: 20, color: '#EC4899', icon: 'run', status: 'balanced', recommended: 25 },
+        { name: 'Shoulders', value: 16, color: '#F59E0B', icon: 'yoga', status: 'balanced' },
+        { name: 'Arms', value: 10, color: '#8B5CF6', icon: 'arm-flex', status: 'balanced' },
+        { name: 'Core', value: 6, color: '#14B8A6', icon: 'human', status: 'balanced' },
+    ],
+    'ALL': [
+        { name: 'Chest', value: 23, color: '#6366F1', icon: 'chess-knight', status: 'balanced' },
+        { name: 'Back', value: 23, color: '#10B981', icon: 'human-male-height-variant', status: 'balanced' },
+        { name: 'Legs', value: 22, color: '#EC4899', icon: 'run', status: 'balanced', recommended: 25 },
+        { name: 'Shoulders', value: 15, color: '#F59E0B', icon: 'yoga', status: 'balanced' },
+        { name: 'Arms', value: 11, color: '#8B5CF6', icon: 'arm-flex', status: 'balanced' },
+        { name: 'Core', value: 6, color: '#14B8A6', icon: 'human', status: 'balanced' },
+    ]
+};
 
 const BALANCE_ALERTS = [
     { type: 'warning', muscle: 'Legs', message: 'Undertrained at 15%. Aim for 20-25%', icon: 'alert-circle' },
@@ -44,28 +69,26 @@ export function MuscleDistributionScreen({ navigation }: any) {
         Animated.timing(fadeAnim, { toValue: 1, duration: 500, useNativeDriver: true }).start();
     }, []);
 
-    const pieData = MUSCLE_DATA.map((m) => ({
+    const currentData = MUSCLE_DATA[period];
+    const totalWorkouts = period === '7D' ? 5 : period === '30D' ? 24 : period === '90D' ? 70 : 185;
+
+    const pieData = currentData.map((m: any) => ({
         value: m.value,
         color: m.color,
         text: `${m.value}%`,
         focused: m.status === 'undertrained',
     }));
 
-    const totalWorkouts = 24;
-
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
             {/* Header */}
-            <LinearGradient
-                colors={['#EC4899', '#DB2777'] as [string, string]}
-                style={[styles.header, { paddingTop: insets.top + 8 }]}
-            >
+            <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.background }]}>
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerBtn}>
-                    <Ionicons name="arrow-back" size={24} color="#FFF" />
+                    <Ionicons name="arrow-back" size={24} color={colors.foreground} />
                 </TouchableOpacity>
-                <Text style={[styles.headerTitle, { fontFamily: fontFamilies.display }]}>Muscles</Text>
+                <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Muscles</Text>
                 <View style={styles.headerBtn} />
-            </LinearGradient>
+            </View>
 
             <ScrollView showsVerticalScrollIndicator={false}>
                 {/* Period Selector */}
@@ -73,10 +96,10 @@ export function MuscleDistributionScreen({ navigation }: any) {
                     {['7D', '30D', '90D', 'ALL'].map((p) => (
                         <TouchableOpacity
                             key={p}
-                            style={[styles.periodBtn, period === p && { backgroundColor: '#EC4899' }]}
+                            style={[styles.periodBtn, period === p && { backgroundColor: `${colors.primary.main}20` }]}
                             onPress={() => setPeriod(p)}
                         >
-                            <Text style={[styles.periodText, { color: period === p ? '#FFF' : colors.mutedForeground }]}>{p}</Text>
+                            <Text style={[styles.periodText, { color: period === p ? colors.primary.main : colors.mutedForeground }]}>{p}</Text>
                         </TouchableOpacity>
                     ))}
                 </View>
@@ -137,7 +160,7 @@ export function MuscleDistributionScreen({ navigation }: any) {
                 {/* Muscle Breakdown List */}
                 <View style={styles.section}>
                     <Text style={[styles.sectionTitle, { color: colors.foreground, marginBottom: 14 }]}>Breakdown</Text>
-                    {MUSCLE_DATA.map((muscle, index) => (
+                    {currentData.map((muscle: any, index: number) => (
                         <Animated.View
                             key={muscle.name}
                             style={{
@@ -204,9 +227,9 @@ export function MuscleDistributionScreen({ navigation }: any) {
 
 const styles = StyleSheet.create({
     container: { flex: 1 },
-    header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 12, paddingBottom: 20 },
-    headerBtn: { width: 44, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center' },
-    headerTitle: { fontSize: 24, fontWeight: '700', color: '#FFF' },
+    header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, paddingBottom: 16 },
+    headerBtn: { width: 44, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(150,150,150,0.1)' },
+    headerTitle: { fontSize: 20, fontWeight: '700' },
     periodRow: { flexDirection: 'row', justifyContent: 'center', paddingVertical: 16, gap: 8 },
     periodBtn: { paddingHorizontal: 18, paddingVertical: 10, borderRadius: 12 },
     periodText: { fontSize: 14, fontWeight: '600' },

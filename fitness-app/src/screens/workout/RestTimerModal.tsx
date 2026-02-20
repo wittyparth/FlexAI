@@ -11,7 +11,6 @@ import {
     Vibration,
 } from 'react-native';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import { BlurView } from 'expo-blur';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useColors } from '../../hooks';
@@ -199,8 +198,7 @@ export function RestTimerModal({
                             onPress={handlePlayPause}
                             activeOpacity={0.9}
                         >
-                            <LinearGradient
-                                colors={seconds === 0 ? [colors.success, '#059669'] as [string, string] : colors.primary.gradient as [string, string]}
+                            <View
                                 style={styles.primaryGradient}
                             >
                                 <Ionicons
@@ -208,7 +206,7 @@ export function RestTimerModal({
                                     size={36}
                                     color="#FFF"
                                 />
-                            </LinearGradient>
+                            </View>
                         </TouchableOpacity>
 
                         <TouchableOpacity style={styles.secondaryBtn} onPress={handleSkip}>

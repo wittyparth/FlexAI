@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput, Switch } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 
@@ -15,7 +14,7 @@ export function ExerciseFilterScreen({ navigation, route }: any) {
     const colors = useColors();
     const insets = useSafeAreaInsets();
 
-    const [selectedMuscles, setSelectedMuscles] = useState<string[]>(['Chest']);
+    const [selectedMuscles, setSelectedMuscles] = useState<string[]>([]);
     const [selectedEquipment, setSelectedEquipment] = useState<string[]>([]);
     const [selectedDifficulty, setSelectedDifficulty] = useState<string>('');
     const [selectedMovement, setSelectedMovement] = useState<string[]>([]);
@@ -40,7 +39,18 @@ export function ExerciseFilterScreen({ navigation, route }: any) {
     };
 
     const applyFilters = () => {
-        navigation.goBack();
+        navigation.navigate({
+            name: route.params?.returnScreen || 'ExerciseLibrary',
+            params: {
+                filters: {
+                    muscleGroups: selectedMuscles,
+                    equipment: selectedEquipment,
+                    difficulty: selectedDifficulty,
+                    movement: selectedMovement
+                }
+            },
+            merge: true,
+        });
     };
 
     const activeCount = selectedMuscles.length + selectedEquipment.length + selectedMovement.length + (selectedDifficulty ? 1 : 0) + (showFavorites ? 1 : 0) + (showRecent ? 1 : 0);
@@ -133,9 +143,9 @@ export function ExerciseFilterScreen({ navigation, route }: any) {
             {/* Apply Button */}
             <View style={[styles.footer, { paddingBottom: insets.bottom + 16, backgroundColor: colors.card, borderTopColor: colors.border }]}>
                 <TouchableOpacity style={styles.applyBtn} onPress={applyFilters}>
-                    <LinearGradient colors={colors.primary.gradient as [string, string]} style={styles.applyGrad}>
+                    <View style={styles.applyGrad}>
                         <Text style={styles.applyText}>Apply Filters{activeCount > 0 ? ` (${activeCount})` : ''}</Text>
-                    </LinearGradient>
+                    </View>
                 </TouchableOpacity>
             </View>
         </View>

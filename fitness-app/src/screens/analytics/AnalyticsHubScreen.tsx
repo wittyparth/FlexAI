@@ -11,7 +11,6 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import { LineChart, BarChart } from 'react-native-gifted-charts';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
@@ -24,32 +23,29 @@ const { width } = Dimensions.get('window');
 // ============================================================
 // MOCK DATA
 // ============================================================
-const WEEKLY_VOLUME = [
-    { value: 42000, label: 'Mon' },
-    { value: 38000, label: 'Tue' },
-    { value: 0, label: 'Wed' },
-    { value: 52000, label: 'Thu' },
-    { value: 0, label: 'Fri' },
-    { value: 48000, label: 'Sat' },
-    { value: 0, label: 'Sun' },
-];
+const WEEKLY_VOLUME = {
+    '7D': [
+        { value: 42000, label: 'Mon' }, { value: 38000, label: 'Tue' }, { value: 0, label: 'Wed' },
+        { value: 52000, label: 'Thu' }, { value: 0, label: 'Fri' }, { value: 48000, label: 'Sat' }, { value: 55000, label: 'Sun' },
+    ],
+    '30D': [
+        { value: 152000, label: 'Week 1' }, { value: 148000, label: 'Week 2' },
+        { value: 165000, label: 'Week 3' }, { value: 180000, label: 'Week 4' }
+    ],
+    '90D': [
+        { value: 650000, label: 'Month 1' }, { value: 720000, label: 'Month 2' }, { value: 810000, label: 'Month 3' }
+    ]
+};
 
 const STRENGTH_TREND = [
-    { value: 195, dataPointText: '' },
-    { value: 200, dataPointText: '' },
-    { value: 205, dataPointText: '' },
-    { value: 205, dataPointText: '' },
-    { value: 210, dataPointText: '' },
-    { value: 215, dataPointText: '' },
-    { value: 220, dataPointText: '' },
+    { value: 195, label: 'Jan' }, { value: 200, label: '' }, { value: 205, label: 'Feb' },
+    { value: 205, label: '' }, { value: 210, label: 'Mar' }, { value: 215, label: '' }, { value: 220, label: 'Apr' }
 ];
 
 const QUICK_STATS = {
-    pr: "+15%",
-    volume: "42.5 tons",
-    consistency: "92%",
-    strength: "Elite",
-    streak: "5 Days" // Added missing property
+    prsThisMonth: 8,
+    totalVolume: 840000,
+    streak: "5 Days"
 };
 
 const NAV_CARDS = [
@@ -64,7 +60,7 @@ export function AnalyticsHubScreen() { // Renamed function and removed navigatio
     const colors = useColors();
     const insets = useSafeAreaInsets();
     const fadeAnim = useRef(new Animated.Value(0)).current;
-    const [period, setPeriod] = useState('7D');
+    const [period, setPeriod] = useState<'7D' | '30D' | '90D'>('7D');
 
     useEffect(() => {
         Animated.timing(fadeAnim, { toValue: 1, duration: 500, useNativeDriver: true }).start();
@@ -74,18 +70,23 @@ export function AnalyticsHubScreen() { // Renamed function and removed navigatio
         primary: colors.primary.main,
         grid: colors.border,
         axis: colors.mutedForeground,
+        gradientStart: `${colors.primary.main}80`,
+        gradientEnd: `${colors.primary.main}00`,
     };
+
+    const currentChartData = WEEKLY_VOLUME[period];
+    const totalCurrentVolume = currentChartData.reduce((a, b) => a + b.value, 0);
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
             {/* Header */}
-            <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.card, borderBottomColor: colors.border }]}>
+            <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.background }]}>
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerBtn}>
                     <Ionicons name="arrow-back" size={24} color={colors.foreground} />
                 </TouchableOpacity>
-                <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>My Stats</Text>
+                <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Analytics</Text>
                 <TouchableOpacity style={styles.headerBtn}>
-                    <Ionicons name="settings-outline" size={22} color={colors.foreground} />
+                    <Ionicons name="share-outline" size={24} color={colors.foreground} />
                 </TouchableOpacity>
             </View>
 
@@ -93,8 +94,8 @@ export function AnalyticsHubScreen() { // Renamed function and removed navigatio
                 {/* Quick Stats Row */}
                 <Animated.View style={[styles.quickStatsRow, { opacity: fadeAnim }]}>
                     <View style={[styles.quickStatCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-                        <View style={[styles.quickStatIcon, { backgroundColor: `${colors.stats.streak}15` }]}>
-                            <MaterialCommunityIcons name="fire" size={22} color={colors.stats.streak} />
+                        <View style={[styles.quickStatIcon, { backgroundColor: `${colors.stats.consistency}15` }]}>
+                            <MaterialCommunityIcons name="fire" size={22} color={colors.stats.consistency} />
                         </View>
                         <Text style={[styles.quickStatValue, { color: colors.foreground }]}>{QUICK_STATS.streak}</Text>
                         <Text style={[styles.quickStatLabel, { color: colors.mutedForeground }]}>Streak</Text>
@@ -118,20 +119,20 @@ export function AnalyticsHubScreen() { // Renamed function and removed navigatio
                 {/* Weekly Overview Chart */}
                 <View style={styles.section}>
                     <View style={styles.sectionHeader}>
-                        <Text style={[styles.sectionTitle, { color: colors.foreground }]}>This Week</Text>
+                        <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Volume Snapshot</Text>
                         <View style={styles.periodSelector}>
-                            {['7D', '30D', '90D'].map((p) => (
+                            {(['7D', '30D', '90D'] as const).map((p) => (
                                 <TouchableOpacity
                                     key={p}
                                     style={[
                                         styles.periodBtn,
-                                        period === p && { backgroundColor: colors.primary.main }
+                                        period === p && { backgroundColor: `${colors.primary.main}20` }
                                     ]}
                                     onPress={() => setPeriod(p)}
                                 >
                                     <Text style={[
                                         styles.periodText,
-                                        { color: period === p ? '#FFF' : colors.mutedForeground }
+                                        { color: period === p ? colors.primary.main : colors.mutedForeground }
                                     ]}>{p}</Text>
                                 </TouchableOpacity>
                             ))}
@@ -139,30 +140,31 @@ export function AnalyticsHubScreen() { // Renamed function and removed navigatio
                     </View>
                     <View style={[styles.chartCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
                         <View style={styles.chartHeader}>
-                            <Text style={[styles.chartLabel, { color: colors.mutedForeground }]}>Total Volume</Text>
+                            <Text style={[styles.chartLabel, { color: colors.mutedForeground }]}>Total Volume ({period})</Text>
                             <Text style={[styles.chartValue, { color: colors.foreground }]}>
-                                {(WEEKLY_VOLUME.reduce((a, b) => a + b.value, 0) / 1000).toFixed(1)}k lbs
+                                {(totalCurrentVolume / 1000).toFixed(1)}k lbs
                             </Text>
                         </View>
                         <BarChart
-                            data={WEEKLY_VOLUME.map(d => ({
+                            data={currentChartData.map(d => ({
                                 value: d.value / 1000,
                                 label: d.label,
-                                frontColor: d.value > 0 ? colors.primary.main : colors.muted,
+                                frontColor: d.value > 0 ? colors.primary.main : colors.border,
                                 topLabelComponent: () => null,
                             }))}
                             width={width - 80}
-                            height={150}
-                            barWidth={28}
-                            spacing={16}
+                            height={160}
+                            barWidth={period === '7D' ? 28 : period === '30D' ? 40 : 50}
+                            spacing={period === '7D' ? 16 : period === '30D' ? 24 : 35}
                             noOfSections={4}
                             barBorderRadius={8}
                             yAxisThickness={0}
                             xAxisThickness={0}
                             hideRules
-                            xAxisLabelTextStyle={{ color: colors.mutedForeground, fontSize: 11 }}
-                            yAxisTextStyle={{ color: colors.mutedForeground, fontSize: 11 }}
+                            xAxisLabelTextStyle={{ color: colors.mutedForeground, fontSize: 11, fontWeight: '500' }}
+                            yAxisTextStyle={{ color: colors.mutedForeground, fontSize: 11, fontWeight: '500' }}
                             isAnimated
+                            animationDuration={600}
                         />
                     </View>
                 </View>
@@ -171,7 +173,7 @@ export function AnalyticsHubScreen() { // Renamed function and removed navigatio
                 <View style={styles.section}>
                     <View style={styles.sectionHeader}>
                         <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Bench Press Trend</Text>
-                        <TouchableOpacity onPress={() => navigation.navigate('StrengthProgression')}>
+                        <TouchableOpacity onPress={() => navigation.navigate('StrengthProgression' as never)}>
                             <Text style={[styles.seeAllText, { color: colors.primary.main }]}>See All</Text>
                         </TouchableOpacity>
                     </View>
@@ -189,23 +191,50 @@ export function AnalyticsHubScreen() { // Renamed function and removed navigatio
                         <LineChart
                             data={STRENGTH_TREND}
                             width={width - 80}
-                            height={120}
+                            height={140}
                             color={colors.primary.main}
                             thickness={3}
                             hideDataPoints={false}
                             dataPointsColor={colors.primary.main}
-                            dataPointsRadius={5}
+                            dataPointsRadius={4}
                             curved
                             areaChart
-                            startFillColor={colors.primary.main}
-                            endFillColor={colors.background}
-                            startOpacity={0.3}
-                            endOpacity={0}
+                            startFillColor={chartColors.gradientStart}
+                            endFillColor={chartColors.gradientEnd}
+                            startOpacity={0.6}
+                            endOpacity={0.05}
                             hideRules
                             yAxisThickness={0}
                             xAxisThickness={0}
-                            hideYAxisText
+                            xAxisLabelTextStyle={{ color: colors.mutedForeground, fontSize: 11, fontWeight: '500' }}
+                            yAxisTextStyle={{ color: colors.mutedForeground, fontSize: 11, fontWeight: '500' }}
+                            pointerConfig={{
+                                pointerStripHeight: 140,
+                                pointerStripColor: colors.primary.main,
+                                pointerStripWidth: 2,
+                                pointerColor: colors.primary.main,
+                                radius: 6,
+                                pointerLabelWidth: 80,
+                                pointerLabelHeight: 30,
+                                activatePointersOnLongPress: true,
+                                autoAdjustPointerLabelPosition: true,
+                                pointerLabelComponent: (items: any) => {
+                                    return (
+                                        <View style={{
+                                            backgroundColor: colors.card,
+                                            padding: 6,
+                                            borderRadius: 8,
+                                            borderWidth: 1,
+                                            borderColor: colors.border,
+                                            left: -20,
+                                        }}>
+                                            <Text style={{ color: colors.foreground, fontSize: 12, fontWeight: '700' }}>{items[0].value} lbs</Text>
+                                        </View>
+                                    );
+                                },
+                            }}
                             isAnimated
+                            animationDuration={800}
                         />
                     </View>
                 </View>
@@ -252,9 +281,9 @@ export function AnalyticsHubScreen() { // Renamed function and removed navigatio
 
 const styles = StyleSheet.create({
     container: { flex: 1 },
-    header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 12, paddingBottom: 16, borderBottomWidth: 1 },
-    headerBtn: { width: 44, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center' },
-    headerTitle: { fontSize: 22, fontWeight: '700' },
+    header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, paddingBottom: 16 },
+    headerBtn: { width: 44, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(150,150,150,0.1)' },
+    headerTitle: { fontSize: 20, fontWeight: '700' },
     quickStatsRow: { flexDirection: 'row', paddingHorizontal: 16, paddingTop: 20, gap: 12 },
     quickStatCard: { flex: 1, paddingVertical: 18, borderRadius: 18, borderWidth: 1, alignItems: 'center' },
     quickStatIcon: { width: 44, height: 44, borderRadius: 14, alignItems: 'center', justifyContent: 'center', marginBottom: 10 },

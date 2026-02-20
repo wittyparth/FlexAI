@@ -15,7 +15,6 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { spacing } from '../../theme/spacing';
@@ -87,8 +86,7 @@ export function HomeScreen({ navigation }: any) {
                         <RefreshControl refreshing={isRefetching} onRefresh={refetch} tintColor={colors.primary.main} />
                     }
                 >
-                    <LinearGradient
-                        colors={[colors.primary.main + '15', colors.primary.main + '05']}
+                    <View
                         style={styles.emptyGradient}
                     >
                         <View style={[styles.emptyIconCircle, { backgroundColor: colors.primary.main + '20' }]}>
@@ -107,7 +105,7 @@ export function HomeScreen({ navigation }: any) {
                             <Text style={styles.emptyButtonText}>Begin First Workout</Text>
                             <Ionicons name="arrow-forward" size={20} color="#FFF" />
                         </TouchableOpacity>
-                    </LinearGradient>
+                    </View>
                 </ScrollView>
             </View>
         );
@@ -126,13 +124,11 @@ export function HomeScreen({ navigation }: any) {
                         refreshing={isRefetching}
                         onRefresh={refetch}
                         tintColor={colors.primary.main}
-                        colors={[colors.primary.main]}
                     />
                 }
             >
                 {/* Animated Header with Gradient */}
-                <LinearGradient
-                    colors={[colors.primary.main + '20', colors.background]}
+                <View
                     style={[styles.headerGradient, { paddingTop: insets.top + spacing[4] }]}
                 >
                     <View style={styles.headerContent}>
@@ -151,15 +147,12 @@ export function HomeScreen({ navigation }: any) {
                             <Ionicons name="person-outline" size={24} color={colors.foreground} />
                         </TouchableOpacity>
                     </View>
-                </LinearGradient>
+                </View>
 
                 <View style={styles.content}>
                     {/* Hero Streak Card with Glassmorphism */}
                     <View style={styles.heroSection}>
-                        <LinearGradient
-                            colors={[colors.primary.main, colors.primary.light]}
-                            start={{ x: 0, y: 0 }}
-                            end={{ x: 1, y: 1 }}
+                        <View
                             style={styles.streakHeroCard}
                         >
                             <View style={styles.streakHeroContent}>
@@ -204,7 +197,7 @@ export function HomeScreen({ navigation }: any) {
                                     />
                                 ))}
                             </View>
-                        </LinearGradient>
+                        </View>
                     </View>
 
                     {/* Start Workout CTA */}
@@ -213,10 +206,7 @@ export function HomeScreen({ navigation }: any) {
                         activeOpacity={0.8}
                         onPress={() => navigation.navigate('WorkoutHub')}
                     >
-                        <LinearGradient
-                            colors={[colors.primary.main, colors.primary.light]}
-                            start={{ x: 0, y: 0 }}
-                            end={{ x: 1, y: 0 }}
+                        <View
                             style={styles.startWorkoutGradient}
                         >
                             <View style={styles.startWorkoutContent}>
@@ -228,7 +218,7 @@ export function HomeScreen({ navigation }: any) {
                                     <Ionicons name="add" size={28} color={colors.primary.main} />
                                 </View>
                             </View>
-                        </LinearGradient>
+                        </View>
                     </TouchableOpacity>
 
                     {/* Stats Grid - Modern Cards */}
@@ -332,7 +322,6 @@ export function HomeScreen({ navigation }: any) {
                                 title="Templates"
                                 gradient={[colors.primary.main + '15', colors.primary.main + '05']}
                                 iconColor={colors.primary.main}
-                                colors={colors}
                                 onPress={() => navigation.navigate('RoutineList')}
                             />
                             <QuickActionCard
@@ -340,7 +329,6 @@ export function HomeScreen({ navigation }: any) {
                                 title="Exercises"
                                 gradient={[colors.success + '15', colors.success + '05']}
                                 iconColor={colors.success}
-                                colors={colors}
                                 onPress={() => navigation.navigate('ExerciseLibrary')}
                             />
                             <QuickActionCard
@@ -348,7 +336,6 @@ export function HomeScreen({ navigation }: any) {
                                 title="Analytics"
                                 gradient={[colors.warning + '15', colors.warning + '05']}
                                 iconColor={colors.warning}
-                                colors={colors}
                                 onPress={() => navigation.navigate('StatsScreen')}
                             />
                             <QuickActionCard
@@ -356,7 +343,6 @@ export function HomeScreen({ navigation }: any) {
                                 title="History"
                                 gradient={['#9333EA15', '#9333EA05']}
                                 iconColor="#9333EA"
-                                colors={colors}
                                 onPress={() => navigation.navigate('WorkoutHistory')}
                             />
                         </View>
@@ -375,8 +361,7 @@ function QuickActionCard({ icon, title, gradient, iconColor, colors, onPress }: 
             onPress={onPress}
             activeOpacity={0.7}
         >
-            <LinearGradient
-                colors={gradient}
+            <View
                 style={styles.quickActionGradient}
             >
                 <View style={styles.quickActionContent}>
@@ -385,7 +370,7 @@ function QuickActionCard({ icon, title, gradient, iconColor, colors, onPress }: 
                         {title}
                     </Text>
                 </View>
-            </LinearGradient>
+            </View>
         </TouchableOpacity>
     );
 }

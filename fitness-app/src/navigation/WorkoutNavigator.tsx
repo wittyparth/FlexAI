@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
+import { useNavigation } from '@react-navigation/native';
 import { WorkoutStackParamList } from './types';
 
 // ============================================================
@@ -32,12 +33,43 @@ import { AIGeneratorScreen } from '../screens/workout/AIGeneratorScreen';
 import { AIPreviewScreen } from '../screens/workout/AIPreviewScreen';
 import { AIPromptsScreen } from '../screens/workout/AIPromptsScreen';
 import { AIRoutinePlannerScreen } from '../screens/workout/AIRoutinePlannerScreen';
+import { AITemplateGeneratorScreen } from '../screens/workout/AITemplateGeneratorScreen';
+
+// ============================================================
+// Phase 2D: Templates
+// ============================================================
+import { TemplateListScreen } from '../screens/workout/TemplateListScreen';
+import { TemplateEditorScreen } from '../screens/workout/TemplateEditorScreen';
 
 const Stack = createStackNavigator<WorkoutStackParamList>();
 
 export function WorkoutNavigator() {
+    // Pop to WorkoutHub whenever the Workout tab is tapped from a child screen
+    const navigation = useNavigation<any>();
+
+    useEffect(() => {
+        const parent = navigation.getParent();
+        if (!parent) return;
+
+        const unsubscribe = parent.addListener('tabPress' as any, () => {
+            // Don't reset if currently tracking an active workout
+            const state = navigation.getState();
+            const currentScreen = state?.routes?.[state.index]?.name;
+            if (currentScreen === 'ActiveWorkout') return;
+
+            // Otherwise pop all child screens back to WorkoutHub
+            navigation.reset({
+                index: 0,
+                routes: [{ name: 'WorkoutHub' }],
+            });
+        });
+
+        return unsubscribe;
+    }, [navigation]);
+
     return (
         <Stack.Navigator
+            initialRouteName="WorkoutHub"
             screenOptions={{
                 headerShown: false,
                 cardStyle: { backgroundColor: 'transparent' },
@@ -85,6 +117,11 @@ export function WorkoutNavigator() {
                 options={{ presentation: 'modal' }}
             />
             <Stack.Screen name="AIRoutinePlanner" component={AIRoutinePlannerScreen} />
+            <Stack.Screen name="AITemplateGenerator" component={AITemplateGeneratorScreen} />
+
+            {/* Phase 2D: Templates */}
+            <Stack.Screen name="TemplateList" component={TemplateListScreen} />
+            <Stack.Screen name="TemplateEditor" component={TemplateEditorScreen} />
         </Stack.Navigator>
     );
 }

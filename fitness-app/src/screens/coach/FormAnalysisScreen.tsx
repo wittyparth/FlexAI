@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 
@@ -35,35 +34,34 @@ export function FormAnalysisScreen({ navigation }: any) {
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
             {/* Header */}
-            <LinearGradient
-                colors={['#8B5CF6', '#7C3AED'] as [string, string]}
-                style={[styles.header, { paddingTop: insets.top + 8 }]}
+            <View
+                style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.primary.main }]}
             >
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerBtn}>
                     <Ionicons name="arrow-back" size={24} color="#FFF" />
                 </TouchableOpacity>
                 <Text style={[styles.headerTitle, { fontFamily: fontFamilies.display }]}>Form Analysis</Text>
                 <View style={styles.headerBtn} />
-            </LinearGradient>
+            </View>
 
             <ScrollView showsVerticalScrollIndicator={false}>
                 {/* Hero */}
                 <Animated.View style={[styles.heroSection, { opacity: fadeAnim }]}>
                     <View style={[styles.heroCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
                         <View style={styles.cameraIcon}>
-                            <LinearGradient colors={['#8B5CF6', '#6366F1'] as [string, string]} style={styles.cameraGradient}>
+                            <View style={[styles.cameraGradient, { backgroundColor: colors.primary.main }]}>
                                 <Ionicons name="videocam" size={40} color="#FFF" />
-                            </LinearGradient>
+                            </View>
                         </View>
                         <Text style={[styles.heroTitle, { color: colors.foreground }]}>Record Your Lift</Text>
                         <Text style={[styles.heroDesc, { color: colors.mutedForeground }]}>
                             Get AI-powered feedback on your form to improve technique and prevent injury
                         </Text>
                         <TouchableOpacity style={styles.recordBtn} activeOpacity={0.9}>
-                            <LinearGradient colors={['#8B5CF6', '#7C3AED'] as [string, string]} style={styles.recordGradient}>
+                            <View style={[styles.recordGradient, { backgroundColor: colors.primary.main }]}>
                                 <Ionicons name="radio-button-on" size={20} color="#FFF" />
                                 <Text style={styles.recordText}>Start Recording</Text>
-                            </LinearGradient>
+                            </View>
                         </TouchableOpacity>
                     </View>
                 </Animated.View>

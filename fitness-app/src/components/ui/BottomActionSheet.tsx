@@ -12,7 +12,6 @@
 
 import React from 'react';
 import { View, StyleSheet, Platform, ViewStyle } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useColors } from '../../hooks';
 import { spacing } from '../../constants';
 
@@ -32,8 +31,7 @@ export function BottomActionSheet({
   return (
     <View style={[styles.footer, { backgroundColor: colors.background }, style]}>
       {showGradient && (
-        <LinearGradient
-          colors={[colors.background + '00', colors.background] as [string, string]}
+        <View
           style={styles.footerGradient}
           pointerEvents="none"
         />

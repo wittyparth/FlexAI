@@ -6,8 +6,7 @@ import type { CoachStackParamList } from './types';
 import { CoachHubScreen } from '../screens/coach/CoachHubScreen';
 import { CoachChatScreen } from '../screens/coach/CoachChatScreen';
 import { FormAnalysisScreen } from '../screens/coach/FormAnalysisScreen';
-// Missing screen - will be placeholder for now
-// import { CoachPromptsScreen } from '../screens/coach/CoachPromptsScreen';
+import { ChatHistoryScreen } from '../screens/coach/ChatHistoryScreen';
 
 const Stack = createStackNavigator<CoachStackParamList>();
 
@@ -19,31 +18,21 @@ export function CoachNavigator() {
                 cardStyle: { backgroundColor: 'transparent' },
             }}
         >
-            {/* Coach Hub - Main landing screen */}
-            <Stack.Screen
-                name="CoachHub"
-                component={CoachHubScreen}
-                options={{ headerShown: false }}
-            />
+            {/* Main Hub — conversation list + quick prompts */}
+            <Stack.Screen name="CoachHub" component={CoachHubScreen} />
 
-            {/* Coach Chat */}
+            {/* Individual chat thread */}
             <Stack.Screen
                 name="CoachChat"
                 component={CoachChatScreen}
+                options={{ gestureEnabled: true }}
             />
 
-            {/* Form Analysis */}
-            <Stack.Screen
-                name="FormAnalysis"
-                component={FormAnalysisScreen}
-            />
+            {/* Dedicated full history screen */}
+            <Stack.Screen name="ChatHistory" component={ChatHistoryScreen} />
 
-            {/* TODO: Missing screen - create placeholder or implement
-            <Stack.Screen 
-                name="CoachPrompts" 
-                component={CoachPromptsScreen} 
-            />
-            */}
+            {/* Form Analysis (AI-powered lift feedback) */}
+            <Stack.Screen name="FormAnalysis" component={FormAnalysisScreen} />
         </Stack.Navigator>
     );
 }

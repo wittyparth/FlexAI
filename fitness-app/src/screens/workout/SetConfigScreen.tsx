@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { colors as themeColors } from '../../theme/colors';
@@ -82,9 +81,9 @@ export function SetConfigScreen({ navigation, route }: any) {
                 </TouchableOpacity>
                 <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Set Options</Text>
                 <TouchableOpacity onPress={handleSave}>
-                    <LinearGradient colors={colors.primary.gradient as [string, string]} style={styles.saveBtn}>
+                    <View style={styles.saveBtn}>
                         <Text style={styles.saveText}>Save</Text>
-                    </LinearGradient>
+                    </View>
                 </TouchableOpacity>
             </View>
 
@@ -212,8 +211,7 @@ export function SetConfigScreen({ navigation, route }: any) {
 
                 {/* Summary Preview */}
                 <View style={styles.section}>
-                    <LinearGradient
-                        colors={[`${colors.primary.main}10`, `${colors.primary.main}05`]}
+                    <View
                         style={styles.summaryCard}
                     >
                         <Text style={[styles.summaryTitle, { color: colors.foreground }]}>Set Preview</Text>
@@ -238,7 +236,7 @@ export function SetConfigScreen({ navigation, route }: any) {
                                 <Text style={[styles.summaryValue, { color: colors.foreground }]}>{targetRpe}</Text>
                             </View>
                         </View>
-                    </LinearGradient>
+                    </View>
                 </View>
 
                 <View style={{ height: 100 }} />

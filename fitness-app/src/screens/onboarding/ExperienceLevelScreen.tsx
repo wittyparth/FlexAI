@@ -8,7 +8,6 @@ import {
     Platform,
     ScrollView,
 } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
 import { useTheme } from '../../contexts';
@@ -114,10 +113,7 @@ export function ExperienceLevelScreen({ navigation }: ExperienceLevelScreenProps
                                     isSelected && shadows.accent
                                 ]}>
                                     {isSelected && (
-                                        <LinearGradient
-                                            colors={(colors.primary.gradient || [colors.primary.main, colors.primary.light]) as any}
-                                            start={{ x: 0, y: 0 }}
-                                            end={{ x: 1, y: 0 }}
+                                        <View
                                             style={styles.gradientBorder}
                                         />
                                     )}
@@ -160,8 +156,7 @@ export function ExperienceLevelScreen({ navigation }: ExperienceLevelScreenProps
 
             {/* Footer Action */}
             <View style={[styles.footer, { backgroundColor: colors.background }]}>
-                <LinearGradient
-                    colors={[colors.background + '00', colors.background] as any}
+                <View
                     style={styles.footerGradient}
                     pointerEvents="none"
                 />

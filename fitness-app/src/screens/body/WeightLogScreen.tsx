@@ -13,7 +13,6 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import { LineChart } from 'react-native-gifted-charts';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
@@ -83,11 +82,8 @@ export function WeightLogScreen({ navigation }: any) {
                                     <Text style={[styles.goalText, { color: colors.mutedForeground }]}>Goal: {goalWeight}</Text>
                                 </View>
                                 <View style={[styles.progressBg, { backgroundColor: colors.muted }]}>
-                                    <LinearGradient
-                                        colors={['#10B981', '#059669'] as [string, string]}
+                                    <View
                                         style={[styles.progressFill, { width: `${Math.min(progressPercent, 100)}%` }]}
-                                        start={{ x: 0, y: 0 }}
-                                        end={{ x: 1, y: 0 }}
                                     />
                                 </View>
                                 <Text style={[styles.progressText, { color: colors.success }]}>{progressPercent.toFixed(0)}% to goal!</Text>
@@ -174,18 +170,18 @@ export function WeightLogScreen({ navigation }: any) {
                                 <Text style={[styles.cancelText, { color: colors.foreground }]}>Cancel</Text>
                             </TouchableOpacity>
                             <TouchableOpacity style={styles.saveBtn} activeOpacity={0.9}>
-                                <LinearGradient colors={['#10B981', '#059669'] as [string, string]} style={styles.saveGradient}>
+                                <View style={styles.saveGradient}>
                                     <Text style={styles.saveText}>Save</Text>
-                                </LinearGradient>
+                                </View>
                             </TouchableOpacity>
                         </View>
                     </View>
                 ) : (
                     <TouchableOpacity style={styles.fab} onPress={() => setShowInput(true)} activeOpacity={0.9}>
-                        <LinearGradient colors={['#10B981', '#059669'] as [string, string]} style={styles.fabGradient}>
+                        <View style={styles.fabGradient}>
                             <Ionicons name="add" size={28} color="#FFF" />
                             <Text style={styles.fabText}>Log Weight</Text>
-                        </LinearGradient>
+                        </View>
                     </TouchableOpacity>
                 )}
             </View>

@@ -11,7 +11,6 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useColors, useRankings } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 
@@ -116,14 +115,13 @@ export function LeaderboardScreen({ navigation }: any) {
                         onPress={() => setPeriod(p)}
                     >
                         {period === p ? (
-                            <LinearGradient
-                                colors={colors.primary.gradient as [string, string]}
+                            <View
                                 style={styles.periodTabGradient}
                             >
                                 <Text style={styles.periodTextActive}>
                                     {p === 'weekly' ? 'Weekly' : p === 'monthly' ? 'Monthly' : 'All Time'}
                                 </Text>
-                            </LinearGradient>
+                            </View>
                         ) : (
                             <Text style={[styles.periodText, { color: colors.mutedForeground }]}>
                                 {p === 'weekly' ? 'Weekly' : p === 'monthly' ? 'Monthly' : 'All Time'}
@@ -150,8 +148,7 @@ export function LeaderboardScreen({ navigation }: any) {
                                 {formatXP(top3[1]?.score || 0)} XP
                             </Text>
                             <View style={[styles.podiumBar, styles.podiumBarSecond, { backgroundColor: colors.muted }]}>
-                                <LinearGradient
-                                    colors={['#C0C0C0', '#E8E8E8']}
+                                <View
                                     style={styles.podiumBarFill}
                                 />
                             </View>
@@ -165,14 +162,13 @@ export function LeaderboardScreen({ navigation }: any) {
                             <View style={[styles.rankBadge, styles.rankBadgeFirst, { backgroundColor: getRankColor(1) }]}>
                                 <Text style={styles.rankBadgeText}>1</Text>
                             </View>
-                            <LinearGradient
-                                colors={['#FFD700', '#FFA500']}
+                            <View
                                 style={styles.firstAvatarRing}
                             >
                                 <View style={[styles.avatarInner, { backgroundColor: colors.card }]}>
                                     <Image source={{ uri: top3[0]?.user?.avatarUrl || 'https://i.pravatar.cc/150' }} style={styles.podiumAvatar} />
                                 </View>
-                            </LinearGradient>
+                            </View>
                             <Text style={[styles.podiumName, styles.podiumNameFirst, { color: colors.foreground }]} numberOfLines={1}>
                                 {top3[0]?.user?.firstName || 'User'}
                             </Text>
@@ -180,8 +176,7 @@ export function LeaderboardScreen({ navigation }: any) {
                                 {formatXP(top3[0]?.score || 0)} XP
                             </Text>
                             <View style={[styles.podiumBar, styles.podiumBarFirst, { backgroundColor: colors.muted }]}>
-                                <LinearGradient
-                                    colors={['#FFD700', '#FFA500']}
+                                <View
                                     style={styles.podiumBarFill}
                                 />
                             </View>
@@ -200,8 +195,7 @@ export function LeaderboardScreen({ navigation }: any) {
                                 {formatXP(top3[2]?.score || 0)} XP
                             </Text>
                             <View style={[styles.podiumBar, styles.podiumBarThird, { backgroundColor: colors.muted }]}>
-                                <LinearGradient
-                                    colors={['#CD7F32', '#E8B873']}
+                                <View
                                     style={styles.podiumBarFill}
                                 />
                             </View>

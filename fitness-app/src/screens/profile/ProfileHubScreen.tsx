@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import {
@@ -116,7 +115,7 @@ export function ProfileHubScreen({ navigation }: any) {
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
-            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: insets.bottom + 90 }}>
+            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: insets.bottom + 140 }}>
 
                 {/* ─── PROFILE HERO ─── */}
                 <View
@@ -234,7 +233,7 @@ export function ProfileHubScreen({ navigation }: any) {
                         onPress={() => goToCoach('CoachHub')}
                         activeOpacity={0.9}
                     >
-                        <LinearGradient colors={['#1E40AF', '#6366F1']} style={styles.coachGradient}>
+                        <View style={styles.coachGradient}>
                             <View style={styles.coachContent}>
                                 <View>
                                     <Text style={styles.coachLabel}>AI-POWERED</Text>
@@ -245,7 +244,7 @@ export function ProfileHubScreen({ navigation }: any) {
                                     <Ionicons name="sparkles" size={28} color="#FFF" />
                                 </View>
                             </View>
-                        </LinearGradient>
+                        </View>
                     </TouchableOpacity>
                 </Animated.View>
 

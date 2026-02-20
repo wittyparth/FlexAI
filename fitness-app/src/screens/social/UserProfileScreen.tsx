@@ -11,7 +11,6 @@ import {
 import { useState } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { colors as themeColors } from '../../theme/colors';
@@ -113,8 +112,7 @@ export function UserProfileScreen({ route, navigation }: any) {
                     {/* Avatar & Level */}
                     <View style={styles.avatarSection}>
                         <View style={styles.avatarContainer}>
-                            <LinearGradient
-                                colors={colors.primary.gradient as [string, string]}
+                            <View
                                 style={styles.avatarRing}
                             >
                                 <View style={[styles.avatarInner, { backgroundColor: colors.card }]}>
@@ -123,7 +121,7 @@ export function UserProfileScreen({ route, navigation }: any) {
                                         style={styles.avatar}
                                     />
                                 </View>
-                            </LinearGradient>
+                            </View>
                             <View style={[styles.levelBadge, { backgroundColor: colors.primary.main }]}>
                                 <Text style={styles.levelText}>Lv.{userProfile?.level || 1}</Text>
                             </View>
@@ -174,10 +172,7 @@ export function UserProfileScreen({ route, navigation }: any) {
                                 <Text style={[styles.xpValue, { color: colors.primary.main }]}>{formatNumber(userProfile?.xp || 0)} XP</Text>
                             </View>
                             <View style={[styles.xpBarBg, { backgroundColor: colors.muted }]}>
-                                <LinearGradient
-                                    colors={colors.primary.gradient as [string, string]}
-                                    start={{ x: 0, y: 0 }}
-                                    end={{ x: 1, y: 0 }}
+                                <View
                                     style={[styles.xpBarFill, { width: '65%' }]}
                                 />
                             </View>
@@ -215,8 +210,7 @@ export function UserProfileScreen({ route, navigation }: any) {
                                 onPress={handleFollow}
                                 disabled={followMutation.isPending || unfollowMutation.isPending}
                             >
-                                <LinearGradient
-                                    colors={userProfile?.isFollowing ? [colors.muted, colors.muted] : (colors.primary.gradient as [string, string])}
+                                <View
                                     style={styles.followButtonGradient}
                                 >
                                     {followMutation.isPending || unfollowMutation.isPending ? (
@@ -226,7 +220,7 @@ export function UserProfileScreen({ route, navigation }: any) {
                                             {userProfile?.isFollowing ? 'Following' : 'Follow'}
                                         </Text>
                                     )}
-                                </LinearGradient>
+                                </View>
                             </TouchableOpacity>
                         )}
 

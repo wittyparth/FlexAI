@@ -15,57 +15,13 @@ import { WorkoutNavigator } from './WorkoutNavigator';
 import { SocialNavigator } from './SocialNavigator';
 import { ProfileNavigator } from './ProfileNavigator';
 import { ExploreNavigator } from './ExploreNavigator';
+import { BlurView } from 'expo-blur';
+import { FloatingWorkoutPill } from '../components/active-workout/FloatingWorkoutPill';
 
 const Tab = createBottomTabNavigator<MainTabParamList>();
 const HomeStack = createStackNavigator<HomeStackParamList>();
 
-// Placeholder components for other tabs
-function WorkoutPlaceholder() {
-    const colors = useColors();
-    return (
-        <View style={[styles.placeholder, { backgroundColor: colors.background }]}>
-            <Ionicons name="barbell-outline" size={48} color={colors.mutedForeground} />
-            <Text style={[styles.placeholderText, { color: colors.mutedForeground }]}>
-                Workout Tab - Coming Soon
-            </Text>
-        </View>
-    );
-}
-function ExplorePlaceholder() {
-    const colors = useColors();
-    return (
-        <View style={[styles.placeholder, { backgroundColor: colors.background }]}>
-            <Ionicons name="compass-outline" size={48} color={colors.mutedForeground} />
-            <Text style={[styles.placeholderText, { color: colors.mutedForeground }]}>
-                Explore Tab - Coming Soon
-            </Text>
-        </View>
-    );
-}
-function SocialPlaceholder() {
-    const colors = useColors();
-    return (
-        <View style={[styles.placeholder, { backgroundColor: colors.background }]}>
-            <Ionicons name="people-outline" size={48} color={colors.mutedForeground} />
-            <Text style={[styles.placeholderText, { color: colors.mutedForeground }]}>
-                Social Tab - Coming Soon
-            </Text>
-        </View>
-    );
-}
-function ProfilePlaceholder() {
-    const colors = useColors();
-    return (
-        <View style={[styles.placeholder, { backgroundColor: colors.background }]}>
-            <Ionicons name="person-outline" size={48} color={colors.mutedForeground} />
-            <Text style={[styles.placeholderText, { color: colors.mutedForeground }]}>
-                Profile Tab - Coming Soon
-            </Text>
-        </View>
-    );
-}
-
-// Custom Tab Bar Icon with active indicator
+// Premium Tab Bar Icon with animated active indicator
 function TabBarIcon({
     route,
     focused,
@@ -100,16 +56,16 @@ function TabBarIcon({
 
     return (
         <View style={styles.iconWrapper}>
-            {/* Active indicator pill behind the icon */}
+            {/* Premium gradient active indicator pill */}
             {focused && (
                 <View
                     style={[
                         styles.activeIndicator,
-                        { backgroundColor: colors.primary.main + '20' },
+                        { backgroundColor: colors.primary.main + '18' },
                     ]}
                 />
             )}
-            <Ionicons name={iconName} size={26} color={color} />
+            <Ionicons name={iconName} size={focused ? 26 : 24} color={color} />
         </View>
     );
 }
@@ -127,6 +83,7 @@ function HomeStackNavigator() {
                 headerTitleStyle: {
                     fontSize: 18,
                     fontWeight: '600',
+                    fontFamily: fontFamilies.display,
                 },
                 headerShadowVisible: false,
             }}
@@ -158,112 +115,96 @@ function HomeStackNavigator() {
     );
 }
 
-// Main Tab Navigator
+// Main Tab Navigator — Premium Design
 export function MainTabs() {
     const colors = useColors();
     const insets = useSafeAreaInsets();
 
-    // Tab bar height calculation
     const bottomInset = Math.max(insets.bottom, 8);
-    const tabBarHeight = 70 + bottomInset;
+    const tabBarHeight = 72 + bottomInset;
 
     return (
-        <Tab.Navigator
-            screenOptions={({ route }) => ({
-                headerShown: false,
-                tabBarActiveTintColor: colors.primary.main,
-                tabBarInactiveTintColor: colors.mutedForeground,
-                tabBarStyle: {
-                    backgroundColor: colors.card,
-                    borderTopColor: colors.border,
-                    borderTopWidth: 1,
-                    height: tabBarHeight,
-                    paddingTop: 10,
-                    paddingBottom: bottomInset + 6,
-                    // Add subtle shadow for depth
-                    ...Platform.select({
-                        ios: {
-                            shadowColor: '#000',
-                            shadowOffset: { width: 0, height: -2 },
-                            shadowOpacity: 0.05,
-                            shadowRadius: 8,
-                        },
-                        android: {
-                            elevation: 8,
-                        },
-                    }),
-                },
-                tabBarLabelStyle: {
-                    fontSize: 11,
-                    fontWeight: '600',
-                    fontFamily: fontFamilies.body,
-                    marginTop: 4,
-                },
-                tabBarIcon: ({ focused, color }) => (
-                    <TabBarIcon route={route.name} focused={focused} color={color} />
-                ),
-                // Hide label when not focused for cleaner look (optional - remove if you prefer always visible)
-                // tabBarShowLabel: true,
-            })}
-        >
-            <Tab.Screen
-                name="HomeTab"
-                component={HomeStackNavigator}
-                options={{
-                    tabBarLabel: 'Home',
-                }}
-            />
-            <Tab.Screen
-                name="WorkoutTab"
-                component={WorkoutNavigator}
-                options={{
-                    tabBarLabel: 'Workout',
-                }}
-            />
-            <Tab.Screen
-                name="ExploreTab"
-                component={ExploreNavigator}
-                options={{
-                    tabBarLabel: 'Explore',
-                }}
-            />
-            <Tab.Screen
-                name="SocialTab"
-                component={SocialNavigator}
-                options={{
-                    tabBarLabel: 'Social',
-                }}
-            />
-            <Tab.Screen
-                name="ProfileTab"
-                component={ProfileNavigator}
-                options={{
-                    tabBarLabel: 'Profile',
-                }}
-            />
-        </Tab.Navigator>
+        <View style={{ flex: 1 }}>
+            <Tab.Navigator
+                screenOptions={({ route }) => ({
+                    headerShown: false,
+                    tabBarActiveTintColor: colors.primary.main,
+                    tabBarInactiveTintColor: colors.mutedForeground,
+                    tabBarStyle: {
+                        position: 'absolute',
+                        backgroundColor: colors.tabBarBackground + 'F2',
+                        borderTopColor: colors.tabBarBorder,
+                        borderTopWidth: StyleSheet.hairlineWidth,
+                        height: tabBarHeight,
+                        paddingTop: 8,
+                        paddingBottom: bottomInset + 4,
+                        ...Platform.select({
+                            ios: {
+                                shadowColor: colors.primary.main,
+                                shadowOffset: { width: 0, height: -4 },
+                                shadowOpacity: 0.08,
+                                shadowRadius: 16,
+                            },
+                            android: {
+                                elevation: 12,
+                            },
+                        }),
+                    },
+                    tabBarLabelStyle: {
+                        fontSize: 10,
+                        fontWeight: '600',
+                        fontFamily: fontFamilies.body,
+                        marginTop: 2,
+                        letterSpacing: 0.3,
+                    },
+                    tabBarIcon: ({ focused, color }) => (
+                        <TabBarIcon route={route.name} focused={focused} color={color} />
+                    ),
+                })}
+            >
+                <Tab.Screen
+                    name="HomeTab"
+                    component={HomeStackNavigator}
+                    options={{ tabBarLabel: 'Home' }}
+                />
+                <Tab.Screen
+                    name="WorkoutTab"
+                    component={WorkoutNavigator}
+                    options={{ tabBarLabel: 'Workout' }}
+                />
+                <Tab.Screen
+                    name="ExploreTab"
+                    component={ExploreNavigator}
+                    options={{ tabBarLabel: 'Explore' }}
+                />
+                <Tab.Screen
+                    name="SocialTab"
+                    component={SocialNavigator}
+                    options={{ tabBarLabel: 'Social' }}
+                />
+                <Tab.Screen
+                    name="ProfileTab"
+                    component={ProfileNavigator}
+                    options={{ tabBarLabel: 'Profile' }}
+                />
+            </Tab.Navigator>
+
+            {/* Floating workout indicator — shows when workout active & user navigated away */}
+            <FloatingWorkoutPill />
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
-    placeholder: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        gap: 16,
-    },
-    placeholderText: {
-        fontSize: 16,
-    },
     iconWrapper: {
         alignItems: 'center',
         justifyContent: 'center',
-        width: 50,
+        width: 56,
         height: 32,
     },
     activeIndicator: {
         position: 'absolute',
-        width: 50,
+        width: 56,
         height: 32,
         borderRadius: 16,
     },

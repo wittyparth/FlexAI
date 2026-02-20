@@ -7,7 +7,6 @@
 
 import React from 'react';
 import { View, Text, StyleSheet, StyleProp, ViewStyle } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
@@ -165,14 +164,11 @@ export function StatCard({
     if (gradient) {
         return (
             <View style={[styles.container, style]}>
-                <LinearGradient
-                    colors={(colors.primary.gradient || [colors.primary.main, colors.primary.light]) as any}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 1 }}
+                <View
                     style={styles.gradientCard}
                 >
                     {renderContent()}
-                </LinearGradient>
+                </View>
             </View>
         );
     }

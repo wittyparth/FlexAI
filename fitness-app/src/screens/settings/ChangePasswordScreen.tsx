@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 
@@ -163,9 +162,9 @@ export function ChangePasswordScreen({ navigation }: any) {
                         disabled={!isValid}
                         activeOpacity={0.9}
                     >
-                        <LinearGradient colors={colors.primary.gradient as [string, string]} style={styles.submitGradient}>
+                        <View style={styles.submitGradient}>
                             <Text style={styles.submitText}>Update Password</Text>
-                        </LinearGradient>
+                        </View>
                     </TouchableOpacity>
                 </Animated.View>
             </ScrollView>

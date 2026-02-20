@@ -73,10 +73,10 @@ export type HomeStackParamList = {
 export type WorkoutStackParamList = {
   // Phase 2A: Workout Hub
   WorkoutHub: undefined;
-  RoutineList: undefined;
-  RoutineDetail: { routineId: number };
-  RoutineEditor: { routineId?: number };
-  ExercisePicker: { onSelect?: (exerciseIds: number[]) => void };
+  RoutineList: { mode?: 'select'; initialTab?: string; onSelect?: (routineId: number) => void };
+  RoutineDetail: { routineId: number; mode?: 'select'; onSelect?: (routineId: number) => void };
+  RoutineEditor: { routineId?: number; mode?: 'create' | 'edit' | 'template_day'; routineData?: any; onSaveReturn?: (data: any) => void };
+  ExercisePicker: { onSelect?: (exerciseIds: number[]) => void; returnTo?: string };
   ExerciseDetail: { exerciseId: number };
   ExerciseFilter: undefined;
   CustomExercise: undefined;
@@ -95,6 +95,11 @@ export type WorkoutStackParamList = {
   AIPreview: { workoutData: any };
   AIPrompts: undefined;
   AIRoutinePlanner: undefined;
+  AITemplateGenerator: { customPrompt?: string };
+  
+  // Phase 2D: Templates
+  TemplateList: undefined;
+  TemplateEditor: { templateId?: string };
 };
 
 // ==========================================
@@ -148,7 +153,8 @@ export type AnalyticsStackParamList = {
 // ==========================================
 export type CoachStackParamList = {
   CoachHub: undefined;
-  CoachChat: { conversationId?: number };
+  CoachChat: { conversationId?: string; initialPrompt?: string };
+  ChatHistory: undefined;
   FormAnalysis: undefined;
   CoachPrompts: undefined;
 };

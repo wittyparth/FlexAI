@@ -11,7 +11,6 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { colors as themeColors } from '../../theme/colors';
@@ -191,15 +190,12 @@ export function ExerciseSwapScreen({ navigation, route }: any) {
                     onPress={handleSwap}
                     activeOpacity={0.9}
                 >
-                    <LinearGradient
-                        colors={colors.primary.gradient as [string, string]}
+                    <View
                         style={styles.swapGradient}
-                        start={{ x: 0, y: 0 }}
-                        end={{ x: 1, y: 0 }}
                     >
                         <MaterialCommunityIcons name="swap-horizontal" size={22} color="#FFF" />
                         <Text style={styles.swapText}>Swap Exercise</Text>
-                    </LinearGradient>
+                    </View>
                 </TouchableOpacity>
             </View>
         </View>

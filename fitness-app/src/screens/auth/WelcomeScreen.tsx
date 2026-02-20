@@ -20,7 +20,6 @@ import {
     Dimensions,
     StatusBar,
 } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Button } from '../../components/ui';
 import { useColors } from '../../hooks';
@@ -82,11 +81,7 @@ export function WelcomeScreen({ navigation }: WelcomeScreenProps) {
                 </View>
 
                 {/* Text & Actions Section */}
-                <LinearGradient
-                    colors={isDark
-                        ? [colors.background + '00', colors.background + 'CC', colors.background]
-                        : [colors.background + '00', colors.background + 'CC', colors.background]
-                    }
+                <View
                     style={styles.bottomSection}
                 >
                     {/* Headline */}
@@ -116,7 +111,7 @@ export function WelcomeScreen({ navigation }: WelcomeScreenProps) {
                         variant="ghost"
                         fullWidth
                     />
-                </LinearGradient>
+                </View>
             </View>
         </View>
     );

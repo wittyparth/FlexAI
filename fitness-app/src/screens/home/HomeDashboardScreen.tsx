@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, RefreshControl, ActivityIndicator } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { HomeStackScreenProps } from '../../navigation/types';
@@ -173,10 +172,7 @@ export function HomeDashboardScreen({ navigation }: HomeStackScreenProps<'HomeDa
                                         </Text>
                                     </View>
                                     <View style={[styles.progressBarBg, { backgroundColor: colors.slate[200] }]}>
-                                        <LinearGradient
-                                            colors={(colors.primary.gradient || [colors.primary.main || '#0052FF', colors.primary.light || '#4D7CFF']) as any}
-                                            start={{ x: 0, y: 0 }}
-                                            end={{ x: 1, y: 0 }}
+                                        <View
                                             style={[styles.progressBarFill, { width: `${data.userLevel.progress * 100}%` }]}
                                         />
                                     </View>
@@ -295,15 +291,12 @@ export function HomeDashboardScreen({ navigation }: HomeStackScreenProps<'HomeDa
                             </View>
 
                             <TouchableOpacity style={styles.startBtnContainer} activeOpacity={0.9}>
-                                <LinearGradient
-                                    colors={[colors.primary.main || '#0052FF', colors.primary.dark || '#0039B3'] as any}
-                                    start={{ x: 0, y: 0 }}
-                                    end={{ x: 1, y: 0 }}
+                                <View
                                     style={styles.startBtn}
                                 >
                                     <Text style={styles.startBtnText}>START WORKOUT</Text>
                                     <Ionicons name="arrow-forward" size={20} color="#fff" />
-                                </LinearGradient>
+                                </View>
                             </TouchableOpacity>
                         </Card>
                     </View>
@@ -366,7 +359,7 @@ export function HomeDashboardScreen({ navigation }: HomeStackScreenProps<'HomeDa
                     </View>
                 )}
 
-                <View style={{ height: 100 }} />
+                <View style={{ height: insets.bottom + 140 }} />
             </ScrollView>
         </View>
     );

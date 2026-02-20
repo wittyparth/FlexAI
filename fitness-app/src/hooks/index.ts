@@ -1,4 +1,5 @@
 export { useColors } from './useColors';
+export { useActiveWorkout } from './useActiveWorkout';
 
 // Query hooks
 export * from './queries/useStatsQueries';

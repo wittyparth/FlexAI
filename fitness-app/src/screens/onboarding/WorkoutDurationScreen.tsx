@@ -8,7 +8,6 @@ import {
     StatusBar,
     Platform,
 } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
 import { useTheme } from '../../contexts';
@@ -119,8 +118,7 @@ export function WorkoutDurationScreen({ navigation }: any) {
 
             {/* Footer */}
             <View style={[styles.footer, { backgroundColor: colors.background }]}>
-                <LinearGradient
-                    colors={[colors.background + '00', colors.background] as any}
+                <View
                     style={styles.footerGradient}
                     pointerEvents="none"
                 />

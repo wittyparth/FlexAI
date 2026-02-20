@@ -20,12 +20,22 @@ interface WorkoutState {
   workoutName: string | null;
   startTime: string | null; // ISO Date String
   status: 'idle' | 'in_progress' | 'paused';
+  currentExerciseId: number | null; // Track active exercise for crash recovery
   
   // Normalized Data (Persisted)
   exercises: Record<number, WorkoutExercise>; // Key: exerciseId
   sets: Record<string, WorkoutSet>; // Key: Set ID (string for temp IDs)
   
-  // UI State (Not Persisted ideally, but useful for crash recovery)
+  // Rest Timer (Global so floating pill can show it)
+  isResting: boolean;
+  restEndTime: string | null; // ISO Date String when rest finishes
+  restDurationSeconds: number; // Original duration for display
+  
+  // User Preferences (Persisted)
+  autoStartTimer: boolean;
+  defaultTimerSeconds: number;
+  
+  // UI State
   isLoading: boolean;
   error: string | null;
   minimized: boolean; // Player floating mode
@@ -35,8 +45,8 @@ interface WorkoutState {
 interface WorkoutActions {
   // Core Actions
   startWorkout: (input: StartWorkoutInput) => Promise<void>;
-  startMockWorkout: (name: string, exercises?: any[]) => void; // No API needed
-  resumeWorkout: () => Promise<void>; // Hydrate from API if needed
+  startMockWorkout: (name: string, exercises?: any[]) => void;
+  resumeWorkout: () => Promise<void>;
   cancelWorkout: () => Promise<void>;
   completeWorkout: (input: any) => Promise<void>;
   
@@ -44,9 +54,15 @@ interface WorkoutActions {
   logSet: (exerciseId: number, input: LogSetInput) => Promise<void>;
   deleteSet: (exerciseId: number, setIds: string) => Promise<void>;
   
-  // Timer Actions
+  // Exercise & Rest
+  setCurrentExercise: (id: number) => void;
+  startRest: (durationSeconds: number) => void;
+  stopRest: () => void;
+  
+  // Timer & UI
   tick: () => void;
   minimize: (minimized: boolean) => void;
+  updateTimerSettings: (autoStart: boolean, defaultDuration: number) => void;
   resetError: () => void;
 }
 
@@ -57,8 +73,14 @@ const initialState: Omit<WorkoutState, 'exercises'|'sets'> & { exercises: any, s
   workoutName: null,
   startTime: null,
   status: 'idle',
+  currentExerciseId: null,
   exercises: {},
   sets: {},
+  isResting: false,
+  restEndTime: null,
+  restDurationSeconds: 0,
+  autoStartTimer: true,
+  defaultTimerSeconds: 90,
   isLoading: false,
   error: null,
   minimized: false,
@@ -302,6 +324,29 @@ export const useWorkoutStore = create<WorkoutState & WorkoutActions>()(
           }
       },
 
+      // EXERCISE & REST
+      // ----------------------------------------------------------------------
+      setCurrentExercise: (id) => {
+        set((state) => { state.currentExerciseId = id; });
+      },
+
+      startRest: (durationSeconds) => {
+        const endTime = new Date(Date.now() + durationSeconds * 1000).toISOString();
+        set((state) => {
+          state.isResting = true;
+          state.restEndTime = endTime;
+          state.restDurationSeconds = durationSeconds;
+        });
+      },
+
+      stopRest: () => {
+        set((state) => {
+          state.isResting = false;
+          state.restEndTime = null;
+          state.restDurationSeconds = 0;
+        });
+      },
+
       // TIMER & UI
       // ----------------------------------------------------------------------
       tick: () => {
@@ -313,6 +358,13 @@ export const useWorkoutStore = create<WorkoutState & WorkoutActions>()(
       },
       
       minimize: (val) => set({ minimized: val }),
+
+      updateTimerSettings: (autoStart, defaultDuration) => {
+        set((state) => {
+           state.autoStartTimer = autoStart;
+           state.defaultTimerSeconds = defaultDuration;
+        });
+      },
       
       resetError: () => set({ error: null }),
 
@@ -325,8 +377,14 @@ export const useWorkoutStore = create<WorkoutState & WorkoutActions>()(
           workoutName: state.workoutName,
           startTime: state.startTime,
           status: state.status,
+          currentExerciseId: state.currentExerciseId,
           exercises: state.exercises,
           sets: state.sets,
+          isResting: state.isResting,
+          restEndTime: state.restEndTime,
+          restDurationSeconds: state.restDurationSeconds,
+          autoStartTimer: state.autoStartTimer,
+          defaultTimerSeconds: state.defaultTimerSeconds,
           elapsedSeconds: state.elapsedSeconds
       }),
     }

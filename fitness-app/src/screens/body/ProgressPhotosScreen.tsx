@@ -13,7 +13,6 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { useProgressPhotos } from '../../hooks/queries/useBodyQueries';
@@ -143,12 +142,11 @@ export function ProgressPhotosScreen({ navigation }: any) {
 
             {/* FAB */}
             <TouchableOpacity style={styles.fab} activeOpacity={0.9}>
-                <LinearGradient
-                    colors={['#10B981', '#059669'] as [string, string]}
+                <View
                     style={styles.fabGradient}
                 >
                     <Ionicons name="camera" size={28} color="#FFF" />
-                </LinearGradient>
+                </View>
             </TouchableOpacity>
 
             {/* Detail Modal */}

@@ -16,7 +16,6 @@ import {
     Platform,
     Linking,
 } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
 import { useTheme } from '../../contexts';

@@ -11,7 +11,6 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { colors as themeColors } from '../../theme/colors';
@@ -76,11 +75,8 @@ export function RoutineTemplateScreen({ navigation, route }: any) {
             <ScrollView showsVerticalScrollIndicator={false}>
                 {/* Hero Card */}
                 <Animated.View style={{ opacity: fadeAnim }}>
-                    <LinearGradient
-                        colors={colors.primary.gradient as [string, string]}
+                    <View
                         style={styles.heroCard}
-                        start={{ x: 0, y: 0 }}
-                        end={{ x: 1, y: 1 }}
                     >
                         {/* Tags */}
                         <View style={styles.tagRow}>
@@ -118,7 +114,7 @@ export function RoutineTemplateScreen({ navigation, route }: any) {
                                 <Text style={styles.heroStatLabel}>sets</Text>
                             </View>
                         </View>
-                    </LinearGradient>
+                    </View>
                 </Animated.View>
 
                 {/* Creator */}
@@ -193,15 +189,12 @@ export function RoutineTemplateScreen({ navigation, route }: any) {
                     onPress={() => navigation.navigate('ActiveWorkout')}
                     activeOpacity={0.9}
                 >
-                    <LinearGradient
-                        colors={colors.primary.gradient as [string, string]}
+                    <View
                         style={styles.startGradient}
-                        start={{ x: 0, y: 0 }}
-                        end={{ x: 1, y: 0 }}
                     >
                         <Ionicons name="play" size={22} color="#FFF" />
                         <Text style={styles.startText}>Start Workout</Text>
-                    </LinearGradient>
+                    </View>
                 </TouchableOpacity>
             </View>
         </View>

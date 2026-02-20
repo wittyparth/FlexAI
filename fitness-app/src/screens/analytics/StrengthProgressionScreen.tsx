@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import { LineChart } from 'react-native-gifted-charts';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
@@ -28,18 +27,27 @@ const EXERCISES = [
     { id: 4, name: 'Overhead Press', icon: 'human-handsup' },
 ];
 
-const PROGRESSION_DATA = [
-    { value: 185, date: 'Jan 1', label: '' },
-    { value: 190, date: 'Jan 8', label: '' },
-    { value: 195, date: 'Jan 15', label: '' },
-    { value: 195, date: 'Jan 22', label: '' },
-    { value: 200, date: 'Jan 29', label: '' },
-    { value: 205, date: 'Feb 5', label: '' },
-    { value: 210, date: 'Feb 12', label: '' },
-    { value: 215, date: 'Feb 19', label: '' },
-    { value: 220, date: 'Feb 26', label: '' },
-    { value: 225, date: 'Mar 5', label: '', isPR: true },
-];
+const PROGRESSION_DATA: Record<string, any[]> = {
+    '3M': [
+        { value: 200, date: 'Jan 1', label: 'Jan' }, { value: 205, date: 'Jan 15', label: '' },
+        { value: 210, date: 'Feb 1', label: 'Feb' }, { value: 215, date: 'Feb 15', label: '' },
+        { value: 220, date: 'Mar 1', label: 'Mar' }, { value: 225, date: 'Mar 15', label: '', isPR: true },
+    ],
+    '6M': [
+        { value: 185, date: 'Oct 1', label: 'Oct' }, { value: 195, date: 'Nov 1', label: 'Nov' },
+        { value: 200, date: 'Dec 1', label: 'Dec' }, { value: 210, date: 'Jan 1', label: 'Jan' },
+        { value: 215, date: 'Feb 1', label: 'Feb' }, { value: 225, date: 'Mar 1', label: 'Mar', isPR: true },
+    ],
+    '1Y': [
+        { value: 155, date: 'Apr', label: 'Apr' }, { value: 165, date: 'Jun', label: 'Jun' },
+        { value: 185, date: 'Aug', label: 'Aug' }, { value: 200, date: 'Oct', label: 'Oct' },
+        { value: 215, date: 'Dec', label: 'Dec' }, { value: 225, date: 'Feb', label: 'Feb', isPR: true },
+    ],
+    'ALL': [
+        { value: 135, date: '2023', label: "'23" }, { value: 165, date: '2024', label: "'24" },
+        { value: 225, date: '2025', label: "'25", isPR: true },
+    ]
+};
 
 const RECENT_SESSIONS = [
     { date: 'Mar 5, 2025', weight: 205, reps: 5, e1rm: 225, isPR: true },
@@ -64,19 +72,18 @@ export function StrengthProgressionScreen({ navigation }: any) {
     const allTimeBest = 225;
     const improvement = 21.6; // percentage improvement
 
+    const currentData = PROGRESSION_DATA[period];
+
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
             {/* Header */}
-            <LinearGradient
-                colors={[colors.primary.main, '#4338CA'] as [string, string]}
-                style={[styles.header, { paddingTop: insets.top + 8 }]}
-            >
+            <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.background }]}>
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerBtn}>
-                    <Ionicons name="arrow-back" size={24} color="#FFF" />
+                    <Ionicons name="arrow-back" size={24} color={colors.foreground} />
                 </TouchableOpacity>
-                <Text style={[styles.headerTitle, { fontFamily: fontFamilies.display }]}>Strength</Text>
+                <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Strength</Text>
                 <View style={styles.headerBtn} />
-            </LinearGradient>
+            </View>
 
             <ScrollView showsVerticalScrollIndicator={false}>
                 {/* Exercise Selector */}
@@ -137,48 +144,72 @@ export function StrengthProgressionScreen({ navigation }: any) {
                             {['3M', '6M', '1Y', 'ALL'].map((p) => (
                                 <TouchableOpacity
                                     key={p}
-                                    style={[styles.periodBtn, period === p && { backgroundColor: colors.primary.main }]}
+                                    style={[styles.periodBtn, period === p && { backgroundColor: `${colors.primary.main}20` }]}
                                     onPress={() => setPeriod(p)}
                                 >
-                                    <Text style={[styles.periodText, { color: period === p ? '#FFF' : colors.mutedForeground }]}>{p}</Text>
+                                    <Text style={[styles.periodText, { color: period === p ? colors.primary.main : colors.mutedForeground }]}>{p}</Text>
                                 </TouchableOpacity>
                             ))}
                         </View>
                     </View>
                     <View style={[styles.chartCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
                         <LineChart
-                            data={PROGRESSION_DATA.map((d, i) => ({
+                            data={currentData.map((d: any) => ({
                                 value: d.value,
-                                label: i % 3 === 0 ? d.date.split(' ')[0] : '',
-                                dataPointText: d.isPR ? '⭐' : '',
+                                label: d.label,
                                 customDataPoint: d.isPR ? () => (
                                     <View style={[styles.prDot, { backgroundColor: colors.stats.pr }]}>
-                                        <MaterialCommunityIcons name="crown" size={10} color="#FFF" />
+                                        <MaterialCommunityIcons name="crown" size={12} color="#FFF" />
                                     </View>
                                 ) : undefined,
                             }))}
                             width={width - 80}
-                            height={200}
+                            height={220}
                             color={colors.primary.main}
-                            thickness={3}
+                            thickness={4}
                             hideDataPoints={false}
                             dataPointsColor={colors.primary.main}
                             dataPointsRadius={6}
                             curved
                             areaChart
-                            startFillColor={colors.primary.main}
-                            endFillColor={colors.background}
-                            startOpacity={0.3}
-                            endOpacity={0}
+                            startFillColor={`${colors.primary.main}80`}
+                            endFillColor={`${colors.primary.main}00`}
+                            startOpacity={0.6}
+                            endOpacity={0.05}
                             noOfSections={4}
                             yAxisThickness={0}
                             xAxisThickness={0}
-                            xAxisLabelTextStyle={{ color: colors.mutedForeground, fontSize: 10 }}
-                            yAxisTextStyle={{ color: colors.mutedForeground, fontSize: 11 }}
+                            xAxisLabelTextStyle={{ color: colors.mutedForeground, fontSize: 11, fontWeight: '500' }}
+                            yAxisTextStyle={{ color: colors.mutedForeground, fontSize: 11, fontWeight: '500' }}
                             rulesType="solid"
                             rulesColor={colors.border}
                             isAnimated
                             animationDuration={800}
+                            pointerConfig={{
+                                pointerStripHeight: 220,
+                                pointerStripColor: colors.primary.main,
+                                pointerStripWidth: 2,
+                                pointerColor: colors.primary.main,
+                                radius: 6,
+                                pointerLabelWidth: 80,
+                                pointerLabelHeight: 30,
+                                activatePointersOnLongPress: true,
+                                autoAdjustPointerLabelPosition: true,
+                                pointerLabelComponent: (items: any) => (
+                                    <View style={{
+                                        backgroundColor: colors.card,
+                                        padding: 8,
+                                        borderRadius: 8,
+                                        borderWidth: 1,
+                                        borderColor: colors.border,
+                                        left: -20,
+                                    }}>
+                                        <Text style={{ color: colors.foreground, fontSize: 12, fontWeight: '700' }}>
+                                            {items[0].value} lbs
+                                        </Text>
+                                    </View>
+                                ),
+                            }}
                         />
                     </View>
                 </View>
@@ -235,9 +266,9 @@ export function StrengthProgressionScreen({ navigation }: any) {
 
 const styles = StyleSheet.create({
     container: { flex: 1 },
-    header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 12, paddingBottom: 20 },
-    headerBtn: { width: 44, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center' },
-    headerTitle: { fontSize: 24, fontWeight: '700', color: '#FFF' },
+    header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, paddingBottom: 16 },
+    headerBtn: { width: 44, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(150,150,150,0.1)' },
+    headerTitle: { fontSize: 20, fontWeight: '700' },
     exerciseSelector: { paddingVertical: 16 },
     exerciseScroll: { paddingHorizontal: 16, gap: 10 },
     exerciseChip: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, paddingVertical: 12, borderRadius: 14, gap: 8 },
@@ -255,7 +286,7 @@ const styles = StyleSheet.create({
     periodBtn: { paddingHorizontal: 12, paddingVertical: 6, borderRadius: 10 },
     periodText: { fontSize: 12, fontWeight: '600' },
     chartCard: { borderRadius: 20, borderWidth: 1, padding: 20, paddingTop: 10, overflow: 'hidden' },
-    prDot: { width: 20, height: 20, borderRadius: 10, alignItems: 'center', justifyContent: 'center' },
+    prDot: { width: 24, height: 24, borderRadius: 12, alignItems: 'center', justifyContent: 'center', elevation: 4, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.3, shadowRadius: 3 },
     sessionCard: { flexDirection: 'row', alignItems: 'center', padding: 16, borderRadius: 16, borderWidth: 1, marginBottom: 10 },
     sessionInfo: { flex: 1 },
     sessionDate: { fontSize: 16, fontWeight: '600', marginBottom: 4 },

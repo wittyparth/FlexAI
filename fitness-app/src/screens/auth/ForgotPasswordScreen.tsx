@@ -19,7 +19,6 @@ import {
     Platform,
     Alert,
 } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { Input } from '../../components/ui';
 import { useColors } from '../../hooks';
@@ -140,16 +139,13 @@ export function ForgotPasswordScreen({ navigation }: ForgotPasswordScreenProps) 
                         activeOpacity={0.9}
                         style={[styles.submitButton, shadows.accent, loading && styles.buttonDisabled]}
                     >
-                        <LinearGradient
-                            colors={(loading ? ['#94A3B8', '#94A3B8'] : (colors.primary.gradient || [colors.primary.main, colors.primary.light])) as any}
-                            start={{ x: 0, y: 0 }}
-                            end={{ x: 1, y: 0 }}
+                        <View
                             style={styles.submitButtonGradient}
                         >
                             <Text style={styles.submitButtonText}>
                                 {loading ? 'Sending...' : 'Send Reset Code'}
                             </Text>
-                        </LinearGradient>
+                        </View>
                     </TouchableOpacity>
 
                     {/* Back to Login */}

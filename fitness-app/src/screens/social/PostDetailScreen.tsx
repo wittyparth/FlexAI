@@ -14,7 +14,6 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 
 import { useColors, useComments, useToggleLike, useAddComment } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
@@ -161,8 +160,7 @@ export function PostDetailScreen({ route, navigation }: any) {
                         {/* Workout Card */}
                         {post.workout && (
                             <View style={[styles.workoutCard, { borderColor: colors.primary.main }]}>
-                                <LinearGradient
-                                    colors={[`${colors.primary.main}08`, `${colors.primary.main}02`]}
+                                <View
                                     style={styles.workoutGradient}
                                 >
                                     <View style={styles.workoutHeader}>
@@ -185,7 +183,7 @@ export function PostDetailScreen({ route, navigation }: any) {
                                             <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>volume</Text>
                                         </View>
                                     </View>
-                                </LinearGradient>
+                                </View>
                             </View>
                         )}
 

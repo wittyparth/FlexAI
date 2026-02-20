@@ -11,7 +11,6 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 
@@ -46,8 +45,7 @@ export function MeasurementsScreen({ navigation }: any) {
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
             {/* Header */}
-            <LinearGradient
-                colors={['#6366F1', '#4F46E5'] as [string, string]}
+            <View
                 style={[styles.header, { paddingTop: insets.top + 8 }]}
             >
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerBtn}>
@@ -57,7 +55,7 @@ export function MeasurementsScreen({ navigation }: any) {
                 <TouchableOpacity style={styles.headerBtn} onPress={() => setEditMode(!editMode)}>
                     <Ionicons name={editMode ? 'checkmark' : 'pencil'} size={22} color="#FFF" />
                 </TouchableOpacity>
-            </LinearGradient>
+            </View>
 
             <ScrollView showsVerticalScrollIndicator={false}>
                 {/* Last Updated */}
@@ -141,10 +139,10 @@ export function MeasurementsScreen({ navigation }: any) {
 
             {/* Add Measurement Button */}
             <TouchableOpacity style={styles.fab} activeOpacity={0.9}>
-                <LinearGradient colors={['#6366F1', '#4F46E5'] as [string, string]} style={styles.fabGradient}>
+                <View style={styles.fabGradient}>
                     <Ionicons name="add" size={28} color="#FFF" />
                     <Text style={styles.fabText}>Log All</Text>
-                </LinearGradient>
+                </View>
             </TouchableOpacity>
         </View>
     );

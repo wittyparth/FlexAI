@@ -10,7 +10,6 @@ import {
     ScrollView,
     ActivityIndicator,
 } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { Input } from '../../components/ui';
 import { useColors } from '../../hooks';
@@ -214,10 +213,7 @@ export function ResetPasswordScreen({ navigation, route }: ResetPasswordScreenPr
                     disabled={loading}
                     style={[styles.button, { opacity: loading ? 0.7 : 1 }]}
                 >
-                    <LinearGradient
-                        colors={[colors.primary.main, colors.primary.light]}
-                        start={{ x: 0, y: 0 }}
-                        end={{ x: 1, y: 1 }}
+                    <View
                         style={styles.gradient}
                     >
                         {loading ? (
@@ -225,7 +221,7 @@ export function ResetPasswordScreen({ navigation, route }: ResetPasswordScreenPr
                         ) : (
                             <Text style={styles.buttonText}>Reset Password</Text>
                         )}
-                    </LinearGradient>
+                    </View>
                 </TouchableOpacity>
 
             </ScrollView>

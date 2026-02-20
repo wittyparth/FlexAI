@@ -91,7 +91,7 @@ export function ExploreHubScreen({ navigation }: any) {
 
     return (
         <View style={[s.container, { backgroundColor: colors.background }]}>
-            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: insets.bottom + 100 }}>
+            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: insets.bottom + 140 }}>
                 <View style={[s.header, { paddingTop: insets.top + 16 }]}>
                     <View><Text style={[s.headerSub, { color: colors.mutedForeground }]}>DISCOVER</Text><Text style={[s.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Explore</Text></View>
                     <TouchableOpacity style={[s.headerBtn, { backgroundColor: colors.card, borderColor: colors.border }]}><Ionicons name="search-outline" size={20} color={colors.foreground} /></TouchableOpacity>

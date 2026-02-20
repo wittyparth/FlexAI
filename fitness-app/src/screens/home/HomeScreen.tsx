@@ -7,11 +7,12 @@ import {
     TouchableOpacity,
     Animated,
     Dimensions,
+    Platform,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useColors } from '../../hooks';
+import { useTheme } from '../../contexts';
 import { fontFamilies } from '../../theme/typography';
 import { WorkoutHeatmap } from '../../components/WorkoutHeatmap';
 import {
@@ -54,7 +55,7 @@ function ActiveWorkoutBanner({ workout, onPress }: { workout: typeof ACTIVE_WORK
 
     return (
         <TouchableOpacity onPress={onPress} activeOpacity={0.9} style={styles.activeBannerWrapper}>
-            <LinearGradient colors={['#1D4ED8', '#7C3AED']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.activeBannerGradient}>
+            <View style={styles.activeBannerGradient}>
                 <View style={styles.activeBannerRow}>
                     <View style={styles.activeBannerLeft}>
                         <View style={styles.activeDotRow}>
@@ -69,11 +70,10 @@ function ActiveWorkoutBanner({ workout, onPress }: { workout: typeof ACTIVE_WORK
                         <Ionicons name="play" size={20} color="#FFF" />
                     </View>
                 </View>
-                {/* Progress bar */}
                 <View style={styles.activeProgressBg}>
                     <View style={[styles.activeProgressFill, { width: `${pct}%` }]} />
                 </View>
-            </LinearGradient>
+            </View>
         </TouchableOpacity>
     );
 }
@@ -87,10 +87,10 @@ function TodaysPlanCard({ plan, onPress, c }: { plan: typeof TODAYS_PLANNED_WORK
         Back: '#F59E0B', Biceps: '#EC4899', Legs: '#EF4444', Core: '#14B8A6',
     };
     return (
-        <TouchableOpacity style={[styles.todayCard, { backgroundColor: c.card, borderColor: c.cardBorder }]} onPress={onPress} activeOpacity={0.8}>
+        <TouchableOpacity style={[styles.todayCard, { backgroundColor: c.card, borderColor: c.border }]} onPress={onPress} activeOpacity={0.8}>
             <View style={styles.todayHeader}>
                 <View style={styles.todayHeaderLeft}>
-                    <View style={[styles.todayIconBg, { backgroundColor: c.primary + '20' }]}>
+                    <View style={[styles.todayIconBg, { backgroundColor: c.primary + '15' }]}>
                         <MaterialCommunityIcons name="calendar-check" size={18} color={c.primary} />
                     </View>
                     <View style={{ gap: 2 }}>
@@ -98,13 +98,13 @@ function TodaysPlanCard({ plan, onPress, c }: { plan: typeof TODAYS_PLANNED_WORK
                         <Text style={[styles.todayMeta, { color: c.muted }]}>{plan.exercises.length} exercises • ~{plan.estimatedDuration} min</Text>
                     </View>
                 </View>
-                <View style={[styles.startTodayBtn, { backgroundColor: c.primary }]}>
-                    <Ionicons name="play" size={14} color="#FFF" />
+                <View style={styles.startTodayBtn}>
+                    <Ionicons name="play" size={12} color="#FFF" />
                     <Text style={styles.startTodayBtnText}>Start</Text>
                 </View>
             </View>
             <View style={styles.todayExerciseList}>
-                {plan.exercises.slice(0, 4).map((ex, i) => (
+                {plan.exercises.slice(0, 4).map((ex) => (
                     <View key={ex.id} style={styles.todayExRow}>
                         <View style={[styles.todayExDot, { backgroundColor: MUSCLE_COLORS[ex.muscle] || c.primary }]} />
                         <Text style={[styles.todayExName, { color: c.text }]}>{ex.name}</Text>
@@ -118,30 +118,30 @@ function TodaysPlanCard({ plan, onPress, c }: { plan: typeof TODAYS_PLANNED_WORK
         </TouchableOpacity>
     );
 }
-function MetricCard({ icon, label, value, unit, accent, bg }: {
-    icon: string; label: string; value: string; unit?: string; accent: string; bg: string;
+
+// MetricCard — Premium with inner glow
+function MetricCard({ icon, label, value, unit, accent, bg, borderColor }: {
+    icon: string; label: string; value: string; unit?: string; accent: string; bg: string; borderColor: string;
 }) {
     return (
-        <View style={[styles.metricCard, { backgroundColor: bg }]}>
-            <View style={[styles.metricIconBg, { backgroundColor: accent + '25' }]}>
+        <View style={[styles.metricCard, { backgroundColor: bg, borderColor, borderWidth: 1 }]}>
+            <View style={[styles.metricIconBg, { backgroundColor: accent + '15' }]}>
                 <MaterialCommunityIcons name={icon as any} size={20} color={accent} />
             </View>
-            <Text style={[styles.metricLabel, { color: accent + 'CC' }]}>{label}</Text>
+            <Text style={[styles.metricLabel, { color: accent + 'BB' }]}>{label}</Text>
             <View style={styles.metricValRow}>
-                <Text style={[styles.metricVal, { color: accent === '#F97316' ? '#F97316' : '#F1F5FF' }]}>{value}</Text>
-                {unit && <Text style={[styles.metricUnit, { color: accent + '88' }]}>{unit}</Text>}
+                <Text style={[styles.metricVal, { color: accent }]}>{value}</Text>
+                {unit && <Text style={[styles.metricUnit, { color: accent + '80' }]}>{unit}</Text>}
             </View>
         </View>
     );
 }
 
-// ============================================================
-// RECENT WORKOUT ROW
-// ============================================================
+// Recent Workout Row
 function WorkoutRow({ workout, onPress, c }: { workout: any; onPress: () => void; c: any }) {
     return (
-        <TouchableOpacity style={[styles.wkRow, { backgroundColor: c.card, borderColor: c.cardBorder }]} onPress={onPress} activeOpacity={0.75}>
-            <View style={[styles.wkIcon, { backgroundColor: c.surface }]}>
+        <TouchableOpacity style={[styles.wkRow, { backgroundColor: c.card, borderColor: c.border }]} onPress={onPress} activeOpacity={0.75}>
+            <View style={[styles.wkIcon, { backgroundColor: c.primary + '12' }]}>
                 <MaterialCommunityIcons name={workout.iconName} size={22} color={c.primary} />
             </View>
             <View style={styles.wkInfo}>
@@ -152,8 +152,8 @@ function WorkoutRow({ workout, onPress, c }: { workout: any; onPress: () => void
                 <Text style={[styles.wkVol, { color: c.text, fontFamily: fontFamilies.mono }]}>{fmtVol(workout.volume)}</Text>
                 <Text style={[styles.wkVolUnit, { color: c.muted }]}>kg</Text>
                 {workout.hasPR && (
-                    <View style={[styles.prBadge, { backgroundColor: c.primary + '22' }]}>
-                        <Text style={[styles.prText, { color: c.primary }]}>PR</Text>
+                    <View style={styles.prBadge}>
+                        <Text style={styles.prText}>🔥 PR</Text>
                     </View>
                 )}
             </View>
@@ -167,14 +167,14 @@ function WorkoutRow({ workout, onPress, c }: { workout: any; onPress: () => void
 export function HomeScreen({ navigation }: any) {
     const insets = useSafeAreaInsets();
     const colors = useColors();
+    const { isDark } = useTheme();
+
+    // Map to local shorthand for sub-components
     const c = {
-        bg: colors.background, card: colors.card, cardBorder: colors.border,
+        bg: colors.background, card: colors.card, border: colors.border,
         text: colors.foreground, muted: colors.mutedForeground, primary: colors.primary.main,
-        primaryGlow: colors.primary.main + '40', orange: colors.warning,
-        orangeBg: colors.warning + '15', green: colors.success,
-        greenBg: colors.success + '15', surface: colors.muted,
+        primaryGlow: colors.primary.main + '30', surface: colors.muted,
     };
-    const FNT = { display: fontFamilies.display, mono: fontFamilies.mono, bold: fontFamilies.display, semi: fontFamilies.body, medium: fontFamilies.body, regular: fontFamilies.body };
 
     const fadeAnim = useRef(new Animated.Value(0)).current;
     useEffect(() => {
@@ -184,13 +184,12 @@ export function HomeScreen({ navigation }: any) {
     const getTabNav = () => navigation.getParent() ?? navigation;
     const getDrawerNav = () => navigation.getParent()?.getParent() ?? navigation;
 
-    const goToWorkout = () => {
-        getTabNav().navigate('WorkoutTab');
+    const openDrawer = () => {
+        try { getDrawerNav().openDrawer(); } catch { }
     };
 
-    const goToAnalytics = (screen = 'AnalyticsHub') => {
-        getDrawerNav().navigate('Analytics', { screen });
-    };
+    const goToWorkout = () => getTabNav().navigate('WorkoutTab');
+    const goToAnalytics = (screen = 'AnalyticsHub') => getDrawerNav().navigate('Analytics', { screen });
 
     return (
         <View style={[styles.container, { backgroundColor: c.bg }]}>
@@ -199,28 +198,38 @@ export function HomeScreen({ navigation }: any) {
                 contentContainerStyle={{ paddingBottom: insets.bottom + 100 }}
             >
                 {/* ─── HEADER ─── */}
-                <View style={[styles.header, { paddingTop: insets.top + 16 }]}>
+                <View style={[styles.header, { paddingTop: insets.top + 12 }]}>
                     <View style={styles.headerLeft}>
+                        {/* Hamburger Menu Button */}
+                        <TouchableOpacity
+                            style={[styles.headerIconBtn, { backgroundColor: colors.card, borderColor: colors.border }]}
+                            onPress={openDrawer}
+                            activeOpacity={0.7}
+                        >
+                            <Ionicons name="menu" size={22} color={colors.foreground} />
+                        </TouchableOpacity>
                         <View style={styles.headerTextCol}>
                             <Text style={[styles.headerSub, { color: c.muted }]}>DASHBOARD</Text>
-                            <Text style={[styles.headerTitle, { color: c.text, fontFamily: FNT.display }]}>
+                            <Text style={[styles.headerTitle, { color: c.text, fontFamily: fontFamilies.display }]}>
                                 {getGreeting()},{'\n'}{DUMMY_USER.firstName} 👋
                             </Text>
                         </View>
                     </View>
                     <View style={styles.headerRight}>
-                        {/* Streak badge */}
-                        <View style={[styles.streakBadge, { backgroundColor: c.orangeBg }]}>
-                            <Ionicons name="flame" size={16} color={c.orange} />
-                            <Text style={[styles.streakNum, { color: c.orange, fontFamily: FNT.mono }]}>{DUMMY_USER.streak}</Text>
+                        {/* Streak badge — premium gradient */}
+                        <View
+                            style={styles.streakBadge}
+                        >
+                            <Ionicons name="flame" size={16} color={colors.warning} />
+                            <Text style={[styles.streakNum, { color: colors.warning, fontFamily: fontFamilies.mono }]}>{DUMMY_USER.streak}</Text>
                         </View>
                         {/* Notification */}
                         <TouchableOpacity
-                            style={[styles.headerIconBtn, { backgroundColor: c.card, borderColor: c.cardBorder }]}
+                            style={[styles.headerIconBtn, { backgroundColor: colors.card, borderColor: colors.border }]}
                             onPress={() => navigation.navigate('HomeNotifications')}
                         >
                             <Ionicons name="notifications-outline" size={20} color={c.text} />
-                            <View style={styles.notifDot} />
+                            <View style={[styles.notifDot, { backgroundColor: colors.destructive, borderColor: c.bg }]} />
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -241,13 +250,11 @@ export function HomeScreen({ navigation }: any) {
                         </View>
                     )}
 
-                    {/* ─── START WORKOUT CTA (when no active session) ─── */}
+                    {/* ─── START WORKOUT CTA ─── */}
                     {!ACTIVE_WORKOUT_TODAY.isActive && (
                         <View style={styles.px}>
                             <TouchableOpacity onPress={goToWorkout} activeOpacity={0.92} style={styles.ctaWrapper}>
-                                <LinearGradient
-                                    colors={[c.primary, '#7C3AED']}
-                                    start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}
+                                <View
                                     style={styles.ctaGrad}
                                 >
                                     <View style={styles.ctaContent}>
@@ -261,7 +268,7 @@ export function HomeScreen({ navigation }: any) {
                                     </View>
                                     <View style={styles.ctaDecor1} />
                                     <View style={styles.ctaDecor2} />
-                                </LinearGradient>
+                                </View>
                             </TouchableOpacity>
                         </View>
                     )}
@@ -270,9 +277,9 @@ export function HomeScreen({ navigation }: any) {
                     {!ACTIVE_WORKOUT_TODAY.isActive && (
                         <View style={styles.section}>
                             <View style={styles.sectionHeader}>
-                                <Text style={[styles.sectionTitle, { color: c.text, fontFamily: FNT.display }]}>Today's Plan</Text>
+                                <Text style={[styles.sectionTitle, { color: c.text, fontFamily: fontFamilies.display }]}>Today's Plan</Text>
                                 <TouchableOpacity onPress={() => getTabNav().navigate('WorkoutTab')}>
-                                    <Text style={[styles.linkText, { color: c.primary }]}>View Workout</Text>
+                                    <Text style={[styles.linkText, { color: colors.primary.main }]}>View Workout</Text>
                                 </TouchableOpacity>
                             </View>
                             <TodaysPlanCard
@@ -291,36 +298,33 @@ export function HomeScreen({ navigation }: any) {
                     {/* ─── METRICS ─── */}
                     <View style={styles.section}>
                         <View style={styles.sectionHeader}>
-                            <Text style={[styles.sectionTitle, { color: c.text, fontFamily: FNT.display }]}>Your Metrics</Text>
+                            <Text style={[styles.sectionTitle, { color: c.text, fontFamily: fontFamilies.display }]}>Your Metrics</Text>
                             <TouchableOpacity onPress={() => goToAnalytics('AnalyticsHub')}>
-                                <Text style={[styles.linkText, { color: c.primary }]}>View All</Text>
+                                <Text style={[styles.linkText, { color: colors.primary.main }]}>View All</Text>
                             </TouchableOpacity>
                         </View>
                         <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.metricsScroll}>
-                            <MetricCard icon="dumbbell" label="WEEKLY VOL" value={fmtVol(DUMMY_METRICS.weeklyVolume)} unit="kg" accent="#3B82F6" bg={c.card} />
-                            <MetricCard icon="fire" label="STREAK" value={DUMMY_USER.streak.toString()} unit="days" accent="#F97316" bg={c.card} />
-                            <MetricCard icon="trophy" label="BEST STREAK" value={DUMMY_METRICS.bestStreak.toString()} unit="days" accent="#F59E0B" bg={c.card} />
-                            <MetricCard icon="heart-pulse" label="RECOVERY" value={DUMMY_METRICS.recovery} accent="#34D399" bg={c.card} />
+                            <MetricCard icon="dumbbell" label="WEEKLY VOL" value={fmtVol(DUMMY_METRICS.weeklyVolume)} unit="kg" accent={colors.chart1} bg={colors.card} borderColor={colors.border} />
+                            <MetricCard icon="fire" label="STREAK" value={DUMMY_USER.streak.toString()} unit="days" accent={colors.warning} bg={colors.card} borderColor={colors.border} />
+                            <MetricCard icon="trophy" label="BEST STREAK" value={DUMMY_METRICS.bestStreak.toString()} unit="days" accent={colors.chart3} bg={colors.card} borderColor={colors.border} />
+                            <MetricCard icon="heart-pulse" label="RECOVERY" value={DUMMY_METRICS.recovery} accent={colors.success} bg={colors.card} borderColor={colors.border} />
                         </ScrollView>
                     </View>
 
                     {/* ─── WEEKLY HEATMAP ─── */}
                     <View style={styles.section}>
-                        <Text style={[styles.sectionTitle, { color: c.text, fontFamily: FNT.display, marginBottom: 12 }]}>This Week</Text>
-                        <View style={[styles.heatmapCard, { backgroundColor: c.card, borderColor: c.cardBorder }]}>
-                            <WorkoutHeatmap data={HEATMAP_DATA} mode="7day" />
-                            <View style={styles.heatmapLegend}>
-                                <Text style={[styles.heatmapLegendText, { color: c.muted }]}>4 of 7 days active • 52.4k kg lifted</Text>
-                            </View>
+                        <Text style={[styles.sectionTitle, { color: c.text, fontFamily: fontFamilies.display, marginBottom: 12 }]}>Activity</Text>
+                        <View style={[styles.heatmapCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+                            <WorkoutHeatmap data={HEATMAP_DATA} showToggle={true} defaultRange="week" showLegend={true} />
                         </View>
                     </View>
 
                     {/* ─── RECENT ACTIVITY ─── */}
                     <View style={[styles.section, styles.sectionLast]}>
                         <View style={styles.sectionHeader}>
-                            <Text style={[styles.sectionTitle, { color: c.text, fontFamily: FNT.display }]}>Recent Activity</Text>
+                            <Text style={[styles.sectionTitle, { color: c.text, fontFamily: fontFamilies.display }]}>Recent Activity</Text>
                             <TouchableOpacity onPress={() => getTabNav().navigate('WorkoutTab', { screen: 'WorkoutHistory' })}>
-                                <Text style={[styles.linkText, { color: c.primary }]}>View All</Text>
+                                <Text style={[styles.linkText, { color: colors.primary.main }]}>View All</Text>
                             </TouchableOpacity>
                         </View>
                         {DUMMY_RECENT_WORKOUTS.map(w => (
@@ -336,7 +340,7 @@ export function HomeScreen({ navigation }: any) {
 }
 
 // ============================================================
-// STYLES
+// STYLES — Premium design
 // ============================================================
 const styles = StyleSheet.create({
     container: { flex: 1 },
@@ -344,18 +348,32 @@ const styles = StyleSheet.create({
 
     // HEADER
     header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', paddingHorizontal: 20, marginBottom: 24 },
-    headerLeft: { flex: 1 },
-    headerTextCol: { gap: 4 },
+    headerLeft: { flex: 1, flexDirection: 'row', alignItems: 'flex-start', gap: 12 },
+    headerTextCol: { gap: 4, flex: 1 },
     headerSub: { fontSize: 10, fontWeight: '700', letterSpacing: 2 },
-    headerTitle: { fontSize: 30, lineHeight: 36 },
+    headerTitle: { fontSize: 26, lineHeight: 32 },
     headerRight: { flexDirection: 'row', alignItems: 'center', gap: 10 },
+    headerIconBtn: {
+        width: 42, height: 42, borderRadius: 14, alignItems: 'center', justifyContent: 'center',
+        borderWidth: 1, position: 'relative',
+        ...Platform.select({
+            ios: { shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.06, shadowRadius: 4 },
+            android: { elevation: 2 },
+        }),
+    },
     streakBadge: { flexDirection: 'row', alignItems: 'center', gap: 5, paddingHorizontal: 12, paddingVertical: 7, borderRadius: 20 },
     streakNum: { fontSize: 16, fontWeight: '700' },
-    headerIconBtn: { width: 40, height: 40, borderRadius: 12, alignItems: 'center', justifyContent: 'center', borderWidth: 1, position: 'relative' },
-    notifDot: { position: 'absolute', top: 9, right: 9, width: 8, height: 8, borderRadius: 4, backgroundColor: '#EF4444', borderWidth: 1.5, borderColor: '#0A0E1A' },
+    notifDot: { position: 'absolute', top: 9, right: 9, width: 8, height: 8, borderRadius: 4, borderWidth: 1.5 },
 
     // ACTIVE BANNER
-    activeBannerWrapper: { borderRadius: 20, shadowColor: '#3B82F6', shadowOffset: { width: 0, height: 8 }, shadowOpacity: 0.3, shadowRadius: 16, elevation: 10, marginBottom: 4 },
+    activeBannerWrapper: {
+        borderRadius: 20,
+        ...Platform.select({
+            ios: { shadowColor: '#3B82F6', shadowOffset: { width: 0, height: 8 }, shadowOpacity: 0.3, shadowRadius: 16 },
+            android: { elevation: 10 },
+        }),
+        marginBottom: 4,
+    },
     activeBannerGradient: { borderRadius: 20, padding: 18 },
     activeBannerRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 },
     activeBannerLeft: { flex: 1, gap: 4 },
@@ -370,7 +388,13 @@ const styles = StyleSheet.create({
     activeProgressFill: { height: '100%', borderRadius: 3, backgroundColor: '#FFF' },
 
     // START WORKOUT CTA
-    ctaWrapper: { borderRadius: 22, shadowColor: '#2563EB', shadowOffset: { width: 0, height: 10 }, shadowOpacity: 0.35, shadowRadius: 20, elevation: 10 },
+    ctaWrapper: {
+        borderRadius: 22,
+        ...Platform.select({
+            ios: { shadowColor: '#2563EB', shadowOffset: { width: 0, height: 10 }, shadowOpacity: 0.35, shadowRadius: 20 },
+            android: { elevation: 10 },
+        }),
+    },
     ctaGrad: { borderRadius: 22, overflow: 'hidden' },
     ctaContent: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 22 },
     ctaLabel: { fontSize: 10, fontWeight: '800', color: 'rgba(255,255,255,0.7)', letterSpacing: 1.5, marginBottom: 4 },
@@ -386,10 +410,16 @@ const styles = StyleSheet.create({
     sectionTitle: { fontSize: 21 },
     linkText: { fontSize: 13, fontWeight: '600' },
 
-    // METRICS
+    // METRICS — Premium cards
     metricsScroll: { gap: 12, paddingRight: 4 },
-    metricCard: { width: 140, padding: 16, borderRadius: 18, gap: 10 },
-    metricIconBg: { width: 38, height: 38, borderRadius: 11, alignItems: 'center', justifyContent: 'center' },
+    metricCard: {
+        width: 140, padding: 16, borderRadius: 18, gap: 10,
+        ...Platform.select({
+            ios: { shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.04, shadowRadius: 8 },
+            android: { elevation: 2 },
+        }),
+    },
+    metricIconBg: { width: 38, height: 38, borderRadius: 12, alignItems: 'center', justifyContent: 'center' },
     metricLabel: { fontSize: 10, fontWeight: '700', letterSpacing: 0.8 },
     metricValRow: { flexDirection: 'row', alignItems: 'baseline', gap: 3 },
     metricVal: { fontSize: 26, fontWeight: '800' },
@@ -397,11 +427,16 @@ const styles = StyleSheet.create({
 
     // HEATMAP
     heatmapCard: { borderRadius: 18, borderWidth: 1, padding: 16, gap: 12 },
-    heatmapLegend: { alignItems: 'center' },
-    heatmapLegendText: { fontSize: 12, fontWeight: '500' },
 
     // RECENT WORKOUTS
-    wkRow: { flexDirection: 'row', alignItems: 'center', borderRadius: 16, borderWidth: 1, padding: 14, marginBottom: 10, gap: 12 },
+    wkRow: {
+        flexDirection: 'row', alignItems: 'center', borderRadius: 16, borderWidth: 1,
+        padding: 14, marginBottom: 10, gap: 12,
+        ...Platform.select({
+            ios: { shadowColor: '#000', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.03, shadowRadius: 4 },
+            android: { elevation: 1 },
+        }),
+    },
     wkIcon: { width: 46, height: 46, borderRadius: 13, alignItems: 'center', justifyContent: 'center' },
     wkInfo: { flex: 1, gap: 3 },
     wkName: { fontSize: 15, fontWeight: '700' },
@@ -409,11 +444,17 @@ const styles = StyleSheet.create({
     wkRight: { alignItems: 'flex-end', gap: 4 },
     wkVol: { fontSize: 16, fontWeight: '700' },
     wkVolUnit: { fontSize: 11 },
-    prBadge: { paddingHorizontal: 8, paddingVertical: 3, borderRadius: 6 },
-    prText: { fontSize: 10, fontWeight: '800', letterSpacing: 0.5 },
+    prBadge: { paddingHorizontal: 8, paddingVertical: 3, borderRadius: 8 },
+    prText: { fontSize: 10, fontWeight: '800', color: '#FFF', letterSpacing: 0.5 },
 
     // TODAY'S PLAN
-    todayCard: { borderRadius: 18, borderWidth: 1, padding: 16, gap: 14 },
+    todayCard: {
+        borderRadius: 18, borderWidth: 1, padding: 16, gap: 14,
+        ...Platform.select({
+            ios: { shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.04, shadowRadius: 8 },
+            android: { elevation: 2 },
+        }),
+    },
     todayHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 12 },
     todayHeaderLeft: { flexDirection: 'row', alignItems: 'center', gap: 12, flex: 1 },
     todayIconBg: { width: 40, height: 40, borderRadius: 12, alignItems: 'center', justifyContent: 'center' },

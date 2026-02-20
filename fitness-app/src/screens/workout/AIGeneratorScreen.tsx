@@ -11,11 +11,9 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
-import { useColors, useGenerateWorkout } from '../../hooks';
+import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { colors as themeColors } from '../../theme/colors';
-import type { GenerateWorkoutInput } from '../../api/ai.api';
 
 const { width } = Dimensions.get('window');
 
@@ -53,19 +51,21 @@ const EQUIPMENT = [
     { id: 'minimal', label: 'Minimal', icon: 'home' },
 ];
 
-export function AIGeneratorScreen({ navigation }: any) {
+export function AIGeneratorScreen({ navigation, route }: any) {
     const colors = useColors();
     const insets = useSafeAreaInsets();
 
-    const [goal, setGoal] = useState('muscle');
-    const [duration, setDuration] = useState(60);
+    const { presetGoal, presetDuration, customPrompt: initPrompt } = route.params || {};
+
+    const presetGoalId = presetGoal ? GOALS.find(g => g.label === presetGoal)?.id || 'muscle' : 'muscle';
+    
+    const [goal, setGoal] = useState(presetGoalId);
+    const [duration, setDuration] = useState(presetDuration || 60);
     const [focus, setFocus] = useState('full');
     const [equipment, setEquipment] = useState('full');
-    const [customPrompt, setCustomPrompt] = useState('');
+    const [customPrompt, setCustomPrompt] = useState(initPrompt || '');
 
-    // Use the mutation hook
-    const generateWorkoutMutation = useGenerateWorkout();
-    const loading = generateWorkoutMutation.isPending;
+    const [loading, setLoading] = useState(false);
 
     const pulseAnim = useRef(new Animated.Value(1)).current;
     const spinAnim = useRef(new Animated.Value(0)).current;
@@ -83,10 +83,18 @@ export function AIGeneratorScreen({ navigation }: any) {
         ).start();
     };
 
+    const stopLoadingAnimation = () => {
+        pulseAnim.stopAnimation();
+        spinAnim.stopAnimation();
+        pulseAnim.setValue(1);
+        spinAnim.setValue(0);
+    };
+
     const generate = () => {
+        setLoading(true);
         startLoadingAnimation();
 
-        const input: GenerateWorkoutInput = {
+        const input = {
             goal,
             duration,
             equipment: [equipment], // Pass as array
@@ -94,18 +102,38 @@ export function AIGeneratorScreen({ navigation }: any) {
             preferences: `Focus area: ${focus}. ${customPrompt}`, // Combine focus and custom prompt
         };
 
-        generateWorkoutMutation.mutate(input, {
-            onSuccess: (data: any) => {
-                navigation.navigate('AIPreview', {
-                    workout: data,
-                    input: input // Pass input for context in preview
-                });
-            },
-            onError: (error: any) => {
-                console.error('Failed to generate workout:', error);
-                // Optionally show alert
-            }
-        });
+        // Simulate API taking some time then returning dummy elegant data
+        setTimeout(() => {
+            const selectedGoalLabel = GOALS.find(g => g.id === goal)?.label || 'Workout';
+            
+            const dummyWorkout = {
+                workoutName: `AI ${selectedGoalLabel} Session`,
+                goal: input.goal,
+                duration: input.duration,
+                difficulty: 'Intermediate',
+                description: `A highly optimized ${input.duration} min workout focusing on ${focus.toUpperCase()} with ${equipment.toUpperCase()}. ${customPrompt ? 'Tailored to your specific requests.' : ''}`,
+                warmup: [
+                    { id: 'temp-1', notes: '', reps: '1', rest: 0, sets: 1, exercise: { id: 1, name: 'Jumping Jacks', muscle: 'Full Body' } },
+                    { id: 'temp-2', notes: '', reps: '10', rest: 0, sets: 2, exercise: { id: 2, name: 'Arm Circles', muscle: 'Shoulders' } },
+                ],
+                main: [
+                    { id: 'temp-3', notes: '', reps: '8-12', rest: 60, sets: 3, exercise: { id: 3, name: 'Dumbbell Bench Press', muscle: 'Chest' } },
+                    { id: 'temp-4', notes: '', reps: '10-15', rest: 60, sets: 3, exercise: { id: 4, name: 'Dumbbell Row', muscle: 'Back' } },
+                    { id: 'temp-5', notes: '', reps: '12-15', rest: 60, sets: 3, exercise: { id: 5, name: 'Lateral Raises', muscle: 'Shoulders' } },
+                ],
+                cooldown: [
+                    { id: 'temp-6', notes: '', reps: '30s', rest: 0, sets: 1, exercise: { id: 6, name: 'Childs Pose', muscle: 'Back' } },
+                ]
+            };
+
+            setLoading(false);
+            stopLoadingAnimation();
+
+            navigation.navigate('RoutineEditor', {
+                mode: 'create',
+                routineData: dummyWorkout
+            });
+        }, 2000);
     };
 
     const selectedGoal = GOALS.find(g => g.id === goal);
@@ -126,26 +154,11 @@ export function AIGeneratorScreen({ navigation }: any) {
                 </TouchableOpacity>
             </View>
 
-            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scroll}>
-                {/* Hero Card */}
-                <LinearGradient
-                    colors={colors.primary.gradient as [string, string]}
-                    style={styles.heroCard}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 1 }}
-                >
-                    <Animated.View style={[styles.heroIconContainer, { transform: [{ scale: pulseAnim }] }]}>
-                        <View style={styles.heroIconRing}>
-                            <MaterialCommunityIcons name="robot-excited" size={44} color={colors.primary.main} />
-                        </View>
-                    </Animated.View>
-                    <Text style={styles.heroTitle}>Create Your Perfect Workout</Text>
-                    <Text style={styles.heroSubtitle}>Tell me what you need and I'll design a personalized routine just for you</Text>
-                </LinearGradient>
+            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={[styles.scroll, { paddingBottom: insets.bottom + 140 }]}>
 
                 {/* Goal Selection */}
                 <View style={styles.section}>
-                    <Text style={[styles.sectionTitle, { color: colors.foreground }]}>What's your goal? 🎯</Text>
+                    <Text style={[styles.sectionTitle, { color: colors.foreground }]}>What's your goal?</Text>
                     <View style={styles.goalGrid}>
                         {GOALS.map((g) => (
                             <TouchableOpacity
@@ -174,7 +187,7 @@ export function AIGeneratorScreen({ navigation }: any) {
 
                 {/* Duration Selection */}
                 <View style={styles.section}>
-                    <Text style={[styles.sectionTitle, { color: colors.foreground }]}>How long? ⏱️</Text>
+                    <Text style={[styles.sectionTitle, { color: colors.foreground }]}>How long?</Text>
                     <View style={styles.durationRow}>
                         {DURATIONS.map((d) => (
                             <TouchableOpacity
@@ -182,12 +195,11 @@ export function AIGeneratorScreen({ navigation }: any) {
                                 style={[
                                     styles.durationCard,
                                     duration === d.value
-                                        ? { backgroundColor: colors.primary.main }
+                                        ? { backgroundColor: colors.primary.main, borderColor: colors.primary.main, borderWidth: 1 }
                                         : { backgroundColor: colors.card, borderColor: colors.border, borderWidth: 1 }
                                 ]}
                                 onPress={() => setDuration(d.value)}
                             >
-                                <Text style={styles.durationEmoji}>{d.emoji}</Text>
                                 <Text style={[
                                     styles.durationValue,
                                     { color: duration === d.value ? '#FFF' : colors.foreground }
@@ -203,7 +215,7 @@ export function AIGeneratorScreen({ navigation }: any) {
 
                 {/* Muscle Focus */}
                 <View style={styles.section}>
-                    <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Focus Area 💪</Text>
+                    <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Focus Area</Text>
                     <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.focusScroll}>
                         {MUSCLE_FOCUS.map((f) => (
                             <TouchableOpacity
@@ -211,7 +223,7 @@ export function AIGeneratorScreen({ navigation }: any) {
                                 style={[
                                     styles.focusChip,
                                     focus === f.id
-                                        ? { backgroundColor: colors.primary.main }
+                                        ? { backgroundColor: colors.primary.main, borderColor: colors.primary.main, borderWidth: 1 }
                                         : { backgroundColor: colors.card, borderColor: colors.border, borderWidth: 1 }
                                 ]}
                                 onPress={() => setFocus(f.id)}
@@ -232,7 +244,7 @@ export function AIGeneratorScreen({ navigation }: any) {
 
                 {/* Equipment */}
                 <View style={styles.section}>
-                    <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Equipment 🏋️</Text>
+                    <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Equipment</Text>
                     <View style={styles.equipmentGrid}>
                         {EQUIPMENT.map((e) => (
                             <TouchableOpacity
@@ -240,7 +252,7 @@ export function AIGeneratorScreen({ navigation }: any) {
                                 style={[
                                     styles.equipmentCard,
                                     equipment === e.id
-                                        ? { backgroundColor: colors.primary.main }
+                                        ? { backgroundColor: colors.primary.main, borderColor: colors.primary.main, borderWidth: 1 }
                                         : { backgroundColor: colors.card, borderColor: colors.border, borderWidth: 1 }
                                 ]}
                                 onPress={() => setEquipment(e.id)}
@@ -261,7 +273,7 @@ export function AIGeneratorScreen({ navigation }: any) {
 
                 {/* Custom Instructions */}
                 <View style={styles.section}>
-                    <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Special Instructions ✨</Text>
+                    <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Special Instructions</Text>
                     <View style={[styles.textAreaContainer, { backgroundColor: colors.card, borderColor: colors.border }]}>
                         <TextInput
                             style={[styles.textArea, { color: colors.foreground }]}
@@ -276,26 +288,20 @@ export function AIGeneratorScreen({ navigation }: any) {
                     </View>
                 </View>
 
-                <View style={{ height: 140 }} />
             </ScrollView>
 
             {/* Generate Button */}
             <View style={[styles.footer, { paddingBottom: insets.bottom + 16, backgroundColor: colors.card, borderTopColor: colors.border }]}>
                 <TouchableOpacity
-                    style={styles.generateBtn}
+                    style={[styles.generateBtn, { backgroundColor: loading ? colors.muted : colors.primary.main }]}
                     onPress={generate}
                     disabled={loading}
                     activeOpacity={0.9}
                 >
-                    <LinearGradient
-                        colors={loading ? [colors.muted, colors.muted] : colors.primary.gradient as [string, string]}
-                        style={styles.generateGradient}
-                        start={{ x: 0, y: 0 }}
-                        end={{ x: 1, y: 0 }}
-                    >
+                    <View style={styles.generateContent}>
                         {loading ? (
                             <Animated.View style={{ transform: [{ rotate: spinAnim.interpolate({ inputRange: [0, 1], outputRange: ['0deg', '360deg'] }) }] }}>
-                                <MaterialCommunityIcons name="loading" size={24} color={colors.mutedForeground} />
+                                <MaterialCommunityIcons name="loading" size={24} color="#FFF" />
                             </Animated.View>
                         ) : (
                             <>
@@ -303,7 +309,7 @@ export function AIGeneratorScreen({ navigation }: any) {
                                 <Text style={styles.generateText}>Generate My Workout</Text>
                             </>
                         )}
-                    </LinearGradient>
+                    </View>
                 </TouchableOpacity>
                 <Text style={[styles.footerHint, { color: colors.mutedForeground }]}>
                     {selectedGoal?.label} • {selectedDuration?.value} min • {focus.charAt(0).toUpperCase() + focus.slice(1)}
@@ -344,11 +350,10 @@ const styles = StyleSheet.create({
         padding: 28,
         alignItems: 'center',
         marginBottom: 24,
-        elevation: 10,
-        shadowColor: themeColors.primary.main,
-        shadowOffset: { width: 0, height: 10 },
-        shadowOpacity: 0.35,
-        shadowRadius: 20,
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.1,
+        shadowRadius: 10,
+        elevation: 4,
     },
     heroIconContainer: {
         marginBottom: 16,
@@ -357,19 +362,16 @@ const styles = StyleSheet.create({
         width: 80,
         height: 80,
         borderRadius: 24,
-        backgroundColor: '#FFF',
         alignItems: 'center',
         justifyContent: 'center',
     },
     heroTitle: {
-        color: '#FFF',
         fontSize: 24,
         fontWeight: '800',
         textAlign: 'center',
         marginBottom: 8,
     },
     heroSubtitle: {
-        color: 'rgba(255,255,255,0.85)',
         fontSize: 15,
         textAlign: 'center',
         lineHeight: 22,
@@ -497,13 +499,12 @@ const styles = StyleSheet.create({
         width: '100%',
         borderRadius: 20,
         overflow: 'hidden',
-        elevation: 8,
-        shadowColor: themeColors.primary.main,
-        shadowOffset: { width: 0, height: 8 },
-        shadowOpacity: 0.35,
-        shadowRadius: 16,
+        elevation: 6,
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.15,
+        shadowRadius: 10,
     },
-    generateGradient: {
+    generateContent: {
         flexDirection: 'row',
         paddingVertical: 18,
         alignItems: 'center',

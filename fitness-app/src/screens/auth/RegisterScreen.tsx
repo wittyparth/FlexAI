@@ -22,7 +22,6 @@ import {
     ScrollView,
     Alert,
 } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { Input } from '../../components/ui';
 import { useColors } from '../../hooks';
@@ -291,16 +290,13 @@ export function RegisterScreen({ navigation }: RegisterScreenProps) {
                             activeOpacity={0.9}
                             style={[styles.signUpButton, shadows.accent, loading && styles.buttonDisabled]}
                         >
-                            <LinearGradient
-                                colors={(loading ? ['#94A3B8', '#94A3B8'] : (colors.primary.gradient || [colors.primary.main || '#0052FF', colors.primary.light || '#4D7CFF'])) as any}
-                                start={{ x: 0, y: 0 }}
-                                end={{ x: 1, y: 0 }}
+                            <View
                                 style={styles.signUpButtonGradient}
                             >
                                 <Text style={styles.signUpButtonText}>
                                     {loading ? 'Creating Account...' : 'Create Account'}
                                 </Text>
-                            </LinearGradient>
+                            </View>
                         </TouchableOpacity>
                     </View>
 

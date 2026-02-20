@@ -1,0 +1,199 @@
+src/hooks/queries/useWorkoutQueries.ts(3,10): error TS2724: '"../../types/backend.types"' has no exported member named 'CreateWorkoutInput'. Did you mean 'UpdateWorkoutInput'?
+src/hooks/queries/useWorkoutQueries.ts(3,50): error TS2305: Module '"../../types/backend.types"' has no exported member 'LogExerciseInput'.
+src/hooks/queries/useWorkoutQueries.ts(40,62): error TS2339: Property 'createWorkout' does not exist on type '{ getWorkouts: (params?: GetWorkoutsQuery | undefined) => Promise<ApiResponse<any>>; getWorkoutById: (id: number) => Promise<ApiResponse<any>>; ... 9 more ...; deleteSet: (workoutId: number, setId: string) => Promise<...>; }'.
+src/hooks/queries/useWorkoutQueries.ts(63,48): error TS2339: Property 'deleteWorkout' does not exist on type '{ getWorkouts: (params?: GetWorkoutsQuery | undefined) => Promise<ApiResponse<any>>; getWorkoutById: (id: number) => Promise<ApiResponse<any>>; ... 9 more ...; deleteSet: (workoutId: number, setId: string) => Promise<...>; }'.
+src/hooks/queries/useWorkoutQueries.ts(75,24): error TS2339: Property 'logExercise' does not exist on type '{ getWorkouts: (params?: GetWorkoutsQuery | undefined) => Promise<ApiResponse<any>>; getWorkoutById: (id: number) => Promise<ApiResponse<any>>; ... 9 more ...; deleteSet: (workoutId: number, setId: string) => Promise<...>; }'.
+src/navigation/SettingsNavigator.tsx(25,27): error TS2322: Type '"Settings"' is not assignable to type 'keyof ProfileStackParamList'.
+src/navigation/SettingsNavigator.tsx(26,27): error TS2322: Type '"AccountSecurity"' is not assignable to type 'keyof ProfileStackParamList'.
+src/navigation/SettingsNavigator.tsx(27,27): error TS2322: Type '"ChangePassword"' is not assignable to type 'keyof ProfileStackParamList'.
+src/navigation/SettingsNavigator.tsx(28,27): error TS2322: Type '"PrivacySettings"' is not assignable to type 'keyof ProfileStackParamList'.
+src/navigation/SettingsNavigator.tsx(29,27): error TS2322: Type '"NotificationSettings"' is not assignable to type 'keyof ProfileStackParamList'.
+src/navigation/SettingsNavigator.tsx(30,27): error TS2322: Type '"UnitsPreferences"' is not assignable to type 'keyof ProfileStackParamList'.
+src/navigation/SettingsNavigator.tsx(31,27): error TS2322: Type '"HelpSupport"' is not assignable to type 'keyof ProfileStackParamList'.
+src/navigation/SettingsNavigator.tsx(32,27): error TS2322: Type '"About"' is not assignable to type 'keyof ProfileStackParamList'.
+src/screens/analytics/AnalyticsHubScreen.tsx(96,96): error TS2339: Property 'streak' does not exist on type '{ pr: string; volume: string; consistency: string; strength: string; }'.
+src/screens/analytics/AnalyticsHubScreen.tsx(97,95): error TS2339: Property 'streak' does not exist on type '{ pr: string; volume: string; consistency: string; strength: string; }'.
+src/screens/analytics/AnalyticsHubScreen.tsx(106,107): error TS2339: Property 'totalVolume' does not exist on type '{ pr: string; volume: string; consistency: string; strength: string; streak: string; }'.
+src/screens/analytics/AnalyticsHubScreen.tsx(113,106): error TS2339: Property 'prsThisMonth' does not exist on type '{ pr: string; volume: string; consistency: string; strength: string; streak: string; }'.
+src/screens/analytics/AnalyticsHubScreen.tsx(174,78): error TS2345: Argument of type 'string' is not assignable to parameter of type '{ name: "WorkoutFrequency"; params: undefined; path?: string | undefined; merge?: boolean | undefined; pop?: boolean | undefined; } | { name: "AnalyticsHub"; params: undefined; path?: string | undefined; merge?: boolean | undefined; pop?: boolean | undefined; } | ... 6 more ... | { ...; }'.
+src/screens/auth/AccountLockedScreen.tsx(75,64): error TS2322: Type '{ main: string; foreground: string; light: string; lighter: string; dark: string; gradient: readonly ["#2563EB", "#7C3AED"] | readonly ["#3B82F6", "#8B5CF6"]; }' is not assignable to type 'string | OpaqueColorValue | undefined'.
+src/screens/auth/AccountLockedScreen.tsx(93,54): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: TextProps): Text', gave the following error.
+    Type '{ color: { main: string; foreground: string; light: string; lighter: string; dark: string; gradient: readonly ["#2563EB", "#7C3AED"] | readonly ["#3B82F6", "#8B5CF6"]; }; }' is not assignable to type 'TextStyle | Falsy | RegisteredStyle<TextStyle> | RecursiveArray<TextStyle | Falsy | RegisteredStyle<TextStyle>> | readonly (TextStyle | ... 1 more ... | RegisteredStyle<...>)[]'.
+      Types of property 'color' are incompatible.
+        Type '{ main: string; foreground: string; light: string; lighter: string; dark: string; gradient: readonly ["#2563EB", "#7C3AED"] | readonly ["#3B82F6", "#8B5CF6"]; }' is not assignable to type 'ColorValue | undefined'.
+  Overload 2 of 2, '(props: TextProps, context: any): Text', gave the following error.
+    Type '{ color: { main: string; foreground: string; light: string; lighter: string; dark: string; gradient: readonly ["#2563EB", "#7C3AED"] | readonly ["#3B82F6", "#8B5CF6"]; }; }' is not assignable to type 'TextStyle | Falsy | RegisteredStyle<TextStyle> | RecursiveArray<TextStyle | Falsy | RegisteredStyle<TextStyle>> | readonly (TextStyle | ... 1 more ... | RegisteredStyle<...>)[]'.
+      Types of property 'color' are incompatible.
+        Type '{ main: string; foreground: string; light: string; lighter: string; dark: string; gradient: readonly ["#2563EB", "#7C3AED"] | readonly ["#3B82F6", "#8B5CF6"]; }' is not assignable to type 'ColorValue | undefined'.
+src/screens/auth/AccountLockedScreen.tsx(104,55): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: ViewProps): View', gave the following error.
+    Type '{ borderColor: { main: string; foreground: string; light: string; lighter: string; dark: string; gradient: readonly ["#2563EB", "#7C3AED"] | readonly ["#3B82F6", "#8B5CF6"]; }; }' is not assignable to type 'ViewStyle | Falsy | RegisteredStyle<ViewStyle> | RecursiveArray<ViewStyle | Falsy | RegisteredStyle<ViewStyle>> | readonly (ViewStyle | ... 1 more ... | RegisteredStyle<...>)[]'.
+      Types of property 'borderColor' are incompatible.
+        Type '{ main: string; foreground: string; light: string; lighter: string; dark: string; gradient: readonly ["#2563EB", "#7C3AED"] | readonly ["#3B82F6", "#8B5CF6"]; }' is not assignable to type 'ColorValue | undefined'.
+  Overload 2 of 2, '(props: ViewProps, context: any): View', gave the following error.
+    Type '{ borderColor: { main: string; foreground: string; light: string; lighter: string; dark: string; gradient: readonly ["#2563EB", "#7C3AED"] | readonly ["#3B82F6", "#8B5CF6"]; }; }' is not assignable to type 'ViewStyle | Falsy | RegisteredStyle<ViewStyle> | RecursiveArray<ViewStyle | Falsy | RegisteredStyle<ViewStyle>> | readonly (ViewStyle | ... 1 more ... | RegisteredStyle<...>)[]'.
+      Types of property 'borderColor' are incompatible.
+        Type '{ main: string; foreground: string; light: string; lighter: string; dark: string; gradient: readonly ["#2563EB", "#7C3AED"] | readonly ["#3B82F6", "#8B5CF6"]; }' is not assignable to type 'ColorValue | undefined'.
+src/screens/auth/ForgotPasswordScreen.tsx(141,62): error TS2339: Property 'accent' does not exist on type '{ none: { shadowColor: string; shadowOffset: { width: number; height: number; }; shadowOpacity: number; shadowRadius: number; elevation: number; }; '2xs': { shadowColor: string; shadowOffset: { width: number; height: number; }; shadowOpacity: number; shadowRadius: number; elevation: number; }; ... 7 more ...; colore...'.
+src/screens/auth/LoginScreen.tsx(196,69): error TS2339: Property 'accent' does not exist on type '{ none: { shadowColor: string; shadowOffset: { width: number; height: number; }; shadowOpacity: number; shadowRadius: number; elevation: number; }; '2xs': { shadowColor: string; shadowOffset: { width: number; height: number; }; shadowOpacity: number; shadowRadius: number; elevation: number; }; ... 7 more ...; colore...'.
+src/screens/auth/RegisterScreen.tsx(292,66): error TS2339: Property 'accent' does not exist on type '{ none: { shadowColor: string; shadowOffset: { width: number; height: number; }; shadowOpacity: number; shadowRadius: number; elevation: number; }; '2xs': { shadowColor: string; shadowOffset: { width: number; height: number; }; shadowOpacity: number; shadowRadius: number; elevation: number; }; ... 7 more ...; colore...'.
+src/screens/auth/ResetPasswordScreen.tsx(244,36): error TS2339: Property 'lg' does not exist on type '{ 0: number; 1: 4; 2: 8; 3: 12; 4: 16; 5: 20; 6: 24; 8: 32; 10: 40; 12: 48; 16: 64; }'.
+src/screens/auth/ResetPasswordScreen.tsx(246,32): error TS2339: Property 'md' does not exist on type '{ 0: number; 1: 4; 2: 8; 3: 12; 4: 16; 5: 20; 6: 24; 8: 32; 10: 40; 12: 48; 16: 64; }'.
+src/screens/auth/ResetPasswordScreen.tsx(252,36): error TS2339: Property 'round' does not exist on type '{ none: 0; sm: 12; md: 14; lg: 16; xl: 20; '2xl': 24; '3xl': number; full: 999; }'.
+src/screens/auth/ResetPasswordScreen.tsx(257,27): error TS2339: Property 'semiBold' does not exist on type '{ display: string; body: string; bodyMedium: string; bodyBold: string; bodySemibold: string; mono: string; }'.
+src/screens/auth/ResetPasswordScreen.tsx(264,26): error TS2339: Property 'lg' does not exist on type '{ 0: number; 1: 4; 2: 8; 3: 12; 4: 16; 5: 20; 6: 24; 8: 32; 10: 40; 12: 48; 16: 64; }'.
+src/screens/auth/ResetPasswordScreen.tsx(267,31): error TS2339: Property 'xl' does not exist on type '{ 0: number; 1: 4; 2: 8; 3: 12; 4: 16; 5: 20; 6: 24; 8: 32; 10: 40; 12: 48; 16: 64; }'.
+src/screens/auth/ResetPasswordScreen.tsx(270,27): error TS2339: Property 'bold' does not exist on type '{ display: string; body: string; bodyMedium: string; bodyBold: string; bodySemibold: string; mono: string; }'.
+src/screens/auth/ResetPasswordScreen.tsx(272,31): error TS2339: Property 'xs' does not exist on type '{ 0: number; 1: 4; 2: 8; 3: 12; 4: 16; 5: 20; 6: 24; 8: 32; 10: 40; 12: 48; 16: 64; }'.
+src/screens/auth/ResetPasswordScreen.tsx(275,27): error TS2339: Property 'regular' does not exist on type '{ display: string; body: string; bodyMedium: string; bodyBold: string; bodySemibold: string; mono: string; }'.
+src/screens/auth/ResetPasswordScreen.tsx(276,28): error TS2339: Property 'md' does not exist on type '{ xs: number; sm: number; base: number; lg: number; xl: number; '2xl': number; '3xl': number; '4xl': number; '5xl': number; }'.
+src/screens/auth/ResetPasswordScreen.tsx(280,31): error TS2339: Property 'lg' does not exist on type '{ 0: number; 1: 4; 2: 8; 3: 12; 4: 16; 5: 20; 6: 24; 8: 32; 10: 40; 12: 48; 16: 64; }'.
+src/screens/auth/ResetPasswordScreen.tsx(283,27): error TS2339: Property 'medium' does not exist on type '{ display: string; body: string; bodyMedium: string; bodyBold: string; bodySemibold: string; mono: string; }'.
+src/screens/auth/ResetPasswordScreen.tsx(285,31): error TS2339: Property 'xs' does not exist on type '{ 0: number; 1: 4; 2: 8; 3: 12; 4: 16; 5: 20; 6: 24; 8: 32; 10: 40; 12: 48; 16: 64; }'.
+src/screens/auth/ResetPasswordScreen.tsx(286,29): error TS2339: Property 'xs' does not exist on type '{ 0: number; 1: 4; 2: 8; 3: 12; 4: 16; 5: 20; 6: 24; 8: 32; 10: 40; 12: 48; 16: 64; }'.
+src/screens/auth/ResetPasswordScreen.tsx(289,31): error TS2339: Property 'xl' does not exist on type '{ 0: number; 1: 4; 2: 8; 3: 12; 4: 16; 5: 20; 6: 24; 8: 32; 10: 40; 12: 48; 16: 64; }'.
+src/screens/auth/ResetPasswordScreen.tsx(290,26): error TS2339: Property 'md' does not exist on type '{ 0: number; 1: 4; 2: 8; 3: 12; 4: 16; 5: 20; 6: 24; 8: 32; 10: 40; 12: 48; 16: 64; }'.
+src/screens/auth/ResetPasswordScreen.tsx(297,31): error TS2339: Property 'xs' does not exist on type '{ 0: number; 1: 4; 2: 8; 3: 12; 4: 16; 5: 20; 6: 24; 8: 32; 10: 40; 12: 48; 16: 64; }'.
+src/screens/auth/ResetPasswordScreen.tsx(300,27): error TS2339: Property 'medium' does not exist on type '{ display: string; body: string; bodyMedium: string; bodyBold: string; bodySemibold: string; mono: string; }'.
+src/screens/auth/ResetPasswordScreen.tsx(304,27): error TS2339: Property 'semiBold' does not exist on type '{ display: string; body: string; bodyMedium: string; bodyBold: string; bodySemibold: string; mono: string; }'.
+src/screens/auth/ResetPasswordScreen.tsx(311,31): error TS2339: Property 'xs' does not exist on type '{ 0: number; 1: 4; 2: 8; 3: 12; 4: 16; 5: 20; 6: 24; 8: 32; 10: 40; 12: 48; 16: 64; }'.
+src/screens/auth/ResetPasswordScreen.tsx(318,27): error TS2339: Property 'regular' does not exist on type '{ display: string; body: string; bodyMedium: string; bodyBold: string; bodySemibold: string; mono: string; }'.
+src/screens/auth/ResetPasswordScreen.tsx(334,27): error TS2339: Property 'semiBold' does not exist on type '{ display: string; body: string; bodyMedium: string; bodyBold: string; bodySemibold: string; mono: string; }'.
+src/screens/auth/ResetPasswordScreen.tsx(335,28): error TS2339: Property 'md' does not exist on type '{ xs: number; sm: number; base: number; lg: number; xl: number; '2xl': number; '3xl': number; '4xl': number; '5xl': number; }'.
+src/screens/auth/ResetVerifyScreen.tsx(141,78): error TS2339: Property 'backgroundSecondary' does not exist on type '{ primary: { main: string; foreground: string; light: string; lighter: string; dark: string; gradient: readonly ["#2563EB", "#7C3AED"] | readonly ["#3B82F6", "#8B5CF6"]; }; text: { primary: string; secondary: string; tertiary: string; inverse: string; link: string; }; ... 46 more ...; neutral: { ...; }; }'.
+src/screens/auth/ResetVerifyScreen.tsx(144,65): error TS2322: Type '{ primary: string; secondary: string; tertiary: string; inverse: string; link: string; }' is not assignable to type 'string | OpaqueColorValue | undefined'.
+src/screens/auth/ResetVerifyScreen.tsx(151,49): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: TextProps): Text', gave the following error.
+    Type '{ color: { primary: string; secondary: string; tertiary: string; inverse: string; link: string; }; }' is not assignable to type 'TextStyle | Falsy | RegisteredStyle<TextStyle> | RecursiveArray<TextStyle | Falsy | RegisteredStyle<TextStyle>> | readonly (TextStyle | ... 1 more ... | RegisteredStyle<...>)[]'.
+      Types of property 'color' are incompatible.
+        Type '{ primary: string; secondary: string; tertiary: string; inverse: string; link: string; }' is not assignable to type 'ColorValue | undefined'.
+  Overload 2 of 2, '(props: TextProps, context: any): Text', gave the following error.
+    Type '{ color: { primary: string; secondary: string; tertiary: string; inverse: string; link: string; }; }' is not assignable to type 'TextStyle | Falsy | RegisteredStyle<TextStyle> | RecursiveArray<TextStyle | Falsy | RegisteredStyle<TextStyle>> | readonly (TextStyle | ... 1 more ... | RegisteredStyle<...>)[]'.
+      Types of property 'color' are incompatible.
+        Type '{ primary: string; secondary: string; tertiary: string; inverse: string; link: string; }' is not assignable to type 'ColorValue | undefined'.
+src/screens/auth/ResetVerifyScreen.tsx(156,68): error TS2551: Property 'textSecondary' does not exist on type '{ primary: { main: string; foreground: string; light: string; lighter: string; dark: string; gradient: readonly ["#2563EB", "#7C3AED"] | readonly ["#3B82F6", "#8B5CF6"]; }; text: { primary: string; secondary: string; tertiary: string; inverse: string; link: string; }; ... 46 more ...; neutral: { ...; }; }'. Did you mean 'secondary'?
+src/screens/auth/ResetVerifyScreen.tsx(158,57): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: TextProps): Text', gave the following error.
+    Type '{ color: { primary: string; secondary: string; tertiary: string; inverse: string; link: string; }; }' is not assignable to type 'TextStyle | Falsy | RegisteredStyle<TextStyle> | RecursiveArray<TextStyle | Falsy | RegisteredStyle<TextStyle>> | readonly (TextStyle | ... 1 more ... | RegisteredStyle<...>)[]'.
+      Types of property 'color' are incompatible.
+        Type '{ primary: string; secondary: string; tertiary: string; inverse: string; link: string; }' is not assignable to type 'ColorValue | undefined'.
+  Overload 2 of 2, '(props: TextProps, context: any): Text', gave the following error.
+    Type '{ color: { primary: string; secondary: string; tertiary: string; inverse: string; link: string; }; }' is not assignable to type 'TextStyle | Falsy | RegisteredStyle<TextStyle> | RecursiveArray<TextStyle | Falsy | RegisteredStyle<TextStyle>> | readonly (TextStyle | ... 1 more ... | RegisteredStyle<...>)[]'.
+      Types of property 'color' are incompatible.
+        Type '{ primary: string; secondary: string; tertiary: string; inverse: string; link: string; }' is not assignable to type 'ColorValue | undefined'.
+src/screens/auth/ResetVerifyScreen.tsx(174,45): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: TextInputProps): TextInput', gave the following error.
+    Type '{ backgroundColor: any; color: { primary: string; secondary: string; tertiary: string; inverse: string; link: string; }; borderColor: string | { main: string; foreground: string; light: string; lighter: string; dark: string; gradient: readonly [...] | readonly [...]; }; }' is not assignable to type 'TextStyle | Falsy | RegisteredStyle<TextStyle> | RecursiveArray<TextStyle | Falsy | RegisteredStyle<TextStyle>> | readonly (TextStyle | ... 1 more ... | RegisteredStyle<...>)[]'.
+      Types of property 'color' are incompatible.
+        Type '{ primary: string; secondary: string; tertiary: string; inverse: string; link: string; }' is not assignable to type 'ColorValue | undefined'.
+  Overload 2 of 2, '(props: TextInputProps, context: any): TextInput', gave the following error.
+    Type '{ backgroundColor: any; color: { primary: string; secondary: string; tertiary: string; inverse: string; link: string; }; borderColor: string | { main: string; foreground: string; light: string; lighter: string; dark: string; gradient: readonly [...] | readonly [...]; }; }' is not assignable to type 'TextStyle | Falsy | RegisteredStyle<TextStyle> | RecursiveArray<TextStyle | Falsy | RegisteredStyle<TextStyle>> | readonly (TextStyle | ... 1 more ... | RegisteredStyle<...>)[]'.
+      Types of property 'color' are incompatible.
+        Type '{ primary: string; secondary: string; tertiary: string; inverse: string; link: string; }' is not assignable to type 'ColorValue | undefined'.
+src/screens/auth/ResetVerifyScreen.tsx(175,73): error TS2339: Property 'backgroundSecondary' does not exist on type '{ primary: { main: string; foreground: string; light: string; lighter: string; dark: string; gradient: readonly ["#2563EB", "#7C3AED"] | readonly ["#3B82F6", "#8B5CF6"]; }; text: { primary: string; secondary: string; tertiary: string; inverse: string; link: string; }; ... 46 more ...; neutral: { ...; }; }'.
+src/screens/auth/ResetVerifyScreen.tsx(204,93): error TS2339: Property 'backgroundSecondary' does not exist on type '{ primary: { main: string; foreground: string; light: string; lighter: string; dark: string; gradient: readonly ["#2563EB", "#7C3AED"] | readonly ["#3B82F6", "#8B5CF6"]; }; text: { primary: string; secondary: string; tertiary: string; inverse: string; link: string; }; ... 46 more ...; neutral: { ...; }; }'.
+src/screens/auth/ResetVerifyScreen.tsx(206,69): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: ViewProps): View', gave the following error.
+    Type '{ backgroundColor: { main: string; foreground: string; light: string; lighter: string; dark: string; gradient: readonly ["#2563EB", "#7C3AED"] | readonly ["#3B82F6", "#8B5CF6"]; }; }' is not assignable to type 'ViewStyle | Falsy | RegisteredStyle<ViewStyle> | RecursiveArray<ViewStyle | Falsy | RegisteredStyle<ViewStyle>> | readonly (ViewStyle | ... 1 more ... | RegisteredStyle<...>)[]'.
+      Types of property 'backgroundColor' are incompatible.
+        Type '{ main: string; foreground: string; light: string; lighter: string; dark: string; gradient: readonly ["#2563EB", "#7C3AED"] | readonly ["#3B82F6", "#8B5CF6"]; }' is not assignable to type 'ColorValue | undefined'.
+  Overload 2 of 2, '(props: ViewProps, context: any): View', gave the following error.
+    Type '{ backgroundColor: { main: string; foreground: string; light: string; lighter: string; dark: string; gradient: readonly ["#2563EB", "#7C3AED"] | readonly ["#3B82F6", "#8B5CF6"]; }; }' is not assignable to type 'ViewStyle | Falsy | RegisteredStyle<ViewStyle> | RecursiveArray<ViewStyle | Falsy | RegisteredStyle<ViewStyle>> | readonly (ViewStyle | ... 1 more ... | RegisteredStyle<...>)[]'.
+      Types of property 'backgroundColor' are incompatible.
+        Type '{ main: string; foreground: string; light: string; lighter: string; dark: string; gradient: readonly ["#2563EB", "#7C3AED"] | readonly ["#3B82F6", "#8B5CF6"]; }' is not assignable to type 'ColorValue | undefined'.
+src/screens/auth/ResetVerifyScreen.tsx(209,61): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: TextProps): Text', gave the following error.
+    Type '{ color: { primary: string; secondary: string; tertiary: string; inverse: string; link: string; }; }' is not assignable to type 'TextStyle | Falsy | RegisteredStyle<TextStyle> | RecursiveArray<TextStyle | Falsy | RegisteredStyle<TextStyle>> | readonly (TextStyle | ... 1 more ... | RegisteredStyle<...>)[]'.
+      Types of property 'color' are incompatible.
+        Type '{ primary: string; secondary: string; tertiary: string; inverse: string; link: string; }' is not assignable to type 'ColorValue | undefined'.
+  Overload 2 of 2, '(props: TextProps, context: any): Text', gave the following error.
+    Type '{ color: { primary: string; secondary: string; tertiary: string; inverse: string; link: string; }; }' is not assignable to type 'TextStyle | Falsy | RegisteredStyle<TextStyle> | RecursiveArray<TextStyle | Falsy | RegisteredStyle<TextStyle>> | readonly (TextStyle | ... 1 more ... | RegisteredStyle<...>)[]'.
+      Types of property 'color' are incompatible.
+        Type '{ primary: string; secondary: string; tertiary: string; inverse: string; link: string; }' is not assignable to type 'ColorValue | undefined'.
+src/screens/auth/ResetVerifyScreen.tsx(213,74): error TS2339: Property 'textTertiary' does not exist on type '{ primary: { main: string; foreground: string; light: string; lighter: string; dark: string; gradient: readonly ["#2563EB", "#7C3AED"] | readonly ["#3B82F6", "#8B5CF6"]; }; text: { primary: string; secondary: string; tertiary: string; inverse: string; link: string; }; ... 46 more ...; neutral: { ...; }; }'.
+src/screens/auth/ResetVerifyScreen.tsx(231,69): error TS2339: Property 'textTertiary' does not exist on type '{ primary: { main: string; foreground: string; light: string; lighter: string; dark: string; gradient: readonly ["#2563EB", "#7C3AED"] | readonly ["#3B82F6", "#8B5CF6"]; }; text: { primary: string; secondary: string; tertiary: string; inverse: string; link: string; }; ... 46 more ...; neutral: { ...; }; }'.
+src/screens/auth/ResetVerifyScreen.tsx(231,91): error TS2551: Property 'textSecondary' does not exist on type '{ primary: { main: string; foreground: string; light: string; lighter: string; dark: string; gradient: readonly ["#2563EB", "#7C3AED"] | readonly ["#3B82F6", "#8B5CF6"]; }; text: { primary: string; secondary: string; tertiary: string; inverse: string; link: string; }; ... 46 more ...; neutral: { ...; }; }'. Did you mean 'secondary'?
+src/screens/auth/ResetVerifyScreen.tsx(235,71): error TS2339: Property 'textTertiary' does not exist on type '{ primary: { main: string; foreground: string; light: string; lighter: string; dark: string; gradient: readonly ["#2563EB", "#7C3AED"] | readonly ["#3B82F6", "#8B5CF6"]; }; text: { primary: string; secondary: string; tertiary: string; inverse: string; link: string; }; ... 46 more ...; neutral: { ...; }; }'.
+src/screens/auth/ResetVerifyScreen.tsx(235,93): error TS2551: Property 'textSecondary' does not exist on type '{ primary: { main: string; foreground: string; light: string; lighter: string; dark: string; gradient: readonly ["#2563EB", "#7C3AED"] | readonly ["#3B82F6", "#8B5CF6"]; }; text: { primary: string; secondary: string; tertiary: string; inverse: string; link: string; }; ... 46 more ...; neutral: { ...; }; }'. Did you mean 'secondary'?
+src/screens/auth/VerifyEmailScreen.tsx(202,37): error TS2339: Property 'accent' does not exist on type '{ none: { shadowColor: string; shadowOffset: { width: number; height: number; }; shadowOpacity: number; shadowRadius: number; elevation: number; }; '2xs': { shadowColor: string; shadowOffset: { width: number; height: number; }; shadowOpacity: number; shadowRadius: number; elevation: number; }; ... 7 more ...; colore...'.
+src/screens/explore/ExploreScreen.tsx(18,45): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: TextProps): Text', gave the following error.
+    Type '{ color: { primary: string; secondary: string; tertiary: string; inverse: string; link: string; }; }' is not assignable to type 'TextStyle | Falsy | RegisteredStyle<TextStyle> | RecursiveArray<TextStyle | Falsy | RegisteredStyle<TextStyle>> | readonly (TextStyle | ... 1 more ... | RegisteredStyle<...>)[]'.
+      Types of property 'color' are incompatible.
+        Type '{ primary: string; secondary: string; tertiary: string; inverse: string; link: string; }' is not assignable to type 'ColorValue | undefined'.
+  Overload 2 of 2, '(props: TextProps, context: any): Text', gave the following error.
+    Type '{ color: { primary: string; secondary: string; tertiary: string; inverse: string; link: string; }; }' is not assignable to type 'TextStyle | Falsy | RegisteredStyle<TextStyle> | RecursiveArray<TextStyle | Falsy | RegisteredStyle<TextStyle>> | readonly (TextStyle | ... 1 more ... | RegisteredStyle<...>)[]'.
+      Types of property 'color' are incompatible.
+        Type '{ primary: string; secondary: string; tertiary: string; inverse: string; link: string; }' is not assignable to type 'ColorValue | undefined'.
+src/screens/explore/ExploreScreen.tsx(19,64): error TS2551: Property 'textSecondary' does not exist on type '{ primary: { main: string; foreground: string; light: string; lighter: string; dark: string; gradient: readonly ["#2563EB", "#7C3AED"] | readonly ["#3B82F6", "#8B5CF6"]; }; text: { primary: string; secondary: string; tertiary: string; inverse: string; link: string; }; ... 46 more ...; neutral: { ...; }; }'. Did you mean 'secondary'?
+src/screens/home/HomeDashboardScreen.tsx(30,9): error TS2353: Object literal may only specify known properties, and 'userLevel' does not exist in type 'DashboardStatsResponse'.
+src/screens/home/HomeDashboardScreen.tsx(145,24): error TS2339: Property 'userLevel' does not exist on type 'DashboardStatsResponse'.
+src/screens/home/HomeDashboardScreen.tsx(147,31): error TS2820: Type '"featured"' is not assignable to type '"flat" | "default" | "elevated" | "glass" | "feature" | undefined'. Did you mean '"feature"'?
+src/screens/home/HomeDashboardScreen.tsx(155,51): error TS2339: Property 'userLevel' does not exist on type 'DashboardStatsResponse'.
+src/screens/home/HomeDashboardScreen.tsx(155,74): error TS2339: Property 'userLevel' does not exist on type 'DashboardStatsResponse'.
+src/screens/home/HomeDashboardScreen.tsx(166,57): error TS2339: Property 'userLevel' does not exist on type 'DashboardStatsResponse'.
+src/screens/home/HomeDashboardScreen.tsx(170,55): error TS2339: Property 'userLevel' does not exist on type 'DashboardStatsResponse'.
+src/screens/home/HomeDashboardScreen.tsx(172,52): error TS2339: Property 'userLevel' does not exist on type 'DashboardStatsResponse'.
+src/screens/home/HomeDashboardScreen.tsx(180,94): error TS2339: Property 'userLevel' does not exist on type 'DashboardStatsResponse'.
+src/screens/home/HomeDashboardScreen.tsx(190,24): error TS2339: Property 'heatmap' does not exist on type 'DashboardStatsResponse'.
+src/screens/home/HomeDashboardScreen.tsx(212,39): error TS2339: Property 'heatmap' does not exist on type 'DashboardStatsResponse'.
+src/screens/home/HomeDashboardScreen.tsx(231,24): error TS2339: Property 'todaysWorkout' does not exist on type 'DashboardStatsResponse'.
+src/screens/home/HomeDashboardScreen.tsx(240,51): error TS2339: Property 'todaysWorkout' does not exist on type 'DashboardStatsResponse'.
+src/screens/home/HomeDashboardScreen.tsx(240,78): error TS2339: Property 'todaysWorkout' does not exist on type 'DashboardStatsResponse'.
+src/screens/home/HomeDashboardScreen.tsx(243,47): error TS2339: Property 'todaysWorkout' does not exist on type 'DashboardStatsResponse'.
+src/screens/home/HomeDashboardScreen.tsx(252,39): error TS2339: Property 'todaysWorkout' does not exist on type 'DashboardStatsResponse'.
+src/screens/home/HomeDashboardScreen.tsx(285,111): error TS2339: Property 'todaysWorkout' does not exist on type 'DashboardStatsResponse'.
+src/screens/home/HomeDashboardScreen.tsx(289,111): error TS2339: Property 'todaysWorkout' does not exist on type 'DashboardStatsResponse'.
+src/screens/home/HomeDashboardScreen.tsx(293,112): error TS2339: Property 'todaysWorkout' does not exist on type 'DashboardStatsResponse'.
+src/screens/home/HomeDashboardScreen.tsx(313,24): error TS2339: Property 'quickStats' does not exist on type 'DashboardStatsResponse'.
+src/screens/home/HomeDashboardScreen.tsx(326,43): error TS2339: Property 'quickStats' does not exist on type 'DashboardStatsResponse'.
+src/screens/home/HomeDashboardScreen.tsx(327,110): error TS2339: Property 'quickStats' does not exist on type 'DashboardStatsResponse'.
+src/screens/home/HomeDashboardScreen.tsx(331,104): error TS2339: Property 'quickStats' does not exist on type 'DashboardStatsResponse'.
+src/screens/home/HomeDashboardScreen.tsx(342,43): error TS2339: Property 'quickStats' does not exist on type 'DashboardStatsResponse'.
+src/screens/home/HomeDashboardScreen.tsx(358,43): error TS2339: Property 'quickStats' does not exist on type 'DashboardStatsResponse'.
+src/screens/home/HomeDashboardScreen.tsx(361,39): error TS2339: Property 'quickStats' does not exist on type 'DashboardStatsResponse'.
+src/screens/home/LevelXpModalScreen.tsx(159,23): error TS2820: Type '"featured"' is not assignable to type '"flat" | "default" | "elevated" | "glass" | "feature" | undefined'. Did you mean '"feature"'?
+src/screens/onboarding/EquipmentScreen.tsx(34,22): error TS2339: Property 'equipmentAvailable' does not exist on type 'Partial<UserProfile>'.
+src/screens/onboarding/EquipmentScreen.tsx(64,26): error TS2353: Object literal may only specify known properties, and 'equipmentAvailable' does not exist in type 'Partial<UserProfile>'.
+src/screens/onboarding/ExperienceLevelScreen.tsx(62,30): error TS2353: Object literal may only specify known properties, and 'experienceLevel' does not exist in type 'Partial<UserProfile>'.
+src/screens/onboarding/ExperienceLevelScreen.tsx(114,59): error TS2339: Property 'accent' does not exist on type '{ none: { shadowColor: string; shadowOffset: { width: number; height: number; }; shadowOpacity: number; shadowRadius: number; elevation: number; }; '2xs': { shadowColor: string; shadowOffset: { width: number; height: number; }; shadowOpacity: number; shadowRadius: number; elevation: number; }; ... 7 more ...; colore...'.
+src/screens/onboarding/FinalSuccessScreen.tsx(164,36): error TS2339: Property 'xl' does not exist on type '{ 0: number; 1: 4; 2: 8; 3: 12; 4: 16; 5: 20; 6: 24; 8: 32; 10: 40; 12: 48; 16: 64; }'.
+src/screens/onboarding/FinalSuccessScreen.tsx(172,31): error TS2339: Property 'xl' does not exist on type '{ 0: number; 1: 4; 2: 8; 3: 12; 4: 16; 5: 20; 6: 24; 8: 32; 10: 40; 12: 48; 16: 64; }'.
+src/screens/onboarding/FinalSuccessScreen.tsx(183,31): error TS2339: Property 'md' does not exist on type '{ 0: number; 1: 4; 2: 8; 3: 12; 4: 16; 5: 20; 6: 24; 8: 32; 10: 40; 12: 48; 16: 64; }'.
+src/screens/onboarding/FinalSuccessScreen.tsx(190,31): error TS2339: Property 'xxl' does not exist on type '{ 0: number; 1: 4; 2: 8; 3: 12; 4: 16; 5: 20; 6: 24; 8: 32; 10: 40; 12: 48; 16: 64; }'.
+src/screens/onboarding/FinalSuccessScreen.tsx(196,28): error TS2339: Property 'md' does not exist on type '{ 0: number; 1: 4; 2: 8; 3: 12; 4: 16; 5: 20; 6: 24; 8: 32; 10: 40; 12: 48; 16: 64; }'.
+src/screens/onboarding/FinalSuccessScreen.tsx(200,36): error TS2339: Property 'lg' does not exist on type '{ 0: number; 1: 4; 2: 8; 3: 12; 4: 16; 5: 20; 6: 24; 8: 32; 10: 40; 12: 48; 16: 64; }'.
+src/screens/onboarding/FinalSuccessScreen.tsx(221,26): error TS2339: Property 'xl' does not exist on type '{ 0: number; 1: 4; 2: 8; 3: 12; 4: 16; 5: 20; 6: 24; 8: 32; 10: 40; 12: 48; 16: 64; }'.
+src/screens/onboarding/FinalSuccessScreen.tsx(222,24): error TS7053: Element implicitly has an 'any' type because expression of type '"3xl"' can't be used to index type '{ 0: number; 1: 4; 2: 8; 3: 12; 4: 16; 5: 20; 6: 24; 8: 32; 10: 40; 12: 48; 16: 64; }'.
+  Property '3xl' does not exist on type '{ 0: number; 1: 4; 2: 8; 3: 12; 4: 16; 5: 20; 6: 24; 8: 32; 10: 40; 12: 48; 16: 64; }'.
+src/screens/onboarding/GoalSelectionScreen.tsx(64,30): error TS2353: Object literal may only specify known properties, and 'primaryGoal' does not exist in type 'Partial<UserProfile>'.
+src/screens/onboarding/NotificationScreen.tsx(31,26): error TS2353: Object literal may only specify known properties, and 'pushEnabled' does not exist in type 'Partial<UserProfile>'.
+src/screens/onboarding/NotificationScreen.tsx(36,26): error TS2353: Object literal may only specify known properties, and 'pushEnabled' does not exist in type 'Partial<UserProfile>'.
+src/screens/onboarding/PhysicalProfileScreen.tsx(40,13): error TS2353: Object literal may only specify known properties, and 'gender' does not exist in type 'Partial<UserProfile>'.
+src/screens/onboarding/SecondaryGoalsScreen.tsx(55,26): error TS2353: Object literal may only specify known properties, and 'secondaryGoals' does not exist in type 'Partial<UserProfile>'.
+src/screens/onboarding/WorkoutDurationScreen.tsx(35,30): error TS2353: Object literal may only specify known properties, and 'workoutDuration' does not exist in type 'Partial<UserProfile>'.
+src/screens/onboarding/WorkoutFrequencyScreen.tsx(38,30): error TS2353: Object literal may only specify known properties, and 'trainingDaysPerWeek' does not exist in type 'Partial<UserProfile>'.
+src/screens/onboarding/WorkoutInterestsScreen.tsx(53,26): error TS2353: Object literal may only specify known properties, and 'workoutInterests' does not exist in type 'Partial<UserProfile>'.
+src/screens/profile/ProfileScreen.tsx(183,34): error TS2339: Property 'bodySemibold' does not exist on type '{ display: string; body: string; mono: string; }'.
+src/screens/profile/ProfileScreen.tsx(222,34): error TS2339: Property 'bodySemibold' does not exist on type '{ display: string; body: string; mono: string; }'.
+src/screens/social/SocialScreen.tsx(18,45): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: TextProps): Text', gave the following error.
+    Type '{ color: { primary: string; secondary: string; tertiary: string; inverse: string; link: string; }; }' is not assignable to type 'TextStyle | Falsy | RegisteredStyle<TextStyle> | RecursiveArray<TextStyle | Falsy | RegisteredStyle<TextStyle>> | readonly (TextStyle | ... 1 more ... | RegisteredStyle<...>)[]'.
+      Types of property 'color' are incompatible.
+        Type '{ primary: string; secondary: string; tertiary: string; inverse: string; link: string; }' is not assignable to type 'ColorValue | undefined'.
+  Overload 2 of 2, '(props: TextProps, context: any): Text', gave the following error.
+    Type '{ color: { primary: string; secondary: string; tertiary: string; inverse: string; link: string; }; }' is not assignable to type 'TextStyle | Falsy | RegisteredStyle<TextStyle> | RecursiveArray<TextStyle | Falsy | RegisteredStyle<TextStyle>> | readonly (TextStyle | ... 1 more ... | RegisteredStyle<...>)[]'.
+      Types of property 'color' are incompatible.
+        Type '{ primary: string; secondary: string; tertiary: string; inverse: string; link: string; }' is not assignable to type 'ColorValue | undefined'.
+src/screens/social/SocialScreen.tsx(19,64): error TS2551: Property 'textSecondary' does not exist on type '{ primary: { main: string; foreground: string; light: string; lighter: string; dark: string; gradient: readonly ["#2563EB", "#7C3AED"] | readonly ["#3B82F6", "#8B5CF6"]; }; text: { primary: string; secondary: string; tertiary: string; inverse: string; link: string; }; ... 46 more ...; neutral: { ...; }; }'. Did you mean 'secondary'?
+src/screens/workout/WorkoutScreen.tsx(18,45): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(props: TextProps): Text', gave the following error.
+    Type '{ color: { primary: string; secondary: string; tertiary: string; inverse: string; link: string; }; }' is not assignable to type 'TextStyle | Falsy | RegisteredStyle<TextStyle> | RecursiveArray<TextStyle | Falsy | RegisteredStyle<TextStyle>> | readonly (TextStyle | ... 1 more ... | RegisteredStyle<...>)[]'.
+      Types of property 'color' are incompatible.
+        Type '{ primary: string; secondary: string; tertiary: string; inverse: string; link: string; }' is not assignable to type 'ColorValue | undefined'.
+  Overload 2 of 2, '(props: TextProps, context: any): Text', gave the following error.
+    Type '{ color: { primary: string; secondary: string; tertiary: string; inverse: string; link: string; }; }' is not assignable to type 'TextStyle | Falsy | RegisteredStyle<TextStyle> | RecursiveArray<TextStyle | Falsy | RegisteredStyle<TextStyle>> | readonly (TextStyle | ... 1 more ... | RegisteredStyle<...>)[]'.
+      Types of property 'color' are incompatible.
+        Type '{ primary: string; secondary: string; tertiary: string; inverse: string; link: string; }' is not assignable to type 'ColorValue | undefined'.
+src/screens/workout/WorkoutScreen.tsx(19,64): error TS2551: Property 'textSecondary' does not exist on type '{ primary: { main: string; foreground: string; light: string; lighter: string; dark: string; gradient: readonly ["#2563EB", "#7C3AED"] | readonly ["#3B82F6", "#8B5CF6"]; }; text: { primary: string; secondary: string; tertiary: string; inverse: string; link: string; }; ... 46 more ...; neutral: { ...; }; }'. Did you mean 'secondary'?

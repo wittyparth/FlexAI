@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 
@@ -26,14 +25,14 @@ const FEATURED_PRS = [
 ];
 
 const ALL_PRS = [
-    { exercise: 'Bench Press', weight: 225, reps: '1RM', date: 'Mar 5', color: '#6366F1' },
-    { exercise: 'Incline Dumbbell Press', weight: 80, reps: '8RM', date: 'Mar 3', color: '#818CF8' },
-    { exercise: 'Squat', weight: 315, reps: '1RM', date: 'Feb 28', color: '#10B981' },
-    { exercise: 'Romanian Deadlift', weight: 225, reps: '8RM', date: 'Feb 26', color: '#34D399' },
-    { exercise: 'Deadlift', weight: 405, reps: '1RM', date: 'Mar 1', color: '#F59E0B' },
-    { exercise: 'Overhead Press', weight: 135, reps: '1RM', date: 'Feb 20', color: '#EC4899' },
-    { exercise: 'Barbell Row', weight: 185, reps: '5RM', date: 'Feb 18', color: '#8B5CF6' },
-    { exercise: 'Pull-ups', weight: 45, reps: '10RM', date: 'Feb 15', color: '#14B8A6' },
+    { exercise: 'Bench Press', weight: 225, reps: '1RM', date: 'Mar 5', color: '#6366F1', icon: 'dumbbell' },
+    { exercise: 'Incline Dumbbell Press', weight: 80, reps: '8RM', date: 'Mar 3', color: '#818CF8', icon: 'dumbbell' },
+    { exercise: 'Squat', weight: 315, reps: '1RM', date: 'Feb 28', color: '#10B981', icon: 'human' },
+    { exercise: 'Romanian Deadlift', weight: 225, reps: '8RM', date: 'Feb 26', color: '#34D399', icon: 'weight-lifter' },
+    { exercise: 'Deadlift', weight: 405, reps: '1RM', date: 'Mar 1', color: '#F59E0B', icon: 'weight-lifter' },
+    { exercise: 'Overhead Press', weight: 135, reps: '1RM', date: 'Feb 20', color: '#EC4899', icon: 'human-handsup' },
+    { exercise: 'Barbell Row', weight: 185, reps: '5RM', date: 'Feb 18', color: '#8B5CF6', icon: 'dumbbell' },
+    { exercise: 'Pull-ups', weight: 45, reps: '10RM', date: 'Feb 15', color: '#14B8A6', icon: 'human-handsup' },
 ];
 
 const STATS = {
@@ -56,34 +55,34 @@ export function PersonalRecordsScreen({ navigation }: any) {
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
             {/* Header */}
-            <LinearGradient
-                colors={['#F59E0B', '#D97706'] as [string, string]}
-                style={[styles.header, { paddingTop: insets.top + 8 }]}
-            >
+            <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.background }]}>
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerBtn}>
-                    <Ionicons name="arrow-back" size={24} color="#FFF" />
+                    <Ionicons name="arrow-back" size={24} color={colors.foreground} />
                 </TouchableOpacity>
-                <View style={styles.headerCenter}>
-                    <MaterialCommunityIcons name="trophy" size={28} color="#FFF" />
-                    <Text style={[styles.headerTitle, { fontFamily: fontFamilies.display }]}>Personal Records</Text>
-                </View>
+                <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Records</Text>
                 <View style={styles.headerBtn} />
-            </LinearGradient>
+            </View>
 
             <ScrollView showsVerticalScrollIndicator={false}>
                 {/* Stats Row */}
                 <Animated.View style={[styles.statsRow, { opacity: fadeAnim }]}>
                     <View style={[styles.statCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-                        <Text style={[styles.statValue, { color: colors.foreground }]}>{STATS.totalPRs}</Text>
-                        <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>All-Time</Text>
+                        <View style={[styles.statIconBadge, { backgroundColor: `${colors.primary.main}15` }]}>
+                            <MaterialCommunityIcons name="trophy-award" size={22} color={colors.primary.main} />
+                        </View>
+                        <View>
+                            <Text style={[styles.statValue, { color: colors.foreground }]}>{STATS.totalPRs}</Text>
+                            <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>All-Time Setting</Text>
+                        </View>
                     </View>
                     <View style={[styles.statCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-                        <Text style={[styles.statValue, { color: colors.success }]}>{STATS.prsThisMonth}</Text>
-                        <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>This Month</Text>
-                    </View>
-                    <View style={[styles.statCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-                        <Text style={[styles.statValue, { color: colors.foreground }]}>{STATS.longestStreak}</Text>
-                        <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>PR Streak</Text>
+                        <View style={[styles.statIconBadge, { backgroundColor: `${colors.stats.consistency}15` }]}>
+                            <MaterialCommunityIcons name="lightning-bolt" size={22} color={colors.stats.consistency} />
+                        </View>
+                        <View>
+                            <Text style={[styles.statValue, { color: colors.foreground }]}>{STATS.prsThisMonth}</Text>
+                            <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>Current Month</Text>
+                        </View>
                     </View>
                 </Animated.View>
 
@@ -96,53 +95,59 @@ export function PersonalRecordsScreen({ navigation }: any) {
                                 key={index}
                                 style={{
                                     opacity: fadeAnim,
-                                    transform: [{
-                                        translateX: fadeAnim.interpolate({
-                                            inputRange: [0, 1],
-                                            outputRange: [30 + index * 10, 0]
-                                        })
-                                    }]
+                                    transform: [{ translateX: fadeAnim.interpolate({ inputRange: [0, 1], outputRange: [30 + index * 10, 0] }) }],
+                                    shadowColor: pr.color, shadowOffset: { width: 0, height: 8 }, shadowOpacity: 0.3, shadowRadius: 10, elevation: 8
                                 }}
                             >
-                                <LinearGradient
-                                    colors={[pr.color, `${pr.color}CC`] as [string, string]}
+                                <View
                                     style={styles.featuredCard}
                                 >
                                     <View style={styles.featuredHeader}>
                                         <View style={styles.crownBadge}>
-                                            <MaterialCommunityIcons name="crown" size={18} color="#FFF" />
+                                            <MaterialCommunityIcons name="crown" size={16} color="#FFF" />
                                         </View>
-                                        <Text style={styles.featuredImprovement}>{pr.improvement} lbs</Text>
+                                        <View style={styles.improvementBadge}>
+                                            <Ionicons name="trending-up" size={12} color="#FFF" style={{ marginRight: 4 }} />
+                                            <Text style={styles.featuredImprovement}>{pr.improvement} lbs</Text>
+                                        </View>
                                     </View>
-                                    <MaterialCommunityIcons name={pr.icon as any} size={40} color="rgba(255,255,255,0.3)" style={styles.featuredIcon} />
-                                    <Text style={styles.featuredExercise}>{pr.exercise}</Text>
-                                    <Text style={styles.featuredWeight}>{pr.weight} {pr.unit}</Text>
-                                    <Text style={styles.featuredDate}>{pr.date}</Text>
-                                </LinearGradient>
+                                    
+                                    <View style={styles.featuredContent}>
+                                        <Text style={styles.featuredExercise}>{pr.exercise}</Text>
+                                        <View style={styles.featuredWeightRow}>
+                                            <Text style={styles.featuredWeight}>{pr.weight}</Text>
+                                            <Text style={styles.featuredUnit}>{pr.unit}</Text>
+                                        </View>
+                                        <Text style={styles.featuredDate}>{pr.date}</Text>
+                                    </View>
+                                    
+                                    <MaterialCommunityIcons name={pr.icon as any} size={90} color="rgba(255,255,255,0.12)" style={styles.featuredIcon} />
+                                </View>
                             </Animated.View>
                         ))}
                     </ScrollView>
                 </View>
 
                 {/* Filter Pills */}
-                <View style={styles.filterRow}>
-                    {['all', 'chest', 'back', 'legs', 'shoulders'].map((f) => (
+                <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.filterRow}>
+                    {['all', 'chest', 'back', 'legs', 'shoulders', 'arms', 'core'].map((f) => (
                         <TouchableOpacity
                             key={f}
                             style={[
                                 styles.filterPill,
                                 filter === f
-                                    ? { backgroundColor: colors.primary.main }
+                                    ? { backgroundColor: `${colors.primary.main}20`, borderColor: colors.primary.main, borderWidth: 1 }
                                     : { backgroundColor: colors.card, borderColor: colors.border, borderWidth: 1 }
                             ]}
                             onPress={() => setFilter(f)}
+                            activeOpacity={0.7}
                         >
-                            <Text style={[styles.filterText, { color: filter === f ? '#FFF' : colors.foreground }]}>
+                            <Text style={[styles.filterText, { color: filter === f ? colors.primary.main : colors.mutedForeground }]}>
                                 {f.charAt(0).toUpperCase() + f.slice(1)}
                             </Text>
                         </TouchableOpacity>
                     ))}
-                </View>
+                </ScrollView>
 
                 {/* All PRs List */}
                 <View style={styles.section}>
@@ -165,19 +170,22 @@ export function PersonalRecordsScreen({ navigation }: any) {
                                 activeOpacity={0.9}
                             >
                                 <View style={[styles.prIcon, { backgroundColor: `${pr.color}15` }]}>
-                                    <MaterialCommunityIcons name="trophy" size={22} color={pr.color} />
+                                    <MaterialCommunityIcons name={(pr as any).icon || 'trophy'} size={24} color={pr.color} />
                                 </View>
                                 <View style={styles.prInfo}>
                                     <Text style={[styles.prExercise, { color: colors.foreground }]}>{pr.exercise}</Text>
                                     <View style={styles.prMeta}>
-                                        <Text style={[styles.prReps, { color: colors.mutedForeground }]}>{pr.reps}</Text>
-                                        <View style={[styles.dot, { backgroundColor: colors.border }]} />
+                                        <View style={[styles.prRepsBadge, { backgroundColor: `${colors.border}80` }]}>
+                                            <Text style={[styles.prReps, { color: colors.foreground }]}>{pr.reps}</Text>
+                                        </View>
                                         <Text style={[styles.prDate, { color: colors.mutedForeground }]}>{pr.date}</Text>
                                     </View>
                                 </View>
                                 <View style={styles.prWeightContainer}>
-                                    <Text style={[styles.prWeight, { color: colors.foreground }]}>{pr.weight}</Text>
-                                    <Text style={[styles.prUnit, { color: colors.mutedForeground }]}>lbs</Text>
+                                    <View style={{ flexDirection: 'row', alignItems: 'baseline', gap: 4 }}>
+                                        <Text style={[styles.prWeight, { color: colors.foreground }]}>{pr.weight}</Text>
+                                        <Text style={[styles.prUnit, { color: colors.mutedForeground }]}>lbs</Text>
+                                    </View>
                                 </View>
                             </TouchableOpacity>
                         </Animated.View>
@@ -192,37 +200,41 @@ export function PersonalRecordsScreen({ navigation }: any) {
 
 const styles = StyleSheet.create({
     container: { flex: 1 },
-    header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 12, paddingBottom: 20 },
-    headerBtn: { width: 44, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center' },
-    headerCenter: { flexDirection: 'row', alignItems: 'center', gap: 10 },
-    headerTitle: { fontSize: 22, fontWeight: '700', color: '#FFF' },
-    statsRow: { flexDirection: 'row', paddingHorizontal: 16, paddingTop: 20, gap: 10 },
-    statCard: { flex: 1, padding: 18, borderRadius: 18, borderWidth: 1, alignItems: 'center' },
-    statValue: { fontSize: 28, fontWeight: '800', fontFamily: fontFamilies.mono },
-    statLabel: { fontSize: 12, marginTop: 4 },
-    section: { marginTop: 24, paddingHorizontal: 16 },
+    header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, paddingBottom: 16 },
+    headerBtn: { width: 44, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(150,150,150,0.1)' },
+    headerTitle: { fontSize: 20, fontWeight: '700' },
+    statsRow: { flexDirection: 'row', paddingHorizontal: 16, paddingTop: 20, gap: 12 },
+    statCard: { flex: 1, padding: 18, borderRadius: 20, borderWidth: 1, flexDirection: 'row', alignItems: 'center', gap: 14 },
+    statIconBadge: { width: 48, height: 48, borderRadius: 14, alignItems: 'center', justifyContent: 'center' },
+    statValue: { fontSize: 24, fontWeight: '800', fontFamily: fontFamilies.mono, marginBottom: 2 },
+    statLabel: { fontSize: 13, fontWeight: '500' },
+    section: { marginTop: 30, paddingHorizontal: 16 },
     sectionTitle: { fontSize: 18, fontWeight: '700', marginBottom: 16 },
-    featuredScroll: { paddingRight: 16, gap: 14 },
-    featuredCard: { width: 160, padding: 18, borderRadius: 20, position: 'relative', overflow: 'hidden' },
-    featuredHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 },
-    crownBadge: { backgroundColor: 'rgba(255,255,255,0.2)', width: 36, height: 36, borderRadius: 12, alignItems: 'center', justifyContent: 'center' },
-    featuredImprovement: { color: '#FFF', fontSize: 13, fontWeight: '700', backgroundColor: 'rgba(0,0,0,0.2)', paddingHorizontal: 10, paddingVertical: 4, borderRadius: 8 },
-    featuredIcon: { position: 'absolute', right: -10, bottom: -10 },
-    featuredExercise: { color: 'rgba(255,255,255,0.8)', fontSize: 14, marginBottom: 6 },
-    featuredWeight: { color: '#FFF', fontSize: 32, fontWeight: '800', fontFamily: fontFamilies.mono },
-    featuredDate: { color: 'rgba(255,255,255,0.6)', fontSize: 12, marginTop: 6 },
-    filterRow: { flexDirection: 'row', paddingHorizontal: 16, marginTop: 20, gap: 8, flexWrap: 'wrap' },
-    filterPill: { paddingHorizontal: 16, paddingVertical: 10, borderRadius: 12 },
+    featuredScroll: { paddingRight: 16, gap: 16, paddingBottom: 16 },
+    featuredCard: { width: 220, height: 260, padding: 22, borderRadius: 28, position: 'relative', overflow: 'hidden', justifyContent: 'space-between' },
+    featuredHeader: { flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between', zIndex: 2 },
+    crownBadge: { backgroundColor: 'rgba(255,255,255,0.25)', width: 38, height: 38, borderRadius: 14, alignItems: 'center', justifyContent: 'center' },
+    improvementBadge: { flexDirection: 'row', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.3)', paddingHorizontal: 10, paddingVertical: 6, borderRadius: 10 },
+    featuredImprovement: { color: '#FFF', fontSize: 13, fontWeight: '700' },
+    featuredContent: { zIndex: 2 },
+    featuredExercise: { color: 'rgba(255,255,255,0.9)', fontSize: 16, fontWeight: '600', marginBottom: 8 },
+    featuredWeightRow: { flexDirection: 'row', alignItems: 'baseline', gap: 6 },
+    featuredWeight: { color: '#FFF', fontSize: 42, fontWeight: '800', fontFamily: fontFamilies.mono, lineHeight: 48 },
+    featuredUnit: { color: 'rgba(255,255,255,0.7)', fontSize: 16, fontWeight: '600' },
+    featuredDate: { color: 'rgba(255,255,255,0.6)', fontSize: 13, marginTop: 8 },
+    featuredIcon: { position: 'absolute', right: -15, bottom: -15, transform: [{ rotate: '-15deg' }] },
+    filterRow: { paddingHorizontal: 16, marginTop: 10, gap: 10, flexWrap: 'wrap' },
+    filterPill: { paddingHorizontal: 18, paddingVertical: 10, borderRadius: 12 },
     filterText: { fontSize: 14, fontWeight: '600' },
-    prCard: { flexDirection: 'row', alignItems: 'center', padding: 16, borderRadius: 16, borderWidth: 1, marginBottom: 10, gap: 14 },
-    prIcon: { width: 48, height: 48, borderRadius: 14, alignItems: 'center', justifyContent: 'center' },
+    prCard: { flexDirection: 'row', alignItems: 'center', padding: 18, borderRadius: 20, borderWidth: 1, marginBottom: 12, gap: 16 },
+    prIcon: { width: 54, height: 54, borderRadius: 16, alignItems: 'center', justifyContent: 'center' },
     prInfo: { flex: 1 },
-    prExercise: { fontSize: 16, fontWeight: '600', marginBottom: 4 },
-    prMeta: { flexDirection: 'row', alignItems: 'center', gap: 8 },
-    prReps: { fontSize: 13 },
-    prDate: { fontSize: 13 },
-    dot: { width: 4, height: 4, borderRadius: 2 },
-    prWeightContainer: { alignItems: 'flex-end' },
+    prExercise: { fontSize: 16, fontWeight: '700', marginBottom: 6 },
+    prMeta: { flexDirection: 'row', alignItems: 'center', gap: 10 },
+    prRepsBadge: { paddingHorizontal: 8, paddingVertical: 3, borderRadius: 6 },
+    prReps: { fontSize: 12, fontWeight: '600' },
+    prDate: { fontSize: 13, fontWeight: '500' },
+    prWeightContainer: { alignItems: 'flex-end', justifyContent: 'center' },
     prWeight: { fontSize: 24, fontWeight: '800', fontFamily: fontFamilies.mono },
-    prUnit: { fontSize: 12 },
+    prUnit: { fontSize: 13, fontWeight: '600' },
 });

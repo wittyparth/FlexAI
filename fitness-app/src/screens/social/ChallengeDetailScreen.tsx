@@ -2,7 +2,6 @@ import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, Dimensions, ActivityIndicator } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useColors } from '../../hooks';
 import { useChallengeDetail, useJoinChallenge, useLeaveChallenge } from '../../hooks/queries/useLeaderboardQueries';
 import { fontFamilies } from '../../theme/typography';
@@ -94,7 +93,7 @@ export function ChallengeDetailScreen({ route, navigation }: any) {
                 {/* Hero Image */}
                 <View style={styles.hero}>
                     <Image source={{ uri: imageUrl }} style={styles.heroImage} />
-                    <LinearGradient colors={['transparent', 'rgba(0,0,0,0.8)']} style={styles.heroOverlay} />
+                    <View style={styles.heroOverlay} />
                     <TouchableOpacity style={[styles.backBtn, { top: insets.top + 8 }]} onPress={() => navigation.goBack()}>
                         <Ionicons name="arrow-back" size={24} color="#FFF" />
                     </TouchableOpacity>
@@ -141,10 +140,7 @@ export function ChallengeDetailScreen({ route, navigation }: any) {
                                     <Text style={[styles.progressVal, { color: colors.primary.main }]}>{progress}%</Text>
                                 </View>
                                 <View style={[styles.progressBg, { backgroundColor: colors.muted }]}>
-                                    <LinearGradient
-                                        colors={colors.primary.gradient as [string, string]}
-                                        start={{ x: 0, y: 0 }}
-                                        end={{ x: 1, y: 0 }}
+                                    <View
                                         style={[styles.progressFill, { width: `${progress}%` }]}
                                     />
                                 </View>
@@ -211,11 +207,11 @@ export function ChallengeDetailScreen({ route, navigation }: any) {
                         onPress={() => joinChallengeMutation.mutate(challenge.id)}
                         disabled={joinChallengeMutation.isPending}
                     >
-                        <LinearGradient colors={colors.primary.gradient as [string, string]} style={styles.ctaGrad}>
+                        <View style={styles.ctaGrad}>
                             <Text style={styles.ctaText}>
                                 {joinChallengeMutation.isPending ? 'Joining...' : 'Join Challenge'}
                             </Text>
-                        </LinearGradient>
+                        </View>
                     </TouchableOpacity>
                 </View>
             )}

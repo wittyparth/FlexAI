@@ -2,7 +2,6 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, Platform } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import { OnboardingStackParamList } from '../../../App';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useColors } from '../../hooks/useColors';
@@ -58,14 +57,7 @@ export const AppTourScreen: React.FC<Props> = ({ navigation }) => {
                     />
 
                     {/* Overlay to tint/style */}
-                    <LinearGradient
-                        colors={[
-                            isDark ? 'rgba(15, 23, 42, 0.9)' : 'rgba(248, 249, 252, 0.9)',
-                            'transparent',
-                            'transparent'
-                        ]}
-                        start={{ x: 0, y: 1 }}
-                        end={{ x: 0, y: 0 }}
+                    <View
                         style={[StyleSheet.absoluteFill, { opacity: 0.3 }]}
                     />
 
@@ -99,10 +91,7 @@ export const AppTourScreen: React.FC<Props> = ({ navigation }) => {
                             <Text style={[styles.cardTitle, { color: colors.mutedForeground }]}>Fatigue Level</Text>
                         </View>
                         <View style={[styles.barBg, { backgroundColor: isDark ? colors.slate[700] : colors.slate[200] }]}>
-                            <LinearGradient
-                                colors={[colors.primary.main || '#0052FF', '#f87171']}
-                                start={{ x: 0, y: 0 }}
-                                end={{ x: 1, y: 0 }}
+                            <View
                                 style={{ width: '75%', height: '100%' }}
                             />
                         </View>
@@ -140,15 +129,12 @@ export const AppTourScreen: React.FC<Props> = ({ navigation }) => {
 
                 {/* Next Button */}
                 <TouchableOpacity onPress={handleNext} style={styles.buttonContainer} activeOpacity={0.9}>
-                    <LinearGradient
-                        colors={(colors.primary.gradient || [colors.primary.main || '#0052FF', colors.primary.light || '#4D7CFF']) as any}
-                        start={{ x: 0, y: 0 }}
-                        end={{ x: 1, y: 1 }}
+                    <View
                         style={styles.continueButton}
                     >
                         <Text style={styles.continueButtonText}>Next</Text>
                         <Ionicons name="arrow-forward" size={20} color="#ffffff" />
-                    </LinearGradient>
+                    </View>
                 </TouchableOpacity>
             </View>
         </View>

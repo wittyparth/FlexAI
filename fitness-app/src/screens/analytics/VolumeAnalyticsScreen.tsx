@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import { BarChart } from 'react-native-gifted-charts';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
@@ -18,29 +17,44 @@ import { fontFamilies } from '../../theme/typography';
 const { width } = Dimensions.get('window');
 
 // ============================================================
-// MOCK DATA - Volume by week and muscle group
+// MOCK DATA - Volume by time period and muscle group
 // ============================================================
-const VOLUME_BY_WEEK = [
-    { week: 'W1', chest: 12, back: 10, legs: 8, shoulders: 6, arms: 5 },
-    { week: 'W2', chest: 14, back: 12, legs: 10, shoulders: 7, arms: 6 },
-    { week: 'W3', chest: 11, back: 11, legs: 12, shoulders: 8, arms: 5 },
-    { week: 'W4', chest: 15, back: 13, legs: 9, shoulders: 7, arms: 7 },
-];
+const VOLUME_DATA: Record<string, any[]> = {
+    '4W': [
+        { label: 'W1', chest: 12, back: 10, legs: 8, shoulders: 6, arms: 5 },
+        { label: 'W2', chest: 14, back: 12, legs: 10, shoulders: 7, arms: 6 },
+        { label: 'W3', chest: 11, back: 11, legs: 12, shoulders: 8, arms: 5 },
+        { label: 'W4', chest: 15, back: 13, legs: 9, shoulders: 7, arms: 7 },
+    ],
+    '12W': [
+        { label: 'M1', chest: 45, back: 40, legs: 35, shoulders: 25, arms: 20 },
+        { label: 'M2', chest: 48, back: 44, legs: 38, shoulders: 28, arms: 22 },
+        { label: 'M3', chest: 52, back: 46, legs: 39, shoulders: 28, arms: 23 },
+    ],
+    '6M': [
+        { label: 'Jul', chest: 43, back: 40, legs: 35, shoulders: 25, arms: 20 },
+        { label: 'Aug', chest: 45, back: 41, legs: 36, shoulders: 26, arms: 21 },
+        { label: 'Sep', chest: 48, back: 44, legs: 38, shoulders: 28, arms: 22 },
+        { label: 'Oct', chest: 50, back: 45, legs: 40, shoulders: 29, arms: 23 },
+        { label: 'Nov', chest: 49, back: 44, legs: 39, shoulders: 28, arms: 24 },
+        { label: 'Dec', chest: 52, back: 46, legs: 39, shoulders: 28, arms: 23 },
+    ]
+};
 
 const MUSCLE_BREAKDOWN = [
-    { name: 'Chest', volume: 52340, percentage: 25, color: '#6366F1', icon: 'chest' },
+    { name: 'Chest', volume: 52340, percentage: 25, color: '#6366F1', icon: 'chess-knight' },
     { name: 'Back', volume: 41800, percentage: 22, color: '#10B981', icon: 'human-male-height-variant' },
-    { name: 'Legs', volume: 35600, percentage: 18, color: '#EC4899', icon: 'leg' },
-    { name: 'Shoulders', volume: 28000, percentage: 15, color: '#F59E0B', icon: 'human-handsup' },
+    { name: 'Legs', volume: 35600, percentage: 18, color: '#EC4899', icon: 'run' },
+    { name: 'Shoulders', volume: 28000, percentage: 15, color: '#F59E0B', icon: 'yoga' },
     { name: 'Arms', volume: 23400, percentage: 12, color: '#8B5CF6', icon: 'arm-flex' },
     { name: 'Core', volume: 15200, percentage: 8, color: '#14B8A6', icon: 'human' },
 ];
 
 const WEEKLY_TOTALS = [
-    { label: 'Week 1', value: 41000, change: 0 },
-    { label: 'Week 2', value: 49000, change: 19.5 },
-    { label: 'Week 3', value: 47000, change: -4.1 },
-    { label: 'Week 4', value: 51000, change: 8.5 },
+    { label: 'Current Week', value: 51000, change: 8.5 },
+    { label: 'Last Week', value: 47000, change: -4.1 },
+    { label: '2 Weeks Ago', value: 49000, change: 19.5 },
+    { label: '3 Weeks Ago', value: 41000, change: 0 },
 ];
 
 export function VolumeAnalyticsScreen({ navigation }: any) {
@@ -57,30 +71,28 @@ export function VolumeAnalyticsScreen({ navigation }: any) {
     const weeklyAvg = totalVolume / 4;
 
     // Prepare stacked bar data
-    const stackedData = VOLUME_BY_WEEK.map((week) => ({
+    const currentData = VOLUME_DATA[period];
+    const stackedData = currentData.map((dataPoint) => ({
         stacks: [
-            { value: week.chest, color: '#6366F1' },
-            { value: week.back, color: '#10B981' },
-            { value: week.legs, color: '#EC4899' },
-            { value: week.shoulders, color: '#F59E0B' },
-            { value: week.arms, color: '#8B5CF6' },
+            { value: dataPoint.chest, color: '#6366F1' },
+            { value: dataPoint.back, color: '#10B981' },
+            { value: dataPoint.legs, color: '#EC4899' },
+            { value: dataPoint.shoulders, color: '#F59E0B' },
+            { value: dataPoint.arms, color: '#8B5CF6' },
         ],
-        label: week.week,
+        label: dataPoint.label,
     }));
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
             {/* Header */}
-            <LinearGradient
-                colors={['#10B981', '#059669'] as [string, string]}
-                style={[styles.header, { paddingTop: insets.top + 8 }]}
-            >
+            <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.background }]}>
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerBtn}>
-                    <Ionicons name="arrow-back" size={24} color="#FFF" />
+                    <Ionicons name="arrow-back" size={24} color={colors.foreground} />
                 </TouchableOpacity>
-                <Text style={[styles.headerTitle, { fontFamily: fontFamilies.display }]}>Volume</Text>
+                <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Volume</Text>
                 <View style={styles.headerBtn} />
-            </LinearGradient>
+            </View>
 
             <ScrollView showsVerticalScrollIndicator={false}>
                 {/* Summary Cards */}
@@ -111,15 +123,15 @@ export function VolumeAnalyticsScreen({ navigation }: any) {
                 {/* Stacked Bar Chart */}
                 <View style={styles.section}>
                     <View style={styles.sectionHeader}>
-                        <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Weekly Volume</Text>
+                        <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Trend</Text>
                         <View style={styles.periodSelector}>
-                            {['4W', '8W', '12W'].map((p) => (
+                            {['4W', '12W', '6M'].map((p) => (
                                 <TouchableOpacity
                                     key={p}
-                                    style={[styles.periodBtn, period === p && { backgroundColor: '#10B981' }]}
+                                    style={[styles.periodBtn, period === p && { backgroundColor: `${colors.primary.main}20` }]}
                                     onPress={() => setPeriod(p)}
                                 >
-                                    <Text style={[styles.periodText, { color: period === p ? '#FFF' : colors.mutedForeground }]}>{p}</Text>
+                                    <Text style={[styles.periodText, { color: period === p ? colors.primary.main : colors.mutedForeground }]}>{p}</Text>
                                 </TouchableOpacity>
                             ))}
                         </View>
@@ -129,16 +141,43 @@ export function VolumeAnalyticsScreen({ navigation }: any) {
                             stackData={stackedData}
                             width={width - 80}
                             height={180}
-                            barWidth={40}
-                            spacing={30}
+                            barWidth={period === '4W' ? 40 : period === '12W' ? 55 : 30}
+                            spacing={period === '4W' ? 30 : period === '12W' ? 40 : 18}
                             noOfSections={4}
                             barBorderRadius={6}
                             yAxisThickness={0}
                             xAxisThickness={0}
                             hideRules
-                            xAxisLabelTextStyle={{ color: colors.mutedForeground, fontSize: 12 }}
-                            yAxisTextStyle={{ color: colors.mutedForeground, fontSize: 11 }}
+                            xAxisLabelTextStyle={{ color: colors.mutedForeground, fontSize: 12, fontWeight: '500' }}
+                            yAxisTextStyle={{ color: colors.mutedForeground, fontSize: 11, fontWeight: '500' }}
                             isAnimated
+                            animationDuration={800}
+                            pointerConfig={{
+                                pointerStripHeight: 180,
+                                pointerStripColor: colors.foreground,
+                                pointerStripWidth: 2,
+                                pointerColor: colors.foreground,
+                                activatePointersOnLongPress: true,
+                                autoAdjustPointerLabelPosition: true,
+                                pointerLabelComponent: (items: any) => {
+                                    // Calculate total directly for the tooltip
+                                    const stackTotal = items[0].stacks?.reduce((sum: number, stack: any) => sum + stack.value, 0) || 0;
+                                    return (
+                                        <View style={{
+                                            backgroundColor: colors.card,
+                                            padding: 8,
+                                            borderRadius: 8,
+                                            borderWidth: 1,
+                                            borderColor: colors.border,
+                                            left: -20,
+                                        }}>
+                                            <Text style={{ color: colors.foreground, fontSize: 12, fontWeight: '700' }}>
+                                                Total: {stackTotal.toFixed(1)}k
+                                            </Text>
+                                        </View>
+                                    );
+                                },
+                            }}
                         />
                         {/* Legend */}
                         <View style={styles.legend}>
@@ -181,11 +220,8 @@ export function VolumeAnalyticsScreen({ navigation }: any) {
                                     </View>
                                     <View style={styles.progressContainer}>
                                         <View style={[styles.progressBg, { backgroundColor: colors.muted }]}>
-                                            <LinearGradient
-                                                colors={[muscle.color, `${muscle.color}CC`] as [string, string]}
+                                            <View
                                                 style={[styles.progressFill, { width: `${muscle.percentage}%` }]}
-                                                start={{ x: 0, y: 0 }}
-                                                end={{ x: 1, y: 0 }}
                                             />
                                         </View>
                                         <Text style={[styles.percentText, { color: colors.mutedForeground }]}>{muscle.percentage}%</Text>
@@ -227,9 +263,9 @@ export function VolumeAnalyticsScreen({ navigation }: any) {
 
 const styles = StyleSheet.create({
     container: { flex: 1 },
-    header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 12, paddingBottom: 20 },
-    headerBtn: { width: 44, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center' },
-    headerTitle: { fontSize: 24, fontWeight: '700', color: '#FFF' },
+    header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, paddingBottom: 16 },
+    headerBtn: { width: 44, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(150,150,150,0.1)' },
+    headerTitle: { fontSize: 20, fontWeight: '700' },
     summaryRow: { flexDirection: 'row', paddingHorizontal: 16, paddingTop: 20, gap: 10 },
     summaryCard: { flex: 1, padding: 16, borderRadius: 18, borderWidth: 1, alignItems: 'center', position: 'relative' },
     summaryLabel: { fontSize: 12, marginBottom: 6 },

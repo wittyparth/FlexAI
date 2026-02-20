@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { useColors } from '../hooks';
+import { useTheme } from '../contexts';
+import { fontFamilies } from '../theme/typography';
 
 // ============================================================
-// WORKOUT HEATMAP COMPONENT
-// GitHub-style workout activity heatmap.
-// Supports: weekly (7 days), monthly (5 weeks), yearly (52 weeks)
-// with a tab-style toggle and proper sizing for each context.
+// WORKOUT HEATMAP COMPONENT — Premium Design
+// GitHub-style workout activity heatmap with month navigation.
 // ============================================================
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
-const MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const MONTH_NAMES_FULL = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const MONTH_NAMES_SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const WEEKDAY_INITIALS = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
 
 export type HeatmapRange = 'week' | 'month' | 'year';
@@ -22,24 +24,16 @@ interface HeatmapEntry {
 
 interface WorkoutHeatmapProps {
     data: HeatmapEntry[];
-    mode?: '7day' | 'month'; // legacy - ignored when showToggle=true
-    showToggle?: boolean;     // new: show weekly/monthly/yearly tabs
+    mode?: '7day' | 'month';
+    showToggle?: boolean;
     defaultRange?: HeatmapRange;
     title?: string;
     showLegend?: boolean;
-    compact?: boolean;        // compact mode = smaller cells for profile
-    containerPaddingH?: number; // horizontal padding context
-}
-
-function getIntensityColor(intensity: 0 | 1 | 2 | 3, isDark: boolean): string {
-    const paletteDark = ['#1C2538', '#1E3A5F', '#1D4ED8', '#3B82F6'];
-    const paletteLight = ['#E8EEF8', '#BFDBFE', '#60A5FA', '#2563EB'];
-    return isDark ? paletteDark[intensity] : paletteLight[intensity];
+    compact?: boolean;
+    containerPaddingH?: number;
 }
 
 const INTENSITY_LABELS = ['Rest', 'Light', 'Moderate', 'Heavy'];
-const INTENSITY_COLORS_DARK = ['#1C2538', '#1E3A5F', '#1D4ED8', '#3B82F6'];
-const INTENSITY_COLORS_LIGHT = ['#E8EEF8', '#BFDBFE', '#60A5FA', '#2563EB'];
 
 const TABS: { label: string; key: HeatmapRange }[] = [
     { label: 'Weekly', key: 'week' },
@@ -58,92 +52,79 @@ export function WorkoutHeatmap({
     containerPaddingH = 32,
 }: WorkoutHeatmapProps) {
     const colors = useColors();
-    const isDark = !!(
-        colors.background === '#0A0E1A' ||
-        colors.background?.startsWith('#0') ||
-        colors.background?.startsWith('#1')
-    );
-    const mutedColor = colors.mutedForeground || '#6B7280';
-    const textColor = colors.foreground || '#F1F5FF';
-    const borderColor = colors.border || '#1F2D45';
-    const cardBg = colors.card || '#131C2E';
-    const primaryColor = '#3B82F6';
+    const { isDark } = useTheme();
+    const heatmap = colors.heatmap;
+    const primary = colors.primary.main;
 
-    // Determine initial range from legacy mode prop
     const legacyRange: HeatmapRange = mode === '7day' ? 'week' : 'month';
     const [range, setRange] = useState<HeatmapRange>(defaultRange || legacyRange);
     const activeRange = showToggle ? range : legacyRange;
 
-    // ─── WEEK VIEW (7 days horizontal strip) ───
+    // Month navigation state (for yearly view)
+    const today = new Date();
+    const [selectedMonth, setSelectedMonth] = useState<number | null>(null); // null = show all 12
+
+    const getIntensityColor = (intensity: 0 | 1 | 2 | 3): string => {
+        return [heatmap.rest, heatmap.light, heatmap.moderate, heatmap.heavy][intensity];
+    };
+
+    // ─── WEEK VIEW ───
     if (activeRange === 'week') {
         const last7 = data.slice(-7);
         return (
             <View>
-                {showToggle && (
-                    <ToggleTabs range={range} setRange={setRange} isDark={isDark} primaryColor={primaryColor} cardBg={cardBg} borderColor={borderColor} textColor={textColor} mutedColor={mutedColor} />
-                )}
-                {title && <Text style={[styles.title, { color: textColor }]}>{title}</Text>}
+                {showToggle && <ToggleTabs range={range} setRange={setRange} colors={colors} />}
+                {title && <Text style={[styles.title, { color: colors.foreground }]}>{title}</Text>}
                 <View style={styles.sevenDayRow}>
                     {last7.map((entry, idx) => {
                         const d = new Date(entry.date);
                         const dayName = d.toLocaleDateString('en-US', { weekday: 'short' })[0];
                         const isToday = idx === last7.length - 1;
-                        const cellColor = getIntensityColor(entry.intensity, isDark);
+                        const cellColor = getIntensityColor(entry.intensity);
                         return (
                             <View key={entry.date} style={styles.sevenDayItem}>
                                 <View
                                     style={[
                                         styles.sevenDayCell,
                                         { backgroundColor: cellColor },
-                                        isToday && { borderColor: primaryColor, borderWidth: 2 },
+                                        isToday && { borderColor: primary, borderWidth: 2 },
                                     ]}
                                 />
-                                <Text
-                                    style={[
-                                        styles.dayLabel,
-                                        { color: isToday ? primaryColor : mutedColor },
-                                        isToday && { fontWeight: '800' },
-                                    ]}
-                                >
+                                <Text style={[styles.dayLabel, { color: isToday ? primary : colors.mutedForeground }, isToday && { fontWeight: '800' }]}>
                                     {dayName}
                                 </Text>
                             </View>
                         );
                     })}
                 </View>
-                {showLegend && <IntensityLegend isDark={isDark} mutedColor={mutedColor} />}
+                {showLegend && <IntensityLegend colors={colors} getColor={getIntensityColor} />}
             </View>
         );
     }
 
-    // ─── MONTH VIEW (5 weeks × 7 days) ───
+    // ─── MONTH VIEW ───
     if (activeRange === 'month') {
         const last35 = data.slice(-35);
-        // Pad if needed
         while (last35.length < 35) {
             const padDate = new Date();
             padDate.setDate(padDate.getDate() - last35.length - 1);
             last35.unshift({ date: padDate.toISOString().split('T')[0], intensity: 0 });
         }
         const weeks: HeatmapEntry[][] = [];
-        for (let i = 0; i < 35; i += 7) {
-            weeks.push(last35.slice(i, i + 7));
-        }
+        for (let i = 0; i < 35; i += 7) weeks.push(last35.slice(i, i + 7));
 
-        // Calculate available width
         const availableWidth = SCREEN_WIDTH - containerPaddingH - (compact ? 20 : 22);
         const numWeeks = 5;
         const cellGap = compact ? 2 : 3;
         const cellSize = Math.floor((availableWidth - (numWeeks - 1) * cellGap) / numWeeks);
 
-        // Month labels
         const monthLabels: { label: string; weekIndex: number }[] = [];
         let lastMonth = -1;
         weeks.forEach((week, wi) => {
             if (week[0]) {
                 const m = new Date(week[0].date).getMonth();
                 if (m !== lastMonth) {
-                    monthLabels.push({ label: MONTH_NAMES[m], weekIndex: wi });
+                    monthLabels.push({ label: MONTH_NAMES_SHORT[m], weekIndex: wi });
                     lastMonth = m;
                 }
             }
@@ -151,57 +132,40 @@ export function WorkoutHeatmap({
 
         return (
             <View>
-                {showToggle && (
-                    <ToggleTabs range={range} setRange={setRange} isDark={isDark} primaryColor={primaryColor} cardBg={cardBg} borderColor={borderColor} textColor={textColor} mutedColor={mutedColor} />
-                )}
-                {title && <Text style={[styles.title, { color: textColor }]}>{title}</Text>}
+                {showToggle && <ToggleTabs range={range} setRange={setRange} colors={colors} />}
+                {title && <Text style={[styles.title, { color: colors.foreground }]}>{title}</Text>}
 
-                {/* Month label row */}
                 <View style={[styles.monthLabelRow, { gap: cellGap, paddingLeft: compact ? 18 : 22 }]}>
                     {weeks.map((_, wi) => {
                         const ml = monthLabels.find(x => x.weekIndex === wi);
                         return (
                             <View key={wi} style={[styles.monthLabelSlot, { width: cellSize }]}>
-                                {ml && <Text style={[styles.monthLabel, { color: mutedColor }]}>{ml.label}</Text>}
+                                {ml && <Text style={[styles.monthLabel, { color: colors.mutedForeground }]}>{ml.label}</Text>}
                             </View>
                         );
                     })}
                 </View>
 
-                {/* Grid */}
                 <View style={[styles.gridWrapper, { gap: compact ? 4 : 6 }]}>
-                    {/* Day-of-week labels */}
                     <View style={[styles.dowColumn, { width: compact ? 14 : 16 }]}>
                         {WEEKDAY_INITIALS.map((d, i) => (
-                            <Text
-                                key={i}
-                                style={[
-                                    styles.dowLabel,
-                                    { color: mutedColor, height: cellSize, fontSize: compact ? 8 : 9 },
-                                ]}
-                            >
+                            <Text key={i} style={[styles.dowLabel, { color: colors.mutedForeground, height: cellSize, fontSize: compact ? 8 : 9 }]}>
                                 {d}
                             </Text>
                         ))}
                     </View>
-                    {/* Weeks */}
                     <View style={[styles.weeksRow, { gap: cellGap }]}>
                         {weeks.map((week, wi) => (
                             <View key={wi} style={[styles.weekCol, { gap: cellGap }]}>
                                 {week.map((entry) => {
-                                    const cellColor = getIntensityColor(entry.intensity, isDark);
-                                    const isToday = entry.date === new Date().toISOString().split('T')[0];
+                                    const cellColor = getIntensityColor(entry.intensity);
+                                    const isToday = entry.date === today.toISOString().split('T')[0];
                                     return (
                                         <View
                                             key={entry.date}
                                             style={[
-                                                {
-                                                    width: cellSize,
-                                                    height: cellSize,
-                                                    backgroundColor: cellColor,
-                                                    borderRadius: Math.max(2, cellSize * 0.18),
-                                                },
-                                                isToday && { borderWidth: 1.5, borderColor: primaryColor },
+                                                { width: cellSize, height: cellSize, backgroundColor: cellColor, borderRadius: Math.max(2, cellSize * 0.18) },
+                                                isToday && { borderWidth: 1.5, borderColor: primary },
                                             ]}
                                         />
                                     );
@@ -211,87 +175,140 @@ export function WorkoutHeatmap({
                     </View>
                 </View>
 
-                {showLegend && <IntensityLegend isDark={isDark} mutedColor={mutedColor} />}
+                {showLegend && <IntensityLegend colors={colors} getColor={getIntensityColor} />}
             </View>
         );
     }
 
-    // ─── YEAR VIEW (52 weeks × 7 days, GitHub-style) ───
+    // ─── YEAR VIEW with month navigation ───
     const last364 = data.slice(-364);
     while (last364.length < 364) {
         const padDate = new Date();
         padDate.setDate(padDate.getDate() - last364.length - 1);
         last364.unshift({ date: padDate.toISOString().split('T')[0], intensity: 0 });
     }
-    const yearWeeks: HeatmapEntry[][] = [];
-    for (let i = 0; i < 364; i += 7) {
-        yearWeeks.push(last364.slice(i, i + 7));
+
+    let yearWeeks: HeatmapEntry[][] = [];
+    for (let i = 0; i < 364; i += 7) yearWeeks.push(last364.slice(i, i + 7));
+
+    // Filter by selected month if set
+    let filteredWeeks = yearWeeks;
+    let displayMonthLabel = 'Full Year';
+    if (selectedMonth !== null) {
+        filteredWeeks = yearWeeks.filter(week => {
+            const m = new Date(week[3]?.date || week[0]?.date || '').getMonth();
+            return m === selectedMonth;
+        });
+        const y = new Date(filteredWeeks[0]?.at(0)?.date || '').getFullYear();
+        displayMonthLabel = `${MONTH_NAMES_FULL[selectedMonth]} ${y}`;
     }
 
-    // Small cells for year view to fit 52 weeks
-    const yearCellGap = 2;
+    const yearCellGap = selectedMonth !== null ? 3 : 2;
     const yearDowWidth = compact ? 14 : 16;
     const yearAvailWidth = SCREEN_WIDTH - containerPaddingH - yearDowWidth - yearCellGap;
-    const yearCellSize = Math.floor((yearAvailWidth - (52 - 1) * yearCellGap) / 52);
+    const numWeeksToShow = filteredWeeks.length || 1;
+    const maxCellSize = 38;
+    const yearCellSize = selectedMonth !== null
+        ? Math.min(maxCellSize, Math.floor((yearAvailWidth - (numWeeksToShow - 1) * yearCellGap) / numWeeksToShow))
+        : Math.floor((yearAvailWidth - 51 * yearCellGap) / 52);
 
-    // Month label positions
+    // Month label positions (only for full-year)
     const yearMonthLabels: { label: string; weekIndex: number }[] = [];
-    let lastYearMonth = -1;
-    yearWeeks.forEach((week, wi) => {
-        if (week[0]) {
-            const m = new Date(week[0].date).getMonth();
-            if (m !== lastYearMonth) {
-                yearMonthLabels.push({ label: MONTH_NAMES[m], weekIndex: wi });
-                lastYearMonth = m;
+    if (selectedMonth === null) {
+        let lastYearMonth = -1;
+        filteredWeeks.forEach((week, wi) => {
+            if (week[0]) {
+                const m = new Date(week[0].date).getMonth();
+                if (m !== lastYearMonth) {
+                    yearMonthLabels.push({ label: MONTH_NAMES_SHORT[m], weekIndex: wi });
+                    lastYearMonth = m;
+                }
+            }
+        });
+    }
+
+    // Navigate months
+    const allMonths: number[] = [];
+    yearWeeks.forEach(week => {
+        const m = new Date(week[3]?.date || week[0]?.date || '').getMonth();
+        if (!allMonths.includes(m)) allMonths.push(m);
+    });
+
+    const navigateMonth = (dir: -1 | 1) => {
+        if (selectedMonth === null) {
+            setSelectedMonth(allMonths[allMonths.length - 1]);
+        } else {
+            const idx = allMonths.indexOf(selectedMonth);
+            const next = idx + dir;
+            if (next < 0 || next >= allMonths.length) {
+                setSelectedMonth(null); // back to full year
+            } else {
+                setSelectedMonth(allMonths[next]);
             }
         }
-    });
+    };
 
     return (
         <View>
-            {showToggle && (
-                <ToggleTabs range={range} setRange={setRange} isDark={isDark} primaryColor={primaryColor} cardBg={cardBg} borderColor={borderColor} textColor={textColor} mutedColor={mutedColor} />
-            )}
-            {title && <Text style={[styles.title, { color: textColor }]}>{title}</Text>}
+            {showToggle && <ToggleTabs range={range} setRange={setRange} colors={colors} />}
+            {title && <Text style={[styles.title, { color: colors.foreground }]}>{title}</Text>}
 
-            {/* Month labels */}
-            <View style={[styles.monthLabelRow, { gap: yearCellGap, paddingLeft: yearDowWidth + yearCellGap }]}>
-                {yearWeeks.map((_, wi) => {
-                    const ml = yearMonthLabels.find(x => x.weekIndex === wi);
-                    return (
-                        <View key={wi} style={[styles.monthLabelSlot, { width: yearCellSize }]}>
-                            {ml && <Text style={[styles.monthLabel, { color: mutedColor, fontSize: 8 }]}>{ml.label}</Text>}
-                        </View>
-                    );
-                })}
+            {/* Month navigation bar */}
+            <View style={[styles.monthNavBar, { backgroundColor: isDark ? '#111827' : '#F1F5F9', borderColor: colors.border }]}>
+                <TouchableOpacity onPress={() => navigateMonth(-1)} style={styles.monthNavBtn} activeOpacity={0.6}>
+                    <Ionicons name="chevron-back" size={18} color={colors.primary.main} />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => setSelectedMonth(null)} activeOpacity={0.7}>
+                    <Text style={[styles.monthNavLabel, { color: colors.foreground, fontFamily: fontFamilies.display }]}>
+                        {displayMonthLabel}
+                    </Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigateMonth(1)} style={styles.monthNavBtn} activeOpacity={0.6}>
+                    <Ionicons name="chevron-forward" size={18} color={colors.primary.main} />
+                </TouchableOpacity>
             </View>
+
+            {/* Month labels (full year only) */}
+            {selectedMonth === null && (
+                <View style={[styles.monthLabelRow, { gap: yearCellGap, paddingLeft: yearDowWidth + yearCellGap }]}>
+                    {filteredWeeks.map((_, wi) => {
+                        const ml = yearMonthLabels.find(x => x.weekIndex === wi);
+                        return (
+                            <View key={wi} style={[styles.monthLabelSlot, { width: yearCellSize }]}>
+                                {ml && <Text style={[styles.monthLabel, { color: colors.mutedForeground, fontSize: 8 }]}>{ml.label}</Text>}
+                            </View>
+                        );
+                    })}
+                </View>
+            )}
 
             {/* Grid */}
             <View style={[styles.gridWrapper, { gap: yearCellGap }]}>
                 <View style={[styles.dowColumn, { width: yearDowWidth }]}>
                     {WEEKDAY_INITIALS.map((d, i) => (
-                        <Text
-                            key={i}
-                            style={[styles.dowLabel, { color: mutedColor, height: yearCellSize, fontSize: 8 }]}
-                        >
+                        <Text key={i} style={[styles.dowLabel, { color: colors.mutedForeground, height: yearCellSize, fontSize: selectedMonth !== null ? 10 : 8 }]}>
                             {d}
                         </Text>
                     ))}
                 </View>
                 <View style={[styles.weeksRow, { gap: yearCellGap }]}>
-                    {yearWeeks.map((week, wi) => (
+                    {filteredWeeks.map((week, wi) => (
                         <View key={wi} style={[styles.weekCol, { gap: yearCellGap }]}>
                             {week.map((entry) => {
-                                const cellColor = getIntensityColor(entry.intensity, isDark);
+                                const cellColor = getIntensityColor(entry.intensity);
+                                const isToday = entry.date === today.toISOString().split('T')[0];
                                 return (
                                     <View
                                         key={entry.date}
-                                        style={{
-                                            width: yearCellSize,
-                                            height: yearCellSize,
-                                            backgroundColor: cellColor,
-                                            borderRadius: Math.max(1, yearCellSize * 0.2),
-                                        }}
+                                        style={[
+                                            {
+                                                width: yearCellSize,
+                                                height: yearCellSize,
+                                                backgroundColor: cellColor,
+                                                borderRadius: Math.max(2, yearCellSize * 0.2),
+                                            },
+                                            isToday && { borderWidth: 1.5, borderColor: primary },
+                                        ]}
                                     />
                                 );
                             })}
@@ -300,26 +317,20 @@ export function WorkoutHeatmap({
                 </View>
             </View>
 
-            {showLegend && <IntensityLegend isDark={isDark} mutedColor={mutedColor} />}
+            {showLegend && <IntensityLegend colors={colors} getColor={getIntensityColor} />}
         </View>
     );
 }
 
-// ─── TOGGLE TABS ───
-function ToggleTabs({
-    range, setRange, isDark, primaryColor, cardBg, borderColor, textColor, mutedColor,
-}: {
+// ─── TOGGLE TABS — Premium ───
+function ToggleTabs({ range, setRange, colors }: {
     range: HeatmapRange;
     setRange: (r: HeatmapRange) => void;
-    isDark: boolean;
-    primaryColor: string;
-    cardBg: string;
-    borderColor: string;
-    textColor: string;
-    mutedColor: string;
+    colors: ReturnType<typeof useColors>;
 }) {
+    const { isDark } = useTheme();
     return (
-        <View style={[styles.tabRow, { backgroundColor: isDark ? '#0D1526' : '#EEF2FF', borderColor }]}>
+        <View style={[styles.tabRow, { backgroundColor: isDark ? '#111827' : '#F1F5F9', borderColor: colors.border }]}>
             {TABS.map(tab => {
                 const isActive = range === tab.key;
                 return (
@@ -327,17 +338,25 @@ function ToggleTabs({
                         key={tab.key}
                         style={[
                             styles.tab,
-                            isActive && { backgroundColor: isDark ? '#1A2540' : '#FFFFFF', borderColor: primaryColor + '60', borderWidth: 1 },
+                            isActive && {
+                                backgroundColor: isDark ? '#1E293B' : '#FFFFFF',
+                                borderColor: colors.primary.main + '40',
+                                borderWidth: 1,
+                                ...(!isDark ? {
+                                    shadowColor: colors.primary.main,
+                                    shadowOffset: { width: 0, height: 1 },
+                                    shadowOpacity: 0.1,
+                                    shadowRadius: 4,
+                                    elevation: 2,
+                                } : {}),
+                            },
                         ]}
-                        onPress={() => setRange(tab.key)}
+                        onPress={() => {
+                            setRange(tab.key);
+                        }}
                         activeOpacity={0.7}
                     >
-                        <Text
-                            style={[
-                                styles.tabLabel,
-                                { color: isActive ? primaryColor : mutedColor, fontWeight: isActive ? '700' : '500' },
-                            ]}
-                        >
+                        <Text style={[styles.tabLabel, { color: isActive ? colors.primary.main : colors.mutedForeground, fontWeight: isActive ? '700' : '500' }]}>
                             {tab.label}
                         </Text>
                     </TouchableOpacity>
@@ -347,19 +366,13 @@ function ToggleTabs({
     );
 }
 
-function IntensityLegend({ isDark, mutedColor }: { isDark: boolean; mutedColor: string }) {
-    const palette = isDark ? INTENSITY_COLORS_DARK : INTENSITY_COLORS_LIGHT;
+function IntensityLegend({ colors, getColor }: { colors: ReturnType<typeof useColors>; getColor: (i: 0 | 1 | 2 | 3) => string }) {
     return (
         <View style={styles.legend}>
             {([0, 1, 2, 3] as const).map(v => (
                 <View key={v} style={styles.legendItem}>
-                    <View
-                        style={[
-                            styles.legendSwatch,
-                            { backgroundColor: palette[v], borderWidth: v === 0 ? 1 : 0, borderColor: 'rgba(150,160,180,0.3)' },
-                        ]}
-                    />
-                    <Text style={[styles.legendLabel, { color: mutedColor }]}>{INTENSITY_LABELS[v]}</Text>
+                    <View style={[styles.legendSwatch, { backgroundColor: getColor(v), borderWidth: v === 0 ? 1 : 0, borderColor: colors.border }]} />
+                    <Text style={[styles.legendLabel, { color: colors.mutedForeground }]}>{INTENSITY_LABELS[v]}</Text>
                 </View>
             ))}
         </View>
@@ -370,47 +383,33 @@ const styles = StyleSheet.create({
     title: { fontSize: 15, fontWeight: '700', marginBottom: 12 },
 
     // Toggle tabs
-    tabRow: {
-        flexDirection: 'row',
-        borderRadius: 10,
-        borderWidth: 1,
-        padding: 3,
-        marginBottom: 14,
-        alignSelf: 'stretch',
+    tabRow: { flexDirection: 'row', borderRadius: 12, borderWidth: 1, padding: 3, marginBottom: 14, alignSelf: 'stretch' },
+    tab: { flex: 1, paddingVertical: 7, borderRadius: 10, alignItems: 'center', justifyContent: 'center' },
+    tabLabel: { fontSize: 12, letterSpacing: 0.2 },
+
+    // Month navigation
+    monthNavBar: {
+        flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
+        borderRadius: 10, borderWidth: 1, paddingVertical: 8, paddingHorizontal: 6, marginBottom: 12,
     },
-    tab: {
-        flex: 1,
-        paddingVertical: 6,
-        borderRadius: 8,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    tabLabel: { fontSize: 12 },
+    monthNavBtn: { width: 32, height: 32, borderRadius: 8, alignItems: 'center', justifyContent: 'center' },
+    monthNavLabel: { fontSize: 14, fontWeight: '600' },
 
     // Week view
     sevenDayRow: { flexDirection: 'row', gap: 6 },
     sevenDayItem: { flex: 1, alignItems: 'center', gap: 5 },
-    sevenDayCell: {
-        width: 34,
-        height: 34,
-        borderRadius: 9,
-        borderColor: 'transparent',
-        borderWidth: 2,
-    },
+    sevenDayCell: { width: 34, height: 34, borderRadius: 10, borderColor: 'transparent', borderWidth: 2 },
     dayLabel: { fontSize: 11, fontWeight: '600' },
 
-    // Month/year mode
+    // Month/year labels
     monthLabelRow: { flexDirection: 'row', marginBottom: 3 },
     monthLabelSlot: { alignItems: 'flex-start' },
     monthLabel: { fontSize: 9, fontWeight: '600', letterSpacing: 0.2 },
 
+    // Grid
     gridWrapper: { flexDirection: 'row' },
     dowColumn: { gap: 2 },
-    dowLabel: {
-        textAlign: 'right',
-        fontWeight: '600',
-        textAlignVertical: 'center',
-    },
+    dowLabel: { textAlign: 'right', fontWeight: '600', textAlignVertical: 'center' },
     weeksRow: { flexDirection: 'row' },
     weekCol: { flexDirection: 'column' },
 

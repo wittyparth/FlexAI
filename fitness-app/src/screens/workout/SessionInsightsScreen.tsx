@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { colors as themeColors } from '../../theme/colors';
@@ -80,11 +79,8 @@ export function SessionInsightsScreen({ navigation, route }: any) {
             <ScrollView showsVerticalScrollIndicator={false}>
                 {/* Performance Summary */}
                 <Animated.View style={{ opacity: fadeAnim }}>
-                    <LinearGradient
-                        colors={colors.primary.gradient as [string, string]}
+                    <View
                         style={styles.summaryCard}
-                        start={{ x: 0, y: 0 }}
-                        end={{ x: 1, y: 1 }}
                     >
                         <View style={styles.summaryHeader}>
                             <View style={styles.ratingBadge}>
@@ -105,7 +101,7 @@ export function SessionInsightsScreen({ navigation, route }: any) {
                                 <Text style={styles.summaryStatValue}>{insights.summary.intensityTrend}</Text>
                             </View>
                         </View>
-                    </LinearGradient>
+                    </View>
                 </Animated.View>
 
                 {/* PRs Achieved */}

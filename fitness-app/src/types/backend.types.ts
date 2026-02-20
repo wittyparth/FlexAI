@@ -155,10 +155,21 @@ export interface WorkoutSet {
 export interface Exercise {
   id: number;
   name: string;
+  slug?: string;
+  description?: string;
   muscleGroup: string;
+  secondaryMuscleGroups?: string[];
   equipment?: string;
+  equipmentList?: string[];
   difficulty: string;
-  // ... maps to backend Exercise model
+  exerciseType?: 'strength' | 'cardio' | 'flexibility' | 'stretching';
+  exerciseClass?: 'compound' | 'isolation';
+  instructions?: string[];
+  pros?: string[];
+  cons?: string[];
+  videoUrl?: string;
+  thumbnailUrl?: string;
+  isFeatured?: boolean;
 }
 
 export interface RoutineExercise {
@@ -189,6 +200,24 @@ export interface Routine {
     daysPerWeek?: number;
     estimatedDuration?: number;
     goal?: string;
+}
+
+export interface TemplateDay {
+    dayId: number; // 1-7 (1=Monday, 7=Sunday)
+    isRestDay: boolean;
+    routineId?: number; // If an existing routine is linked
+    routineData?: any; // Stores a full routine if custom built
+}
+
+export interface Template {
+    id: string;
+    name: string;
+    description?: string;
+    days: TemplateDay[];
+    color?: string;
+    createdAt?: string;
+    exercises?: number; // Mock compatibility
+    lastUsed?: string; // Mock compatibility
 }
 
 export interface Workout {

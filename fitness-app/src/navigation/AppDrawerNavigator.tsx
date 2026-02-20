@@ -23,7 +23,6 @@ import {
 } from '@react-navigation/drawer';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '../contexts';
 import { authStore } from '../store/authStore';
 import { MainTabs } from './MainTabs';
@@ -96,10 +95,7 @@ function CustomDrawerContent(props: DrawerContentComponentProps) {
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
             {/* User Profile Header */}
-            <LinearGradient
-                colors={gradientColors}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 1 }}
+            <View
                 style={[styles.profileHeader, { paddingTop: insets.top + 24 }]}
             >
                 <View style={styles.avatarContainer}>
@@ -123,7 +119,7 @@ function CustomDrawerContent(props: DrawerContentComponentProps) {
                         <Text style={styles.statLabel}>Rank</Text>
                     </View>
                 </View>
-            </LinearGradient>
+            </View>
 
             {/* Menu Items */}
             <ScrollView
@@ -205,7 +201,7 @@ function CustomDrawerContent(props: DrawerContentComponentProps) {
                                     <View style={[
                                         styles.toggleDot,
                                         {
-                                            backgroundColor: '#fff',
+                                            backgroundColor: colors.primaryForeground,
                                             transform: [{ translateX: isDark ? 16 : 0 }]
                                         }
                                     ]} />
@@ -251,7 +247,7 @@ export function AppDrawerNavigator() {
                     width: 320,
                     backgroundColor: colors.background,
                 },
-                overlayColor: 'rgba(0, 0, 0, 0.5)',
+                overlayColor: 'rgba(0, 0, 0, 0.6)',
             }}
         >
             {/* Primary: all tabs */}

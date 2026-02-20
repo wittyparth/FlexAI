@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 
@@ -38,9 +37,9 @@ export function AboutScreen({ navigation }: any) {
                 <Animated.View style={{ opacity: fadeAnim }}>
                     {/* App Info */}
                     <View style={styles.appSection}>
-                        <LinearGradient colors={colors.primary.gradient as [string, string]} style={styles.appIcon}>
+                        <View style={styles.appIcon}>
                             <Ionicons name="barbell" size={50} color="#FFF" />
-                        </LinearGradient>
+                        </View>
                         <Text style={[styles.appName, { color: colors.foreground, fontFamily: fontFamilies.display }]}>FitApp Pro</Text>
                         <Text style={[styles.appVersion, { color: colors.mutedForeground }]}>Version 2.1.0 (Build 142)</Text>
                         <Text style={[styles.appTagline, { color: colors.mutedForeground }]}>

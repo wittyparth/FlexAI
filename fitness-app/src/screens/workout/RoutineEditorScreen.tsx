@@ -14,7 +14,6 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import {
@@ -41,15 +40,16 @@ interface EditorExercise {
 export function RoutineEditorScreen({ navigation, route }: any) {
     const colors = useColors();
     const insets = useSafeAreaInsets();
-    const { routineId } = route.params || {};
-    const isEditing = !!routineId;
+    const { routineId, mode, routineData, onSaveReturn } = route.params || {};
+    const isTemplateMode = mode === 'template_day';
+    const isEditing = !!routineId || (isTemplateMode && !!routineData);
 
-    // Queries & Mutations
-    const { data: routineResponse, isLoading: isLoadingRoutine } = useRoutine(routineId);
+    // Queries & Mutations (only use if not in template mode)
+    const { data: routineResponse, isLoading: isLoadingRoutine } = useRoutine(isTemplateMode ? undefined : routineId);
     const createRoutine = useCreateRoutine();
     const updateRoutine = useUpdateRoutine();
     const addExercise = useAddExerciseToRoutine();
-    const removeExerciseMutation = useRemoveExerciseFromRoutine(); // Not fully used for complex batch update but good to have
+    const removeExerciseMutation = useRemoveExerciseFromRoutine(); 
 
     // Form State
     const [name, setName] = useState('');
@@ -58,18 +58,34 @@ export function RoutineEditorScreen({ navigation, route }: any) {
     const [exercises, setExercises] = useState<EditorExercise[]>([]);
     const [isSaving, setIsSaving] = useState(false);
 
-    // Initialize state when editing
+    // Initialize state when editing or creating with preset data
     useEffect(() => {
-        if (isEditing && routineResponse?.data) {
+        if ((isTemplateMode || mode === 'create') && routineData) {
+            // Initialize from embedded template data or preset prepopulated data
+            setName(routineData.name || '');
+            setDescription(routineData.description || '');
+            if (routineData.exercises) {
+                setExercises(routineData.exercises.map((ex: any) => ({
+                    id: ex.id || Date.now() + Math.random(),
+                    exerciseId: ex.exerciseId || ex.exercise?.id,
+                    name: ex.exercise?.name || 'Unknown Exercise',
+                    targetSets: ex.targetSets?.toString() || '3',
+                    targetReps: ex.targetRepsMin ?
+                        (ex.targetRepsMax && ex.targetRepsMax !== ex.targetRepsMin ? `${ex.targetRepsMin}-${ex.targetRepsMax}` : `${ex.targetRepsMin}`)
+                        : '10',
+                    restSeconds: ex.restSeconds?.toString() || '60',
+                    orderIndex: ex.orderIndex,
+                })));
+            }
+        } else if (isEditing && routineResponse?.data && !isTemplateMode) {
             const r = routineResponse.data;
             setName(r.name);
             setDescription(r.description || '');
             setIsPublic(r.isPublic || false);
 
-            // Map existing routine exercises to editor format if they exist
             if (r.exercises) {
                 setExercises(r.exercises.map((ex: RoutineExercise) => ({
-                    id: ex.id, // routine_exercises id
+                    id: ex.id, 
                     exerciseId: ex.exerciseId,
                     name: ex.exercise?.name || 'Unknown Exercise',
                     targetSets: ex.targetSets?.toString() || '3',
@@ -81,7 +97,7 @@ export function RoutineEditorScreen({ navigation, route }: any) {
                 })));
             }
         }
-    }, [isEditing, routineResponse]);
+    }, [isEditing, routineResponse, isTemplateMode, routineData]);
 
     // Handle new exercise added from Picker
     useEffect(() => {
@@ -129,7 +145,37 @@ export function RoutineEditorScreen({ navigation, route }: any) {
 
         setIsSaving(true);
         try {
-            if (isEditing) {
+            if (isTemplateMode) {
+                // In template mode, we just build the object and return it back via onSaveReturn
+                if (onSaveReturn) {
+                    const formattedExercises = exercises.map((ex, idx) => {
+                        const { min, max } = parseReps(ex.targetReps);
+                        return {
+                            id: ex.id || Date.now() + idx, // Temp ID for embedded routines
+                            exerciseId: ex.exerciseId,
+                            orderIndex: idx,
+                            targetSets: parseInt(ex.targetSets) || 3,
+                            targetRepsMin: min || 8,
+                            targetRepsMax: max || 12,
+                            restSeconds: parseInt(ex.restSeconds) || 60,
+                            exercise: { id: ex.exerciseId, name: ex.name } // Need exercise name for UI
+                        };
+                    });
+                    
+                    const newRoutineData = {
+                        id: routineId || `temp_${Date.now()}`,
+                        name,
+                        description,
+                        isPublic: false,
+                        exercises: formattedExercises,
+                        estimatedDuration: routineData?.estimatedDuration // Pass back so template editor has duration
+                    };
+                    
+                    onSaveReturn(newRoutineData);
+                    navigation.goBack();
+                    return;
+                }
+            } else if (isEditing) {
                 // Update Routine Metadata
                 await updateRoutine.mutateAsync({
                     id: routineId,
@@ -239,16 +285,15 @@ export function RoutineEditorScreen({ navigation, route }: any) {
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
             {/* Header */}
-            <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.background + 'E6' }]}>
+            <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.background }]}>
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.navButton}>
                     <Ionicons name="arrow-back" size={24} color={colors.foreground} />
                 </TouchableOpacity>
                 <Text style={[styles.title, { color: colors.foreground, fontFamily: fontFamilies.display }]}>
-                    {isEditing ? 'Edit Routine' : 'New Routine'}
+                    {isEditing ? 'Edit Routine' : 'Build Workout'}
                 </Text>
                 <TouchableOpacity onPress={handleSave} disabled={isSaving}>
-                    <LinearGradient
-                        colors={isSaving ? ['#cbd5e1', '#94a3b8'] : ['#0da6f2', '#00d2ff']}
+                    <View
                         style={styles.saveButton}
                     >
                         {isSaving ? (
@@ -256,7 +301,7 @@ export function RoutineEditorScreen({ navigation, route }: any) {
                         ) : (
                             <Text style={styles.saveText}>Save</Text>
                         )}
-                    </LinearGradient>
+                    </View>
                 </TouchableOpacity>
             </View>
 
@@ -272,98 +317,119 @@ export function RoutineEditorScreen({ navigation, route }: any) {
                     <View style={styles.section}>
                         <View style={styles.inputGroup}>
                             <Text style={[styles.label, { color: colors.mutedForeground }]}>ROUTINE NAME</Text>
-                            <TextInput
-                                style={[styles.mainInput, { backgroundColor: colors.muted, color: colors.foreground }]}
-                                placeholder="e.g. Morning Cardio"
-                                placeholderTextColor="#94A3B8"
-                                value={name}
-                                onChangeText={setName}
-                            />
+                            <View style={[styles.inputWrapper, { backgroundColor: colors.card, borderColor: colors.border }]}>
+                                <Ionicons name="barbell-outline" size={20} color={colors.primary.main} />
+                                <TextInput
+                                    style={[styles.mainInput, { color: colors.foreground }]}
+                                    placeholder="e.g. Legendary Leg Day"
+                                    placeholderTextColor={colors.mutedForeground}
+                                    value={name}
+                                    onChangeText={setName}
+                                />
+                            </View>
                         </View>
 
                         <View style={styles.inputGroup}>
                             <Text style={[styles.label, { color: colors.mutedForeground }]}>DESCRIPTION</Text>
-                            <TextInput
-                                style={[styles.mainInput, { backgroundColor: colors.muted, color: colors.foreground, height: 80, textAlignVertical: 'top', paddingTop: 16 }]}
-                                placeholder="Add a brief description..."
-                                placeholderTextColor="#94A3B8"
-                                value={description}
-                                onChangeText={setDescription}
-                                multiline
-                            />
+                            <View style={[styles.inputWrapper, { backgroundColor: colors.card, borderColor: colors.border, alignItems: 'flex-start', paddingTop: 16 }]}>
+                                <Ionicons name="document-text-outline" size={20} color={colors.primary.main} style={{ marginTop: 2 }} />
+                                <TextInput
+                                    style={[styles.mainInput, { color: colors.foreground, height: 80, textAlignVertical: 'top', paddingTop: 0 }]}
+                                    placeholder="What's the goal of this routine?"
+                                    placeholderTextColor={colors.mutedForeground}
+                                    value={description}
+                                    onChangeText={setDescription}
+                                    multiline
+                                />
+                            </View>
                         </View>
 
-                        <View style={[styles.toggleRow, { backgroundColor: colors.muted }]}>
-                            <View style={styles.toggleInfo}>
-                                <View style={[styles.iconBox, { backgroundColor: '#0da6f220' }]}>
-                                    <Ionicons name="earth" size={20} color="#0da6f2" />
+                        {!isTemplateMode && (
+                            <View style={[styles.toggleRow, { backgroundColor: colors.card, borderColor: colors.border }]}>
+                                <View style={styles.toggleInfo}>
+                                    <View style={[styles.iconBox, { backgroundColor: `${colors.primary.main}20` }]}>
+                                        <Ionicons name="earth" size={20} color={colors.primary.main} />
+                                    </View>
+                                    <View>
+                                        <Text style={[styles.toggleText, { color: colors.foreground }]}>Publish to Community</Text>
+                                        <Text style={[styles.toggleSubText, { color: colors.mutedForeground }]}>Allow others to see and copy this</Text>
+                                    </View>
                                 </View>
-                                <Text style={[styles.toggleText, { color: colors.foreground }]}>Make Public</Text>
+                                <Switch
+                                    value={isPublic}
+                                    onValueChange={setIsPublic}
+                                    trackColor={{ false: colors.border, true: colors.primary.main }}
+                                    thumbColor={Platform.OS === 'ios' ? '#FFFFFF' : isPublic ? '#FFFFFF' : '#f4f3f4'}
+                                />
                             </View>
-                            <Switch
-                                value={isPublic}
-                                onValueChange={setIsPublic}
-                                trackColor={{ false: '#767577', true: '#0da6f2' }}
-                                thumbColor={Platform.OS === 'ios' ? '#FFFFFF' : isPublic ? '#FFFFFF' : '#f4f3f4'}
-                            />
-                        </View>
+                        )}
                     </View>
 
                     {/* Exercises Section */}
                     <View style={styles.exerciseHeader}>
                         <Text style={[styles.sectionTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Exercises</Text>
-                        <View style={[styles.countBadge, { backgroundColor: '#0da6f215' }]}>
-                            <Text style={styles.countText}>{exercises.length} items</Text>
+                        <View style={[styles.countBadge, { backgroundColor: `${colors.primary.main}15` }]}>
+                            <Text style={[styles.countText, { color: colors.primary.main }]}>{exercises.length} items</Text>
                         </View>
                     </View>
 
                     {exercises.length === 0 ? (
-                        <View style={[styles.emptyState, { borderColor: colors.border }]}>
-                            <Text style={{ color: colors.mutedForeground }}>No exercises added yet.</Text>
+                        <View style={[styles.emptyState, { borderColor: colors.border, backgroundColor: colors.card }]}>
+                            <View style={[styles.emptyStateIconCircle, { backgroundColor: `${colors.primary.main}15` }]}>
+                                <MaterialCommunityIcons name="weight-lifter" size={40} color={colors.primary.main} />
+                            </View>
+                            <Text style={[styles.emptyStateTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Empty Workout</Text>
+                            <Text style={[styles.emptyStateSub, { color: colors.mutedForeground }]}>Tap the button below to start adding exercises.</Text>
                         </View>
                     ) : (
                         exercises.map((item, index) => (
-                            <View key={item.id} style={[styles.exerciseCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+                            <View key={item.id} style={[styles.exerciseCard, { backgroundColor: colors.card, borderColor: colors.border, shadowColor: colors.primary.main }]}>
                                 <View style={styles.cardHeader}>
                                     <View style={styles.cardHeaderLeft}>
-                                        <MaterialCommunityIcons name="drag-vertical" size={24} color="#CBD5E1" />
+                                        <Text style={[styles.exerciseIndex, { color: colors.mutedForeground }]}>{String(index + 1).padStart(2, '0')}</Text>
                                         <Text style={[styles.exerciseName, { color: colors.foreground }]} numberOfLines={1}>
                                             {item.name}
                                         </Text>
                                     </View>
-                                    <TouchableOpacity onPress={() => removeExercise(item.id)}>
-                                        <Ionicons name="trash-outline" size={20} color="#EF4444" />
-                                    </TouchableOpacity>
+                                    <View style={styles.cardHeaderRight}>
+                                        <MaterialCommunityIcons name="drag" size={22} color={colors.mutedForeground} style={{ marginRight: 8 }} />
+                                        <TouchableOpacity onPress={() => removeExercise(item.id)} style={[styles.deleteBtn, { backgroundColor: `${colors.error}15` }]}>
+                                            <Ionicons name="close" size={18} color={colors.error} />
+                                        </TouchableOpacity>
+                                    </View>
                                 </View>
 
-                                <View style={styles.metricsRow}>
-                                    <View style={styles.metricItem}>
-                                        <Text style={[styles.metricLabel, { color: colors.mutedForeground }]}>SETS</Text>
+                                <View style={styles.metricsContainer}>
+                                    <View style={[styles.metricBox, { backgroundColor: colors.background, borderColor: colors.border }]}>
+                                        <Text style={[styles.metricBoxLabel, { color: colors.mutedForeground }]}>Sets</Text>
                                         <TextInput
-                                            style={[styles.metricInput, { backgroundColor: colors.muted, color: colors.foreground }]}
+                                            style={[styles.metricBoxInput, { color: colors.foreground }]}
                                             value={item.targetSets}
                                             onChangeText={(v) => updateExercise(item.id, 'targetSets', v)}
                                             keyboardType="numeric"
                                             placeholder="3"
+                                            placeholderTextColor={colors.mutedForeground}
                                         />
                                     </View>
-                                    <View style={styles.metricItem}>
-                                        <Text style={[styles.metricLabel, { color: colors.mutedForeground }]}>REPS</Text>
+                                    <View style={[styles.metricBox, { backgroundColor: colors.background, borderColor: colors.border }]}>
+                                        <Text style={[styles.metricBoxLabel, { color: colors.mutedForeground }]}>Reps</Text>
                                         <TextInput
-                                            style={[styles.metricInput, { backgroundColor: colors.muted, color: colors.foreground }]}
+                                            style={[styles.metricBoxInput, { color: colors.foreground }]}
                                             value={item.targetReps}
                                             onChangeText={(v) => updateExercise(item.id, 'targetReps', v)}
-                                            placeholder="10"
+                                            placeholder="8-12"
+                                            placeholderTextColor={colors.mutedForeground}
                                         />
                                     </View>
-                                    <View style={styles.metricItem}>
-                                        <Text style={[styles.metricLabel, { color: colors.mutedForeground }]}>REST (S)</Text>
+                                    <View style={[styles.metricBox, { backgroundColor: colors.background, borderColor: colors.border }]}>
+                                        <Text style={[styles.metricBoxLabel, { color: colors.mutedForeground }]}>Rest (s)</Text>
                                         <TextInput
-                                            style={[styles.metricInput, { backgroundColor: colors.muted, color: colors.foreground }]}
+                                            style={[styles.metricBoxInput, { color: colors.foreground }]}
                                             value={item.restSeconds}
                                             onChangeText={(v) => updateExercise(item.id, 'restSeconds', v)}
                                             keyboardType="numeric"
-                                            placeholder="60"
+                                            placeholder="90"
+                                            placeholderTextColor={colors.mutedForeground}
                                         />
                                     </View>
                                 </View>
@@ -373,11 +439,12 @@ export function RoutineEditorScreen({ navigation, route }: any) {
 
                     {/* Add Exercise */}
                     <TouchableOpacity
-                        style={[styles.addButton, { borderColor: '#0da6f250' }]}
+                        style={[styles.addButton, { backgroundColor: `${colors.primary.main}10`, borderColor: `${colors.primary.main}30` }]}
                         onPress={() => navigation.navigate('ExercisePicker', { returnTo: 'RoutineEditor' })}
+                        activeOpacity={0.8}
                     >
-                        <Ionicons name="add-circle" size={24} color="#0da6f2" />
-                        <Text style={styles.addButtonText}>Add Exercise</Text>
+                        <Ionicons name="add" size={20} color={colors.primary.main} />
+                        <Text style={[styles.addButtonText, { color: colors.primary.main }]}>Add Exercise to Workout</Text>
                     </TouchableOpacity>
                 </ScrollView>
             </KeyboardAvoidingView>
@@ -431,48 +498,63 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     section: {
-        marginBottom: 24,
+        marginBottom: 30,
         gap: 20,
     },
     inputGroup: {
         gap: 8,
     },
     label: {
-        fontSize: 10,
+        fontSize: 11,
         fontWeight: '800',
-        letterSpacing: 1.5,
+        letterSpacing: 1.2,
         marginLeft: 4,
+        textTransform: 'uppercase',
+    },
+    inputWrapper: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingHorizontal: 16,
+        borderRadius: 16,
+        borderWidth: 1,
+        minHeight: 56,
+        gap: 12,
     },
     mainInput: {
-        height: 56,
-        borderRadius: 20,
-        paddingHorizontal: 20,
+        flex: 1,
         fontSize: 16,
         fontWeight: '500',
+        height: '100%',
     },
     toggleRow: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        height: 64,
-        borderRadius: 20,
+        paddingVertical: 12,
         paddingHorizontal: 16,
+        borderRadius: 16,
+        borderWidth: 1,
     },
     toggleInfo: {
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 12,
+        gap: 14,
+        flex: 1,
     },
     iconBox: {
-        width: 36,
-        height: 36,
-        borderRadius: 18,
+        width: 40,
+        height: 40,
+        borderRadius: 12,
         alignItems: 'center',
         justifyContent: 'center',
     },
     toggleText: {
         fontSize: 16,
-        fontWeight: '600',
+        fontWeight: '700',
+        marginBottom: 2,
+    },
+    toggleSubText: {
+        fontSize: 12,
     },
     exerciseHeader: {
         flexDirection: 'row',
@@ -482,91 +564,125 @@ const styles = StyleSheet.create({
         paddingHorizontal: 4,
     },
     sectionTitle: {
-        fontSize: 20,
+        fontSize: 22,
         fontWeight: '700',
     },
     countBadge: {
         paddingHorizontal: 12,
         paddingVertical: 6,
-        borderRadius: 8,
+        borderRadius: 12,
     },
     countText: {
-        color: '#0da6f2',
-        fontSize: 12,
-        fontWeight: '700',
+        fontSize: 13,
+        fontWeight: '800',
     },
     exerciseCard: {
-        borderRadius: 24,
+        borderRadius: 20,
         borderWidth: 1,
         padding: 16,
         marginBottom: 16,
-        elevation: 2,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.05,
-        shadowRadius: 10,
+        elevation: 4,
+        shadowOffset: { width: 0, height: 6 },
+        shadowOpacity: 0.1,
+        shadowRadius: 12,
     },
     cardHeader: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        marginBottom: 16,
+        marginBottom: 20,
     },
     cardHeaderLeft: {
         flexDirection: 'row',
         alignItems: 'center',
         flex: 1,
-        gap: 8,
+        gap: 12,
+    },
+    cardHeaderRight: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    exerciseIndex: {
+        fontSize: 14,
+        fontWeight: '800',
+        letterSpacing: 1,
     },
     exerciseName: {
-        fontSize: 17,
-        fontWeight: '800',
+        fontSize: 18,
+        fontWeight: '700',
         flex: 1,
     },
-    metricsRow: {
+    deleteBtn: {
+        width: 32,
+        height: 32,
+        borderRadius: 16,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    metricsContainer: {
         flexDirection: 'row',
         gap: 12,
-        paddingLeft: 32,
     },
-    metricItem: {
+    metricBox: {
         flex: 1,
-        gap: 6,
+        borderWidth: 1,
+        borderRadius: 16,
+        paddingVertical: 10,
+        paddingHorizontal: 12,
+        alignItems: 'center',
+        gap: 4,
     },
-    metricLabel: {
-        fontSize: 9,
-        fontWeight: '900',
-        textAlign: 'center',
+    metricBoxLabel: {
+        fontSize: 11,
+        fontWeight: '800',
+        textTransform: 'uppercase',
+        letterSpacing: 0.5,
     },
-    metricInput: {
-        height: 48,
-        borderRadius: 14,
-        textAlign: 'center',
-        fontSize: 16,
+    metricBoxInput: {
+        fontSize: 18,
         fontWeight: '700',
+        textAlign: 'center',
+        width: '100%',
     },
     addButton: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        height: 60,
-        borderRadius: 20,
-        borderWidth: 2,
-        borderStyle: 'dashed',
-        gap: 10,
+        height: 56,
+        borderRadius: 16,
+        borderWidth: 1,
+        gap: 8,
         marginTop: 8,
     },
     addButtonText: {
-        color: '#0da6f2',
-        fontSize: 16,
+        fontSize: 15,
         fontWeight: '700',
     },
     emptyState: {
-        padding: 32,
+        paddingVertical: 40,
+        paddingHorizontal: 20,
         alignItems: 'center',
         justifyContent: 'center',
         borderWidth: 1,
-        borderStyle: 'dashed',
-        borderRadius: 20,
+        borderRadius: 24,
         marginBottom: 16,
+        borderStyle: 'dashed',
+    },
+    emptyStateIconCircle: {
+        width: 80,
+        height: 80,
+        borderRadius: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 16,
+    },
+    emptyStateTitle: {
+        fontSize: 20,
+        fontWeight: '700',
+        marginBottom: 8,
+    },
+    emptyStateSub: {
+        fontSize: 14,
+        textAlign: 'center',
     }
 });

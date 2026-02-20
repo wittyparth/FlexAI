@@ -14,7 +14,6 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { colors as themeColors } from '../../theme/colors';
@@ -93,12 +92,11 @@ export function ExerciseCreatorScreen({ navigation }: any) {
                 </TouchableOpacity>
                 <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Create Exercise</Text>
                 <TouchableOpacity disabled={!canSave} onPress={handlePublish}>
-                    <LinearGradient
-                        colors={canSave ? colors.primary.gradient as [string, string] : [colors.muted, colors.muted]}
+                    <View
                         style={styles.publishBtn}
                     >
                         <Text style={[styles.publishText, { color: canSave ? '#FFF' : colors.mutedForeground }]}>Publish</Text>
-                    </LinearGradient>
+                    </View>
                 </TouchableOpacity>
             </View>
 

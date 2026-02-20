@@ -1,10 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import {
-    View, Text, StyleSheet, ScrollView, TouchableOpacity, Animated, Dimensions,
+    View, Text, StyleSheet, ScrollView, TouchableOpacity, Animated, Dimensions, Platform,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { WorkoutHeatmap } from '../../components/WorkoutHeatmap';
@@ -12,6 +11,7 @@ import {
     ACTIVE_ROUTINES, MY_TEMPLATES, DUMMY_RECENT_WORKOUTS, HEATMAP_DATA, DUMMY_METRICS, DUMMY_USER,
 } from '../../data/mockData';
 import { useWorkoutStore } from '../../store/workoutStore';
+import { useShallow } from 'zustand/react/shallow';
 import type { ThemeColors } from '../../hooks/useColors';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
@@ -96,16 +96,22 @@ export function WorkoutHubScreen({ navigation }: any) {
     const colors = useColors();
     const fade = useRef(new Animated.Value(0)).current;
 
+    // Reactive workout store selectors
+    const { workoutStatus, workoutName, totalSets } = useWorkoutStore(useShallow(state => ({
+        workoutStatus: state.status,
+        workoutName: state.workoutName,
+        totalSets: Object.keys(state.sets).length,
+    })));
+
     useEffect(() => {
         Animated.timing(fade, { toValue: 1, duration: 500, useNativeDriver: true }).start();
     }, []);
 
-    const getDrawerNav = () => navigation.getParent()?.getParent() ?? navigation;
     const nav = (screen: string, params?: any) => navigation.navigate(screen, params);
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
-            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: insets.bottom + 100 }}>
+            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: insets.bottom + 180 }}>
 
                 {/* ─── HEADER ─── */}
                 <View style={[styles.header, { paddingTop: insets.top + 16 }]}>
@@ -123,11 +129,38 @@ export function WorkoutHubScreen({ navigation }: any) {
 
                 <Animated.View style={{ opacity: fade }}>
 
+                    {/* ─── ACTIVE WORKOUT BANNER ─── */}
+                    {workoutStatus === 'in_progress' && (
+                        <View style={styles.px}>
+                            <TouchableOpacity
+                                style={[styles.activeBanner, { backgroundColor: colors.card, borderColor: colors.primary.main + '30' }]}
+                                onPress={() => nav('ActiveWorkout')}
+                                activeOpacity={0.85}
+                            >
+                                <View style={styles.activeBannerDotWrap}>
+                                    <View style={styles.activeBannerDot} />
+                                </View>
+                                <View style={styles.activeBannerInfo}>
+                                    <Text style={[styles.activeBannerTitle, { color: colors.foreground }]} numberOfLines={1}>
+                                        {workoutName || 'Workout'}
+                                    </Text>
+                                    <Text style={[styles.activeBannerMeta, { color: colors.mutedForeground }]}>
+                                        {totalSets} sets logged • In Progress
+                                    </Text>
+                                </View>
+                                <View style={[styles.activeBannerBtn, { backgroundColor: colors.primary.main }]}>
+                                    <Ionicons name="play" size={14} color="#FFFFFF" />
+                                    <Text style={styles.activeBannerBtnText}>Resume</Text>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                    )}
+
                     {/* ─── STATS ROW ─── */}
                     <View style={[styles.px, styles.statsRow]}>
-                        <StatTile value={DUMMY_METRICS.weeklyWorkouts.toString()} label="This Week" icon="clipboard-check" color={colors.chart4} colors={colors} />
-                        <StatTile value={`${(DUMMY_METRICS.weeklyVolume / 1000).toFixed(0)}k`} label="Volume (lbs)" icon="weight" color={colors.chart1} colors={colors} />
-                        <StatTile value={`${DUMMY_USER.streak}d`} label="Streak" icon="fire" color={colors.warning} colors={colors} />
+                        <StatTile value={DUMMY_METRICS.weeklyWorkouts.toString()} label="This Week" icon="clipboard-check" color={colors.chart4} />
+                        <StatTile value={`${(DUMMY_METRICS.weeklyVolume / 1000).toFixed(0)}k`} label="Volume (lbs)" icon="weight" color={colors.chart1} />
+                        <StatTile value={`${DUMMY_USER.streak}d`} label="Streak" icon="fire" color={colors.warning} />
                     </View>
 
                     {/* ─── HEATMAP ─── */}
@@ -153,9 +186,7 @@ export function WorkoutHubScreen({ navigation }: any) {
                             activeOpacity={0.9}
                             style={styles.startWrapper}
                         >
-                            <LinearGradient
-                                colors={[colors.primary.main, colors.accent] as any}
-                                start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}
+                            <View
                                 style={styles.startGrad}
                             >
                                 <View style={styles.startContent}>
@@ -168,16 +199,16 @@ export function WorkoutHubScreen({ navigation }: any) {
                                     </View>
                                 </View>
                                 <View style={styles.startDecor} />
-                            </LinearGradient>
+                            </View>
                         </TouchableOpacity>
                     </View>
 
                     {/* ─── QUICK ACTIONS ─── */}
                     <View style={[styles.px, styles.mt]}>
-                        <SectionHeader title="Quick Actions" colors={colors} />
+                        <SectionHeader title="Quick Actions" />
                         <View style={styles.qaGrid}>
                             <QuickAction icon="clipboard-list-outline" label="Routines" color={colors.chart4} bg={`${colors.chart4}20`} onPress={() => nav('RoutineList')} />
-                            <QuickAction icon="file-document-outline" label="Templates" color={colors.chart1} bg={`${colors.chart1}20`} onPress={() => nav('RoutineList', { initialTab: 'Discover' })} />
+                            <QuickAction icon="calendar-month" label="Templates" color={colors.chart1} bg={`${colors.chart1}20`} onPress={() => nav('TemplateList')} />
                             <QuickAction icon="plus-circle-outline" label="New Routine" color={colors.success} bg={`${colors.success}20`} onPress={() => nav('RoutineEditor')} />
                             <QuickAction icon="robot-outline" label="AI Generate" color={colors.warning} bg={`${colors.warning}20`} onPress={() => nav('AIRoutinePlanner')} />
                         </View>
@@ -185,17 +216,17 @@ export function WorkoutHubScreen({ navigation }: any) {
 
                     {/* ─── MY ROUTINES ─── */}
                     <View style={[styles.px, styles.mt]}>
-                        <SectionHeader title="My Routines" onViewAll={() => nav('RoutineList')} colors={colors} />
+                        <SectionHeader title="My Routines" onViewAll={() => nav('RoutineList')} />
                         {ACTIVE_ROUTINES.map(r => (
-                            <RoutineRow key={r.id} routine={r} colors={colors} onPress={() => navigation.navigate('RoutineDetail', { routineId: parseInt(r.id) })} />
+                            <RoutineRow key={r.id} routine={r} onPress={() => navigation.navigate('RoutineDetail', { routineId: parseInt(r.id) })} />
                         ))}
                     </View>
 
                     {/* ─── MY TEMPLATES ─── */}
                     <View style={[styles.px, styles.mt]}>
-                        <SectionHeader title="My Templates" onViewAll={() => nav('RoutineList')} colors={colors} />
+                        <SectionHeader title="My Templates" onViewAll={() => nav('TemplateList')} />
                         {MY_TEMPLATES.map(t => (
-                            <TemplateRow key={t.id} template={t} colors={colors} onPress={() => navigation.navigate('RoutineDetail', { routineId: parseInt(t.id.replace('t', '')) || 1 })} />
+                            <TemplateRow key={t.id} template={t} onPress={() => navigation.navigate('RoutineDetail', { routineId: parseInt(t.id.replace('t', '')) || 1 })} />
                         ))}
                     </View>
 
@@ -206,23 +237,23 @@ export function WorkoutHubScreen({ navigation }: any) {
                             activeOpacity={0.9}
                             style={{ borderRadius: 18, overflow: 'hidden' }}
                         >
-                            <LinearGradient colors={[colors.primary.main, colors.accent] as any} style={styles.aiCard}>
+                            <View style={styles.aiCard}>
                                 <View style={styles.aiContent}>
-                                    <Ionicons name="sparkles" size={24} color={colors.chart4} style={{ marginBottom: 6 }} />
+                                    <Ionicons name="sparkles" size={24} color="#FBBF24" style={{ marginBottom: 6 }} />
                                     <Text style={[styles.aiTitle, { color: colors.primaryForeground }]}>AI Routine Planner</Text>
                                     <Text style={[styles.aiSub, { color: colors.primaryForeground + 'B0' }]}>Chat with AI Coach, generate a personalized routine or workout template</Text>
                                 </View>
                                 <Ionicons name="chevron-forward" size={24} color={colors.primaryForeground + '99'} />
-                            </LinearGradient>
+                            </View>
                         </TouchableOpacity>
                     </View>
 
                     {/* ─── RECENT ACTIVITY ─── */}
                     <View style={[styles.px, styles.mt, styles.mbExtra]}>
-                        <SectionHeader title="Recent Activity" onViewAll={() => nav('WorkoutHistory')} colors={colors} />
+                        <SectionHeader title="Recent Activity" onViewAll={() => nav('WorkoutHistory')} />
                         {DUMMY_RECENT_WORKOUTS.slice(0, 3).map(w => (
                             <TouchableOpacity key={w.id} style={[styles.recentRow, { backgroundColor: colors.card, borderColor: colors.border }]} activeOpacity={0.75} onPress={() => navigation.navigate('WorkoutDetail', { workoutId: parseInt(w.id) })}>
-                                <View style={[styles.recentIcon, { backgroundColor: colors.muted }]}>
+                                <View style={[styles.recentIcon, { backgroundColor: colors.primary.main + '12' }]}>
                                     <MaterialCommunityIcons name={w.iconName} size={20} color={colors.primary.main} />
                                 </View>
                                 <View style={styles.recentInfo}>
@@ -253,7 +284,13 @@ const styles = StyleSheet.create({
     header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end', paddingHorizontal: 20, paddingBottom: 20 },
     headerSub: { fontSize: 10, fontWeight: '700', letterSpacing: 2, marginBottom: 2 },
     headerTitle: { fontSize: 32 },
-    headerBtn: { width: 42, height: 42, borderRadius: 12, alignItems: 'center', justifyContent: 'center', borderWidth: 1 },
+    headerBtn: {
+        width: 42, height: 42, borderRadius: 14, alignItems: 'center', justifyContent: 'center', borderWidth: 1,
+        ...Platform.select({
+            ios: { shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.06, shadowRadius: 4 },
+            android: { elevation: 2 },
+        }),
+    },
 
     statsRow: { flexDirection: 'row', gap: 12, marginBottom: 16 },
     statTile: { flex: 1, borderRadius: 16, borderWidth: 1, padding: 14, alignItems: 'center', gap: 8 },
@@ -263,7 +300,13 @@ const styles = StyleSheet.create({
 
     card: { borderRadius: 18, borderWidth: 1, padding: 16 },
 
-    startWrapper: { borderRadius: 22, overflow: 'hidden' },
+    startWrapper: {
+        borderRadius: 22, overflow: 'hidden',
+        ...Platform.select({
+            ios: { shadowColor: '#2563EB', shadowOffset: { width: 0, height: 8 }, shadowOpacity: 0.3, shadowRadius: 16 },
+            android: { elevation: 10 },
+        }),
+    },
     startGrad: { borderRadius: 22, overflow: 'hidden' },
     startContent: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 22 },
     startLabel: { fontSize: 10, fontWeight: '800', letterSpacing: 1.5, marginBottom: 4 },
@@ -300,4 +343,22 @@ const styles = StyleSheet.create({
     recentVol: { fontSize: 15, fontWeight: '700' },
     prBadge: { paddingHorizontal: 8, paddingVertical: 2, borderRadius: 6 },
     prText: { fontSize: 10, fontWeight: '800', letterSpacing: 0.5 },
+
+    // Active Banner
+    activeBanner: {
+        flexDirection: 'row', alignItems: 'center', gap: 12, padding: 14,
+        borderRadius: 16, borderWidth: 1, marginBottom: 16,
+        shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.06, shadowRadius: 6,
+        elevation: 3,
+    },
+    activeBannerDotWrap: { width: 20, height: 20, alignItems: 'center', justifyContent: 'center' },
+    activeBannerDot: { width: 10, height: 10, borderRadius: 5, backgroundColor: '#EF4444' },
+    activeBannerInfo: { flex: 1, gap: 2 },
+    activeBannerTitle: { fontSize: 15, fontWeight: '700' },
+    activeBannerMeta: { fontSize: 11, fontWeight: '500' },
+    activeBannerBtn: {
+        flexDirection: 'row', alignItems: 'center', gap: 4,
+        paddingHorizontal: 14, paddingVertical: 8, borderRadius: 10,
+    },
+    activeBannerBtnText: { color: '#FFFFFF', fontSize: 13, fontWeight: '700' },
 });

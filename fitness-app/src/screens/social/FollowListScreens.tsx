@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image, TextInput, ActivityIndicator } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 
@@ -58,9 +57,9 @@ export function FollowersListScreen({ route, navigation }: any) {
                     {item.isFollowing ? (
                         <Text style={[styles.followText, { color: colors.foreground }]}>Following</Text>
                     ) : (
-                        <LinearGradient colors={colors.primary.gradient as [string, string]} style={styles.followGrad}>
+                        <View style={styles.followGrad}>
                             <Text style={styles.followTextWhite}>Follow</Text>
-                        </LinearGradient>
+                        </View>
                     )}
                 </TouchableOpacity>
             )}

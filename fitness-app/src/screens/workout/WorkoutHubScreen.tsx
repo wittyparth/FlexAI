@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import {
-    View, Text, StyleSheet, ScrollView, TouchableOpacity, Animated, Dimensions, Platform,
+    View, Text, StyleSheet, ScrollView, TouchableOpacity, Animated, Dimensions, Platform, Alert,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
@@ -179,9 +179,13 @@ export function WorkoutHubScreen({ navigation }: any) {
                     {/* ─── START EMPTY WORKOUT ─── */}
                     <View style={[styles.px, styles.mt]}>
                         <TouchableOpacity
-                            onPress={() => {
-                                useWorkoutStore.getState().startMockWorkout('Empty Workout', []);
-                                nav('ActiveWorkout');
+                            onPress={async () => {
+                                try {
+                                    await useWorkoutStore.getState().startWorkout({ name: 'Quick Workout' });
+                                    nav('ActiveWorkout');
+                                } catch (error: any) {
+                                    Alert.alert('Unable to start workout', error?.message || 'Please try again.');
+                                }
                             }}
                             activeOpacity={0.9}
                             style={styles.startWrapper}

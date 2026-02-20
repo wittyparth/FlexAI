@@ -6,7 +6,8 @@ import {
     ScrollView,
     TouchableOpacity,
     Dimensions,
-    Platform
+    Platform,
+    Alert,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
@@ -39,27 +40,17 @@ export function RoutineDetailScreen({ route, navigation }: any) {
             return;
         }
 
-        const exercisePayload = exercises.map((item: any, i: number) => {
-            const ex = item.exercise || item;
-            return {
-                id: item.id || i + 1,
-                orderIndex: i,
-                targetSets: item.targetSets || 3,
-                targetRepsMin: item.targetRepsMin || 8,
-                targetRepsMax: item.targetRepsMax || 12,
-                targetWeight: item.targetWeight || 0,
-                restSeconds: item.restSeconds || 90,
-                notes: item.notes || '',
-                exercise: {
-                    id: ex.id || i + 1,
-                    name: ex.name || 'Exercise',
-                    muscleGroup: ex.muscleGroup || 'Full Body',
-                    exerciseType: ex.exerciseType || 'Strength',
-                },
-            };
-        });
-        useWorkoutStore.getState().startMockWorkout(routine.name, exercisePayload);
-        navigation.navigate('ActiveWorkout');
+        const routineIdNumber = Number(routine.id);
+        const payload = Number.isFinite(routineIdNumber)
+            ? { routineId: routineIdNumber, name: routine.name }
+            : { name: routine.name };
+
+        useWorkoutStore.getState()
+            .startWorkout(payload)
+            .then(() => navigation.navigate('ActiveWorkout'))
+            .catch((error: any) => {
+                Alert.alert('Unable to start workout', error?.message || 'Please try again.');
+            });
     };
 
     return (

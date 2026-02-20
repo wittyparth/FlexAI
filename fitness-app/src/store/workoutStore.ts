@@ -45,10 +45,11 @@ interface WorkoutState {
 interface WorkoutActions {
   // Core Actions
   startWorkout: (input: StartWorkoutInput) => Promise<void>;
-  startMockWorkout: (name: string, exercises?: any[]) => void;
   resumeWorkout: () => Promise<void>;
   cancelWorkout: () => Promise<void>;
   completeWorkout: (input: any) => Promise<void>;
+  addExercise: (exerciseId: number, notes?: string) => Promise<void>;
+  removeExercise: (workoutExerciseId: number) => Promise<void>;
   
   // Set Actions (Optimistic)
   logSet: (exerciseId: number, input: LogSetInput) => Promise<void>;
@@ -97,44 +98,6 @@ export const useWorkoutStore = create<WorkoutState & WorkoutActions>()(
       // ACTIONS
       // ----------------------------------------------------------------------
 
-      startMockWorkout: (name: string, exercises?: any[]) => {
-        // Default mock exercises if none provided
-        const defaultExercises = exercises || [
-          {
-            id: 1, orderIndex: 0, targetSets: 3, targetRepsMin: 8, targetRepsMax: 12,
-            targetWeight: 135, restSeconds: 90, notes: 'Keep chest up',
-            exercise: { id: 1, name: 'Barbell Bench Press', muscleGroup: 'Chest', exerciseType: 'Strength' }
-          },
-          {
-            id: 2, orderIndex: 1, targetSets: 3, targetRepsMin: 5, targetRepsMax: 8,
-            targetWeight: 225, restSeconds: 120, notes: 'Full depth',
-            exercise: { id: 2, name: 'Barbell Squat', muscleGroup: 'Legs', exerciseType: 'Strength' }
-          },
-          {
-            id: 3, orderIndex: 2, targetSets: 4, targetRepsMin: 6, targetRepsMax: 10,
-            targetWeight: 185, restSeconds: 90, notes: 'Hinge at hip',
-            exercise: { id: 3, name: 'Romanian Deadlift', muscleGroup: 'Hamstrings', exerciseType: 'Strength' }
-          },
-          {
-            id: 4, orderIndex: 3, targetSets: 3, targetRepsMin: 10, targetRepsMax: 15,
-            targetWeight: 50, restSeconds: 60,
-            exercise: { id: 4, name: 'Cable Row', muscleGroup: 'Back', exerciseType: 'Strength' }
-          },
-        ];
-        set((state: any) => {
-          state.activeWorkoutId = 9999; // Mock ID
-          state.workoutName = name;
-          state.startTime = new Date().toISOString();
-          state.status = 'in_progress';
-          state.exercises = {};
-          state.sets = {};
-          state.elapsedSeconds = 0;
-          defaultExercises.forEach((ex: any) => {
-            state.exercises[ex.id] = ex;
-          });
-        });
-      },
-
       startWorkout: async (input) => {
         set({ isLoading: true, error: null });
         try {
@@ -145,7 +108,7 @@ export const useWorkoutStore = create<WorkoutState & WorkoutActions>()(
             state.isLoading = false;
             state.activeWorkoutId = workout.id;
             state.workoutName = workout.name;
-            state.startTime = new Date().toISOString();
+            state.startTime = workout.startTime || new Date().toISOString();
             state.status = 'in_progress';
             state.exercises = {}; 
             state.sets = {};
@@ -171,7 +134,9 @@ export const useWorkoutStore = create<WorkoutState & WorkoutActions>()(
             }
           });
         } catch (error: any) {
-          set({ isLoading: false, error: error.message || 'Failed to start workout' });
+          const message = error.message || 'Failed to start workout';
+          set({ isLoading: false, error: message });
+          throw new Error(message);
         }
       },
 
@@ -217,6 +182,71 @@ export const useWorkoutStore = create<WorkoutState & WorkoutActions>()(
         }
       },
 
+      addExercise: async (exerciseId, notes) => {
+        const { activeWorkoutId, status } = get();
+        if (!activeWorkoutId || status !== 'in_progress') {
+          const message = 'No active workout in progress';
+          set({ error: message });
+          throw new Error(message);
+        }
+
+        set({ isLoading: true, error: null });
+        try {
+          const response = await workoutApi.addExercise(activeWorkoutId, { exerciseId, notes });
+          const workoutExercise = response.data as unknown as WorkoutExercise;
+
+          set((state) => {
+            state.isLoading = false;
+            state.exercises[workoutExercise.id] = {
+              ...workoutExercise,
+              sets: Array.isArray(workoutExercise.sets) ? workoutExercise.sets : [],
+            };
+
+            if (Array.isArray(workoutExercise.sets)) {
+              workoutExercise.sets.forEach((setItem) => {
+                state.sets[setItem.id] = setItem;
+              });
+            }
+          });
+        } catch (error: any) {
+          const message = error.message || 'Failed to add exercise';
+          set({ isLoading: false, error: message });
+          throw new Error(message);
+        }
+      },
+
+      removeExercise: async (workoutExerciseId) => {
+        const { activeWorkoutId, status, exercises } = get();
+        if (!activeWorkoutId || status !== 'in_progress') return;
+        if (!exercises[workoutExerciseId]) return;
+
+        const previousExercise = exercises[workoutExerciseId];
+        const previousSets = Object.entries(get().sets).filter(
+          ([, setItem]) => setItem.workoutExerciseId === workoutExerciseId
+        );
+
+        // Optimistic remove
+        set((state) => {
+          delete state.exercises[workoutExerciseId];
+          previousSets.forEach(([setId]) => {
+            delete state.sets[setId];
+          });
+        });
+
+        try {
+          await workoutApi.removeExercise(activeWorkoutId, workoutExerciseId);
+        } catch (error: any) {
+          // Rollback on failure
+          set((state) => {
+            state.error = error.message || 'Failed to remove exercise';
+            state.exercises[workoutExerciseId] = previousExercise;
+            previousSets.forEach(([setId, setItem]) => {
+              state.sets[setId] = setItem;
+            });
+          });
+        }
+      },
+
       logSet: async (exerciseId: number, input: LogSetInput) => {
         const { activeWorkoutId } = get();
         if (!activeWorkoutId) {
@@ -241,9 +271,6 @@ export const useWorkoutStore = create<WorkoutState & WorkoutActions>()(
             
             state.sets[tempId] = newSet;
         });
-
-        // Mock mode: skip API call
-        if (activeWorkoutId === 9999) return;
 
         // 3. API Call
         try {
@@ -290,7 +317,7 @@ export const useWorkoutStore = create<WorkoutState & WorkoutActions>()(
       cancelWorkout: async () => {
         const { activeWorkoutId } = get();
         // Allow cancel even without active workout (safety)
-        if (!activeWorkoutId || activeWorkoutId === 9999) {
+        if (!activeWorkoutId) {
             set(initialState);
             return;
         }
@@ -308,12 +335,6 @@ export const useWorkoutStore = create<WorkoutState & WorkoutActions>()(
       completeWorkout: async (input) => {
           const { activeWorkoutId } = get();
           if (!activeWorkoutId) return;
-
-          // Mock mode: skip API call
-          if (activeWorkoutId === 9999) {
-              set(initialState);
-              return;
-          }
           
           set({ isLoading: true });
           try {

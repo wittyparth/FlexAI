@@ -124,6 +124,7 @@ export function useActiveWorkout() {
   const {
     logSet: storeLogSet,
     deleteSet: storeDeleteSet,
+    addExercise: storeAddExercise,
     completeWorkout,
     cancelWorkout,
     tick,
@@ -134,6 +135,7 @@ export function useActiveWorkout() {
   } = useWorkoutStore(useShallow(state => ({
     logSet: state.logSet,
     deleteSet: state.deleteSet,
+    addExercise: state.addExercise,
     completeWorkout: state.completeWorkout,
     cancelWorkout: state.cancelWorkout,
     tick: state.tick,
@@ -322,6 +324,7 @@ export function useActiveWorkout() {
     // Store actions
     completeWorkout,
     cancelWorkout,
+    addExercise: storeAddExercise,
     minimize,
     deleteSet: storeDeleteSet,
     stopRest,

@@ -140,7 +140,10 @@ export const workoutApi = {
       `/workouts/${workoutId}/exercises`, 
       data
     );
-    return response.data;
+    return {
+      ...response.data,
+      data: normalizeWorkoutExercise(response.data.data),
+    };
   },
 
   /**

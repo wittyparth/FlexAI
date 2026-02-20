@@ -19,7 +19,7 @@ import { ExerciseCard } from '../../components/active-workout/ExerciseCard';
 import { RestTimerOverlay } from '../../components/active-workout/RestTimerOverlay';
 import { TimerSettingsModal } from '../../components/active-workout/TimerSettingsModal';
 
-export function ActiveWorkoutScreen({ navigation }: any) {
+export function ActiveWorkoutScreen({ navigation, route }: any) {
   const colors = useColors();
   const insets = useSafeAreaInsets();
   const scrollRef = useRef<ScrollView>(null);
@@ -64,6 +64,7 @@ export function ActiveWorkoutScreen({ navigation }: any) {
     // Store actions
     completeWorkout,
     cancelWorkout,
+    addExercise,
     deleteSet,
     stopRest,
 
@@ -71,6 +72,19 @@ export function ActiveWorkoutScreen({ navigation }: any) {
     formatTime,
     formatVolume,
   } = useActiveWorkout();
+
+  useEffect(() => {
+    const selectedExercise = route.params?.selectedExercise;
+    if (!selectedExercise?.id) return;
+
+    addExercise(selectedExercise.id, selectedExercise.notes)
+      .catch((error: any) => {
+        Alert.alert('Unable to add exercise', error?.message || 'Please try again.');
+      })
+      .finally(() => {
+        navigation.setParams({ selectedExercise: undefined });
+      });
+  }, [route.params?.selectedExercise, addExercise, navigation]);
 
   // ─── Navigate away if no active workout ───
   useEffect(() => {
@@ -116,12 +130,20 @@ export function ActiveWorkoutScreen({ navigation }: any) {
       <View style={[styles.container, { backgroundColor: colors.background, justifyContent: 'center', alignItems: 'center' }]}>
         <MaterialCommunityIcons name="dumbbell" size={48} color={colors.mutedForeground} />
         <Text style={[styles.emptyText, { color: colors.mutedForeground }]}>No exercises in this workout</Text>
-        <TouchableOpacity
-          style={[styles.emptyBtn, { borderColor: colors.border }]}
-          onPress={handleCancel}
-        >
-          <Text style={{ color: colors.error }}>Cancel Workout</Text>
-        </TouchableOpacity>
+        <View style={styles.emptyActions}>
+          <TouchableOpacity
+            style={[styles.emptyBtn, { borderColor: colors.primary.main }]}
+            onPress={() => navigation.navigate('ExercisePicker', { returnTo: 'ActiveWorkout' })}
+          >
+            <Text style={{ color: colors.primary.main }}>Add Exercise</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.emptyBtn, { borderColor: colors.border }]}
+            onPress={handleCancel}
+          >
+            <Text style={{ color: colors.error }}>Cancel Workout</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -237,7 +259,7 @@ export function ActiveWorkoutScreen({ navigation }: any) {
         {/* Add Exercise placeholder */}
         <TouchableOpacity
           style={[styles.addExerciseBtn, { borderColor: colors.border }]}
-          onPress={() => navigation.navigate('ExercisePicker')}
+          onPress={() => navigation.navigate('ExercisePicker', { returnTo: 'ActiveWorkout' })}
           activeOpacity={0.7}
         >
           <Ionicons name="add-circle-outline" size={20} color={colors.primary.main} />
@@ -439,6 +461,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginTop: 12,
     marginBottom: 20,
+  },
+  emptyActions: {
+    flexDirection: 'row',
+    gap: 10,
   },
   emptyBtn: {
     paddingHorizontal: 20,

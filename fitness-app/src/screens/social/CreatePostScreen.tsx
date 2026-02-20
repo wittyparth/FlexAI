@@ -124,7 +124,7 @@ export function CreatePostScreen({ navigation }: any) {
                     {/* Selected Workout */}
                     {selectedWorkout && (
                         <View style={[styles.selectedWorkout, { borderColor: colors.primary.main }]}>
-                            <View
+                            <View08`, `${colors.primary.main}02`]}
                                 style={styles.workoutGradient}
                             >
                                 <View style={styles.workoutHeader}>

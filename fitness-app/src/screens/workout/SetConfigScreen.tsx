@@ -211,7 +211,7 @@ export function SetConfigScreen({ navigation, route }: any) {
 
                 {/* Summary Preview */}
                 <View style={styles.section}>
-                    <View
+                    <View10`, `${colors.primary.main}05`]}
                         style={styles.summaryCard}
                     >
                         <Text style={[styles.summaryTitle, { color: colors.foreground }]}>Set Preview</Text>

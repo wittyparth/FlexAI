@@ -220,7 +220,7 @@ export function VolumeAnalyticsScreen({ navigation }: any) {
                                     </View>
                                     <View style={styles.progressContainer}>
                                         <View style={[styles.progressBg, { backgroundColor: colors.muted }]}>
-                                            <View
+                                            <ViewCC`] as [string, string]}
                                                 style={[styles.progressFill, { width: `${muscle.percentage}%` }]}
                                             />
                                         </View>

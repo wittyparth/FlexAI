@@ -160,7 +160,7 @@ export function PostDetailScreen({ route, navigation }: any) {
                         {/* Workout Card */}
                         {post.workout && (
                             <View style={[styles.workoutCard, { borderColor: colors.primary.main }]}>
-                                <View
+                                <View08`, `${colors.primary.main}02`]}
                                     style={styles.workoutGradient}
                                 >
                                     <View style={styles.workoutHeader}>

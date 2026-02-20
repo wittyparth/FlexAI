@@ -240,7 +240,7 @@ Every integration PR must update this file.
 - 2026-02-20 | PR: `0b7199d` | Phase: 3 | Replaced workout history/detail query hooks with real backend endpoints, added workout response normalization in API client (`startedAt`/`completedAt` mapping), and aligned create/delete/log-set query mutations to backend workout routes.
 - 2026-02-20 | PR: `988bd0a` | Phase: 3 | Removed remaining mock-start pathways, wired routine/hub start to backend create-workout API, enabled active-workout add-exercise flow through ExercisePicker return navigation, and added store/API normalization/error handling for exercise insertion.
 - 2026-02-20 | PR: `b6d8e32` | Phase: 3 | Replaced routine query mocks with real routine APIs, wired `RoutineListScreen` and `RoutineDetailScreen` to backend routine data, and switched Workout Hub routine/template sections to seeded backend routines/templates.
-- 2026-02-20 | PR: Pending commit (Phase 3 - in-workout exercise removal integration) | Phase: 3 | Added active-workout remove-exercise UI with confirmation, exposed remove action through `useActiveWorkout`, and hardened store remove-exercise error propagation with optimistic rollback.
+- 2026-02-20 | PR: `cca2f06` | Phase: 3 | Added active-workout remove-exercise UI with confirmation, exposed remove action through `useActiveWorkout`, and hardened store remove-exercise error propagation with optimistic rollback.
 
 ## Change Notes
 - 2026-02-20: Added mandatory backend persistence of `workoutInterests` in onboarding (Phase 2).

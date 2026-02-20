@@ -39,7 +39,7 @@ export function CreatePostScreen({ navigation }: any) {
             await createPostMutation.mutateAsync({
                 content: caption,
                 workoutId: selectedWorkout?.id,
-                visibility: isPublic ? 'public' : 'followers',
+                visibility: isPublic ? 'public' : 'friends',
             });
             navigation.goBack();
         } catch (error) {
@@ -124,8 +124,8 @@ export function CreatePostScreen({ navigation }: any) {
                     {/* Selected Workout */}
                     {selectedWorkout && (
                         <View style={[styles.selectedWorkout, { borderColor: colors.primary.main }]}>
-                            <View08`, `${colors.primary.main}02`]}
-                                style={styles.workoutGradient}
+                            <View
+                                style={[styles.workoutGradient, { backgroundColor: `${colors.primary.main}08` }]}
                             >
                                 <View style={styles.workoutHeader}>
                                     <MaterialCommunityIcons name="dumbbell" size={20} color={colors.primary.main} />

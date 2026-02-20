@@ -160,8 +160,8 @@ export function PostDetailScreen({ route, navigation }: any) {
                         {/* Workout Card */}
                         {post.workout && (
                             <View style={[styles.workoutCard, { borderColor: colors.primary.main }]}>
-                                <View08`, `${colors.primary.main}02`]}
-                                    style={styles.workoutGradient}
+                                <View
+                                    style={[styles.workoutGradient, { backgroundColor: `${colors.primary.main}08` }]}
                                 >
                                     <View style={styles.workoutHeader}>
                                         <MaterialCommunityIcons name="dumbbell" size={22} color={colors.primary.main} />

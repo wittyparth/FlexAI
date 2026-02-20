@@ -99,9 +99,7 @@ export function PersonalRecordsScreen({ navigation }: any) {
                                     shadowColor: pr.color, shadowOffset: { width: 0, height: 8 }, shadowOpacity: 0.3, shadowRadius: 10, elevation: 8
                                 }}
                             >
-                                <View99`] as [string, string]}
-                                    style={styles.featuredCard}
-                                >
+                                <View style={[styles.featuredCard, { backgroundColor: pr.color }]}>
                                     <View style={styles.featuredHeader}>
                                         <View style={styles.crownBadge}>
                                             <MaterialCommunityIcons name="crown" size={16} color="#FFF" />

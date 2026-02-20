@@ -48,10 +48,19 @@ export const exerciseApi = {
      * Get available filter options (muscle groups, equipment, etc.)
      */
     getFilterOptions: async (): Promise<ExerciseFilterOptions> => {
-        const response = await apiClient.get<{ success: boolean; data: ExerciseFilterOptions }>(
-            '/exercises/filters'
-        );
-        return response.data.data;
+        const [muscleGroups, equipment, exerciseTypes, trainingGoals] = await Promise.all([
+            apiClient.get<{ success: boolean; data: string[] }>('/exercises/muscle-groups'),
+            apiClient.get<{ success: boolean; data: string[] }>('/exercises/equipment'),
+            apiClient.get<{ success: boolean; data: string[] }>('/exercises/types'),
+            apiClient.get<{ success: boolean; data: string[] }>('/exercises/training-goals'),
+        ]);
+
+        return {
+            muscleGroups: muscleGroups.data.data,
+            equipment: equipment.data.data,
+            exerciseTypes: exerciseTypes.data.data,
+            trainingGoals: trainingGoals.data.data,
+        };
     },
 
     /**
@@ -100,7 +109,7 @@ export const exerciseApi = {
      */
     createCustomExercise: async (data: Partial<Exercise>): Promise<Exercise> => {
         const response = await apiClient.post<{ success: boolean; data: Exercise }>(
-            '/exercises/custom',
+            '/exercises',
             data
         );
         return response.data.data;
@@ -111,7 +120,7 @@ export const exerciseApi = {
      */
     updateCustomExercise: async (id: number, data: Partial<Exercise>): Promise<Exercise> => {
         const response = await apiClient.patch<{ success: boolean; data: Exercise }>(
-            `/exercises/custom/${id}`,
+            `/exercises/${id}`,
             data
         );
         return response.data.data;
@@ -121,6 +130,6 @@ export const exerciseApi = {
      * Delete a custom exercise
      */
     deleteCustomExercise: async (id: number): Promise<void> => {
-        await apiClient.delete(`/exercises/custom/${id}`);
+        await apiClient.delete(`/exercises/${id}`);
     },
 };

@@ -16,7 +16,7 @@ Every integration PR must update this file.
 
 ## Current Status
 - Current Phase: Phase 0
-- Overall Completion: 6%
+- Overall Completion: 14%
 - Blockers: None
 
 ## Global Exit Criteria
@@ -33,12 +33,12 @@ Every integration PR must update this file.
 - [x] Finalize one active root navigation architecture (remove duplicate root flow risk).
 - [x] Remove auth bypass paths from app entry flow.
 - [ ] Audit and fix route mismatches between frontend API clients and backend routers:
-  - [ ] `social.api.ts`
-  - [ ] `feed.api.ts`
-  - [ ] `leaderboard.api.ts`
-  - [ ] `gamification.api.ts`
-  - [ ] `exercise.api.ts`
-  - [ ] `routine.api.ts`
+  - [x] `social.api.ts`
+  - [x] `feed.api.ts`
+  - [x] `leaderboard.api.ts`
+  - [x] `gamification.api.ts`
+  - [x] `exercise.api.ts`
+  - [x] `routine.api.ts`
 - [ ] Standardize response envelope assumptions (`{ success, data }`) per endpoint.
 - [ ] Update API contract documentation.
 
@@ -230,6 +230,7 @@ Every integration PR must update this file.
 ### Log
 - 2026-02-20 | PR: N/A | Phase: Planning | Created master checklist and execution order.
 - 2026-02-20 | PR: Pending commit (Phase 0 - Nav/Auth cleanup) | Phase: 0 | Unified app entry to `src/navigation/RootNavigator`, added dedicated onboarding stack, expanded auth stack registration, removed auth bypass mode.
+- 2026-02-20 | PR: Pending commit (Phase 0 - API route alignment) | Phase: 0 | Aligned frontend API clients with backend route paths/contracts for social, feed, leaderboards, gamification, exercises, and routines; added safe fallbacks where backend endpoints are not yet exposed.
 
 ## Change Notes
 - 2026-02-20: Added mandatory backend persistence of `workoutInterests` in onboarding (Phase 2).

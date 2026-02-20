@@ -10,6 +10,9 @@ export interface GamificationStats {
     nextTitle: string;
     achievements: Achievement[];
     recentXpGains: XPGain[];
+    currentStreak?: number;
+    longestStreak?: number;
+    lastWorkoutDate?: string | null;
 }
 
 export interface Achievement {
@@ -42,33 +45,70 @@ export const gamificationApi = {
      * Get user's gamification stats (XP, level, achievements)
      */
     getStats: async (): Promise<GamificationStats> => {
-        const response = await apiClient.get<{ data: GamificationStats }>('/gamification/stats');
-        return response.data.data;
+        const response = await apiClient.get<{
+            xp: number;
+            level: number;
+            currentStreak: number;
+            longestStreak: number;
+            lastWorkoutDate: string | null;
+            nextLevelXp: number;
+            levelProgress: number;
+        }>('/gamification/stats');
+
+        const stats = response.data;
+        const currentLevelBaseXp = Math.pow(Math.max(stats.level - 1, 0), 2) * 100;
+        const currentLevelXp = Math.max(0, stats.xp - currentLevelBaseXp);
+
+        return {
+            xp: stats.xp,
+            level: stats.level,
+            levelProgress: stats.levelProgress / 100,
+            currentLevelXp,
+            nextLevelXp: stats.nextLevelXp,
+            title: `Level ${stats.level}`,
+            nextTitle: `Level ${stats.level + 1}`,
+            achievements: [],
+            recentXpGains: [],
+            currentStreak: stats.currentStreak,
+            longestStreak: stats.longestStreak,
+            lastWorkoutDate: stats.lastWorkoutDate,
+        };
     },
 
     /**
      * Get user's streak data
      */
     getStreakData: async (): Promise<StreakData> => {
-        const response = await apiClient.get<{ data: StreakData }>('/gamification/streak');
-        return response.data.data;
+        const stats = await gamificationApi.getStats();
+        return {
+            currentStreak: stats.currentStreak ?? 0,
+            longestStreak: stats.longestStreak ?? 0,
+            lastWorkoutDate: stats.lastWorkoutDate ?? null,
+            weeklyData: [],
+            monthlyData: [],
+        };
     },
 
     /**
      * Get user's achievements
      */
     getAchievements: async (): Promise<Achievement[]> => {
-        const response = await apiClient.get<{ data: Achievement[] }>('/gamification/achievements');
-        return response.data.data;
+        const response = await apiClient.get<any[]>('/gamification/achievements');
+        return (response.data || []).map((item: any) => ({
+            id: item.id,
+            name: item.name,
+            description: item.description,
+            icon: item.iconUrl || '',
+            unlockedAt: item.unlockedAt,
+            progress: item.unlocked ? 100 : undefined,
+        }));
     },
 
     /**
      * Get recent XP gains
      */
-    getRecentXpGains: async (limit = 10): Promise<XPGain[]> => {
-        const response = await apiClient.get<{ data: XPGain[] }>('/gamification/xp-history', {
-            params: { limit },
-        });
-        return response.data.data;
+    getRecentXpGains: async (_limit = 10): Promise<XPGain[]> => {
+        // Backend XP history endpoint is not available yet.
+        return [];
     },
 };

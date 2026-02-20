@@ -66,6 +66,20 @@ interface ChallengesResponse {
 // ============================================================================
 
 export const leaderboardApi = {
+    mapMetricToType(metric?: LeaderboardMetric): 'strength' | 'volume' | 'consistency' | 'weekly' {
+        switch (metric) {
+            case 'volume':
+                return 'volume';
+            case 'streak':
+                return 'consistency';
+            case 'workouts':
+                return 'weekly';
+            case 'xp':
+            default:
+                return 'strength';
+        }
+    },
+
     /**
      * Get leaderboard rankings
      */
@@ -75,11 +89,33 @@ export const leaderboardApi = {
         page?: number;
         limit?: number;
     }): Promise<RankingsResponse> => {
-        const response = await apiClient.get<{ success: boolean; data: RankingsResponse }>(
-            '/leaderboard/rankings',
-            { params }
+        const type = leaderboardApi.mapMetricToType(params?.metric);
+        const response = await apiClient.get<{ success: boolean; data: any[] }>(
+            `/leaderboards/rankings/${type}`,
+            { params: { limit: params?.limit } }
         );
-        return response.data.data;
+        const rankings = (response.data.data || []).map((entry: any) => ({
+            rank: entry.rank,
+            userId: String(entry.user?.id ?? ''),
+            user: {
+                id: String(entry.user?.id ?? ''),
+                firstName: entry.user?.firstName ?? 'Unknown',
+                lastName: entry.user?.lastName ?? '',
+                avatarUrl: entry.user?.avatarUrl,
+            },
+            score: entry.score ?? 0,
+            metric: type,
+        })) as LeaderboardEntry[];
+
+        return {
+            rankings,
+            pagination: {
+                page: 1,
+                limit: params?.limit ?? rankings.length,
+                total: rankings.length,
+                totalPages: 1,
+            },
+        };
     },
 
     /**
@@ -90,21 +126,41 @@ export const leaderboardApi = {
         page?: number;
         limit?: number;
     }): Promise<ChallengesResponse> => {
-        const response = await apiClient.get<{ success: boolean; data: ChallengesResponse }>(
-            '/leaderboard/challenges',
-            { params }
+        const response = await apiClient.get<{ success: boolean; data: any[] }>(
+            '/leaderboards/challenges'
         );
-        return response.data.data;
+        const challenges = (response.data.data || []).map((challenge: any) => ({
+            id: String(challenge.id),
+            name: challenge.name,
+            description: challenge.description,
+            type: challenge.challengeType ?? 'custom',
+            targetValue: challenge.targetValue ?? 0,
+            startDate: challenge.startDate,
+            endDate: challenge.endDate,
+            participantsCount: challenge._count?.participants ?? 0,
+        })) as Challenge[];
+
+        return {
+            challenges,
+            pagination: {
+                page: 1,
+                limit: params?.limit ?? challenges.length,
+                total: challenges.length,
+                totalPages: 1,
+            },
+        };
     },
 
     /**
      * Get a specific challenge by ID
      */
     getChallengeById: async (challengeId: string): Promise<Challenge> => {
-        const response = await apiClient.get<{ success: boolean; data: Challenge }>(
-            `/leaderboard/challenges/${challengeId}`
-        );
-        return response.data.data;
+        const challenges = await leaderboardApi.getChallenges();
+        const challenge = challenges.challenges.find(c => c.id === challengeId);
+        if (!challenge) {
+            throw new Error('Challenge not found');
+        }
+        return challenge;
     },
 
     /**
@@ -112,7 +168,7 @@ export const leaderboardApi = {
      */
     joinChallenge: async (challengeId: string): Promise<{ success: boolean }> => {
         const response = await apiClient.post<{ success: boolean }>(
-            `/leaderboard/challenges/${challengeId}/join`
+            `/leaderboards/challenges/${challengeId}/join`
         );
         return response.data;
     },
@@ -120,10 +176,8 @@ export const leaderboardApi = {
     /**
      * Leave a challenge
      */
-    leaveChallenge: async (challengeId: string): Promise<{ success: boolean }> => {
-        const response = await apiClient.delete<{ success: boolean }>(
-            `/leaderboard/challenges/${challengeId}/join`
-        );
-        return response.data;
+    leaveChallenge: async (_challengeId: string): Promise<{ success: boolean }> => {
+        // Leave challenge endpoint is not exposed by backend yet.
+        throw new Error('Leave challenge is not supported by backend');
     },
 };

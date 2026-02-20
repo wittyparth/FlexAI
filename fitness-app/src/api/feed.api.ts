@@ -5,10 +5,10 @@ import apiClient from './client';
 // ============================================================================
 
 export interface FeedPost {
-    id: string; // Changed from number
-    userId: string; // Changed from number
+    id: string;
+    userId: string;
     user: {
-        id: string; // Changed from number
+        id: string;
         firstName: string;
         lastName: string;
         username?: string;
@@ -16,15 +16,15 @@ export interface FeedPost {
     };
     content: string;
     imageUrl?: string;
-    workoutId?: string; // Changed from number
+    workoutId?: string;
     workout?: {
-        id: string; // Changed from number
+        id: string;
         name: string;
         duration?: number;
         totalVolume?: number;
         exerciseCount?: number;
     };
-    visibility: 'public' | 'followers' | 'private';
+    visibility: 'public' | 'friends' | 'private';
     likesCount: number;
     commentsCount: number;
     isLiked?: boolean;
@@ -33,11 +33,11 @@ export interface FeedPost {
 }
 
 export interface FeedComment {
-    id: string; // Changed from number
-    postId: string; // Changed from number
-    userId: string; // Changed from number
+    id: string;
+    postId: string;
+    userId: string;
     user: {
-        id: string; // Changed from number
+        id: string;
         firstName: string;
         lastName: string;
         username?: string;
@@ -51,7 +51,7 @@ export interface CreatePostInput {
     content: string;
     imageUrl?: string;
     workoutId?: string;
-    visibility?: 'public' | 'followers' | 'private';
+    visibility?: 'public' | 'friends' | 'private';
 }
 
 interface FeedResponse {
@@ -69,11 +69,11 @@ export const feedApi = {
      * Get global public feed
      */
     getGlobalFeed: async (params?: { cursor?: number; limit?: number }): Promise<FeedResponse> => {
-        const response = await apiClient.get<{ success: boolean } & FeedResponse>('/feed/global', { params });
+        const response = await apiClient.get<{ success: boolean; posts: FeedPost[]; nextCursor?: number }>('/feed', { params });
         return {
             posts: response.data.posts,
             nextCursor: response.data.nextCursor,
-            hasMore: response.data.hasMore,
+            hasMore: response.data.nextCursor !== undefined,
         };
     },
 
@@ -81,11 +81,11 @@ export const feedApi = {
      * Get personalized feed (from followed users)
      */
     getMyFeed: async (params?: { cursor?: number; limit?: number }): Promise<FeedResponse> => {
-        const response = await apiClient.get<{ success: boolean } & FeedResponse>('/feed', { params });
+        const response = await apiClient.get<{ success: boolean; posts: FeedPost[]; nextCursor?: number }>('/feed/following', { params });
         return {
             posts: response.data.posts,
             nextCursor: response.data.nextCursor,
-            hasMore: response.data.hasMore,
+            hasMore: response.data.nextCursor !== undefined,
         };
     },
 
@@ -93,15 +93,16 @@ export const feedApi = {
      * Create a new post
      */
     createPost: async (data: CreatePostInput): Promise<FeedPost> => {
-        const response = await apiClient.post<{ success: boolean } & FeedPost>('/feed/posts', data);
-        return response.data;
+        const response = await apiClient.post<{ success: boolean; [key: string]: any }>('/feed/posts', data);
+        const { success: _success, ...post } = response.data;
+        return post as FeedPost;
     },
 
     /**
      * Toggle like on a post
      */
-    toggleLike: async (postId: string): Promise<{ liked: boolean; likesCount: number }> => {
-        const response = await apiClient.post<{ success: boolean; liked: boolean; likesCount: number }>(
+    toggleLike: async (postId: string): Promise<{ liked: boolean; likesCount?: number }> => {
+        const response = await apiClient.post<{ success: boolean; liked: boolean; likesCount?: number }>(
             `/feed/posts/${postId}/like`
         );
         return { liked: response.data.liked, likesCount: response.data.likesCount };
@@ -122,11 +123,12 @@ export const feedApi = {
      * Add a comment to a post
      */
     addComment: async (postId: string, content: string): Promise<FeedComment> => {
-        const response = await apiClient.post<{ success: boolean } & FeedComment>(
+        const response = await apiClient.post<{ success: boolean; [key: string]: any }>(
             `/feed/posts/${postId}/comments`,
             { content }
         );
-        return response.data;
+        const { success: _success, ...comment } = response.data;
+        return comment as FeedComment;
     },
 
     /**
@@ -139,12 +141,8 @@ export const feedApi = {
     /**
      * Get user posts
      */
-    getUserPosts: async (userId: string, params?: { cursor?: number; limit?: number }): Promise<FeedResponse> => {
-        const response = await apiClient.get<{ success: boolean } & FeedResponse>(`/feed/user/${userId}`, { params });
-        return {
-            posts: response.data.posts,
-            nextCursor: response.data.nextCursor,
-            hasMore: response.data.hasMore,
-        };
+    getUserPosts: async (_userId: string, params?: { cursor?: number; limit?: number }): Promise<FeedResponse> => {
+        // User-specific feed endpoint is not exposed by backend yet.
+        return feedApi.getMyFeed(params);
     },
 };

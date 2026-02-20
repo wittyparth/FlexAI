@@ -42,7 +42,7 @@ export const routineApi = {
      * Get public routines (Library/Discovery)
      */
     getPublicRoutines: async (params?: { page?: number; limit?: number; search?: string; goal?: string }) => {
-        const response = await apiClient.get<ApiResponse<{ routines: Routine[] }>>('/routines/public', { params });
+        const response = await apiClient.get<ApiResponse<{ routines: Routine[] }>>('/routines/library', { params });
         return response.data;
     },
 
@@ -95,5 +95,38 @@ export const routineApi = {
     removeExercise: async (routineId: number, exerciseId: number) => {
         const response = await apiClient.delete<ApiResponse<any>>(`/routines/${routineId}/exercises/${exerciseId}`);
         return response.data;
-    }
+    },
+
+    /**
+     * Update routine exercise configuration
+     */
+    updateExercise: async (routineId: number, routineExerciseId: number, data: Partial<AddExerciseToRoutineInput>) => {
+        const response = await apiClient.patch<ApiResponse<any>>(
+            `/routines/${routineId}/exercises/${routineExerciseId}`,
+            data
+        );
+        return response.data;
+    },
+
+    /**
+     * Reorder exercises in routine
+     */
+    reorderExercises: async (
+        routineId: number,
+        exercises: Array<{ routineExerciseId: number; orderIndex: number; dayOfWeek?: number }>
+    ) => {
+        const response = await apiClient.put<ApiResponse<Routine>>(
+            `/routines/${routineId}/exercises/reorder`,
+            { exercises }
+        );
+        return response.data;
+    },
+
+    /**
+     * Like a routine
+     */
+    toggleLike: async (routineId: number) => {
+        const response = await apiClient.post<ApiResponse<{ likes: number }>>(`/routines/${routineId}/like`);
+        return response.data;
+    },
 };

@@ -15,8 +15,8 @@ Every integration PR must update this file.
 - If scope changes, add a `Change Note` entry before implementation.
 
 ## Current Status
-- Current Phase: Phase 3
-- Overall Completion: 89%
+- Current Phase: Phase 4
+- Overall Completion: 92%
 - Blockers: None
 
 ## Global Exit Criteria
@@ -127,7 +127,7 @@ Every integration PR must update this file.
 - Connect AI generation flow to real backend and routine creation path.
 
 ### Checklist
-- [ ] Replace dummy generation in `AIGeneratorScreen` with backend `/routines/generate`.
+- [x] Replace dummy generation in `AIGeneratorScreen` with backend `/routines/generate`.
 - [ ] Map generated workout into preview/editor/save/start flows.
 - [ ] Handle provider/config failures gracefully.
 - [ ] Validate generated exercise IDs and fallback behavior.
@@ -256,6 +256,7 @@ Every integration PR must update this file.
 - 2026-02-20 | PR: `df0b73d` | Phase: 3 | Replaced Workout Hub recent-activity mock cards with API-backed workout history rows using `useWorkouts`, including computed duration/volume/exercise counts.
 - 2026-02-20 | PR: `ed672ea` | Phase: 3 | Replaced Workout Hub `DUMMY_METRICS`/`DUMMY_USER`/`HEATMAP_DATA` dependencies with backend-derived weekly metrics, streak, and one-year heatmap data from workout history.
 - 2026-02-20 | PR: `f199428` | Phase: 3 | Replaced `SessionInsightsScreen` mock payload with live workout APIs (`useWorkout` + `useWorkouts`) and computed summary, PRs, muscle-volume, recommendations, and week comparison.
+- 2026-02-20 | PR: `c025080` | Phase: 4 | Integrated `AIGeneratorScreen` with live `/routines/generate`, normalized AI response enrichment in `ai.api.ts`, and wired `AIPreviewScreen` to API-generated workout data/save flow (removed local mock fallback).
 - 2026-02-20 | PR: `2b5db45` | Phase: 3 | Removed the large hardcoded `MOCK_WORKOUTS` dataset from `WorkoutDetailScreen`, leaving the screen fully backend-driven via `useWorkout`.
 - 2026-02-20 | PR: `aa8ad31` | Phase: 3 | Replaced `useExerciseQueries` mock-backed implementations with backend `exerciseApi` calls for filters, featured, search, and exercise detail lookups.
 

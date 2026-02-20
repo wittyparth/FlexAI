@@ -33,6 +33,7 @@ model User {
   experienceLevel   String?   @db.VarChar(50) // beginner, intermediate, advanced, elite
   primaryGoal       String?   @db.VarChar(50) // muscle_gain, fat_loss, strength, athletic, general
   secondaryGoals    String[]  @db.VarChar(50)
+  workoutInterests  String[]  @default([]) @db.VarChar(50)
   trainingDaysPerWeek Int?
   workoutDuration   Int?      // preferred duration in minutes
   equipmentAvailable Json?    // ["barbell", "dumbbell", "machines", etc.]

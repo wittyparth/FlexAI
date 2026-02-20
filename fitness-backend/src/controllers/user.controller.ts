@@ -1,6 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
 import { userService } from '../services/user.service';
-import type { UpdateProfileInput, UpdateSettingsInput } from '../schemas/user.schema';
+import type {
+  CompleteOnboardingInput,
+  UpdateProfileInput,
+  UpdateSettingsInput,
+} from '../schemas/user.schema';
 
 // Type helper for validated requests
 interface ValidatedBody<T> extends Request {
@@ -111,7 +115,7 @@ export const userController = {
    */
   async completeOnboarding(req: Request, res: Response, next: NextFunction) {
     try {
-      const onboardingData = req.body;
+      const onboardingData = (req as ValidatedBody<CompleteOnboardingInput>).validated;
       const user = await userService.completeOnboarding(req.userId!, onboardingData);
       res.json({
         success: true,

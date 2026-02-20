@@ -254,4 +254,66 @@ describe('User Routes', () => {
       expect(res.status).toBe(422);
     });
   });
+
+  // ==========================================================================
+  // POST /api/v1/users/me/complete-onboarding
+  // ==========================================================================
+  describe('POST /users/me/complete-onboarding', () => {
+    it('should complete onboarding and persist workoutInterests', async () => {
+      const user = createMockUser({ id: 1, emailVerified: true });
+      const token = generateTestToken(user.id, user.email);
+
+      const payload = {
+        age: 26,
+        gender: 'male',
+        experienceLevel: 'beginner',
+        primaryGoal: 'muscle_gain',
+        secondaryGoals: ['strength', 'mass'],
+        workoutInterests: ['gym', 'running'],
+        trainingDaysPerWeek: 4,
+        workoutDuration: 45,
+        equipmentAvailable: ['dumbbells', 'barbell'],
+        units: 'metric',
+      };
+
+      mockPrisma.user.findUnique.mockResolvedValue(user);
+      mockPrisma.user.update.mockResolvedValue({
+        ...user,
+        onboardingCompleted: true,
+        ...payload,
+      });
+      mockPrisma.userSettings.upsert.mockResolvedValue({
+        id: 1,
+        userId: user.id,
+        units: 'metric',
+      });
+
+      const res = await request(app)
+        .post('/api/v1/users/me/complete-onboarding')
+        .set('Authorization', `Bearer ${token}`)
+        .send(payload);
+
+      expect(res.status).toBe(200);
+      expect(res.body.success).toBe(true);
+      expect(res.body.data.onboardingCompleted).toBe(true);
+      expect(res.body.data.workoutInterests).toEqual(payload.workoutInterests);
+    });
+
+    it('should validate invalid onboarding payload', async () => {
+      const user = createMockUser({ id: 1, emailVerified: true });
+      const token = generateTestToken(user.id, user.email);
+      mockPrisma.user.findUnique.mockResolvedValue(user);
+
+      const res = await request(app)
+        .post('/api/v1/users/me/complete-onboarding')
+        .set('Authorization', `Bearer ${token}`)
+        .send({
+          trainingDaysPerWeek: 9, // invalid (must be <= 7)
+          workoutInterests: new Array(11).fill('gym'), // invalid (max 10)
+        });
+
+      expect(res.status).toBe(422);
+      expect(res.body.success).toBe(false);
+    });
+  });
 });

@@ -7,15 +7,16 @@
 import apiClient from './client';
 
 export interface UserProfile {
-    id: string;
+    id: number | string;
     email: string;
-    username: string;
-    firstName?: string;
-    lastName?: string;
+    firstName?: string | null;
+    lastName?: string | null;
     avatarUrl?: string;
-    isOnboardingComplete: boolean;
-    role: 'USER' | 'COACH' | 'ADMIN';
-    createdAt: string;
+    onboardingCompleted: boolean;
+    emailVerified?: boolean;
+    role: string;
+    createdAt?: string;
+    updatedAt?: string;
     // Profile fields
     age?: number;
     gender?: 'male' | 'female' | 'other' | 'prefer_not_to_say';
@@ -24,6 +25,7 @@ export interface UserProfile {
     experienceLevel?: 'beginner' | 'intermediate' | 'advanced' | 'elite';
     primaryGoal?: 'muscle_gain' | 'fat_loss' | 'strength' | 'athletic' | 'general';
     secondaryGoals?: string[];
+    workoutInterests?: string[];
     trainingDaysPerWeek?: number;
     workoutDuration?: number;
     equipmentAvailable?: string[];
@@ -39,6 +41,7 @@ export interface OnboardingData {
     experienceLevel?: 'beginner' | 'intermediate' | 'advanced' | 'elite';
     primaryGoal?: 'muscle_gain' | 'fat_loss' | 'strength' | 'athletic' | 'general';
     secondaryGoals?: string[];
+    workoutInterests?: string[];
     trainingDaysPerWeek?: number;
     workoutDuration?: number;
     equipmentAvailable?: string[];

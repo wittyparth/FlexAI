@@ -17,6 +17,7 @@ export const updateProfileSchema = z.object({
   experienceLevel: z.enum(['beginner', 'intermediate', 'advanced', 'elite']).optional(),
   primaryGoal: z.enum(['muscle_gain', 'fat_loss', 'strength', 'athletic', 'general']).optional(),
   secondaryGoals: z.array(z.string()).max(3).optional(),
+  workoutInterests: z.array(z.string()).max(10).optional(),
   
   trainingDaysPerWeek: z.number().int().min(1).max(7).optional(),
   workoutDuration: z.number().int().min(15).max(180).optional(), // minutes
@@ -26,6 +27,31 @@ export const updateProfileSchema = z.object({
 });
 
 export type UpdateProfileInput = z.infer<typeof updateProfileSchema>;
+
+// =============================================================================
+// COMPLETE ONBOARDING
+// =============================================================================
+
+export const completeOnboardingSchema = z.object({
+  age: z.number().int().min(13).max(120).optional(),
+  gender: z.enum(['male', 'female', 'other', 'prefer_not_to_say']).optional(),
+  height: z.number().min(50).max(300).optional(),
+  weight: z.number().min(20).max(500).optional(),
+
+  experienceLevel: z.enum(['beginner', 'intermediate', 'advanced', 'elite']).optional(),
+  primaryGoal: z.enum(['muscle_gain', 'fat_loss', 'strength', 'athletic', 'general']).optional(),
+  secondaryGoals: z.array(z.string()).max(3).optional(),
+  workoutInterests: z.array(z.string()).max(10).optional(),
+
+  trainingDaysPerWeek: z.number().int().min(1).max(7).optional(),
+  workoutDuration: z.number().int().min(15).max(180).optional(),
+  equipmentAvailable: z.array(z.string()).optional(),
+
+  units: z.enum(['metric', 'imperial']).optional(),
+  pushEnabled: z.boolean().optional(),
+});
+
+export type CompleteOnboardingInput = z.infer<typeof completeOnboardingSchema>;
 
 // =============================================================================
 // USER SETTINGS

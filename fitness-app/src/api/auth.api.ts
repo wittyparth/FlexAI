@@ -26,12 +26,23 @@ export interface LoginRequest {
 export interface UserProfile {
   id: number | string;
   email: string;
-  firstName: string;
-  lastName: string;
+  firstName?: string | null;
+  lastName?: string | null;
   role: string;
   emailVerified: boolean;
   onboardingCompleted: boolean;
   avatarUrl?: string;
+  age?: number;
+  gender?: 'male' | 'female' | 'other' | 'prefer_not_to_say';
+  height?: number;
+  weight?: number;
+  experienceLevel?: 'beginner' | 'intermediate' | 'advanced' | 'elite';
+  primaryGoal?: 'muscle_gain' | 'fat_loss' | 'strength' | 'athletic' | 'general';
+  secondaryGoals?: string[];
+  workoutInterests?: string[];
+  trainingDaysPerWeek?: number;
+  workoutDuration?: number;
+  equipmentAvailable?: string[];
   units?: 'metric' | 'imperial';
 }
 

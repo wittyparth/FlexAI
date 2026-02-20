@@ -2,7 +2,11 @@ import { Router } from 'express';
 import { userController } from '../controllers/user.controller';
 import { validate } from '../middleware/validation';
 import { authenticate } from '../middleware/auth';
-import { updateProfileSchema, updateSettingsSchema } from '../schemas/user.schema';
+import {
+  completeOnboardingSchema,
+  updateProfileSchema,
+  updateSettingsSchema,
+} from '../schemas/user.schema';
 
 const router = Router();
 
@@ -56,6 +60,10 @@ router.patch('/me/settings', validate(updateSettingsSchema), userController.upda
  * @desc    Complete user onboarding and update profile
  * @access  Private
  */
-router.post('/me/complete-onboarding', userController.completeOnboarding);
+router.post(
+  '/me/complete-onboarding',
+  validate(completeOnboardingSchema),
+  userController.completeOnboarding
+);
 
 export default router;

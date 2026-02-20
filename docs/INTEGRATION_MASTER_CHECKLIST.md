@@ -15,8 +15,8 @@ Every integration PR must update this file.
 - If scope changes, add a `Change Note` entry before implementation.
 
 ## Current Status
-- Current Phase: Phase 1
-- Overall Completion: 22%
+- Current Phase: Phase 2
+- Overall Completion: 29%
 - Blockers: None
 
 ## Global Exit Criteria
@@ -72,12 +72,12 @@ Every integration PR must update this file.
 - Complete onboarding end-to-end and persist all required fields.
 
 ### Checklist
-- [ ] Add `workoutInterests` field to backend user model (`prisma/schema.prisma`).
-- [ ] Create and run migration for `workoutInterests`.
-- [ ] Persist `workoutInterests` in onboarding service.
-- [ ] Return `workoutInterests` in user profile responses.
-- [ ] Align frontend onboarding payload/types with backend model.
-- [ ] Validate onboarding state transitions and completion flag behavior.
+- [x] Add `workoutInterests` field to backend user model (`prisma/schema.prisma`).
+- [x] Create and run migration for `workoutInterests`.
+- [x] Persist `workoutInterests` in onboarding service.
+- [x] Return `workoutInterests` in user profile responses.
+- [x] Align frontend onboarding payload/types with backend model.
+- [x] Validate onboarding state transitions and completion flag behavior.
 
 ### Acceptance
 - [ ] Onboarding saves all fields including `workoutInterests`.
@@ -231,7 +231,8 @@ Every integration PR must update this file.
 - 2026-02-20 | PR: N/A | Phase: Planning | Created master checklist and execution order.
 - 2026-02-20 | PR: `78fb2a0` | Phase: 0 | Unified app entry to `src/navigation/RootNavigator`, added dedicated onboarding stack, expanded auth stack registration, removed auth bypass mode.
 - 2026-02-20 | PR: `0c8b9d5` | Phase: 0 | Aligned frontend API clients with backend route paths/contracts for social, feed, leaderboards, gamification, exercises, and routines; added safe fallbacks where backend endpoints are not yet exposed.
-- 2026-02-20 | PR: Pending commit (Phase 1 - Auth contract + refresh queue) | Phase: 1 | Aligned auth contracts (verify/register response handling), fixed verification flow to login handoff, added single-flight refresh queue/retry behavior, and hardened session hydration rules.
+- 2026-02-20 | PR: `3f9e3cc` | Phase: 1 | Aligned auth contracts (verify/register response handling), fixed verification flow to login handoff, added single-flight refresh queue/retry behavior, and hardened session hydration rules.
+- 2026-02-20 | PR: Pending commit (Phase 2 - workoutInterests persistence) | Phase: 2 | Added `workoutInterests` to backend schema and migration, persisted it via onboarding service, returned it in profile/onboarding responses, added onboarding request validation, and aligned frontend onboarding payload/types.
 
 ## Change Notes
 - 2026-02-20: Added mandatory backend persistence of `workoutInterests` in onboarding (Phase 2).

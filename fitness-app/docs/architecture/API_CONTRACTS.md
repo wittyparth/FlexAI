@@ -549,7 +549,7 @@
 #### **Onboarding screens (Welcome → Goal → Experience → Equipment → Schedule → Metrics → Complete)**
 - **APIs:**
   - `POST /user/onboarding` → Submit all onboarding data at completion
-- **Request:** `{ fitnessGoal, experienceLevel, equipment, workoutDays, metrics, ... }`
+- **Request:** `{ primaryGoal, secondaryGoals, workoutInterests, trainingDaysPerWeek, workoutDuration, equipmentAvailable, age, gender, height, weight, units, ... }`
 - **State:** `authStore.updatedUser` (staging) → `setOnboardingCompleted()`
 - **Usage:** Single API call at end of onboarding flow
 

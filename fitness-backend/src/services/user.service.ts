@@ -1,6 +1,10 @@
 import { prisma } from '../config/database';
 import { NotFoundError } from '../utils/errors';
-import type { UpdateProfileInput, UpdateSettingsInput } from '../schemas/user.schema';
+import type {
+  CompleteOnboardingInput,
+  UpdateProfileInput,
+  UpdateSettingsInput,
+} from '../schemas/user.schema';
 
 /**
  * User Service - handles user profile and settings business logic
@@ -25,6 +29,7 @@ export const userService = {
         experienceLevel: true,
         primaryGoal: true,
         secondaryGoals: true,
+        workoutInterests: true,
         trainingDaysPerWeek: true,
         workoutDuration: true,
         equipmentAvailable: true,
@@ -71,6 +76,7 @@ export const userService = {
         experienceLevel: true,
         primaryGoal: true,
         secondaryGoals: true,
+        workoutInterests: true,
         trainingDaysPerWeek: true,
         workoutDuration: true,
         equipmentAvailable: true,
@@ -157,21 +163,7 @@ export const userService = {
   /**
    * Complete onboarding and update profile with onboarding data
    */
-  async completeOnboarding(userId: number, onboardingData: {
-    age?: number;
-    gender?: string;
-    height?: number;
-    weight?: number;
-    experienceLevel?: string;
-    primaryGoal?: string;
-    secondaryGoals?: string[];
-    workoutInterests?: string[];
-    trainingDaysPerWeek?: number;
-    workoutDuration?: number;
-    equipmentAvailable?: string[];
-    units?: string;
-    pushEnabled?: boolean;
-  }) {
+  async completeOnboarding(userId: number, onboardingData: CompleteOnboardingInput) {
     // Build update data, filtering out undefined values
     const updateData: Record<string, unknown> = {
       onboardingCompleted: true,
@@ -184,6 +176,7 @@ export const userService = {
     if (onboardingData.experienceLevel !== undefined) updateData.experienceLevel = onboardingData.experienceLevel;
     if (onboardingData.primaryGoal !== undefined) updateData.primaryGoal = onboardingData.primaryGoal;
     if (onboardingData.secondaryGoals !== undefined) updateData.secondaryGoals = onboardingData.secondaryGoals;
+    if (onboardingData.workoutInterests !== undefined) updateData.workoutInterests = onboardingData.workoutInterests;
     if (onboardingData.trainingDaysPerWeek !== undefined) updateData.trainingDaysPerWeek = onboardingData.trainingDaysPerWeek;
     if (onboardingData.workoutDuration !== undefined) updateData.workoutDuration = onboardingData.workoutDuration;
     if (onboardingData.equipmentAvailable !== undefined) updateData.equipmentAvailable = onboardingData.equipmentAvailable;
@@ -205,6 +198,7 @@ export const userService = {
         experienceLevel: true,
         primaryGoal: true,
         secondaryGoals: true,
+        workoutInterests: true,
         trainingDaysPerWeek: true,
         workoutDuration: true,
         equipmentAvailable: true,

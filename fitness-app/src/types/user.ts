@@ -16,6 +16,7 @@ export interface UpdateProfileInput {
   experienceLevel?: ExperienceLevel;
   primaryGoal?: PrimaryGoal;
   secondaryGoals?: string[];
+  workoutInterests?: WorkoutInterest[];
   trainingDaysPerWeek?: number;
   workoutDuration?: number;
   equipmentAvailable?: string[];

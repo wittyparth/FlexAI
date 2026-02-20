@@ -1,36 +1,18 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { MOCK_ROUTINES, MOCK_TEMPLATES, MOCK_PUBLIC_ROUTINES } from '../../data/workoutMockData';
 import { routineApi } from '../../api/routine.api';
 import { CreateRoutineInput, UpdateRoutineInput, AddExerciseToRoutineInput } from '../../types/backend.types';
-
-// Helper to simulate API delay
-const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 export const useRoutines = (params?: { page?: number; limit?: number; search?: string; isTemplate?: boolean }) => {
     return useQuery({
         queryKey: ['routines', params],
-        // MOCK IMPLEMENTATION
-        queryFn: async () => {
-             await delay(500);
-             if (params?.isTemplate) return { data: { routines: MOCK_TEMPLATES, total: MOCK_TEMPLATES.length } };
-             return { data: { routines: MOCK_ROUTINES, total: MOCK_ROUTINES.length } };
-        }
-        // queryFn: () => routineApi.getRoutines(params),
+        queryFn: () => routineApi.getRoutines(params),
     });
 };
 
 export const useRoutine = (id: number) => {
     return useQuery({
         queryKey: ['routine', id],
-        // MOCK IMPLEMENTATION
-        queryFn: async () => {
-             await delay(300);
-             const all = [...MOCK_ROUTINES, ...MOCK_TEMPLATES, ...MOCK_PUBLIC_ROUTINES];
-             const routine = all.find(r => r.id === Number(id));
-             if (!routine) throw new Error('Routine not found');
-             return { data: routine };
-        },
-        // queryFn: () => routineApi.getRoutineById(id),
+        queryFn: () => routineApi.getRoutineById(id),
         enabled: !!id,
     });
 };
@@ -38,12 +20,7 @@ export const useRoutine = (id: number) => {
 export const usePublicRoutines = (params?: { page?: number; limit?: number; search?: string; goal?: string }) => {
     return useQuery({
         queryKey: ['publicRoutines', params],
-        // MOCK IMPLEMENTATION
-        queryFn: async () => {
-             await delay(600);
-             return { data: { routines: MOCK_PUBLIC_ROUTINES, total: MOCK_PUBLIC_ROUTINES.length } };
-        }
-        // queryFn: () => routineApi.getPublicRoutines(params),
+        queryFn: () => routineApi.getPublicRoutines(params),
     });
 };
 

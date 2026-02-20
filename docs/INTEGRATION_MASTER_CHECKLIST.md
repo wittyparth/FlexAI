@@ -16,7 +16,7 @@ Every integration PR must update this file.
 
 ## Current Status
 - Current Phase: Phase 3
-- Overall Completion: 44%
+- Overall Completion: 51%
 - Blockers: None
 
 ## Global Exit Criteria
@@ -97,6 +97,9 @@ Every integration PR must update this file.
 
 #### Workout Integration
 - [ ] Replace workout mocks in hooks/screens/stores with real API calls.
+  - [x] Switch workout query hooks and routine query hooks to backend endpoints.
+  - [x] Replace mock workout start and add-exercise paths with backend mutations.
+  - [x] Wire routine list/detail and workout hub routine/template sections to backend routine data.
 - [ ] Integrate full workout lifecycle:
   - [x] Start workout
   - [ ] Add/remove exercises
@@ -235,7 +238,8 @@ Every integration PR must update this file.
 - 2026-02-20 | PR: `701a9b9` | Phase: 2 | Added `workoutInterests` to backend schema and migration, persisted it via onboarding service, returned it in profile/onboarding responses, added onboarding request validation, and aligned frontend onboarding payload/types.
 - 2026-02-20 | PR: `9adfdef` | Phase: 3 | Added deterministic idempotent seed script to create template/public routines and sample completed workout history using existing exercise data, with stable seed users.
 - 2026-02-20 | PR: `0b7199d` | Phase: 3 | Replaced workout history/detail query hooks with real backend endpoints, added workout response normalization in API client (`startedAt`/`completedAt` mapping), and aligned create/delete/log-set query mutations to backend workout routes.
-- 2026-02-20 | PR: Pending commit (Phase 3 - active workout start/add flow) | Phase: 3 | Removed remaining mock-start pathways, wired routine/hub start to backend create-workout API, enabled active-workout add-exercise flow through ExercisePicker return navigation, and added store/API normalization/error handling for exercise insertion.
+- 2026-02-20 | PR: `988bd0a` | Phase: 3 | Removed remaining mock-start pathways, wired routine/hub start to backend create-workout API, enabled active-workout add-exercise flow through ExercisePicker return navigation, and added store/API normalization/error handling for exercise insertion.
+- 2026-02-20 | PR: Pending commit (Phase 3 - routine/template backend browsing integration) | Phase: 3 | Replaced routine query mocks with real routine APIs, wired `RoutineListScreen` and `RoutineDetailScreen` to backend routine data, and switched Workout Hub routine/template sections to seeded backend routines/templates.
 
 ## Change Notes
 - 2026-02-20: Added mandatory backend persistence of `workoutInterests` in onboarding (Phase 2).

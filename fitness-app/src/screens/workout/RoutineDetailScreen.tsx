@@ -5,57 +5,70 @@ import {
     StyleSheet,
     ScrollView,
     TouchableOpacity,
-    Dimensions,
-    Platform,
     Alert,
+    ActivityIndicator,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
 import { useWorkoutStore } from '../../store/workoutStore';
-import { fontFamilies } from '../../theme/typography';
-import { MOCK_ROUTINES } from '../../data/mockRoutines';
-
-const { width } = Dimensions.get('window');
+import { useRoutine } from '../../hooks/queries/useRoutineQueries';
 
 export function RoutineDetailScreen({ route, navigation }: any) {
     const colors = useColors();
     const insets = useSafeAreaInsets();
-    const { routineId, mode, onSelect } = route.params || { routineId: 1 };
+    const { mode, onSelect } = route.params || {};
+    const routineId = Number(route.params?.routineId || 1);
 
-    // Find routine from mock data (supports both string and number ids)
-    const routine = MOCK_ROUTINES.find(r => r.id === routineId || r.id === Number(routineId))
-        ?? MOCK_ROUTINES[0];
+    const { data: routineResponse, isLoading } = useRoutine(routineId);
+    const routine = routineResponse?.data;
+    const exercises = routine?.exercises || [];
 
-    const exercises = routine.exercises || [];
+    const toTitleCase = (value?: string) =>
+        value ? `${value.charAt(0).toUpperCase()}${value.slice(1)}` : 'General';
 
     const handlePrimaryAction = () => {
+        if (!routine) return;
+
         if (mode === 'select' && onSelect) {
             onSelect(routine.id);
-            // Need to go back to TemplateEditor (2 screens back: Detail -> List -> TemplateEditor)
-            // or we could just pass a return navigation logic
-            // Assuming the picker flow was TemplateEditor -> RoutineList -> RoutineDetail
-            // We can pop two screens off the stack
-            navigation.pop(2); 
+            navigation.pop(2);
             return;
         }
 
-        const routineIdNumber = Number(routine.id);
-        const payload = Number.isFinite(routineIdNumber)
-            ? { routineId: routineIdNumber, name: routine.name }
-            : { name: routine.name };
-
         useWorkoutStore.getState()
-            .startWorkout(payload)
+            .startWorkout({ routineId: routine.id, name: routine.name })
             .then(() => navigation.navigate('ActiveWorkout'))
             .catch((error: any) => {
                 Alert.alert('Unable to start workout', error?.message || 'Please try again.');
             });
     };
 
+    if (isLoading) {
+        return (
+            <View style={[styles.container, { backgroundColor: colors.background, justifyContent: 'center', alignItems: 'center' }]}>
+                <ActivityIndicator size="large" color={colors.primary.main} />
+            </View>
+        );
+    }
+
+    if (!routine) {
+        return (
+            <View style={[styles.container, { backgroundColor: colors.background, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 24 }]}>
+                <MaterialCommunityIcons name="alert-circle-outline" size={40} color={colors.mutedForeground} />
+                <Text style={[styles.emptyTitle, { color: colors.foreground }]}>Routine unavailable</Text>
+                <TouchableOpacity
+                    style={[styles.emptyBtn, { borderColor: colors.border }]}
+                    onPress={() => navigation.goBack()}
+                >
+                    <Text style={{ color: colors.foreground }}>Go Back</Text>
+                </TouchableOpacity>
+            </View>
+        );
+    }
+
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
-            {/* ── TOP NAV BAR ── */}
             <View style={[styles.topBar, { paddingTop: insets.top + 12, backgroundColor: colors.background + 'F0' }]}>
                 <TouchableOpacity
                     onPress={() => navigation.goBack()}
@@ -73,18 +86,18 @@ export function RoutineDetailScreen({ route, navigation }: any) {
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{ paddingBottom: insets.bottom + 140, paddingTop: insets.top + 72 }}
             >
-                {/* ── HEADER ── */}
                 <View style={styles.headerSection}>
                     <View style={[styles.splitBadge, { backgroundColor: colors.primary.main + '20', borderColor: colors.primary.main + '40' }]}>
                         <Text style={[styles.splitBadgeText, { color: colors.primary.main }]}>
-                            {routine.splitType || 'ROUTINE'} • {routine.daysPerWeek} DAYS/WEEK
+                            {toTitleCase(routine.splitType)} - {routine.daysPerWeek || 1} DAYS/WEEK
                         </Text>
                     </View>
                     <Text style={[styles.routineTitle, { color: colors.foreground }]}>{routine.name}</Text>
-                    <Text style={[styles.routineDesc, { color: colors.mutedForeground }]}>{routine.description}</Text>
+                    <Text style={[styles.routineDesc, { color: colors.mutedForeground }]}>
+                        {routine.description || 'No description provided.'}
+                    </Text>
                 </View>
 
-                {/* ── STATS STRIP ── */}
                 <View style={[styles.statsStrip, { backgroundColor: colors.card, borderColor: colors.border }]}>
                     <View style={styles.statItem}>
                         <MaterialCommunityIcons name="dumbbell" size={20} color={colors.primary.main} />
@@ -94,34 +107,30 @@ export function RoutineDetailScreen({ route, navigation }: any) {
                     <View style={[styles.statDivider, { backgroundColor: colors.border }]} />
                     <View style={styles.statItem}>
                         <MaterialCommunityIcons name="clock-outline" size={20} color={colors.primary.main} />
-                        <Text style={[styles.statValue, { color: colors.foreground }]}>{routine.estimatedDuration}</Text>
+                        <Text style={[styles.statValue, { color: colors.foreground }]}>{routine.estimatedDuration || 0}</Text>
                         <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>Min</Text>
                     </View>
                     <View style={[styles.statDivider, { backgroundColor: colors.border }]} />
                     <View style={styles.statItem}>
                         <MaterialCommunityIcons name="signal" size={20} color={colors.primary.main} />
-                        <Text style={[styles.statValue, { color: colors.foreground }]}>{routine.difficulty}</Text>
+                        <Text style={[styles.statValue, { color: colors.foreground }]}>{toTitleCase(routine.difficulty)}</Text>
                         <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>Level</Text>
                     </View>
                 </View>
 
-                {/* ── START/SELECT BUTTON ── */}
                 <View style={styles.startSection}>
                     <TouchableOpacity
                         onPress={handlePrimaryAction}
                         activeOpacity={0.88}
                         style={styles.startBtnWrapper}
                     >
-                        <View
-                            style={styles.startBtn}
-                        >
+                        <View style={styles.startBtn}>
                             <Ionicons name={mode === 'select' ? 'checkmark-circle' : 'play-circle'} size={26} color="#FFFFFF" />
                             <Text style={styles.startBtnText}>{mode === 'select' ? 'SELECT WORKOUT' : 'START WORKOUT'}</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
 
-                {/* ── EXERCISES LIST ── */}
                 <View style={styles.sectionHeader}>
                     <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Exercises</Text>
                     <Text style={[styles.sectionCount, { color: colors.mutedForeground }]}>{exercises.length} movements</Text>
@@ -135,21 +144,22 @@ export function RoutineDetailScreen({ route, navigation }: any) {
                         const repsMax = item.targetRepsMax || 12;
                         const weight = item.targetWeight;
                         const rest = item.restSeconds || 90;
-                        const muscle = ex.muscleGroup || 'Full Body';
+                        const muscle =
+                            ex.muscleGroup ||
+                            (Array.isArray(ex.primaryMuscleGroups) && ex.primaryMuscleGroups[0]) ||
+                            'Full Body';
 
                         return (
                             <View
                                 key={ex.id + '-' + index}
                                 style={[styles.exerciseCard, { backgroundColor: colors.card, borderColor: colors.border }]}
                             >
-                                {/* Index number */}
                                 <View style={[styles.exerciseIndex, { backgroundColor: colors.primary.main + '15' }]}>
                                     <Text style={[styles.exerciseIndexText, { color: colors.primary.main }]}>
                                         {String(index + 1).padStart(2, '0')}
                                     </Text>
                                 </View>
 
-                                {/* Main info */}
                                 <View style={styles.exerciseInfo}>
                                     <Text style={[styles.exerciseName, { color: colors.foreground }]} numberOfLines={1}>
                                         {ex.name}
@@ -159,11 +169,12 @@ export function RoutineDetailScreen({ route, navigation }: any) {
                                             <Text style={[styles.tagText, { color: colors.mutedForeground }]}>{muscle}</Text>
                                         </View>
                                         <View style={[styles.tag, { backgroundColor: colors.muted }]}>
-                                            <Text style={[styles.tagText, { color: colors.mutedForeground }]}>{ex.exerciseType}</Text>
+                                            <Text style={[styles.tagText, { color: colors.mutedForeground }]}>
+                                                {toTitleCase(ex.exerciseType)}
+                                            </Text>
                                         </View>
                                     </View>
 
-                                    {/* Sets / Reps / Rest pills */}
                                     <View style={styles.pillRow}>
                                         <View style={[styles.pill, { backgroundColor: colors.background, borderColor: colors.border }]}>
                                             <MaterialCommunityIcons name="replay" size={12} color={colors.primary.main} />
@@ -171,12 +182,12 @@ export function RoutineDetailScreen({ route, navigation }: any) {
                                         </View>
                                         <View style={[styles.pill, { backgroundColor: colors.background, borderColor: colors.border }]}>
                                             <MaterialCommunityIcons name="pound" size={12} color={colors.primary.main} />
-                                            <Text style={[styles.pillText, { color: colors.foreground }]}>{repsMin}–{repsMax} reps</Text>
+                                            <Text style={[styles.pillText, { color: colors.foreground }]}>{repsMin}-{repsMax} reps</Text>
                                         </View>
                                         {weight > 0 && (
                                             <View style={[styles.pill, { backgroundColor: colors.background, borderColor: colors.border }]}>
                                                 <MaterialCommunityIcons name="weight-kilogram" size={12} color={colors.primary.main} />
-                                                <Text style={[styles.pillText, { color: colors.foreground }]}>{weight} kg</Text>
+                                                <Text style={[styles.pillText, { color: colors.foreground }]}>{weight} lbs</Text>
                                             </View>
                                         )}
                                         <View style={[styles.pill, { backgroundColor: colors.background, borderColor: colors.border }]}>
@@ -190,16 +201,13 @@ export function RoutineDetailScreen({ route, navigation }: any) {
                     })}
                 </View>
 
-                {/* ── BOTTOM START/SELECT BUTTON (repeat at end of list) ── */}
                 <View style={[styles.startSection, { marginTop: 8 }]}>
                     <TouchableOpacity
                         onPress={handlePrimaryAction}
                         activeOpacity={0.88}
                         style={styles.startBtnWrapper}
                     >
-                        <View
-                            style={styles.startBtn}
-                        >
+                        <View style={styles.startBtn}>
                             <Ionicons name={mode === 'select' ? 'checkmark-circle' : 'play-circle'} size={26} color="#FFFFFF" />
                             <Text style={styles.startBtnText}>{mode === 'select' ? 'SELECT WORKOUT' : 'START WORKOUT'}</Text>
                         </View>
@@ -400,5 +408,17 @@ const styles = StyleSheet.create({
     pillText: {
         fontSize: 12,
         fontWeight: '600',
+    },
+    emptyTitle: {
+        fontSize: 18,
+        fontWeight: '700',
+        marginTop: 12,
+    },
+    emptyBtn: {
+        marginTop: 14,
+        paddingHorizontal: 18,
+        paddingVertical: 10,
+        borderRadius: 10,
+        borderWidth: 1,
     },
 });

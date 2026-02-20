@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
     View,
     Text,
@@ -7,12 +7,13 @@ import {
     TouchableOpacity,
     Dimensions,
     TextInput,
+    ActivityIndicator,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
-import { MOCK_ROUTINES } from '../../data/mockRoutines';
+import { usePublicRoutines, useRoutines } from '../../hooks/queries/useRoutineQueries';
 
 const { width } = Dimensions.get('window');
 const CARD_WIDTH = (width - 48) / 2;
@@ -20,32 +21,74 @@ const CARD_WIDTH = (width - 48) / 2;
 const TABS = ['My Plans', 'Discover'];
 const FILTERS = ['All', 'Strength', 'Hypertrophy', 'Cardio', 'Mobility'];
 
-// Map mock routines to the list shape
-const MY_PLAN_ROUTINES = MOCK_ROUTINES.map(r => ({
-    id: r.id,
-    name: r.name,
-    difficulty: r.difficulty,
-    splitType: r.splitType,
-    daysPerWeek: r.daysPerWeek,
-    exerciseCount: r.exercises.length,
-    color: r.color,
-}));
+const GOAL_FILTER_MAP: Record<string, string | undefined> = {
+    All: undefined,
+    Strength: 'strength',
+    Hypertrophy: 'muscle_gain',
+    Cardio: 'endurance',
+    Mobility: 'general',
+};
 
-// Discover tab pulls from same data for now (would be community routines in prod)
-const DISCOVER_ROUTINES = MY_PLAN_ROUTINES;
+const DIFFICULTY_COLOR: Record<string, string> = {
+    beginner: '#10B981',
+    intermediate: '#F59E0B',
+    advanced: '#EF4444',
+};
+
+const toTitleCase = (value?: string | null) =>
+    value ? `${value.charAt(0).toUpperCase()}${value.slice(1).replace('_', ' ')}` : 'General';
+
+const daysPerWeekFromRoutine = (routine: any) => {
+    if (routine?.daysPerWeek) return routine.daysPerWeek;
+    if (routine?.schedule && typeof routine.schedule === 'object') {
+        return Object.values(routine.schedule).filter(Boolean).length || 1;
+    }
+    return 1;
+};
 
 export function RoutineListScreen({ navigation, route }: any) {
     const colors = useColors();
     const insets = useSafeAreaInsets();
     const { mode, onSelect, initialTab } = route.params || {};
+
     const [activeTab, setActiveTab] = useState(initialTab || 'My Plans');
     const [searchQuery, setSearchQuery] = useState('');
     const [activeFilter, setActiveFilter] = useState('All');
 
-    const allRoutines = activeTab === 'My Plans' ? MY_PLAN_ROUTINES : DISCOVER_ROUTINES;
-    const activeData = allRoutines.filter(r =>
-        searchQuery.length === 0 || r.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    const normalizedSearch = searchQuery.trim() || undefined;
+    const selectedGoal = GOAL_FILTER_MAP[activeFilter];
+
+    const {
+        data: myPlansResponse,
+        isLoading: isMyPlansLoading,
+        isError: isMyPlansError,
+    } = useRoutines({
+        page: 1,
+        limit: 50,
+        search: normalizedSearch,
+        isTemplate: false,
+    });
+
+    const {
+        data: discoverResponse,
+        isLoading: isDiscoverLoading,
+        isError: isDiscoverError,
+    } = usePublicRoutines({
+        page: 1,
+        limit: 50,
+        search: normalizedSearch,
+        goal: selectedGoal,
+    });
+
+    const activeData = useMemo(() => {
+        if (activeTab === 'My Plans') {
+            return myPlansResponse?.data?.routines || [];
+        }
+        return discoverResponse?.data?.routines || [];
+    }, [activeTab, myPlansResponse, discoverResponse]);
+
+    const isLoading = activeTab === 'My Plans' ? isMyPlansLoading : isDiscoverLoading;
+    const hasError = activeTab === 'My Plans' ? isMyPlansError : isDiscoverError;
 
     const handleCreateRoutine = () => {
         navigation.navigate('RoutineEditor', { mode: 'create' });
@@ -53,7 +96,6 @@ export function RoutineListScreen({ navigation, route }: any) {
 
     const handleRoutinePress = (routineId: number) => {
         if (mode === 'select' && onSelect) {
-            // Pass the selection mode to Detail screen so they can preview then select
             navigation.navigate('RoutineDetail', { routineId, mode: 'select', onSelect });
         } else {
             navigation.navigate('RoutineDetail', { routineId });
@@ -61,15 +103,14 @@ export function RoutineListScreen({ navigation, route }: any) {
     };
 
     return (
-        <View style={[styles.container, { backgroundColor: colors.background }]}>
-            {/* Header */}
+        <View style={[styles.container, { backgroundColor: colors.background }]}> 
             <View style={[
                 styles.header,
                 {
                     paddingTop: insets.top + 12,
                     backgroundColor: colors.card,
-                    borderBottomColor: colors.border
-                }
+                    borderBottomColor: colors.border,
+                },
             ]}>
                 <View style={styles.headerTop}>
                     <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
@@ -81,12 +122,11 @@ export function RoutineListScreen({ navigation, route }: any) {
                     <View style={{ width: 44 }} />
                 </View>
 
-                {/* Search Bar */}
-                <View style={[styles.searchContainer, { backgroundColor: colors.background }]}>
+                <View style={[styles.searchContainer, { backgroundColor: colors.background }]}> 
                     <Ionicons name="search" size={20} color={colors.mutedForeground} />
                     <TextInput
                         style={[styles.searchInput, { color: colors.foreground }]}
-                        placeholder="Search plans, exercises..."
+                        placeholder="Search plans..."
                         placeholderTextColor={colors.mutedForeground}
                         value={searchQuery}
                         onChangeText={setSearchQuery}
@@ -98,28 +138,28 @@ export function RoutineListScreen({ navigation, route }: any) {
                     )}
                 </View>
 
-                {/* Tabs */}
                 <View style={styles.tabsRow}>
                     {TABS.map(tab => (
                         <TouchableOpacity
                             key={tab}
                             style={[
                                 styles.tab,
-                                activeTab === tab && { borderBottomColor: colors.primary.main }
+                                activeTab === tab && { borderBottomColor: colors.primary.main },
                             ]}
                             onPress={() => setActiveTab(tab)}
                         >
-                            <Text style={[
-                                styles.tabText,
-                                { color: activeTab === tab ? colors.primary.main : colors.mutedForeground }
-                            ]}>
+                            <Text
+                                style={[
+                                    styles.tabText,
+                                    { color: activeTab === tab ? colors.primary.main : colors.mutedForeground },
+                                ]}
+                            >
                                 {tab}
                             </Text>
                         </TouchableOpacity>
                     ))}
                 </View>
 
-                {/* Filters (Only for Discover or if supported for My Plans) */}
                 <ScrollView
                     horizontal
                     showsHorizontalScrollIndicator={false}
@@ -132,14 +172,16 @@ export function RoutineListScreen({ navigation, route }: any) {
                                 styles.filterChip,
                                 activeFilter === filter
                                     ? { backgroundColor: colors.primary.main }
-                                    : { backgroundColor: colors.muted, borderWidth: 1, borderColor: colors.border }
+                                    : { backgroundColor: colors.muted, borderWidth: 1, borderColor: colors.border },
                             ]}
                             onPress={() => setActiveFilter(filter)}
                         >
-                            <Text style={[
-                                styles.filterText,
-                                { color: activeFilter === filter ? '#FFFFFF' : colors.mutedForeground }
-                            ]}>
+                            <Text
+                                style={[
+                                    styles.filterText,
+                                    { color: activeFilter === filter ? '#FFFFFF' : colors.mutedForeground },
+                                ]}
+                            >
                                 {filter}
                             </Text>
                         </TouchableOpacity>
@@ -147,73 +189,74 @@ export function RoutineListScreen({ navigation, route }: any) {
                 </ScrollView>
             </View>
 
-            {/* Content list */}
             <ScrollView
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={[styles.contentContainer, { paddingBottom: insets.bottom + 160 }]}
             >
-                {activeData.length === 0 ? (
+                {isLoading ? (
+                    <View style={styles.loadingContainer}>
+                        <ActivityIndicator size="large" color={colors.primary.main} />
+                    </View>
+                ) : hasError ? (
+                    <View style={styles.emptyState}>
+                        <MaterialCommunityIcons name="alert-circle-outline" size={44} color={colors.mutedForeground} />
+                        <Text style={[styles.emptyStateText, { color: colors.foreground }]}>Unable to load routines</Text>
+                    </View>
+                ) : activeData.length === 0 ? (
                     <View style={styles.emptyState}>
                         <MaterialCommunityIcons name="dumbbell" size={48} color={colors.mutedForeground} />
                         <Text style={[styles.emptyStateText, { color: colors.foreground }]}>No routines found</Text>
                         {activeTab === 'My Plans' && (
-                            <Text style={[styles.emptyStateSub, { color: colors.mutedForeground }]}>
-                                Create a new plan to get started!
-                            </Text>
+                            <Text style={[styles.emptyStateSub, { color: colors.mutedForeground }]}>Create a new plan to get started.</Text>
                         )}
                     </View>
                 ) : (
                     <View style={styles.grid}>
-                        {activeData.map((routine: any) => (
-                            <TouchableOpacity
-                                key={routine.id}
-                                style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}
-                                activeOpacity={0.8}
-                                onPress={() => handleRoutinePress(routine.id)}
-                            >
-                                {/* Color-coded header block */}
-                                <View style={[styles.cardImageContainer, { backgroundColor: routine.color + '22' }]}>
-                                    <View
-                                        style={[StyleSheet.absoluteFill, { backgroundColor: routine.color, opacity: 0.12 }]}
-                                    />
-                                    <MaterialCommunityIcons name="notebook" size={32} color={routine.color} style={{ opacity: 0.7 }} />
+                        {activeData.map((routine: any) => {
+                            const difficultyKey = String(routine.difficulty || 'beginner').toLowerCase();
+                            const routineColor = DIFFICULTY_COLOR[difficultyKey] || colors.primary.main;
 
-                                    {/* Overlay Info */}
-                                    <View
-                                        style={styles.cardOverlay}
-                                    />
-                                    <View style={styles.cardOverlayContent}>
-                                        <Text style={styles.cardDays}>{routine.daysPerWeek} Days / Week</Text>
+                            return (
+                                <TouchableOpacity
+                                    key={routine.id}
+                                    style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}
+                                    activeOpacity={0.8}
+                                    onPress={() => handleRoutinePress(Number(routine.id))}
+                                >
+                                    <View style={[styles.cardImageContainer, { backgroundColor: `${routineColor}22` }]}> 
+                                        <View style={[StyleSheet.absoluteFill, { backgroundColor: routineColor, opacity: 0.12 }]} />
+                                        <MaterialCommunityIcons name="notebook" size={32} color={routineColor} style={{ opacity: 0.7 }} />
+                                        <View style={styles.cardOverlay} />
+                                        <View style={styles.cardOverlayContent}>
+                                            <Text style={styles.cardDays}>{daysPerWeekFromRoutine(routine)} Days / Week</Text>
+                                        </View>
                                     </View>
-                                </View>
 
-                                <View style={styles.cardBody}>
-                                    <Text style={[styles.cardTitle, { color: colors.foreground }]} numberOfLines={1}>
-                                        {routine.name}
-                                    </Text>
-                                    <Text style={[styles.cardSubtitle, { color: colors.mutedForeground }]} numberOfLines={1}>
-                                        {routine.difficulty} • {routine.splitType || 'General'}
-                                    </Text>
-                                    <Text style={[styles.cardSubtitle, { color: routine.color, marginTop: 2 }]}>
-                                        {routine.exerciseCount} exercises
-                                    </Text>
-                                </View>
-                            </TouchableOpacity>
-                        ))}
+                                    <View style={styles.cardBody}>
+                                        <Text style={[styles.cardTitle, { color: colors.foreground }]} numberOfLines={1}>
+                                            {routine.name}
+                                        </Text>
+                                        <Text style={[styles.cardSubtitle, { color: colors.mutedForeground }]} numberOfLines={1}>
+                                            {toTitleCase(routine.difficulty)} - {toTitleCase(routine.splitType)}
+                                        </Text>
+                                        <Text style={[styles.cardSubtitle, { color: routineColor, marginTop: 2 }]}> 
+                                            {(routine.exercises || []).length} exercises
+                                        </Text>
+                                    </View>
+                                </TouchableOpacity>
+                            );
+                        })}
                     </View>
                 )}
             </ScrollView>
 
-            {/* FAB for Create */}
             {activeTab === 'My Plans' && (
                 <TouchableOpacity
                     style={[styles.fab, { shadowColor: colors.primary.main }]}
                     onPress={handleCreateRoutine}
                     activeOpacity={0.9}
                 >
-                    <View
-                        style={styles.fabGradient}
-                    >
+                    <View style={styles.fabGradient}>
                         <Ionicons name="add" size={28} color="#FFFFFF" />
                     </View>
                 </TouchableOpacity>
@@ -264,7 +307,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingHorizontal: 16,
         borderBottomWidth: 1,
-        borderBottomColor: 'transparent', // Handled by tab border
+        borderBottomColor: 'transparent',
     },
     tab: {
         marginRight: 24,
@@ -294,6 +337,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        paddingTop: 80,
     },
     contentContainer: {
         padding: 16,
@@ -307,10 +351,12 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: '600',
         marginTop: 16,
+        textAlign: 'center',
     },
     emptyStateSub: {
         fontSize: 14,
         marginTop: 8,
+        textAlign: 'center',
     },
     grid: {
         flexDirection: 'row',
@@ -379,4 +425,3 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 });
-

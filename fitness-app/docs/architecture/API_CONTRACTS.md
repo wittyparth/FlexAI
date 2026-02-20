@@ -124,8 +124,8 @@
 #### **RegisterScreen**
 - **APIs:**
   - `POST /auth/register` → Create new account
-- **Request:** `{ email, password, name }`
-- **Response:** `{ success: true, message: 'Verification email sent' }`
+- **Request:** `{ email, password, firstName, lastName }`
+- **Response:** `{ user, message }`
 - **Navigation:** Auto-navigate to `EmailVerification`
 
 #### **EmailVerificationScreen**
@@ -133,8 +133,8 @@
   - `POST /auth/verify-email` → Verify OTP
   - `POST /auth/resend-verification` → Resend OTP
 - **Request:** `{ email, otp }` / `{ email }`
-- **Response:** `{ accessToken, refreshToken, user }` / `{ success: true }`
-- **Behavior:** Auto-login on successful verification
+- **Response:** `{ message }` / `{ message }`
+- **Behavior:** Navigate to `Login` after successful verification
 
 #### **ForgotPasswordScreen**
 - **APIs:**

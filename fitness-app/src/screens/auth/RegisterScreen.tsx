@@ -3,7 +3,7 @@
  * 
  * Backend Integration:
  * - POST /auth/register with { email, password, firstName, lastName }
- * - Returns: { data: { message, userId } }
+ * - Returns: { data: { user, message } }
  * - Navigates to email verification
  * 
  * Only uses data that backend accepts - no placeholder images
@@ -95,8 +95,12 @@ export function RegisterScreen({ navigation }: RegisterScreenProps) {
             newErrors.password = 'Password is required';
         } else if (password.length < 8) {
             newErrors.password = 'Password must be at least 8 characters';
-        } else if (passwordStrength.level < 2) {
-            newErrors.password = 'Password is too weak';
+        } else if (!/[A-Z]/.test(password)) {
+            newErrors.password = 'Password must include at least one uppercase letter';
+        } else if (!/[a-z]/.test(password)) {
+            newErrors.password = 'Password must include at least one lowercase letter';
+        } else if (!/[0-9]/.test(password)) {
+            newErrors.password = 'Password must include at least one number';
         }
 
         setErrors(newErrors);

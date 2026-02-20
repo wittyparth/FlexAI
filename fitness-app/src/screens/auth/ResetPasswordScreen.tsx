@@ -37,29 +37,30 @@ export function ResetPasswordScreen({ navigation, route }: ResetPasswordScreenPr
     // Password validation criteria
     const criteria = useMemo(() => ({
         length: password.length >= 8,
+        upper: /[A-Z]/.test(password),
+        lower: /[a-z]/.test(password),
         number: /\d/.test(password),
-        special: /[!@#$%^&*(),.?":{}|<>]/.test(password),
     }), [password]);
 
     const strengthScore = useMemo(() => {
         let score = 0;
         if (criteria.length) score++;
+        if (criteria.upper) score++;
+        if (criteria.lower) score++;
         if (criteria.number) score++;
-        if (criteria.special) score++;
         return score;
     }, [criteria]);
 
     const getStrengthLabel = () => {
         if (strengthScore === 0) return 'Very Weak';
         if (strengthScore === 1) return 'Weak';
-        if (strengthScore === 2) return 'Fair';
+        if (strengthScore <= 3) return 'Fair';
         return 'Strong';
     };
 
     const getStrengthColor = () => {
-        if (strengthScore === 0) return '#EF4444'; // Red
-        if (strengthScore === 1) return '#F59E0B'; // Orange
-        if (strengthScore === 2) return '#3B82F6'; // Blue
+        if (strengthScore <= 1) return '#EF4444'; // Red
+        if (strengthScore <= 3) return '#F59E0B'; // Orange
         return '#10B981'; // Green
     };
 
@@ -69,7 +70,7 @@ export function ResetPasswordScreen({ navigation, route }: ResetPasswordScreenPr
     const handleReset = async () => {
         let hasError = false;
 
-        if (strengthScore < 3) {
+        if (!criteria.length || !criteria.upper || !criteria.lower || !criteria.number) {
             setPasswordError('Password does not meet requirements');
             hasError = true;
         }
@@ -196,14 +197,14 @@ export function ResetPasswordScreen({ navigation, route }: ResetPasswordScreenPr
                             style={[
                                 styles.strengthBar,
                                 {
-                                    width: `${(strengthScore / 3) * 100}%`,
+                                    width: `${(strengthScore / 4) * 100}%`,
                                     backgroundColor: getStrengthColor()
                                 }
                             ]}
                         />
                     </View>
                     <Text style={[styles.strengthHint, { color: colors.mutedForeground }]}>
-                        Must be at least 8 characters with 1 number and 1 special character.
+                        Must be at least 8 characters with uppercase, lowercase, and a number.
                     </Text>
                 </View>
 

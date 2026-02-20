@@ -36,11 +36,66 @@ const apiClient: AxiosInstance = axios.create({
 });
 
 export interface ApiError {
-    message: string;
-    code?: string;
-    status?: number;
-    data?: any;
+  message: string;
+  code?: string;
+  status?: number;
+  data?: unknown;
 }
+
+type RetryRequestConfig = InternalAxiosRequestConfig & { _retry?: boolean };
+
+let isRefreshing = false;
+let refreshQueue: Array<{
+  resolve: (accessToken: string) => void;
+  reject: (error: ApiError) => void;
+}> = [];
+
+const createApiError = (error: AxiosError | unknown): ApiError => {
+  if (!axios.isAxiosError(error)) {
+    return {
+      message: (error as Error)?.message || 'An unexpected error occurred',
+    };
+  }
+
+  const errorData = error.response?.data as Record<string, unknown> | undefined;
+
+  return {
+    message: (errorData?.message as string) || error.message || 'An unexpected error occurred',
+    status: error.response?.status,
+    code: errorData?.code as string | undefined,
+    data: errorData?.data,
+  };
+};
+
+const shouldSkipRefresh = (url?: string): boolean => {
+  if (!url) return false;
+
+  const skipPaths = [
+    '/auth/register',
+    '/auth/login',
+    '/auth/verify-email',
+    '/auth/resend-verification',
+    '/auth/forgot-password',
+    '/auth/reset-password',
+    '/auth/google',
+    '/auth/refresh',
+  ];
+
+  return skipPaths.some((path) => url.includes(path));
+};
+
+const flushRefreshQueue = (error: ApiError | null, accessToken?: string) => {
+  refreshQueue.forEach((pending) => {
+    if (error || !accessToken) {
+      pending.reject(error ?? { message: 'Token refresh failed' });
+      return;
+    }
+
+    pending.resolve(accessToken);
+  });
+
+  refreshQueue = [];
+};
 
 // Request Interceptor: Inject Token
 // ----------------------------------------------------------------------------
@@ -62,7 +117,7 @@ apiClient.interceptors.request.use(
 apiClient.interceptors.response.use(
   (response) => response,
   async (error: AxiosError) => {
-    const originalRequest = error.config as InternalAxiosRequestConfig & { _retry?: boolean };
+    const originalRequest = error.config as RetryRequestConfig | undefined;
 
     // Log detailed error for debugging
     if (error.code === 'ERR_NETWORK' || error.message === 'Network Error') {
@@ -79,51 +134,70 @@ apiClient.interceptors.response.use(
       console.error('  4. Try accessing in browser:', `${API_BASE_URL}/health`);
     }
 
-    // 1. Handle 401 Unauthorized (Token Expiry)
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    // 1. Handle 401 Unauthorized (Token Expiry) with a single-flight refresh queue
+    if (
+      error.response?.status === 401 &&
+      originalRequest &&
+      !originalRequest._retry &&
+      !shouldSkipRefresh(originalRequest.url)
+    ) {
+      const refreshToken = authStore.getState().refreshToken;
+      if (!refreshToken) {
+        await authStore.getState().logout();
+        return Promise.reject({
+          message: 'No refresh token available',
+          status: 401,
+        } as ApiError);
+      }
+
+      if (isRefreshing) {
+        return new Promise((resolve, reject) => {
+          refreshQueue.push({
+            resolve: (newAccessToken) => {
+              if (originalRequest.headers) {
+                originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+              }
+              originalRequest._retry = true;
+              resolve(apiClient(originalRequest));
+            },
+            reject: (queueError) => {
+              reject(queueError);
+            },
+          });
+        });
+      }
+
       originalRequest._retry = true;
+      isRefreshing = true;
 
       try {
-        const refreshToken = authStore.getState().refreshToken;
-        
-        if (!refreshToken) {
-          throw new Error('No refresh token available');
-        }
-
-        // Attempt Refresh
-        const response = await axios.post(`${API_BASE_URL}/auth/refresh`, {
+        const refreshResponse = await axios.post(`${API_BASE_URL}/auth/refresh`, {
           refreshToken,
         });
 
-        const { accessToken: newAccessToken, refreshToken: newRefreshToken } = response.data.data;
+        const { accessToken: newAccessToken, refreshToken: newRefreshToken } =
+          refreshResponse.data.data;
 
-        // Update Store
         await authStore.getState().updateTokens(newAccessToken, newRefreshToken);
+        flushRefreshQueue(null, newAccessToken);
 
-        // Retry Request
         if (originalRequest.headers) {
           originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
         }
-        
+
         return apiClient(originalRequest);
       } catch (refreshError) {
-        // Refresh Failed -> Force Logout
-        console.warn('Token refresh failed, logging out user.');
-        authStore.getState().logout();
-        return Promise.reject(refreshError);
+        const standardizedRefreshError = createApiError(refreshError);
+        flushRefreshQueue(standardizedRefreshError);
+        await authStore.getState().logout();
+        return Promise.reject(standardizedRefreshError);
+      } finally {
+        isRefreshing = false;
       }
     }
 
     // 2. Standardize Error Format
-    const errorData = error.response?.data as any;
-    const standardError: ApiError = {
-        message: errorData?.message || error.message || 'An unexpected error occurred',
-        status: error.response?.status,
-        code: errorData?.code,
-        data: errorData?.data
-    };
-    
-    return Promise.reject(standardError);
+    return Promise.reject(createApiError(error));
   }
 );
 

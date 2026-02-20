@@ -132,7 +132,7 @@ export const authStore = create<AuthState>((set, get) => ({
         storage.getUser(),
       ]);
 
-      if (accessToken && user) {
+      if (accessToken && refreshToken && user) {
         console.log('✅ [AUTH STORE] User found, setting authenticated');
         set({
           accessToken,
@@ -142,6 +142,10 @@ export const authStore = create<AuthState>((set, get) => ({
           isLoading: false,
         });
       } else {
+        if (accessToken || refreshToken || user) {
+          await storage.clearAuth();
+        }
+
         console.log('❌ [AUTH STORE] No user found, setting unauthenticated');
         set({ 
           isAuthenticated: false,

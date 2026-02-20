@@ -15,8 +15,8 @@ Every integration PR must update this file.
 - If scope changes, add a `Change Note` entry before implementation.
 
 ## Current Status
-- Current Phase: Phase 0
-- Overall Completion: 14%
+- Current Phase: Phase 1
+- Overall Completion: 22%
 - Blockers: None
 
 ## Global Exit Criteria
@@ -32,7 +32,7 @@ Every integration PR must update this file.
 ### Checklist
 - [x] Finalize one active root navigation architecture (remove duplicate root flow risk).
 - [x] Remove auth bypass paths from app entry flow.
-- [ ] Audit and fix route mismatches between frontend API clients and backend routers:
+- [x] Audit and fix route mismatches between frontend API clients and backend routers:
   - [x] `social.api.ts`
   - [x] `feed.api.ts`
   - [x] `leaderboard.api.ts`
@@ -51,14 +51,14 @@ Every integration PR must update this file.
 
 ### Checklist
 - [ ] Align auth contracts between frontend and backend:
-  - [ ] Register
-  - [ ] Login
-  - [ ] Verify email
-  - [ ] Refresh token
-  - [ ] Logout
-- [ ] Implement stable token attach + refresh queue logic in API client.
-- [ ] Persist and restore session on app boot.
-- [ ] Ensure route guards: unauth -> auth stack, auth+not-onboarded -> onboarding, auth+onboarded -> main app.
+  - [x] Register
+  - [x] Login
+  - [x] Verify email
+  - [x] Refresh token
+  - [x] Logout
+- [x] Implement stable token attach + refresh queue logic in API client.
+- [x] Persist and restore session on app boot.
+- [x] Ensure route guards: unauth -> auth stack, auth+not-onboarded -> onboarding, auth+onboarded -> main app.
 - [x] Remove all dev-only auth bypass behavior.
 
 ### Acceptance
@@ -229,8 +229,9 @@ Every integration PR must update this file.
 
 ### Log
 - 2026-02-20 | PR: N/A | Phase: Planning | Created master checklist and execution order.
-- 2026-02-20 | PR: Pending commit (Phase 0 - Nav/Auth cleanup) | Phase: 0 | Unified app entry to `src/navigation/RootNavigator`, added dedicated onboarding stack, expanded auth stack registration, removed auth bypass mode.
-- 2026-02-20 | PR: Pending commit (Phase 0 - API route alignment) | Phase: 0 | Aligned frontend API clients with backend route paths/contracts for social, feed, leaderboards, gamification, exercises, and routines; added safe fallbacks where backend endpoints are not yet exposed.
+- 2026-02-20 | PR: `78fb2a0` | Phase: 0 | Unified app entry to `src/navigation/RootNavigator`, added dedicated onboarding stack, expanded auth stack registration, removed auth bypass mode.
+- 2026-02-20 | PR: `0c8b9d5` | Phase: 0 | Aligned frontend API clients with backend route paths/contracts for social, feed, leaderboards, gamification, exercises, and routines; added safe fallbacks where backend endpoints are not yet exposed.
+- 2026-02-20 | PR: Pending commit (Phase 1 - Auth contract + refresh queue) | Phase: 1 | Aligned auth contracts (verify/register response handling), fixed verification flow to login handoff, added single-flight refresh queue/retry behavior, and hardened session hydration rules.
 
 ## Change Notes
 - 2026-02-20: Added mandatory backend persistence of `workoutInterests` in onboarding (Phase 2).

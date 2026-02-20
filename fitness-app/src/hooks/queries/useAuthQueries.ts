@@ -28,7 +28,7 @@ export const useAuthQueries = () => {
     });
 
     const logoutMutation = useMutation({
-        mutationFn: () => authApi.logout(),
+        mutationFn: () => authApi.logout(authStore.getState().refreshToken ?? undefined),
         onSuccess: async () => {
              await authStore.getState().logout();
             queryClient.clear();
@@ -37,14 +37,6 @@ export const useAuthQueries = () => {
 
     const verifyEmailMutation = useMutation({
         mutationFn: (data: { email: string; otp: string }) => authApi.verifyEmail(data),
-        onSuccess: async (data: any) => {
-            // Update client-side auth state
-             await authStore.getState().login(
-                { accessToken: data.accessToken, refreshToken: data.refreshToken },
-                data.user
-            );
-             queryClient.invalidateQueries({ queryKey: ['user'] });
-        },
     });
 
     const resendVerificationMutation = useMutation({

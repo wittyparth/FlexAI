@@ -3,6 +3,7 @@
  * 
  * Backend Integration:
  * - POST /auth/verify-email with { email, otp }
+ *   returns { message }
  * - POST /auth/resend-verification with { email }
  * 
  * Only uses data from backend - no placeholder content
@@ -93,6 +94,13 @@ export function VerifyEmailScreen({ navigation, route }: VerifyEmailScreenProps)
         setError('');
 
         verifyEmailMutation.mutate({ email, otp: otpCode }, {
+            onSuccess: () => {
+                Alert.alert(
+                    'Email Verified',
+                    'Your email is verified. Please log in to continue.',
+                    [{ text: 'Go to Login', onPress: () => navigation.navigate('Login') }]
+                );
+            },
             onError: (error: any) => {
                 console.error('Verification error:', error);
                 const errorMessage = error.response?.data?.message || error.message || 'Invalid verification code';

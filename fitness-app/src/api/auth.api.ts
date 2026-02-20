@@ -8,8 +8,14 @@ export interface RegisterRequest {
 }
 
 export interface RegisterResponse {
+  user: {
+    id: number;
+    email: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    createdAt: string;
+  };
   message: string;
-  userId: string;
 }
 
 export interface LoginRequest {
@@ -18,7 +24,7 @@ export interface LoginRequest {
 }
 
 export interface UserProfile {
-  id: string;
+  id: number | string;
   email: string;
   firstName: string;
   lastName: string;
@@ -36,6 +42,10 @@ export interface LoginResponse {
 }
 
 export interface AuthResponse {
+  message: string;
+}
+
+export interface VerifyEmailResponse {
   message: string;
 }
 
@@ -59,9 +69,9 @@ export const authApi = {
     return response.data.data;
   },
 
-  // Verify email with OTP - returns tokens and user after verification
-  verifyEmail: async (data: { email: string; otp: string }): Promise<LoginResponse> => {
-    const response = await apiClient.post<ApiResponse<LoginResponse>>('/auth/verify-email', data);
+  // Verify email with OTP
+  verifyEmail: async (data: { email: string; otp: string }): Promise<VerifyEmailResponse> => {
+    const response = await apiClient.post<ApiResponse<VerifyEmailResponse>>('/auth/verify-email', data);
     return response.data.data;
   },
 

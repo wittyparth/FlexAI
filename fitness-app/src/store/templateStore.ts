@@ -22,41 +22,8 @@ const generateDefaultDays = (): TemplateDay[] => {
     }));
 };
 
-const INITIAL_MOCK_TEMPLATES: Record<string, Template> = {
-    't1': {
-        id: 't1',
-        name: 'Quick Push (30 min)',
-        description: 'A fast push workout when short on time.',
-        color: '#F59E0B',
-        exercises: 5,
-        lastUsed: '2 days ago',
-        createdAt: new Date().toISOString(),
-        days: generateDefaultDays().map(d => d.dayId === 1 ? { ...d, isRestDay: false, routineId: 1 } : d),
-    },
-    't2': {
-        id: 't2',
-        name: 'Chest & Triceps',
-        description: 'Heavy chest focus with tricep isolation.',
-        color: '#EC4899',
-        exercises: 7,
-        lastUsed: 'Last week',
-        createdAt: new Date().toISOString(),
-        days: generateDefaultDays().map(d => d.dayId === 2 ? { ...d, isRestDay: false, routineId: 1 } : d),
-    },
-    't3': {
-        id: 't3',
-        name: 'Back & Biceps',
-        description: 'Pull day focusing on width and thickness.',
-        color: '#8B5CF6',
-        exercises: 6,
-        lastUsed: '10 days ago',
-        createdAt: new Date().toISOString(),
-        days: generateDefaultDays().map(d => d.dayId === 3 ? { ...d, isRestDay: false, routineId: 2 } : d),
-    },
-};
-
 const initialState: TemplateState = {
-    templates: INITIAL_MOCK_TEMPLATES,
+    templates: {},
 };
 
 export const useTemplateStore = create<TemplateState & TemplateActions>()(

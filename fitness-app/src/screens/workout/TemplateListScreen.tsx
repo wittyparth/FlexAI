@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
     View,
     Text,
@@ -7,64 +7,132 @@ import {
     TouchableOpacity,
     Dimensions,
     TextInput,
+    ActivityIndicator,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { useTemplateStore } from '../../store/templateStore';
-import { Template } from '../../types/backend.types';
+import { useRoutines } from '../../hooks/queries/useRoutineQueries';
 
 const { width } = Dimensions.get('window');
 const CARD_WIDTH = (width - 48) / 2;
+
+interface TemplateListItem {
+    id: string;
+    source: 'backend' | 'local';
+    name: string;
+    description?: string;
+    color?: string;
+    daysCount: number;
+}
+
+const resolveDaysCount = (routine: any) => {
+    if (routine?.daysPerWeek) return routine.daysPerWeek;
+
+    if (routine?.schedule && typeof routine.schedule === 'object') {
+        const scheduleDays = Object.values(routine.schedule).filter(Boolean).length;
+        if (scheduleDays > 0) return scheduleDays;
+    }
+
+    if (Array.isArray(routine?.exercises) && routine.exercises.length > 0) {
+        const uniqueDays = new Set(
+            routine.exercises
+                .map((ex: any) => ex.dayOfWeek)
+                .filter((day: any) => typeof day === 'number')
+        );
+        if (uniqueDays.size > 0) return uniqueDays.size;
+    }
+
+    return 1;
+};
 
 export function TemplateListScreen({ navigation }: any) {
     const colors = useColors();
     const insets = useSafeAreaInsets();
     const [searchQuery, setSearchQuery] = useState('');
-    
-    const templatesMap = useTemplateStore(state => state.templates);
-    const templates: Template[] = Object.values(templatesMap);
 
-    const activeData = templates.filter(t =>
-        searchQuery.length === 0 || t.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    const normalizedSearch = searchQuery.trim() || undefined;
+
+    const templatesMap = useTemplateStore(state => state.templates);
+    const localTemplates = Object.values(templatesMap);
+
+    const { data: backendTemplatesResponse, isLoading: isBackendLoading } = useRoutines({
+        page: 1,
+        limit: 100,
+        search: normalizedSearch,
+        isTemplate: true,
+    });
+
+    const backendTemplates = backendTemplatesResponse?.data?.routines || [];
+
+    const activeData = useMemo<TemplateListItem[]>(() => {
+        const local = localTemplates
+            .filter((template) =>
+                !normalizedSearch || template.name.toLowerCase().includes(normalizedSearch.toLowerCase())
+            )
+            .map((template) => ({
+                id: String(template.id),
+                source: 'local' as const,
+                name: template.name,
+                description: template.description,
+                color: template.color,
+                daysCount: Array.isArray(template.days)
+                    ? template.days.filter((day) => !day.isRestDay).length
+                    : 0,
+            }));
+
+        const backend = backendTemplates.map((routine: any) => ({
+            id: String(routine.id),
+            source: 'backend' as const,
+            name: routine.name,
+            description: routine.description,
+            color: routine.color,
+            daysCount: resolveDaysCount(routine),
+        }));
+
+        return [...backend, ...local];
+    }, [backendTemplates, localTemplates, normalizedSearch]);
 
     const handleCreateTemplate = () => {
-        navigation.navigate('TemplateEditor'); // New template mode
+        navigation.navigate('TemplateEditor');
     };
 
-    const handleTemplatePress = (templateId: string) => {
-        navigation.navigate('TemplateEditor', { templateId });
+    const handleTemplatePress = (item: TemplateListItem) => {
+        if (item.source === 'backend') {
+            navigation.navigate('RoutineDetail', { routineId: Number(item.id) });
+            return;
+        }
+
+        navigation.navigate('TemplateEditor', { templateId: item.id });
     };
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
-            {/* Header */}
-            <View style={[
-                styles.header,
-                {
-                    paddingTop: insets.top + 12,
-                    backgroundColor: colors.card,
-                    borderBottomColor: colors.border
-                }
-            ]}>
+            <View
+                style={[
+                    styles.header,
+                    {
+                        paddingTop: insets.top + 12,
+                        backgroundColor: colors.card,
+                        borderBottomColor: colors.border,
+                    },
+                ]}
+            >
                 <View style={styles.headerTop}>
                     <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
                         <Ionicons name="arrow-back" size={24} color={colors.foreground} />
                     </TouchableOpacity>
-                    <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>
-                        Templates
-                    </Text>
+                    <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Templates</Text>
                     <View style={{ width: 44 }} />
                 </View>
 
-                {/* Search Bar */}
                 <View style={[styles.searchContainer, { backgroundColor: colors.background }]}>
                     <Ionicons name="search" size={20} color={colors.mutedForeground} />
                     <TextInput
                         style={[styles.searchInput, { color: colors.foreground }]}
-                        placeholder="Search your templates..."
+                        placeholder="Search templates..."
                         placeholderTextColor={colors.mutedForeground}
                         value={searchQuery}
                         onChangeText={setSearchQuery}
@@ -77,41 +145,42 @@ export function TemplateListScreen({ navigation }: any) {
                 </View>
             </View>
 
-            {/* Content list */}
             <ScrollView
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={[styles.contentContainer, { paddingBottom: insets.bottom + 160 }]}
             >
-                {activeData.length === 0 ? (
+                {isBackendLoading && activeData.length === 0 ? (
+                    <View style={styles.loadingState}>
+                        <ActivityIndicator size="large" color={colors.primary.main} />
+                    </View>
+                ) : activeData.length === 0 ? (
                     <View style={styles.emptyState}>
                         <MaterialCommunityIcons name="file-document-outline" size={48} color={colors.mutedForeground} />
                         <Text style={[styles.emptyStateText, { color: colors.foreground }]}>No templates found</Text>
-                        <Text style={[styles.emptyStateSub, { color: colors.mutedForeground }]}>
-                            Create a new weekly template to get started!
-                        </Text>
+                        <Text style={[styles.emptyStateSub, { color: colors.mutedForeground }]}>Create a new weekly template to get started.</Text>
                     </View>
                 ) : (
                     <View style={styles.grid}>
                         {activeData.map((template) => (
                             <TouchableOpacity
-                                key={template.id}
+                                key={`${template.source}-${template.id}`}
                                 style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}
                                 activeOpacity={0.8}
-                                onPress={() => handleTemplatePress(template.id)}
+                                onPress={() => handleTemplatePress(template)}
                             >
-                                {/* Color-coded header block */}
                                 <View style={[styles.cardImageContainer, { backgroundColor: (template.color || '#6366F1') + '22' }]}>
                                     <View
                                         style={[StyleSheet.absoluteFill, { backgroundColor: template.color || '#6366F1', opacity: 0.12 }]}
                                     />
-                                    <MaterialCommunityIcons name="calendar-month" size={32} color={template.color || '#6366F1'} style={{ opacity: 0.7 }} />
-
-                                    {/* Overlay Info */}
-                                    <View
-                                        style={styles.cardOverlay}
+                                    <MaterialCommunityIcons
+                                        name="calendar-month"
+                                        size={32}
+                                        color={template.color || '#6366F1'}
+                                        style={{ opacity: 0.7 }}
                                     />
+                                    <View style={styles.cardOverlay} />
                                     <View style={styles.cardOverlayContent}>
-                                        <Text style={styles.cardDays}>{template.days.filter(d => !d.isRestDay).length} Active Days</Text>
+                                        <Text style={styles.cardDays}>{template.daysCount} Active Days</Text>
                                     </View>
                                 </View>
 
@@ -129,15 +198,12 @@ export function TemplateListScreen({ navigation }: any) {
                 )}
             </ScrollView>
 
-            {/* FAB for Create */}
             <TouchableOpacity
                 style={[styles.fab, { shadowColor: colors.primary.main }]}
                 onPress={handleCreateTemplate}
                 activeOpacity={0.9}
             >
-                <View
-                    style={styles.fabGradient}
-                >
+                <View style={styles.fabGradient}>
                     <Ionicons name="add" size={28} color="#FFFFFF" />
                 </View>
             </TouchableOpacity>
@@ -154,9 +220,10 @@ const styles = StyleSheet.create({
     searchContainer: { flexDirection: 'row', alignItems: 'center', marginHorizontal: 16, paddingHorizontal: 12, height: 44, borderRadius: 12, marginBottom: 16 },
     searchInput: { flex: 1, marginLeft: 8, fontSize: 15 },
     contentContainer: { padding: 16 },
+    loadingState: { alignItems: 'center', justifyContent: 'center', paddingTop: 60 },
     emptyState: { alignItems: 'center', justifyContent: 'center', paddingTop: 60 },
     emptyStateText: { fontSize: 18, fontWeight: '600', marginTop: 16 },
-    emptyStateSub: { fontSize: 14, marginTop: 8 },
+    emptyStateSub: { fontSize: 14, marginTop: 8, textAlign: 'center' },
     grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 16 },
     card: { width: CARD_WIDTH, borderRadius: 16, overflow: 'hidden', borderWidth: 1 },
     cardImageContainer: { height: 120, justifyContent: 'center', alignItems: 'center', position: 'relative' },

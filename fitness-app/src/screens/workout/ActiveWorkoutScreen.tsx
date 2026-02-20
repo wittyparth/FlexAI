@@ -65,6 +65,7 @@ export function ActiveWorkoutScreen({ navigation, route }: any) {
     completeWorkout,
     cancelWorkout,
     addExercise,
+    removeExercise,
     deleteSet,
     stopRest,
 
@@ -112,6 +113,25 @@ export function ActiveWorkoutScreen({ navigation, route }: any) {
   const handleCancel = useCallback(() => {
     setCancelModalVisible(true);
   }, []);
+
+  const handleRemoveExercise = useCallback((exerciseId: number) => {
+    Alert.alert(
+      'Remove exercise?',
+      'This will remove all logged sets for this exercise.',
+      [
+        { text: 'Keep', style: 'cancel' },
+        {
+          text: 'Remove',
+          style: 'destructive',
+          onPress: () => {
+            removeExercise(exerciseId).catch((error: any) => {
+              Alert.alert('Unable to remove exercise', error?.message || 'Please try again.');
+            });
+          },
+        },
+      ]
+    );
+  }, [removeExercise]);
 
   const handleMinimize = useCallback(() => {
     navigation.goBack();
@@ -252,6 +272,7 @@ export function ActiveWorkoutScreen({ navigation, route }: any) {
               onSetTypeChange={cycleSetType}
               onLogSet={() => handleLogSet(exercise.id)}
               onDeleteSet={deleteSet}
+              onRemoveExercise={handleRemoveExercise}
             />
           );
         })}

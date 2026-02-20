@@ -65,6 +65,7 @@ interface Props {
   onSetTypeChange: () => void;
   onLogSet: () => void;
   onDeleteSet: (exerciseId: number, setId: string) => void;
+  onRemoveExercise?: (exerciseId: number) => void;
 }
 
 // ─── MAIN COMPONENT ───
@@ -86,6 +87,7 @@ export const ExerciseCard = memo(({
   onSetTypeChange,
   onLogSet,
   onDeleteSet,
+  onRemoveExercise,
 }: Props) => {
   const colors = useColors();
   const targetSets = exercise.targetSets || 3;
@@ -156,11 +158,25 @@ export const ExerciseCard = memo(({
         </View>
 
         {/* Progress dots + completion indicator */}
-        <View style={styles.rightSection}>
-          <ProgressDots completed={setsCompleted} total={targetSets} color={accentColor} />
-          {allDone && (
-            <Ionicons name="checkmark-circle" size={20} color={colors.success || '#10B981'} style={{ marginTop: 4 }} />
-          )}
+        <View style={styles.rightActions}>
+          <View style={styles.rightSection}>
+            <ProgressDots completed={setsCompleted} total={targetSets} color={accentColor} />
+            {allDone && (
+              <Ionicons name="checkmark-circle" size={20} color={colors.success || '#10B981'} style={{ marginTop: 4 }} />
+            )}
+          </View>
+          {onRemoveExercise ? (
+            <TouchableOpacity
+              onPress={(event: any) => {
+                event?.stopPropagation?.();
+                onRemoveExercise(exercise.id);
+              }}
+              style={[styles.removeBtn, { backgroundColor: colors.muted }]}
+              hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+            >
+              <Ionicons name="trash-outline" size={16} color={colors.error} />
+            </TouchableOpacity>
+          ) : null}
         </View>
       </TouchableOpacity>
 
@@ -246,6 +262,17 @@ const styles = StyleSheet.create({
   rightSection: {
     alignItems: 'center',
     gap: 2,
+  },
+  rightActions: {
+    alignItems: 'center',
+    gap: 8,
+  },
+  removeBtn: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   dotsContainer: {
     flexDirection: 'row',

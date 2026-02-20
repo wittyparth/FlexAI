@@ -217,8 +217,16 @@ export const useWorkoutStore = create<WorkoutState & WorkoutActions>()(
 
       removeExercise: async (workoutExerciseId) => {
         const { activeWorkoutId, status, exercises } = get();
-        if (!activeWorkoutId || status !== 'in_progress') return;
-        if (!exercises[workoutExerciseId]) return;
+        if (!activeWorkoutId || status !== 'in_progress') {
+          const message = 'No active workout in progress';
+          set({ error: message });
+          throw new Error(message);
+        }
+        if (!exercises[workoutExerciseId]) {
+          const message = 'Exercise not found in workout';
+          set({ error: message });
+          throw new Error(message);
+        }
 
         const previousExercise = exercises[workoutExerciseId];
         const previousSets = Object.entries(get().sets).filter(
@@ -236,14 +244,17 @@ export const useWorkoutStore = create<WorkoutState & WorkoutActions>()(
         try {
           await workoutApi.removeExercise(activeWorkoutId, workoutExerciseId);
         } catch (error: any) {
+          const message = error.message || 'Failed to remove exercise';
+
           // Rollback on failure
           set((state) => {
-            state.error = error.message || 'Failed to remove exercise';
+            state.error = message;
             state.exercises[workoutExerciseId] = previousExercise;
             previousSets.forEach(([setId, setItem]) => {
               state.sets[setId] = setItem;
             });
           });
+          throw new Error(message);
         }
       },
 

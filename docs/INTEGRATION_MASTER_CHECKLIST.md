@@ -247,7 +247,7 @@ Every integration PR must update this file.
 - 2026-02-20 | PR: `065ef08` | Phase: 3 | Added workout-store `updateSet` mutation with optimistic rollback, wired active-workout hook edit mode, and enabled set editing from completed-set rows with save flow through backend API.
 - 2026-02-20 | PR: `8988fd3` | Phase: 3 | Added `syncCurrentWorkout` store action using `/workouts/current`, wired it into Workout Hub mount, and added `useCurrentWorkout` query hook for API-backed current session retrieval.
 - 2026-02-20 | PR: `b71859b` | Phase: 3 | Removed `MOCK_ROUTINES` fallback from template day assignment and resolved linked routines from backend routine/public-routine query data.
-- 2026-02-20 | PR: Pending commit (Phase 3 - backend template list + remove seeded template mocks) | Phase: 3 | Migrated `TemplateListScreen` to backend template routines (`isTemplate=true`) with local custom fallback and removed default mock templates from `templateStore` initial state.
+- 2026-02-20 | PR: `3b5fdeb` | Phase: 3 | Migrated `TemplateListScreen` to backend template routines (`isTemplate=true`) with local custom fallback and removed default mock templates from `templateStore` initial state.
 
 ## Change Notes
 - 2026-02-20: Added mandatory backend persistence of `workoutInterests` in onboarding (Phase 2).

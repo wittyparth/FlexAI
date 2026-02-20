@@ -16,7 +16,7 @@ Every integration PR must update this file.
 
 ## Current Status
 - Current Phase: Phase 5
-- Overall Completion: 97%
+- Overall Completion: 98%
 - Blockers: Global TypeScript type drift outside current integration scope (auth/home/theme typing mismatches) still prevents clean `tsc`.
 
 ## Global Exit Criteria
@@ -142,8 +142,12 @@ Every integration PR must update this file.
 ### Checklist
 - [ ] Integrate stats endpoints in analytics screens.
   - [x] `AnalyticsHubScreen`: quick stats + volume snapshot now derive from `/stats/dashboard` (`useDashboardStats`) and backend recent workouts.
-- [ ] Integrate body tracking endpoints (weight/measurements/photos).
-- [ ] Normalize units and chart payload shaping.
+- [x] Integrate body tracking endpoints (weight/measurements/photos).
+  - [x] `BodyTrackingHubScreen`: replaced mock cards/trend/recent logs with live weight/measurement/photo data and chart shaping.
+  - [x] `WeightLogScreen`: replaced mock weight trend/history with API-backed chart/history and live logging mutation.
+  - [x] `MeasurementsScreen`: replaced mock measurement cards with API-backed latest/previous deltas and live save flow.
+  - [x] `ProgressPhotosScreen`: completed API-backed read + log flow (`/body/photos`) with pose/notes support.
+- [x] Normalize units and chart payload shaping.
 - [ ] Ensure PR/volume/consistency metrics reflect completed workouts.
 
 ### Acceptance
@@ -263,6 +267,7 @@ Every integration PR must update this file.
 - 2026-02-20 | PR: `ae4b0d3` | Phase: 5 | Integrated `AnalyticsHubScreen` with backend dashboard stats (`useDashboardStats`), replacing mock quick stats and deriving 7D/30D/90D volume snapshot bars from API recent workout history.
 - 2026-02-20 | PR: `2b5db45` | Phase: 3 | Removed the large hardcoded `MOCK_WORKOUTS` dataset from `WorkoutDetailScreen`, leaving the screen fully backend-driven via `useWorkout`.
 - 2026-02-20 | PR: `aa8ad31` | Phase: 3 | Replaced `useExerciseQueries` mock-backed implementations with backend `exerciseApi` calls for filters, featured, search, and exercise detail lookups.
+- 2026-02-20 | PR: `9215982` | Phase: 5 | Integrated all body tracking screens with backend body endpoints, normalized body API response mapping (`imageUrl/pose`, measurement field aliases), switched charts/stats to live data using `react-native-gifted-charts`, and enabled end-to-end weight/measurement/photo logging mutations.
 
 ## Change Notes
 - 2026-02-20: Added mandatory backend persistence of `workoutInterests` in onboarding (Phase 2).

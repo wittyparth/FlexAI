@@ -14,11 +14,13 @@ import { useColors, useCreateRoutine, useAddExerciseToRoutine } from '../../hook
 import { fontFamilies } from '../../theme/typography';
 import { colors as themeColors } from '../../theme/colors';
 import { GOALS } from './AIGeneratorScreen';
+import { useWorkoutStore } from '../../store/workoutStore';
 
 export function AIPreviewScreen({ navigation, route }: any) {
     const colors = useColors();
     const insets = useSafeAreaInsets();
     const [saving, setSaving] = useState(false);
+    const [starting, setStarting] = useState(false);
     const fadeAnim = useRef(new Animated.Value(0)).current;
     const { workout: generatedWorkout, input } = route.params || {};
 
@@ -58,6 +60,20 @@ export function AIPreviewScreen({ navigation, route }: any) {
             min: Number.isFinite(asNumber) ? asNumber : 0,
             max: Number.isFinite(asNumber) ? asNumber : 0,
         };
+    };
+
+    const extractGeneratedExercises = () => {
+        if (!generatedWorkout) return [];
+        const sections = [
+            ...(generatedWorkout.warmup || []),
+            ...(generatedWorkout.main || []),
+            ...(generatedWorkout.cooldown || []),
+        ];
+
+        return sections.filter((exerciseItem: any) => {
+            const exerciseId = Number(exerciseItem.exerciseId || exerciseItem.exercise?.id);
+            return Number.isInteger(exerciseId) && exerciseId > 0;
+        });
     };
 
     const renderExerciseSection = (title: string, exercises: any[], startIndex: number) => {
@@ -145,39 +161,126 @@ export function AIPreviewScreen({ navigation, route }: any) {
             const routineResult = await createRoutineMutation.mutateAsync(routinePayload as any);
             const routineId = Number(routineResult?.data?.id);
 
-            const allExercises = [
-                ...(generatedWorkout.warmup || []),
-                ...(generatedWorkout.main || []),
-                ...(generatedWorkout.cooldown || []),
-            ];
+            const allExercises = extractGeneratedExercises();
+            if (allExercises.length === 0) {
+                Alert.alert('Unable to save', 'Generated workout has no valid exercises.');
+                return;
+            }
 
+            let addedCount = 0;
+            let failedCount = 0;
             let orderIndex = 0;
             for (const exerciseItem of allExercises) {
                 const exerciseId = Number(exerciseItem.exerciseId || exerciseItem.exercise?.id);
                 if (!exerciseId) continue;
 
                 const reps = parseReps(exerciseItem.reps);
-                await addExerciseMutation.mutateAsync({
-                    routineId,
-                    data: {
-                        exerciseId,
-                        orderIndex: orderIndex++,
-                        targetSets: Number(exerciseItem.sets || 3),
-                        targetRepsMin: reps.min,
-                        targetRepsMax: reps.max,
-                        restSeconds: Number(exerciseItem.rest || 60),
-                        notes: exerciseItem.notes || '',
-                    },
-                });
+                try {
+                    await addExerciseMutation.mutateAsync({
+                        routineId,
+                        data: {
+                            exerciseId,
+                            orderIndex: orderIndex++,
+                            targetSets: Number(exerciseItem.sets || 3),
+                            targetRepsMin: reps.min,
+                            targetRepsMax: reps.max,
+                            restSeconds: Number(exerciseItem.rest || 60),
+                            notes: exerciseItem.notes || '',
+                        },
+                    });
+                    addedCount += 1;
+                } catch {
+                    failedCount += 1;
+                }
             }
 
-            Alert.alert('Saved', 'Workout saved to your routines.');
+            if (addedCount === 0) {
+                Alert.alert('Unable to save', 'No valid exercises could be added to the routine.');
+                return;
+            }
+
+            if (failedCount > 0) {
+                Alert.alert('Saved with warnings', `Routine saved with ${addedCount} exercises. ${failedCount} exercises failed to add.`);
+            } else {
+                Alert.alert('Saved', 'Workout saved to your routines.');
+            }
             navigation.navigate('RoutineDetail', { routineId });
         } catch (error) {
             console.error('Failed to save generated workout:', error);
             Alert.alert('Error', 'Failed to save workout. Please try again.');
         } finally {
             setSaving(false);
+        }
+    };
+
+    const handleStartWorkout = async () => {
+        if (!generatedWorkout || !generatedWorkout.workoutName) {
+            Alert.alert('Error', 'No workout data to start');
+            return;
+        }
+
+        if (starting) return;
+        setStarting(true);
+
+        try {
+            const exercises = extractGeneratedExercises();
+            if (exercises.length === 0) {
+                Alert.alert('Unable to start', 'Generated workout has no valid exercises.');
+                return;
+            }
+
+            const store = useWorkoutStore.getState();
+            await store.startWorkout({
+                name: generatedWorkout.workoutName || 'AI Generated Workout',
+                notes: generatedWorkout.description || undefined,
+            });
+
+            let addedCount = 0;
+            let failedCount = 0;
+
+            for (const exerciseItem of exercises) {
+                const exerciseId = Number(exerciseItem.exerciseId || exerciseItem.exercise?.id);
+                if (!exerciseId) {
+                    failedCount += 1;
+                    continue;
+                }
+
+                try {
+                    await store.addExercise(exerciseId, exerciseItem.notes || undefined);
+                    addedCount += 1;
+                } catch {
+                    failedCount += 1;
+                }
+            }
+
+            if (addedCount === 0) {
+                await store.cancelWorkout();
+                Alert.alert('Unable to start', 'No exercises could be added to this workout.');
+                return;
+            }
+
+            if (failedCount > 0) {
+                Alert.alert('Workout started', `Started with ${addedCount} exercises. ${failedCount} exercises could not be added.`);
+            }
+
+            navigation.navigate('ActiveWorkout');
+        } catch (error: any) {
+            const message = String(error?.message || 'Unable to start workout.');
+            if (message.toLowerCase().includes('already have a workout in progress')) {
+                Alert.alert(
+                    'Workout in progress',
+                    'You already have a workout in progress.',
+                    [
+                        { text: 'Cancel', style: 'cancel' },
+                        { text: 'Resume', onPress: () => navigation.navigate('ActiveWorkout') },
+                    ],
+                );
+                return;
+            }
+
+            Alert.alert('Unable to start workout', message);
+        } finally {
+            setStarting(false);
         }
     };
 
@@ -286,18 +389,20 @@ export function AIPreviewScreen({ navigation, route }: any) {
                 <TouchableOpacity
                     style={[styles.saveBtn, { borderColor: colors.primary.main }]}
                     onPress={handleSave}
+                    disabled={saving || starting}
                 >
                     <Ionicons name="bookmark-outline" size={20} color={colors.primary.main} />
                     <Text style={[styles.saveBtnText, { color: colors.primary.main }]}>{saving ? 'Saving...' : 'Save'}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={styles.startBtn}
-                    onPress={() => navigation.navigate('ActiveWorkout')}
+                    onPress={handleStartWorkout}
+                    disabled={saving || starting}
                     activeOpacity={0.9}
                 >
                     <View style={styles.startGradient}>
                         <Ionicons name="play" size={22} color="#FFF" />
-                        <Text style={styles.startText}>Start Workout</Text>
+                        <Text style={styles.startText}>{starting ? 'Starting...' : 'Start Workout'}</Text>
                     </View>
                 </TouchableOpacity>
             </View>

@@ -67,6 +67,29 @@ const mapEquipmentToApi = (equipmentId: string): string[] => {
     }
 };
 
+const formatGenerationError = (error: any): string => {
+    const message = String(error?.message || '').toLowerCase();
+    const status = Number(error?.status || 0);
+
+    if (status === 429) {
+        return 'AI generation is rate-limited right now. Please wait a moment and try again.';
+    }
+
+    if (message.includes('gemini_api_key') || message.includes('api key') || message.includes('provider')) {
+        return 'AI provider is not configured right now. Please contact support or try again later.';
+    }
+
+    if (status >= 500) {
+        return 'AI service is temporarily unavailable. Please try again in a few minutes.';
+    }
+
+    if (message.includes('valid exercises')) {
+        return 'The generated workout was invalid. Please regenerate with a more specific prompt.';
+    }
+
+    return error?.message || 'Unable to generate workout right now. Please try again.';
+};
+
 export function AIGeneratorScreen({ navigation, route }: any) {
     const colors = useColors();
     const insets = useSafeAreaInsets();
@@ -120,10 +143,7 @@ export function AIGeneratorScreen({ navigation, route }: any) {
         } catch (error: any) {
             setLoading(false);
             stopLoadingAnimation();
-            Alert.alert(
-                'Generation failed',
-                error?.response?.data?.error || error?.message || 'Unable to generate workout right now. Please try again.',
-            );
+            Alert.alert('Generation failed', formatGenerationError(error));
         }
     };
 

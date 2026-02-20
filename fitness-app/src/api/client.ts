@@ -58,12 +58,19 @@ const createApiError = (error: AxiosError | unknown): ApiError => {
   }
 
   const errorData = error.response?.data as Record<string, unknown> | undefined;
+  const nestedError = errorData?.error as Record<string, unknown> | undefined;
+  const topLevelMessage = errorData?.message as string | undefined;
+  const nestedMessage = nestedError?.message as string | undefined;
+  const topLevelCode = errorData?.code as string | undefined;
+  const nestedCode = nestedError?.code as string | undefined;
+  const topLevelData = errorData?.data;
+  const nestedDetails = nestedError?.details;
 
   return {
-    message: (errorData?.message as string) || error.message || 'An unexpected error occurred',
+    message: nestedMessage || topLevelMessage || error.message || 'An unexpected error occurred',
     status: error.response?.status,
-    code: errorData?.code as string | undefined,
-    data: errorData?.data,
+    code: nestedCode || topLevelCode,
+    data: topLevelData ?? nestedDetails,
   };
 };
 

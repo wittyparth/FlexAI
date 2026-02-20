@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { 
   StartWorkoutInput, 
   LogSetInput, 
+  UpdateSetInput,
   WorkoutExercise, 
   WorkoutSet,
   Workout 
@@ -53,6 +54,7 @@ interface WorkoutActions {
   
   // Set Actions (Optimistic)
   logSet: (exerciseId: number, input: LogSetInput) => Promise<void>;
+  updateSet: (setId: string, input: UpdateSetInput) => Promise<void>;
   deleteSet: (exerciseId: number, setIds: string) => Promise<void>;
   
   // Exercise & Rest
@@ -299,6 +301,54 @@ export const useWorkoutStore = create<WorkoutState & WorkoutActions>()(
                 delete state.sets[tempId];
                 state.error = `Failed to log set: ${error.message}`;
             });
+        }
+      },
+
+      updateSet: async (setId, input) => {
+        const { activeWorkoutId, sets } = get();
+        if (!activeWorkoutId) {
+          const message = 'No active workout';
+          set({ error: message });
+          throw new Error(message);
+        }
+
+        const existingSet = sets[setId];
+        if (!existingSet) {
+          const message = 'Set not found';
+          set({ error: message });
+          throw new Error(message);
+        }
+
+        if (setId.startsWith('temp_')) {
+          const message = 'Set is still syncing. Please try again in a moment.';
+          set({ error: message });
+          throw new Error(message);
+        }
+
+        const previousSet = { ...existingSet };
+
+        // Optimistic update
+        set((state) => {
+          state.sets[setId] = {
+            ...state.sets[setId],
+            ...input,
+          };
+        });
+
+        try {
+          const response = await workoutApi.updateSet(activeWorkoutId, setId, input);
+          const updatedSet = response.data as unknown as WorkoutSet;
+
+          set((state) => {
+            state.sets[updatedSet.id] = updatedSet;
+          });
+        } catch (error: any) {
+          const message = error.message || 'Failed to update set';
+          set((state) => {
+            state.sets[setId] = previousSet;
+            state.error = message;
+          });
+          throw new Error(message);
         }
       },
 

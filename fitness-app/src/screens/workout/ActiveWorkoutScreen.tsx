@@ -51,6 +51,7 @@ export function ActiveWorkoutScreen({ navigation, route }: any) {
     repsInput,
     rpeInput,
     setType,
+    editingSetId,
     expandedExerciseId,
     lastLoggedSet,
 
@@ -59,6 +60,7 @@ export function ActiveWorkoutScreen({ navigation, route }: any) {
     handleLogSet,
     handleSkipRest,
     handleExpandExercise,
+    beginEditSet,
     cycleSetType,
 
     // Store actions
@@ -264,12 +266,14 @@ export function ActiveWorkoutScreen({ navigation, route }: any) {
               repsInput={isActiveExercise ? repsInput : ''}
               rpeInput={isActiveExercise ? rpeInput : null}
               setType={isActiveExercise ? setType : 'working'}
+              editingSetId={isActiveExercise ? editingSetId : null}
               isLoading={isLoading}
               onToggleExpand={handleExpandExercise}
               onWeightChange={(v) => dispatch({ type: 'UPDATE_INPUT', field: 'weightInput', value: v })}
               onRepsChange={(v) => dispatch({ type: 'UPDATE_INPUT', field: 'repsInput', value: v })}
               onRpeChange={(v) => dispatch({ type: 'SET_RPE', value: v })}
               onSetTypeChange={cycleSetType}
+              onBeginEditSet={beginEditSet}
               onLogSet={() => handleLogSet(exercise.id)}
               onDeleteSet={deleteSet}
               onRemoveExercise={handleRemoveExercise}

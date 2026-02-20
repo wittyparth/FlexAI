@@ -22,6 +22,7 @@ interface ActiveWorkoutState {
   repsInput: string;
   rpeInput: number | null;
   setType: SetType;
+  editingSetId: string | null;
   expandedExerciseId: number | null;
   lastLoggedSet: { weight: number; reps: number; rpe?: number; setType: SetType } | null;
 }
@@ -30,6 +31,9 @@ type Action =
   | { type: 'UPDATE_INPUT'; field: 'weightInput' | 'repsInput'; value: string }
   | { type: 'SET_RPE'; value: number | null }
   | { type: 'SET_SET_TYPE'; value: SetType }
+  | { type: 'SET_EXPANDED_EXERCISE'; exerciseId: number }
+  | { type: 'START_EDIT_SET'; setId: string; weight: string; reps: string; rpe: number | null; setType: SetType }
+  | { type: 'CLEAR_EDIT_SET' }
   | { type: 'LOG_SET_SUCCESS'; weight: number; reps: number; rpe?: number; setType: SetType }
   | { type: 'CHANGE_EXERCISE'; exerciseId: number; prefillWeight?: string; prefillReps?: string; restSeconds?: number }
   | { type: 'EXPAND_EXERCISE'; exerciseId: number | null }
@@ -52,9 +56,32 @@ function reducer(state: ActiveWorkoutState, action: Action): ActiveWorkoutState 
     case 'SET_SET_TYPE':
       return { ...state, setType: action.value };
 
+    case 'SET_EXPANDED_EXERCISE':
+      return { ...state, expandedExerciseId: action.exerciseId };
+
+    case 'START_EDIT_SET':
+      return {
+        ...state,
+        editingSetId: action.setId,
+        weightInput: action.weight,
+        repsInput: action.reps,
+        rpeInput: action.rpe,
+        setType: action.setType,
+      };
+
+    case 'CLEAR_EDIT_SET':
+      return {
+        ...state,
+        editingSetId: null,
+        repsInput: '',
+        rpeInput: null,
+        setType: 'working',
+      };
+
     case 'LOG_SET_SUCCESS':
       return {
         ...state,
+        editingSetId: null,
         // Keep weight for next set (same exercise), clear reps
         repsInput: '',
         rpeInput: null,
@@ -70,6 +97,7 @@ function reducer(state: ActiveWorkoutState, action: Action): ActiveWorkoutState 
     case 'CHANGE_EXERCISE':
       return {
         ...state,
+        editingSetId: null,
         weightInput: action.prefillWeight || '',
         repsInput: action.prefillReps || '',
         rpeInput: null,
@@ -81,12 +109,14 @@ function reducer(state: ActiveWorkoutState, action: Action): ActiveWorkoutState 
     case 'EXPAND_EXERCISE':
       return {
         ...state,
+        editingSetId: null,
         expandedExerciseId: state.expandedExerciseId === action.exerciseId ? null : action.exerciseId,
       };
 
     case 'RESET_INPUTS':
       return {
         ...state,
+        editingSetId: null,
         weightInput: '',
         repsInput: '',
         rpeInput: null,
@@ -123,6 +153,7 @@ export function useActiveWorkout() {
 
   const {
     logSet: storeLogSet,
+    updateSet: storeUpdateSet,
     deleteSet: storeDeleteSet,
     addExercise: storeAddExercise,
     removeExercise: storeRemoveExercise,
@@ -135,6 +166,7 @@ export function useActiveWorkout() {
     stopRest,
   } = useWorkoutStore(useShallow(state => ({
     logSet: state.logSet,
+    updateSet: state.updateSet,
     deleteSet: state.deleteSet,
     addExercise: state.addExercise,
     removeExercise: state.removeExercise,
@@ -185,6 +217,7 @@ export function useActiveWorkout() {
     repsInput: '',
     rpeInput: null,
     setType: 'working' as SetType,
+    editingSetId: null,
     expandedExerciseId: initialExpandedId,
     lastLoggedSet: null,
   });
@@ -213,6 +246,17 @@ export function useActiveWorkout() {
     if (reps === 0) return { success: false, error: 'Missing reps' };
 
     try {
+      if (state.editingSetId) {
+        await storeUpdateSet(state.editingSetId, {
+          weight,
+          reps,
+          rpe: state.rpeInput || undefined,
+          setType: state.setType,
+        });
+        dispatch({ type: 'CLEAR_EDIT_SET' });
+        return { success: true };
+      }
+
       await storeLogSet(exerciseId, {
         weight,
         reps,
@@ -246,7 +290,7 @@ export function useActiveWorkout() {
     } catch (error) {
       return { success: false, error: 'Failed to log set' };
     }
-  }, [state.weightInput, state.repsInput, state.rpeInput, state.setType, storeLogSet, store.exercisesMap, setsByExercise, exercises, startRest, setCurrentExercise]);
+  }, [state.weightInput, state.repsInput, state.rpeInput, state.setType, state.editingSetId, storeLogSet, storeUpdateSet, store.exercisesMap, setsByExercise, exercises, startRest, setCurrentExercise]);
 
   const handleSkipRest = useCallback(() => {
     stopRest();
@@ -273,6 +317,20 @@ export function useActiveWorkout() {
     dispatch({ type: 'UPDATE_INPUT', field: 'weightInput', value: prefillWeight });
     dispatch({ type: 'UPDATE_INPUT', field: 'repsInput', value: prefillReps });
   }, [store.exercisesMap, setsByExercise, setCurrentExercise]);
+
+  const beginEditSet = useCallback((setId: string, setItem: WorkoutSet) => {
+    const exerciseId = setItem.workoutExerciseId;
+    setCurrentExercise(exerciseId);
+    dispatch({ type: 'SET_EXPANDED_EXERCISE', exerciseId });
+    dispatch({
+      type: 'START_EDIT_SET',
+      setId,
+      weight: setItem.weight?.toString() || '',
+      reps: setItem.reps?.toString() || '',
+      rpe: setItem.rpe ?? null,
+      setType: (setItem.setType as SetType) || 'working',
+    });
+  }, [setCurrentExercise]);
 
   const cycleSetType = useCallback(() => {
     const currentIndex = SET_TYPE_CYCLE.indexOf(state.setType);
@@ -321,6 +379,7 @@ export function useActiveWorkout() {
     handleLogSet,
     handleSkipRest,
     handleExpandExercise,
+    beginEditSet,
     cycleSetType,
 
     // Store actions

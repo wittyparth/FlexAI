@@ -56,6 +56,7 @@ interface Props {
   repsInput: string;
   rpeInput: number | null;
   setType: SetType;
+  editingSetId?: string | null;
   isLoading: boolean;
   previousWeight?: number;
   onToggleExpand: (exerciseId: number) => void;
@@ -63,6 +64,7 @@ interface Props {
   onRepsChange: (value: string) => void;
   onRpeChange: (value: number | null) => void;
   onSetTypeChange: () => void;
+  onBeginEditSet: (setId: string, setItem: WorkoutSet) => void;
   onLogSet: () => void;
   onDeleteSet: (exerciseId: number, setId: string) => void;
   onRemoveExercise?: (exerciseId: number) => void;
@@ -78,6 +80,7 @@ export const ExerciseCard = memo(({
   repsInput,
   rpeInput,
   setType,
+  editingSetId,
   isLoading,
   previousWeight,
   onToggleExpand,
@@ -85,6 +88,7 @@ export const ExerciseCard = memo(({
   onRepsChange,
   onRpeChange,
   onSetTypeChange,
+  onBeginEditSet,
   onLogSet,
   onDeleteSet,
   onRemoveExercise,
@@ -204,12 +208,14 @@ export const ExerciseCard = memo(({
           repsInput={repsInput}
           rpeInput={rpeInput}
           setType={setType}
+          editingSetId={editingSetId}
           isActive={isActive}
           isLoading={isLoading}
           onWeightChange={onWeightChange}
           onRepsChange={onRepsChange}
           onRpeChange={onRpeChange}
           onSetTypeChange={onSetTypeChange}
+          onBeginEditSet={onBeginEditSet}
           onLogSet={onLogSet}
           onDeleteSet={onDeleteSet}
         />

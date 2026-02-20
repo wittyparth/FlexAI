@@ -32,9 +32,9 @@ export function PublicRoutinesScreen({ navigation }: any) {
 
     const renderRoutine = ({ item }: { item: typeof ROUTINES[0] }) => (
         <TouchableOpacity style={[styles.routineCard, { backgroundColor: colors.card, borderColor: colors.border }]} onPress={() => navigation.navigate('RoutineTemplate', { routineId: item.id })}>
-            <LinearGradient colors={colors.primary.gradient as [string, string]} style={styles.routineImage}>
+            <View style={[styles.routineImage, { backgroundColor: colors.primary.main }]}>
                 <MaterialCommunityIcons name="clipboard-list-outline" size={28} color="#FFF" />
-            </LinearGradient>
+            </View>
             <View style={styles.routineInfo}>
                 <Text style={[styles.routineName, { color: colors.foreground }]}>{item.name}</Text>
                 <Text style={[styles.routineDesc, { color: colors.mutedForeground }]} numberOfLines={1}>{item.description}</Text>

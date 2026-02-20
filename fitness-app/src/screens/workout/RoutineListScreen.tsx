@@ -25,10 +25,10 @@ const CARD_WIDTH = (width - 48) / 2;
 const TABS = ['My Plans', 'Discover'];
 const FILTERS = ['All', 'Strength', 'Hypertrophy', 'Cardio', 'Mobility'];
 
-export function RoutineListScreen({ navigation }: any) {
+export function RoutineListScreen({ navigation, route }: any) {
     const colors = useColors();
     const insets = useSafeAreaInsets();
-    const [activeTab, setActiveTab] = useState('My Plans');
+    const [activeTab, setActiveTab] = useState(route.params?.initialTab || 'My Plans');
     const [searchQuery, setSearchQuery] = useState('');
     const [activeFilter, setActiveFilter] = useState('All');
 
@@ -191,11 +191,9 @@ export function RoutineListScreen({ navigation }: any) {
                                 >
                                     {/* Placeholder Gradient if no image (Backend might not have images yet) */}
                                     <View style={[styles.cardImageContainer, { backgroundColor: colors.muted }]}>
-                                        <LinearGradient
-                                            colors={themeColors.primary.gradient as [string, string]}
-                                            style={[StyleSheet.absoluteFill, { opacity: 0.1 }]}
-                                            start={{ x: 0, y: 0 }}
-                                            end={{ x: 1, y: 1 }}
+
+                                        <View
+                                            style={[StyleSheet.absoluteFill, { backgroundColor: colors.primary.main, opacity: 0.1 }]}
                                         />
                                         <MaterialCommunityIcons name="notebook" size={32} color={colors.primary.main} style={{ opacity: 0.5 }} />
 

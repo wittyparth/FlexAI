@@ -35,6 +35,7 @@ interface WorkoutState {
 interface WorkoutActions {
   // Core Actions
   startWorkout: (input: StartWorkoutInput) => Promise<void>;
+  startMockWorkout: (name: string, exercises?: any[]) => void; // No API needed
   resumeWorkout: () => Promise<void>; // Hydrate from API if needed
   cancelWorkout: () => Promise<void>;
   completeWorkout: (input: any) => Promise<void>;
@@ -73,6 +74,44 @@ export const useWorkoutStore = create<WorkoutState & WorkoutActions>()(
 
       // ACTIONS
       // ----------------------------------------------------------------------
+
+      startMockWorkout: (name: string, exercises?: any[]) => {
+        // Default mock exercises if none provided
+        const defaultExercises = exercises || [
+          {
+            id: 1, orderIndex: 0, targetSets: 3, targetRepsMin: 8, targetRepsMax: 12,
+            targetWeight: 135, restSeconds: 90, notes: 'Keep chest up',
+            exercise: { id: 1, name: 'Barbell Bench Press', muscleGroup: 'Chest', exerciseType: 'Strength' }
+          },
+          {
+            id: 2, orderIndex: 1, targetSets: 3, targetRepsMin: 5, targetRepsMax: 8,
+            targetWeight: 225, restSeconds: 120, notes: 'Full depth',
+            exercise: { id: 2, name: 'Barbell Squat', muscleGroup: 'Legs', exerciseType: 'Strength' }
+          },
+          {
+            id: 3, orderIndex: 2, targetSets: 4, targetRepsMin: 6, targetRepsMax: 10,
+            targetWeight: 185, restSeconds: 90, notes: 'Hinge at hip',
+            exercise: { id: 3, name: 'Romanian Deadlift', muscleGroup: 'Hamstrings', exerciseType: 'Strength' }
+          },
+          {
+            id: 4, orderIndex: 3, targetSets: 3, targetRepsMin: 10, targetRepsMax: 15,
+            targetWeight: 50, restSeconds: 60,
+            exercise: { id: 4, name: 'Cable Row', muscleGroup: 'Back', exerciseType: 'Strength' }
+          },
+        ];
+        set((state: any) => {
+          state.activeWorkoutId = 9999; // Mock ID
+          state.workoutName = name;
+          state.startTime = new Date().toISOString();
+          state.status = 'in_progress';
+          state.exercises = {};
+          state.sets = {};
+          state.elapsedSeconds = 0;
+          defaultExercises.forEach((ex: any) => {
+            state.exercises[ex.id] = ex;
+          });
+        });
+      },
 
       startWorkout: async (input) => {
         set({ isLoading: true, error: null });
@@ -181,6 +220,9 @@ export const useWorkoutStore = create<WorkoutState & WorkoutActions>()(
             state.sets[tempId] = newSet;
         });
 
+        // Mock mode: skip API call
+        if (activeWorkoutId === 9999) return;
+
         // 3. API Call
         try {
             const reponse = await workoutApi.logSet(activeWorkoutId, exerciseId, input);
@@ -225,20 +267,31 @@ export const useWorkoutStore = create<WorkoutState & WorkoutActions>()(
 
       cancelWorkout: async () => {
         const { activeWorkoutId } = get();
-        if (!activeWorkoutId) return;
+        // Allow cancel even without active workout (safety)
+        if (!activeWorkoutId || activeWorkoutId === 9999) {
+            set(initialState);
+            return;
+        }
 
         set({ isLoading: true });
         try {
             await workoutApi.cancelWorkout(activeWorkoutId);
-            set(initialState); // Reset all
+            set(initialState);
         } catch (error: any) {
-            set({ isLoading: false, error: 'Failed to cancel' });
+            // Still reset even on API failure so user isn't stuck
+            set(initialState);
         }
       },
 
       completeWorkout: async (input) => {
           const { activeWorkoutId } = get();
           if (!activeWorkoutId) return;
+
+          // Mock mode: skip API call
+          if (activeWorkoutId === 9999) {
+              set(initialState);
+              return;
+          }
           
           set({ isLoading: true });
           try {

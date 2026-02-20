@@ -31,6 +31,7 @@ import { SessionInsightsScreen } from '../screens/workout/SessionInsightsScreen'
 import { AIGeneratorScreen } from '../screens/workout/AIGeneratorScreen';
 import { AIPreviewScreen } from '../screens/workout/AIPreviewScreen';
 import { AIPromptsScreen } from '../screens/workout/AIPromptsScreen';
+import { AIRoutinePlannerScreen } from '../screens/workout/AIRoutinePlannerScreen';
 
 const Stack = createStackNavigator<WorkoutStackParamList>();
 
@@ -83,6 +84,7 @@ export function WorkoutNavigator() {
                 component={AIPromptsScreen}
                 options={{ presentation: 'modal' }}
             />
+            <Stack.Screen name="AIRoutinePlanner" component={AIRoutinePlannerScreen} />
         </Stack.Navigator>
     );
 }

@@ -25,7 +25,7 @@ export function MainDrawer() {
                 drawerPosition: 'right',
                 drawerType: isLargeScreen ? 'permanent' : 'front',
                 drawerStyle: {
-                    backgroundColor: colors.card,
+                    backgroundColor: colors.background,
                     width: isLargeScreen ? 320 : '80%',
                 },
                 drawerActiveTintColor: colors.primary.main,

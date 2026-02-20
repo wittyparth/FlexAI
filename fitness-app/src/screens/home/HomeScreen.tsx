@@ -1,18 +1,3 @@
-/**
- * Elite Home Dashboard - Pixel-Perfect Recreation
- * 
- * Features:
- * - Calistoga font for headings
- * - JetBrains Mono for numbers/metrics
- * - Material Design icons
- * - Gradient CTA button
- * - Horizontal scrolling metrics
- * - Animated streak badge
- * - Light/Dark mode support
- * - Drawer navigation trigger
- * - Hardcoded dummy data for UI demonstration
- */
-
 import React, { useEffect, useRef } from 'react';
 import {
     View,
@@ -24,839 +9,457 @@ import {
     Dimensions,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '../../contexts';
-
-const { width: SCREEN_WIDTH } = Dimensions.get('window');
-
-// =============================================================================
-// DESIGN TOKENS - Matching dashboard.html exactly
-// =============================================================================
-
-const COLORS = {
-    light: {
-        primary: '#0d59f2',
-        primaryDark: '#0b4ecf',
-        accent: '#00f2fe',
-        background: '#f8f9fc',
-        card: '#ffffff',
-        textMain: '#0d121c',
-        textMuted: '#64748b',
-        orange: '#f97316',
-        orangeLight: '#fff7ed',
-        orangeBorder: '#ffedd5',
-        blueLight: '#eff6ff',
-        greenLight: '#ecfdf5',
-        green: '#10b981',
-        border: '#f1f5f9',
-        iconBg: '#f8fafc',
-    },
-    dark: {
-        primary: '#3b82f6',
-        primaryDark: '#2563eb',
-        accent: '#00f2fe',
-        background: '#101622',
-        card: '#1a2332',
-        textMain: '#f1f5f9',
-        textMuted: '#94a3b8',
-        orange: '#fb923c',
-        orangeLight: '#431407',
-        orangeBorder: '#7c2d12',
-        blueLight: '#1e3a5f',
-        greenLight: '#064e3b',
-        green: '#34d399',
-        border: '#2d3748',
-        iconBg: '#1e293b',
-    },
-};
-
-const FONTS = {
-    calistoga: 'Calistoga',
-    inter: 'Inter',
-    interMedium: 'Inter-Medium',
-    interSemiBold: 'Inter-SemiBold',
-    interBold: 'Inter-Bold',
-    mono: 'JetBrainsMono',
-};
-
-
+import { WorkoutHeatmap } from '../../components/WorkoutHeatmap';
 import {
     DUMMY_USER,
     DUMMY_METRICS,
     DUMMY_RECENT_WORKOUTS,
+    ACTIVE_WORKOUT_TODAY,
+    HEATMAP_DATA,
+    TODAYS_PLANNED_WORKOUT,
 } from '../../data/mockData';
 
-const QUICK_ACTIONS = [
-    { id: 'templates', label: 'Templates', iconName: 'file-document-outline' as const, route: 'RoutineList' },
-    { id: 'exercises', label: 'Exercises', iconName: 'dumbbell' as const, route: 'ExerciseLibrary' },
-    { id: 'progress', label: 'Progress', iconName: 'chart-line' as const, route: 'StatsScreen' },
-    { id: 'coach', label: 'Coach', iconName: 'account-outline' as const, route: 'AICoachChat' },
-];
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
-
-// =============================================================================
-// HELPER FUNCTIONS
-// =============================================================================
-
-const formatVolume = (value: number): string => {
-    if (value >= 1000) {
-        return `${(value / 1000).toFixed(1)}k`;
-    }
-    return value.toString();
+// ============================================================
+// DESIGN TOKENS
+// ============================================================
+const C = {
+    dark: {
+        bg: '#0A0E1A',
+        card: '#131C2E',
+        cardBorder: '#1F2D45',
+        text: '#F1F5FF',
+        muted: '#7A8BAA',
+        primary: '#3B82F6',
+        primaryGlow: 'rgba(59,130,246,0.25)',
+        orange: '#F97316',
+        orangeBg: '#1A0D00',
+        green: '#34D399',
+        greenBg: '#001A10',
+        surface: '#1A2540',
+    },
+    light: {
+        bg: '#F0F4FF',
+        card: '#FFFFFF',
+        cardBorder: '#E2E8F8',
+        text: '#0D1526',
+        muted: '#64748B',
+        primary: '#2563EB',
+        primaryGlow: 'rgba(37,99,235,0.15)',
+        orange: '#EA6C00',
+        orangeBg: '#FFF3E0',
+        green: '#059669',
+        greenBg: '#ECFDF5',
+        surface: '#EEF2FF',
+    },
 };
 
-const formatVolumeWithCommas = (value: number): string => {
-    return value.toLocaleString();
+const FNT = {
+    display: 'Calistoga',
+    mono: 'JetBrainsMono',
+    bold: 'Inter-Bold',
+    semi: 'Inter-SemiBold',
+    medium: 'Inter-Medium',
+    regular: 'Inter',
 };
 
-const getGreeting = (): string => {
-    const hour = new Date().getHours();
-    if (hour < 12) return 'Good morning';
-    if (hour < 18) return 'Good afternoon';
+const getGreeting = () => {
+    const h = new Date().getHours();
+    if (h < 12) return 'Good morning';
+    if (h < 18) return 'Good afternoon';
     return 'Good evening';
 };
 
-// =============================================================================
-// COMPONENTS
-// =============================================================================
+const fmtVol = (v: number) => (v >= 1000 ? `${(v / 1000).toFixed(1)}k` : v.toString());
+const fmtDuration = (secs: number) => `${Math.floor(secs / 60)}m`;
 
-// Animated Streak Badge
-const StreakBadge: React.FC<{ streak: number; colors: typeof COLORS.light }> = ({ streak, colors }) => {
+// ============================================================
+// ACTIVE WORKOUT BANNER
+// ============================================================
+function ActiveWorkoutBanner({ workout, onPress }: { workout: typeof ACTIVE_WORKOUT_TODAY; onPress: () => void }) {
     const pulseAnim = useRef(new Animated.Value(1)).current;
-    const pingAnim = useRef(new Animated.Value(0)).current;
-
     useEffect(() => {
         Animated.loop(
             Animated.sequence([
-                Animated.timing(pulseAnim, {
-                    toValue: 1.1,
-                    duration: 1000,
-                    useNativeDriver: true,
-                }),
-                Animated.timing(pulseAnim, {
-                    toValue: 1,
-                    duration: 1000,
-                    useNativeDriver: true,
-                }),
-            ])
-        ).start();
-
-        Animated.loop(
-            Animated.sequence([
-                Animated.timing(pingAnim, {
-                    toValue: 1,
-                    duration: 1500,
-                    useNativeDriver: true,
-                }),
-                Animated.timing(pingAnim, {
-                    toValue: 0,
-                    duration: 0,
-                    useNativeDriver: true,
-                }),
+                Animated.timing(pulseAnim, { toValue: 1.2, duration: 900, useNativeDriver: true }),
+                Animated.timing(pulseAnim, { toValue: 1, duration: 900, useNativeDriver: true }),
             ])
         ).start();
     }, []);
 
+    const elapsed = Math.floor((Date.now() - new Date(workout.startedAt).getTime()) / 60000);
+    const pct = (workout.exercisesDone / workout.totalExercises) * 100;
+
     return (
-        <View style={[styles.streakBadge, {
-            backgroundColor: colors.orangeLight,
-            borderColor: colors.orangeBorder
-        }]}>
-            <View style={styles.streakDotContainer}>
-                <Animated.View
-                    style={[
-                        styles.streakDotPing,
-                        {
-                            opacity: pingAnim.interpolate({
-                                inputRange: [0, 1],
-                                outputRange: [0.75, 0],
-                            }),
-                            transform: [{
-                                scale: pingAnim.interpolate({
-                                    inputRange: [0, 1],
-                                    outputRange: [1, 2],
-                                })
-                            }],
-                        },
-                    ]}
-                />
-                <LinearGradient
-                    colors={['#f97316', '#facc15']}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 1 }}
-                    style={styles.streakDotInner}
-                />
+        <TouchableOpacity onPress={onPress} activeOpacity={0.9} style={styles.activeBannerWrapper}>
+            <LinearGradient colors={['#1D4ED8', '#7C3AED']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.activeBannerGradient}>
+                <View style={styles.activeBannerRow}>
+                    <View style={styles.activeBannerLeft}>
+                        <View style={styles.activeDotRow}>
+                            <Animated.View style={[styles.activeDotPing, { transform: [{ scale: pulseAnim }] }]} />
+                            <View style={styles.activeDotCore} />
+                            <Text style={styles.activeLabel}>ACTIVE WORKOUT</Text>
+                        </View>
+                        <Text style={styles.activeName}>{workout.name}</Text>
+                        <Text style={styles.activeMeta}>{elapsed} min • {workout.exercisesDone}/{workout.totalExercises} exercises</Text>
+                    </View>
+                    <View style={styles.activeResumeBtn}>
+                        <Ionicons name="play" size={20} color="#FFF" />
+                    </View>
+                </View>
+                {/* Progress bar */}
+                <View style={styles.activeProgressBg}>
+                    <View style={[styles.activeProgressFill, { width: `${pct}%` }]} />
+                </View>
+            </LinearGradient>
+        </TouchableOpacity>
+    );
+}
+
+// ============================================================
+// TODAY'S PLAN SECTION
+// ============================================================
+function TodaysPlanCard({ plan, onPress, c }: { plan: typeof TODAYS_PLANNED_WORKOUT; onPress: () => void; c: typeof C.dark }) {
+    const MUSCLE_COLORS: Record<string, string> = {
+        Chest: '#3B82F6', Shoulders: '#8B5CF6', Triceps: '#10B981',
+        Back: '#F59E0B', Biceps: '#EC4899', Legs: '#EF4444', Core: '#14B8A6',
+    };
+    return (
+        <TouchableOpacity style={[styles.todayCard, { backgroundColor: c.card, borderColor: c.cardBorder }]} onPress={onPress} activeOpacity={0.8}>
+            <View style={styles.todayHeader}>
+                <View style={styles.todayHeaderLeft}>
+                    <View style={[styles.todayIconBg, { backgroundColor: c.primary + '20' }]}>
+                        <MaterialCommunityIcons name="calendar-check" size={18} color={c.primary} />
+                    </View>
+                    <View style={{ gap: 2 }}>
+                        <Text style={[styles.todayTitle, { color: c.text }]}>{plan.routineName}</Text>
+                        <Text style={[styles.todayMeta, { color: c.muted }]}>{plan.exercises.length} exercises • ~{plan.estimatedDuration} min</Text>
+                    </View>
+                </View>
+                <View style={[styles.startTodayBtn, { backgroundColor: c.primary }]}>
+                    <Ionicons name="play" size={14} color="#FFF" />
+                    <Text style={styles.startTodayBtnText}>Start</Text>
+                </View>
             </View>
-            <MaterialCommunityIcons name="fire" size={18} color={colors.orange} />
-            <Text style={[styles.streakNumber, { color: colors.orange }]}>{streak}</Text>
+            <View style={styles.todayExerciseList}>
+                {plan.exercises.slice(0, 4).map((ex, i) => (
+                    <View key={ex.id} style={styles.todayExRow}>
+                        <View style={[styles.todayExDot, { backgroundColor: MUSCLE_COLORS[ex.muscle] || c.primary }]} />
+                        <Text style={[styles.todayExName, { color: c.text }]}>{ex.name}</Text>
+                        <Text style={[styles.todayExSets, { color: c.muted, fontFamily: FNT.mono }]}>{ex.sets}×{ex.reps}</Text>
+                    </View>
+                ))}
+                {plan.exercises.length > 4 && (
+                    <Text style={[styles.todayMoreText, { color: c.muted }]}>+{plan.exercises.length - 4} more exercises</Text>
+                )}
+            </View>
+        </TouchableOpacity>
+    );
+}
+function MetricCard({ icon, label, value, unit, accent, bg }: {
+    icon: string; label: string; value: string; unit?: string; accent: string; bg: string;
+}) {
+    return (
+        <View style={[styles.metricCard, { backgroundColor: bg }]}>
+            <View style={[styles.metricIconBg, { backgroundColor: accent + '25' }]}>
+                <MaterialCommunityIcons name={icon as any} size={20} color={accent} />
+            </View>
+            <Text style={[styles.metricLabel, { color: accent + 'CC' }]}>{label}</Text>
+            <View style={styles.metricValRow}>
+                <Text style={[styles.metricVal, { color: accent === '#F97316' ? '#F97316' : '#F1F5FF' }]}>{value}</Text>
+                {unit && <Text style={[styles.metricUnit, { color: accent + '88' }]}>{unit}</Text>}
+            </View>
         </View>
     );
-};
-
-// Metric Card Component
-interface MetricCardProps {
-    icon: keyof typeof MaterialCommunityIcons.glyphMap;
-    iconColor: string;
-    iconBgColor: string;
-    decorColor: string;
-    label: string;
-    value: string;
-    unit?: string;
-    showPulse?: boolean;
-    colors: typeof COLORS.light;
 }
 
-const MetricCard: React.FC<MetricCardProps> = ({
-    icon,
-    iconColor,
-    iconBgColor,
-    decorColor,
-    label,
-    value,
-    unit,
-    showPulse,
-    colors,
-}) => (
-    <View style={[styles.metricCard, {
-        backgroundColor: colors.card,
-        borderColor: colors.border
-    }]}>
-        <View style={[styles.metricCardDecor, { backgroundColor: decorColor }]} />
-
-        <View style={styles.metricCardHeader}>
-            <View style={[styles.metricIconContainer, { backgroundColor: iconBgColor }]}>
-                <MaterialCommunityIcons name={icon} size={18} color={iconColor} />
+// ============================================================
+// RECENT WORKOUT ROW
+// ============================================================
+function WorkoutRow({ workout, onPress, c }: { workout: any; onPress: () => void; c: typeof C.dark }) {
+    return (
+        <TouchableOpacity style={[styles.wkRow, { backgroundColor: c.card, borderColor: c.cardBorder }]} onPress={onPress} activeOpacity={0.75}>
+            <View style={[styles.wkIcon, { backgroundColor: c.surface }]}>
+                <MaterialCommunityIcons name={workout.iconName} size={22} color={c.primary} />
             </View>
-            {showPulse && (
-                <View style={[styles.pulseDot, { backgroundColor: colors.primary }]} />
-            )}
-        </View>
-
-        <View style={styles.metricCardContent}>
-            <Text style={[styles.metricLabel, { color: colors.textMuted }]}>{label}</Text>
-            <View style={styles.metricValueRow}>
-                <Text style={[styles.metricValue, { color: colors.textMain }]}>{value}</Text>
-                {unit && <Text style={[styles.metricUnit, { color: colors.textMuted }]}>{unit}</Text>}
+            <View style={styles.wkInfo}>
+                <Text style={[styles.wkName, { color: c.text }]}>{workout.name}</Text>
+                <Text style={[styles.wkDate, { color: c.muted }]}>{workout.date} • {fmtDuration(workout.duration || 3600)}</Text>
             </View>
-        </View>
-    </View>
-);
-
-// Workout Activity Card
-interface WorkoutCardProps {
-    workout: typeof DUMMY_RECENT_WORKOUTS[0];
-    colors: typeof COLORS.light;
-    onPress?: () => void;
+            <View style={styles.wkRight}>
+                <Text style={[styles.wkVol, { color: c.text, fontFamily: FNT.mono }]}>{fmtVol(workout.volume)}</Text>
+                <Text style={[styles.wkVolUnit, { color: c.muted }]}>kg</Text>
+                {workout.hasPR && (
+                    <View style={[styles.prBadge, { backgroundColor: c.primary + '22' }]}>
+                        <Text style={[styles.prText, { color: c.primary }]}>PR</Text>
+                    </View>
+                )}
+            </View>
+        </TouchableOpacity>
+    );
 }
 
-const WorkoutCard: React.FC<WorkoutCardProps> = ({ workout, colors, onPress }) => (
-    <TouchableOpacity
-        style={[styles.workoutCard, {
-            backgroundColor: colors.card,
-            borderColor: colors.border
-        }]}
-        activeOpacity={0.7}
-        onPress={onPress}
-    >
-        <View style={styles.workoutCardLeft}>
-            <View style={[styles.workoutIconContainer, { backgroundColor: colors.iconBg }]}>
-                <MaterialCommunityIcons
-                    name={workout.iconName}
-                    size={24}
-                    color={colors.textMain}
-                />
-            </View>
-            <View style={styles.workoutInfo}>
-                <Text style={[styles.workoutName, { color: colors.textMain }]}>{workout.name}</Text>
-                <Text style={[styles.workoutDate, { color: colors.textMuted }]}>{workout.date}</Text>
-            </View>
-        </View>
-
-        <View style={styles.workoutCardRight}>
-            <Text style={[styles.workoutVolume, { color: colors.textMain }]}>
-                {formatVolumeWithCommas(workout.volume)} kg
-            </Text>
-            {workout.hasPR ? (
-                <LinearGradient
-                    colors={[colors.primary, colors.accent]}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 0 }}
-                    style={styles.prBadge}
-                >
-                    <Text style={styles.prBadgeText}>NEW PR</Text>
-                </LinearGradient>
-            ) : (
-                <Text style={[styles.standardLabel, { color: colors.textMuted }]}>Standard</Text>
-            )}
-        </View>
-    </TouchableOpacity>
-);
-
-// Quick Action Button
-interface QuickActionProps {
-    action: typeof QUICK_ACTIONS[0];
-    colors: typeof COLORS.light;
-    onPress?: () => void;
-}
-
-const QuickActionButton: React.FC<QuickActionProps> = ({ action, colors, onPress }) => (
-    <TouchableOpacity
-        style={[styles.quickActionCard, {
-            backgroundColor: colors.card,
-            borderColor: colors.border
-        }]}
-        activeOpacity={0.7}
-        onPress={onPress}
-    >
-        <View style={[styles.quickActionIcon, { backgroundColor: colors.blueLight }]}>
-            <MaterialCommunityIcons
-                name={action.iconName}
-                size={24}
-                color={colors.primary}
-            />
-        </View>
-        <Text style={[styles.quickActionLabel, { color: colors.textMain }]}>{action.label}</Text>
-    </TouchableOpacity>
-);
-
-// =============================================================================
+// ============================================================
 // MAIN COMPONENT
-// =============================================================================
-
+// ============================================================
 export function HomeScreen({ navigation }: any) {
     const insets = useSafeAreaInsets();
     const { isDark } = useTheme();
-    const colors = isDark ? COLORS.dark : COLORS.light;
+    const c = isDark ? C.dark : C.light;
 
-    const openDrawer = () => {
-        if (navigation.openDrawer) {
-            navigation.openDrawer();
-        }
+    const fadeAnim = useRef(new Animated.Value(0)).current;
+    useEffect(() => {
+        Animated.timing(fadeAnim, { toValue: 1, duration: 600, useNativeDriver: true }).start();
+    }, []);
+
+    const getTabNav = () => navigation.getParent() ?? navigation;
+    const getDrawerNav = () => navigation.getParent()?.getParent() ?? navigation;
+
+    const goToWorkout = () => {
+        getTabNav().navigate('WorkoutTab');
+    };
+
+    const goToAnalytics = (screen = 'AnalyticsHub') => {
+        getDrawerNav().navigate('Analytics', { screen });
     };
 
     return (
-        <View style={[styles.container, { backgroundColor: colors.background }]}>
+        <View style={[styles.container, { backgroundColor: c.bg }]}>
             <ScrollView
-                style={styles.scrollView}
-                contentContainerStyle={[
-                    styles.scrollContent,
-                    { paddingBottom: insets.bottom + 100 }
-                ]}
                 showsVerticalScrollIndicator={false}
+                contentContainerStyle={{ paddingBottom: insets.bottom + 100 }}
             >
-                {/* ========== HEADER ========== */}
-                <View style={[styles.header, {
-                    paddingTop: insets.top + 16,
-                    backgroundColor: colors.background
-                }]}>
-                    <View style={styles.headerContent}>
-                        <View style={styles.headerLeft}>
-                            {/* Menu Button for Drawer */}
-                            <TouchableOpacity
-                                style={[styles.menuButton, { backgroundColor: colors.card }]}
-                                onPress={openDrawer}
-                                activeOpacity={0.7}
-                            >
-                                <MaterialCommunityIcons
-                                    name="menu"
-                                    size={24}
-                                    color={colors.textMain}
-                                />
-                            </TouchableOpacity>
-                            <View style={styles.greetingContainer}>
-                                <Text style={[styles.dashboardLabel, { color: colors.textMuted }]}>
-                                    DASHBOARD
-                                </Text>
-                                <Text style={[styles.greeting, { color: colors.textMain }]}>
-                                    {getGreeting()},{'\n'}{DUMMY_USER.firstName}
-                                </Text>
-                            </View>
+                {/* ─── HEADER ─── */}
+                <View style={[styles.header, { paddingTop: insets.top + 16 }]}>
+                    <View style={styles.headerLeft}>
+                        <View style={styles.headerTextCol}>
+                            <Text style={[styles.headerSub, { color: c.muted }]}>DASHBOARD</Text>
+                            <Text style={[styles.headerTitle, { color: c.text, fontFamily: FNT.display }]}>
+                                {getGreeting()},{'\n'}{DUMMY_USER.firstName} 👋
+                            </Text>
                         </View>
-                        <StreakBadge streak={DUMMY_USER.streak} colors={colors} />
+                    </View>
+                    <View style={styles.headerRight}>
+                        {/* Streak badge */}
+                        <View style={[styles.streakBadge, { backgroundColor: c.orangeBg }]}>
+                            <Ionicons name="flame" size={16} color={c.orange} />
+                            <Text style={[styles.streakNum, { color: c.orange, fontFamily: FNT.mono }]}>{DUMMY_USER.streak}</Text>
+                        </View>
+                        {/* Notification */}
+                        <TouchableOpacity
+                            style={[styles.headerIconBtn, { backgroundColor: c.card, borderColor: c.cardBorder }]}
+                            onPress={() => navigation.navigate('HomeNotifications')}
+                        >
+                            <Ionicons name="notifications-outline" size={20} color={c.text} />
+                            <View style={styles.notifDot} />
+                        </TouchableOpacity>
                     </View>
                 </View>
 
-                {/* ========== MAIN CONTENT ========== */}
-                <View style={styles.mainContent}>
+                <Animated.View style={{ opacity: fadeAnim }}>
+                    {/* ─── ACTIVE WORKOUT BANNER ─── */}
+                    {ACTIVE_WORKOUT_TODAY.isActive && (
+                        <View style={styles.px}>
+                            <ActiveWorkoutBanner
+                                workout={ACTIVE_WORKOUT_TODAY}
+                                onPress={() => {
+                                    getTabNav().navigate('WorkoutTab', {
+                                        screen: 'ActiveWorkout',
+                                        params: { workoutId: 1 },
+                                    });
+                                }}
+                            />
+                        </View>
+                    )}
 
-                    {/* ========== START WORKOUT CTA ========== */}
-                    <TouchableOpacity
-                        style={styles.ctaWrapper}
-                        activeOpacity={0.95}
-                        onPress={() => navigation.navigate('WorkoutHub')}
-                    >
-                        <LinearGradient
-                            colors={[colors.primary, '#2563EB', colors.accent]}
-                            start={{ x: 0, y: 0 }}
-                            end={{ x: 1, y: 1 }}
-                            style={styles.ctaOuter}
-                        >
-                            <View style={styles.ctaInner}>
-                                <View style={styles.ctaTextContainer}>
-                                    <Text style={styles.ctaLabel}>READY TO TRAIN?</Text>
-                                    <Text style={styles.ctaTitle}>Start New Workout</Text>
-                                </View>
-                                <View style={styles.ctaPlayButton}>
-                                    <MaterialCommunityIcons
-                                        name="play"
-                                        size={28}
-                                        color="#FFFFFF"
-                                    />
-                                </View>
-
-                                {/* Decorative blurs */}
-                                <View style={styles.ctaBlur1} />
-                                <View style={styles.ctaBlur2} />
-                            </View>
-                        </LinearGradient>
-                    </TouchableOpacity>
-
-                    {/* ========== YOUR METRICS ========== */}
-                    <View style={styles.section}>
-                        <View style={styles.sectionHeader}>
-                            <Text style={[styles.sectionTitle, { color: colors.textMain }]}>
-                                Your Metrics
-                            </Text>
-                            <TouchableOpacity onPress={() => navigation.navigate('StatsScreen')}>
-                                <Text style={[styles.viewAllLink, { color: colors.primary }]}>
-                                    View All
-                                </Text>
+                    {/* ─── START WORKOUT CTA (when no active session) ─── */}
+                    {!ACTIVE_WORKOUT_TODAY.isActive && (
+                        <View style={styles.px}>
+                            <TouchableOpacity onPress={goToWorkout} activeOpacity={0.92} style={styles.ctaWrapper}>
+                                <LinearGradient
+                                    colors={[c.primary, '#7C3AED']}
+                                    start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}
+                                    style={styles.ctaGrad}
+                                >
+                                    <View style={styles.ctaContent}>
+                                        <View>
+                                            <Text style={styles.ctaLabel}>READY TO TRAIN?</Text>
+                                            <Text style={styles.ctaTitle}>Start Workout</Text>
+                                        </View>
+                                        <View style={styles.ctaPlay}>
+                                            <Ionicons name="play" size={24} color="#FFF" />
+                                        </View>
+                                    </View>
+                                    <View style={styles.ctaDecor1} />
+                                    <View style={styles.ctaDecor2} />
+                                </LinearGradient>
                             </TouchableOpacity>
                         </View>
+                    )}
 
-                        <ScrollView
-                            horizontal
-                            showsHorizontalScrollIndicator={false}
-                            contentContainerStyle={styles.metricsScroll}
-                            style={styles.metricsScrollView}
-                        >
-                            <MetricCard
-                                icon="dumbbell"
-                                iconColor={colors.primary}
-                                iconBgColor={colors.blueLight}
-                                decorColor={colors.blueLight}
-                                label="WEEKLY VOLUME"
-                                value={formatVolume(DUMMY_METRICS.weeklyVolume)}
-                                unit="kg"
-                                colors={colors}
+                    {/* ─── TODAY'S PLAN ─── */}
+                    {!ACTIVE_WORKOUT_TODAY.isActive && (
+                        <View style={styles.section}>
+                            <View style={styles.sectionHeader}>
+                                <Text style={[styles.sectionTitle, { color: c.text, fontFamily: FNT.display }]}>Today's Plan</Text>
+                                <TouchableOpacity onPress={() => getTabNav().navigate('WorkoutTab')}>
+                                    <Text style={[styles.linkText, { color: c.primary }]}>View Workout</Text>
+                                </TouchableOpacity>
+                            </View>
+                            <TodaysPlanCard
+                                plan={TODAYS_PLANNED_WORKOUT}
+                                c={c}
+                                onPress={() => {
+                                    getTabNav().navigate('WorkoutTab', {
+                                        screen: 'ActiveWorkout',
+                                        params: { routineId: TODAYS_PLANNED_WORKOUT.routineId },
+                                    });
+                                }}
                             />
-                            <MetricCard
-                                icon="trophy"
-                                iconColor={colors.orange}
-                                iconBgColor={colors.orangeLight}
-                                decorColor={colors.orangeLight}
-                                label="BEST STREAK"
-                                value={DUMMY_METRICS.bestStreak.toString()}
-                                unit="days"
-                                colors={colors}
-                            />
-                            <MetricCard
-                                icon="heart-pulse"
-                                iconColor={colors.green}
-                                iconBgColor={colors.greenLight}
-                                decorColor={colors.greenLight}
-                                label="RECOVERY"
-                                value={DUMMY_METRICS.recovery}
-                                showPulse
-                                colors={colors}
-                            />
+                        </View>
+                    )}
+
+                    {/* ─── METRICS ─── */}
+                    <View style={styles.section}>
+                        <View style={styles.sectionHeader}>
+                            <Text style={[styles.sectionTitle, { color: c.text, fontFamily: FNT.display }]}>Your Metrics</Text>
+                            <TouchableOpacity onPress={() => goToAnalytics('AnalyticsHub')}>
+                                <Text style={[styles.linkText, { color: c.primary }]}>View All</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.metricsScroll}>
+                            <MetricCard icon="dumbbell" label="WEEKLY VOL" value={fmtVol(DUMMY_METRICS.weeklyVolume)} unit="kg" accent="#3B82F6" bg={c.card} />
+                            <MetricCard icon="fire" label="STREAK" value={DUMMY_USER.streak.toString()} unit="days" accent="#F97316" bg={c.card} />
+                            <MetricCard icon="trophy" label="BEST STREAK" value={DUMMY_METRICS.bestStreak.toString()} unit="days" accent="#F59E0B" bg={c.card} />
+                            <MetricCard icon="heart-pulse" label="RECOVERY" value={DUMMY_METRICS.recovery} accent="#34D399" bg={c.card} />
                         </ScrollView>
                     </View>
 
-                    {/* ========== RECENT ACTIVITY ========== */}
+                    {/* ─── WEEKLY HEATMAP ─── */}
                     <View style={styles.section}>
-                        <Text style={[styles.sectionTitle, { color: colors.textMain, marginLeft: 4 }]}>
-                            Recent Activity
-                        </Text>
-                        <View style={styles.workoutsList}>
-                            {DUMMY_RECENT_WORKOUTS.map((workout) => (
-                                <WorkoutCard
-                                    key={workout.id}
-                                    workout={workout}
-                                    colors={colors}
-                                    onPress={() => { }}
-                                />
-                            ))}
+                        <Text style={[styles.sectionTitle, { color: c.text, fontFamily: FNT.display, marginBottom: 12 }]}>This Week</Text>
+                        <View style={[styles.heatmapCard, { backgroundColor: c.card, borderColor: c.cardBorder }]}>
+                            <WorkoutHeatmap data={HEATMAP_DATA} mode="7day" />
+                            <View style={styles.heatmapLegend}>
+                                <Text style={[styles.heatmapLegendText, { color: c.muted }]}>4 of 7 days active • 52.4k kg lifted</Text>
+                            </View>
                         </View>
                     </View>
 
-                    {/* ========== QUICK ACTIONS ========== */}
-                    <View style={styles.section}>
-                        <Text style={[styles.sectionTitle, { color: colors.textMain, marginLeft: 4 }]}>
-                            Quick Actions
-                        </Text>
-                        <View style={styles.quickActionsGrid}>
-                            {QUICK_ACTIONS.map((action) => (
-                                <QuickActionButton
-                                    key={action.id}
-                                    action={action}
-                                    colors={colors}
-                                    onPress={() => navigation.navigate(action.route)}
-                                />
-                            ))}
+                    {/* ─── RECENT ACTIVITY ─── */}
+                    <View style={[styles.section, styles.sectionLast]}>
+                        <View style={styles.sectionHeader}>
+                            <Text style={[styles.sectionTitle, { color: c.text, fontFamily: FNT.display }]}>Recent Activity</Text>
+                            <TouchableOpacity onPress={() => getTabNav().navigate('WorkoutTab', { screen: 'WorkoutHistory' })}>
+                                <Text style={[styles.linkText, { color: c.primary }]}>View All</Text>
+                            </TouchableOpacity>
                         </View>
+                        {DUMMY_RECENT_WORKOUTS.map(w => (
+                            <WorkoutRow key={w.id} workout={w} c={c} onPress={() => {
+                                getTabNav().navigate('WorkoutTab', { screen: 'WorkoutDetail', params: { workoutId: parseInt(w.id) } });
+                            }} />
+                        ))}
                     </View>
-                </View>
+                </Animated.View>
             </ScrollView>
         </View>
     );
 }
 
-// =============================================================================
+// ============================================================
 // STYLES
-// =============================================================================
-
+// ============================================================
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    scrollView: {
-        flex: 1,
-    },
-    scrollContent: {
-        flexGrow: 1,
-    },
+    container: { flex: 1 },
+    px: { paddingHorizontal: 20, marginBottom: 20 },
 
-    // ========== HEADER ==========
-    header: {
-        paddingHorizontal: 24,
-        paddingBottom: 16,
-    },
-    headerContent: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'flex-start',
-    },
-    headerLeft: {
-        flex: 1,
-        flexDirection: 'row',
-        alignItems: 'flex-start',
-        gap: 16,
-    },
-    menuButton: {
-        width: 44,
-        height: 44,
-        borderRadius: 12,
-        alignItems: 'center',
-        justifyContent: 'center',
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.05,
-        shadowRadius: 4,
-        elevation: 2,
-    },
-    greetingContainer: {
-        flex: 1,
-        gap: 4,
-    },
-    dashboardLabel: {
-        fontFamily: FONTS.interBold,
-        fontSize: 10,
-        letterSpacing: 2,
-        textTransform: 'uppercase',
-    },
-    greeting: {
-        fontFamily: FONTS.calistoga,
-        fontSize: 28,
-        lineHeight: 34,
-    },
+    // HEADER
+    header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', paddingHorizontal: 20, marginBottom: 24 },
+    headerLeft: { flex: 1 },
+    headerTextCol: { gap: 4 },
+    headerSub: { fontSize: 10, fontWeight: '700', letterSpacing: 2 },
+    headerTitle: { fontSize: 30, lineHeight: 36 },
+    headerRight: { flexDirection: 'row', alignItems: 'center', gap: 10 },
+    streakBadge: { flexDirection: 'row', alignItems: 'center', gap: 5, paddingHorizontal: 12, paddingVertical: 7, borderRadius: 20 },
+    streakNum: { fontSize: 16, fontWeight: '700' },
+    headerIconBtn: { width: 40, height: 40, borderRadius: 12, alignItems: 'center', justifyContent: 'center', borderWidth: 1, position: 'relative' },
+    notifDot: { position: 'absolute', top: 9, right: 9, width: 8, height: 8, borderRadius: 4, backgroundColor: '#EF4444', borderWidth: 1.5, borderColor: '#0A0E1A' },
 
-    // ========== STREAK BADGE ==========
-    streakBadge: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 8,
-        paddingHorizontal: 12,
-        paddingVertical: 6,
-        borderRadius: 999,
-        borderWidth: 1,
-    },
-    streakDotContainer: {
-        width: 12,
-        height: 12,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    streakDotPing: {
-        position: 'absolute',
-        width: 12,
-        height: 12,
-        borderRadius: 6,
-        backgroundColor: '#f97316',
-    },
-    streakDotInner: {
-        width: 12,
-        height: 12,
-        borderRadius: 6,
-    },
-    streakNumber: {
-        fontFamily: FONTS.mono,
-        fontSize: 14,
-        fontWeight: '700',
-    },
+    // ACTIVE BANNER
+    activeBannerWrapper: { borderRadius: 20, shadowColor: '#3B82F6', shadowOffset: { width: 0, height: 8 }, shadowOpacity: 0.3, shadowRadius: 16, elevation: 10, marginBottom: 4 },
+    activeBannerGradient: { borderRadius: 20, padding: 18 },
+    activeBannerRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 },
+    activeBannerLeft: { flex: 1, gap: 4 },
+    activeDotRow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 2 },
+    activeDotPing: { position: 'absolute', width: 10, height: 10, borderRadius: 5, backgroundColor: '#FFF', opacity: 0.5 },
+    activeDotCore: { width: 10, height: 10, borderRadius: 5, backgroundColor: '#FFF' },
+    activeLabel: { fontSize: 10, fontWeight: '800', color: 'rgba(255,255,255,0.75)', letterSpacing: 1.5, marginLeft: 18 },
+    activeName: { fontSize: 20, fontWeight: '800', color: '#FFF' },
+    activeMeta: { fontSize: 13, color: 'rgba(255,255,255,0.7)' },
+    activeResumeBtn: { width: 48, height: 48, borderRadius: 24, backgroundColor: 'rgba(255,255,255,0.2)', alignItems: 'center', justifyContent: 'center' },
+    activeProgressBg: { height: 6, backgroundColor: 'rgba(255,255,255,0.2)', borderRadius: 3, overflow: 'hidden' },
+    activeProgressFill: { height: '100%', borderRadius: 3, backgroundColor: '#FFF' },
 
-    // ========== MAIN CONTENT ==========
-    mainContent: {
-        paddingHorizontal: 24,
-        gap: 32,
-    },
+    // START WORKOUT CTA
+    ctaWrapper: { borderRadius: 22, shadowColor: '#2563EB', shadowOffset: { width: 0, height: 10 }, shadowOpacity: 0.35, shadowRadius: 20, elevation: 10 },
+    ctaGrad: { borderRadius: 22, overflow: 'hidden' },
+    ctaContent: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 22 },
+    ctaLabel: { fontSize: 10, fontWeight: '800', color: 'rgba(255,255,255,0.7)', letterSpacing: 1.5, marginBottom: 4 },
+    ctaTitle: { fontSize: 26, fontWeight: '800', color: '#FFF' },
+    ctaPlay: { width: 52, height: 52, borderRadius: 26, backgroundColor: 'rgba(255,255,255,0.2)', alignItems: 'center', justifyContent: 'center' },
+    ctaDecor1: { position: 'absolute', width: 100, height: 100, borderRadius: 50, backgroundColor: 'rgba(255,255,255,0.08)', right: -20, bottom: -30 },
+    ctaDecor2: { position: 'absolute', width: 60, height: 60, borderRadius: 30, backgroundColor: 'rgba(255,255,255,0.06)', left: -10, top: -15 },
 
-    // ========== CTA BUTTON ==========
-    ctaWrapper: {
-        borderRadius: 24,
-        shadowColor: '#0d59f2',
-        shadowOffset: { width: 0, height: 10 },
-        shadowOpacity: 0.3,
-        shadowRadius: 20,
-        elevation: 10,
-    },
-    ctaOuter: {
-        borderRadius: 24,
-        padding: 4,
-    },
-    ctaInner: {
-        borderRadius: 20,
-        padding: 24,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        overflow: 'hidden',
-    },
-    ctaTextContainer: {
-        flex: 1,
-        gap: 4,
-    },
-    ctaLabel: {
-        fontFamily: FONTS.interBold,
-        fontSize: 10,
-        letterSpacing: 1.2,
-        color: 'rgba(255, 255, 255, 0.8)',
-        textTransform: 'uppercase',
-    },
-    ctaTitle: {
-        fontFamily: FONTS.interBold,
-        fontSize: 24,
-        color: '#FFFFFF',
-        letterSpacing: -0.5,
-    },
-    ctaPlayButton: {
-        width: 48,
-        height: 48,
-        borderRadius: 24,
-        backgroundColor: 'rgba(255, 255, 255, 0.2)',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    ctaBlur1: {
-        position: 'absolute',
-        right: -24,
-        bottom: -24,
-        width: 128,
-        height: 128,
-        borderRadius: 64,
-        backgroundColor: 'rgba(255, 255, 255, 0.1)',
-    },
-    ctaBlur2: {
-        position: 'absolute',
-        left: -24,
-        top: -24,
-        width: 96,
-        height: 96,
-        borderRadius: 48,
-        backgroundColor: 'rgba(255, 255, 255, 0.1)',
-    },
+    // SECTIONS
+    section: { paddingHorizontal: 20, marginBottom: 28 },
+    sectionLast: { marginBottom: 0 },
+    sectionHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 14 },
+    sectionTitle: { fontSize: 21 },
+    linkText: { fontSize: 13, fontWeight: '600' },
 
-    // ========== SECTIONS ==========
-    section: {
-        gap: 12,
-    },
-    sectionHeader: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'flex-end',
-        paddingHorizontal: 4,
-    },
-    sectionTitle: {
-        fontFamily: FONTS.calistoga,
-        fontSize: 20,
-    },
-    viewAllLink: {
-        fontFamily: FONTS.interMedium,
-        fontSize: 12,
-    },
+    // METRICS
+    metricsScroll: { gap: 12, paddingRight: 4 },
+    metricCard: { width: 140, padding: 16, borderRadius: 18, gap: 10 },
+    metricIconBg: { width: 38, height: 38, borderRadius: 11, alignItems: 'center', justifyContent: 'center' },
+    metricLabel: { fontSize: 10, fontWeight: '700', letterSpacing: 0.8 },
+    metricValRow: { flexDirection: 'row', alignItems: 'baseline', gap: 3 },
+    metricVal: { fontSize: 26, fontWeight: '800' },
+    metricUnit: { fontSize: 13 },
 
-    // ========== METRICS ==========
-    metricsScrollView: {
-        marginHorizontal: -24,
-    },
-    metricsScroll: {
-        paddingHorizontal: 24,
-        paddingBottom: 24,
-        paddingTop: 8,
-        gap: 16,
-    },
-    metricCard: {
-        minWidth: 160,
-        padding: 20,
-        borderRadius: 16,
-        borderWidth: 1,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 10 },
-        shadowOpacity: 0.05,
-        shadowRadius: 25,
-        elevation: 5,
-        position: 'relative',
-        overflow: 'hidden',
-    },
-    metricCardDecor: {
-        position: 'absolute',
-        top: -16,
-        right: -16,
-        width: 64,
-        height: 64,
-        borderBottomLeftRadius: 999,
-    },
-    metricCardHeader: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginBottom: 12,
-        zIndex: 1,
-    },
-    metricIconContainer: {
-        width: 32,
-        height: 32,
-        borderRadius: 8,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    pulseDot: {
-        width: 8,
-        height: 8,
-        borderRadius: 4,
-        shadowOffset: { width: 0, height: 0 },
-        shadowOpacity: 0.6,
-        shadowRadius: 8,
-    },
-    metricCardContent: {
-        gap: 2,
-        zIndex: 1,
-    },
-    metricLabel: {
-        fontFamily: FONTS.interSemiBold,
-        fontSize: 10,
-        letterSpacing: 0.8,
-        textTransform: 'uppercase',
-    },
-    metricValueRow: {
-        flexDirection: 'row',
-        alignItems: 'baseline',
-        gap: 4,
-    },
-    metricValue: {
-        fontFamily: FONTS.mono,
-        fontSize: 24,
-        fontWeight: '700',
-    },
-    metricUnit: {
-        fontFamily: FONTS.inter,
-        fontSize: 14,
-    },
+    // HEATMAP
+    heatmapCard: { borderRadius: 18, borderWidth: 1, padding: 16, gap: 12 },
+    heatmapLegend: { alignItems: 'center' },
+    heatmapLegendText: { fontSize: 12, fontWeight: '500' },
 
-    // ========== WORKOUTS LIST ==========
-    workoutsList: {
-        gap: 12,
-    },
-    workoutCard: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        padding: 16,
-        borderRadius: 16,
-        borderWidth: 1,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.03,
-        shadowRadius: 10,
-        elevation: 2,
-    },
-    workoutCardLeft: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 16,
-        flex: 1,
-    },
-    workoutIconContainer: {
-        width: 48,
-        height: 48,
-        borderRadius: 12,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    workoutInfo: {
-        gap: 4,
-    },
-    workoutName: {
-        fontFamily: FONTS.interBold,
-        fontSize: 16,
-    },
-    workoutDate: {
-        fontFamily: FONTS.inter,
-        fontSize: 12,
-    },
-    workoutCardRight: {
-        alignItems: 'flex-end',
-        gap: 4,
-    },
-    workoutVolume: {
-        fontFamily: FONTS.mono,
-        fontSize: 14,
-        fontWeight: '500',
-    },
-    prBadge: {
-        paddingHorizontal: 8,
-        paddingVertical: 3,
-        borderRadius: 6,
-    },
-    prBadgeText: {
-        fontFamily: FONTS.interBold,
-        fontSize: 10,
-        color: '#FFFFFF',
-        letterSpacing: 0.5,
-    },
-    standardLabel: {
-        fontFamily: FONTS.inter,
-        fontSize: 10,
-    },
+    // RECENT WORKOUTS
+    wkRow: { flexDirection: 'row', alignItems: 'center', borderRadius: 16, borderWidth: 1, padding: 14, marginBottom: 10, gap: 12 },
+    wkIcon: { width: 46, height: 46, borderRadius: 13, alignItems: 'center', justifyContent: 'center' },
+    wkInfo: { flex: 1, gap: 3 },
+    wkName: { fontSize: 15, fontWeight: '700' },
+    wkDate: { fontSize: 12 },
+    wkRight: { alignItems: 'flex-end', gap: 4 },
+    wkVol: { fontSize: 16, fontWeight: '700' },
+    wkVolUnit: { fontSize: 11 },
+    prBadge: { paddingHorizontal: 8, paddingVertical: 3, borderRadius: 6 },
+    prText: { fontSize: 10, fontWeight: '800', letterSpacing: 0.5 },
 
-    // ========== QUICK ACTIONS ==========
-    quickActionsGrid: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        gap: 12,
-    },
-    quickActionCard: {
-        width: (SCREEN_WIDTH - 48 - 12) / 2,
-        padding: 16,
-        borderRadius: 16,
-        borderWidth: 1,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.03,
-        shadowRadius: 4,
-        elevation: 1,
-        gap: 12,
-    },
-    quickActionIcon: {
-        width: 40,
-        height: 40,
-        borderRadius: 20,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    quickActionLabel: {
-        fontFamily: FONTS.interSemiBold,
-        fontSize: 14,
-    },
+    // TODAY'S PLAN
+    todayCard: { borderRadius: 18, borderWidth: 1, padding: 16, gap: 14 },
+    todayHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 12 },
+    todayHeaderLeft: { flexDirection: 'row', alignItems: 'center', gap: 12, flex: 1 },
+    todayIconBg: { width: 40, height: 40, borderRadius: 12, alignItems: 'center', justifyContent: 'center' },
+    todayTitle: { fontSize: 14, fontWeight: '700', lineHeight: 18 },
+    todayMeta: { fontSize: 12 },
+    startTodayBtn: { flexDirection: 'row', alignItems: 'center', gap: 5, paddingHorizontal: 14, paddingVertical: 8, borderRadius: 20 },
+    startTodayBtnText: { fontSize: 13, fontWeight: '700', color: '#FFF' },
+    todayExerciseList: { gap: 8 },
+    todayExRow: { flexDirection: 'row', alignItems: 'center', gap: 10 },
+    todayExDot: { width: 8, height: 8, borderRadius: 4 },
+    todayExName: { flex: 1, fontSize: 13, fontWeight: '500' },
+    todayExSets: { fontSize: 12 },
+    todayMoreText: { fontSize: 12, fontWeight: '500', marginTop: 2 },
 });

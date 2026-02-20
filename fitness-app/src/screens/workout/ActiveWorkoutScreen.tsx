@@ -231,7 +231,7 @@ export function ActiveWorkoutScreen({ navigation, route }: any) {
                     style: 'default',
                     onPress: async () => {
                         await completeWorkout({});
-                        navigation.navigate('WorkoutDetail', { workoutId: activeWorkoutId });
+                        navigation.navigate('WorkoutSummary');
                     },
                 },
             ]

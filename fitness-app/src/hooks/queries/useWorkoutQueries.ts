@@ -2,17 +2,34 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { workoutApi } from '../../api/workout.api';
 import { CreateWorkoutInput, UpdateWorkoutInput, LogExerciseInput } from '../../types/backend.types';
 
+import { MOCK_WORKOUT_HISTORY } from '../../data/workoutMockData';
+
+// Helper to simulate API delay
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
 export const useWorkouts = (params?: { page?: number; limit?: number; startDate?: string; endDate?: string }) => {
     return useQuery({
         queryKey: ['workouts', params],
-        queryFn: () => workoutApi.getWorkouts(params),
+        // MOCK IMPLEMENTATION
+        queryFn: async () => {
+             await delay(500);
+             return { data: MOCK_WORKOUT_HISTORY, total: MOCK_WORKOUT_HISTORY.length };
+        }
+        // queryFn: () => workoutApi.getWorkouts(params),
     });
 };
 
 export const useWorkout = (id: number) => {
     return useQuery({
         queryKey: ['workout', id],
-        queryFn: () => workoutApi.getWorkoutById(id),
+        // MOCK IMPLEMENTATION
+        queryFn: async () => {
+             await delay(300);
+             const workout = MOCK_WORKOUT_HISTORY.find(w => w.id === Number(id));
+             if (!workout) throw new Error('Workout not found');
+             return { data: workout };
+        },
+        // queryFn: () => workoutApi.getWorkoutById(id),
         enabled: !!id,
     });
 };

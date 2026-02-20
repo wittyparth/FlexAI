@@ -5,192 +5,353 @@ import {
     StyleSheet,
     ScrollView,
     TouchableOpacity,
-    Dimensions,
     Animated,
-    Image,
+    Dimensions,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
+import {
+    DUMMY_USER,
+    PROFILE_STATS,
+    PROFILE_ANALYTICS_SUMMARY,
+    HEATMAP_DATA,
+} from '../../data/mockData';
+import { WorkoutHeatmap } from '../../components/WorkoutHeatmap';
 
 const { width } = Dimensions.get('window');
 
 // ============================================================
-// MOCK DATA
+// INLINE STAT STRIP
 // ============================================================
-import {
-    DUMMY_USER,
-    PROFILE_STATS,
-} from '../../data/mockData';
+function StatStrip({ value, label, color }: { value: string; label: string; color: string }) {
+    return (
+        <View style={styles.statItem}>
+            <Text style={[styles.statValue, { color }]}>{value}</Text>
+            <Text style={styles.statLabel}>{label}</Text>
+        </View>
+    );
+}
 
+// ============================================================
+// SECTION HEADER
+// ============================================================
+function SectionHeader({ title, onViewAll }: { title: string; onViewAll?: () => void }) {
+    const colors = useColors();
+    return (
+        <View style={styles.sectionHeaderRow}>
+            <Text style={[styles.sectionTitle, { color: colors.foreground }]}>{title}</Text>
+            {onViewAll && (
+                <TouchableOpacity onPress={onViewAll}>
+                    <Text style={[styles.viewAllText, { color: colors.primary?.main || '#2196F3' }]}>View All</Text>
+                </TouchableOpacity>
+            )}
+        </View>
+    );
+}
 
-const MENU_SECTIONS = [
-    {
-        title: 'Analytics',
-        items: [
-            { id: 'stats', label: 'Stats Hub', icon: 'bar-chart', color: '#6366F1', route: 'StatsHub' },
-            { id: 'records', label: 'Personal Records', icon: 'trophy', color: '#F59E0B', route: 'PersonalRecords' },
-            { id: 'heatmap', label: 'Muscle Heatmap', icon: 'body', color: '#EC4899', route: 'MuscleHeatmap' },
-        ],
-    },
-    {
-        title: 'Body',
-        items: [
-            { id: 'body', label: 'Body Tracking', icon: 'scale', color: '#10B981', route: 'BodyTrackingHub' },
-            { id: 'photos', label: 'Progress Photos', icon: 'camera', color: '#8B5CF6', route: 'ProgressPhotos' },
-        ],
-    },
-    {
-        title: 'AI Coach',
-        items: [
-            { id: 'coach', label: 'AI Coach', icon: 'chatbubbles', color: '#0EA5E9', route: 'CoachHub' },
-        ],
-    },
-    {
-        title: 'Settings',
-        items: [
-            { id: 'settings', label: 'Settings', icon: 'settings', color: '#6B7280', route: 'Settings' },
-            { id: 'help', label: 'Help & Support', icon: 'help-circle', color: '#6B7280', route: 'HelpSupport' },
-        ],
-    },
-];
+// ============================================================
+// NAV CARD — clickable destination card
+// ============================================================
+function NavCard({
+    icon,
+    label,
+    subtitle,
+    color,
+    onPress,
+}: {
+    icon: string;
+    label: string;
+    subtitle?: string;
+    color: string;
+    onPress: () => void;
+}) {
+    const colors = useColors();
+    return (
+        <TouchableOpacity
+            style={[styles.navCard, { backgroundColor: colors.card, borderColor: colors.border }]}
+            onPress={onPress}
+            activeOpacity={0.7}
+        >
+            <View style={[styles.navCardIcon, { backgroundColor: `${color}18` }]}>
+                <Ionicons name={icon as any} size={22} color={color} />
+            </View>
+            <View style={styles.navCardText}>
+                <Text style={[styles.navCardLabel, { color: colors.foreground }]}>{label}</Text>
+                {subtitle && <Text style={[styles.navCardSub, { color: colors.mutedForeground }]}>{subtitle}</Text>}
+            </View>
+            <Ionicons name="chevron-forward" size={18} color={colors.mutedForeground} />
+        </TouchableOpacity>
+    );
+}
 
+// ============================================================
+// MAIN SCREEN
+// ============================================================
 export function ProfileHubScreen({ navigation }: any) {
     const colors = useColors();
     const insets = useSafeAreaInsets();
     const fadeAnim = useRef(new Animated.Value(0)).current;
+    const slideAnim = useRef(new Animated.Value(30)).current;
 
     useEffect(() => {
-        Animated.timing(fadeAnim, { toValue: 1, duration: 500, useNativeDriver: true }).start();
+        Animated.parallel([
+            Animated.timing(fadeAnim, { toValue: 1, duration: 500, useNativeDriver: true }),
+            Animated.timing(slideAnim, { toValue: 0, duration: 400, useNativeDriver: true }),
+        ]).start();
     }, []);
 
     const xpProgress = (DUMMY_USER.xp / DUMMY_USER.xpToNext) * 100;
 
+    // Cross-navigator navigation helpers
+    // ProfileHub lives in: MainDrawer > MainTabs (ProfileTab) > ProfileNavigator > ProfileHubScreen
+    // We need to surface 2 levels up to reach the Drawer-level navigators.
+    const getDrawerNav = () => navigation.getParent()?.getParent() ?? navigation;
+    const goToAnalytics = (screen = 'AnalyticsHub') => getDrawerNav().navigate('Analytics', { screen });
+    const goToBodyTracking = (screen = 'BodyTrackingHub') => getDrawerNav().navigate('BodyTracking', { screen });
+    const goToCoach = (screen = 'CoachHub') => getDrawerNav().navigate('Coach', { screen });
+    const goToSettings = (screen = 'Settings') => getDrawerNav().navigate('SettingsNavigator', { screen });
+
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
-            <ScrollView showsVerticalScrollIndicator={false}>
-                {/* Profile Header */}
-                <LinearGradient
-                    colors={colors.primary.gradient as [string, string]}
-                    style={[styles.headerGradient, { paddingTop: insets.top + 16 }]}
+            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: insets.bottom + 90 }}>
+
+                {/* ─── PROFILE HERO ─── */}
+                <View
+                    style={[styles.heroGradient, { backgroundColor: colors.card, paddingTop: insets.top + 12 }]}
                 >
-                    <View style={styles.headerTop}>
-                        <View style={{ width: 44 }} />
-                        <Text style={[styles.headerTitle, { fontFamily: fontFamilies.display }]}>Profile</Text>
-                        <TouchableOpacity style={styles.headerBtn}>
-                            <Ionicons name="settings-outline" size={24} color="#FFF" />
+                    {/* Header bar */}
+                    <View style={styles.heroTopBar}>
+                        <Text style={[styles.heroPageTitle, { fontFamily: fontFamilies.display }]}>Profile</Text>
+                        <TouchableOpacity style={styles.heroIconBtn} onPress={() => getDrawerNav().navigate('SettingsNavigator', { screen: 'Settings' })}>
+                            <Ionicons name="settings-outline" size={22} color="rgba(255,255,255,0.9)" />
                         </TouchableOpacity>
                     </View>
 
-                    <View style={styles.profileSection}>
-                        <View style={styles.avatarContainer}>
-                            <LinearGradient colors={['#FFF', '#E5E7EB'] as [string, string]} style={styles.avatarBg}>
-                                <Text style={styles.avatarText}>{DUMMY_USER.firstName.charAt(0)}</Text>
-                            </LinearGradient>
-                            <View style={styles.levelBadge}>
-                                <Text style={styles.levelText}>{DUMMY_USER.level}</Text>
+                    {/* Avatar + info */}
+                    <View style={styles.heroBody}>
+                        <View style={styles.avatarWrapper}>
+                            <View style={[styles.avatarRing, { backgroundColor: colors.primary.main }]}>
+                                <View style={[styles.avatarInner, { backgroundColor: colors.card }]}>
+                                    <Text style={styles.avatarText}>{DUMMY_USER.firstName.charAt(0)}</Text>
+                                </View>
+                            </View>
+                            <View style={[styles.levelBadge, { backgroundColor: '#F59E0B' }]}>
+                                <Text style={styles.levelBadgeText}>{DUMMY_USER.level}</Text>
                             </View>
                         </View>
-                        <Text style={styles.userName}>{DUMMY_USER.firstName} {DUMMY_USER.surname}</Text>
-                        <Text style={styles.userHandle}>{DUMMY_USER.username}</Text>
 
-                        {/* XP Progress */}
-                        <View style={styles.xpContainer}>
-                            <View style={styles.xpHeader}>
-                                <Text style={styles.xpLabel}>Level {DUMMY_USER.level}</Text>
-                                <Text style={styles.xpValue}>{DUMMY_USER.xp.toLocaleString()} / {DUMMY_USER.xpToNext.toLocaleString()} XP</Text>
-                            </View>
-                            <View style={styles.xpBar}>
-                                <View style={[styles.xpFill, { width: `${xpProgress}%` }]} />
+                        <View style={styles.heroInfo}>
+                            <Text style={styles.heroName}>{DUMMY_USER.firstName} {DUMMY_USER.surname}</Text>
+                            <Text style={styles.heroHandle}>{DUMMY_USER.username}</Text>
+                            <View style={styles.streakPill}>
+                                <Ionicons name="flame" size={13} color="#F97316" />
+                                <Text style={styles.streakPillText}>{DUMMY_USER.streak} day streak</Text>
                             </View>
                         </View>
                     </View>
-                </LinearGradient>
 
-                {/* Quick Stats */}
-                <Animated.View style={[styles.quickStatsRow, { opacity: fadeAnim, marginTop: -30 }]}>
-                    {PROFILE_STATS.map((stat) => (
-                        <View key={stat.label} style={[styles.quickStatCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-                            <View style={[styles.quickStatIcon, { backgroundColor: `${stat.color}15` }]}>
-                                <Ionicons name={stat.icon as any} size={22} color={stat.color} />
-                            </View>
-                            <Text style={[styles.quickStatValue, { color: colors.foreground }]}>{stat.value}</Text>
-                            <Text style={[styles.quickStatLabel, { color: colors.mutedForeground }]}>{stat.label}</Text>
+                    {/* XP Bar */}
+                    <View style={styles.xpSection}>
+                        <View style={styles.xpLabelRow}>
+                            <Text style={styles.xpLevelText}>Level {DUMMY_USER.level}</Text>
+                            <Text style={styles.xpValueText}>{DUMMY_USER.xp.toLocaleString()} / {DUMMY_USER.xpToNext.toLocaleString()} XP</Text>
                         </View>
-                    ))}
+                        <View style={styles.xpBarBg}>
+                            <View style={[styles.xpBarFill, { width: `${xpProgress}%` }]} />
+                        </View>
+                    </View>
+                </View>
+
+                {/* ─── INLINE STATS STRIP ─── */}
+                <Animated.View style={[
+                    styles.statsStrip,
+                    { backgroundColor: colors.card, borderColor: colors.border, opacity: fadeAnim, transform: [{ translateY: slideAnim }] }
+                ]}>
+                    <StatStrip value="342" label="Workouts" color="#6366F1" />
+                    <View style={[styles.statDivider, { backgroundColor: colors.border }]} />
+                    <StatStrip value="1.2M" label="Volume (lbs)" color="#3B82F6" />
+                    <View style={[styles.statDivider, { backgroundColor: colors.border }]} />
+                    <StatStrip value="4/wk" label="This Week" color="#10B981" />
                 </Animated.View>
 
-                {/* Menu Sections */}
-                {MENU_SECTIONS.map((section, sectionIndex) => (
-                    <View key={section.title} style={styles.menuSection}>
-                        <Text style={[styles.menuSectionTitle, { color: colors.mutedForeground }]}>{section.title}</Text>
-                        <View style={[styles.menuCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-                            {section.items.map((item, itemIndex) => (
-                                <TouchableOpacity
-                                    key={item.id}
-                                    style={[
-                                        styles.menuItem,
-                                        itemIndex < section.items.length - 1 && { borderBottomColor: colors.border, borderBottomWidth: 1 }
-                                    ]}
-                                    onPress={() => navigation.navigate(item.route)}
-                                    activeOpacity={0.7}
-                                >
-                                    <View style={[styles.menuIcon, { backgroundColor: `${item.color}15` }]}>
-                                        <Ionicons name={item.icon as any} size={22} color={item.color} />
-                                    </View>
-                                    <Text style={[styles.menuLabel, { color: colors.foreground }]}>{item.label}</Text>
-                                    <Ionicons name="chevron-forward" size={20} color={colors.mutedForeground} />
-                                </TouchableOpacity>
-                            ))}
-                        </View>
+                {/* ─── WORKOUT HEATMAP ─── */}
+                <Animated.View style={[styles.section, { opacity: fadeAnim }]}>
+                    <SectionHeader title="Activity" onViewAll={() => goToAnalytics('AnalyticsHub')} />
+                    <View style={[styles.heatmapCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+                        <WorkoutHeatmap
+                            data={HEATMAP_DATA}
+                            showToggle
+                            defaultRange="month"
+                            compact
+                            containerPaddingH={72}
+                            showLegend
+                        />
                     </View>
-                ))}
+                </Animated.View>
 
-                {/* Logout */}
-                <TouchableOpacity style={[styles.logoutBtn, { borderColor: colors.error }]}>
-                    <Ionicons name="log-out-outline" size={22} color={colors.error} />
-                    <Text style={[styles.logoutText, { color: colors.error }]}>Log Out</Text>
+                {/* ─── ANALYTICS (inline quick access, not deeply nested) ─── */}
+                <Animated.View style={[styles.section, { opacity: fadeAnim }]}>
+                    <SectionHeader title="Analytics" onViewAll={() => goToAnalytics('AnalyticsHub')} />
+
+                    {/* Summary stat cards */}
+                    <View style={styles.analyticsSummaryRow}>
+                        {PROFILE_ANALYTICS_SUMMARY.map(item => (
+                            <View key={item.label} style={[styles.analyticsMiniCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+                                <Ionicons name={item.icon as any} size={18} color={item.color} />
+                                <Text style={[styles.analyticsValue, { color: colors.foreground }]}>{item.value}</Text>
+                                <Text style={[styles.analyticsLabel, { color: colors.mutedForeground }]}>{item.label}</Text>
+                            </View>
+                        ))}
+                    </View>
+
+                    {/* Analytics nav cards */}
+                    <View style={styles.navCardList}>
+                        <NavCard icon="trophy-outline" label="Personal Records" subtitle="47 all-time PRs" color="#F59E0B" onPress={() => goToAnalytics('PersonalRecords')} />
+                        <NavCard icon="trending-up" label="Strength Progression" subtitle="Track your lifts over time" color="#6366F1" onPress={() => goToAnalytics('StrengthProgression')} />
+                        <NavCard icon="bar-chart-outline" label="Volume Analytics" subtitle="Weekly & monthly volume" color="#3B82F6" onPress={() => goToAnalytics('VolumeAnalytics')} />
+                        <NavCard icon="body-outline" label="Muscle Heatmap" subtitle="Muscle group distribution" color="#EC4899" onPress={() => goToAnalytics('MuscleHeatmap')} />
+                    </View>
+                </Animated.View>
+
+                {/* ─── BODY TRACKING ─── */}
+                <Animated.View style={[styles.section, { opacity: fadeAnim }]}>
+                    <SectionHeader title="Body Tracking" onViewAll={() => goToBodyTracking('BodyTrackingHub')} />
+                    <View style={styles.navCardList}>
+                        <NavCard icon="scale-outline" label="Weight Log" subtitle="Track weight over time" color="#10B981" onPress={() => goToBodyTracking('WeightLog')} />
+                        <NavCard icon="resize-outline" label="Measurements" subtitle="Body measurements" color="#14B8A6" onPress={() => goToBodyTracking('Measurements')} />
+                        <NavCard icon="camera-outline" label="Progress Photos" subtitle="Visual progress timeline" color="#8B5CF6" onPress={() => goToBodyTracking('ProgressPhotos')} />
+                    </View>
+                </Animated.View>
+
+                {/* ─── AI COACH ─── */}
+                <Animated.View style={[styles.section, { opacity: fadeAnim }]}>
+                    <SectionHeader title="AI Coach" />
+                    <TouchableOpacity
+                        style={styles.coachCard}
+                        onPress={() => goToCoach('CoachHub')}
+                        activeOpacity={0.9}
+                    >
+                        <LinearGradient colors={['#1E40AF', '#6366F1']} style={styles.coachGradient}>
+                            <View style={styles.coachContent}>
+                                <View>
+                                    <Text style={styles.coachLabel}>AI-POWERED</Text>
+                                    <Text style={styles.coachTitle}>Your Personal Coach</Text>
+                                    <Text style={styles.coachSub}>Get personalized advice, form analysis & workout plans</Text>
+                                </View>
+                                <View style={styles.coachIconBg}>
+                                    <Ionicons name="sparkles" size={28} color="#FFF" />
+                                </View>
+                            </View>
+                        </LinearGradient>
+                    </TouchableOpacity>
+                </Animated.View>
+
+                {/* ─── SETTINGS ─── */}
+                <Animated.View style={[styles.section, { opacity: fadeAnim }]}>
+                    <SectionHeader title="Settings" />
+                    <View style={styles.navCardList}>
+                        <NavCard icon="settings-outline" label="App Settings" subtitle="Notifications, units, theme" color="#6B7280" onPress={() => goToSettings('Settings')} />
+                        <NavCard icon="lock-closed-outline" label="Account & Security" subtitle="Password, privacy" color="#EF4444" onPress={() => goToSettings('AccountSecurity')} />
+                        <NavCard icon="help-circle-outline" label="Help & Support" subtitle="FAQ, contact us" color="#6B7280" onPress={() => goToSettings('HelpSupport')} />
+                    </View>
+                </Animated.View>
+
+                {/* ─── LOGOUT ─── */}
+                <TouchableOpacity style={[styles.logoutBtn, { borderColor: `${colors.error || '#EF4444'}40` }]} activeOpacity={0.7}>
+                    <Ionicons name="log-out-outline" size={20} color={colors.error || '#EF4444'} />
+                    <Text style={[styles.logoutText, { color: colors.error || '#EF4444' }]}>Log Out</Text>
                 </TouchableOpacity>
 
-                <View style={{ height: 100 }} />
             </ScrollView>
         </View>
     );
 }
 
+// ============================================================
+// STYLES
+// ============================================================
 const styles = StyleSheet.create({
     container: { flex: 1 },
-    headerGradient: { paddingBottom: 60 },
-    headerTop: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, marginBottom: 20 },
-    headerTitle: { fontSize: 22, fontWeight: '700', color: '#FFF' },
-    headerBtn: { width: 44, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center' },
-    profileSection: { alignItems: 'center', paddingHorizontal: 16 },
-    avatarContainer: { position: 'relative', marginBottom: 12 },
-    avatarBg: { width: 100, height: 100, borderRadius: 50, alignItems: 'center', justifyContent: 'center' },
-    avatarText: { fontSize: 40, fontWeight: '700', color: '#6366F1' },
-    levelBadge: { position: 'absolute', bottom: 0, right: 0, width: 32, height: 32, borderRadius: 16, backgroundColor: '#F59E0B', alignItems: 'center', justifyContent: 'center', borderWidth: 3, borderColor: '#FFF' },
-    levelText: { color: '#FFF', fontSize: 14, fontWeight: '800' },
-    userName: { fontSize: 24, fontWeight: '700', color: '#FFF', marginBottom: 4 },
-    userHandle: { fontSize: 15, color: 'rgba(255,255,255,0.7)', marginBottom: 16 },
-    xpContainer: { width: '100%', maxWidth: 280 },
-    xpHeader: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 8 },
-    xpLabel: { color: 'rgba(255,255,255,0.8)', fontSize: 13, fontWeight: '600' },
-    xpValue: { color: 'rgba(255,255,255,0.8)', fontSize: 13 },
-    xpBar: { height: 8, backgroundColor: 'rgba(255,255,255,0.2)', borderRadius: 4, overflow: 'hidden' },
-    xpFill: { height: '100%', backgroundColor: '#FFF', borderRadius: 4 },
-    quickStatsRow: { flexDirection: 'row', paddingHorizontal: 16, gap: 10 },
-    quickStatCard: { flex: 1, padding: 16, borderRadius: 18, borderWidth: 1, alignItems: 'center' },
-    quickStatIcon: { width: 44, height: 44, borderRadius: 14, alignItems: 'center', justifyContent: 'center', marginBottom: 10 },
-    quickStatValue: { fontSize: 24, fontWeight: '800', fontFamily: fontFamilies.mono },
-    quickStatLabel: { fontSize: 12, marginTop: 4 },
-    menuSection: { marginTop: 24, paddingHorizontal: 16 },
-    menuSectionTitle: { fontSize: 13, fontWeight: '600', marginBottom: 10, marginLeft: 4, textTransform: 'uppercase', letterSpacing: 0.5 },
-    menuCard: { borderRadius: 18, borderWidth: 1, overflow: 'hidden' },
-    menuItem: { flexDirection: 'row', alignItems: 'center', padding: 16, gap: 14 },
-    menuIcon: { width: 44, height: 44, borderRadius: 12, alignItems: 'center', justifyContent: 'center' },
-    menuLabel: { flex: 1, fontSize: 16, fontWeight: '500' },
-    logoutBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: 30, marginHorizontal: 16, padding: 16, borderRadius: 16, borderWidth: 1, gap: 10 },
-    logoutText: { fontSize: 16, fontWeight: '600' },
+
+    // Hero
+    heroGradient: { paddingHorizontal: 20, paddingBottom: 28 },
+    heroTopBar: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 },
+    heroPageTitle: { fontSize: 22, fontWeight: '800', color: '#FFF' },
+    heroIconBtn: { width: 40, height: 40, borderRadius: 12, backgroundColor: 'rgba(255,255,255,0.12)', alignItems: 'center', justifyContent: 'center' },
+    heroBody: { flexDirection: 'row', alignItems: 'center', gap: 16, marginBottom: 20 },
+    avatarWrapper: { position: 'relative' },
+    avatarRing: { width: 80, height: 80, borderRadius: 40, alignItems: 'center', justifyContent: 'center' },
+    avatarInner: { width: 72, height: 72, borderRadius: 36, alignItems: 'center', justifyContent: 'center' },
+    avatarText: { fontSize: 30, fontWeight: '800', color: '#6366F1' },
+    levelBadge: { position: 'absolute', bottom: -2, right: -2, width: 26, height: 26, borderRadius: 13, alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: '#0A1628' },
+    levelBadgeText: { fontSize: 11, fontWeight: '800', color: '#FFF' },
+    heroInfo: { flex: 1, gap: 4 },
+    heroName: { fontSize: 22, fontWeight: '800', color: '#FFF' },
+    heroHandle: { fontSize: 14, color: 'rgba(255,255,255,0.65)' },
+    streakPill: { flexDirection: 'row', alignItems: 'center', gap: 4, backgroundColor: 'rgba(249,115,22,0.15)', paddingHorizontal: 10, paddingVertical: 4, borderRadius: 20, alignSelf: 'flex-start' },
+    streakPillText: { fontSize: 13, fontWeight: '600', color: '#F97316' },
+    xpSection: { gap: 8 },
+    xpLabelRow: { flexDirection: 'row', justifyContent: 'space-between' },
+    xpLevelText: { fontSize: 13, fontWeight: '700', color: 'rgba(255,255,255,0.8)' },
+    xpValueText: { fontSize: 12, color: 'rgba(255,255,255,0.6)' },
+    xpBarBg: { height: 8, backgroundColor: 'rgba(255,255,255,0.15)', borderRadius: 4, overflow: 'hidden' },
+    xpBarFill: { height: '100%', borderRadius: 4, backgroundColor: '#3B82F6' },
+
+    // Stats Strip
+    statsStrip: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginHorizontal: 16,
+        marginTop: -20,
+        borderRadius: 16,
+        borderWidth: 1,
+        padding: 16,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.15,
+        shadowRadius: 12,
+        elevation: 6,
+    },
+    statItem: { flex: 1, alignItems: 'center', gap: 4 },
+    statValue: { fontSize: 20, fontWeight: '800' },
+    statLabel: { fontSize: 11, color: '#6B7280', fontWeight: '500' },
+    statDivider: { width: 1, height: 32, marginHorizontal: 4 },
+
+    // Sections
+    section: { paddingHorizontal: 16, marginTop: 24 },
+    sectionHeaderRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 },
+    sectionTitle: { fontSize: 18, fontWeight: '800' },
+    viewAllText: { fontSize: 13, fontWeight: '600' },
+    card: { borderRadius: 16, borderWidth: 1, padding: 16 },
+    heatmapCard: { borderRadius: 16, borderWidth: 1, paddingHorizontal: 16, paddingVertical: 16, overflow: 'hidden' },
+
+    // Analytics summary cards
+    analyticsSummaryRow: { flexDirection: 'row', gap: 10, marginBottom: 12 },
+    analyticsMiniCard: { flex: 1, borderRadius: 14, borderWidth: 1, padding: 12, alignItems: 'center', gap: 6 },
+    analyticsValue: { fontSize: 16, fontWeight: '800' },
+    analyticsLabel: { fontSize: 10, fontWeight: '500', textAlign: 'center' },
+
+    // NavCards
+    navCardList: { gap: 8 },
+    navCard: { flexDirection: 'row', alignItems: 'center', padding: 14, borderRadius: 14, borderWidth: 1, gap: 12 },
+    navCardIcon: { width: 42, height: 42, borderRadius: 12, alignItems: 'center', justifyContent: 'center' },
+    navCardText: { flex: 1 },
+    navCardLabel: { fontSize: 15, fontWeight: '700' },
+    navCardSub: { fontSize: 12, marginTop: 2 },
+
+    // AI Coach card
+    coachCard: { borderRadius: 18, overflow: 'hidden' },
+    coachGradient: { padding: 20 },
+    coachContent: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+    coachLabel: { fontSize: 10, fontWeight: '800', color: 'rgba(255,255,255,0.7)', letterSpacing: 1.5, marginBottom: 4 },
+    coachTitle: { fontSize: 20, fontWeight: '800', color: '#FFF', marginBottom: 6 },
+    coachSub: { fontSize: 13, color: 'rgba(255,255,255,0.75)', maxWidth: 220, lineHeight: 18 },
+    coachIconBg: { width: 56, height: 56, borderRadius: 28, backgroundColor: 'rgba(255,255,255,0.15)', alignItems: 'center', justifyContent: 'center' },
+
+    // Logout
+    logoutBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 10, margin: 16, marginTop: 24, padding: 14, borderRadius: 14, borderWidth: 1 },
+    logoutText: { fontSize: 16, fontWeight: '700' },
 });

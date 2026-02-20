@@ -234,12 +234,29 @@ export function RoutineDetailScreen({ route, navigation }: any) {
                             shadowColor: colors.primary.main
                         }]}
                         activeOpacity={0.9}
-                        onPress={async () => {
-                            // Start workout via store
-                            await useWorkoutStore.getState().startWorkout({
-                                name: routine.name,
-                                routineId: routine.id
+                        onPress={() => {
+                            // Use mock workout mode for demo (no backend needed)
+                            // Build exercises from routine data
+                            const exercises = routine.exercises?.map((item: any, i: number) => {
+                                const ex = item.exercise || item;
+                                return {
+                                    id: item.id || i + 1,
+                                    orderIndex: i,
+                                    targetSets: item.targetSets || 3,
+                                    targetRepsMin: item.targetRepsMin || 8,
+                                    targetRepsMax: item.targetRepsMax || 12,
+                                    targetWeight: item.targetWeight || 0,
+                                    restSeconds: item.restSeconds || 90,
+                                    notes: item.notes,
+                                    exercise: {
+                                        id: ex.id || i + 1,
+                                        name: ex.name || 'Exercise',
+                                        muscleGroup: ex.muscleGroup || 'Full Body',
+                                        exerciseType: ex.exerciseType || 'Strength',
+                                    }
+                                };
                             });
+                            useWorkoutStore.getState().startMockWorkout(routine.name, exercises);
                             navigation.navigate('ActiveWorkout');
                         }}
                     >

@@ -1,868 +1,318 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
-    View,
-    Text,
-    StyleSheet,
-    ScrollView,
-    TouchableOpacity,
-    RefreshControl,
-    Dimensions,
-    ActivityIndicator,
-    Animated,
+    View, Text, StyleSheet, ScrollView, TouchableOpacity, Animated, Dimensions,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useColors } from '../../hooks';
-import { fontFamilies } from '../../theme/typography';
-import { colors as themeColors } from '../../theme/colors';
+import { useTheme } from '../../contexts';
+import { WorkoutHeatmap } from '../../components/WorkoutHeatmap';
+import {
+    ACTIVE_ROUTINES, MY_TEMPLATES, DUMMY_RECENT_WORKOUTS, HEATMAP_DATA, DUMMY_METRICS, DUMMY_USER,
+} from '../../data/mockData';
 import { useWorkoutStore } from '../../store/workoutStore';
-import { useShallow } from 'zustand/react/shallow';
-// import { useDashboardStats, useRoutines } from '../../hooks';
-import { WORKOUT_STATS, ACTIVE_ROUTINES } from '../../data/mockData';
-// Native date formatter
-const formatDate = (dateString: string | Date) => {
-    const d = new Date(dateString);
-    const day = d.toLocaleDateString('en-US', { weekday: 'short' });
-    const month = d.toLocaleDateString('en-US', { month: 'short' });
-    const dateNum = d.getDate();
-    const time = d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
-    return `${day}, ${month} ${dateNum} • ${time}`;
+
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
+
+// ─── DESIGN TOKENS ───
+const C = {
+    dark:  { bg: '#0A0E1A', card: '#131C2E', border: '#1F2D45', text: '#F1F5FF', muted: '#7A8BAA', primary: '#3B82F6', surface: '#1A2540' },
+    light: { bg: '#F0F4FF', card: '#FFFFFF', border: '#E2E8F8', text: '#0D1526', muted: '#64748B', primary: '#2563EB', surface: '#EEF2FF' },
 };
+const FNT = { display: 'Calistoga', mono: 'JetBrainsMono', bold: 'Inter-Bold', semi: 'Inter-SemiBold' };
 
-const { width } = Dimensions.get('window');
+const fmtVol = (v: number) => v >= 1000 ? `${(v / 1000).toFixed(1)}k` : v.toString();
+const fmtDuration = (s: number) => `${Math.floor(s / 60)}m`;
 
-// ============================================================
-// PULSING DOT COMPONENT FOR ACTIVE SESSION
-// ============================================================
-const PulsingDot = () => {
-    const pulseAnim = React.useRef(new Animated.Value(1)).current;
+// ─── DIFFICULTY BADGE ───
+const DIFF_COLOR: Record<string, string> = { Beginner: '#10B981', Intermediate: '#F59E0B', Advanced: '#EF4444' };
 
-    React.useEffect(() => {
-        Animated.loop(
-            Animated.sequence([
-                Animated.timing(pulseAnim, {
-                    toValue: 1.5,
-                    duration: 1000,
-                    useNativeDriver: true,
-                }),
-                Animated.timing(pulseAnim, {
-                    toValue: 1,
-                    duration: 1000,
-                    useNativeDriver: true,
-                }),
-            ])
-        ).start();
-    }, []);
-
+// ─── SECTION HEADER ───
+function SectionHeader({ title, onViewAll, c }: { title: string; onViewAll?: () => void; c: typeof C.dark }) {
     return (
-        <View style={{ width: 10, height: 10, alignItems: 'center', justifyContent: 'center' }}>
-            <Animated.View
-                style={{
-                    position: 'absolute',
-                    width: 10,
-                    height: 10,
-                    borderRadius: 5,
-                    backgroundColor: themeColors.primary.main,
-                    opacity: 0.75,
-                    transform: [{ scale: pulseAnim }],
-                }}
-            />
-            <View
-                style={{
-                    width: 10,
-                    height: 10,
-                    borderRadius: 5,
-                    backgroundColor: themeColors.primary.main,
-                }}
-            />
+        <View style={styles.sectionHeaderRow}>
+            <Text style={[styles.sectionTitle, { color: c.text, fontFamily: FNT.display }]}>{title}</Text>
+            {onViewAll && (
+                <TouchableOpacity onPress={onViewAll}>
+                    <Text style={[styles.viewAll, { color: c.primary }]}>View All</Text>
+                </TouchableOpacity>
+            )}
         </View>
     );
-};
+}
 
+// ─── STAT TILE ───
+function StatTile({ value, label, icon, color, c }: { value: string; label: string; icon: string; color: string; c: typeof C.dark }) {
+    return (
+        <View style={[styles.statTile, { backgroundColor: c.card, borderColor: c.border }]}>
+            <View style={[styles.statTileIcon, { backgroundColor: `${color}20` }]}>
+                <MaterialCommunityIcons name={icon as any} size={18} color={color} />
+            </View>
+            <Text style={[styles.statTileVal, { color: c.text, fontFamily: FNT.mono }]}>{value}</Text>
+            <Text style={[styles.statTileLabel, { color: c.muted }]}>{label}</Text>
+        </View>
+    );
+}
+
+// ─── ROUTINE ROW ───
+function RoutineRow({ routine, onPress, c }: { routine: any; onPress: () => void; c: typeof C.dark }) {
+    const diffColor = DIFF_COLOR[routine.difficulty] || '#6366F1';
+    return (
+        <TouchableOpacity style={[styles.routineRow, { backgroundColor: c.card, borderColor: c.border }]} onPress={onPress} activeOpacity={0.75}>
+            <View style={[styles.routineColorBar, { backgroundColor: routine.color || diffColor }]} />
+            <View style={styles.routineInfo}>
+                <Text style={[styles.routineName, { color: c.text }]}>{routine.name}</Text>
+                <Text style={[styles.routineMeta, { color: c.muted }]}>{routine.daysPerWeek}×/wk • {routine.exercises || '—'} exercises</Text>
+            </View>
+            <View style={[styles.diffBadge, { backgroundColor: `${diffColor}18` }]}>
+                <Text style={[styles.diffText, { color: diffColor }]}>{routine.difficulty}</Text>
+            </View>
+            <Ionicons name="chevron-forward" size={18} color={c.muted} />
+        </TouchableOpacity>
+    );
+}
+
+// ─── TEMPLATE ROW ───
+function TemplateRow({ template, onPress, c }: { template: any; onPress: () => void; c: typeof C.dark }) {
+    return (
+        <TouchableOpacity style={[styles.routineRow, { backgroundColor: c.card, borderColor: c.border }]} onPress={onPress} activeOpacity={0.75}>
+            <View style={[styles.routineColorBar, { backgroundColor: template.color }]} />
+            <View style={styles.routineInfo}>
+                <Text style={[styles.routineName, { color: c.text }]}>{template.name}</Text>
+                <Text style={[styles.routineMeta, { color: c.muted }]}>{template.exercises} exercises • Last: {template.lastUsed}</Text>
+            </View>
+            <Ionicons name="chevron-forward" size={18} color={c.muted} />
+        </TouchableOpacity>
+    );
+}
+
+// ─── QUICK ACTION ───
+function QuickAction({ icon, label, color, bg, onPress }: { icon: string; label: string; color: string; bg: string; onPress: () => void }) {
+    return (
+        <TouchableOpacity style={[styles.quickAction, { backgroundColor: bg }]} onPress={onPress} activeOpacity={0.8}>
+            <MaterialCommunityIcons name={icon as any} size={24} color={color} />
+            <Text style={[styles.quickActionLabel, { color }]}>{label}</Text>
+        </TouchableOpacity>
+    );
+}
+
+// ─── MAIN SCREEN ───
 export function WorkoutHubScreen({ navigation }: any) {
-    const colors = useColors();
     const insets = useSafeAreaInsets();
+    const { isDark } = useTheme();
+    const c = isDark ? C.dark : C.light;
+    const fade = useRef(new Animated.Value(0)).current;
 
-    // Store Connection
-    const {
-        activeWorkoutId,
-        workoutName,
-        elapsedSeconds,
-        isLoading: isStoreLoading,
-        startWorkout,
-        resumeWorkout
-    } = useWorkoutStore(useShallow(state => ({
-        activeWorkoutId: state.activeWorkoutId,
-        workoutName: state.workoutName,
-        elapsedSeconds: state.elapsedSeconds,
-        isLoading: state.isLoading,
-        startWorkout: state.startWorkout,
-        resumeWorkout: state.resumeWorkout
-    })));
-
-    // Data Fetching
-    // const {
-    //     data: dashboardStats,
-    //     isLoading: isStatsLoading,
-    //     refetch: refetchStats,
-    //     isRefetching: isStatsRefetching
-    // } = useDashboardStats();
-
-    // const {
-    //     data: routinesData,
-    //     isLoading: isRoutinesLoading,
-    //     refetch: refetchRoutines,
-    //     isRefetching: isRoutinesRefetching
-    // } = useRoutines({ limit: 3, isTemplate: true });
-
-    // Mock Data
-    const dashboardStats = WORKOUT_STATS;
-    const isStatsLoading = false;
-    const refetchStats = () => {};
-    const isStatsRefetching = false;
-
-    const routinesData = { data: { routines: ACTIVE_ROUTINES } };
-    const isRoutinesLoading = false;
-    const refetchRoutines = () => {};
-    const isRoutinesRefetching = false;
-
-    // Combined refreshing state
-    const isRefreshing = isStatsRefetching || isRoutinesRefetching;
-
-    // Hydrate on mount
     useEffect(() => {
-        resumeWorkout();
-    }, [resumeWorkout]);
+        Animated.timing(fade, { toValue: 1, duration: 500, useNativeDriver: true }).start();
+    }, []);
 
-    const onRefresh = () => {
-        refetchStats();
-        refetchRoutines();
-    };
-
-    const formatTime = (totalSeconds: number) => {
-        const hrs = Math.floor(totalSeconds / 3600);
-        const mins = Math.floor((totalSeconds % 3600) / 60);
-        const secs = totalSeconds % 60;
-        return `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-    };
-
-    const handleResumeSession = async () => {
-        if (activeWorkoutId) {
-            navigation.navigate('ActiveWorkout');
-        }
-    };
-
-    const handleStartEmpty = async () => {
-        await startWorkout({
-            name: 'Freestyle Workout',
-        });
-        navigation.navigate('ActiveWorkout');
-    };
-
-    const handleTemplates = () => {
-        navigation.navigate('RoutineList');
-    };
-
-    const handleCreatePlan = () => {
-        // Navigate to routine editor
-        navigation.navigate('RoutineEditor', { mode: 'create' });
-    };
-
-    const handleLibrary = () => {
-        navigation.navigate('RoutineList'); // Or separate library screen if planned
-    };
-
-    // Calculate Greeting based on time
-    const getGreeting = () => {
-        const hour = new Date().getHours();
-        if (hour < 12) return 'Good Morning';
-        if (hour < 18) return 'Good Afternoon';
-        return 'Good Evening';
-    };
+    const getDrawerNav = () => navigation.getParent()?.getParent() ?? navigation;
+    const nav = (screen: string, params?: any) => navigation.navigate(screen, params);
 
     return (
-        <View style={[styles.container, { backgroundColor: colors.background }]}>
-            {/* Header */}
-            <View
-                style={[
-                    styles.header,
-                    {
-                        paddingTop: insets.top + 12,
-                        backgroundColor: colors.card,
-                        borderBottomWidth: 1,
-                        borderBottomColor: colors.border,
-                    },
-                ]}
-            >
-                <View>
-                    <Text style={[styles.greetingSub, { color: colors.mutedForeground }]}>
-                        {getGreeting()}
-                    </Text>
-                    <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>
-                        Workout Hub
-                    </Text>
+        <View style={[styles.container, { backgroundColor: c.bg }]}>
+            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: insets.bottom + 100 }}>
+
+                {/* ─── HEADER ─── */}
+                <View style={[styles.header, { paddingTop: insets.top + 16 }]}>
+                    <View>
+                        <Text style={[styles.headerSub, { color: c.muted }]}>READY TO TRAIN</Text>
+                        <Text style={[styles.headerTitle, { color: c.text, fontFamily: FNT.display }]}>Workout</Text>
+                    </View>
+                    <TouchableOpacity
+                        style={[styles.headerBtn, { backgroundColor: c.card, borderColor: c.border }]}
+                        onPress={() => nav('WorkoutHistory')}
+                    >
+                        <Ionicons name="time-outline" size={20} color={c.text} />
+                    </TouchableOpacity>
                 </View>
 
-                <TouchableOpacity
-                    style={[styles.profileButton, { backgroundColor: colors.muted }]}
-                    onPress={() => navigation.navigate('ProfileStack')}
-                >
-                    <Ionicons name="person-circle-outline" size={28} color={colors.mutedForeground} />
-                    <View style={styles.notificationDot} />
-                </TouchableOpacity>
-            </View>
+                <Animated.View style={{ opacity: fade }}>
 
-            <ScrollView
-                showsVerticalScrollIndicator={false}
-                contentContainerStyle={styles.scrollContent}
-                refreshControl={
-                    <RefreshControl
-                        refreshing={isRefreshing}
-                        onRefresh={onRefresh}
-                        tintColor={colors.primary.main}
-                        colors={[colors.primary.main]}
-                    />
-                }
-            >
-                {/* Stats Overview */}
-                <View style={styles.statsRow}>
-                    <View style={[styles.statCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-                        <View style={styles.statIconBadge}>
-                            <Ionicons name="flame" size={18} color={themeColors.primary.main} />
-                        </View>
-                        <View>
-                            <Text style={[styles.statValue, { color: colors.foreground }]}>
-                                {dashboardStats?.streak?.current || 0}
-                            </Text>
-                            <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>Day Streak</Text>
+                    {/* ─── STATS ROW ─── */}
+                    <View style={[styles.px, styles.statsRow]}>
+                        <StatTile value={DUMMY_METRICS.weeklyWorkouts.toString()} label="This Week" icon="clipboard-check" color="#6366F1" c={c} />
+                        <StatTile value={`${(DUMMY_METRICS.weeklyVolume / 1000).toFixed(0)}k`} label="Volume (lbs)" icon="weight" color="#3B82F6" c={c} />
+                        <StatTile value={`${DUMMY_USER.streak}d`} label="Streak" icon="fire" color="#F97316" c={c} />
+                    </View>
+
+                    {/* ─── HEATMAP ─── */}
+                    <View style={styles.px}>
+                        <View style={[styles.card, { backgroundColor: c.card, borderColor: c.border }]}>
+                            <WorkoutHeatmap
+                                data={HEATMAP_DATA}
+                                showToggle
+                                defaultRange="week"
+                                containerPaddingH={56}
+                                showLegend
+                            />
                         </View>
                     </View>
-                    <View style={[styles.statCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-                        <View style={[styles.statIconBadge, { backgroundColor: themeColors.stats.volume + '20' }]}>
-                            <MaterialCommunityIcons name="weight-lifter" size={18} color={themeColors.stats.volume} />
-                        </View>
-                        <View>
-                            <Text style={[styles.statValue, { color: colors.foreground }]}>
-                                {dashboardStats?.weeklyVolume ? (dashboardStats.weeklyVolume / 1000).toFixed(1) + 'k' : '0'}
-                            </Text>
-                            <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>Vol (lbs)</Text>
-                        </View>
-                    </View>
-                </View>
 
-                {/* Active Session Banner */}
-                {activeWorkoutId ? (
-                    <View style={styles.activeSessionContainer}>
+                    {/* ─── START EMPTY WORKOUT ─── */}
+                    <View style={[styles.px, styles.mt]}>
                         <TouchableOpacity
-                            style={[
-                                styles.activeSessionCard,
-                                {
-                                    backgroundColor: colors.card,
-                                    shadowColor: colors.primary.main,
-                                },
-                            ]}
-                            onPress={handleResumeSession}
+                            onPress={() => {
+                                useWorkoutStore.getState().startMockWorkout('Empty Workout', []);
+                                nav('ActiveWorkout');
+                            }}
                             activeOpacity={0.9}
-                        >
-                            <View style={[styles.accentBar, { backgroundColor: colors.primary.main }]} />
-                            <View style={styles.activeSessionContent}>
-                                <View style={styles.activeSessionHeader}>
-                                    <View>
-                                        <View style={styles.activeSessionBadge}>
-                                            <PulsingDot />
-                                            <Text style={[styles.activeSessionBadgeText, { color: colors.primary.main }]}>
-                                                ACTIVE SESSION
-                                            </Text>
-                                        </View>
-                                        <Text style={[styles.activeSessionTitle, { color: colors.foreground }]}>
-                                            {workoutName || 'Current Workout'}
-                                        </Text>
-                                    </View>
-                                    <MaterialCommunityIcons
-                                        name="dumbbell"
-                                        size={32}
-                                        color={colors.border}
-                                    />
-                                </View>
-
-                                <View style={styles.timerRow}>
-                                    <Text
-                                        style={[
-                                            styles.timerText,
-                                            { color: colors.foreground, fontFamily: fontFamilies.mono },
-                                        ]}
-                                    >
-                                        {formatTime(elapsedSeconds)}
-                                    </Text>
-                                </View>
-
-                                <TouchableOpacity
-                                    style={styles.resumeButton}
-                                    onPress={handleResumeSession}
-                                    activeOpacity={0.8}
-                                >
-                                    <LinearGradient
-                                        colors={colors.primary.gradient as [string, string]}
-                                        start={{ x: 0, y: 0 }}
-                                        end={{ x: 1, y: 0 }}
-                                        style={styles.resumeGradient}
-                                    >
-                                        <Ionicons name="play" size={20} color="#FFFFFF" />
-                                        <Text style={styles.resumeButtonText}>Resume Session</Text>
-                                    </LinearGradient>
-                                </TouchableOpacity>
-                            </View>
-                        </TouchableOpacity>
-                    </View>
-                ) : (
-                    // Quick Start Call to Action when no active session
-                    <View style={styles.section}>
-                        <TouchableOpacity
-                            style={[styles.quickStartBanner, { backgroundColor: colors.card, borderColor: colors.border }]}
-                            onPress={handleStartEmpty}
-                            activeOpacity={0.9}
+                            style={styles.startWrapper}
                         >
                             <LinearGradient
-                                colors={[colors.primary.main + '20', 'transparent']}
-                                start={{ x: 0, y: 0 }}
-                                end={{ x: 1, y: 0 }}
-                                style={StyleSheet.absoluteFill}
-                            />
-                            <View style={styles.quickStartContent}>
-                                <View style={styles.quickStartIcon}>
-                                    <Ionicons name="add" size={24} color={colors.primary.main} />
-                                </View>
-                                <View>
-                                    <Text style={[styles.quickStartTitle, { color: colors.foreground }]}>Start Empty Workout</Text>
-                                    <Text style={[styles.quickStartSub, { color: colors.mutedForeground }]}>Log as you go</Text>
-                                </View>
-                            </View>
-                            <Ionicons name="chevron-forward" size={24} color={colors.mutedForeground} />
-                        </TouchableOpacity>
-                    </View>
-                )}
-
-                {/* Quick Actions Grid */}
-                <View style={styles.section}>
-                    <Text style={[styles.sectionTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>
-                        Quick Actions
-                    </Text>
-                    <View style={styles.quickActionsGrid}>
-                        <TouchableOpacity
-                            style={[styles.quickActionCard, { backgroundColor: colors.card, borderColor: colors.border }]}
-                            onPress={handleTemplates}
-                            activeOpacity={0.7}
-                        >
-                            <View style={[styles.quickActionIcon, { backgroundColor: colors.muted }]}>
-                                <Ionicons name="document-text-outline" size={24} color={colors.mutedForeground} />
-                            </View>
-                            <Text style={[styles.quickActionText, { color: colors.foreground }]}>My Plans</Text>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity
-                            style={[styles.quickActionCard, { backgroundColor: colors.card, borderColor: colors.border }]}
-                            onPress={handleCreatePlan}
-                            activeOpacity={0.7}
-                        >
-                            <View style={[styles.quickActionIcon, { backgroundColor: colors.muted }]}>
-                                <MaterialCommunityIcons name="pencil-outline" size={24} color={colors.mutedForeground} />
-                            </View>
-                            <Text style={[styles.quickActionText, { color: colors.foreground }]}>Create Plan</Text>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity
-                            style={[styles.quickActionCard, { backgroundColor: colors.card, borderColor: colors.border }]}
-                            onPress={() => navigation.navigate('WorkoutHistory')}
-                            activeOpacity={0.7}
-                        >
-                            <View style={[styles.quickActionIcon, { backgroundColor: colors.muted }]}>
-                                <MaterialCommunityIcons name="history" size={24} color={colors.mutedForeground} />
-                            </View>
-                            <Text style={[styles.quickActionText, { color: colors.foreground }]}>History</Text>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity
-                            style={[styles.quickActionCard, { backgroundColor: colors.card, borderColor: colors.border }]}
-                            onPress={handleLibrary}
-                            activeOpacity={0.7}
-                        >
-                            <View style={[styles.quickActionIcon, { backgroundColor: colors.muted }]}>
-                                <Ionicons name="library-outline" size={24} color={colors.mutedForeground} />
-                            </View>
-                            <Text style={[styles.quickActionText, { color: colors.foreground }]}>Discover</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-
-                {/* My Routines Preview */}
-                <View style={styles.section}>
-                    <View style={styles.sectionHeaderRow}>
-                        <Text style={[styles.sectionTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>
-                            My Active Plans
-                        </Text>
-                        <TouchableOpacity onPress={() => navigation.navigate('RoutineList')}>
-                            <Text style={[styles.viewAllText, { color: colors.primary.main }]}>View All</Text>
-                        </TouchableOpacity>
-                    </View>
-
-                    {isRoutinesLoading ? (
-                        <ActivityIndicator />
-                    ) : routinesData?.data?.routines?.length ? (
-                        <View style={[styles.libraryList, { backgroundColor: colors.card }]}>
-                            {routinesData.data.routines.slice(0, 3).map((routine: any, index: number) => (
-                                <React.Fragment key={routine.id}>
-                                    <TouchableOpacity
-                                        style={[
-                                            styles.libraryItem,
-                                            { borderBottomColor: colors.border },
-                                            index === (routinesData.data.routines.length > 3 ? 2 : routinesData.data.routines.length - 1) && { borderBottomWidth: 0 },
-                                        ]}
-                                        activeOpacity={0.7}
-                                        onPress={() => navigation.navigate('RoutineDetail', { routineId: routine.id })}
-                                    >
-                                        <View style={[styles.libraryIconBg, { backgroundColor: themeColors.primary.main + '15' }]}>
-                                            <MaterialCommunityIcons name="notebook-outline" size={24} color={themeColors.primary.main} />
-                                        </View>
-                                        <View style={styles.libraryInfo}>
-                                            <Text style={[styles.libraryName, { color: colors.foreground }]}>
-                                                {routine.name}
-                                            </Text>
-                                            <Text style={[styles.librarySubtitle, { color: colors.mutedForeground }]}>
-                                                {routine.daysPerWeek} Days/Week • {routine.difficulty}
-                                            </Text>
-                                        </View>
-                                        <Ionicons name="chevron-forward" size={20} color={colors.primary.main} />
-                                    </TouchableOpacity>
-                                </React.Fragment>
-                            ))}
-                        </View>
-                    ) : (
-                        <View style={[styles.emptyStateCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-                            <Text style={[styles.emptyStateText, { color: colors.mutedForeground }]}>No plans created yet.</Text>
-                            <TouchableOpacity onPress={handleCreatePlan}>
-                                <Text style={[styles.emptyStateAction, { color: colors.primary.main }]}>Create your first plan</Text>
-                            </TouchableOpacity>
-                        </View>
-                    )}
-                </View>
-
-                {/* Recent Activity Feed */}
-                <View style={[styles.section, { paddingBottom: 24 }]}>
-                    <Text style={[styles.sectionTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>
-                        Recent Activity
-                    </Text>
-
-                    {isStatsLoading ? (
-                        <ActivityIndicator />
-                    ) : dashboardStats?.recentWorkouts?.length ? (
-                        dashboardStats.recentWorkouts.map((activity) => (
-                            <TouchableOpacity
-                                key={activity.id}
-                                style={[
-                                    styles.activityCard,
-                                    {
-                                        backgroundColor: colors.card,
-                                        borderColor: colors.border,
-                                    },
-                                ]}
-                                activeOpacity={0.7}
-                                onPress={() => navigation.navigate('WorkoutDetail', { workoutId: activity.id })}
+                                colors={['#1D4ED8', '#7C3AED']}
+                                start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}
+                                style={styles.startGrad}
                             >
-                                <View style={styles.activityHeader}>
+                                <View style={styles.startContent}>
                                     <View>
-                                        <Text
-                                            style={[
-                                                styles.activityDate,
-                                                { color: colors.mutedForeground, fontFamily: fontFamilies.mono },
-                                            ]}
-                                        >
-                                            {formatDate(activity.date).toUpperCase()}
-                                        </Text>
-                                        <Text style={[styles.activityName, { color: colors.foreground }]}>
-                                            {activity.name}
-                                        </Text>
+                                        <Text style={styles.startLabel}>TAP TO BEGIN</Text>
+                                        <Text style={styles.startTitle}>Start Empty Workout</Text>
                                     </View>
-                                    {activity.prCount > 0 && (
-                                        <LinearGradient
-                                            colors={['#FCD34D', '#FBBF24']}
-                                            start={{ x: 0, y: 0 }}
-                                            end={{ x: 1, y: 0 }}
-                                            style={styles.prBadge}
-                                        >
-                                            <Ionicons name="trophy" size={12} color="#78350F" />
-                                            <Text style={styles.prBadgeText}>{activity.prCount} PRs</Text>
-                                        </LinearGradient>
-                                    )}
+                                    <View style={styles.startPlay}>
+                                        <Ionicons name="play" size={24} color="#FFF" />
+                                    </View>
                                 </View>
+                                <View style={styles.startDecor} />
+                            </LinearGradient>
+                        </TouchableOpacity>
+                    </View>
 
-                                <View style={[styles.activityStats, { borderTopColor: colors.border, borderBottomColor: colors.border }]}>
-                                    <View style={styles.activityStat}>
-                                        <Text style={[styles.activityStatLabel, { color: colors.mutedForeground }]}>
-                                            VOLUME
-                                        </Text>
-                                        <Text style={[styles.activityStatValue, { color: colors.foreground, fontFamily: fontFamilies.mono }]}>
-                                            {activity.volume.toLocaleString()} <Text style={styles.activityStatUnit}>lbs</Text>
-                                        </Text>
-                                    </View>
+                    {/* ─── QUICK ACTIONS ─── */}
+                    <View style={[styles.px, styles.mt]}>
+                        <SectionHeader title="Quick Actions" c={c} />
+                        <View style={styles.qaGrid}>
+                            <QuickAction icon="clipboard-list-outline" label="Routines" color="#6366F1" bg="#6366F120" onPress={() => nav('RoutineList')} />
+                            <QuickAction icon="file-document-outline" label="Templates" color="#3B82F6" bg="#3B82F620" onPress={() => nav('RoutineList', { initialTab: 'Discover' })} />
+                            <QuickAction icon="plus-circle-outline" label="New Routine" color="#10B981" bg="#10B98120" onPress={() => nav('RoutineEditor')} />
+                            <QuickAction icon="robot-outline" label="AI Generate" color="#F59E0B" bg="#F59E0B20" onPress={() => nav('AIRoutinePlanner')} />
+                        </View>
+                    </View>
+
+                    {/* ─── MY ROUTINES ─── */}
+                    <View style={[styles.px, styles.mt]}>
+                        <SectionHeader title="My Routines" onViewAll={() => nav('RoutineList')} c={c} />
+                        {ACTIVE_ROUTINES.map(r => (
+                            <RoutineRow key={r.id} routine={r} c={c} onPress={() => navigation.navigate('RoutineDetail', { routineId: parseInt(r.id) })} />
+                        ))}
+                    </View>
+
+                    {/* ─── MY TEMPLATES ─── */}
+                    <View style={[styles.px, styles.mt]}>
+                        <SectionHeader title="My Templates" onViewAll={() => nav('RoutineList')} c={c} />
+                        {MY_TEMPLATES.map(t => (
+                            <TemplateRow key={t.id} template={t} c={c} onPress={() => navigation.navigate('RoutineDetail', { routineId: parseInt(t.id.replace('t', '')) || 1 })} />
+                        ))}
+                    </View>
+
+                    {/* ─── AI ROUTINE PLANNER SECTION ─── */}
+                    <View style={[styles.px, styles.mt]}>
+                        <TouchableOpacity
+                            onPress={() => nav('AIRoutinePlanner')}
+                            activeOpacity={0.9}
+                            style={{ borderRadius: 18, overflow: 'hidden' }}
+                        >
+                            <LinearGradient colors={['#1E1B4B', '#4338CA']} style={styles.aiCard}>
+                                <View style={styles.aiContent}>
+                                    <Ionicons name="sparkles" size={24} color="#A78BFA" style={{ marginBottom: 6 }} />
+                                    <Text style={styles.aiTitle}>AI Routine Planner</Text>
+                                    <Text style={styles.aiSub}>Chat with AI Coach, generate a personalized routine or workout template</Text>
+                                </View>
+                                <Ionicons name="chevron-forward" size={24} color="rgba(255,255,255,0.6)" />
+                            </LinearGradient>
+                        </TouchableOpacity>
+                    </View>
+
+                    {/* ─── RECENT ACTIVITY ─── */}
+                    <View style={[styles.px, styles.mt, styles.mbExtra]}>
+                        <SectionHeader title="Recent Activity" onViewAll={() => nav('WorkoutHistory')} c={c} />
+                        {DUMMY_RECENT_WORKOUTS.slice(0, 3).map(w => (
+                            <TouchableOpacity key={w.id} style={[styles.recentRow, { backgroundColor: c.card, borderColor: c.border }]} activeOpacity={0.75} onPress={() => navigation.navigate('WorkoutDetail', { workoutId: parseInt(w.id) })}>
+                                <View style={[styles.recentIcon, { backgroundColor: c.surface }]}>
+                                    <MaterialCommunityIcons name={w.iconName} size={20} color={c.primary} />
+                                </View>
+                                <View style={styles.recentInfo}>
+                                    <Text style={[styles.recentName, { color: c.text }]}>{w.name}</Text>
+                                    <Text style={[styles.recentMeta, { color: c.muted }]}>{w.date} • {w.exercises} ex • {fmtDuration(w.duration)}</Text>
+                                </View>
+                                <View style={styles.recentRight}>
+                                    <Text style={[styles.recentVol, { color: c.text, fontFamily: FNT.mono }]}>{fmtVol(w.volume)}</Text>
+                                    {w.hasPR && <View style={[styles.prBadge, { backgroundColor: `${c.primary}25` }]}><Text style={[styles.prText, { color: c.primary }]}>PR</Text></View>}
                                 </View>
                             </TouchableOpacity>
-                        ))
-                    ) : (
-                        <Text style={{ color: colors.mutedForeground, textAlign: 'center', marginTop: 10 }}>No recent activity</Text>
-                    )}
-                </View>
+                        ))}
+                    </View>
 
-                <View style={{ height: 100 }} />
+                </Animated.View>
             </ScrollView>
         </View>
     );
 }
 
-
+// ─── STYLES ───
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    header: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        paddingHorizontal: 24,
-        paddingBottom: 16,
-    },
-    greetingSub: {
-        fontSize: 14,
-        fontWeight: '600',
-        marginBottom: 2,
-    },
-    headerTitle: {
-        fontSize: 28,
-        fontWeight: '700',
-        letterSpacing: 0.3,
-    },
-    profileButton: {
-        position: 'relative',
-        width: 40,
-        height: 40,
-        borderRadius: 20,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    notificationDot: {
-        position: 'absolute',
-        top: 8,
-        right: 8,
-        width: 10,
-        height: 10,
-        borderRadius: 5,
-        backgroundColor: themeColors.error,
-        borderWidth: 2,
-        borderColor: '#FFFFFF',
-    },
-    scrollContent: {
-        paddingTop: 24,
-    },
-    statsRow: {
-        flexDirection: 'row',
-        paddingHorizontal: 20,
-        gap: 12,
-        marginBottom: 24,
-    },
-    statCard: {
-        flex: 1,
-        flexDirection: 'row',
-        alignItems: 'center',
-        padding: 12,
-        borderRadius: 12,
-        borderWidth: 1,
-        gap: 12,
-    },
-    statIconBadge: {
-        width: 36,
-        height: 36,
-        borderRadius: 18,
-        backgroundColor: themeColors.primary.main + '20',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    statValue: {
-        fontSize: 18,
-        fontWeight: '700',
-    },
-    statLabel: {
-        fontSize: 12,
-    },
-    // Active Session Banner Styles
-    activeSessionContainer: {
-        paddingHorizontal: 20,
-        marginBottom: 32,
-    },
-    activeSessionCard: {
-        borderRadius: 16,
-        overflow: 'hidden',
-        shadowOffset: { width: 0, height: 8 },
-        shadowOpacity: 0.15,
-        shadowRadius: 12,
-        elevation: 8,
-    },
-    accentBar: {
-        position: 'absolute',
-        left: 0,
-        top: 0,
-        bottom: 0,
-        width: 6,
-    },
-    activeSessionContent: {
-        paddingLeft: 24,
-        paddingRight: 24,
-        paddingTop: 24,
-        paddingBottom: 24,
-    },
-    activeSessionHeader: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'flex-start',
-        marginBottom: 24,
-    },
-    activeSessionBadge: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 8,
-        marginBottom: 8,
-    },
-    activeSessionBadgeText: {
-        fontSize: 11,
-        fontWeight: '800',
-        letterSpacing: 1,
-    },
-    activeSessionTitle: {
-        fontSize: 20,
-        fontWeight: '700',
-    },
-    timerRow: {
-        flexDirection: 'row',
-        alignItems: 'flex-end',
-        justifyContent: 'space-between',
-        marginBottom: 24,
-    },
-    timerText: {
-        fontSize: 40,
-        fontWeight: '600',
-        letterSpacing: -1,
-    },
-    resumeButton: {
-        borderRadius: 12,
-        overflow: 'hidden',
-    },
-    resumeGradient: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: 8,
-        height: 48,
-    },
-    resumeButtonText: {
-        color: '#FFFFFF',
-        fontSize: 16,
-        fontWeight: '600',
-    },
-    // Quick Start Banner
-    quickStartBanner: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        padding: 16,
-        borderRadius: 12,
-        borderWidth: 1,
-        marginBottom: 8,
-        overflow: 'hidden',
-    },
-    quickStartContent: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 16,
-    },
-    quickStartIcon: {
-        width: 40,
-        height: 40,
-        borderRadius: 20,
-        backgroundColor: themeColors.primary.main + '20',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    quickStartTitle: {
-        fontSize: 16,
-        fontWeight: '700',
-    },
-    quickStartSub: {
-        fontSize: 13,
-    },
-    // Section Styles
-    section: {
-        marginBottom: 32,
-        paddingHorizontal: 20,
-    },
-    sectionTitle: {
-        fontSize: 22,
-        fontWeight: '700',
-        marginBottom: 16,
-    },
-    sectionHeaderRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        marginBottom: 16,
-    },
-    viewAllText: {
-        fontSize: 14,
-        fontWeight: '600',
-    },
-    // Quick Actions Grid
-    quickActionsGrid: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        gap: 12,
-    },
-    quickActionCard: {
-        flex: 1,
-        minWidth: '47%',
-        flexDirection: 'column',
-        alignItems: 'flex-start',
-        gap: 12,
-        padding: 16,
-        borderRadius: 12,
-        borderWidth: 1,
-    },
-    quickActionIcon: {
-        width: 40,
-        height: 40,
-        borderRadius: 10,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    quickActionText: {
-        fontSize: 15,
-        fontWeight: '600',
-        marginTop: 4,
-    },
-    // Library List Styles
-    libraryList: {
-        borderRadius: 12,
-        overflow: 'hidden',
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.05,
-        shadowRadius: 8,
-        elevation: 2,
-    },
-    libraryItem: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        padding: 16,
-        gap: 16,
-        borderBottomWidth: 1,
-    },
-    libraryIconBg: {
-        width: 40,
-        height: 40,
-        borderRadius: 10,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    libraryInfo: {
-        flex: 1,
-    },
-    libraryName: {
-        fontSize: 16,
-        fontWeight: '700',
-        marginBottom: 4,
-        lineHeight: 20,
-    },
-    librarySubtitle: {
-        fontSize: 13,
-        lineHeight: 16,
-    },
-    emptyStateCard: {
-        padding: 24,
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 12,
-        borderWidth: 1,
-        borderStyle: 'dashed',
-    },
-    emptyStateText: {
-        fontSize: 14,
-        marginBottom: 8,
-    },
-    emptyStateAction: {
-        fontSize: 14,
-        fontWeight: '600',
-    },
-    // Activity Card Styles
-    activityCard: {
-        padding: 20,
-        borderRadius: 12,
-        borderWidth: 1,
-        marginBottom: 16,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.05,
-        shadowRadius: 8,
-        elevation: 2,
-    },
-    activityHeader: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'flex-start',
-        marginBottom: 12,
-    },
-    activityDate: {
-        fontSize: 11,
-        fontWeight: '600',
-        letterSpacing: 0.5,
-        marginBottom: 4,
-    },
-    activityName: {
-        fontSize: 16,
-        fontWeight: '700',
-    },
-    prBadge: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 4,
-        paddingHorizontal: 8,
-        paddingVertical: 4,
-        borderRadius: 6,
-    },
-    prBadgeText: {
-        fontSize: 10,
-        fontWeight: '800',
-        color: '#78350F',
-        letterSpacing: 0.5,
-    },
-    activityStats: {
-        flexDirection: 'row',
-        gap: 16,
-        paddingTop: 12,
-        borderTopWidth: 1,
-    },
-    activityStat: {
-        flex: 1,
-    },
-    activityStatLabel: {
-        fontSize: 10,
-        fontWeight: '700',
-        letterSpacing: 0.5,
-        marginBottom: 4,
-    },
-    activityStatValue: {
-        fontSize: 14,
-        fontWeight: '700',
-    },
-    activityStatUnit: {
-        fontSize: 12,
-        fontWeight: '400',
-    },
-});
+    container: { flex: 1 },
+    px: { paddingHorizontal: 20 },
+    mt: { marginTop: 28 },
+    mbExtra: { marginBottom: 12 },
 
+    // Header
+    header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end', paddingHorizontal: 20, paddingBottom: 20 },
+    headerSub: { fontSize: 10, fontWeight: '700', letterSpacing: 2, marginBottom: 2 },
+    headerTitle: { fontSize: 32 },
+    headerBtn: { width: 42, height: 42, borderRadius: 12, alignItems: 'center', justifyContent: 'center', borderWidth: 1 },
+
+    // Stats
+    statsRow: { flexDirection: 'row', gap: 12, marginBottom: 16 },
+    statTile: { flex: 1, borderRadius: 16, borderWidth: 1, padding: 14, alignItems: 'center', gap: 8 },
+    statTileIcon: { width: 36, height: 36, borderRadius: 10, alignItems: 'center', justifyContent: 'center' },
+    statTileVal: { fontSize: 20, fontWeight: '800' },
+    statTileLabel: { fontSize: 10, fontWeight: '600', textAlign: 'center' },
+
+    // Card
+    card: { borderRadius: 18, borderWidth: 1, padding: 16 },
+
+    // Start Workout
+    startWrapper: { borderRadius: 22, shadowColor: '#2563EB', shadowOffset: { width: 0, height: 10 }, shadowOpacity: 0.35, shadowRadius: 20, elevation: 10 },
+    startGrad: { borderRadius: 22, overflow: 'hidden' },
+    startContent: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 22 },
+    startLabel: { fontSize: 10, fontWeight: '800', color: 'rgba(255,255,255,0.65)', letterSpacing: 1.5, marginBottom: 4 },
+    startTitle: { fontSize: 24, fontWeight: '800', color: '#FFF' },
+    startPlay: { width: 52, height: 52, borderRadius: 26, backgroundColor: 'rgba(255,255,255,0.2)', alignItems: 'center', justifyContent: 'center' },
+    startDecor: { position: 'absolute', width: 100, height: 100, borderRadius: 50, backgroundColor: 'rgba(255,255,255,0.07)', right: -20, bottom: -30 },
+
+    // Quick Actions
+    sectionHeaderRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 },
+    sectionTitle: { fontSize: 21 },
+    viewAll: { fontSize: 13, fontWeight: '600' },
+    qaGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 12 },
+    quickAction: { width: (SCREEN_WIDTH - 52) / 2, height: 80, borderRadius: 18, alignItems: 'center', justifyContent: 'center', gap: 8 },
+    quickActionLabel: { fontSize: 13, fontWeight: '700' },
+
+    // Routine / Template rows
+    routineRow: { flexDirection: 'row', alignItems: 'center', borderRadius: 16, borderWidth: 1, padding: 14, marginBottom: 10, gap: 12, overflow: 'hidden' },
+    routineColorBar: { width: 4, height: 44, borderRadius: 2 },
+    routineInfo: { flex: 1, gap: 3 },
+    routineName: { fontSize: 15, fontWeight: '700' },
+    routineMeta: { fontSize: 12 },
+    diffBadge: { paddingHorizontal: 10, paddingVertical: 4, borderRadius: 8 },
+    diffText: { fontSize: 11, fontWeight: '700' },
+
+    // AI card
+    aiCard: { flexDirection: 'row', alignItems: 'center', padding: 20, borderRadius: 18 },
+    aiContent: { flex: 1 },
+    aiTitle: { fontSize: 18, fontWeight: '800', color: '#FFF', marginBottom: 4 },
+    aiSub: { fontSize: 13, color: 'rgba(255,255,255,0.7)', lineHeight: 18 },
+
+    // Recent
+    recentRow: { flexDirection: 'row', alignItems: 'center', borderRadius: 16, borderWidth: 1, padding: 14, marginBottom: 10, gap: 12 },
+    recentIcon: { width: 44, height: 44, borderRadius: 13, alignItems: 'center', justifyContent: 'center' },
+    recentInfo: { flex: 1, gap: 3 },
+    recentName: { fontSize: 15, fontWeight: '700' },
+    recentMeta: { fontSize: 12 },
+    recentRight: { alignItems: 'flex-end', gap: 4 },
+    recentVol: { fontSize: 15, fontWeight: '700' },
+    prBadge: { paddingHorizontal: 8, paddingVertical: 2, borderRadius: 6 },
+    prText: { fontSize: 10, fontWeight: '800', letterSpacing: 0.5 },
+});

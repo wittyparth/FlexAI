@@ -1,491 +1,406 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import {
-    View,
-    Text,
-    StyleSheet,
-    ScrollView,
-    TouchableOpacity,
-    TextInput,
-    Dimensions,
-    Animated,
-    Image,
+    View, Text, StyleSheet, ScrollView, TouchableOpacity, Animated, Dimensions,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
-import { useColors } from '../../hooks';
-import { fontFamilies } from '../../theme/typography';
-import { colors as themeColors } from '../../theme/colors';
-
-const { width } = Dimensions.get('window');
-
-
+import { useTheme } from '../../contexts';
 import {
-    EXPLORE_CATEGORIES,
-    EXPLORE_FEATURED,
-    EXPLORE_TRENDING,
-    EXPLORE_COACH_PICKS,
+    EXPLORE_CATEGORIES, EXPLORE_FEATURED, EXPLORE_COMMUNITY_ROUTINES, EXPLORE_CHALLENGES,
 } from '../../data/mockData';
 
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
-export function ExploreHubScreen({ navigation }: any) {
-    const colors = useColors();
-    const insets = useSafeAreaInsets();
-    const [search, setSearch] = useState('');
-    const fadeAnim = useRef(new Animated.Value(0)).current;
-    const slideAnim = useRef(new Animated.Value(30)).current;
+// Classic, no rainbow, no gradient backgrounds
+const C = {
+    dark:  { bg: '#0A0E1A', card: '#131C2E', border: '#1F2D45', text: '#F1F5FF', muted: '#7A8BAA', primary: '#3B82F6', surface: '#1A2540' },
+    light: { bg: '#F0F4FF', card: '#FFFFFF', border: '#E2E8F8', text: '#0D1526', muted: '#64748B', primary: '#2563EB', surface: '#EEF2FF' },
+};
+const FNT = { display: 'Calistoga', semi: 'Inter-SemiBold' };
+const DIFF_COLOR: Record<string, string> = { Beginner: '#10B981', Intermediate: '#F59E0B', Advanced: '#EF4444' };
 
-    useEffect(() => {
-        Animated.parallel([
-            Animated.timing(fadeAnim, { toValue: 1, duration: 500, useNativeDriver: true }),
-            Animated.timing(slideAnim, { toValue: 0, duration: 500, useNativeDriver: true }),
-        ]).start();
-    }, []);
-
+function SectionHeader({ title, onViewAll, c }: { title: string; onViewAll?: () => void; c: typeof C.dark }) {
     return (
-        <View style={[styles.container, { backgroundColor: colors.background }]}>
-            {/* Premium Header */}
-            <View style={[styles.header, { paddingTop: insets.top + 16, backgroundColor: colors.card }]}>
-                <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>
-                    Explore
-                </Text>
-                <Text style={[styles.headerSubtitle, { color: colors.mutedForeground }]}>
-                    Discover workouts, routines & more
-                </Text>
+        <View style={styles.sectionHeaderRow}>
+            <Text style={[styles.sectionTitle, { color: c.text, fontFamily: FNT.display }]}>{title}</Text>
+            {onViewAll && (
+                <TouchableOpacity onPress={onViewAll}>
+                    <Text style={[styles.viewAll, { color: c.primary }]}>View All</Text>
+                </TouchableOpacity>
+            )}
+        </View>
+    );
+}
 
-                {/* Search Bar */}
+// ─── CATEGORY CARD (grid card, not pill) ───
+function CategoryCard({ cat, onPress, c }: { cat: any; onPress: () => void; c: typeof C.dark }) {
+    const CARD_W = (SCREEN_WIDTH - 52) / 2;
+    return (
+        <TouchableOpacity
+            style={[styles.catCard, { backgroundColor: c.card, borderColor: c.border, width: CARD_W }]}
+            onPress={onPress}
+            activeOpacity={0.75}
+        >
+            <View style={[styles.catCardIcon, { backgroundColor: `${cat.color}18` }]}>
+                <MaterialCommunityIcons name={cat.icon} size={22} color={cat.color} />
+            </View>
+            <View style={styles.catCardText}>
+                <Text style={[styles.catCardLabel, { color: c.text }]}>{cat.label}</Text>
+                <Text style={[styles.catCardCount, { color: c.muted }]}>{cat.count} items</Text>
+            </View>
+            <Ionicons name="chevron-forward" size={16} color={c.muted} />
+        </TouchableOpacity>
+    );
+}
+
+// ─── FEATURED CARD — classic (no gradient, plain card) ───
+function FeaturedCard({ item, onPress, c }: { item: any; onPress: () => void; c: typeof C.dark }) {
+    return (
+        <TouchableOpacity
+            style={[styles.featuredCard, { backgroundColor: c.card, borderColor: c.border }]}
+            onPress={onPress}
+            activeOpacity={0.8}
+        >
+            <View style={styles.featuredCardTop}>
+                <View style={[styles.featuredTypeBadge, { backgroundColor: c.surface, borderColor: c.border }]}>
+                    <Text style={[styles.featuredTypeText, { color: c.muted }]}>{item.type}</Text>
+                </View>
+            </View>
+            <Text style={[styles.featuredTitle, { color: c.text }]} numberOfLines={2}>{item.title}</Text>
+            <View style={styles.featuredMeta}>
+                <Ionicons name="star" size={12} color="#F59E0B" />
+                <Text style={[styles.featuredRating, { color: c.text }]}>{item.rating}</Text>
+                <Text style={[styles.featuredSep, { color: c.muted }]}>•</Text>
+                <Ionicons name="people-outline" size={12} color={c.muted} />
+                <Text style={[styles.featuredUsers, { color: c.muted }]}>{item.users.toLocaleString()}</Text>
+            </View>
+        </TouchableOpacity>
+    );
+}
+
+// ─── COMMUNITY ROUTINE CARD (classic, no gradient) ───
+function CommunityCard({ routine, onPress, c }: { routine: any; onPress: () => void; c: typeof C.dark }) {
+    const diffColor = DIFF_COLOR[routine.difficulty] || '#6366F1';
+    return (
+        <TouchableOpacity
+            style={[styles.communityCard, { backgroundColor: c.card, borderColor: c.border }]}
+            onPress={onPress}
+            activeOpacity={0.8}
+        >
+            <View style={styles.communityCardHeader}>
+                <View style={{ flex: 1 }}>
+                    <Text style={[styles.communityCardName, { color: c.text }]}>{routine.name}</Text>
+                    <Text style={[styles.communityCardAuthor, { color: c.muted }]}>by {routine.author}</Text>
+                </View>
+                <View style={[styles.diffBadge, { backgroundColor: `${diffColor}15`, borderColor: `${diffColor}30`, borderWidth: 1 }]}>
+                    <Text style={[styles.diffText, { color: diffColor }]}>{routine.difficulty}</Text>
+                </View>
+            </View>
+            <View style={[styles.communityCardDivider, { backgroundColor: c.border }]} />
+            <View style={styles.communityCardFooter}>
+                <View style={styles.communityMetaItem}>
+                    <Ionicons name="calendar-outline" size={13} color={c.muted} />
+                    <Text style={[styles.communityMetaText, { color: c.muted }]}>{routine.days}×/week</Text>
+                </View>
+                <View style={styles.communityMetaItem}>
+                    <Ionicons name="heart" size={13} color="#EF4444" />
+                    <Text style={[styles.communityMetaText, { color: c.muted }]}>{routine.likes.toLocaleString()}</Text>
+                </View>
                 <TouchableOpacity
-                    style={[styles.searchBar, { backgroundColor: colors.muted }]}
-                    activeOpacity={0.8}
+                    style={[styles.useBtn, { borderColor: c.primary, borderWidth: 1 }]}
+                    onPress={onPress}
                 >
-                    <Ionicons name="search" size={20} color={colors.mutedForeground} />
-                    <TextInput
-                        style={[styles.searchInput, { color: colors.foreground }]}
-                        placeholder="Search exercises, routines..."
-                        placeholderTextColor={colors.mutedForeground}
-                        value={search}
-                        onChangeText={setSearch}
-                    />
-                    <TouchableOpacity style={[styles.filterBtn, { backgroundColor: colors.primary.main }]}>
-                        <Ionicons name="options" size={18} color="#FFF" />
-                    </TouchableOpacity>
+                    <Text style={[styles.useBtnText, { color: c.primary }]}>Use</Text>
                 </TouchableOpacity>
             </View>
+        </TouchableOpacity>
+    );
+}
 
-            <ScrollView showsVerticalScrollIndicator={false}>
-                {/* Categories Grid */}
-                <Animated.View style={[styles.categoriesGrid, { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }]}>
-                    {EXPLORE_CATEGORIES.map((cat, index) => (
-                        <TouchableOpacity
-                            key={cat.id}
-                            style={[styles.categoryCard, { backgroundColor: colors.card, borderColor: colors.border }]}
-                            onPress={() => navigation.navigate(cat.id === 'exercises' ? 'ExerciseLibrary' : cat.id === 'routines' ? 'PublicRoutines' : 'ChallengesList')}
-                            activeOpacity={0.9}
+// ─── CHALLENGE CARD (classic, no gradient) ───
+function ChallengeCard({ ch, onPress, c }: { ch: any; onPress: () => void; c: typeof C.dark }) {
+    return (
+        <TouchableOpacity
+            style={[styles.challengeCard, { backgroundColor: c.card, borderColor: c.border }]}
+            onPress={onPress}
+            activeOpacity={0.8}
+        >
+            <View style={[styles.challengeIconBg, { backgroundColor: c.surface }]}>
+                <Text style={styles.challengeEmoji}>{ch.badge}</Text>
+            </View>
+            <View style={styles.challengeInfo}>
+                <Text style={[styles.challengeName, { color: c.text }]}>{ch.name}</Text>
+                <Text style={[styles.challengeMeta, { color: c.muted }]}>
+                    {ch.participants.toLocaleString()} participants • {ch.daysLeft} days left
+                </Text>
+            </View>
+            <TouchableOpacity
+                style={[styles.joinBtn, { borderColor: c.primary, borderWidth: 1 }]}
+                onPress={onPress}
+            >
+                <Text style={[styles.joinText, { color: c.primary }]}>Join</Text>
+            </TouchableOpacity>
+        </TouchableOpacity>
+    );
+}
+
+export function ExploreHubScreen({ navigation }: any) {
+    const insets = useSafeAreaInsets();
+    const { isDark } = useTheme();
+    const c = isDark ? C.dark : C.light;
+    const fade = useRef(new Animated.Value(0)).current;
+
+    const getDrawerNav = () => navigation.getParent()?.getParent() ?? navigation;
+    const getTabNav = () => navigation.getParent() ?? navigation;
+
+    React.useEffect(() => {
+        Animated.timing(fade, { toValue: 1, duration: 500, useNativeDriver: true }).start();
+    }, []);
+
+    const handleCategoryPress = (id: string) => {
+        if (id === 'exercises') navigation.navigate('ExerciseLibrary');
+        else if (id === 'routines') navigation.navigate('PublicRoutines');
+        else if (id === 'templates') getTabNav().navigate('WorkoutTab', { screen: 'RoutineList' });
+        else if (id === 'challenges') getDrawerNav().navigate('SocialTab', { screen: 'ChallengesList' });
+    };
+
+    return (
+        <View style={[styles.container, { backgroundColor: c.bg }]}>
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={{ paddingBottom: insets.bottom + 100 }}
+            >
+                {/* ─── HEADER ─── */}
+                <View style={[styles.header, { paddingTop: insets.top + 16 }]}>
+                    <View>
+                        <Text style={[styles.headerSub, { color: c.muted }]}>DISCOVER</Text>
+                        <Text style={[styles.headerTitle, { color: c.text, fontFamily: FNT.display }]}>Explore</Text>
+                    </View>
+                    <TouchableOpacity style={[styles.headerBtn, { backgroundColor: c.card, borderColor: c.border }]}>
+                        <Ionicons name="search-outline" size={20} color={c.text} />
+                    </TouchableOpacity>
+                </View>
+
+                <Animated.View style={{ opacity: fade }}>
+
+                    {/* ─── BROWSE CATEGORIES (2×2 card grid) ─── */}
+                    <View style={[styles.px, styles.mt]}>
+                        <SectionHeader title="Browse" c={c} />
+                        <View style={styles.catGrid}>
+                            {EXPLORE_CATEGORIES.map(cat => (
+                                <CategoryCard
+                                    key={cat.id}
+                                    cat={cat}
+                                    c={c}
+                                    onPress={() => handleCategoryPress(cat.id)}
+                                />
+                            ))}
+                        </View>
+                    </View>
+
+                    {/* ─── FEATURED (horizontal scroll, classic cards) ─── */}
+                    <View style={styles.mt}>
+                        <View style={styles.px}>
+                            <SectionHeader title="Featured" c={c} />
+                        </View>
+                        <ScrollView
+                            horizontal
+                            showsHorizontalScrollIndicator={false}
+                            contentContainerStyle={styles.featuredScroll}
                         >
-                            <View style={[styles.categoryIcon, { backgroundColor: `${cat.color}15` }]}>
-                                <MaterialCommunityIcons name={cat.icon as any} size={26} color={cat.color} />
-                            </View>
-                            <Text style={[styles.categoryLabel, { color: colors.foreground }]}>{cat.label}</Text>
-                            <Text style={[styles.categoryCount, { color: colors.mutedForeground }]}>{cat.count}</Text>
-                        </TouchableOpacity>
-                    ))}
+                            {EXPLORE_FEATURED.map(item => (
+                                <FeaturedCard
+                                    key={item.id}
+                                    item={item}
+                                    c={c}
+                                    onPress={() => {}}
+                                />
+                            ))}
+                        </ScrollView>
+                    </View>
+
+                    {/* ─── COMMUNITY ROUTINES ─── */}
+                    <View style={[styles.px, styles.mt]}>
+                        <SectionHeader
+                            title="Community Routines"
+                            onViewAll={() => navigation.navigate('PublicRoutines')}
+                            c={c}
+                        />
+                        {EXPLORE_COMMUNITY_ROUTINES.map(r => (
+                            <CommunityCard
+                                key={r.id}
+                                routine={r}
+                                c={c}
+                                onPress={() => navigation.navigate('PublicRoutines')}
+                            />
+                        ))}
+                    </View>
+
+                    {/* ─── CHALLENGES (classic cards) ─── */}
+                    <View style={[styles.px, styles.mt]}>
+                        <SectionHeader title="Active Challenges" c={c} />
+                        {EXPLORE_CHALLENGES.map(ch => (
+                            <ChallengeCard
+                                key={ch.id}
+                                ch={ch}
+                                c={c}
+                                onPress={() => {}}
+                            />
+                        ))}
+                    </View>
+
                 </Animated.View>
-
-                {/* Featured Section */}
-                <View style={styles.section}>
-                    <View style={styles.sectionHeader}>
-                        <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Featured</Text>
-                        <TouchableOpacity>
-                            <Text style={[styles.seeAll, { color: colors.primary.main }]}>See All</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <ScrollView
-                        horizontal
-                        showsHorizontalScrollIndicator={false}
-                        contentContainerStyle={styles.featuredScroll}
-                        decelerationRate="fast"
-                        snapToInterval={width * 0.75 + 12}
-                    >
-                        {EXPLORE_FEATURED.map((item) => (
-                            <TouchableOpacity
-                                key={item.id}
-                                style={styles.featuredCard}
-                                activeOpacity={0.95}
-                            >
-                                <LinearGradient
-                                    colors={item.gradient as [string, string]}
-                                    style={styles.featuredGradient}
-                                    start={{ x: 0, y: 0 }}
-                                    end={{ x: 1, y: 1 }}
-                                >
-                                    <View style={styles.featuredBadge}>
-                                        <Text style={styles.featuredBadgeText}>{item.type}</Text>
-                                    </View>
-                                    <View style={styles.featuredContent}>
-                                        <Text style={styles.featuredTitle}>{item.title}</Text>
-                                        <View style={styles.featuredMeta}>
-                                            <View style={styles.ratingContainer}>
-                                                <Ionicons name="star" size={14} color="#FFC107" />
-                                                <Text style={styles.ratingText}>{item.rating}</Text>
-                                            </View>
-                                            <View style={styles.usersContainer}>
-                                                <Ionicons name="people" size={14} color="rgba(255,255,255,0.8)" />
-                                                <Text style={styles.usersText}>{(item.users / 1000).toFixed(1)}k</Text>
-                                            </View>
-                                        </View>
-                                    </View>
-                                    <TouchableOpacity style={styles.featuredBtn}>
-                                        <Text style={styles.featuredBtnText}>View</Text>
-                                        <Ionicons name="arrow-forward" size={16} color="#FFF" />
-                                    </TouchableOpacity>
-                                </LinearGradient>
-                            </TouchableOpacity>
-                        ))}
-                    </ScrollView>
-                </View>
-
-                {/* Trending Exercises */}
-                <View style={styles.section}>
-                    <View style={styles.sectionHeader}>
-                        <View style={styles.sectionTitleRow}>
-                            <MaterialCommunityIcons name="trending-up" size={22} color={colors.success} />
-                            <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Trending Now</Text>
-                        </View>
-                    </View>
-                    {EXPLORE_TRENDING.map((ex, index) => (
-                        <TouchableOpacity
-                            key={ex.id}
-                            style={[styles.trendingCard, { backgroundColor: colors.card, borderColor: colors.border }]}
-                            onPress={() => navigation.navigate('ExerciseDetail', { exerciseId: ex.id })}
-                            activeOpacity={0.9}
-                        >
-                            <View style={styles.trendingRank}>
-                                <Text style={[styles.rankNumber, { color: colors.primary.main }]}>#{index + 1}</Text>
-                            </View>
-                            <View style={[styles.trendingIcon, { backgroundColor: colors.muted }]}>
-                                <MaterialCommunityIcons name={ex.icon as any} size={24} color={colors.primary.main} />
-                            </View>
-                            <View style={styles.trendingInfo}>
-                                <Text style={[styles.trendingName, { color: colors.foreground }]}>{ex.name}</Text>
-                                <Text style={[styles.trendingMuscle, { color: colors.mutedForeground }]}>{ex.muscle}</Text>
-                            </View>
-                            <View style={[styles.trendingBadge, { backgroundColor: `${colors.success}15` }]}>
-                                <Ionicons name="trending-up" size={14} color={colors.success} />
-                                <Text style={[styles.trendingPercent, { color: colors.success }]}>{ex.trending}</Text>
-                            </View>
-                        </TouchableOpacity>
-                    ))}
-                </View>
-
-                {/* Coach's Picks */}
-                <View style={styles.section}>
-                    <View style={styles.sectionHeader}>
-                        <View style={styles.sectionTitleRow}>
-                            <MaterialCommunityIcons name="star-circle" size={22} color={colors.stats.pr} />
-                            <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Coach's Picks</Text>
-                        </View>
-                    </View>
-                    <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.coachScroll}>
-                        {EXPLORE_COACH_PICKS.map((pick) => (
-                            <TouchableOpacity
-                                key={pick.id}
-                                style={[styles.coachCard, { backgroundColor: colors.card, borderColor: colors.border }]}
-                                activeOpacity={0.9}
-                            >
-                                <Image source={{ uri: pick.avatar }} style={styles.coachAvatar} />
-                                <Text style={[styles.coachPickName, { color: colors.foreground }]} numberOfLines={2}>{pick.name}</Text>
-                                <Text style={[styles.coachName, { color: colors.mutedForeground }]}>by {pick.coach}</Text>
-                            </TouchableOpacity>
-                        ))}
-                    </ScrollView>
-                </View>
-
-                <View style={{ height: 120 }} />
             </ScrollView>
 
-            {/* AI Generator FAB */}
+            {/* ─── FLOATING AI COACH BUTTON ─── */}
             <TouchableOpacity
-                style={styles.fab}
+                style={[styles.fab, { backgroundColor: c.card, borderColor: c.border }]}
+                onPress={() => getDrawerNav().navigate('Coach', { screen: 'CoachHub' })}
                 activeOpacity={0.9}
-                onPress={() => navigation.navigate('AIGenerator')}
             >
-                <LinearGradient
-                    colors={colors.primary.gradient as [string, string]}
-                    style={styles.fabGradient}
-                >
-                    <MaterialCommunityIcons name="robot" size={26} color="#FFF" />
-                </LinearGradient>
+                <Ionicons name="sparkles" size={20} color={c.primary} />
+                <Text style={[styles.fabLabel, { color: c.primary }]}>AI Coach</Text>
             </TouchableOpacity>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
+    container: { flex: 1 },
+    px: { paddingHorizontal: 20 },
+    mt: { marginTop: 24 },
+
     header: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'flex-end',
         paddingHorizontal: 20,
-        paddingBottom: 20,
+        paddingBottom: 8,
     },
-    headerTitle: {
-        fontSize: 32,
-        fontWeight: '800',
-        marginBottom: 4,
+    headerSub: { fontSize: 10, fontWeight: '700', letterSpacing: 2, marginBottom: 2 },
+    headerTitle: { fontSize: 32 },
+    headerBtn: {
+        width: 42, height: 42, borderRadius: 12,
+        alignItems: 'center', justifyContent: 'center', borderWidth: 1,
     },
-    headerSubtitle: {
-        fontSize: 15,
-        marginBottom: 20,
-    },
-    searchBar: {
+
+    // Category section
+    sectionHeaderRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 },
+    sectionTitle: { fontSize: 20 },
+    viewAll: { fontSize: 13, fontWeight: '600' },
+
+    catGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 12 },
+    catCard: {
         flexDirection: 'row',
         alignItems: 'center',
-        paddingLeft: 16,
-        paddingRight: 6,
+        gap: 12,
+        padding: 14,
         borderRadius: 16,
-        height: 52,
-        gap: 12,
-    },
-    searchInput: {
-        flex: 1,
-        fontSize: 16,
-    },
-    filterBtn: {
-        width: 40,
-        height: 40,
-        borderRadius: 12,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    categoriesGrid: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        paddingHorizontal: 16,
-        paddingTop: 20,
-        gap: 12,
-    },
-    categoryCard: {
-        width: (width - 44) / 2,
-        borderRadius: 20,
         borderWidth: 1,
-        padding: 20,
-        alignItems: 'center',
+        marginBottom: 0,
     },
-    categoryIcon: {
-        width: 56,
-        height: 56,
-        borderRadius: 16,
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginBottom: 12,
-    },
-    categoryLabel: {
-        fontSize: 16,
-        fontWeight: '700',
-        marginBottom: 4,
-    },
-    categoryCount: {
-        fontSize: 14,
-        fontFamily: fontFamilies.mono,
-    },
-    section: {
-        marginTop: 28,
-    },
-    sectionHeader: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        paddingHorizontal: 20,
-        marginBottom: 16,
-    },
-    sectionTitleRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 8,
-    },
-    sectionTitle: {
-        fontSize: 20,
-        fontWeight: '700',
-    },
-    seeAll: {
-        fontSize: 14,
-        fontWeight: '600',
-    },
-    featuredScroll: {
-        paddingLeft: 20,
-        paddingRight: 8,
-        gap: 12,
-    },
+    catCardIcon: { width: 42, height: 42, borderRadius: 13, alignItems: 'center', justifyContent: 'center' },
+    catCardText: { flex: 1 },
+    catCardLabel: { fontSize: 14, fontWeight: '700', marginBottom: 2 },
+    catCardCount: { fontSize: 11 },
+
+    // Featured
+    featuredScroll: { gap: 12, paddingHorizontal: 20, paddingRight: 28, paddingBottom: 4 },
     featuredCard: {
-        width: width * 0.75,
-        height: 180,
-        borderRadius: 24,
-        overflow: 'hidden',
-        elevation: 8,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 8 },
-        shadowOpacity: 0.15,
-        shadowRadius: 16,
-    },
-    featuredGradient: {
-        flex: 1,
-        padding: 20,
-        justifyContent: 'space-between',
-    },
-    featuredBadge: {
-        alignSelf: 'flex-start',
-        backgroundColor: 'rgba(255,255,255,0.2)',
-        paddingHorizontal: 12,
-        paddingVertical: 6,
-        borderRadius: 12,
-    },
-    featuredBadgeText: {
-        color: '#FFF',
-        fontSize: 12,
-        fontWeight: '700',
-    },
-    featuredContent: {
-        flex: 1,
-        justifyContent: 'center',
-    },
-    featuredTitle: {
-        color: '#FFF',
-        fontSize: 22,
-        fontWeight: '800',
-        marginBottom: 8,
-    },
-    featuredMeta: {
-        flexDirection: 'row',
-        gap: 16,
-    },
-    ratingContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 4,
-    },
-    ratingText: {
-        color: '#FFF',
-        fontSize: 14,
-        fontWeight: '700',
-    },
-    usersContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 4,
-    },
-    usersText: {
-        color: 'rgba(255,255,255,0.8)',
-        fontSize: 14,
-    },
-    featuredBtn: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        alignSelf: 'flex-start',
-        backgroundColor: 'rgba(255,255,255,0.2)',
-        paddingHorizontal: 16,
-        paddingVertical: 10,
-        borderRadius: 14,
-        gap: 8,
-    },
-    featuredBtnText: {
-        color: '#FFF',
-        fontSize: 14,
-        fontWeight: '700',
-    },
-    trendingCard: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginHorizontal: 20,
-        marginBottom: 12,
-        padding: 16,
+        width: SCREEN_WIDTH * 0.62,
         borderRadius: 18,
         borderWidth: 1,
+        padding: 18,
+        gap: 10,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.08,
+        shadowRadius: 8,
+        elevation: 3,
     },
-    trendingRank: {
-        width: 32,
-        alignItems: 'center',
-    },
-    rankNumber: {
-        fontSize: 16,
-        fontWeight: '800',
-        fontFamily: fontFamilies.mono,
-    },
-    trendingIcon: {
-        width: 50,
-        height: 50,
-        borderRadius: 14,
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginRight: 14,
-    },
-    trendingInfo: {
-        flex: 1,
-    },
-    trendingName: {
-        fontSize: 16,
-        fontWeight: '700',
-        marginBottom: 4,
-    },
-    trendingMuscle: {
-        fontSize: 13,
-    },
-    trendingBadge: {
-        flexDirection: 'row',
-        alignItems: 'center',
+    featuredCardTop: {},
+    featuredTypeBadge: {
+        alignSelf: 'flex-start',
         paddingHorizontal: 10,
-        paddingVertical: 6,
-        borderRadius: 10,
-        gap: 4,
+        paddingVertical: 4,
+        borderRadius: 8,
+        borderWidth: 1,
     },
-    trendingPercent: {
-        fontSize: 13,
-        fontWeight: '700',
-        fontFamily: fontFamilies.mono,
-    },
-    coachScroll: {
-        paddingLeft: 20,
-        paddingRight: 8,
-        gap: 12,
-    },
-    coachCard: {
-        width: 160,
-        borderRadius: 20,
+    featuredTypeText: { fontSize: 10, fontWeight: '700', letterSpacing: 0.5 },
+    featuredTitle: { fontSize: 18, fontWeight: '800', lineHeight: 23 },
+    featuredMeta: { flexDirection: 'row', alignItems: 'center', gap: 5 },
+    featuredRating: { fontSize: 12, fontWeight: '700' },
+    featuredSep: { fontSize: 12 },
+    featuredUsers: { fontSize: 12 },
+
+    // Community routine card
+    communityCard: {
+        borderRadius: 16,
         borderWidth: 1,
         padding: 16,
-        alignItems: 'center',
-    },
-    coachAvatar: {
-        width: 64,
-        height: 64,
-        borderRadius: 32,
         marginBottom: 12,
+        gap: 12,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.06,
+        shadowRadius: 8,
+        elevation: 2,
     },
-    coachPickName: {
-        fontSize: 15,
-        fontWeight: '700',
-        textAlign: 'center',
-        marginBottom: 4,
+    communityCardHeader: { flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12 },
+    communityCardName: { fontSize: 15, fontWeight: '800', marginBottom: 3 },
+    communityCardAuthor: { fontSize: 12 },
+    diffBadge: { paddingHorizontal: 10, paddingVertical: 4, borderRadius: 8 },
+    diffText: { fontSize: 11, fontWeight: '700' },
+    communityCardDivider: { height: 1 },
+    communityCardFooter: { flexDirection: 'row', alignItems: 'center', gap: 14 },
+    communityMetaItem: { flexDirection: 'row', alignItems: 'center', gap: 5 },
+    communityMetaText: { fontSize: 12 },
+    useBtn: { marginLeft: 'auto' as any, paddingHorizontal: 16, paddingVertical: 7, borderRadius: 20 },
+    useBtnText: { fontSize: 13, fontWeight: '700' },
+
+    // Challenge card
+    challengeCard: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 14,
+        padding: 16,
+        borderRadius: 16,
+        borderWidth: 1,
+        marginBottom: 10,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.05,
+        shadowRadius: 6,
+        elevation: 2,
     },
-    coachName: {
-        fontSize: 12,
+    challengeIconBg: {
+        width: 46, height: 46, borderRadius: 14,
+        alignItems: 'center', justifyContent: 'center',
     },
+    challengeEmoji: { fontSize: 24 },
+    challengeInfo: { flex: 1 },
+    challengeName: { fontSize: 15, fontWeight: '700', marginBottom: 3 },
+    challengeMeta: { fontSize: 12 },
+    joinBtn: { paddingHorizontal: 16, paddingVertical: 7, borderRadius: 20 },
+    joinText: { fontSize: 13, fontWeight: '700' },
+
+    // FAB - classic style, no gradient
     fab: {
         position: 'absolute',
-        bottom: 100,
+        bottom: 28,
         right: 20,
-        width: 64,
-        height: 64,
-        borderRadius: 22,
-        overflow: 'hidden',
-        elevation: 10,
-        shadowColor: themeColors.primary.main,
-        shadowOffset: { width: 0, height: 10 },
-        shadowOpacity: 0.4,
-        shadowRadius: 20,
-    },
-    fabGradient: {
-        flex: 1,
+        flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center',
+        gap: 8,
+        paddingHorizontal: 18,
+        paddingVertical: 12,
+        borderRadius: 28,
+        borderWidth: 1,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.15,
+        shadowRadius: 10,
+        elevation: 8,
     },
+    fabLabel: { fontSize: 14, fontWeight: '700' },
 });

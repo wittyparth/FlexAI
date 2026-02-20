@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import {
     View,
     Text,
@@ -16,11 +16,12 @@ import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { WorkoutHeatmap } from '../../components/WorkoutHeatmap';
-import { DUMMY_RECENT_WORKOUTS, HEATMAP_DATA, DUMMY_METRICS, DUMMY_USER } from '../../data/mockData';
+import { HEATMAP_DATA, DUMMY_METRICS, DUMMY_USER } from '../../data/mockData';
 import { useWorkoutStore } from '../../store/workoutStore';
 import { useShallow } from 'zustand/react/shallow';
 import type { ThemeColors } from '../../hooks/useColors';
 import { useRoutines } from '../../hooks/queries/useRoutineQueries';
+import { useWorkouts } from '../../hooks/queries/useWorkoutQueries';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
@@ -133,9 +134,43 @@ export function WorkoutHubScreen({ navigation }: any) {
 
     const { data: routinesResponse, isLoading: isRoutinesLoading } = useRoutines({ page: 1, limit: 5, isTemplate: false });
     const { data: templatesResponse, isLoading: isTemplatesLoading } = useRoutines({ page: 1, limit: 5, isTemplate: true });
+    const { data: workoutsResponse, isLoading: isRecentLoading } = useWorkouts({ page: 1, limit: 10 });
 
     const myRoutines = routinesResponse?.data?.routines || [];
     const myTemplates = templatesResponse?.data?.routines || [];
+    const recentActivity = useMemo(() => {
+        const workouts = workoutsResponse?.data || [];
+        return workouts.slice(0, 3).map((workout: any) => {
+            const exercises = Array.isArray(workout.exercises) ? workout.exercises : [];
+            const volume = exercises.reduce((totalVolume: number, exercise: any) => {
+                const sets = Array.isArray(exercise.sets) ? exercise.sets : [];
+                const exerciseVolume = sets.reduce((setVolume: number, setItem: any) => {
+                    const weight = Number(setItem?.weight || 0);
+                    const reps = Number(setItem?.reps || 0);
+                    return setVolume + (weight * reps);
+                }, 0);
+                return totalVolume + exerciseVolume;
+            }, 0);
+
+            const startTime = workout.startTime ? new Date(workout.startTime) : null;
+            const endTime = workout.endTime ? new Date(workout.endTime) : null;
+            const durationSeconds =
+                startTime && endTime
+                    ? Math.max(0, Math.floor((endTime.getTime() - startTime.getTime()) / 1000))
+                    : 0;
+
+            return {
+                id: String(workout.id),
+                name: workout.name || 'Workout',
+                date: startTime ? startTime.toLocaleDateString() : 'Unknown',
+                exercises: exercises.length,
+                duration: durationSeconds,
+                volume,
+                iconName: 'dumbbell',
+                hasPR: false,
+            };
+        });
+    }, [workoutsResponse]);
 
     useEffect(() => {
         Animated.timing(fade, { toValue: 1, duration: 500, useNativeDriver: true }).start();
@@ -307,30 +342,38 @@ export function WorkoutHubScreen({ navigation }: any) {
 
                     <View style={[styles.px, styles.mt, styles.mbExtra]}>
                         <SectionHeader title="Recent Activity" onViewAll={() => nav('WorkoutHistory')} colors={colors} />
-                        {DUMMY_RECENT_WORKOUTS.slice(0, 3).map(w => (
-                            <TouchableOpacity
-                                key={w.id}
-                                style={[styles.recentRow, { backgroundColor: colors.card, borderColor: colors.border }]}
-                                activeOpacity={0.75}
-                                onPress={() => navigation.navigate('WorkoutDetail', { workoutId: parseInt(w.id) })}
-                            >
-                                <View style={[styles.recentIcon, { backgroundColor: colors.primary.main + '12' }]}> 
-                                    <MaterialCommunityIcons name={w.iconName} size={20} color={colors.primary.main} />
-                                </View>
-                                <View style={styles.recentInfo}>
-                                    <Text style={[styles.recentName, { color: colors.foreground }]}>{w.name}</Text>
-                                    <Text style={[styles.recentMeta, { color: colors.mutedForeground }]}>{w.date} - {w.exercises} ex - {fmtDuration(w.duration)}</Text>
-                                </View>
-                                <View style={styles.recentRight}>
-                                    <Text style={[styles.recentVol, { color: colors.foreground, fontFamily: fontFamilies.mono }]}>{fmtVol(w.volume)}</Text>
-                                    {w.hasPR && (
-                                        <View style={[styles.prBadge, { backgroundColor: `${colors.primary.main}25` }]}>
-                                            <Text style={[styles.prText, { color: colors.primary.main }]}>PR</Text>
-                                        </View>
-                                    )}
-                                </View>
-                            </TouchableOpacity>
-                        ))}
+                        {isRecentLoading ? (
+                            <View style={styles.listLoadingRow}>
+                                <ActivityIndicator size="small" color={colors.primary.main} />
+                            </View>
+                        ) : recentActivity.length === 0 ? (
+                            <Text style={[styles.emptyListText, { color: colors.mutedForeground }]}>No completed workouts yet.</Text>
+                        ) : (
+                            recentActivity.map((w) => (
+                                <TouchableOpacity
+                                    key={w.id}
+                                    style={[styles.recentRow, { backgroundColor: colors.card, borderColor: colors.border }]}
+                                    activeOpacity={0.75}
+                                    onPress={() => navigation.navigate('WorkoutDetail', { workoutId: Number(w.id) })}
+                                >
+                                    <View style={[styles.recentIcon, { backgroundColor: colors.primary.main + '12' }]}> 
+                                        <MaterialCommunityIcons name={w.iconName as any} size={20} color={colors.primary.main} />
+                                    </View>
+                                    <View style={styles.recentInfo}>
+                                        <Text style={[styles.recentName, { color: colors.foreground }]}>{w.name}</Text>
+                                        <Text style={[styles.recentMeta, { color: colors.mutedForeground }]}>{w.date} - {w.exercises} ex - {fmtDuration(w.duration)}</Text>
+                                    </View>
+                                    <View style={styles.recentRight}>
+                                        <Text style={[styles.recentVol, { color: colors.foreground, fontFamily: fontFamilies.mono }]}>{fmtVol(w.volume)}</Text>
+                                        {w.hasPR && (
+                                            <View style={[styles.prBadge, { backgroundColor: `${colors.primary.main}25` }]}>
+                                                <Text style={[styles.prText, { color: colors.primary.main }]}>PR</Text>
+                                            </View>
+                                        )}
+                                    </View>
+                                </TouchableOpacity>
+                            ))
+                        )}
                     </View>
                 </Animated.View>
             </ScrollView>

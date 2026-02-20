@@ -16,7 +16,7 @@ Every integration PR must update this file.
 
 ## Current Status
 - Current Phase: Phase 3
-- Overall Completion: 74%
+- Overall Completion: 78%
 - Blockers: None
 
 ## Global Exit Criteria
@@ -103,6 +103,7 @@ Every integration PR must update this file.
   - [x] Remove `MOCK_ROUTINES` dependency from template day assignment flow.
   - [x] Switch `TemplateListScreen` to backend template routines with local custom fallback.
   - [x] Remove seeded mock templates from `templateStore` initial state.
+  - [x] Replace workout hub recent-activity cards with backend workout history data.
 - [ ] Integrate full workout lifecycle:
   - [x] Start workout
   - [x] Add/remove exercises
@@ -248,6 +249,7 @@ Every integration PR must update this file.
 - 2026-02-20 | PR: `8988fd3` | Phase: 3 | Added `syncCurrentWorkout` store action using `/workouts/current`, wired it into Workout Hub mount, and added `useCurrentWorkout` query hook for API-backed current session retrieval.
 - 2026-02-20 | PR: `b71859b` | Phase: 3 | Removed `MOCK_ROUTINES` fallback from template day assignment and resolved linked routines from backend routine/public-routine query data.
 - 2026-02-20 | PR: `3b5fdeb` | Phase: 3 | Migrated `TemplateListScreen` to backend template routines (`isTemplate=true`) with local custom fallback and removed default mock templates from `templateStore` initial state.
+- 2026-02-20 | PR: Pending commit (Phase 3 - workout hub recent activity from backend) | Phase: 3 | Replaced Workout Hub recent-activity mock cards with API-backed workout history rows using `useWorkouts`, including computed duration/volume/exercise counts.
 
 ## Change Notes
 - 2026-02-20: Added mandatory backend persistence of `workoutInterests` in onboarding (Phase 2).

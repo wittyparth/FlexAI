@@ -24,7 +24,7 @@ export function FollowersListScreen({ route, navigation }: any) {
 
     // Filter based on search
     const filtered = followers.filter((u: any) =>
-        u.username.toLowerCase().includes(search.toLowerCase()) ||
+        (u.username || '').toLowerCase().includes(search.toLowerCase()) ||
         (u.firstName + ' ' + u.lastName).toLowerCase().includes(search.toLowerCase())
     );
 
@@ -41,7 +41,7 @@ export function FollowersListScreen({ route, navigation }: any) {
             <Image source={{ uri: item.avatarUrl || 'https://i.pravatar.cc/150' }} style={styles.avatar} />
             <View style={styles.userInfo}>
                 <View style={styles.nameRow}>
-                    <Text style={[styles.username, { color: colors.foreground }]}>@{item.username}</Text>
+                    <Text style={[styles.username, { color: colors.foreground }]}>@{item.username || `user${item.id}`}</Text>
                     <View style={[styles.levelBadge, { backgroundColor: colors.muted }]}>
                         <Text style={[styles.level, { color: colors.primary.main }]}>Lv.{item.level || 1}</Text>
                     </View>
@@ -94,7 +94,7 @@ export function FollowersListScreen({ route, navigation }: any) {
 
             <FlatList
                 data={filtered}
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item) => String(item.id)}
                 renderItem={renderUser}
                 contentContainerStyle={{ paddingBottom: insets.bottom + 20 }}
                 ListEmptyComponent={
@@ -121,7 +121,7 @@ export function FollowingListScreen({ route, navigation }: any) {
     const unfollowMutation = useUnfollowUser();
 
     const filtered = following.filter((u: any) =>
-        u.username.toLowerCase().includes(search.toLowerCase()) ||
+        (u.username || '').toLowerCase().includes(search.toLowerCase()) ||
         (u.firstName + ' ' + u.lastName).toLowerCase().includes(search.toLowerCase())
     );
 
@@ -134,7 +134,7 @@ export function FollowingListScreen({ route, navigation }: any) {
             <Image source={{ uri: item.avatarUrl || 'https://i.pravatar.cc/150' }} style={styles.avatar} />
             <View style={styles.userInfo}>
                 <View style={styles.nameRow}>
-                    <Text style={[styles.username, { color: colors.foreground }]}>@{item.username}</Text>
+                    <Text style={[styles.username, { color: colors.foreground }]}>@{item.username || `user${item.id}`}</Text>
                     <View style={[styles.levelBadge, { backgroundColor: colors.muted }]}>
                         <Text style={[styles.level, { color: colors.primary.main }]}>Lv.{item.level || 1}</Text>
                     </View>
@@ -177,7 +177,7 @@ export function FollowingListScreen({ route, navigation }: any) {
 
             <FlatList
                 data={filtered}
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item) => String(item.id)}
                 renderItem={renderUser}
                 contentContainerStyle={{ paddingBottom: insets.bottom + 20 }}
                 ListEmptyComponent={

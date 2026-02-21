@@ -43,8 +43,6 @@ export function UserProfileScreen({ route, navigation }: any) {
     const {
         data: postsData,
         isLoading: isPostsLoading,
-        fetchNextPage,
-        hasNextPage
     } = useUserPosts(userId);
 
     // Mutations

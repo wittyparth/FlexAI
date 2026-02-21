@@ -7,10 +7,11 @@ import { socialApi, UserProfile } from '../../api/social.api';
 
 export const socialKeys = {
     all: ['social'] as const,
-    followers: (userId: string) => [...socialKeys.all, 'followers', userId] as const,
-    following: (userId: string) => [...socialKeys.all, 'following', userId] as const,
+    followers: (userId: string, params?: { page?: number; limit?: number }) => [...socialKeys.all, 'followers', userId, params] as const,
+    following: (userId: string, params?: { page?: number; limit?: number }) => [...socialKeys.all, 'following', userId, params] as const,
     search: (query: string) => [...socialKeys.all, 'search', query] as const,
     profile: (userId: string) => [...socialKeys.all, 'profile', userId] as const,
+    followStatus: (userId: string) => [...socialKeys.all, 'follow-status', userId] as const,
 };
 
 // ============================================================================
@@ -22,7 +23,7 @@ export const socialKeys = {
  */
 export const useFollowers = (userId: string, params?: { page?: number; limit?: number }) => {
     return useQuery({
-        queryKey: socialKeys.followers(userId),
+        queryKey: socialKeys.followers(userId, params),
         queryFn: () => socialApi.getFollowers(userId, params),
         enabled: !!userId,
     });
@@ -33,8 +34,16 @@ export const useFollowers = (userId: string, params?: { page?: number; limit?: n
  */
 export const useFollowing = (userId: string, params?: { page?: number; limit?: number }) => {
     return useQuery({
-        queryKey: socialKeys.following(userId),
+        queryKey: socialKeys.following(userId, params),
         queryFn: () => socialApi.getFollowing(userId, params),
+        enabled: !!userId,
+    });
+};
+
+export const useFollowStatus = (userId: string) => {
+    return useQuery({
+        queryKey: socialKeys.followStatus(userId),
+        queryFn: () => socialApi.getFollowStatus(userId),
         enabled: !!userId,
     });
 };
@@ -76,6 +85,9 @@ export const useFollowUser = () => {
         onSuccess: (_, userId) => {
             // Invalidate related queries
             queryClient.invalidateQueries({ queryKey: socialKeys.followers(userId) });
+            queryClient.invalidateQueries({ queryKey: socialKeys.following(userId) });
+            queryClient.invalidateQueries({ queryKey: socialKeys.followStatus(userId) });
+            queryClient.invalidateQueries({ queryKey: socialKeys.profile(userId) });
             queryClient.invalidateQueries({ queryKey: socialKeys.all });
         },
     });
@@ -92,6 +104,9 @@ export const useUnfollowUser = () => {
         onSuccess: (_, userId) => {
             // Invalidate related queries
             queryClient.invalidateQueries({ queryKey: socialKeys.followers(userId) });
+            queryClient.invalidateQueries({ queryKey: socialKeys.following(userId) });
+            queryClient.invalidateQueries({ queryKey: socialKeys.followStatus(userId) });
+            queryClient.invalidateQueries({ queryKey: socialKeys.profile(userId) });
             queryClient.invalidateQueries({ queryKey: socialKeys.all });
         },
     });

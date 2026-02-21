@@ -1,5 +1,19 @@
 import { z } from 'zod';
 
+const booleanQueryParam = z.preprocess((value) => {
+  if (typeof value === 'boolean') return value;
+  if (typeof value === 'number') {
+    if (value === 1) return true;
+    if (value === 0) return false;
+  }
+  if (typeof value === 'string') {
+    const normalized = value.trim().toLowerCase();
+    if (['true', '1', 'yes'].includes(normalized)) return true;
+    if (['false', '0', 'no'].includes(normalized)) return false;
+  }
+  return value;
+}, z.boolean());
+
 // ============================================================================
 // ROUTINE SCHEMAS
 // ============================================================================
@@ -47,8 +61,8 @@ export const getRoutinesQuerySchema = z.object({
   goal: z.enum(['muscle_gain', 'strength', 'fat_loss', 'endurance', 'athletic', 'general']).optional(),
   difficulty: z.enum(['beginner', 'intermediate', 'advanced']).optional(),
   splitType: z.enum(['ppl', 'upper_lower', 'full_body', 'bro', 'custom']).optional(),
-  isTemplate: z.coerce.boolean().optional(),
-  isArchived: z.coerce.boolean().optional().default(false),
+  isTemplate: booleanQueryParam.optional(),
+  isArchived: booleanQueryParam.optional().default(false),
   search: z.string().max(100).optional(),
 });
 

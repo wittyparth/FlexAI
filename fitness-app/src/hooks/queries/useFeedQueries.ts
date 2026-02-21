@@ -13,6 +13,7 @@ export const feedKeys = {
     all: ['feed'] as const,
     global: () => [...feedKeys.all, 'global'] as const,
     myFeed: () => [...feedKeys.all, 'myFeed'] as const,
+    userPosts: (userId: string) => [...feedKeys.all, 'user', userId] as const,
     comments: (postId: string) => [...feedKeys.all, 'comments', postId] as const,
 };
 
@@ -49,7 +50,7 @@ export const useMyFeed = () => {
  */
 export const useUserPosts = (userId: string) => {
     return useInfiniteQuery({
-        queryKey: [...feedKeys.all, 'user', userId],
+        queryKey: feedKeys.userPosts(userId),
         queryFn: ({ pageParam }) => feedApi.getUserPosts(userId, { cursor: pageParam, limit: 10 }),
         getNextPageParam: (lastPage) => lastPage.hasMore ? lastPage.nextCursor : undefined,
         initialPageParam: undefined as number | undefined,
@@ -84,6 +85,7 @@ export const useCreatePost = () => {
             // Invalidate feeds to refetch
             queryClient.invalidateQueries({ queryKey: feedKeys.global() });
             queryClient.invalidateQueries({ queryKey: feedKeys.myFeed() });
+            queryClient.invalidateQueries({ queryKey: feedKeys.all });
         },
     });
 };
@@ -104,6 +106,7 @@ export const useToggleLike = () => {
             // Invalidate feeds to show updated like counts
             queryClient.invalidateQueries({ queryKey: feedKeys.global() });
             queryClient.invalidateQueries({ queryKey: feedKeys.myFeed() });
+            queryClient.invalidateQueries({ queryKey: feedKeys.all });
         },
     });
 };
@@ -120,6 +123,7 @@ export const useAddComment = () => {
         onSuccess: (_, { postId }) => {
             // Invalidate comments for this post
             queryClient.invalidateQueries({ queryKey: feedKeys.comments(postId) });
+            queryClient.invalidateQueries({ queryKey: feedKeys.all });
         },
     });
 };
@@ -135,6 +139,7 @@ export const useDeleteComment = () => {
             feedApi.deleteComment(commentId),
         onSuccess: (_, { postId }) => {
             queryClient.invalidateQueries({ queryKey: feedKeys.comments(postId) });
+            queryClient.invalidateQueries({ queryKey: feedKeys.all });
         },
     });
 };

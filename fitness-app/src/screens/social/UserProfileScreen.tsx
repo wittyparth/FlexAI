@@ -143,14 +143,14 @@ export function UserProfileScreen({ route, navigation }: any) {
                             </TouchableOpacity>
                             <TouchableOpacity
                                 style={styles.statItem}
-                                onPress={() => navigation.navigate('FollowersList', { userId: userProfile?.id })}
+                                onPress={() => navigation.navigate('FollowersList', { userId: Number(userProfile?.id) })}
                             >
                                 <Text style={[styles.statValue, { color: colors.foreground }]}>{formatNumber(userProfile?.followersCount || 0)}</Text>
                                 <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>Followers</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
                                 style={styles.statItem}
-                                onPress={() => navigation.navigate('FollowingList', { userId: userProfile?.id })}
+                                onPress={() => navigation.navigate('FollowingList', { userId: Number(userProfile?.id) })}
                             >
                                 <Text style={[styles.statValue, { color: colors.foreground }]}>{formatNumber(userProfile?.followingCount || 0)}</Text>
                                 <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>Following</Text>
@@ -281,7 +281,7 @@ export function UserProfileScreen({ route, navigation }: any) {
                             <TouchableOpacity
                                 key={post.id}
                                 style={[styles.postThumbnail, { backgroundColor: colors.muted }]}
-                                onPress={() => navigation.navigate('PostDetail', { postId: post.id })}
+                                onPress={() => navigation.navigate('PostDetail', { post })}
                             >
                                 <Image
                                     source={{ uri: post.imageUrl || 'https://via.placeholder.com/300' }}

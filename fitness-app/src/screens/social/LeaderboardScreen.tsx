@@ -211,7 +211,7 @@ export function LeaderboardScreen({ navigation }: any) {
                             style={[
                                 styles.rankItem,
                             ]}
-                            onPress={() => navigation.navigate('UserProfile', { userId: String(entry.userId) })}
+                            onPress={() => navigation.navigate('UserProfile', { userId: Number(entry.userId) })}
                         >
                             <Text style={[
                                 styles.rankNumber,

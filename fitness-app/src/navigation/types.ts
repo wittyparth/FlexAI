@@ -130,8 +130,8 @@ export type ExploreStackParamList = {
 // ==========================================
 export type SocialStackParamList = {
   SocialHome: undefined;
-  CreatePost: { workoutId?: number };
-  PostDetail: { postId: number };
+  CreatePost: { workoutId?: number } | undefined;
+  PostDetail: { post: any };
   UserProfile: { userId: number };
   FollowersList: { userId: number };
   FollowingList: { userId: number };

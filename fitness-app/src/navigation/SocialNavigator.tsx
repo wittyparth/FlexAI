@@ -1,5 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
+import type { SocialStackParamList } from './types';
 
 // Import all Social screens
 import { SocialHomeScreen } from '../screens/social/SocialHomeScreen';
@@ -12,20 +13,6 @@ import { ChallengeDetailScreen } from '../screens/social/ChallengeDetailScreen';
 import { FollowersListScreen, FollowingListScreen } from '../screens/social/FollowListScreens';
 import { SearchUsersScreen } from '../screens/social/SearchUsersScreen';
 import { ActivityScreen } from '../screens/social/ActivityScreen';
-
-export type SocialStackParamList = {
-    SocialHome: undefined;
-    PostDetail: { postId: number };
-    CreatePost: undefined;
-    UserProfile: { userId: number };
-    Leaderboard: undefined;
-    ChallengesList: undefined;
-    ChallengeDetail: { challengeId: number };
-    Followers: { userId: number };
-    Following: { userId: number };
-    SearchUsers: undefined;
-    Activity: undefined;
-};
 
 const Stack = createStackNavigator<SocialStackParamList>();
 
@@ -48,8 +35,8 @@ export function SocialNavigator() {
             <Stack.Screen name="Leaderboard" component={LeaderboardScreen} />
             <Stack.Screen name="ChallengesList" component={ChallengesListScreen} />
             <Stack.Screen name="ChallengeDetail" component={ChallengeDetailScreen} />
-            <Stack.Screen name="Followers" component={FollowersListScreen} />
-            <Stack.Screen name="Following" component={FollowingListScreen} />
+            <Stack.Screen name="FollowersList" component={FollowersListScreen} />
+            <Stack.Screen name="FollowingList" component={FollowingListScreen} />
             <Stack.Screen
                 name="SearchUsers"
                 component={SearchUsersScreen}

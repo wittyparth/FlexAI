@@ -320,6 +320,7 @@ Every integration PR must update this file.
 - 2026-02-21 | PR: `4df9c85` | Phase: 3 Data Consistency | Replaced `ExerciseSwapScreen` mock alternative exercise dataset with live backend exercise search results (muscle-filtered, searchable, and return-path aware), so swap flow uses real API data instead of hardcoded entries.
 - 2026-02-21 | PR: `b7f6772` | Phase: 3 UX Restoration | Restored `RoutineDetailScreen` and `RoutineTemplateScreen` from baseline UI and re-integrated backend routine/template data flows (live routine fetch, duplicate/save to library, and start-workout from routine ID) without redesigning screen styling.
 - 2026-02-21 | PR: `bddafe3` | Phase: 3 UX Restoration | Restored `WorkoutDetailScreen` to baseline UI (`43aa592`) using git restore so workout viewing matches original styling while keeping backend workout detail/delete integration path.
+- 2026-02-21 | PR: `b7e098d` | Phase: 3/8 Restoration Integration | Rewired restored `RoutineDetailScreen`, `RoutineTemplateScreen`, `CoachHubScreen`, `CoachChatScreen`, and `ChatHistoryScreen` to backend routine/coach APIs while preserving existing UI styling/layout; replaced remaining mock-store chat flow with API-backed send/list/detail/delete plus local UI-only pin/rename/reaction behavior where backend contract does not expose those mutations.
 
 ## Change Notes
 - 2026-02-20: Added mandatory backend persistence of `workoutInterests` in onboarding (Phase 2).

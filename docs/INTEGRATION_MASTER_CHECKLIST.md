@@ -1,6 +1,6 @@
 # Frontend-Backend Integration Master Checklist
 
-Last Updated: 2026-02-20
+Last Updated: 2026-02-21
 Owner: FlexAI team
 Branch Baseline: main
 
@@ -169,8 +169,13 @@ Every integration PR must update this file.
   - [x] Added API-backed `EditProfileScreen` in settings stack using `/users/me` (`useUserQueries.profileQuery` + `updateProfileMutation`).
   - [x] Fixed settings navigator typing/routes and wired `EditProfile` route end-to-end.
   - [x] Updated social own-profile "Edit Profile" action to navigate into `SettingsNavigator -> EditProfile`.
-- [ ] Align gamification endpoints and response parsing.
+- [x] Align gamification endpoints and response parsing.
+  - [x] Added robust gamification response parsing for both raw and envelope shapes (`{ success, data }`) in `gamification.api.ts`.
+  - [x] Added centralized gamification query hooks (`useGamificationStats`, `useStreakData`, `useAchievements`) for consistent cache keys and stale-time policy.
 - [ ] Surface streak/XP/level/achievements in profile/home.
+  - [x] Home dashboard now surfaces live streak, best streak, level, and achievement count from gamification/dashboard queries.
+  - [x] XP modal and streak calendar screens now use live gamification queries (removed local mock fallback paths).
+  - [ ] Add explicit achievement surfacing on profile hub cards (pending due unrelated in-progress profile file edits in working tree).
 
 ### Acceptance
 - [ ] Profile and gamification screens have no mock dependencies.
@@ -281,6 +286,7 @@ Every integration PR must update this file.
 - 2026-02-21 | PR: `7cce041` | Phase: 5 | Integrated remaining analytics screens with live stats APIs (`/stats/prs`, `/stats/strength-progression/:exerciseId`, `/stats/muscle-distribution`), removed analytics mock datasets, and upgraded charts/stat cards to API-backed data across PR, strength, distribution, and heatmap flows.
 - 2026-02-21 | PR: `8eff021` | Phase: 6 | Migrated `ProfileHubScreen` to live data sources (`/users/me`, `/stats/dashboard`, `/stats/prs`, `/stats/muscle-distribution`, completed workout history, and `/gamification/stats`), removed profile mock-data dependencies, and aligned profile heatmap generation with real completed workouts.
 - 2026-02-21 | PR: `1aed303` | Phase: 6 | Added API-backed `EditProfile` flow, fixed settings navigator typing/routes, converted privacy/notification preferences to backend-synced settings where supported, and wired social self-profile edit action to `SettingsNavigator`.
+- 2026-02-21 | PR: `7f48cc6` | Phase: 6 | Hardened gamification API parsing for envelope/raw responses, added shared gamification query hooks, and wired home dashboard + XP/streak screens to live streak/XP/level/achievement data.
 
 ## Change Notes
 - 2026-02-20: Added mandatory backend persistence of `workoutInterests` in onboarding (Phase 2).

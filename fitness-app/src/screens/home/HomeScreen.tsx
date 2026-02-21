@@ -11,12 +11,10 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { useColors } from '../../hooks';
-import { useTheme } from '../../contexts';
+import { useAchievements, useColors, useDashboardStats, useGamificationStats, useUserQueries } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { WorkoutHeatmap } from '../../components/WorkoutHeatmap';
 import {
-    DUMMY_USER,
     DUMMY_METRICS,
     DUMMY_RECENT_WORKOUTS,
     ACTIVE_WORKOUT_TODAY,
@@ -167,7 +165,17 @@ function WorkoutRow({ workout, onPress, c }: { workout: any; onPress: () => void
 export function HomeScreen({ navigation }: any) {
     const insets = useSafeAreaInsets();
     const colors = useColors();
-    const { isDark } = useTheme();
+    const { profileQuery } = useUserQueries();
+    const { data: dashboardStats } = useDashboardStats();
+    const { data: gamificationStats } = useGamificationStats();
+    const { data: achievements = [] } = useAchievements();
+
+    const firstName = profileQuery.data?.firstName || 'Athlete';
+    const currentStreak = gamificationStats?.currentStreak ?? dashboardStats?.streak?.current ?? 0;
+    const longestStreak = gamificationStats?.longestStreak ?? dashboardStats?.streak?.best ?? DUMMY_METRICS.bestStreak;
+    const weeklyVolume = dashboardStats?.weeklyVolume ?? DUMMY_METRICS.weeklyVolume;
+    const level = gamificationStats?.level ?? 1;
+    const unlockedAchievementCount = achievements.filter((achievement) => achievement.unlocked || achievement.unlockedAt).length;
 
     // Map to local shorthand for sub-components
     const c = {
@@ -211,7 +219,7 @@ export function HomeScreen({ navigation }: any) {
                         <View style={styles.headerTextCol}>
                             <Text style={[styles.headerSub, { color: c.muted }]}>DASHBOARD</Text>
                             <Text style={[styles.headerTitle, { color: c.text, fontFamily: fontFamilies.display }]}>
-                                {getGreeting()},{'\n'}{DUMMY_USER.firstName} 👋
+                                {getGreeting()},{'\n'}{firstName} 👋
                             </Text>
                         </View>
                     </View>
@@ -221,7 +229,7 @@ export function HomeScreen({ navigation }: any) {
                             style={styles.streakBadge}
                         >
                             <Ionicons name="flame" size={16} color={colors.warning} />
-                            <Text style={[styles.streakNum, { color: colors.warning, fontFamily: fontFamilies.mono }]}>{DUMMY_USER.streak}</Text>
+                            <Text style={[styles.streakNum, { color: colors.warning, fontFamily: fontFamilies.mono }]}>{currentStreak}</Text>
                         </View>
                         {/* Notification */}
                         <TouchableOpacity
@@ -304,10 +312,19 @@ export function HomeScreen({ navigation }: any) {
                             </TouchableOpacity>
                         </View>
                         <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.metricsScroll}>
-                            <MetricCard icon="dumbbell" label="WEEKLY VOL" value={fmtVol(DUMMY_METRICS.weeklyVolume)} unit="kg" accent={colors.chart1} bg={colors.card} borderColor={colors.border} />
-                            <MetricCard icon="fire" label="STREAK" value={DUMMY_USER.streak.toString()} unit="days" accent={colors.warning} bg={colors.card} borderColor={colors.border} />
-                            <MetricCard icon="trophy" label="BEST STREAK" value={DUMMY_METRICS.bestStreak.toString()} unit="days" accent={colors.chart3} bg={colors.card} borderColor={colors.border} />
-                            <MetricCard icon="heart-pulse" label="RECOVERY" value={DUMMY_METRICS.recovery} accent={colors.success} bg={colors.card} borderColor={colors.border} />
+                            <MetricCard icon="dumbbell" label="WEEKLY VOL" value={fmtVol(weeklyVolume)} unit="kg" accent={colors.chart1} bg={colors.card} borderColor={colors.border} />
+                            <MetricCard icon="fire" label="STREAK" value={currentStreak.toString()} unit="days" accent={colors.warning} bg={colors.card} borderColor={colors.border} />
+                            <MetricCard icon="trophy" label="BEST STREAK" value={longestStreak.toString()} unit="days" accent={colors.chart3} bg={colors.card} borderColor={colors.border} />
+                            <MetricCard icon="medal" label="LEVEL" value={level.toString()} accent={colors.success} bg={colors.card} borderColor={colors.border} />
+                            <MetricCard
+                                icon="star-circle"
+                                label="ACHIEVEMENTS"
+                                value={unlockedAchievementCount.toString()}
+                                unit={achievements.length > 0 ? `/ ${achievements.length}` : undefined}
+                                accent={colors.primary.main}
+                                bg={colors.card}
+                                borderColor={colors.border}
+                            />
                         </ScrollView>
                     </View>
 

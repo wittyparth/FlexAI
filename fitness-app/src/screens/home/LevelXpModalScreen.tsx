@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import {
     View,
     Text,
@@ -9,33 +9,11 @@ import {
     TouchableOpacity,
 } from 'react-native';
 import { HomeStackScreenProps } from '../../navigation/types';
-import { useColors } from '../../hooks';
+import { useAchievements, useColors, useGamificationStats } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { Card } from '../../components/ui/Card';
-import { ProgressBar } from '../../components/ui/ProgressBar';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { gamificationApi, GamificationStats, XPGain } from '../../api/gamification.api';
-
-// Mock data for development
-const MOCK_STATS: GamificationStats = {
-    xp: 2450,
-    level: 12,
-    levelProgress: 0.82,
-    currentLevelXp: 2450,
-    nextLevelXp: 3000,
-    title: 'Elite',
-    nextTitle: 'Champion',
-    achievements: [
-        { id: 1, name: 'First Workout', description: 'Complete your first workout', icon: 'trophy', unlockedAt: '2024-01-01' },
-        { id: 2, name: '10 Workouts', description: 'Complete 10 workouts', icon: 'medal', unlockedAt: '2024-01-15' },
-        { id: 3, name: 'Week Warrior', description: 'Work out every day for a week', icon: 'flame', unlockedAt: null, progress: 70 },
-    ],
-    recentXpGains: [
-        { id: 1, amount: 150, source: 'WORKOUT', description: 'Upper Body Power', createdAt: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString() },
-        { id: 2, amount: 50, source: 'STREAK', description: '5-Day Streak Bonus', createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString() },
-        { id: 3, amount: 200, source: 'PR', description: 'New Bench Press PR', createdAt: new Date(Date.now() - 1000 * 60 * 60 * 48).toISOString() },
-    ],
-};
+import { XPGain } from '../../api/gamification.api';
 
 function formatTimeAgo(dateString: string): string {
     const date = new Date(dateString);
@@ -75,37 +53,23 @@ function getXPSourceIcon(source: XPGain['source']): {
 
 export function LevelXpModalScreen({ navigation }: HomeStackScreenProps<'XPLevelDetail'>) {
     const colors = useColors();
-
-    const [stats, setStats] = useState<GamificationStats | null>(null);
-    const [loading, setLoading] = useState(true);
-    const [refreshing, setRefreshing] = useState(false);
-    const [error, setError] = useState<string | null>(null);
+    const statsQuery = useGamificationStats();
+    const achievementsQuery = useAchievements();
+    const stats = statsQuery.data
+        ? {
+            ...statsQuery.data,
+            achievements: achievementsQuery.data ?? statsQuery.data.achievements,
+        }
+        : null;
+    const loading = statsQuery.isLoading || achievementsQuery.isLoading;
+    const refreshing = statsQuery.isRefetching || achievementsQuery.isRefetching;
+    const error = (statsQuery.error || achievementsQuery.error) as { message?: string } | null;
 
     const fetchStats = useCallback(async () => {
-        try {
-            setError(null);
-            const data = await gamificationApi.getStats();
-            setStats(data);
-        } catch (err: any) {
-            console.error('Failed to fetch gamification stats:', err);
-            if (__DEV__) {
-                console.log('Using mock gamification stats for development');
-                setStats(MOCK_STATS);
-            } else {
-                setError(err.message || 'Failed to load stats');
-            }
-        } finally {
-            setLoading(false);
-            setRefreshing(false);
-        }
-    }, []);
-
-    useEffect(() => {
-        fetchStats();
-    }, [fetchStats]);
+        await Promise.all([statsQuery.refetch(), achievementsQuery.refetch()]);
+    }, [achievementsQuery, statsQuery]);
 
     const onRefresh = useCallback(() => {
-        setRefreshing(true);
         fetchStats();
     }, [fetchStats]);
 
@@ -127,7 +91,7 @@ export function LevelXpModalScreen({ navigation }: HomeStackScreenProps<'XPLevel
             <View style={[styles.centerContainer, { backgroundColor: colors.background }]}>
                 <Ionicons name="alert-circle-outline" size={48} color={colors.destructive} />
                 <Text style={[styles.errorText, { color: colors.destructive }]}>
-                    {error || 'Failed to load stats'}
+                    {error?.message || 'Failed to load stats'}
                 </Text>
                 <TouchableOpacity
                     style={[styles.retryButton, { backgroundColor: colors.primary.main }]}
@@ -154,7 +118,7 @@ export function LevelXpModalScreen({ navigation }: HomeStackScreenProps<'XPLevel
                 }
             >
                 {/* Hero Card */}
-                <Card variant="featured" style={styles.heroCard} padding="lg">
+                <Card variant="feature" style={styles.heroCard} padding="lg">
                     <View style={[styles.levelBadge, { backgroundColor: colors.primary.main + '20' }]}>
                         <MaterialCommunityIcons name="trophy-award" size={48} color={colors.primary.main} />
                     </View>

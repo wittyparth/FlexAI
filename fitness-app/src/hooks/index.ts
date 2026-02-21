@@ -13,3 +13,4 @@ export * from './queries/useSocialQueries';
 export * from './queries/useLeaderboardQueries';
 export * from './queries/useExerciseQueries';
 export * from './queries/useAIQueries';
+export * from './queries/useGamificationQueries';

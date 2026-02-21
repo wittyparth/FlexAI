@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import {
     View,
     Text,
@@ -9,78 +9,29 @@ import {
     TouchableOpacity,
 } from 'react-native';
 import { HomeStackScreenProps } from '../../navigation/types';
-import { useColors } from '../../hooks';
+import { useColors, useStreakData } from '../../hooks';
 import { useTheme } from '../../contexts/ThemeContext';
 import { fontFamilies } from '../../theme/typography';
 import { Card } from '../../components/ui/Card';
 import { StatCard } from '../../components/ui/StatCard';
 import { Ionicons } from '@expo/vector-icons';
-import { gamificationApi, StreakData } from '../../api/gamification.api';
-
-// Mock data for development
-const MOCK_STREAK_DATA: StreakData = {
-    currentStreak: 14,
-    longestStreak: 21,
-    lastWorkoutDate: new Date().toISOString(),
-    weeklyData: [3, 2, 0, 4, 2, 3, 0], // Last 7 days intensity
-    monthlyData: generateMockMonthlyData(),
-};
-
-function generateMockMonthlyData() {
-    const data = [];
-    const today = new Date();
-    for (let i = 34; i >= 0; i--) {
-        const date = new Date(today);
-        date.setDate(date.getDate() - i);
-        // Random intensity with some pattern (weekends less likely)
-        const dayOfWeek = date.getDay();
-        const intensity = dayOfWeek === 0 || dayOfWeek === 6
-            ? Math.random() > 0.7 ? Math.floor(Math.random() * 2) + 1 : 0
-            : Math.random() > 0.3 ? Math.floor(Math.random() * 4) + 1 : 0;
-        data.push({
-            date: date.toISOString().split('T')[0],
-            intensity,
-        });
-    }
-    return data;
-}
 
 const DAY_LABELS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
 export function StreakCalendarScreen({ navigation }: HomeStackScreenProps<'FullStreakCalendar'>) {
     const colors = useColors();
     const { mode } = useTheme();
-
-    const [streakData, setStreakData] = useState<StreakData | null>(null);
-    const [loading, setLoading] = useState(true);
-    const [refreshing, setRefreshing] = useState(false);
-    const [error, setError] = useState<string | null>(null);
+    const streakQuery = useStreakData();
+    const streakData = streakQuery.data;
+    const loading = streakQuery.isLoading;
+    const refreshing = streakQuery.isRefetching;
+    const error = streakQuery.error as { message?: string } | null;
 
     const fetchStreakData = useCallback(async () => {
-        try {
-            setError(null);
-            const data = await gamificationApi.getStreakData();
-            setStreakData(data);
-        } catch (err: any) {
-            console.error('Failed to fetch streak data:', err);
-            if (__DEV__) {
-                console.log('Using mock streak data for development');
-                setStreakData(MOCK_STREAK_DATA);
-            } else {
-                setError(err.message || 'Failed to load streak data');
-            }
-        } finally {
-            setLoading(false);
-            setRefreshing(false);
-        }
-    }, []);
-
-    useEffect(() => {
-        fetchStreakData();
-    }, [fetchStreakData]);
+        await streakQuery.refetch();
+    }, [streakQuery]);
 
     const onRefresh = useCallback(() => {
-        setRefreshing(true);
         fetchStreakData();
     }, [fetchStreakData]);
 
@@ -111,7 +62,7 @@ export function StreakCalendarScreen({ navigation }: HomeStackScreenProps<'FullS
             <View style={[styles.centerContainer, { backgroundColor: colors.background }]}>
                 <Ionicons name="alert-circle-outline" size={48} color="#ef4444" />
                 <Text style={[styles.errorText, { color: '#ef4444' }]}>
-                    {error || 'Failed to load data'}
+                    {error?.message || 'Failed to load data'}
                 </Text>
                 <TouchableOpacity
                     style={[styles.retryButton, { backgroundColor: colors.primary.main }]}

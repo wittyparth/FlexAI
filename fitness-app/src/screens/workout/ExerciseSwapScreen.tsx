@@ -8,32 +8,17 @@ import {
     TextInput,
     Dimensions,
     Animated,
+    ActivityIndicator,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { colors as themeColors } from '../../theme/colors';
+import { useExerciseSearch } from '../../hooks/queries/useExerciseQueries';
+import { useDebounce } from '../../hooks/useDebounce';
 
 const { width } = Dimensions.get('window');
-
-// ============================================================
-// MOCK DATA - Similar exercises for swap
-// ============================================================
-const CURRENT_EXERCISE = {
-    name: 'Barbell Bench Press',
-    muscle: 'Chest',
-    equipment: 'Barbell',
-};
-
-const SIMILAR_EXERCISES = [
-    { id: 1, name: 'Dumbbell Bench Press', muscle: 'Chest', equipment: 'Dumbbell', matchScore: 95, icon: 'dumbbell' },
-    { id: 2, name: 'Machine Chest Press', muscle: 'Chest', equipment: 'Machine', matchScore: 88, icon: 'cog' },
-    { id: 3, name: 'Incline Dumbbell Press', muscle: 'Upper Chest', equipment: 'Dumbbell', matchScore: 82, icon: 'dumbbell' },
-    { id: 4, name: 'Push Ups', muscle: 'Chest', equipment: 'Bodyweight', matchScore: 75, icon: 'human' },
-    { id: 5, name: 'Cable Fly', muscle: 'Chest', equipment: 'Cable', matchScore: 68, icon: 'cable-data' },
-    { id: 6, name: 'Dumbbell Fly', muscle: 'Chest', equipment: 'Dumbbell', matchScore: 65, icon: 'dumbbell' },
-];
 
 export function ExerciseSwapScreen({ navigation, route }: any) {
     const colors = useColors();
@@ -41,13 +26,63 @@ export function ExerciseSwapScreen({ navigation, route }: any) {
     const [search, setSearch] = useState('');
     const [selectedId, setSelectedId] = useState<number | null>(null);
     const fadeAnim = useRef(new Animated.Value(0)).current;
+    const debouncedSearch = useDebounce(search, 350);
+    const { currentExercise, returnTo, onSwapExercise } = route.params || {};
+
+    const currentExerciseId = Number(currentExercise?.id) || undefined;
+    const currentMuscle =
+        currentExercise?.muscleGroup ||
+        currentExercise?.muscle ||
+        (Array.isArray(currentExercise?.primaryMuscleGroups) ? currentExercise.primaryMuscleGroups[0] : undefined);
+    const currentEquipment =
+        currentExercise?.equipment ||
+        (Array.isArray(currentExercise?.equipmentList) ? currentExercise.equipmentList[0] : undefined);
+
+    const { data: exercisesData, isLoading } = useExerciseSearch({
+        search: debouncedSearch || undefined,
+        muscleGroup: currentMuscle,
+        limit: 50,
+    });
+
+    const normalizeExercise = (exercise: any) => {
+        const muscle =
+            exercise?.muscleGroup ||
+            (Array.isArray(exercise?.primaryMuscleGroups) ? exercise.primaryMuscleGroups[0] : undefined) ||
+            'General';
+        const equipment =
+            exercise?.equipment ||
+            (Array.isArray(exercise?.equipmentList) ? exercise.equipmentList[0] : undefined) ||
+            (Array.isArray(exercise?.equipment) ? exercise.equipment[0] : undefined) ||
+            'Bodyweight';
+        const equipmentMatch = String(equipment).toLowerCase() === String(currentEquipment || '').toLowerCase();
+        const muscleMatch = String(muscle).toLowerCase() === String(currentMuscle || '').toLowerCase();
+        const matchScore = Math.min(99, 60 + (muscleMatch ? 25 : 0) + (equipmentMatch ? 14 : 0));
+
+        return {
+            id: Number(exercise.id),
+            raw: exercise,
+            name: exercise.name,
+            muscle,
+            equipment,
+            matchScore,
+            icon: equipmentMatch ? 'dumbbell' : 'arm-flex',
+        };
+    };
 
     useEffect(() => {
         Animated.timing(fadeAnim, { toValue: 1, duration: 400, useNativeDriver: true }).start();
     }, []);
 
-    const filteredExercises = SIMILAR_EXERCISES.filter(e =>
-        e.name.toLowerCase().includes(search.toLowerCase())
+    const liveExercises = (exercisesData?.exercises || [])
+        .filter((exercise: any) => {
+            const id = Number(exercise?.id);
+            return Number.isFinite(id) && (!currentExerciseId || id !== currentExerciseId);
+        })
+        .map(normalizeExercise)
+        .sort((a: any, b: any) => b.matchScore - a.matchScore);
+
+    const filteredExercises = liveExercises.filter((exercise: any) =>
+        exercise.name.toLowerCase().includes(search.toLowerCase())
     );
 
     const getMatchColor = (score: number) => {
@@ -57,9 +92,30 @@ export function ExerciseSwapScreen({ navigation, route }: any) {
     };
 
     const handleSwap = () => {
-        if (selectedId) {
+        if (!selectedId) return;
+        const selectedExercise = filteredExercises.find(exercise => exercise.id === selectedId)?.raw;
+        if (!selectedExercise) return;
+
+        if (typeof onSwapExercise === 'function') {
+            onSwapExercise(selectedExercise);
             navigation.goBack();
+            return;
         }
+
+        if (returnTo) {
+            navigation.navigate({
+                name: returnTo,
+                params: {
+                    selectedSwapExercise: selectedExercise,
+                    selectionToken: Date.now(),
+                },
+                merge: true,
+                pop: true,
+            } as any);
+            return;
+        }
+
+        navigation.goBack();
     };
 
     return (
@@ -83,15 +139,17 @@ export function ExerciseSwapScreen({ navigation, route }: any) {
                             </View>
                             <Text style={[styles.currentLabel, { color: colors.error }]}>Swapping From</Text>
                         </View>
-                        <Text style={[styles.currentName, { color: colors.foreground }]}>{CURRENT_EXERCISE.name}</Text>
+                        <Text style={[styles.currentName, { color: colors.foreground }]}>
+                            {currentExercise?.name || 'Selected Exercise'}
+                        </Text>
                         <View style={styles.currentMeta}>
                             <View style={[styles.metaChip, { backgroundColor: colors.muted }]}>
                                 <MaterialCommunityIcons name="arm-flex" size={14} color={colors.mutedForeground} />
-                                <Text style={[styles.metaText, { color: colors.mutedForeground }]}>{CURRENT_EXERCISE.muscle}</Text>
+                                <Text style={[styles.metaText, { color: colors.mutedForeground }]}>{currentMuscle || 'General'}</Text>
                             </View>
                             <View style={[styles.metaChip, { backgroundColor: colors.muted }]}>
                                 <MaterialCommunityIcons name="dumbbell" size={14} color={colors.mutedForeground} />
-                                <Text style={[styles.metaText, { color: colors.mutedForeground }]}>{CURRENT_EXERCISE.equipment}</Text>
+                                <Text style={[styles.metaText, { color: colors.mutedForeground }]}>{currentEquipment || 'Bodyweight'}</Text>
                             </View>
                         </View>
                     </View>
@@ -124,7 +182,11 @@ export function ExerciseSwapScreen({ navigation, route }: any) {
                         <Text style={[styles.sectionCount, { color: colors.mutedForeground }]}>{filteredExercises.length}</Text>
                     </View>
 
-                    {filteredExercises.map((exercise, index) => (
+                    {isLoading ? (
+                        <View style={{ paddingVertical: 24, alignItems: 'center' }}>
+                            <ActivityIndicator size="small" color={colors.primary.main} />
+                        </View>
+                    ) : filteredExercises.map((exercise, index) => (
                         <Animated.View
                             key={exercise.id}
                             style={{
@@ -171,6 +233,14 @@ export function ExerciseSwapScreen({ navigation, route }: any) {
                             </TouchableOpacity>
                         </Animated.View>
                     ))}
+
+                    {!isLoading && filteredExercises.length === 0 && (
+                        <View style={{ paddingVertical: 24 }}>
+                            <Text style={[styles.exerciseMuscle, { color: colors.mutedForeground, textAlign: 'center' }]}>
+                                No similar exercises found.
+                            </Text>
+                        </View>
+                    )}
                 </View>
 
                 <View style={{ height: 140 }} />

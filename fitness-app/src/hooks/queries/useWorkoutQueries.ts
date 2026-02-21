@@ -7,7 +7,7 @@ import {
     UpdateWorkoutInput,
 } from '../../types/backend.types';
 
-export const useWorkouts = (params?: { page?: number; limit?: number; startDate?: string; endDate?: string }) => {
+export const useWorkouts = (params?: { page?: number; limit?: number; status?: 'in_progress' | 'completed' | 'cancelled'; startDate?: string; endDate?: string }) => {
     return useQuery({
         queryKey: ['workouts', params],
         queryFn: async () => {

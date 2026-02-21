@@ -199,7 +199,8 @@ export function WorkoutHeatmap({
             const m = new Date(week[3]?.date || week[0]?.date || '').getMonth();
             return m === selectedMonth;
         });
-        const y = new Date(filteredWeeks[0]?.at(0)?.date || '').getFullYear();
+        const firstDay = filteredWeeks[0] && filteredWeeks[0].length > 0 ? filteredWeeks[0][0] : undefined;
+        const y = new Date(firstDay?.date || '').getFullYear();
         displayMonthLabel = `${MONTH_NAMES_FULL[selectedMonth]} ${y}`;
     }
 

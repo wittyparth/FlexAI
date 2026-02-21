@@ -166,7 +166,7 @@ export const RestTimerOverlay: React.FC<RestTimerProps> = ({
             {/* Solid opaque dark background */}
             <View style={StyleSheet.absoluteFill}>
                 <View
-                    style={StyleSheet.absoluteFill}
+                    style={[StyleSheet.absoluteFill, styles.backdrop]}
                 />
                 {/* Subtle glow blob */}
                 <View style={styles.glowBlob1} />
@@ -343,6 +343,9 @@ const styles = StyleSheet.create({
     overlay: {
         zIndex: 1000,
         elevation: 1000,
+    },
+    backdrop: {
+        backgroundColor: '#020617',
     },
     // Glow FX
     glowBlob1: {

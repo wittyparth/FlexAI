@@ -323,6 +323,7 @@ Every integration PR must update this file.
 - 2026-02-21 | PR: `b7e098d` | Phase: 3/8 Restoration Integration | Rewired restored `RoutineDetailScreen`, `RoutineTemplateScreen`, `CoachHubScreen`, `CoachChatScreen`, and `ChatHistoryScreen` to backend routine/coach APIs while preserving existing UI styling/layout; replaced remaining mock-store chat flow with API-backed send/list/detail/delete plus local UI-only pin/rename/reaction behavior where backend contract does not expose those mutations.
 - 2026-02-21 | PR: `c39cb7f` | Phase: 3 Navigation Fix | Fixed start-workout launch path from restored routine/template view screens so successful workout start always routes to `WorkoutTab -> ActiveWorkout` from Explore stack and falls back to resuming active session when backend returns `already have a workout in progress`.
 - 2026-02-21 | PR: `bdcf688` | Phase: 3 Start Reliability | Fixed routine start behavior to pre-populate workout exercises from routine definitions at backend workout creation, auto-recover stale empty in-progress sessions when launching a routine, and corrected floating active-workout pill tap navigation to route into `WorkoutTab -> ActiveWorkout`.
+- 2026-02-21 | PR: `N/A` | Phase: 3 UX Fix | Updated active rest timer fullscreen overlay to use an opaque dark backdrop (`#020617`) instead of a transparent background layer.
 
 ## Change Notes
 - 2026-02-20: Added mandatory backend persistence of `workoutInterests` in onboarding (Phase 2).

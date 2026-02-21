@@ -47,6 +47,11 @@ export const useAuthQueries = () => {
         mutationFn: (email: string) => authApi.forgotPassword(email),
     });
 
+    const changePasswordMutation = useMutation({
+        mutationFn: (data: { currentPassword: string; newPassword: string }) =>
+            authApi.changePassword(data),
+    });
+
     const resetPasswordMutation = useMutation({
         mutationFn: (data: any) => authApi.resetPassword(data),
     });
@@ -58,6 +63,7 @@ export const useAuthQueries = () => {
         verifyEmailMutation,
         resendVerificationMutation,
         forgotPasswordMutation,
+        changePasswordMutation,
         resetPasswordMutation,
     };
 };

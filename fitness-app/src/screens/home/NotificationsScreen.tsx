@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import {
     View,
     Text,
@@ -9,14 +9,13 @@ import {
     ActivityIndicator,
 } from 'react-native';
 import { HomeStackScreenProps } from '../../navigation/types';
-import { useColors } from '../../hooks';
+import { useColors, useMarkAllNotificationsRead, useMarkNotificationRead, useNotifications, useRegisterNotificationDevice } from '../../hooks';
 import { useTheme } from '../../contexts/ThemeContext';
 import { fontFamilies } from '../../theme/typography';
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import { Card } from '../../components/ui/Card';
-import { notificationsApi, NotificationItem } from '../../api/notifications.api';
+import { NotificationItem } from '../../api/notifications.api';
 
-// Format relative time
 function formatTimeAgo(dateString: string): string {
     const date = new Date(dateString);
     const now = new Date();
@@ -32,7 +31,6 @@ function formatTimeAgo(dateString: string): string {
     return date.toLocaleDateString();
 }
 
-// Get icon based on notification type
 function getNotificationIcon(type: NotificationItem['type']): {
     name: keyof typeof Ionicons.glyphMap;
     color: string;
@@ -54,101 +52,33 @@ function getNotificationIcon(type: NotificationItem['type']): {
     }
 }
 
-// Mock data for development
-const MOCK_NOTIFICATIONS: NotificationItem[] = [
-    {
-        id: 1,
-        type: 'WORKOUT',
-        title: 'Workout Completed!',
-        body: 'Great job finishing your Upper Body workout. You burned 320 calories!',
-        read: false,
-        createdAt: new Date(Date.now() - 1000 * 60 * 30).toISOString(), // 30 mins ago
-    },
-    {
-        id: 2,
-        type: 'STREAK',
-        title: '🔥 5-Day Streak!',
-        body: "You're on fire! Keep the momentum going tomorrow.",
-        read: false,
-        createdAt: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(), // 2 hours ago
-    },
-    {
-        id: 3,
-        type: 'ACHIEVEMENT',
-        title: 'Achievement Unlocked',
-        body: 'You earned "First 10 Workouts" badge! Check your profile.',
-        read: true,
-        createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(), // 1 day ago
-    },
-    {
-        id: 4,
-        type: 'REMINDER',
-        title: 'Time to Train',
-        body: "It's been 2 days since your last workout. Ready to jump back in?",
-        read: true,
-        createdAt: new Date(Date.now() - 1000 * 60 * 60 * 48).toISOString(), // 2 days ago
-    },
-];
-
 export function NotificationsScreen({ navigation }: HomeStackScreenProps<'HomeNotifications'>) {
     const colors = useColors();
     const { mode } = useTheme();
 
-    const [notifications, setNotifications] = useState<NotificationItem[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [refreshing, setRefreshing] = useState(false);
-    const [error, setError] = useState<string | null>(null);
-
-    const fetchNotifications = useCallback(async () => {
-        try {
-            setError(null);
-            const data = await notificationsApi.getNotifications();
-            setNotifications(data);
-        } catch (err: any) {
-            console.error('Failed to fetch notifications:', err);
-            // Use mock data in development
-            if (__DEV__) {
-                console.log('Using mock notifications for development');
-                setNotifications(MOCK_NOTIFICATIONS);
-            } else {
-                setError(err.message || 'Failed to load notifications');
-            }
-        } finally {
-            setLoading(false);
-            setRefreshing(false);
-        }
-    }, []);
+    const notificationsQuery = useNotifications({ limit: 50, offset: 0 });
+    const markAsReadMutation = useMarkNotificationRead();
+    const markAllAsReadMutation = useMarkAllNotificationsRead();
+    const registerDeviceMutation = useRegisterNotificationDevice();
 
     useEffect(() => {
-        fetchNotifications();
-    }, [fetchNotifications]);
+        registerDeviceMutation.mutate();
+    }, []);
 
-    const onRefresh = useCallback(() => {
-        setRefreshing(true);
-        fetchNotifications();
-    }, [fetchNotifications]);
+    const notifications = notificationsQuery.data ?? [];
 
-    const handleMarkAsRead = async (id: number) => {
-        try {
-            await notificationsApi.markAsRead(id);
-            setNotifications((prev) =>
-                prev.map((n) => (n.id === id ? { ...n, read: true } : n))
-            );
-        } catch (err) {
-            console.error('Failed to mark notification as read:', err);
-        }
+    const unreadCount = useMemo(
+        () => notifications.filter((notification) => !notification.read).length,
+        [notifications]
+    );
+
+    const handleMarkAsRead = (id: number) => {
+        markAsReadMutation.mutate(id);
     };
 
-    const handleMarkAllAsRead = async () => {
-        try {
-            await notificationsApi.markAllAsRead();
-            setNotifications((prev) => prev.map((n) => ({ ...n, read: true })));
-        } catch (err) {
-            console.error('Failed to mark all as read:', err);
-        }
+    const handleMarkAllAsRead = () => {
+        markAllAsReadMutation.mutate();
     };
-
-    const unreadCount = notifications.filter((n) => !n.read).length;
 
     const renderItem = ({ item }: { item: NotificationItem }) => {
         const iconInfo = getNotificationIcon(item.type);
@@ -169,7 +99,6 @@ export function NotificationsScreen({ navigation }: HomeStackScreenProps<'HomeNo
                     ]}
                 >
                     <View style={styles.row}>
-                        {/* Icon */}
                         <View
                             style={[
                                 styles.iconContainer,
@@ -185,7 +114,6 @@ export function NotificationsScreen({ navigation }: HomeStackScreenProps<'HomeNo
                             />
                         </View>
 
-                        {/* Content */}
                         <View style={styles.content}>
                             <View style={styles.headerRow}>
                                 <Text
@@ -212,7 +140,6 @@ export function NotificationsScreen({ navigation }: HomeStackScreenProps<'HomeNo
                             </Text>
                         </View>
 
-                        {/* Unread indicator */}
                         {!item.read && (
                             <View
                                 style={[styles.unreadDot, { backgroundColor: colors.primary.main }]}
@@ -224,27 +151,23 @@ export function NotificationsScreen({ navigation }: HomeStackScreenProps<'HomeNo
         );
     };
 
-    // Loading state
-    if (loading && !refreshing) {
+    if (notificationsQuery.isLoading) {
         return (
-            <View style={[styles.centerContainer, { backgroundColor: colors.background }]}>
+            <View style={[styles.centerContainer, { backgroundColor: colors.background }]}> 
                 <ActivityIndicator size="large" color={colors.primary.main} />
-                <Text style={[styles.loadingText, { color: colors.mutedForeground }]}>
-                    Loading notifications...
-                </Text>
+                <Text style={[styles.loadingText, { color: colors.mutedForeground }]}>Loading notifications...</Text>
             </View>
         );
     }
 
-    // Error state
-    if (error) {
+    if (notificationsQuery.isError) {
         return (
-            <View style={[styles.centerContainer, { backgroundColor: colors.background }]}>
+            <View style={[styles.centerContainer, { backgroundColor: colors.background }]}> 
                 <Ionicons name="alert-circle-outline" size={48} color="#ef4444" />
-                <Text style={[styles.errorText, { color: '#ef4444' }]}>{error}</Text>
+                <Text style={[styles.errorText, { color: '#ef4444' }]}>Failed to load notifications</Text>
                 <TouchableOpacity
                     style={[styles.retryButton, { backgroundColor: colors.primary.main }]}
-                    onPress={fetchNotifications}
+                    onPress={() => notificationsQuery.refetch()}
                 >
                     <Text style={styles.retryText}>Retry</Text>
                 </TouchableOpacity>
@@ -253,22 +176,23 @@ export function NotificationsScreen({ navigation }: HomeStackScreenProps<'HomeNo
     }
 
     return (
-        <View style={[styles.container, { backgroundColor: colors.background }]}>
-            {/* Header with Mark All Read */}
+        <View style={[styles.container, { backgroundColor: colors.background }]}> 
             {unreadCount > 0 && (
-                <View style={[styles.header, { borderBottomColor: colors.border }]}>
-                    <Text style={[styles.unreadLabel, { color: colors.mutedForeground }]}>
+                <View style={[styles.header, { borderBottomColor: colors.border }]}> 
+                    <Text style={[styles.unreadLabel, { color: colors.mutedForeground }]}> 
                         {unreadCount} unread
                     </Text>
-                    <TouchableOpacity onPress={handleMarkAllAsRead}>
-                        <Text style={[styles.markAllText, { color: colors.primary.main }]}>
-                            Mark all as read
+                    <TouchableOpacity
+                        onPress={handleMarkAllAsRead}
+                        disabled={markAllAsReadMutation.isPending}
+                    >
+                        <Text style={[styles.markAllText, { color: colors.primary.main }]}> 
+                            {markAllAsReadMutation.isPending ? 'Updating...' : 'Mark all as read'}
                         </Text>
                     </TouchableOpacity>
                 </View>
             )}
 
-            {/* Notification List */}
             <FlatList
                 data={notifications}
                 renderItem={renderItem}
@@ -276,8 +200,8 @@ export function NotificationsScreen({ navigation }: HomeStackScreenProps<'HomeNo
                 contentContainerStyle={styles.listContent}
                 refreshControl={
                     <RefreshControl
-                        refreshing={refreshing}
-                        onRefresh={onRefresh}
+                        refreshing={notificationsQuery.isRefetching}
+                        onRefresh={() => notificationsQuery.refetch()}
                         tintColor={colors.primary.main}
                         colors={[colors.primary.main]}
                     />
@@ -296,11 +220,9 @@ export function NotificationsScreen({ navigation }: HomeStackScreenProps<'HomeNo
                                 color={colors.mutedForeground}
                             />
                         </View>
-                        <Text style={[styles.emptyTitle, { color: colors.foreground }]}>
-                            No Notifications
-                        </Text>
-                        <Text style={[styles.emptyText, { color: colors.mutedForeground }]}>
-                            You're all caught up! Check back later for updates.
+                        <Text style={[styles.emptyTitle, { color: colors.foreground }]}>No Notifications</Text>
+                        <Text style={[styles.emptyText, { color: colors.mutedForeground }]}> 
+                            You are all caught up.
                         </Text>
                     </View>
                 }

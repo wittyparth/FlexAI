@@ -1,4 +1,6 @@
 import apiClient from './client';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Platform } from 'react-native';
 
 export interface NotificationItem {
     id: number;
@@ -9,6 +11,10 @@ export interface NotificationItem {
     read: boolean;
     createdAt: string;
 }
+
+type DevicePlatform = 'android' | 'ios' | 'web';
+
+const DEVICE_TOKEN_STORAGE_KEY = '@fitness_device_token';
 
 const normalizeNotificationType = (value: unknown): NotificationItem['type'] => {
     const raw = String(value ?? '').toUpperCase();
@@ -58,5 +64,38 @@ export const notificationsApi = {
      */
     markAllAsRead: async (): Promise<void> => {
         await apiClient.patch('/notifications/read-all');
+    },
+
+    /**
+     * Register current device token for push routing
+     */
+    registerDevice: async (
+        deviceToken: string,
+        platform: DevicePlatform = Platform.OS === 'ios' ? 'ios' : Platform.OS === 'android' ? 'android' : 'web'
+    ): Promise<void> => {
+        await apiClient.post('/notifications/register-device', {
+            deviceToken,
+            platform,
+        });
+    },
+
+    /**
+     * Get or create a stable local device token used for backend device registration.
+     * This keeps registration deterministic across app restarts.
+     */
+    getOrCreateDeviceToken: async (): Promise<string> => {
+        const existing = await AsyncStorage.getItem(DEVICE_TOKEN_STORAGE_KEY);
+        if (existing) {
+            return existing;
+        }
+
+        const token = `${Platform.OS}-${Date.now()}-${Math.random().toString(36).slice(2, 12)}`;
+        await AsyncStorage.setItem(DEVICE_TOKEN_STORAGE_KEY, token);
+        return token;
+    },
+
+    registerCurrentDevice: async (): Promise<void> => {
+        const token = await notificationsApi.getOrCreateDeviceToken();
+        await notificationsApi.registerDevice(token);
     },
 };

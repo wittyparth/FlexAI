@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { userApi, OnboardingData, UserProfile } from '../../api/user.api';
-import { useAuthStore } from '../../store/authStore';
+import { useAuthStore, authStore } from '../../store/authStore';
 
 export const userKeys = {
     all: ['user'] as const,
@@ -76,6 +76,14 @@ export function useUserQueries() {
         },
     });
 
+    const deleteAccountMutation = useMutation({
+        mutationFn: userApi.deleteAccount,
+        onSuccess: async () => {
+            queryClient.clear();
+            await authStore.getState().logout();
+        },
+    });
+
     return {
         profileQuery,
         updateProfileMutation,
@@ -83,5 +91,6 @@ export function useUserQueries() {
         uploadAvatarMutation,
         settingsQuery,
         updateSettingsMutation,
+        deleteAccountMutation,
     };
 }

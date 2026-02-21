@@ -14,6 +14,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
 import { useTheme } from '../../contexts';
 import { fontFamilies } from '../../theme/typography';
+import { useAuthQueries } from '../../hooks/queries/useAuthQueries';
 import { useUserQueries } from '../../hooks/queries/useUserQueries';
 
 export function SettingsScreen({ navigation }: any) {
@@ -22,7 +23,8 @@ export function SettingsScreen({ navigation }: any) {
     const insets = useSafeAreaInsets();
     const fadeAnim = useRef(new Animated.Value(0)).current;
 
-    const { settingsQuery } = useUserQueries();
+    const { settingsQuery, deleteAccountMutation } = useUserQueries();
+    const { logoutMutation } = useAuthQueries();
     const units = settingsQuery.data?.units || 'metric';
 
     useEffect(() => {
@@ -48,6 +50,7 @@ export function SettingsScreen({ navigation }: any) {
             title: 'Account',
             items: [
                 { id: 'profile', label: 'Edit Profile', icon: 'person-outline', type: 'nav' },
+                { id: 'account_security', label: 'Account Security', icon: 'shield-checkmark-outline', type: 'nav' },
                 { id: 'password', label: 'Change Password', icon: 'lock-closed-outline', type: 'nav' },
                 { id: 'privacy', label: 'Privacy Settings', icon: 'shield-outline', type: 'nav' },
             ],
@@ -83,6 +86,9 @@ export function SettingsScreen({ navigation }: any) {
             case 'profile':
                 navigation.navigate('EditProfile');
                 break;
+            case 'account_security':
+                navigation.navigate('AccountSecurity');
+                break;
             case 'password':
                 navigation.navigate('ChangePassword');
                 break;
@@ -104,6 +110,32 @@ export function SettingsScreen({ navigation }: any) {
             default:
                 break;
         }
+    };
+
+    const handleLogout = () => {
+        Alert.alert('Log out', 'Do you want to log out from this device?', [
+            { text: 'Cancel', style: 'cancel' },
+            {
+                text: 'Log out',
+                style: 'destructive',
+                onPress: () => logoutMutation.mutate(),
+            },
+        ]);
+    };
+
+    const handleDeleteAccount = () => {
+        Alert.alert(
+            'Delete account',
+            'This will permanently remove your account and data. This action cannot be undone.',
+            [
+                { text: 'Cancel', style: 'cancel' },
+                {
+                    text: 'Delete',
+                    style: 'destructive',
+                    onPress: () => deleteAccountMutation.mutate(),
+                },
+            ]
+        );
     };
 
     return (
@@ -161,14 +193,26 @@ export function SettingsScreen({ navigation }: any) {
                     ))}
 
                     {/* Logout Button */}
-                    <TouchableOpacity style={[styles.logoutBtn, { borderColor: colors.error }]}>
+                    <TouchableOpacity
+                        style={[styles.logoutBtn, { borderColor: colors.error }]}
+                        onPress={handleLogout}
+                        disabled={logoutMutation.isPending || deleteAccountMutation.isPending}
+                    >
                         <Ionicons name="log-out-outline" size={22} color={colors.error} />
-                        <Text style={[styles.logoutText, { color: colors.error }]}>Log Out</Text>
+                        <Text style={[styles.logoutText, { color: colors.error }]}>
+                            {logoutMutation.isPending ? 'Logging out...' : 'Log Out'}
+                        </Text>
                     </TouchableOpacity>
 
                     {/* Delete Account */}
-                    <TouchableOpacity style={styles.deleteBtn}>
-                        <Text style={[styles.deleteText, { color: colors.mutedForeground }]}>Delete Account</Text>
+                    <TouchableOpacity
+                        style={styles.deleteBtn}
+                        onPress={handleDeleteAccount}
+                        disabled={deleteAccountMutation.isPending || logoutMutation.isPending}
+                    >
+                        <Text style={[styles.deleteText, { color: colors.mutedForeground }]}>
+                            {deleteAccountMutation.isPending ? 'Deleting account...' : 'Delete Account'}
+                        </Text>
                     </TouchableOpacity>
                 </Animated.View>
 

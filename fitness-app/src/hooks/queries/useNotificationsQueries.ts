@@ -32,3 +32,9 @@ export const useMarkAllNotificationsRead = () => {
         },
     });
 };
+
+export const useRegisterNotificationDevice = () => {
+    return useMutation({
+        mutationFn: () => notificationsApi.registerCurrentDevice(),
+    });
+};

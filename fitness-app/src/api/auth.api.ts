@@ -60,6 +60,11 @@ export interface VerifyEmailResponse {
   message: string;
 }
 
+export interface ChangePasswordRequest {
+  currentPassword: string;
+  newPassword: string;
+}
+
 // Backend response wrapper type
 interface ApiResponse<T> {
   success: boolean;
@@ -107,6 +112,12 @@ export const authApi = {
   // Forgot password
   forgotPassword: async (email: string): Promise<AuthResponse> => {
     const response = await apiClient.post<ApiResponse<AuthResponse>>('/auth/forgot-password', { email });
+    return response.data.data;
+  },
+
+  // Change password for authenticated user
+  changePassword: async (data: ChangePasswordRequest): Promise<AuthResponse> => {
+    const response = await apiClient.post<ApiResponse<AuthResponse>>('/auth/change-password', data);
     return response.data.data;
   },
 

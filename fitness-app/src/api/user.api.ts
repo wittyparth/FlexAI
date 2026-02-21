@@ -66,6 +66,10 @@ export interface UserSettings {
     autoStartRest: boolean;
 }
 
+export interface DeleteAccountResponse {
+    message: string;
+}
+
 export const userApi = {
     // Get current user profile
     getProfile: async (): Promise<UserProfile> => {
@@ -104,6 +108,12 @@ export const userApi = {
     // Update user settings
     updateSettings: async (data: Partial<UserSettings>): Promise<UserSettings> => {
         const response = await apiClient.patch('/users/me/settings', data);
+        return response.data.data;
+    },
+
+    // Delete account
+    deleteAccount: async (): Promise<DeleteAccountResponse> => {
+        const response = await apiClient.delete('/users/me');
         return response.data.data;
     },
 };

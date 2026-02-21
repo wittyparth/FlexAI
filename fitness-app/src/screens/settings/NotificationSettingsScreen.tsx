@@ -14,6 +14,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
+import { useRegisterNotificationDevice } from '../../hooks';
 import { useUserQueries } from '../../hooks/queries/useUserQueries';
 import type { UserSettings } from '../../api/user.api';
 
@@ -28,6 +29,7 @@ export function NotificationSettingsScreen({ navigation }: any) {
     const fadeAnim = useRef(new Animated.Value(0)).current;
 
     const { settingsQuery, updateSettingsMutation } = useUserQueries();
+    const registerDeviceMutation = useRegisterNotificationDevice();
     const settings = settingsQuery.data;
 
     const [restTimerAlerts, setRestTimerAlerts] = useState(true);
@@ -42,6 +44,9 @@ export function NotificationSettingsScreen({ navigation }: any) {
     const handleRemoteToggle = async (key: SettingsBooleanKey, value: boolean) => {
         try {
             await updateSettingsMutation.mutateAsync({ [key]: value });
+            if (key === 'pushEnabled' && value) {
+                await registerDeviceMutation.mutateAsync();
+            }
         } catch (error: any) {
             Alert.alert('Update failed', error?.message || 'Could not update notification settings.');
         }
@@ -51,7 +56,10 @@ export function NotificationSettingsScreen({ navigation }: any) {
     const workoutReminders = settings?.workoutReminders ?? true;
     const socialNotifications = settings?.socialNotifications ?? true;
     const emailUpdates = settings?.emailUpdates ?? true;
-    const isBusy = settingsQuery.isLoading || updateSettingsMutation.isPending;
+    const isBusy =
+        settingsQuery.isLoading ||
+        updateSettingsMutation.isPending ||
+        registerDeviceMutation.isPending;
 
     const NotificationItem = ({
         label,

@@ -7,10 +7,13 @@ import {
     TouchableOpacity,
     TextInput,
     Animated,
+    ActivityIndicator,
+    Alert,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
+import { useAuthQueries } from '../../hooks/queries/useAuthQueries';
 import { fontFamilies } from '../../theme/typography';
 
 export function ChangePasswordScreen({ navigation }: any) {
@@ -23,12 +26,32 @@ export function ChangePasswordScreen({ navigation }: any) {
     const [showCurrent, setShowCurrent] = useState(false);
     const [showNew, setShowNew] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
+    const { changePasswordMutation } = useAuthQueries();
 
     useEffect(() => {
         Animated.timing(fadeAnim, { toValue: 1, duration: 500, useNativeDriver: true }).start();
     }, []);
 
     const isValid = currentPassword.length >= 8 && newPassword.length >= 8 && newPassword === confirmPassword;
+
+    const handleSubmit = async () => {
+        if (!isValid) return;
+        if (newPassword === currentPassword) {
+            Alert.alert('Invalid password', 'New password must be different from current password.');
+            return;
+        }
+
+        try {
+            await changePasswordMutation.mutateAsync({
+                currentPassword,
+                newPassword,
+            });
+            Alert.alert('Password updated', 'Your password has been changed successfully.');
+            navigation.goBack();
+        } catch (error: any) {
+            Alert.alert('Update failed', error?.message || 'Could not change password.');
+        }
+    };
 
     const PasswordStrength = ({ password }: { password: string }) => {
         let strength = 0;
@@ -159,11 +182,16 @@ export function ChangePasswordScreen({ navigation }: any) {
                     {/* Submit Button */}
                     <TouchableOpacity
                         style={[styles.submitBtn, { opacity: isValid ? 1 : 0.5 }]}
-                        disabled={!isValid}
+                        disabled={!isValid || changePasswordMutation.isPending}
                         activeOpacity={0.9}
+                        onPress={handleSubmit}
                     >
                         <View style={styles.submitGradient}>
-                            <Text style={styles.submitText}>Update Password</Text>
+                            {changePasswordMutation.isPending ? (
+                                <ActivityIndicator size="small" color="#FFF" />
+                            ) : (
+                                <Text style={styles.submitText}>Update Password</Text>
+                            )}
                         </View>
                     </TouchableOpacity>
                 </Animated.View>

@@ -312,6 +312,7 @@ Every integration PR must update this file.
 - 2026-02-21 | PR: `912c921` | Phase: 8 | Replaced coach local mock store usage with API-backed coach clients/hooks (`/coach/message`, `/coach/conversations`, `/coach/conversations/:id`, delete), rewired Coach Hub/Chat/History screens to backend persistence, and added explicit timeout/error fallback UX in chat send flow.
 - 2026-02-21 | PR: `8c29760` | Phase: 9 | Replaced notifications screen local state/mocks with query/mutation integration, added device registration wiring, connected settings security actions (logout/delete/change-password) to backend mutations, refreshed API contract docs, and validated with backend build + full integration test suite.
 - 2026-02-21 | PR: `63b4534` | Phase: 9 Hardening | Cleared global frontend TypeScript drift by aligning shared theme tokens/types with legacy screen usage, fixed dashboard/workout/auth typing mismatches, and revalidated with frontend `npx tsc --noEmit` plus backend build + full test suite.
+- 2026-02-21 | PR: `aa0be65` | Phase: 9 Ops Hardening | Sanitized backend env templates, added Docker build context guardrails (`.dockerignore`), and fixed docker-compose API env wiring to reuse `.env` while forcing compose-local DB/Redis connectivity.
 
 ## Change Notes
 - 2026-02-20: Added mandatory backend persistence of `workoutInterests` in onboarding (Phase 2).

@@ -48,12 +48,19 @@ services:
     container_name: fitness-api
     ports:
       - "3000:3000"
+    env_file:
+      - .env
     environment:
       NODE_ENV: production
       PORT: 3000
+      # Override DB/Redis for compose network
       DATABASE_URL: postgresql://fitness_user:fitness_password@postgres:5432/fitness_db
       REDIS_HOST: redis
       REDIS_PORT: 6379
+      REDIS_PASSWORD: ""
+      REDIS_URL: ""
+      UPSTASH_REDIS_REST_URL: ""
+      UPSTASH_REDIS_REST_TOKEN: ""
     depends_on:
       postgres:
         condition: service_healthy

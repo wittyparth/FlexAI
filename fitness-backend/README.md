@@ -34,6 +34,26 @@ npm run db:seed
 npm run dev
 ```
 
+## Local Docker Runtime (API + DB + Redis)
+
+Use this when you want the backend API running fully in Docker:
+
+```bash
+# 1) Create and configure env file
+cp .env.example .env
+
+# 2) Start full stack (api profile enabled)
+docker compose --profile production up -d --build
+
+# 3) Apply schema and seed data from host
+npm run db:migrate
+npm run db:seed
+```
+
+Notes:
+- `docker-compose.yml` reads `.env` for required app secrets and overrides DB/Redis hosts for the Docker network.
+- Keep real credentials only in `.env` (never in `.env.example`).
+
 ## Scripts
 
 | Command | Description |

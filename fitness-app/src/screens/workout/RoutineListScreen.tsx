@@ -91,7 +91,7 @@ export function RoutineListScreen({ navigation, route }: any) {
     const hasError = activeTab === 'My Plans' ? isMyPlansError : isDiscoverError;
 
     const handleCreateRoutine = () => {
-        navigation.navigate('RoutineEditor', { mode: 'create' });
+        navigation.push('RoutineEditor', { mode: 'create' });
     };
 
     const handleRoutinePress = (routineId: number) => {

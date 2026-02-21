@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import {
     View,
     Text,
@@ -41,11 +42,16 @@ export function RoutineEditorScreen({ navigation, route }: any) {
     const colors = useColors();
     const insets = useSafeAreaInsets();
     const { routineId, mode, routineData, onSaveReturn } = route.params || {};
-    const isTemplateMode = mode === 'template_day';
-    const isEditing = !!routineId || (isTemplateMode && !!routineData);
+    const parsedRoutineId = Number(routineId);
+    const hasValidRoutineId = Number.isFinite(parsedRoutineId) && parsedRoutineId > 0;
+    const normalizedMode = typeof mode === 'string' ? mode : undefined;
+    const isTemplateMode = normalizedMode === 'template_day';
+    const isCreateMode = normalizedMode === 'create';
+    const isEditing = !isTemplateMode && !isCreateMode && hasValidRoutineId;
+    const queryClient = useQueryClient();
 
     // Queries & Mutations (only use if not in template mode)
-    const { data: routineResponse, isLoading: isLoadingRoutine } = useRoutine(isTemplateMode ? undefined : routineId);
+    const { data: routineResponse, isLoading: isLoadingRoutine } = useRoutine(isEditing ? parsedRoutineId : undefined);
     const createRoutine = useCreateRoutine();
     const updateRoutine = useUpdateRoutine();
     const addExercise = useAddExerciseToRoutine();
@@ -100,27 +106,10 @@ export function RoutineEditorScreen({ navigation, route }: any) {
         }
     }, [isEditing, routineResponse, isTemplateMode, routineData]);
 
-    // Handle exercises returned from picker
-    useEffect(() => {
-        const selectedExercise = route.params?.selectedExercise;
-        const selectedExercises = Array.isArray(route.params?.selectedExercises)
-            ? route.params.selectedExercises
-            : (selectedExercise?.id ? [selectedExercise] : []);
-        const selectionToken = route.params?.selectionToken;
-        const selectionKey = selectionToken
-            ? `token-${selectionToken}`
-            : (selectedExercise?.id ? `legacy-${selectedExercise.id}` : null);
-
-        if (!selectionKey || selectedExercises.length === 0) {
+    const appendSelectedExercises = (selectedExercises: any[]) => {
+        if (!Array.isArray(selectedExercises) || selectedExercises.length === 0) {
             return;
         }
-
-        if (lastHandledSelectionKeyRef.current === selectionKey) {
-            return;
-        }
-
-        lastHandledSelectionKeyRef.current = selectionKey;
-
         setExercises((prev) => {
             const existingExerciseIds = new Set(prev.map((exerciseItem) => Number(exerciseItem.exerciseId)));
             const next: EditorExercise[] = [...prev];
@@ -146,6 +135,30 @@ export function RoutineEditorScreen({ navigation, route }: any) {
 
             return next;
         });
+    };
+
+    // Handle exercises returned from picker
+    useEffect(() => {
+        const selectedExercise = route.params?.selectedExercise;
+        const selectedExercises = Array.isArray(route.params?.selectedExercises)
+            ? route.params.selectedExercises
+            : (selectedExercise?.id ? [selectedExercise] : []);
+        const selectionToken = route.params?.selectionToken;
+        const selectionKey = selectionToken
+            ? `token-${selectionToken}`
+            : (selectedExercise?.id ? `legacy-${selectedExercise.id}` : null);
+
+        if (!selectionKey || selectedExercises.length === 0) {
+            return;
+        }
+
+        if (lastHandledSelectionKeyRef.current === selectionKey) {
+            return;
+        }
+
+        lastHandledSelectionKeyRef.current = selectionKey;
+
+        appendSelectedExercises(selectedExercises);
 
         navigation.setParams({
             selectedExercise: undefined,
@@ -174,6 +187,12 @@ export function RoutineEditorScreen({ navigation, route }: any) {
         }
         return { min: parts[0], max: parts[0] }; // Use same for min/max if single number
     };
+
+    const getErrorMessage = (error: any) =>
+        error?.message ||
+        error?.response?.data?.error?.message ||
+        error?.response?.data?.message ||
+        'Unknown error';
 
     const handleSave = async () => {
         if (!name.trim()) {
@@ -216,7 +235,7 @@ export function RoutineEditorScreen({ navigation, route }: any) {
             } else if (isEditing) {
                 // Update Routine Metadata
                 await updateRoutine.mutateAsync({
-                    id: routineId,
+                    id: parsedRoutineId,
                     data: {
                         name,
                         description,
@@ -242,8 +261,8 @@ export function RoutineEditorScreen({ navigation, route }: any) {
                 // Execute Removals
                 const removePromises = toRemove.map((ex: RoutineExercise) =>
                     removeExerciseMutation.mutateAsync({
-                        routineId,
-                        exerciseId: ex.exerciseId
+                        routineId: parsedRoutineId,
+                        exerciseId: ex.id
                     })
                 );
 
@@ -251,10 +270,10 @@ export function RoutineEditorScreen({ navigation, route }: any) {
                 const addPromises = toAdd.map((ex) => {
                     const { min, max } = parseReps(ex.targetReps);
                     return addExercise.mutateAsync({
-                        routineId,
+                        routineId: parsedRoutineId,
                         data: {
                             exerciseId: ex.exerciseId,
-                            orderIndex: exercises.indexOf(ex),
+                            orderIndex: currentExercises.indexOf(ex),
                             targetSets: parseInt(ex.targetSets) || 3,
                             targetRepsMin: min || 8,
                             targetRepsMax: max || 12,
@@ -265,6 +284,8 @@ export function RoutineEditorScreen({ navigation, route }: any) {
                 });
 
                 await Promise.all([...removePromises, ...addPromises]);
+                await queryClient.invalidateQueries({ queryKey: ['routines'] });
+                await queryClient.invalidateQueries({ queryKey: ['routine', parsedRoutineId] });
 
                 Alert.alert('Success', 'Routine updated successfully');
                 navigation.goBack();
@@ -282,31 +303,46 @@ export function RoutineEditorScreen({ navigation, route }: any) {
                 const newRoutineId = result.data.id;
 
                 // Add all exercises
-                // We do this sequentially to maintain order usually, or Promise.all
-                // API likely handles orderIndex if passed.
-                const exercisePromises = exercises.map((ex, index) => {
+                // Sequential insert gives deterministic order and resilient per-item failure handling.
+                const failedAdds: string[] = [];
+                for (const [index, ex] of exercises.entries()) {
                     const { min, max } = parseReps(ex.targetReps);
-                    return addExercise.mutateAsync({
-                        routineId: newRoutineId,
-                        data: {
-                            exerciseId: ex.exerciseId,
-                            orderIndex: index,
-                            targetSets: parseInt(ex.targetSets) || 3,
-                            targetRepsMin: min || 8,
-                            targetRepsMax: max || 12,
-                            restSeconds: parseInt(ex.restSeconds) || 60,
-                            notes: '',
-                        }
-                    });
-                });
+                    try {
+                        await addExercise.mutateAsync({
+                            routineId: newRoutineId,
+                            data: {
+                                exerciseId: ex.exerciseId,
+                                orderIndex: index,
+                                targetSets: parseInt(ex.targetSets) || 3,
+                                targetRepsMin: min || 8,
+                                targetRepsMax: max || 12,
+                                restSeconds: parseInt(ex.restSeconds) || 60,
+                                notes: '',
+                            }
+                        });
+                    } catch (error) {
+                        failedAdds.push(ex.name || `Exercise #${index + 1}`);
+                    }
+                }
 
-                await Promise.all(exercisePromises);
+                await queryClient.invalidateQueries({ queryKey: ['routines'] });
+                await queryClient.invalidateQueries({ queryKey: ['routine', newRoutineId] });
 
-                navigation.goBack();
+                if (failedAdds.length > 0) {
+                    Alert.alert(
+                        'Routine saved with warnings',
+                        `Routine was created, but ${failedAdds.length} exercise(s) could not be added. You can add them from edit mode.`
+                    );
+                    navigation.navigate('RoutineDetail', { routineId: newRoutineId });
+                    return;
+                }
+
+                Alert.alert('Success', 'Routine created successfully');
+                navigation.navigate('RoutineDetail', { routineId: newRoutineId });
             }
-        } catch (error) {
+        } catch (error: any) {
             console.error('Failed to save routine', error);
-            Alert.alert('Error', 'Failed to save routine. Please try again.');
+            Alert.alert('Error', `Failed to save routine: ${getErrorMessage(error)}`);
         } finally {
             setIsSaving(false);
         }
@@ -478,7 +514,13 @@ export function RoutineEditorScreen({ navigation, route }: any) {
                     {/* Add Exercise */}
                     <TouchableOpacity
                         style={[styles.addButton, { backgroundColor: `${colors.primary.main}10`, borderColor: `${colors.primary.main}30` }]}
-                        onPress={() => navigation.navigate('ExercisePicker', { returnTo: 'RoutineEditor', multiSelect: true })}
+                        onPress={() => navigation.navigate('ExercisePicker', {
+                            returnTo: 'RoutineEditor',
+                            multiSelect: true,
+                            onSelectExercises: (selectedExercisesFromPicker: any[]) => {
+                                appendSelectedExercises(selectedExercisesFromPicker);
+                            },
+                        })}
                         activeOpacity={0.8}
                     >
                         <Ionicons name="add" size={20} color={colors.primary.main} />

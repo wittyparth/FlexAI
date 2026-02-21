@@ -301,16 +301,26 @@ export const routineService = {
   ) {
     await this.verifyRoutineOwnership(userId, routineId);
 
-    const routineExercise = await prisma.routineExercise.findUnique({
+    let routineExercise = await prisma.routineExercise.findUnique({
       where: { id: routineExerciseId },
     });
 
     if (!routineExercise || routineExercise.routineId !== routineId) {
+      routineExercise = await prisma.routineExercise.findFirst({
+        where: {
+          routineId,
+          exerciseId: routineExerciseId,
+        },
+        orderBy: { id: 'desc' },
+      });
+    }
+
+    if (!routineExercise) {
       throw new NotFoundError('Routine exercise');
     }
 
     const updated = await prisma.routineExercise.update({
-      where: { id: routineExerciseId },
+      where: { id: routineExercise.id },
       data: input,
       include: {
         exercise: true,
@@ -326,16 +336,26 @@ export const routineService = {
   async removeExercise(userId: number, routineId: number, routineExerciseId: number) {
     await this.verifyRoutineOwnership(userId, routineId);
 
-    const routineExercise = await prisma.routineExercise.findUnique({
+    let routineExercise = await prisma.routineExercise.findUnique({
       where: { id: routineExerciseId },
     });
 
     if (!routineExercise || routineExercise.routineId !== routineId) {
+      routineExercise = await prisma.routineExercise.findFirst({
+        where: {
+          routineId,
+          exerciseId: routineExerciseId,
+        },
+        orderBy: { id: 'desc' },
+      });
+    }
+
+    if (!routineExercise) {
       throw new NotFoundError('Routine exercise');
     }
 
     await prisma.routineExercise.delete({
-      where: { id: routineExerciseId },
+      where: { id: routineExercise.id },
     });
 
     return { message: 'Exercise removed from routine' };

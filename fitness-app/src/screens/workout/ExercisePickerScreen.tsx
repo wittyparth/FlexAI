@@ -20,8 +20,10 @@ import { useDebounce } from '../../hooks/useDebounce';
 export function ExercisePickerScreen({ navigation, route }: any) {
     const colors = useColors();
     const insets = useSafeAreaInsets();
-    const { returnTo, multiSelect } = route.params || {};
-    const isMultiSelectMode = Boolean(multiSelect ?? (returnTo === 'ActiveWorkout'));
+    const { returnTo, multiSelect, onSelectExercise, onSelectExercises } = route.params || {};
+    const hasSelectionCallback =
+        typeof onSelectExercise === 'function' || typeof onSelectExercises === 'function';
+    const isMultiSelectMode = Boolean((multiSelect ?? (returnTo === 'ActiveWorkout')) || hasSelectionCallback);
 
     const [searchQuery, setSearchQuery] = useState('');
     const debouncedSearch = useDebounce(searchQuery, 500);
@@ -47,7 +49,7 @@ export function ExercisePickerScreen({ navigation, route }: any) {
     const exercises = exercisesData?.exercises || [];
 
     const handleSelectExercise = (item: any) => {
-        if (isMultiSelectMode && returnTo) {
+        if (isMultiSelectMode) {
             setSelectedExerciseMap((current) => {
                 const next = { ...current };
                 if (next[item.id]) {
@@ -57,6 +59,12 @@ export function ExercisePickerScreen({ navigation, route }: any) {
                 }
                 return next;
             });
+            return;
+        }
+
+        if (typeof onSelectExercise === 'function') {
+            onSelectExercise(item);
+            navigation.goBack();
             return;
         }
 
@@ -76,9 +84,16 @@ export function ExercisePickerScreen({ navigation, route }: any) {
     };
 
     const handleApplySelection = () => {
-        if (!returnTo) return;
         const selectedExercises = Object.values(selectedExerciseMap);
         if (selectedExercises.length === 0) return;
+
+        if (typeof onSelectExercises === 'function') {
+            onSelectExercises(selectedExercises);
+            navigation.goBack();
+            return;
+        }
+
+        if (!returnTo) return;
 
         navigation.navigate({
             name: returnTo,

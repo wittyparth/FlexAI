@@ -9,10 +9,10 @@ export const useRoutines = (params?: { page?: number; limit?: number; search?: s
     });
 };
 
-export const useRoutine = (id: number) => {
+export const useRoutine = (id?: number) => {
     return useQuery({
         queryKey: ['routine', id],
-        queryFn: () => routineApi.getRoutineById(id),
+        queryFn: () => routineApi.getRoutineById(id as number),
         enabled: !!id,
     });
 };
@@ -71,6 +71,7 @@ export const useAddExerciseToRoutine = () => {
         mutationFn: ({ routineId, data }: { routineId: number; data: AddExerciseToRoutineInput }) => 
             routineApi.addExercise(routineId, data),
         onSuccess: (_, { routineId }) => {
+            queryClient.invalidateQueries({ queryKey: ['routines'] });
             queryClient.invalidateQueries({ queryKey: ['routine', routineId] });
         },
     });
@@ -82,6 +83,7 @@ export const useRemoveExerciseFromRoutine = () => {
         mutationFn: ({ routineId, exerciseId }: { routineId: number; exerciseId: number }) => 
             routineApi.removeExercise(routineId, exerciseId),
         onSuccess: (_, { routineId }) => {
+            queryClient.invalidateQueries({ queryKey: ['routines'] });
             queryClient.invalidateQueries({ queryKey: ['routine', routineId] });
         },
     });

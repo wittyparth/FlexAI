@@ -36,7 +36,8 @@ export function RoutineDetailScreen({ route, navigation }: any) {
             return;
         }
 
-        useWorkoutStore.getState()
+        useWorkoutStore
+            .getState()
             .startWorkout({ routineId: routine.id, name: routine.name })
             .then(() => navigation.navigate('ActiveWorkout'))
             .catch((error: any) => {
@@ -69,7 +70,7 @@ export function RoutineDetailScreen({ route, navigation }: any) {
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
-            <View style={[styles.topBar, { paddingTop: insets.top + 12, backgroundColor: colors.background + 'F0' }]}>
+            <View style={[styles.topBar, { paddingTop: insets.top + 12, backgroundColor: `${colors.background}F0` }]}>
                 <TouchableOpacity
                     onPress={() => navigation.goBack()}
                     style={[styles.iconBtn, { backgroundColor: colors.card, borderColor: colors.border }]}
@@ -87,7 +88,7 @@ export function RoutineDetailScreen({ route, navigation }: any) {
                 contentContainerStyle={{ paddingBottom: insets.bottom + 140, paddingTop: insets.top + 72 }}
             >
                 <View style={styles.headerSection}>
-                    <View style={[styles.splitBadge, { backgroundColor: colors.primary.main + '20', borderColor: colors.primary.main + '40' }]}>
+                    <View style={[styles.splitBadge, { backgroundColor: `${colors.primary.main}20`, borderColor: `${colors.primary.main}40` }]}>
                         <Text style={[styles.splitBadgeText, { color: colors.primary.main }]}>
                             {toTitleCase(routine.splitType)} - {routine.daysPerWeek || 1} DAYS/WEEK
                         </Text>
@@ -151,10 +152,10 @@ export function RoutineDetailScreen({ route, navigation }: any) {
 
                         return (
                             <View
-                                key={ex.id + '-' + index}
+                                key={`${ex.id}-${index}`}
                                 style={[styles.exerciseCard, { backgroundColor: colors.card, borderColor: colors.border }]}
                             >
-                                <View style={[styles.exerciseIndex, { backgroundColor: colors.primary.main + '15' }]}>
+                                <View style={[styles.exerciseIndex, { backgroundColor: `${colors.primary.main}15` }]}>
                                     <Text style={[styles.exerciseIndexText, { color: colors.primary.main }]}>
                                         {String(index + 1).padStart(2, '0')}
                                     </Text>

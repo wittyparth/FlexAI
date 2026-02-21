@@ -314,6 +314,7 @@ Every integration PR must update this file.
 - 2026-02-21 | PR: `63b4534` | Phase: 9 Hardening | Cleared global frontend TypeScript drift by aligning shared theme tokens/types with legacy screen usage, fixed dashboard/workout/auth typing mismatches, and revalidated with frontend `npx tsc --noEmit` plus backend build + full test suite.
 - 2026-02-21 | PR: `aa0be65` | Phase: 9 Ops Hardening | Sanitized backend env templates, added Docker build context guardrails (`.dockerignore`), and fixed docker-compose API env wiring to reuse `.env` while forcing compose-local DB/Redis connectivity.
 - 2026-02-21 | PR: `2be3985` | Phase: 3 UX Hardening | Fixed active workout add-exercise UX to support multi-select in exercise picker, batch-apply selected exercises on return, prevent duplicate param re-processing with selection tokens, and keep workout state stable while adding multiple exercises.
+- 2026-02-21 | PR: pending | Phase: 3 UX Hardening | Fixed manual workout creation (`RoutineEditor`) add-exercise flow to support multi-select, return via stack pop+merge (avoid editor remount/reset), and consume picker params once per selection token to prevent duplicate inserts/reset behavior.
 
 ## Change Notes
 - 2026-02-20: Added mandatory backend persistence of `workoutInterests` in onboarding (Phase 2).

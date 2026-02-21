@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
     View,
     Text,
@@ -57,6 +57,7 @@ export function RoutineEditorScreen({ navigation, route }: any) {
     const [isPublic, setIsPublic] = useState(false);
     const [exercises, setExercises] = useState<EditorExercise[]>([]);
     const [isSaving, setIsSaving] = useState(false);
+    const lastHandledSelectionKeyRef = useRef<string | null>(null);
 
     // Initialize state when editing or creating with preset data
     useEffect(() => {
@@ -99,27 +100,64 @@ export function RoutineEditorScreen({ navigation, route }: any) {
         }
     }, [isEditing, routineResponse, isTemplateMode, routineData]);
 
-    // Handle new exercise added from Picker
+    // Handle exercises returned from picker
     useEffect(() => {
-        if (route.params?.selectedExercise) {
-            const newEx = route.params.selectedExercise;
-            setExercises(prev => [
-                ...prev,
-                {
-                    id: Date.now(), // temp id
-                    exerciseId: newEx.id,
-                    name: newEx.name,
+        const selectedExercise = route.params?.selectedExercise;
+        const selectedExercises = Array.isArray(route.params?.selectedExercises)
+            ? route.params.selectedExercises
+            : (selectedExercise?.id ? [selectedExercise] : []);
+        const selectionToken = route.params?.selectionToken;
+        const selectionKey = selectionToken
+            ? `token-${selectionToken}`
+            : (selectedExercise?.id ? `legacy-${selectedExercise.id}` : null);
+
+        if (!selectionKey || selectedExercises.length === 0) {
+            return;
+        }
+
+        if (lastHandledSelectionKeyRef.current === selectionKey) {
+            return;
+        }
+
+        lastHandledSelectionKeyRef.current = selectionKey;
+
+        setExercises((prev) => {
+            const existingExerciseIds = new Set(prev.map((exerciseItem) => Number(exerciseItem.exerciseId)));
+            const next: EditorExercise[] = [...prev];
+            let localCounter = 0;
+
+            selectedExercises.forEach((exerciseItem: any) => {
+                const exerciseId = Number(exerciseItem?.id);
+                if (!exerciseId || Number.isNaN(exerciseId) || existingExerciseIds.has(exerciseId)) {
+                    return;
+                }
+
+                existingExerciseIds.add(exerciseId);
+                localCounter += 1;
+                next.push({
+                    id: Date.now() + localCounter,
+                    exerciseId,
+                    name: exerciseItem.name,
                     targetSets: '3',
                     targetReps: '10',
                     restSeconds: '60',
-                }
-            ]);
-            // Clear params to avoid adding again on re-render?
-            // Navigation setParams might be needed, or just handle duplicate check via ID if needed.
-            // For now, simpler to just acknowledge user intent.
-            navigation.setParams({ selectedExercise: undefined });
-        }
-    }, [route.params?.selectedExercise]);
+                });
+            });
+
+            return next;
+        });
+
+        navigation.setParams({
+            selectedExercise: undefined,
+            selectedExercises: undefined,
+            selectionToken: undefined,
+        });
+    }, [
+        route.params?.selectedExercise,
+        route.params?.selectedExercises,
+        route.params?.selectionToken,
+        navigation,
+    ]);
 
     const removeExercise = (id: number) => {
         setExercises(exercises.filter(ex => ex.id !== id));
@@ -440,7 +478,7 @@ export function RoutineEditorScreen({ navigation, route }: any) {
                     {/* Add Exercise */}
                     <TouchableOpacity
                         style={[styles.addButton, { backgroundColor: `${colors.primary.main}10`, borderColor: `${colors.primary.main}30` }]}
-                        onPress={() => navigation.navigate('ExercisePicker', { returnTo: 'RoutineEditor' })}
+                        onPress={() => navigation.navigate('ExercisePicker', { returnTo: 'RoutineEditor', multiSelect: true })}
                         activeOpacity={0.8}
                     >
                         <Ionicons name="add" size={20} color={colors.primary.main} />

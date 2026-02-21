@@ -61,10 +61,15 @@ export function ExercisePickerScreen({ navigation, route }: any) {
         }
 
         if (returnTo) {
-            navigation.navigate(returnTo, {
-                selectedExercise: item,
-                selectionToken: Date.now(),
-            });
+            navigation.navigate({
+                name: returnTo,
+                params: {
+                    selectedExercise: item,
+                    selectionToken: Date.now(),
+                },
+                merge: true,
+                pop: true,
+            } as any);
         } else {
             navigation.navigate('ExerciseDetail', { exerciseId: item.id });
         }
@@ -75,10 +80,15 @@ export function ExercisePickerScreen({ navigation, route }: any) {
         const selectedExercises = Object.values(selectedExerciseMap);
         if (selectedExercises.length === 0) return;
 
-        navigation.navigate(returnTo, {
-            selectedExercises,
-            selectionToken: Date.now(),
-        });
+        navigation.navigate({
+            name: returnTo,
+            params: {
+                selectedExercises,
+                selectionToken: Date.now(),
+            },
+            merge: true,
+            pop: true,
+        } as any);
     };
 
     const selectedCount = Object.keys(selectedExerciseMap).length;

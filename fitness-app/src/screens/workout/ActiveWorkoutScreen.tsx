@@ -24,6 +24,7 @@ export function ActiveWorkoutScreen({ navigation, route }: any) {
   const colors = useColors();
   const insets = useSafeAreaInsets();
   const scrollRef = useRef<ScrollView>(null);
+  const lastHandledSelectionKeyRef = useRef<string | null>(null);
 
   const [cancelModalVisible, setCancelModalVisible] = React.useState(false);
   const [completeModalVisible, setCompleteModalVisible] = React.useState(false);
@@ -79,16 +80,72 @@ export function ActiveWorkoutScreen({ navigation, route }: any) {
 
   useEffect(() => {
     const selectedExercise = route.params?.selectedExercise;
-    if (!selectedExercise?.id) return;
+    const selectedExercises = Array.isArray(route.params?.selectedExercises)
+      ? route.params.selectedExercises
+      : (selectedExercise?.id ? [selectedExercise] : []);
+    const selectionToken = route.params?.selectionToken;
+    const selectionKey = selectionToken
+      ? `token-${selectionToken}`
+      : (selectedExercise?.id ? `legacy-${selectedExercise.id}` : null);
 
-    addExercise(selectedExercise.id, selectedExercise.notes)
+    if (!selectionKey || selectedExercises.length === 0) {
+      return;
+    }
+
+    if (lastHandledSelectionKeyRef.current === selectionKey) {
+      return;
+    }
+
+    lastHandledSelectionKeyRef.current = selectionKey;
+
+    const applySelectedExercises = async () => {
+      const existingExerciseIds = new Set(
+        exercises.map((exerciseItem: any) => Number(exerciseItem.exerciseId))
+      );
+      const seenInBatch = new Set<number>();
+
+      const queue = selectedExercises.filter((exerciseItem: any) => {
+        const exerciseId = Number(exerciseItem?.id);
+        if (!exerciseId || Number.isNaN(exerciseId)) return false;
+        if (existingExerciseIds.has(exerciseId)) return false;
+        if (seenInBatch.has(exerciseId)) return false;
+        seenInBatch.add(exerciseId);
+        return true;
+      });
+
+      const skippedCount = selectedExercises.length - queue.length;
+
+      for (const exerciseItem of queue) {
+        await addExercise(exerciseItem.id, exerciseItem.notes);
+      }
+
+      if (skippedCount > 0) {
+        Alert.alert(
+          'Some exercises were skipped',
+          `${skippedCount} selected exercise(s) were already in this workout.`
+        );
+      }
+    };
+
+    applySelectedExercises()
       .catch((error: any) => {
         Alert.alert('Unable to add exercise', error?.message || 'Please try again.');
       })
       .finally(() => {
-        navigation.setParams({ selectedExercise: undefined });
+        navigation.setParams({
+          selectedExercise: undefined,
+          selectedExercises: undefined,
+          selectionToken: undefined,
+        });
       });
-  }, [route.params?.selectedExercise, addExercise, navigation]);
+  }, [
+    route.params?.selectedExercise,
+    route.params?.selectedExercises,
+    route.params?.selectionToken,
+    addExercise,
+    navigation,
+    exercises,
+  ]);
 
   // ─── Navigate away if no active workout ───
   useEffect(() => {
@@ -182,7 +239,7 @@ export function ActiveWorkoutScreen({ navigation, route }: any) {
         <View style={styles.emptyActions}>
           <TouchableOpacity
             style={[styles.emptyBtn, { borderColor: colors.primary.main }]}
-            onPress={() => navigation.navigate('ExercisePicker', { returnTo: 'ActiveWorkout' })}
+            onPress={() => navigation.navigate('ExercisePicker', { returnTo: 'ActiveWorkout', multiSelect: true })}
           >
             <Text style={{ color: colors.primary.main }}>Add Exercise</Text>
           </TouchableOpacity>
@@ -320,7 +377,7 @@ export function ActiveWorkoutScreen({ navigation, route }: any) {
         {/* Add Exercise placeholder */}
         <TouchableOpacity
           style={[styles.addExerciseBtn, { borderColor: colors.border }]}
-          onPress={() => navigation.navigate('ExercisePicker', { returnTo: 'ActiveWorkout' })}
+          onPress={() => navigation.navigate('ExercisePicker', { returnTo: 'ActiveWorkout', multiSelect: true })}
           activeOpacity={0.7}
         >
           <Ionicons name="add-circle-outline" size={20} color={colors.primary.main} />

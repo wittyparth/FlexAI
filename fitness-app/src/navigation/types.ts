@@ -77,14 +77,28 @@ export type WorkoutStackParamList = {
   WorkoutHub: undefined;
   RoutineList: { mode?: 'select'; initialTab?: string; onSelect?: (routineId: number) => void };
   RoutineDetail: { routineId: number; mode?: 'select'; onSelect?: (routineId: number) => void };
-  RoutineEditor: { routineId?: number; mode?: 'create' | 'edit' | 'template_day'; routineData?: any; onSaveReturn?: (data: any) => void };
-  ExercisePicker: { onSelect?: (exerciseIds: number[]) => void; returnTo?: string };
+  RoutineEditor: {
+    routineId?: number;
+    mode?: 'create' | 'edit' | 'template_day';
+    routineData?: any;
+    onSaveReturn?: (data: any) => void;
+    selectedExercise?: { id: number; notes?: string };
+    selectedExercises?: Array<{ id: number; notes?: string }>;
+    selectionToken?: number;
+  };
+  ExercisePicker: { onSelect?: (exerciseIds: number[]) => void; returnTo?: string; multiSelect?: boolean };
   ExerciseDetail: { exerciseId: number };
   ExerciseFilter: undefined;
   CustomExercise: undefined;
   
   // Phase 2B: Active Workout
-  ActiveWorkout: { routineId?: number; workoutId?: number };
+  ActiveWorkout: {
+    routineId?: number;
+    workoutId?: number;
+    selectedExercise?: { id: number; notes?: string };
+    selectedExercises?: Array<{ id: number; notes?: string }>;
+    selectionToken?: number;
+  };
   ExerciseSwap: { exerciseId: number; currentExerciseName: string };
   SetConfig: { setId: number; exerciseId: number };
   WorkoutSummary: {

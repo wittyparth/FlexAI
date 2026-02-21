@@ -20,12 +20,14 @@ import { useDebounce } from '../../hooks/useDebounce';
 export function ExercisePickerScreen({ navigation, route }: any) {
     const colors = useColors();
     const insets = useSafeAreaInsets();
-    const { returnTo } = route.params || {};
+    const { returnTo, multiSelect } = route.params || {};
+    const isMultiSelectMode = Boolean(multiSelect ?? (returnTo === 'ActiveWorkout'));
 
     const [searchQuery, setSearchQuery] = useState('');
     const debouncedSearch = useDebounce(searchQuery, 500);
 
     const [activeFilters, setActiveFilters] = useState<any>({});
+    const [selectedExerciseMap, setSelectedExerciseMap] = useState<Record<number, any>>({});
 
     useEffect(() => {
         if (route.params?.filters) {
@@ -45,16 +47,53 @@ export function ExercisePickerScreen({ navigation, route }: any) {
     const exercises = exercisesData?.exercises || [];
 
     const handleSelectExercise = (item: any) => {
+        if (isMultiSelectMode && returnTo) {
+            setSelectedExerciseMap((current) => {
+                const next = { ...current };
+                if (next[item.id]) {
+                    delete next[item.id];
+                } else {
+                    next[item.id] = item;
+                }
+                return next;
+            });
+            return;
+        }
+
         if (returnTo) {
-            navigation.navigate(returnTo, { selectedExercise: item });
+            navigation.navigate(returnTo, {
+                selectedExercise: item,
+                selectionToken: Date.now(),
+            });
         } else {
             navigation.navigate('ExerciseDetail', { exerciseId: item.id });
         }
     };
 
-    const renderExerciseItem = ({ item }: { item: any }) => (
+    const handleApplySelection = () => {
+        if (!returnTo) return;
+        const selectedExercises = Object.values(selectedExerciseMap);
+        if (selectedExercises.length === 0) return;
+
+        navigation.navigate(returnTo, {
+            selectedExercises,
+            selectionToken: Date.now(),
+        });
+    };
+
+    const selectedCount = Object.keys(selectedExerciseMap).length;
+
+    const renderExerciseItem = ({ item }: { item: any }) => {
+        const isSelected = Boolean(selectedExerciseMap[item.id]);
+        return (
         <TouchableOpacity
-            style={[styles.exerciseCard, { backgroundColor: colors.card, borderColor: colors.border }]}
+            style={[
+                styles.exerciseCard,
+                {
+                    backgroundColor: colors.card,
+                    borderColor: isSelected ? colors.primary.main : colors.border,
+                }
+            ]}
             activeOpacity={0.7}
             onPress={() => navigation.navigate('ExerciseDetail', { exerciseId: item.id })}
         >
@@ -94,14 +133,18 @@ export function ExercisePickerScreen({ navigation, route }: any) {
                 </View>
             </View>
             <TouchableOpacity
-                style={[styles.addButton, { backgroundColor: colors.primary.main }]}
+                style={[
+                    styles.addButton,
+                    { backgroundColor: isSelected ? colors.success : colors.primary.main }
+                ]}
                 hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
                 onPress={() => handleSelectExercise(item)}
             >
-                <Ionicons name="add" size={20} color="#FFFFFF" />
+                <Ionicons name={isSelected ? 'checkmark' : 'add'} size={20} color="#FFFFFF" />
             </TouchableOpacity>
         </TouchableOpacity>
     );
+    };
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
@@ -112,9 +155,24 @@ export function ExercisePickerScreen({ navigation, route }: any) {
                         <Ionicons name="chevron-back" size={26} color={colors.foreground} />
                     </TouchableOpacity>
                     <Text style={[styles.title, { color: colors.foreground, fontFamily: fontFamilies.display }]}>
-                        Select Exercise
+                        {isMultiSelectMode ? 'Select Exercises' : 'Select Exercise'}
                     </Text>
-                    <View style={{ width: 44 }} />
+                    {isMultiSelectMode ? (
+                        <TouchableOpacity
+                            onPress={handleApplySelection}
+                            disabled={selectedCount === 0}
+                            style={[
+                                styles.doneButton,
+                                {
+                                    backgroundColor: selectedCount > 0 ? colors.primary.main : colors.muted,
+                                }
+                            ]}
+                        >
+                            <Text style={styles.doneButtonText}>Done</Text>
+                        </TouchableOpacity>
+                    ) : (
+                        <View style={{ width: 44 }} />
+                    )}
                 </View>
 
                 {/* Search & Filter */}
@@ -165,7 +223,7 @@ export function ExercisePickerScreen({ navigation, route }: any) {
                     data={exercises}
                     renderItem={renderExerciseItem}
                     keyExtractor={item => item.id.toString()}
-                    contentContainerStyle={[styles.listContent, { paddingBottom: insets.bottom + 80 }]}
+                    contentContainerStyle={[styles.listContent, { paddingBottom: insets.bottom + (isMultiSelectMode ? 120 : 80) }]}
                     showsVerticalScrollIndicator={false}
                     ListEmptyComponent={
                         <View style={styles.emptyContainer}>
@@ -181,27 +239,55 @@ export function ExercisePickerScreen({ navigation, route }: any) {
                 />
             )}
 
-            {/* Bottom Floating Create Link */}
-            <View
-                style={[styles.bottomGradient, { paddingBottom: insets.bottom + 16 }]}
-                pointerEvents="box-none"
-            >
-                <TouchableOpacity 
-                    style={[styles.createCard, { backgroundColor: colors.card, borderColor: colors.border, shadowColor: '#000' }]}
-                    onPress={() => navigation.navigate('ExerciseCreator')}
+            {isMultiSelectMode ? (
+                <View
+                    style={[
+                        styles.selectionFooter,
+                        {
+                            backgroundColor: colors.card,
+                            borderTopColor: colors.border,
+                            paddingBottom: insets.bottom + 12,
+                        }
+                    ]}
                 >
-                    <View style={styles.createCardLeft}>
-                        <View style={[styles.createIconBox, { backgroundColor: colors.primary.main + '20' }]}>
-                            <Ionicons name="add" size={24} color={colors.primary.main} />
+                    <Text style={[styles.selectionCountText, { color: colors.foreground }]}>
+                        {selectedCount} selected
+                    </Text>
+                    <TouchableOpacity
+                        onPress={handleApplySelection}
+                        disabled={selectedCount === 0}
+                        style={[
+                            styles.applyButton,
+                            { backgroundColor: selectedCount > 0 ? colors.primary.main : colors.muted }
+                        ]}
+                    >
+                        <Text style={styles.applyButtonText}>
+                            Add Selected
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+            ) : (
+                <View
+                    style={[styles.bottomGradient, { paddingBottom: insets.bottom + 16 }]}
+                    pointerEvents="box-none"
+                >
+                    <TouchableOpacity
+                        style={[styles.createCard, { backgroundColor: colors.card, borderColor: colors.border, shadowColor: '#000' }]}
+                        onPress={() => navigation.navigate('ExerciseCreator')}
+                    >
+                        <View style={styles.createCardLeft}>
+                            <View style={[styles.createIconBox, { backgroundColor: colors.primary.main + '20' }]}>
+                                <Ionicons name="add" size={24} color={colors.primary.main} />
+                            </View>
+                            <View>
+                                <Text style={[styles.createTitle, { color: colors.foreground }]}>Custom Exercise</Text>
+                                <Text style={[styles.createSub, { color: colors.mutedForeground }]}>Can't find what you need?</Text>
+                            </View>
                         </View>
-                        <View>
-                            <Text style={[styles.createTitle, { color: colors.foreground }]}>Custom Exercise</Text>
-                            <Text style={[styles.createSub, { color: colors.mutedForeground }]}>Can't find what you need?</Text>
-                        </View>
-                    </View>
-                    <Ionicons name="chevron-forward" size={20} color={colors.mutedForeground} />
-                </TouchableOpacity>
-            </View>
+                        <Ionicons name="chevron-forward" size={20} color={colors.mutedForeground} />
+                    </TouchableOpacity>
+                </View>
+            )}
         </View>
     );
 }
@@ -212,6 +298,8 @@ const styles = StyleSheet.create({
     header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 12, marginBottom: 12 },
     backButton: { width: 44, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center' },
     title: { fontSize: 22, fontWeight: '800' },
+    doneButton: { minWidth: 56, height: 32, borderRadius: 16, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 12 },
+    doneButtonText: { color: '#FFFFFF', fontWeight: '700', fontSize: 13 },
     searchSection: { paddingHorizontal: 16 },
     searchBar: { flexDirection: 'row', alignItems: 'center', height: 48, borderRadius: 16, paddingHorizontal: 16, gap: 10 },
     searchInput: { flex: 1, fontSize: 16, fontFamily: fontFamilies.body },
@@ -232,6 +320,10 @@ const styles = StyleSheet.create({
     emptyIcon: { width: 80, height: 80, borderRadius: 40, alignItems: 'center', justifyContent: 'center', marginBottom: 20 },
     emptyTitle: { fontSize: 20, fontWeight: '800', marginBottom: 8, fontFamily: fontFamilies.display },
     emptyText: { fontSize: 15, textAlign: 'center' },
+    selectionFooter: { position: 'absolute', left: 0, right: 0, bottom: 0, borderTopWidth: 1, paddingHorizontal: 16, paddingTop: 12, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+    selectionCountText: { fontSize: 14, fontWeight: '700' },
+    applyButton: { height: 42, borderRadius: 12, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 16 },
+    applyButtonText: { color: '#FFFFFF', fontSize: 14, fontWeight: '700' },
     bottomGradient: { position: 'absolute', bottom: 0, left: 0, right: 0, paddingHorizontal: 16, paddingTop: 40 },
     createCard: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 16, borderRadius: 20, borderWidth: 1, shadowOffset: {width: 0, height: 4}, shadowOpacity: 0.05, shadowRadius: 8, elevation: 5 },
     createCardLeft: { flexDirection: 'row', alignItems: 'center', gap: 14 },

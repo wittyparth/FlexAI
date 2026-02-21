@@ -12,7 +12,7 @@
  * - AI Features section
  */
 
-import React, { useState, useMemo, useRef, useCallback } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
     View,
     Text,
@@ -20,7 +20,6 @@ import {
     ScrollView,
     TouchableOpacity,
     TextInput,
-    Animated,
     Alert,
     Modal,
     Pressable,
@@ -32,7 +31,47 @@ import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
-import { useChatStore, Conversation } from '../../store/chatStore';
+import { useCoachConversations, useDeleteCoachConversation } from '../../hooks/queries/useCoachQueries';
+import { CoachConversation } from '../../api/coach.api';
+
+type AIModel = 'pro' | 'fast';
+
+interface Conversation {
+    id: string;
+    title: string;
+    messages: Array<{ id: string }>;
+    createdAt: number;
+    updatedAt: number;
+    preview: string;
+    isPinned?: boolean;
+    model?: AIModel;
+}
+
+const toConversation = (
+    source: CoachConversation,
+    titleOverride?: string,
+    pinnedOverride?: boolean
+): Conversation => {
+    const normalizedMessages = Array.isArray(source.messages) ? source.messages : [];
+    const createdAt = Number.isFinite(new Date(source.createdAt).getTime())
+        ? new Date(source.createdAt).getTime()
+        : Date.now();
+    const updatedAt = Number.isFinite(new Date(source.updatedAt).getTime())
+        ? new Date(source.updatedAt).getTime()
+        : createdAt;
+    const fallbackPreview = normalizedMessages[normalizedMessages.length - 1]?.content || 'No messages yet';
+
+    return {
+        id: String(source.id),
+        title: titleOverride || source.title || 'New Conversation',
+        messages: normalizedMessages.map((message) => ({ id: String(message.id) })),
+        createdAt,
+        updatedAt,
+        preview: source.preview || fallbackPreview,
+        isPinned: pinnedOverride ?? false,
+        model: 'pro',
+    };
+};
 
 // ─── Time Grouping ────────────────────────────────────────────────────────────
 
@@ -223,16 +262,25 @@ const convoStyles = StyleSheet.create({
 export function CoachHubScreen({ navigation }: any) {
     const colors = useColors();
     const insets = useSafeAreaInsets();
-    const {
-        conversations,
-        createConversation,
-        deleteConversation,
-        renameConversation,
-        pinConversation,
-    } = useChatStore();
+    const { data: conversationsData = [] } = useCoachConversations();
+    const deleteConversationMutation = useDeleteCoachConversation();
 
     const [searchQuery, setSearchQuery] = useState('');
     const [renameTarget, setRenameTarget] = useState<{ id: string; title: string } | null>(null);
+    const [pinnedOverrides, setPinnedOverrides] = useState<Record<string, boolean>>({});
+    const [titleOverrides, setTitleOverrides] = useState<Record<string, string>>({});
+
+    const conversations = useMemo(
+        () =>
+            conversationsData.map((conversation) =>
+                toConversation(
+                    conversation,
+                    titleOverrides[String(conversation.id)],
+                    pinnedOverrides[String(conversation.id)]
+                )
+            ),
+        [conversationsData, pinnedOverrides, titleOverrides]
+    );
 
     const unpinnedConversations = useMemo(() => {
         const sorted = [...conversations]
@@ -256,12 +304,26 @@ export function CoachHubScreen({ navigation }: any) {
     );
 
     const handleNewChat = () => {
-        const cid = createConversation();
-        navigation.navigate('CoachChat', { conversationId: cid });
+        navigation.navigate('CoachChat');
     };
 
     const handleOpenChat = (conv: Conversation) => {
         navigation.navigate('CoachChat', { conversationId: conv.id });
+    };
+
+    const handleTogglePinned = (item: Conversation) => {
+        setPinnedOverrides((current) => ({
+            ...current,
+            [item.id]: !(item.isPinned ?? false),
+        }));
+    };
+
+    const handleDeleteConversation = (conversationId: string) => {
+        deleteConversationMutation.mutate(conversationId, {
+            onError: (error: any) => {
+                Alert.alert('Delete failed', error?.message || 'Please try again.');
+            },
+        });
     };
 
     const handleLongPress = (item: Conversation) => {
@@ -278,25 +340,25 @@ export function CoachHubScreen({ navigation }: any) {
                     cancelButtonIndex: 3,
                 },
                 (idx) => {
-                    if (idx === 0) pinConversation(item.id, !item.isPinned);
+                    if (idx === 0) handleTogglePinned(item);
                     else if (idx === 1) setRenameTarget({ id: item.id, title: item.title });
                     else if (idx === 2) {
                         Alert.alert('Delete Conversation', 'This will permanently delete the conversation.', [
                             { text: 'Cancel', style: 'cancel' },
-                            { text: 'Delete', style: 'destructive', onPress: () => deleteConversation(item.id) },
+                            { text: 'Delete', style: 'destructive', onPress: () => handleDeleteConversation(item.id) },
                         ]);
                     }
                 }
             );
         } else {
             Alert.alert(item.title, undefined, [
-                { text: item.isPinned ? 'Unpin' : 'Pin', onPress: () => pinConversation(item.id, !item.isPinned) },
+                { text: item.isPinned ? 'Unpin' : 'Pin', onPress: () => handleTogglePinned(item) },
                 { text: 'Rename', onPress: () => setRenameTarget({ id: item.id, title: item.title }) },
                 {
                     text: 'Delete', style: 'destructive',
                     onPress: () => Alert.alert('Delete Conversation', 'This will permanently delete the conversation.', [
                         { text: 'Cancel', style: 'cancel' },
-                        { text: 'Delete', style: 'destructive', onPress: () => deleteConversation(item.id) },
+                        { text: 'Delete', style: 'destructive', onPress: () => handleDeleteConversation(item.id) },
                     ]),
                 },
                 { text: 'Cancel', style: 'cancel' },
@@ -305,11 +367,8 @@ export function CoachHubScreen({ navigation }: any) {
     };
 
     const handleQuickPrompt = (prompt: string) => {
-        const cid = createConversation(prompt);
-        navigation.navigate('CoachChat', { conversationId: cid, initialPrompt: prompt });
+        navigation.navigate('CoachChat', { initialPrompt: prompt });
     };
-
-    const totalChats = conversations.length;
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
@@ -493,7 +552,12 @@ export function CoachHubScreen({ navigation }: any) {
                     visible={!!renameTarget}
                     initialTitle={renameTarget.title}
                     colors={colors}
-                    onConfirm={(title) => renameConversation(renameTarget.id, title)}
+                    onConfirm={(title) => {
+                        setTitleOverrides((current) => ({
+                            ...current,
+                            [renameTarget.id]: title.trim() || renameTarget.title,
+                        }));
+                    }}
                     onClose={() => setRenameTarget(null)}
                 />
             )}

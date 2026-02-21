@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import {
     View,
     Text,
@@ -8,45 +8,58 @@ import {
     Image,
     Dimensions,
     Animated,
+    Alert,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { colors as themeColors } from '../../theme/colors';
+import { useRoutine, useDuplicateRoutine } from '../../hooks/queries/useRoutineQueries';
+import { useWorkoutStore } from '../../store/workoutStore';
 
 const { width } = Dimensions.get('window');
-
-// ============================================================
-// MOCK DATA - Aligned with Routine/RoutineExercise schema
-// ============================================================
-const MOCK_ROUTINE = {
-    id: 1,
-    name: 'PPL - Push Day',
-    description: 'Classic push workout targeting chest, shoulders, and triceps. Great for hypertrophy with progressive overload principles.',
-    estimatedDuration: 60,
-    difficulty: 'intermediate',
-    isPublic: true,
-    usageCount: 2400,
-    rating: 4.8,
-    exercises: [
-        { name: 'Barbell Bench Press', sets: 4, reps: '8-10', rest: 90, muscle: 'Chest', icon: 'dumbbell' },
-        { name: 'Incline Dumbbell Press', sets: 3, reps: '10-12', rest: 75, muscle: 'Upper Chest', icon: 'dumbbell' },
-        { name: 'Overhead Press', sets: 4, reps: '8-10', rest: 90, muscle: 'Shoulders', icon: 'weight-lifter' },
-        { name: 'Cable Fly', sets: 3, reps: '12-15', rest: 60, muscle: 'Chest', icon: 'cable-data' },
-        { name: 'Lateral Raises', sets: 3, reps: '12-15', rest: 60, muscle: 'Shoulders', icon: 'human-handsup' },
-        { name: 'Tricep Pushdown', sets: 3, reps: '10-12', rest: 60, muscle: 'Triceps', icon: 'arm-flex' },
-    ],
-    creator: { firstName: 'John', lastName: 'Doe', avatarUrl: 'https://i.pravatar.cc/100?img=11', level: 45 },
-    tags: ['Push', 'Hypertrophy', 'PPL'],
-};
 
 export function RoutineTemplateScreen({ navigation, route }: any) {
     const colors = useColors();
     const insets = useSafeAreaInsets();
     const [saving, setSaving] = useState(false);
     const fadeAnim = useRef(new Animated.Value(0)).current;
-    const routine = MOCK_ROUTINE;
+    const { routineId } = route?.params || {};
+    const parsedRoutineId = Number(routineId);
+    const { data: routineResponse } = useRoutine(Number.isFinite(parsedRoutineId) ? parsedRoutineId : undefined);
+    const duplicateRoutine = useDuplicateRoutine();
+    const routineData = routineResponse?.data;
+
+    const routine = useMemo(() => {
+        const exercises = routineData?.exercises || [];
+        return {
+            id: routineData?.id ?? parsedRoutineId ?? 0,
+            name: routineData?.name ?? 'Routine Template',
+            description: routineData?.description ?? 'No description available.',
+            estimatedDuration: routineData?.estimatedDuration ?? 0,
+            difficulty: routineData?.difficulty ?? 'intermediate',
+            isPublic: true,
+            usageCount: 0,
+            rating: 0,
+            exercises: exercises.map((item) => ({
+                name: item.exercise?.name ?? 'Exercise',
+                sets: item.targetSets ?? 3,
+                reps: item.targetRepsMax
+                    ? `${item.targetRepsMin}-${item.targetRepsMax}`
+                    : `${item.targetRepsMin ?? 8}`,
+                rest: item.restSeconds ?? 90,
+                muscle: item.exercise?.muscleGroup ?? 'Full Body',
+                icon: 'dumbbell',
+            })),
+            creator: { firstName: 'FlexAI', lastName: 'Library', avatarUrl: 'https://i.pravatar.cc/100?img=11', level: 1 },
+            tags: [
+                (routineData?.splitType ?? 'Template').toString().toUpperCase(),
+                (routineData?.difficulty ?? 'INTERMEDIATE').toString(),
+                (routineData?.goal ?? 'GENERAL').toString().replace('_', ' '),
+            ],
+        };
+    }, [routineData, parsedRoutineId]);
 
     useEffect(() => {
         Animated.timing(fadeAnim, { toValue: 1, duration: 500, useNativeDriver: true }).start();
@@ -54,9 +67,36 @@ export function RoutineTemplateScreen({ navigation, route }: any) {
 
     const totalSets = routine.exercises.reduce((sum, e) => sum + e.sets, 0);
 
-    const saveToLibrary = () => {
+    const saveToLibrary = async () => {
+        if (!routine?.id) {
+            return;
+        }
+
         setSaving(true);
-        setTimeout(() => { setSaving(false); navigation.goBack(); }, 1000);
+        try {
+            await duplicateRoutine.mutateAsync({ id: Number(routine.id) });
+            setSaving(false);
+            navigation.goBack();
+        } catch (error: any) {
+            setSaving(false);
+            Alert.alert('Could not save template', error?.message || 'Please try again.');
+        }
+    };
+
+    const handleStartWorkout = async () => {
+        if (!routine?.id) {
+            return;
+        }
+
+        try {
+            await useWorkoutStore.getState().startWorkout({
+                routineId: Number(routine.id),
+                name: routine.name,
+            });
+            navigation.navigate('ActiveWorkout');
+        } catch (error: any) {
+            Alert.alert('Could not start workout', error?.message || 'Please try again.');
+        }
     };
 
     return (
@@ -186,7 +226,7 @@ export function RoutineTemplateScreen({ navigation, route }: any) {
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={styles.startBtn}
-                    onPress={() => navigation.navigate('ActiveWorkout')}
+                    onPress={handleStartWorkout}
                     activeOpacity={0.9}
                 >
                     <View

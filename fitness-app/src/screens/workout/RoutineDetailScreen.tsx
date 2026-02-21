@@ -6,14 +6,14 @@ import {
     ScrollView,
     TouchableOpacity,
     Dimensions,
-    Platform
+    Platform,
+    Alert
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
 import { useWorkoutStore } from '../../store/workoutStore';
-import { fontFamilies } from '../../theme/typography';
-import { MOCK_ROUTINES } from '../../data/mockRoutines';
+import { useRoutine } from '../../hooks/queries/useRoutineQueries';
 
 const { width } = Dimensions.get('window');
 
@@ -21,14 +21,24 @@ export function RoutineDetailScreen({ route, navigation }: any) {
     const colors = useColors();
     const insets = useSafeAreaInsets();
     const { routineId, mode, onSelect } = route.params || { routineId: 1 };
+    const parsedRoutineId = Number(routineId);
+    const { data: routineResponse } = useRoutine(Number.isFinite(parsedRoutineId) ? parsedRoutineId : undefined);
 
-    // Find routine from mock data (supports both string and number ids)
-    const routine = MOCK_ROUTINES.find(r => r.id === routineId || r.id === Number(routineId))
-        ?? MOCK_ROUTINES[0];
+    const routine = routineResponse?.data;
+    const routineName = routine?.name ?? 'Routine';
+    const routineDescription = routine?.description ?? 'No description available.';
+    const splitType = routine?.splitType || 'ROUTINE';
+    const daysPerWeek = routine?.daysPerWeek ?? 0;
+    const estimatedDuration = routine?.estimatedDuration ?? 0;
+    const difficulty = routine?.difficulty ?? 'N/A';
 
-    const exercises = routine.exercises || [];
+    const exercises = routine?.exercises || [];
 
-    const handlePrimaryAction = () => {
+    const handlePrimaryAction = async () => {
+        if (!routine?.id) {
+            return;
+        }
+
         if (mode === 'select' && onSelect) {
             onSelect(routine.id);
             // Need to go back to TemplateEditor (2 screens back: Detail -> List -> TemplateEditor)
@@ -39,27 +49,15 @@ export function RoutineDetailScreen({ route, navigation }: any) {
             return;
         }
 
-        const exercisePayload = exercises.map((item: any, i: number) => {
-            const ex = item.exercise || item;
-            return {
-                id: item.id || i + 1,
-                orderIndex: i,
-                targetSets: item.targetSets || 3,
-                targetRepsMin: item.targetRepsMin || 8,
-                targetRepsMax: item.targetRepsMax || 12,
-                targetWeight: item.targetWeight || 0,
-                restSeconds: item.restSeconds || 90,
-                notes: item.notes || '',
-                exercise: {
-                    id: ex.id || i + 1,
-                    name: ex.name || 'Exercise',
-                    muscleGroup: ex.muscleGroup || 'Full Body',
-                    exerciseType: ex.exerciseType || 'Strength',
-                },
-            };
-        });
-        useWorkoutStore.getState().startMockWorkout(routine.name, exercisePayload);
-        navigation.navigate('ActiveWorkout');
+        try {
+            await useWorkoutStore.getState().startWorkout({
+                routineId: Number(routine.id),
+                name: routine.name,
+            });
+            navigation.navigate('ActiveWorkout');
+        } catch (error: any) {
+            Alert.alert('Could not start workout', error?.message || 'Please try again.');
+        }
     };
 
     return (
@@ -73,7 +71,7 @@ export function RoutineDetailScreen({ route, navigation }: any) {
                     <Ionicons name="arrow-back" size={20} color={colors.foreground} />
                 </TouchableOpacity>
                 <Text style={[styles.topBarTitle, { color: colors.foreground }]} numberOfLines={1}>
-                    {routine.name}
+                    {routineName}
                 </Text>
                 <View style={{ width: 40 }} />
             </View>
@@ -86,11 +84,11 @@ export function RoutineDetailScreen({ route, navigation }: any) {
                 <View style={styles.headerSection}>
                     <View style={[styles.splitBadge, { backgroundColor: colors.primary.main + '20', borderColor: colors.primary.main + '40' }]}>
                         <Text style={[styles.splitBadgeText, { color: colors.primary.main }]}>
-                            {routine.splitType || 'ROUTINE'} • {routine.daysPerWeek} DAYS/WEEK
+                            {splitType || 'ROUTINE'} • {daysPerWeek} DAYS/WEEK
                         </Text>
                     </View>
-                    <Text style={[styles.routineTitle, { color: colors.foreground }]}>{routine.name}</Text>
-                    <Text style={[styles.routineDesc, { color: colors.mutedForeground }]}>{routine.description}</Text>
+                    <Text style={[styles.routineTitle, { color: colors.foreground }]}>{routineName}</Text>
+                    <Text style={[styles.routineDesc, { color: colors.mutedForeground }]}>{routineDescription}</Text>
                 </View>
 
                 {/* ── STATS STRIP ── */}
@@ -103,13 +101,13 @@ export function RoutineDetailScreen({ route, navigation }: any) {
                     <View style={[styles.statDivider, { backgroundColor: colors.border }]} />
                     <View style={styles.statItem}>
                         <MaterialCommunityIcons name="clock-outline" size={20} color={colors.primary.main} />
-                        <Text style={[styles.statValue, { color: colors.foreground }]}>{routine.estimatedDuration}</Text>
+                        <Text style={[styles.statValue, { color: colors.foreground }]}>{estimatedDuration}</Text>
                         <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>Min</Text>
                     </View>
                     <View style={[styles.statDivider, { backgroundColor: colors.border }]} />
                     <View style={styles.statItem}>
                         <MaterialCommunityIcons name="signal" size={20} color={colors.primary.main} />
-                        <Text style={[styles.statValue, { color: colors.foreground }]}>{routine.difficulty}</Text>
+                        <Text style={[styles.statValue, { color: colors.foreground }]}>{difficulty}</Text>
                         <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>Level</Text>
                     </View>
                 </View>

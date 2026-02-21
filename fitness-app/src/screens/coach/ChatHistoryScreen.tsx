@@ -26,10 +26,48 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
-import { useChatStore, Conversation } from '../../store/chatStore';
+import { useCoachConversations, useDeleteCoachConversation } from '../../hooks/queries/useCoachQueries';
+import { CoachConversation } from '../../api/coach.api';
 
 type FilterTab = 'all' | 'pinned' | 'today';
 type SortMode = 'recent' | 'az';
+type AIModel = 'pro' | 'fast';
+
+interface Conversation {
+    id: string;
+    title: string;
+    messages: Array<{ id: string }>;
+    createdAt: number;
+    updatedAt: number;
+    preview: string;
+    isPinned?: boolean;
+    model?: AIModel;
+}
+
+const toConversation = (
+    source: CoachConversation,
+    pinnedOverride?: boolean
+): Conversation => {
+    const normalizedMessages = Array.isArray(source.messages) ? source.messages : [];
+    const createdAt = Number.isFinite(new Date(source.createdAt).getTime())
+        ? new Date(source.createdAt).getTime()
+        : Date.now();
+    const updatedAt = Number.isFinite(new Date(source.updatedAt).getTime())
+        ? new Date(source.updatedAt).getTime()
+        : createdAt;
+    const fallbackPreview = normalizedMessages[normalizedMessages.length - 1]?.content || 'No messages yet';
+
+    return {
+        id: String(source.id),
+        title: source.title || 'New Conversation',
+        messages: normalizedMessages.map((message) => ({ id: String(message.id) })),
+        createdAt,
+        updatedAt,
+        preview: source.preview || fallbackPreview,
+        isPinned: pinnedOverride ?? false,
+        model: 'pro',
+    };
+};
 
 function formatTimestamp(timestamp: number): string {
     const now = Date.now();
@@ -59,11 +97,21 @@ interface Section { label: string; data: Conversation[] }
 export function ChatHistoryScreen({ navigation }: any) {
     const colors = useColors();
     const insets = useSafeAreaInsets();
-    const { conversations, deleteConversation, pinConversation, renameConversation } = useChatStore();
+    const { data: conversationsData = [] } = useCoachConversations();
+    const deleteConversationMutation = useDeleteCoachConversation();
 
     const [query, setQuery] = useState('');
     const [activeTab, setActiveTab] = useState<FilterTab>('all');
     const [sortMode, setSortMode] = useState<SortMode>('recent');
+    const [pinnedOverrides, setPinnedOverrides] = useState<Record<string, boolean>>({});
+
+    const conversations = useMemo(
+        () =>
+            conversationsData.map((conversation) =>
+                toConversation(conversation, pinnedOverrides[String(conversation.id)])
+            ),
+        [conversationsData, pinnedOverrides]
+    );
 
     const filtered = useMemo<Conversation[]>(() => {
         let result = [...conversations];
@@ -114,13 +162,25 @@ export function ChatHistoryScreen({ navigation }: any) {
                     cancelButtonIndex: 2,
                 },
                 (idx) => {
-                    if (idx === 0) pinConversation(item.id, !item.isPinned);
+                    if (idx === 0) {
+                        setPinnedOverrides((current) => ({
+                            ...current,
+                            [item.id]: !(item.isPinned ?? false),
+                        }));
+                    }
                     else if (idx === 1) confirmDelete(item.id);
                 }
             );
         } else {
             Alert.alert(item.title, undefined, [
-                { text: item.isPinned ? 'Unpin' : 'Pin', onPress: () => pinConversation(item.id, !item.isPinned) },
+                {
+                    text: item.isPinned ? 'Unpin' : 'Pin',
+                    onPress: () =>
+                        setPinnedOverrides((current) => ({
+                            ...current,
+                            [item.id]: !(item.isPinned ?? false),
+                        })),
+                },
                 { text: 'Delete', style: 'destructive', onPress: () => confirmDelete(item.id) },
                 { text: 'Cancel', style: 'cancel' },
             ]);
@@ -130,7 +190,16 @@ export function ChatHistoryScreen({ navigation }: any) {
     const confirmDelete = (id: string) => {
         Alert.alert('Delete Chat', 'This conversation will be permanently deleted.', [
             { text: 'Cancel', style: 'cancel' },
-            { text: 'Delete', style: 'destructive', onPress: () => deleteConversation(id) },
+            {
+                text: 'Delete',
+                style: 'destructive',
+                onPress: () =>
+                    deleteConversationMutation.mutate(id, {
+                        onError: (error: any) => {
+                            Alert.alert('Delete failed', error?.message || 'Please try again.');
+                        },
+                    }),
+            },
         ]);
     };
 
@@ -232,11 +301,7 @@ export function ChatHistoryScreen({ navigation }: any) {
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={[styles.newBtn, { backgroundColor: colors.primary.main }]}
-                        onPress={() => {
-                            const { createConversation } = useChatStore.getState();
-                            const cid = createConversation();
-                            navigation.navigate('CoachChat', { conversationId: cid });
-                        }}
+                        onPress={() => navigation.navigate('CoachChat')}
                     >
                         <Ionicons name="add" size={20} color="#FFF" />
                     </TouchableOpacity>
@@ -305,11 +370,7 @@ export function ChatHistoryScreen({ navigation }: any) {
                     </Text>
                     <TouchableOpacity
                         style={[styles.emptyBtn, { backgroundColor: colors.primary.main }]}
-                        onPress={() => {
-                            const { createConversation } = useChatStore.getState();
-                            const cid = createConversation();
-                            navigation.navigate('CoachChat', { conversationId: cid });
-                        }}
+                        onPress={() => navigation.navigate('CoachChat')}
                     >
                         <Text style={styles.emptyBtnText}>Start New Chat</Text>
                     </TouchableOpacity>

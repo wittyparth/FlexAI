@@ -43,15 +43,26 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { useColors } from '../../hooks';
-import { fontFamilies } from '../../theme/typography';
 import {
-    useChatStore,
-    getMockAIResponse,
-    ChatMessage,
-    MessageReaction,
-    AIModel,
-} from '../../store/chatStore';
+    useCoachConversation,
+    useSendCoachMessage,
+} from '../../hooks/queries/useCoachQueries';
 import { MarkdownRenderer } from '../../components/MarkdownRenderer';
+
+type MessageReaction = 'up' | 'down' | null;
+type AIModel = 'pro' | 'fast';
+type MessageRole = 'user' | 'assistant';
+
+interface ChatMessage {
+    id: string;
+    role: MessageRole;
+    content: string;
+    streamingContent?: string;
+    isStreaming?: boolean;
+    timestamp: number;
+    reaction?: MessageReaction;
+    isEdited?: boolean;
+}
 
 // ─── Typing Dots ──────────────────────────────────────────────────────────────
 
@@ -184,8 +195,9 @@ interface MessageBubbleProps {
     isLast: boolean;
     isLastAI: boolean;
     colors: any;
-    conversationId: string;
     onRegenerate: () => void;
+    onReact: (messageId: string, reaction: MessageReaction) => void;
+    onDelete: (messageId: string) => void;
 }
 
 const MessageBubble = memo(({
@@ -193,13 +205,13 @@ const MessageBubble = memo(({
     isLast,
     isLastAI,
     colors,
-    conversationId,
     onRegenerate,
+    onReact,
+    onDelete,
 }: MessageBubbleProps) => {
     const isUser = message.role === 'user';
     const fadeAnim = useRef(new Animated.Value(0)).current;
     const slideAnim = useRef(new Animated.Value(14)).current;
-    const { reactToMessage, deleteMessage } = useChatStore();
 
     useEffect(() => {
         Animated.parallel([
@@ -227,7 +239,7 @@ const MessageBubble = memo(({
                     else if (idx === (isUser ? 1 : 2)) {
                         Alert.alert('Delete message?', 'This cannot be undone.', [
                             { text: 'Cancel', style: 'cancel' },
-                            { text: 'Delete', style: 'destructive', onPress: () => deleteMessage(conversationId, message.id) },
+                            { text: 'Delete', style: 'destructive', onPress: () => onDelete(message.id) },
                         ]);
                     }
                 }
@@ -237,11 +249,11 @@ const MessageBubble = memo(({
             Alert.alert('Message', undefined, [
                 { text: 'Copy', onPress: () => { Clipboard.setString(displayContent); Alert.alert('Copied!', 'Message copied'); } },
                 ...(!isUser ? [{ text: 'Regenerate', onPress: onRegenerate }] : []),
-                { text: 'Delete', style: 'destructive', onPress: () => deleteMessage(conversationId, message.id) },
+                { text: 'Delete', style: 'destructive', onPress: () => onDelete(message.id) },
                 { text: 'Cancel', style: 'cancel' },
             ]);
         }
-    }, [displayContent, isUser, conversationId, message.id, onRegenerate, deleteMessage]);
+    }, [displayContent, isUser, message.id, onRegenerate, onDelete]);
 
     const time = new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
@@ -309,7 +321,7 @@ const MessageBubble = memo(({
                     <ReactionBar
                         reaction={message.reaction ?? null}
                         colors={colors}
-                        onReact={(r) => reactToMessage(conversationId, message.id, r)}
+                        onReact={(r) => onReact(message.id, r)}
                         onCopy={() => { Clipboard.setString(displayContent); Alert.alert('Copied!', 'Message copied'); }}
                         onRegenerate={isLastAI ? onRegenerate : undefined}
                     />
@@ -466,35 +478,47 @@ export function CoachChatScreen({ navigation, route }: any) {
     const flatListRef = useRef<FlatList>(null);
 
     const { conversationId: routeConversationId, initialPrompt } = route?.params ?? {};
-
-    const {
-        conversations,
-        isGenerating,
-        selectedModel,
-        createConversation,
-        addUserMessage,
-        startStreamingResponse,
-        appendStreamingToken,
-        completeStreaming,
-        deleteMessage,
-        setModel,
-    } = useChatStore();
-
-    const [conversationId, setConversationId] = useState<string>(() => routeConversationId ?? '');
+    const [conversationId, setConversationId] = useState<string | undefined>(
+        routeConversationId ? String(routeConversationId) : undefined
+    );
     const [inputText, setInputText] = useState('');
     const [inputHeight, setInputHeight] = useState(44);
     const [showScrollFAB, setShowScrollFAB] = useState(false);
     const [showModelPicker, setShowModelPicker] = useState(false);
+    const [selectedModel, setSelectedModel] = useState<AIModel>('pro');
+    const [messageReactions, setMessageReactions] = useState<Record<string, MessageReaction>>({});
+    const [hiddenMessageIds, setHiddenMessageIds] = useState<Record<string, boolean>>({});
+    const [pendingMessages, setPendingMessages] = useState<ChatMessage[]>([]);
+    const initialPromptSentRef = useRef(false);
 
-    const streamTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+    const { data: conversationData } = useCoachConversation(conversationId);
+    const sendMessageMutation = useSendCoachMessage();
+    const isGenerating = sendMessageMutation.isPending;
     const fabAnim = useRef(new Animated.Value(0)).current;
 
-    const conversation = useMemo(
-        () => conversations.find((c) => c.id === conversationId),
-        [conversations, conversationId]
-    );
+    const backendMessages = useMemo<ChatMessage[]>(() => {
+        const rawMessages = Array.isArray(conversationData?.messages) ? [...conversationData.messages] : [];
+        return rawMessages
+            .map((message) => {
+                const timestamp = Number.isFinite(new Date(message.createdAt).getTime())
+                    ? new Date(message.createdAt).getTime()
+                    : Date.now();
+                return {
+                    id: String(message.id),
+                    role: message.role === 'assistant' ? 'assistant' : 'user',
+                    content: message.content || '',
+                    timestamp,
+                    reaction: messageReactions[String(message.id)] ?? null,
+                } as ChatMessage;
+            })
+            .sort((a, b) => a.timestamp - b.timestamp)
+            .filter((message) => !hiddenMessageIds[message.id]);
+    }, [conversationData, messageReactions, hiddenMessageIds]);
 
-    const messages = conversation?.messages ?? [];
+    const messages = useMemo(
+        () => [...backendMessages, ...pendingMessages].sort((a, b) => a.timestamp - b.timestamp),
+        [backendMessages, pendingMessages]
+    );
     const reversedMessages = useMemo(() => [...messages].reverse(), [messages]);
 
     // Find last AI message id
@@ -505,17 +529,11 @@ export function CoachChatScreen({ navigation, route }: any) {
         return null;
     }, [messages]);
 
-    // Initialize conversation
     useEffect(() => {
-        let cid = routeConversationId;
-        if (!cid) {
-            cid = createConversation(initialPrompt);
-            setConversationId(cid);
+        if (routeConversationId) {
+            setConversationId(String(routeConversationId));
         }
-        if (initialPrompt && cid) {
-            setTimeout(() => sendMessage(initialPrompt, cid), 400);
-        }
-    }, []);
+    }, [routeConversationId]);
 
     // FAB animation
     useEffect(() => {
@@ -527,44 +545,64 @@ export function CoachChatScreen({ navigation, route }: any) {
     }, [showScrollFAB]);
 
     const stopGeneration = useCallback(() => {
-        if (streamTimerRef.current) {
-            clearInterval(streamTimerRef.current);
-            streamTimerRef.current = null;
+        if (isGenerating) {
+            Alert.alert('Generation in progress', 'Please wait for the current response to finish.');
         }
-        const { streamingMessageId } = useChatStore.getState();
-        if (conversationId && streamingMessageId) {
-            completeStreaming(conversationId, streamingMessageId);
-        }
-    }, [conversationId, completeStreaming]);
+    }, [isGenerating]);
 
-    const sendMessage = useCallback((text: string, cid?: string) => {
+    const sendMessage = useCallback(async (text: string, cid?: string) => {
+        const trimmed = text.trim();
+        if (!trimmed || sendMessageMutation.isPending) return;
+
         const targetId = cid ?? conversationId;
-        if (!text.trim() || !targetId) return;
+        const ts = Date.now();
 
-        addUserMessage(targetId, text.trim());
+        setPendingMessages([
+            {
+                id: `pending-user-${ts}`,
+                role: 'user',
+                content: trimmed,
+                timestamp: ts,
+                reaction: null,
+            },
+            {
+                id: `pending-ai-${ts}`,
+                role: 'assistant',
+                content: '',
+                streamingContent: '',
+                isStreaming: true,
+                timestamp: ts + 1,
+                reaction: null,
+            },
+        ]);
+
         setInputText('');
         setInputHeight(44);
 
-        const aiResponse = getMockAIResponse(text);
-        const msgId = startStreamingResponse(targetId);
+        try {
+            const result = await sendMessageMutation.mutateAsync({
+                message: trimmed,
+                conversationId: targetId,
+            });
 
+            setPendingMessages([]);
+            setConversationId(String(result.conversationId));
+        } catch (error: any) {
+            setPendingMessages([]);
+            Alert.alert('Could not send message', error?.message || 'Please try again.');
+        }
+    }, [conversationId, sendMessageMutation]);
+
+    useEffect(() => {
+        if (!initialPrompt || initialPromptSentRef.current) {
+            return;
+        }
+
+        initialPromptSentRef.current = true;
         setTimeout(() => {
-            const chunks = aiResponse.split(/(\s+)/).filter(Boolean);
-            let chunkIndex = 0;
-
-            streamTimerRef.current = setInterval(() => {
-                if (chunkIndex < chunks.length) {
-                    const batch = chunks.slice(chunkIndex, chunkIndex + 3).join('');
-                    appendStreamingToken(targetId, msgId, batch);
-                    chunkIndex += 3;
-                } else {
-                    clearInterval(streamTimerRef.current!);
-                    streamTimerRef.current = null;
-                    completeStreaming(targetId, msgId);
-                }
-            }, 16);
-        }, 700);
-    }, [conversationId, addUserMessage, startStreamingResponse, appendStreamingToken, completeStreaming]);
+            void sendMessage(initialPrompt, routeConversationId ? String(routeConversationId) : conversationId);
+        }, 250);
+    }, [initialPrompt, routeConversationId, conversationId, sendMessage]);
 
     const handleSend = useCallback(() => {
         if (inputText.trim() && !isGenerating) {
@@ -577,13 +615,19 @@ export function CoachChatScreen({ navigation, route }: any) {
         // Find last user message
         for (let i = messages.length - 1; i >= 0; i--) {
             if (messages[i].role === 'user') {
-                // Delete last AI message if it exists
-                if (lastAIMessageId) deleteMessage(conversationId, lastAIMessageId);
-                setTimeout(() => sendMessage(messages[i].content), 200);
+                if (lastAIMessageId) {
+                    setHiddenMessageIds((current) => ({
+                        ...current,
+                        [lastAIMessageId]: true,
+                    }));
+                }
+                setTimeout(() => {
+                    void sendMessage(messages[i].content, conversationId);
+                }, 200);
                 break;
             }
         }
-    }, [conversationId, isGenerating, messages, lastAIMessageId, deleteMessage, sendMessage]);
+    }, [conversationId, isGenerating, messages, lastAIMessageId, sendMessage]);
 
     const handleScroll = useCallback((e: NativeSyntheticEvent<NativeScrollEvent>) => {
         const offset = e.nativeEvent.contentOffset.y;
@@ -600,14 +644,25 @@ export function CoachChatScreen({ navigation, route }: any) {
             colors={colors}
             isLast={item.id === messages[messages.length - 1]?.id}
             isLastAI={item.id === lastAIMessageId}
-            conversationId={conversationId}
             onRegenerate={handleRegenerate}
+            onReact={(messageId, reaction) => {
+                setMessageReactions((current) => ({
+                    ...current,
+                    [messageId]: current[messageId] === reaction ? null : reaction,
+                }));
+            }}
+            onDelete={(messageId) => {
+                setHiddenMessageIds((current) => ({
+                    ...current,
+                    [messageId]: true,
+                }));
+            }}
         />
-    ), [colors, messages, lastAIMessageId, conversationId, handleRegenerate]);
+    ), [colors, messages, lastAIMessageId, handleRegenerate]);
 
     const keyExtractor = useCallback((item: ChatMessage) => item.id, []);
-    const title = conversation?.title ?? 'New Chat';
-    const currentModel = conversation?.model ?? selectedModel;
+    const title = conversationData?.title ?? 'New Chat';
+    const currentModel = selectedModel;
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
@@ -655,10 +710,7 @@ export function CoachChatScreen({ navigation, route }: any) {
                         <EmptyState
                             colors={colors}
                             onSelectPrompt={(prompt) => {
-                                setInputText(prompt);
-                                setTimeout(handleSend, 100);
-                                // Actually send it directly
-                                sendMessage(prompt);
+                                void sendMessage(prompt, conversationId);
                             }}
                         />
                     </View>
@@ -775,8 +827,7 @@ export function CoachChatScreen({ navigation, route }: any) {
                 currentModel={currentModel}
                 colors={colors}
                 onSelect={(m) => {
-                    setModel(m);
-                    // Update conversation model too if desired
+                    setSelectedModel(m);
                 }}
                 onClose={() => setShowModelPicker(false)}
             />

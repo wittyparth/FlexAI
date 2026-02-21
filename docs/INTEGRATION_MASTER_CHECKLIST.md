@@ -172,10 +172,10 @@ Every integration PR must update this file.
 - [x] Align gamification endpoints and response parsing.
   - [x] Added robust gamification response parsing for both raw and envelope shapes (`{ success, data }`) in `gamification.api.ts`.
   - [x] Added centralized gamification query hooks (`useGamificationStats`, `useStreakData`, `useAchievements`) for consistent cache keys and stale-time policy.
-- [ ] Surface streak/XP/level/achievements in profile/home.
+- [x] Surface streak/XP/level/achievements in profile/home.
   - [x] Home dashboard now surfaces live streak, best streak, level, and achievement count from gamification/dashboard queries.
   - [x] XP modal and streak calendar screens now use live gamification queries (removed local mock fallback paths).
-  - [ ] Add explicit achievement surfacing on profile hub cards (pending due unrelated in-progress profile file edits in working tree).
+  - [x] Added profile hub achievement surfacing plus muscle activation snapshot card for live distribution context.
 
 ### Acceptance
 - [ ] Profile and gamification screens have no mock dependencies.
@@ -287,6 +287,7 @@ Every integration PR must update this file.
 - 2026-02-21 | PR: `8eff021` | Phase: 6 | Migrated `ProfileHubScreen` to live data sources (`/users/me`, `/stats/dashboard`, `/stats/prs`, `/stats/muscle-distribution`, completed workout history, and `/gamification/stats`), removed profile mock-data dependencies, and aligned profile heatmap generation with real completed workouts.
 - 2026-02-21 | PR: `1aed303` | Phase: 6 | Added API-backed `EditProfile` flow, fixed settings navigator typing/routes, converted privacy/notification preferences to backend-synced settings where supported, and wired social self-profile edit action to `SettingsNavigator`.
 - 2026-02-21 | PR: `7f48cc6` | Phase: 6 | Hardened gamification API parsing for envelope/raw responses, added shared gamification query hooks, and wired home dashboard + XP/streak screens to live streak/XP/level/achievement data.
+- 2026-02-21 | PR: `846b3bb` | Phase: 6/5 UX | Added reusable muscle highlighter body-map component (`react-native-body-highlighter`) and integrated it into profile hub, muscle analytics, exercise detail, and workout detail views using live muscle distribution/selection data.
 
 ## Change Notes
 - 2026-02-20: Added mandatory backend persistence of `workoutInterests` in onboarding (Phase 2).

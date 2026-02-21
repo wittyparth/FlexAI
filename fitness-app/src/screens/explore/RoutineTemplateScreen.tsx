@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useMemo } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
     View,
     Text,
@@ -6,18 +6,20 @@ import {
     ScrollView,
     TouchableOpacity,
     Image,
+    Dimensions,
     Animated,
-    ActivityIndicator,
-    Alert,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { colors as themeColors } from '../../theme/colors';
-import { useRoutine, useDuplicateRoutine } from '../../hooks/queries/useRoutineQueries';
-import { useWorkoutStore } from '../../store/workoutStore';
 
+const { width } = Dimensions.get('window');
+
+// ============================================================
+// MOCK DATA - Aligned with Routine/RoutineExercise schema
+// ============================================================
 const MOCK_ROUTINE = {
     id: 1,
     name: 'PPL - Push Day',
@@ -39,133 +41,27 @@ const MOCK_ROUTINE = {
     tags: ['Push', 'Hypertrophy', 'PPL'],
 };
 
-const toTitleCase = (value?: string | null) =>
-    value ? `${value.charAt(0).toUpperCase()}${value.slice(1).replace('_', ' ')}` : 'General';
-
 export function RoutineTemplateScreen({ navigation, route }: any) {
     const colors = useColors();
     const insets = useSafeAreaInsets();
     const [saving, setSaving] = useState(false);
     const fadeAnim = useRef(new Animated.Value(0)).current;
-
-    const routineId = Number(route?.params?.routineId);
-    const hasValidRoutineId = Number.isFinite(routineId) && routineId > 0;
-
-    const { data: routineResponse, isLoading } = useRoutine(hasValidRoutineId ? routineId : undefined);
-    const duplicateRoutine = useDuplicateRoutine();
-
-    const backendRoutine = routineResponse?.data as any | undefined;
-
-    const routine = useMemo(() => {
-        if (!backendRoutine) return MOCK_ROUTINE;
-
-        const mappedExercises = (backendRoutine.exercises || []).map((item: any) => {
-            const ex = item.exercise || {};
-            const sets = Number(item.targetSets || 3);
-            const minReps = Number(item.targetRepsMin || 8);
-            const maxReps = Number(item.targetRepsMax || minReps);
-            const reps = minReps === maxReps ? `${minReps}` : `${minReps}-${maxReps}`;
-
-            return {
-                name: ex.name || 'Exercise',
-                sets,
-                reps,
-                rest: Number(item.restSeconds || 90),
-                muscle:
-                    ex.muscleGroup ||
-                    (Array.isArray(ex.primaryMuscleGroups) && ex.primaryMuscleGroups[0]) ||
-                    'Full Body',
-                icon: 'dumbbell',
-            };
-        });
-
-        const firstName = backendRoutine?.user?.firstName || 'Community';
-        const lastName = backendRoutine?.user?.lastName || 'Coach';
-        const avatarUrl = backendRoutine?.user?.avatarUrl || `https://i.pravatar.cc/100?u=${backendRoutine.id}`;
-
-        const tags = [
-            toTitleCase(backendRoutine.splitType),
-            toTitleCase(backendRoutine.goal),
-            toTitleCase(backendRoutine.difficulty),
-        ]
-            .filter((tag, index, arr) => tag && arr.indexOf(tag) === index)
-            .slice(0, 3);
-
-        return {
-            id: backendRoutine.id,
-            name: backendRoutine.name || 'Routine',
-            description: backendRoutine.description || 'No description available.',
-            estimatedDuration: Number(backendRoutine.estimatedDuration || 45),
-            difficulty: backendRoutine.difficulty || 'intermediate',
-            isPublic: Boolean(backendRoutine.isPublic),
-            usageCount: Number(backendRoutine.copiedCount || 0),
-            rating: backendRoutine.likes ? Math.min(5, 4 + backendRoutine.likes / 100) : 4.8,
-            exercises: mappedExercises,
-            creator: {
-                firstName,
-                lastName,
-                avatarUrl,
-                level: 45,
-            },
-            tags: tags.length ? tags : ['Routine'],
-        };
-    }, [backendRoutine]);
+    const routine = MOCK_ROUTINE;
 
     useEffect(() => {
         Animated.timing(fadeAnim, { toValue: 1, duration: 500, useNativeDriver: true }).start();
-    }, [fadeAnim]);
+    }, []);
 
-    const totalSets = routine.exercises.reduce((sum: number, e: any) => sum + e.sets, 0);
+    const totalSets = routine.exercises.reduce((sum, e) => sum + e.sets, 0);
 
-    const saveToLibrary = async () => {
-        if (duplicateRoutine.isPending || saving) return;
-
-        if (!backendRoutine) {
-            setSaving(true);
-            setTimeout(() => {
-                setSaving(false);
-                navigation.goBack();
-            }, 1000);
-            return;
-        }
-
+    const saveToLibrary = () => {
         setSaving(true);
-        try {
-            await duplicateRoutine.mutateAsync({ id: Number(backendRoutine.id) });
-            setTimeout(() => {
-                setSaving(false);
-                navigation.goBack();
-            }, 400);
-        } catch (error: any) {
-            setSaving(false);
-            Alert.alert('Unable to save', error?.message || 'Please try again.');
-        }
+        setTimeout(() => { setSaving(false); navigation.goBack(); }, 1000);
     };
-
-    const startWorkout = async () => {
-        try {
-            if (backendRoutine) {
-                await useWorkoutStore.getState().startWorkout({
-                    routineId: Number(backendRoutine.id),
-                    name: backendRoutine.name,
-                });
-            }
-            navigation.navigate('ActiveWorkout');
-        } catch (error: any) {
-            Alert.alert('Unable to start workout', error?.message || 'Please try again.');
-        }
-    };
-
-    if (hasValidRoutineId && isLoading && !backendRoutine) {
-        return (
-            <View style={[styles.container, { backgroundColor: colors.background, justifyContent: 'center', alignItems: 'center' }]}>
-                <ActivityIndicator size="large" color={colors.primary.main} />
-            </View>
-        );
-    }
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
+            {/* Header */}
             <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.card, borderBottomColor: colors.border }]}>
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerBtn}>
                     <Ionicons name="arrow-back" size={24} color={colors.foreground} />
@@ -177,11 +73,15 @@ export function RoutineTemplateScreen({ navigation, route }: any) {
             </View>
 
             <ScrollView showsVerticalScrollIndicator={false}>
+                {/* Hero Card */}
                 <Animated.View style={{ opacity: fadeAnim }}>
-                    <View style={styles.heroCard}>
+                    <View
+                        style={styles.heroCard}
+                    >
+                        {/* Tags */}
                         <View style={styles.tagRow}>
-                            {routine.tags.map((tag: string, i: number) => (
-                                <View key={`${tag}-${i}`} style={styles.tag}>
+                            {routine.tags.map((tag, i) => (
+                                <View key={i} style={styles.tag}>
                                     <Text style={styles.tagText}>{tag}</Text>
                                 </View>
                             ))}
@@ -190,12 +90,14 @@ export function RoutineTemplateScreen({ navigation, route }: any) {
                         <Text style={styles.heroTitle}>{routine.name}</Text>
                         <Text style={styles.heroDesc}>{routine.description}</Text>
 
+                        {/* Rating */}
                         <View style={styles.ratingRow}>
                             <Ionicons name="star" size={18} color="#FFC107" />
-                            <Text style={styles.ratingText}>{routine.rating.toFixed(1)}</Text>
-                            <Text style={styles.usersText}>- {(routine.usageCount / 1000).toFixed(1)}k users</Text>
+                            <Text style={styles.ratingText}>{routine.rating}</Text>
+                            <Text style={styles.usersText}>• {(routine.usageCount / 1000).toFixed(1)}k users</Text>
                         </View>
 
+                        {/* Stats */}
                         <View style={styles.heroStats}>
                             <View style={styles.heroStat}>
                                 <Text style={styles.heroStatValue}>{routine.estimatedDuration}</Text>
@@ -215,6 +117,7 @@ export function RoutineTemplateScreen({ navigation, route }: any) {
                     </View>
                 </Animated.View>
 
+                {/* Creator */}
                 <View style={styles.section}>
                     <TouchableOpacity style={[styles.creatorCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
                         <Image source={{ uri: routine.creator.avatarUrl }} style={styles.creatorAvatar} />
@@ -231,19 +134,20 @@ export function RoutineTemplateScreen({ navigation, route }: any) {
                     </TouchableOpacity>
                 </View>
 
+                {/* Exercises */}
                 <View style={styles.section}>
                     <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Exercises</Text>
-                    {routine.exercises.map((ex: any, index: number) => (
+                    {routine.exercises.map((ex, index) => (
                         <Animated.View
-                            key={`${ex.name}-${index}`}
+                            key={index}
                             style={{
                                 opacity: fadeAnim,
                                 transform: [{
                                     translateY: fadeAnim.interpolate({
                                         inputRange: [0, 1],
-                                        outputRange: [15 + index * 3, 0],
-                                    }),
-                                }],
+                                        outputRange: [15 + index * 3, 0]
+                                    })
+                                }]
                             }}
                         >
                             <View style={[styles.exerciseCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
@@ -256,7 +160,7 @@ export function RoutineTemplateScreen({ navigation, route }: any) {
                                 </View>
                                 <View style={styles.exerciseMeta}>
                                     <View style={[styles.metaBadge, { backgroundColor: colors.muted }]}>
-                                        <Text style={[styles.metaText, { color: colors.foreground }]}>{ex.sets}x{ex.reps}</Text>
+                                        <Text style={[styles.metaText, { color: colors.foreground }]}>{ex.sets}×{ex.reps}</Text>
                                     </View>
                                     <View style={[styles.restBadge, { backgroundColor: `${colors.success}15` }]}>
                                         <Ionicons name="time-outline" size={12} color={colors.success} />
@@ -271,20 +175,23 @@ export function RoutineTemplateScreen({ navigation, route }: any) {
                 <View style={{ height: 180 }} />
             </ScrollView>
 
+            {/* Footer */}
             <View style={[styles.footer, { paddingBottom: insets.bottom + 16, backgroundColor: colors.card, borderTopColor: colors.border }]}>
                 <TouchableOpacity
                     style={[styles.saveBtn, { borderColor: colors.primary.main }]}
                     onPress={saveToLibrary}
                 >
-                    <Ionicons name={saving ? 'checkmark' : 'bookmark-outline'} size={20} color={colors.primary.main} />
+                    <Ionicons name={saving ? "checkmark" : "bookmark-outline"} size={20} color={colors.primary.main} />
                     <Text style={[styles.saveBtnText, { color: colors.primary.main }]}>{saving ? 'Saved!' : 'Save'}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={styles.startBtn}
-                    onPress={startWorkout}
+                    onPress={() => navigation.navigate('ActiveWorkout')}
                     activeOpacity={0.9}
                 >
-                    <View style={styles.startGradient}>
+                    <View
+                        style={styles.startGradient}
+                    >
                         <Ionicons name="play" size={22} color="#FFF" />
                         <Text style={styles.startText}>Start Workout</Text>
                     </View>

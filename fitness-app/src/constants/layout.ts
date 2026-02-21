@@ -43,18 +43,30 @@ export const spacing = {
   10: SPACING.xxxl,   // 40
   12: SPACING.huge,   // 48
   16: SPACING.massive,// 64
-};
+  xs: SPACING.xs,
+  sm: SPACING.sm,
+  md: SPACING.md,
+  base: SPACING.base,
+  lg: SPACING.lg,
+  xl: SPACING.xl,
+  xxl: SPACING.xxl,
+  '3xl': SPACING.xxxl,
+  huge: SPACING.huge,
+  massive: SPACING.massive,
+} as const;
 
 export const borderRadius = {
   none: RADIUS.none,
+  xs: RADIUS.xs,
   sm: RADIUS.sm,    // 12
   md: RADIUS.md,    // 14
   lg: RADIUS.lg,    // 16
   xl: RADIUS.xl,    // 20
   '2xl': RADIUS.xxl,// 24
   '3xl': 28,
+  round: RADIUS.full,
   full: RADIUS.full,
-};
+} as const;
 
 export const sizing = {
   icon: {

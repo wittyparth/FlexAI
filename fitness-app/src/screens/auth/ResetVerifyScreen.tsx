@@ -127,8 +127,8 @@ export function ResetVerifyScreen({ navigation, route }: ResetVerifyScreenProps)
             <StatusBar barStyle={isDark ? 'light-content' : 'dark-content'} />
 
             {/* Background Decoration */}
-            <View style={[styles.decorationTop, { backgroundColor: colors.primary + '15' }]} />
-            <View style={[styles.decorationBottom, { backgroundColor: colors.primary + '10' }]} />
+            <View style={[styles.decorationTop, { backgroundColor: colors.primary.main + '15' }]} />
+            <View style={[styles.decorationBottom, { backgroundColor: colors.primary.main + '10' }]} />
 
             <KeyboardAvoidingView
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -140,21 +140,21 @@ export function ResetVerifyScreen({ navigation, route }: ResetVerifyScreenProps)
                         style={[styles.backButton, { backgroundColor: colors.backgroundSecondary }]}
                         onPress={() => navigation.goBack()}
                     >
-                        <Ionicons name="chevron-back" size={24} color={colors.text} />
+                        <Ionicons name="chevron-back" size={24} color={colors.foreground} />
                     </TouchableOpacity>
                 </View>
 
                 {/* Content */}
                 <View style={styles.content}>
                     {/* Title */}
-                    <Text style={[styles.title, { color: colors.text }]}>
+                    <Text style={[styles.title, { color: colors.foreground }]}>
                         Check Your Inbox
                     </Text>
 
                     {/* Subtitle */}
                     <Text style={[styles.subtitle, { color: colors.textSecondary }]}>
                         We sent a code to{'\n'}
-                        <Text style={[styles.emailText, { color: colors.text }]}>{email}</Text>
+                        <Text style={[styles.emailText, { color: colors.foreground }]}>{email}</Text>
                     </Text>
 
                     {/* OTP Input Section */}
@@ -164,7 +164,7 @@ export function ResetVerifyScreen({ navigation, route }: ResetVerifyScreenProps)
                                 <View key={index} style={styles.otpInputWrapper}>
                                     {/* Active background glow for current focused or filled input */}
                                     {(digit !== '' || (otp.findIndex(d => d === '') === index)) && (
-                                        <View style={[styles.otpActiveGlow, { backgroundColor: colors.primary + '20' }]} />
+                                        <View style={[styles.otpActiveGlow, { backgroundColor: colors.primary.main + '20' }]} />
                                     )}
                                     <TextInput
                                         ref={(ref) => { inputRefs.current[index] = ref; }}
@@ -172,8 +172,8 @@ export function ResetVerifyScreen({ navigation, route }: ResetVerifyScreenProps)
                                             styles.otpInput,
                                             {
                                                 backgroundColor: colors.backgroundSecondary,
-                                                color: colors.text,
-                                                borderColor: error ? colors.error : (digit ? colors.primary : colors.border),
+                                                color: colors.foreground,
+                                                borderColor: error ? colors.error : (digit ? colors.primary.main : colors.border),
                                             },
                                         ]}
                                         value={digit}
@@ -202,10 +202,10 @@ export function ResetVerifyScreen({ navigation, route }: ResetVerifyScreenProps)
                     <View style={styles.timerSection}>
                         <View style={[styles.timerBadge, { backgroundColor: isDark ? colors.backgroundSecondary : '#F3F4F6' }]}>
                             <View style={styles.timerDot}>
-                                <View style={[styles.timerDotInner, { backgroundColor: colors.primary }]} />
-                                <View style={[styles.timerDotPulse, { backgroundColor: colors.primary + '50' }]} />
+                                <View style={[styles.timerDotInner, { backgroundColor: colors.primary.main }]} />
+                                <View style={[styles.timerDotPulse, { backgroundColor: colors.primary.main + '50' }]} />
                             </View>
-                            <Text style={[styles.timerText, { color: colors.text }]}>
+                            <Text style={[styles.timerText, { color: colors.foreground }]}>
                                 {formatTime(resendCountdown)}
                             </Text>
                         </View>

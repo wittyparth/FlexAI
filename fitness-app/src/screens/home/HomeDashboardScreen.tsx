@@ -9,10 +9,38 @@ import { useColors } from '../../hooks';
 import { typography, fontFamilies } from '../../theme/typography';
 import { Card } from '../../components/ui/Card';
 
-import { statsApi, DashboardStatsResponse } from '../../api/stats.api';
-
 // Interfaces ensuring backend data matching
 // (Removed local DashboardData interface as we import it now)
+interface DashboardViewData {
+    userLevel: {
+        currentLevel: number;
+        title: string;
+        currentXp: number;
+        nextLevelXp: number;
+        nextTitle: string;
+        progress: number;
+    };
+    heatmap: {
+        data: number[][];
+    };
+    todaysWorkout: {
+        day: number;
+        focus: string;
+        title: string;
+        durationMin: number;
+        exerciseCount: number;
+        calories: number;
+        muscleStatus: Array<{ part: string; status: 'fresh' | 'recovering' | 'fatigued'; icon: string }>;
+    };
+    quickStats: {
+        totalVolume: number;
+        volumeUnit: string;
+        volumeTrend: number;
+        activeMinutesAvg: number;
+        streakDays: number;
+        isStreakRecord: boolean;
+    };
+}
 
 export function HomeDashboardScreen({ navigation }: HomeStackScreenProps<'HomeDashboard'>) {
     const { user } = useAuthStore();
@@ -22,10 +50,10 @@ export function HomeDashboardScreen({ navigation }: HomeStackScreenProps<'HomeDa
     const [refreshing, setRefreshing] = useState(false);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    const [data, setData] = useState<DashboardStatsResponse | null>(null);
+    const [data, setData] = useState<DashboardViewData | null>(null);
 
     // Mock data for development when API is unavailable
-    const getMockData = (): DashboardStatsResponse => ({
+    const getMockData = (): DashboardViewData => ({
         userLevel: {
             currentLevel: 12,
             title: 'Elite',
@@ -143,7 +171,7 @@ export function HomeDashboardScreen({ navigation }: HomeStackScreenProps<'HomeDa
                 {/* Elite Level Card */}
                 {data?.userLevel && (
                     <TouchableOpacity activeOpacity={0.9} onPress={() => navigation.navigate('XPLevelDetail')}>
-                        <Card variant="featured" style={styles.section} padding="none">
+                        <Card variant="feature" style={styles.section} padding="none">
                             <View style={[styles.levelCardInner, { backgroundColor: colors.card }]}>
                                 <View style={styles.levelHeader}>
                                     <View>

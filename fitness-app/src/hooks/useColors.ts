@@ -49,6 +49,9 @@ const createThemePalette = (baseColors: typeof COLORS_LIGHT, isDark: boolean) =>
       inverse:   baseColors.primaryForeground,
       link:      baseColors.chart1,
     },
+    textSecondary: baseColors.mutedForeground,
+    textTertiary: isDark ? '#64748B' : '#94A3B8',
+    backgroundSecondary: baseColors.card,
 
     // ── Slate alias → neutral (prevents runtime crashes) ──
     slate: baseColors.neutral,

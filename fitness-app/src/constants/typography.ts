@@ -111,12 +111,17 @@ export const fonts = {
   bodyMedium: FONTS.primary.medium,
   bodyBold: FONTS.primary.bold,
   bodySemibold: FONTS.primary.semibold,
+  regular: FONTS.primary.regular,
+  medium: FONTS.primary.medium,
+  semiBold: FONTS.primary.semibold,
+  bold: FONTS.primary.bold,
   mono: FONTS.mono,
 };
 
 export const fontSize = {
   xs: 12,
   sm: 14,
+  md: 16,
   base: 16,
   lg: 18,
   xl: 20,

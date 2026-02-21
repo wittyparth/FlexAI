@@ -29,6 +29,23 @@ export const fontFamilies = {
     android: 'JetBrainsMono',
     default: 'Courier',
   }) as string,
+
+  // Legacy aliases
+  bodyMedium: Platform.select({
+    ios: 'Inter',
+    android: 'Inter',
+    default: 'System',
+  }) as string,
+  bodySemibold: Platform.select({
+    ios: 'Inter',
+    android: 'Inter',
+    default: 'System',
+  }) as string,
+  bodyBold: Platform.select({
+    ios: 'Inter',
+    android: 'Inter',
+    default: 'System',
+  }) as string,
 };
 
 // Font Weights - React Native compatible

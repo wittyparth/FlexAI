@@ -44,6 +44,10 @@ export interface UserProfile {
   workoutDuration?: number;
   equipmentAvailable?: string[];
   units?: 'metric' | 'imperial';
+  pushEnabled?: boolean;
+  workoutReminders?: boolean;
+  socialNotifications?: boolean;
+  emailUpdates?: boolean;
 }
 
 export interface LoginResponse {

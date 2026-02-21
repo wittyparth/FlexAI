@@ -15,8 +15,8 @@ export function SocialScreen() {
     return (
         <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
             <View style={styles.content}>
-                <Text style={[styles.title, { color: colors.text }]}>Social</Text>
-                <Text style={[styles.subtitle, { color: colors.textSecondary }]}>
+                <Text style={[styles.title, { color: colors.foreground }]}>Social</Text>
+                <Text style={[styles.subtitle, { color: colors.mutedForeground }]}>
                     Coming in Phase 3
                 </Text>
             </View>

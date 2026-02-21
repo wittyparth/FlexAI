@@ -115,6 +115,17 @@ const DIFF_COLOR: Record<string, string> = {
     Advanced: '#EF4444',
 };
 
+type RecentActivityItem = {
+    id: string;
+    name: string;
+    date: string;
+    exercises: number;
+    duration: number;
+    volume: number;
+    iconName: string;
+    hasPR: boolean;
+};
+
 function SectionHeader({ title, onViewAll, colors }: { title: string; onViewAll?: () => void; colors: ThemeColors }) {
     return (
         <View style={styles.sectionHeaderRow}>
@@ -261,8 +272,8 @@ export function WorkoutHubScreen({ navigation }: any) {
 
     const heatmapData = useMemo(() => buildHeatmapData(completedWorkouts), [completedWorkouts]);
 
-    const recentActivity = useMemo(() => {
-        return completedWorkouts.slice(0, 3).map((workout: any) => {
+    const recentActivity = useMemo<RecentActivityItem[]>(() => {
+        return completedWorkouts.slice(0, 3).map((workout: any): RecentActivityItem => {
             const exercises = Array.isArray(workout.exercises) ? workout.exercises : [];
             const volume = getWorkoutVolume(workout);
             const startTime = workout.startTime ? new Date(workout.startTime) : null;

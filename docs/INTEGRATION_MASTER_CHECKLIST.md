@@ -15,12 +15,12 @@ Every integration PR must update this file.
 - If scope changes, add a `Change Note` entry before implementation.
 
 ## Current Status
-- Current Phase: Phase 9 Completed
-- Overall Completion: 99%
-- Blockers: Global TypeScript type drift outside current integration scope (auth/home/theme typing mismatches) still prevents clean `tsc`.
+- Current Phase: Phase 9 Completed and Stabilized
+- Overall Completion: 100%
+- Blockers: None.
 
 ## Global Exit Criteria
-- [ ] Frontend TypeScript passes (`tsc`) with no integration-related errors.
+- [x] Frontend TypeScript passes (`tsc`) with no integration-related errors.
 - [x] Backend build/tests pass for touched modules.
 - [x] API contract changes are documented in `fitness-app/docs/architecture/API_CONTRACTS.md`.
 - [x] No production flow depends on mock data.
@@ -311,6 +311,7 @@ Every integration PR must update this file.
 - 2026-02-21 | PR: `df6be2b` | Phase: 7 | Completed leaderboard/challenge contract integration by adding user-specific challenge flags/progress (`isJoined`, `currentValue`, `isCompleted`) from backend, aligning frontend period/metric-to-type mapping, and hardening join/detail/list challenge UX against backend response shapes.
 - 2026-02-21 | PR: `912c921` | Phase: 8 | Replaced coach local mock store usage with API-backed coach clients/hooks (`/coach/message`, `/coach/conversations`, `/coach/conversations/:id`, delete), rewired Coach Hub/Chat/History screens to backend persistence, and added explicit timeout/error fallback UX in chat send flow.
 - 2026-02-21 | PR: `8c29760` | Phase: 9 | Replaced notifications screen local state/mocks with query/mutation integration, added device registration wiring, connected settings security actions (logout/delete/change-password) to backend mutations, refreshed API contract docs, and validated with backend build + full integration test suite.
+- 2026-02-21 | PR: pending | Phase: 9 Hardening | Cleared global frontend TypeScript drift by aligning shared theme tokens/types with legacy screen usage, fixed dashboard/workout/auth typing mismatches, and revalidated with frontend `npx tsc --noEmit` plus backend build + full test suite.
 
 ## Change Notes
 - 2026-02-20: Added mandatory backend persistence of `workoutInterests` in onboarding (Phase 2).

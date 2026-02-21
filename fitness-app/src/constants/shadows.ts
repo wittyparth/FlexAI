@@ -108,4 +108,7 @@ export const SHADOWS = {
   dark: SHADOWS_DARK,
 };
 
-export const shadows = SHADOWS_LIGHT; 
+export const shadows = {
+  ...SHADOWS_LIGHT,
+  accent: SHADOWS_LIGHT.colored,
+} as const;

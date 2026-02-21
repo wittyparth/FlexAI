@@ -69,10 +69,10 @@ export function AccountLockedScreen({ navigation, route }: AccountLockedScreenPr
             <View style={styles.content}>
                 {/* Hero Visual */}
                 <View style={styles.iconWrapper}>
-                    <View style={[styles.iconGlow, { backgroundColor: colors.primary + '30' }]} />
+                    <View style={[styles.iconGlow, { backgroundColor: colors.primary.main + '30' }]} />
                     <View style={styles.iconCircle}>
-                        <Ionicons name="lock-closed" size={64} color={colors.primary} />
-                        <View style={[styles.iconRing, { borderColor: colors.primary + '20' }]} />
+                        <Ionicons name="lock-closed" size={64} color={colors.primary.main} />
+                        <View style={[styles.iconRing, { borderColor: colors.primary.main + '20' }]} />
                     </View>
                 </View>
 
@@ -89,7 +89,7 @@ export function AccountLockedScreen({ navigation, route }: AccountLockedScreenPr
                 {/* Countdown Timer */}
                 <View style={styles.timerSection}>
                     <Text style={styles.timerLabel}>Try again in</Text>
-                    <Text style={[styles.timerValue, { color: colors.primary }]}>
+                    <Text style={[styles.timerValue, { color: colors.primary.main }]}>
                         {formatTime(timeLeft)}
                     </Text>
                 </View>
@@ -100,7 +100,7 @@ export function AccountLockedScreen({ navigation, route }: AccountLockedScreenPr
                     activeOpacity={0.8}
                     style={styles.actionButton}
                 >
-                    <View style={[styles.buttonInner, { borderColor: colors.primary }]}>
+                    <View style={[styles.buttonInner, { borderColor: colors.primary.main }]}>
                         <Text style={styles.buttonText}>Contact Support</Text>
                     </View>
                 </TouchableOpacity>

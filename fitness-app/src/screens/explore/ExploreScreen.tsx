@@ -15,8 +15,8 @@ export function ExploreScreen() {
     return (
         <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
             <View style={styles.content}>
-                <Text style={[styles.title, { color: colors.text }]}>Explore</Text>
-                <Text style={[styles.subtitle, { color: colors.textSecondary }]}>
+                <Text style={[styles.title, { color: colors.foreground }]}>Explore</Text>
+                <Text style={[styles.subtitle, { color: colors.mutedForeground }]}>
                     Coming in Phase 2
                 </Text>
             </View>

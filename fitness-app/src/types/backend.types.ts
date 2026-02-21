@@ -194,6 +194,7 @@ export interface Routine {
     description?: string;
     isPublic?: boolean;
     difficulty?: string;
+    splitType?: 'ppl' | 'upper_lower' | 'full_body' | 'bro' | 'custom';
     exercises?: RoutineExercise[];
     authorId?: number;
     isArchived?: boolean;

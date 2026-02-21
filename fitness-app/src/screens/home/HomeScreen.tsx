@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import {
     View,
     Text,
@@ -6,23 +6,53 @@ import {
     ScrollView,
     TouchableOpacity,
     Animated,
-    Dimensions,
     Platform,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { useAchievements, useColors, useDashboardStats, useGamificationStats, useUserQueries } from '../../hooks';
+import {
+    useAchievements,
+    useColors,
+    useCurrentWorkout,
+    useDashboardStats,
+    useGamificationStats,
+    useRoutines,
+    useUserQueries,
+    useWorkouts,
+} from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { WorkoutHeatmap } from '../../components/WorkoutHeatmap';
-import {
-    DUMMY_METRICS,
-    DUMMY_RECENT_WORKOUTS,
-    ACTIVE_WORKOUT_TODAY,
-    HEATMAP_DATA,
-    TODAYS_PLANNED_WORKOUT,
-} from '../../data/mockData';
 
-const { width: SCREEN_WIDTH } = Dimensions.get('window');
+type ActiveWorkoutBannerData = {
+    id: number;
+    name: string;
+    startedAt: string;
+    exercisesDone: number;
+    totalExercises: number;
+};
+
+type PlannedWorkoutData = {
+    routineId: number;
+    routineName: string;
+    estimatedDuration: number;
+    exercises: Array<{
+        id: number;
+        name: string;
+        muscle: string;
+        sets: number;
+        reps: string;
+    }>;
+};
+
+type RecentWorkoutRowData = {
+    id: string;
+    iconName: string;
+    name: string;
+    date: string;
+    duration: number;
+    volume: number;
+    hasPR: boolean;
+};
 
 const getGreeting = () => {
     const h = new Date().getHours();
@@ -31,13 +61,55 @@ const getGreeting = () => {
     return 'Good evening';
 };
 
-const fmtVol = (v: number) => (v >= 1000 ? `${(v / 1000).toFixed(1)}k` : v.toString());
+const fmtVol = (v: number) => (v >= 1000 ? `${(v / 1000).toFixed(1)}k` : String(Math.round(v)));
 const fmtDuration = (secs: number) => `${Math.floor(secs / 60)}m`;
 
-// ============================================================
-// ACTIVE WORKOUT BANNER
-// ============================================================
-function ActiveWorkoutBanner({ workout, onPress }: { workout: typeof ACTIVE_WORKOUT_TODAY; onPress: () => void }) {
+const formatDateKey = (date: Date) =>
+    `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+
+const addDays = (date: Date, days: number) => {
+    const next = new Date(date);
+    next.setDate(next.getDate() + days);
+    return next;
+};
+
+const buildHeatmapData = (workouts: any[]) => {
+    const byDate = new Map<string, number>();
+
+    workouts.forEach((workout) => {
+        const completedDateRaw = workout?.endTime ?? workout?.completedAt ?? workout?.startTime;
+        if (!completedDateRaw) return;
+
+        const date = new Date(completedDateRaw);
+        if (Number.isNaN(date.getTime())) return;
+
+        const key = formatDateKey(date);
+        const volume = Number(workout?.totalVolume ?? 0);
+        byDate.set(key, (byDate.get(key) ?? 0) + volume);
+    });
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const data: { date: string; intensity: 0 | 1 | 2 | 3 }[] = [];
+
+    for (let i = 364; i >= 0; i -= 1) {
+        const day = addDays(today, -i);
+        const key = formatDateKey(day);
+        const volume = byDate.get(key) ?? 0;
+
+        let intensity: 0 | 1 | 2 | 3 = 0;
+        if (volume > 0 && volume <= 3000) intensity = 1;
+        if (volume > 3000 && volume <= 7000) intensity = 2;
+        if (volume > 7000) intensity = 3;
+
+        data.push({ date: key, intensity });
+    }
+
+    return data;
+};
+
+function ActiveWorkoutBanner({ workout, onPress }: { workout: ActiveWorkoutBannerData; onPress: () => void }) {
     const pulseAnim = useRef(new Animated.Value(1)).current;
     useEffect(() => {
         Animated.loop(
@@ -46,10 +118,10 @@ function ActiveWorkoutBanner({ workout, onPress }: { workout: typeof ACTIVE_WORK
                 Animated.timing(pulseAnim, { toValue: 1, duration: 900, useNativeDriver: true }),
             ])
         ).start();
-    }, []);
+    }, [pulseAnim]);
 
     const elapsed = Math.floor((Date.now() - new Date(workout.startedAt).getTime()) / 60000);
-    const pct = (workout.exercisesDone / workout.totalExercises) * 100;
+    const pct = workout.totalExercises > 0 ? (workout.exercisesDone / workout.totalExercises) * 100 : 0;
 
     return (
         <TouchableOpacity onPress={onPress} activeOpacity={0.9} style={styles.activeBannerWrapper}>
@@ -62,7 +134,7 @@ function ActiveWorkoutBanner({ workout, onPress }: { workout: typeof ACTIVE_WORK
                             <Text style={styles.activeLabel}>ACTIVE WORKOUT</Text>
                         </View>
                         <Text style={styles.activeName}>{workout.name}</Text>
-                        <Text style={styles.activeMeta}>{elapsed} min • {workout.exercisesDone}/{workout.totalExercises} exercises</Text>
+                        <Text style={styles.activeMeta}>{elapsed} min - {workout.exercisesDone}/{workout.totalExercises} exercises</Text>
                     </View>
                     <View style={styles.activeResumeBtn}>
                         <Ionicons name="play" size={20} color="#FFF" />
@@ -76,14 +148,12 @@ function ActiveWorkoutBanner({ workout, onPress }: { workout: typeof ACTIVE_WORK
     );
 }
 
-// ============================================================
-// TODAY'S PLAN SECTION
-// ============================================================
-function TodaysPlanCard({ plan, onPress, c }: { plan: typeof TODAYS_PLANNED_WORKOUT; onPress: () => void; c: any }) {
+function TodaysPlanCard({ plan, onPress, c }: { plan: PlannedWorkoutData; onPress: () => void; c: any }) {
     const MUSCLE_COLORS: Record<string, string> = {
         Chest: '#3B82F6', Shoulders: '#8B5CF6', Triceps: '#10B981',
         Back: '#F59E0B', Biceps: '#EC4899', Legs: '#EF4444', Core: '#14B8A6',
     };
+
     return (
         <TouchableOpacity style={[styles.todayCard, { backgroundColor: c.card, borderColor: c.border }]} onPress={onPress} activeOpacity={0.8}>
             <View style={styles.todayHeader}>
@@ -93,7 +163,7 @@ function TodaysPlanCard({ plan, onPress, c }: { plan: typeof TODAYS_PLANNED_WORK
                     </View>
                     <View style={{ gap: 2 }}>
                         <Text style={[styles.todayTitle, { color: c.text }]}>{plan.routineName}</Text>
-                        <Text style={[styles.todayMeta, { color: c.muted }]}>{plan.exercises.length} exercises • ~{plan.estimatedDuration} min</Text>
+                        <Text style={[styles.todayMeta, { color: c.muted }]}>{plan.exercises.length} exercises - ~{plan.estimatedDuration} min</Text>
                     </View>
                 </View>
                 <View style={styles.startTodayBtn}>
@@ -106,7 +176,7 @@ function TodaysPlanCard({ plan, onPress, c }: { plan: typeof TODAYS_PLANNED_WORK
                     <View key={ex.id} style={styles.todayExRow}>
                         <View style={[styles.todayExDot, { backgroundColor: MUSCLE_COLORS[ex.muscle] || c.primary }]} />
                         <Text style={[styles.todayExName, { color: c.text }]}>{ex.name}</Text>
-                        <Text style={[styles.todayExSets, { color: c.muted, fontFamily: fontFamilies.mono }]}>{ex.sets}×{ex.reps}</Text>
+                        <Text style={[styles.todayExSets, { color: c.muted, fontFamily: fontFamilies.mono }]}>{ex.sets} x {ex.reps}</Text>
                     </View>
                 ))}
                 {plan.exercises.length > 4 && (
@@ -117,7 +187,6 @@ function TodaysPlanCard({ plan, onPress, c }: { plan: typeof TODAYS_PLANNED_WORK
     );
 }
 
-// MetricCard — Premium with inner glow
 function MetricCard({ icon, label, value, unit, accent, bg, borderColor }: {
     icon: string; label: string; value: string; unit?: string; accent: string; bg: string; borderColor: string;
 }) {
@@ -135,23 +204,22 @@ function MetricCard({ icon, label, value, unit, accent, bg, borderColor }: {
     );
 }
 
-// Recent Workout Row
-function WorkoutRow({ workout, onPress, c }: { workout: any; onPress: () => void; c: any }) {
+function WorkoutRow({ workout, onPress, c }: { workout: RecentWorkoutRowData; onPress: () => void; c: any }) {
     return (
         <TouchableOpacity style={[styles.wkRow, { backgroundColor: c.card, borderColor: c.border }]} onPress={onPress} activeOpacity={0.75}>
             <View style={[styles.wkIcon, { backgroundColor: c.primary + '12' }]}>
-                <MaterialCommunityIcons name={workout.iconName} size={22} color={c.primary} />
+                <MaterialCommunityIcons name={workout.iconName as any} size={22} color={c.primary} />
             </View>
             <View style={styles.wkInfo}>
                 <Text style={[styles.wkName, { color: c.text }]}>{workout.name}</Text>
-                <Text style={[styles.wkDate, { color: c.muted }]}>{workout.date} • {fmtDuration(workout.duration || 3600)}</Text>
+                <Text style={[styles.wkDate, { color: c.muted }]}>{workout.date} - {fmtDuration(workout.duration || 0)}</Text>
             </View>
             <View style={styles.wkRight}>
                 <Text style={[styles.wkVol, { color: c.text, fontFamily: fontFamilies.mono }]}>{fmtVol(workout.volume)}</Text>
                 <Text style={[styles.wkVolUnit, { color: c.muted }]}>kg</Text>
                 {workout.hasPR && (
                     <View style={styles.prBadge}>
-                        <Text style={styles.prText}>🔥 PR</Text>
+                        <Text style={styles.prText}>PR</Text>
                     </View>
                 )}
             </View>
@@ -159,41 +227,120 @@ function WorkoutRow({ workout, onPress, c }: { workout: any; onPress: () => void
     );
 }
 
-// ============================================================
-// MAIN COMPONENT
-// ============================================================
 export function HomeScreen({ navigation }: any) {
     const insets = useSafeAreaInsets();
     const colors = useColors();
+
     const { profileQuery } = useUserQueries();
     const { data: dashboardStats } = useDashboardStats();
     const { data: gamificationStats } = useGamificationStats();
     const { data: achievements = [] } = useAchievements();
+    const { data: currentWorkoutResponse } = useCurrentWorkout();
+    const { data: completedWorkoutsResponse } = useWorkouts({ page: 1, limit: 500, status: 'completed' });
+    const { data: routinesResponse } = useRoutines({ page: 1, limit: 1 });
 
     const firstName = profileQuery.data?.firstName || 'Athlete';
     const currentStreak = gamificationStats?.currentStreak ?? dashboardStats?.streak?.current ?? 0;
-    const longestStreak = gamificationStats?.longestStreak ?? dashboardStats?.streak?.best ?? DUMMY_METRICS.bestStreak;
-    const weeklyVolume = dashboardStats?.weeklyVolume ?? DUMMY_METRICS.weeklyVolume;
+    const longestStreak = gamificationStats?.longestStreak ?? dashboardStats?.streak?.best ?? 0;
+    const weeklyVolume = dashboardStats?.weeklyVolume ?? 0;
     const level = gamificationStats?.level ?? 1;
     const unlockedAchievementCount = achievements.filter((achievement) => achievement.unlocked || achievement.unlockedAt).length;
 
-    // Map to local shorthand for sub-components
+    const completedWorkouts = (completedWorkoutsResponse?.data ?? []) as any[];
+
+    const activeWorkout = useMemo<ActiveWorkoutBannerData | null>(() => {
+        const workout = currentWorkoutResponse?.data;
+        if (!workout || workout.status !== 'in_progress') return null;
+
+        return {
+            id: workout.id,
+            name: workout.name || 'Active Workout',
+            startedAt: workout.startTime,
+            exercisesDone: (workout.exercises || []).filter((exercise: any) => (exercise.sets || []).length > 0).length,
+            totalExercises: (workout.exercises || []).length,
+        };
+    }, [currentWorkoutResponse?.data]);
+
+    const todaysPlan = useMemo<PlannedWorkoutData | null>(() => {
+        const routine = routinesResponse?.data?.routines?.[0];
+        if (!routine) return null;
+
+        const exercises = (routine.exercises ?? []).slice(0, 6).map((routineExercise: any, index: number) => ({
+            id: routineExercise.exerciseId ?? routineExercise.id ?? index,
+            name: routineExercise.exercise?.name ?? `Exercise ${index + 1}`,
+            muscle: routineExercise.exercise?.muscleGroup ?? 'Full Body',
+            sets: Number(routineExercise.targetSets ?? 3),
+            reps: routineExercise.targetRepsMax
+                ? `${routineExercise.targetRepsMin ?? 8}-${routineExercise.targetRepsMax}`
+                : `${routineExercise.targetRepsMin ?? 10}`,
+        }));
+
+        return {
+            routineId: routine.id,
+            routineName: routine.name || 'Today Plan',
+            estimatedDuration: Number(routine.estimatedDuration ?? 45),
+            exercises,
+        };
+    }, [routinesResponse?.data?.routines]);
+
+    const heatmapData = useMemo(() => buildHeatmapData(completedWorkouts), [completedWorkouts]);
+
+    const recentWorkouts = useMemo<RecentWorkoutRowData[]>(() => {
+        const toIcon = (muscleGroup?: string) => {
+            const group = (muscleGroup ?? '').toLowerCase();
+            if (group.includes('leg') || group.includes('quad') || group.includes('hamstring') || group.includes('glute')) return 'run-fast';
+            if (group.includes('core') || group.includes('abs')) return 'human-male';
+            if (group.includes('chest') || group.includes('back') || group.includes('shoulder') || group.includes('arm')) return 'dumbbell';
+            return 'weight-lifter';
+        };
+
+        return completedWorkouts.slice(0, 8).map((workout: any) => {
+            const startTime = workout?.startTime ? new Date(workout.startTime) : null;
+            const endTime = workout?.endTime ? new Date(workout.endTime) : null;
+            const duration =
+                startTime && endTime && !Number.isNaN(startTime.getTime()) && !Number.isNaN(endTime.getTime())
+                    ? Math.max(0, Math.floor((endTime.getTime() - startTime.getTime()) / 1000))
+                    : 0;
+
+            const completedAt = new Date(workout?.endTime ?? workout?.completedAt ?? workout?.startTime);
+            const dateLabel = Number.isNaN(completedAt.getTime()) ? 'Unknown date' : completedAt.toLocaleDateString();
+            const firstMuscle = workout?.exercises?.[0]?.exercise?.muscleGroup;
+
+            return {
+                id: String(workout.id),
+                iconName: toIcon(firstMuscle),
+                name: workout.name || 'Workout',
+                date: dateLabel,
+                duration,
+                volume: Number(workout?.totalVolume ?? 0),
+                hasPR: Number(workout?.personalRecordsBroken ?? 0) > 0,
+            };
+        });
+    }, [completedWorkouts]);
+
     const c = {
-        bg: colors.background, card: colors.card, border: colors.border,
-        text: colors.foreground, muted: colors.mutedForeground, primary: colors.primary.main,
-        primaryGlow: colors.primary.main + '30', surface: colors.muted,
+        bg: colors.background,
+        card: colors.card,
+        border: colors.border,
+        text: colors.foreground,
+        muted: colors.mutedForeground,
+        primary: colors.primary.main,
     };
 
     const fadeAnim = useRef(new Animated.Value(0)).current;
     useEffect(() => {
         Animated.timing(fadeAnim, { toValue: 1, duration: 600, useNativeDriver: true }).start();
-    }, []);
+    }, [fadeAnim]);
 
     const getTabNav = () => navigation.getParent() ?? navigation;
     const getDrawerNav = () => navigation.getParent()?.getParent() ?? navigation;
 
     const openDrawer = () => {
-        try { getDrawerNav().openDrawer(); } catch { }
+        try {
+            getDrawerNav().openDrawer();
+        } catch {
+            // no-op
+        }
     };
 
     const goToWorkout = () => getTabNav().navigate('WorkoutTab');
@@ -201,14 +348,9 @@ export function HomeScreen({ navigation }: any) {
 
     return (
         <View style={[styles.container, { backgroundColor: c.bg }]}>
-            <ScrollView
-                showsVerticalScrollIndicator={false}
-                contentContainerStyle={{ paddingBottom: insets.bottom + 100 }}
-            >
-                {/* ─── HEADER ─── */}
+            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: insets.bottom + 100 }}>
                 <View style={[styles.header, { paddingTop: insets.top + 12 }]}>
                     <View style={styles.headerLeft}>
-                        {/* Hamburger Menu Button */}
                         <TouchableOpacity
                             style={[styles.headerIconBtn, { backgroundColor: colors.card, borderColor: colors.border }]}
                             onPress={openDrawer}
@@ -218,20 +360,16 @@ export function HomeScreen({ navigation }: any) {
                         </TouchableOpacity>
                         <View style={styles.headerTextCol}>
                             <Text style={[styles.headerSub, { color: c.muted }]}>DASHBOARD</Text>
-                            <Text style={[styles.headerTitle, { color: c.text, fontFamily: fontFamilies.display }]}>
-                                {getGreeting()},{'\n'}{firstName} 👋
+                            <Text style={[styles.headerTitle, { color: c.text, fontFamily: fontFamilies.display }]}> 
+                                {getGreeting()},{'\n'}{firstName}
                             </Text>
                         </View>
                     </View>
                     <View style={styles.headerRight}>
-                        {/* Streak badge — premium gradient */}
-                        <View
-                            style={styles.streakBadge}
-                        >
+                        <View style={styles.streakBadge}>
                             <Ionicons name="flame" size={16} color={colors.warning} />
                             <Text style={[styles.streakNum, { color: colors.warning, fontFamily: fontFamilies.mono }]}>{currentStreak}</Text>
                         </View>
-                        {/* Notification */}
                         <TouchableOpacity
                             style={[styles.headerIconBtn, { backgroundColor: colors.card, borderColor: colors.border }]}
                             onPress={() => navigation.navigate('HomeNotifications')}
@@ -243,28 +381,24 @@ export function HomeScreen({ navigation }: any) {
                 </View>
 
                 <Animated.View style={{ opacity: fadeAnim }}>
-                    {/* ─── ACTIVE WORKOUT BANNER ─── */}
-                    {ACTIVE_WORKOUT_TODAY.isActive && (
+                    {activeWorkout && (
                         <View style={styles.px}>
                             <ActiveWorkoutBanner
-                                workout={ACTIVE_WORKOUT_TODAY}
+                                workout={activeWorkout}
                                 onPress={() => {
                                     getTabNav().navigate('WorkoutTab', {
                                         screen: 'ActiveWorkout',
-                                        params: { workoutId: 1 },
+                                        params: { workoutId: activeWorkout.id },
                                     });
                                 }}
                             />
                         </View>
                     )}
 
-                    {/* ─── START WORKOUT CTA ─── */}
-                    {!ACTIVE_WORKOUT_TODAY.isActive && (
+                    {!activeWorkout && (
                         <View style={styles.px}>
                             <TouchableOpacity onPress={goToWorkout} activeOpacity={0.92} style={styles.ctaWrapper}>
-                                <View
-                                    style={styles.ctaGrad}
-                                >
+                                <View style={styles.ctaGrad}>
                                     <View style={styles.ctaContent}>
                                         <View>
                                             <Text style={styles.ctaLabel}>READY TO TRAIN?</Text>
@@ -281,8 +415,7 @@ export function HomeScreen({ navigation }: any) {
                         </View>
                     )}
 
-                    {/* ─── TODAY'S PLAN ─── */}
-                    {!ACTIVE_WORKOUT_TODAY.isActive && (
+                    {!activeWorkout && todaysPlan && (
                         <View style={styles.section}>
                             <View style={styles.sectionHeader}>
                                 <Text style={[styles.sectionTitle, { color: c.text, fontFamily: fontFamilies.display }]}>Today's Plan</Text>
@@ -291,19 +424,18 @@ export function HomeScreen({ navigation }: any) {
                                 </TouchableOpacity>
                             </View>
                             <TodaysPlanCard
-                                plan={TODAYS_PLANNED_WORKOUT}
+                                plan={todaysPlan}
                                 c={c}
                                 onPress={() => {
                                     getTabNav().navigate('WorkoutTab', {
                                         screen: 'ActiveWorkout',
-                                        params: { routineId: TODAYS_PLANNED_WORKOUT.routineId },
+                                        params: { routineId: todaysPlan.routineId },
                                     });
                                 }}
                             />
                         </View>
                     )}
 
-                    {/* ─── METRICS ─── */}
                     <View style={styles.section}>
                         <View style={styles.sectionHeader}>
                             <Text style={[styles.sectionTitle, { color: c.text, fontFamily: fontFamilies.display }]}>Your Metrics</Text>
@@ -328,15 +460,13 @@ export function HomeScreen({ navigation }: any) {
                         </ScrollView>
                     </View>
 
-                    {/* ─── WEEKLY HEATMAP ─── */}
                     <View style={styles.section}>
                         <Text style={[styles.sectionTitle, { color: c.text, fontFamily: fontFamilies.display, marginBottom: 12 }]}>Activity</Text>
                         <View style={[styles.heatmapCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-                            <WorkoutHeatmap data={HEATMAP_DATA} showToggle={true} defaultRange="week" showLegend={true} />
+                            <WorkoutHeatmap data={heatmapData} showToggle defaultRange="week" showLegend />
                         </View>
                     </View>
 
-                    {/* ─── RECENT ACTIVITY ─── */}
                     <View style={[styles.section, styles.sectionLast]}>
                         <View style={styles.sectionHeader}>
                             <Text style={[styles.sectionTitle, { color: c.text, fontFamily: fontFamilies.display }]}>Recent Activity</Text>
@@ -344,11 +474,25 @@ export function HomeScreen({ navigation }: any) {
                                 <Text style={[styles.linkText, { color: colors.primary.main }]}>View All</Text>
                             </TouchableOpacity>
                         </View>
-                        {DUMMY_RECENT_WORKOUTS.map(w => (
-                            <WorkoutRow key={w.id} workout={w} c={c} onPress={() => {
-                                getTabNav().navigate('WorkoutTab', { screen: 'WorkoutDetail', params: { workoutId: parseInt(w.id) } });
-                            }} />
-                        ))}
+                        {recentWorkouts.length > 0 ? (
+                            recentWorkouts.map((workout) => (
+                                <WorkoutRow
+                                    key={workout.id}
+                                    workout={workout}
+                                    c={c}
+                                    onPress={() => {
+                                        getTabNav().navigate('WorkoutTab', {
+                                            screen: 'WorkoutDetail',
+                                            params: { workoutId: Number(workout.id) },
+                                        });
+                                    }}
+                                />
+                            ))
+                        ) : (
+                            <View style={[styles.emptyCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+                                <Text style={[styles.emptyCardText, { color: colors.mutedForeground }]}>No completed workouts yet.</Text>
+                            </View>
+                        )}
                     </View>
                 </Animated.View>
             </ScrollView>
@@ -356,14 +500,10 @@ export function HomeScreen({ navigation }: any) {
     );
 }
 
-// ============================================================
-// STYLES — Premium design
-// ============================================================
 const styles = StyleSheet.create({
     container: { flex: 1 },
     px: { paddingHorizontal: 20, marginBottom: 20 },
 
-    // HEADER
     header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', paddingHorizontal: 20, marginBottom: 24 },
     headerLeft: { flex: 1, flexDirection: 'row', alignItems: 'flex-start', gap: 12 },
     headerTextCol: { gap: 4, flex: 1 },
@@ -371,8 +511,13 @@ const styles = StyleSheet.create({
     headerTitle: { fontSize: 26, lineHeight: 32 },
     headerRight: { flexDirection: 'row', alignItems: 'center', gap: 10 },
     headerIconBtn: {
-        width: 42, height: 42, borderRadius: 14, alignItems: 'center', justifyContent: 'center',
-        borderWidth: 1, position: 'relative',
+        width: 42,
+        height: 42,
+        borderRadius: 14,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth: 1,
+        position: 'relative',
         ...Platform.select({
             ios: { shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.06, shadowRadius: 4 },
             android: { elevation: 2 },
@@ -382,7 +527,6 @@ const styles = StyleSheet.create({
     streakNum: { fontSize: 16, fontWeight: '700' },
     notifDot: { position: 'absolute', top: 9, right: 9, width: 8, height: 8, borderRadius: 4, borderWidth: 1.5 },
 
-    // ACTIVE BANNER
     activeBannerWrapper: {
         borderRadius: 20,
         ...Platform.select({
@@ -404,7 +548,6 @@ const styles = StyleSheet.create({
     activeProgressBg: { height: 6, backgroundColor: 'rgba(255,255,255,0.2)', borderRadius: 3, overflow: 'hidden' },
     activeProgressFill: { height: '100%', borderRadius: 3, backgroundColor: '#FFF' },
 
-    // START WORKOUT CTA
     ctaWrapper: {
         borderRadius: 22,
         ...Platform.select({
@@ -420,17 +563,18 @@ const styles = StyleSheet.create({
     ctaDecor1: { position: 'absolute', width: 100, height: 100, borderRadius: 50, backgroundColor: 'rgba(255,255,255,0.08)', right: -20, bottom: -30 },
     ctaDecor2: { position: 'absolute', width: 60, height: 60, borderRadius: 30, backgroundColor: 'rgba(255,255,255,0.06)', left: -10, top: -15 },
 
-    // SECTIONS
     section: { paddingHorizontal: 20, marginBottom: 28 },
     sectionLast: { marginBottom: 0 },
     sectionHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 14 },
     sectionTitle: { fontSize: 21 },
     linkText: { fontSize: 13, fontWeight: '600' },
 
-    // METRICS — Premium cards
     metricsScroll: { gap: 12, paddingRight: 4 },
     metricCard: {
-        width: 140, padding: 16, borderRadius: 18, gap: 10,
+        width: 140,
+        padding: 16,
+        borderRadius: 18,
+        gap: 10,
         ...Platform.select({
             ios: { shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.04, shadowRadius: 8 },
             android: { elevation: 2 },
@@ -442,13 +586,16 @@ const styles = StyleSheet.create({
     metricVal: { fontSize: 26, fontWeight: '800' },
     metricUnit: { fontSize: 13 },
 
-    // HEATMAP
     heatmapCard: { borderRadius: 18, borderWidth: 1, padding: 16, gap: 12 },
 
-    // RECENT WORKOUTS
     wkRow: {
-        flexDirection: 'row', alignItems: 'center', borderRadius: 16, borderWidth: 1,
-        padding: 14, marginBottom: 10, gap: 12,
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderRadius: 16,
+        borderWidth: 1,
+        padding: 14,
+        marginBottom: 10,
+        gap: 12,
         ...Platform.select({
             ios: { shadowColor: '#000', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.03, shadowRadius: 4 },
             android: { elevation: 1 },
@@ -464,9 +611,22 @@ const styles = StyleSheet.create({
     prBadge: { paddingHorizontal: 8, paddingVertical: 3, borderRadius: 8 },
     prText: { fontSize: 10, fontWeight: '800', color: '#FFF', letterSpacing: 0.5 },
 
-    // TODAY'S PLAN
+    emptyCard: {
+        borderWidth: 1,
+        borderRadius: 16,
+        paddingHorizontal: 14,
+        paddingVertical: 18,
+    },
+    emptyCardText: {
+        fontSize: 13,
+        fontWeight: '500',
+    },
+
     todayCard: {
-        borderRadius: 18, borderWidth: 1, padding: 16, gap: 14,
+        borderRadius: 18,
+        borderWidth: 1,
+        padding: 16,
+        gap: 14,
         ...Platform.select({
             ios: { shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.04, shadowRadius: 8 },
             android: { elevation: 2 },

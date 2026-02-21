@@ -1,48 +1,102 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image, TextInput } from 'react-native';
+import React, { useMemo, useState } from 'react';
+import {
+    View,
+    Text,
+    StyleSheet,
+    FlatList,
+    TouchableOpacity,
+    Image,
+    TextInput,
+    ActivityIndicator,
+} from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
+import { useSearchUsers, useFollowUser, useUnfollowUser } from '../../hooks/queries/useSocialQueries';
+import { useAuthStore } from '../../store/authStore';
+import type { UserProfile } from '../../api/social.api';
 
-const MOCK_USERS = [
-    { id: 1, username: 'alex_lifts', name: 'Alex Martinez', avatar: 'https://i.pravatar.cc/150?img=2', level: 32, followers: 1250 },
-    { id: 2, username: 'fit_jordan', name: 'Jordan Lee', avatar: 'https://i.pravatar.cc/150?img=3', level: 28, followers: 3420 },
-    { id: 3, username: 'sam_strength', name: 'Sam Wilson', avatar: 'https://i.pravatar.cc/150?img=4', level: 45, followers: 8900 },
-    { id: 4, username: 'taylor_fit', name: 'Taylor Smith', avatar: 'https://i.pravatar.cc/150?img=5', level: 22, followers: 520 },
-    { id: 5, username: 'casey_gains', name: 'Casey Brown', avatar: 'https://i.pravatar.cc/150?img=6', level: 38, followers: 2100 },
-    { id: 6, username: 'max_power', name: 'Max Power', avatar: 'https://i.pravatar.cc/150?img=7', level: 55, followers: 15000 },
-];
-
-const RECENT_SEARCHES = ['push ups', 'alex_lifts', 'chest workout', 'marathon training'];
+const RECENT_SEARCHES = ['strength', 'hypertrophy', 'coach'];
 
 export function SearchUsersScreen({ navigation }: any) {
     const colors = useColors();
     const insets = useSafeAreaInsets();
+    const authUserId = useAuthStore((state) => state.user?.id);
     const [search, setSearch] = useState('');
     const [recent, setRecent] = useState(RECENT_SEARCHES);
 
-    const filtered = MOCK_USERS.filter(u => u.username.toLowerCase().includes(search.toLowerCase()) || u.name.toLowerCase().includes(search.toLowerCase()));
+    const followMutation = useFollowUser();
+    const unfollowMutation = useUnfollowUser();
+    const { data, isLoading, isFetching, error } = useSearchUsers(search, search.trim().length >= 2);
 
-    const formatFollowers = (n: number) => n >= 1000 ? (n / 1000).toFixed(1) + 'K' : n.toString();
+    const users = data?.users ?? [];
+    const isMutating = followMutation.isPending || unfollowMutation.isPending;
 
-    const clearRecent = () => setRecent([]);
-
-    const renderUser = ({ item }: any) => (
-        <TouchableOpacity style={[styles.userItem, { borderBottomColor: colors.border }]} onPress={() => navigation.navigate('UserProfile', { userId: item.id })}>
-            <Image source={{ uri: item.avatar }} style={styles.avatar} />
-            <View style={styles.userInfo}>
-                <View style={styles.nameRow}>
-                    <Text style={[styles.username, { color: colors.foreground }]}>@{item.username}</Text>
-                    <View style={[styles.levelBadge, { backgroundColor: colors.muted }]}>
-                        <Text style={[styles.level, { color: colors.primary.main }]}>Lv.{item.level}</Text>
-                    </View>
-                </View>
-                <Text style={[styles.name, { color: colors.mutedForeground }]}>{item.name}</Text>
-            </View>
-            <Text style={[styles.followers, { color: colors.mutedForeground }]}>{formatFollowers(item.followers)} followers</Text>
-        </TouchableOpacity>
+    const results = useMemo(
+        () => users.filter((user) => Number(user.id) !== Number(authUserId)),
+        [authUserId, users]
     );
+
+    const formatFollowers = (n?: number) => {
+        const count = Number(n ?? 0);
+        if (count >= 1000) return `${(count / 1000).toFixed(1)}K`;
+        return `${count}`;
+    };
+
+    const onSubmitSearch = (value: string) => {
+        const normalized = value.trim();
+        if (!normalized) return;
+        setRecent((prev) => {
+            const without = prev.filter((item) => item.toLowerCase() !== normalized.toLowerCase());
+            return [normalized, ...without].slice(0, 5);
+        });
+    };
+
+    const handleFollowToggle = (user: UserProfile) => {
+        if (user.isFollowing) {
+            unfollowMutation.mutate(user.id);
+            return;
+        }
+        followMutation.mutate(user.id);
+    };
+
+    const renderUser = ({ item }: { item: UserProfile }) => {
+        const displayName = `${item.firstName || ''} ${item.lastName || ''}`.trim() || 'User';
+        return (
+            <TouchableOpacity
+                style={[styles.userItem, { borderBottomColor: colors.border }]}
+                onPress={() => navigation.navigate('UserProfile', { userId: Number(item.id) })}
+            >
+                <Image source={{ uri: item.avatarUrl || 'https://i.pravatar.cc/150' }} style={styles.avatar} />
+                <View style={styles.userInfo}>
+                    <View style={styles.nameRow}>
+                        <Text style={[styles.username, { color: colors.foreground }]}>@{item.username || `user${item.id}`}</Text>
+                        <View style={[styles.levelBadge, { backgroundColor: colors.muted }]}>
+                            <Text style={[styles.level, { color: colors.primary.main }]}>Lv.{item.level || 1}</Text>
+                        </View>
+                    </View>
+                    <Text style={[styles.name, { color: colors.mutedForeground }]}>{displayName}</Text>
+                    <Text style={[styles.followers, { color: colors.mutedForeground }]}>
+                        {formatFollowers(item.followersCount)} followers
+                    </Text>
+                </View>
+                <TouchableOpacity
+                    style={[styles.followBtn, { backgroundColor: item.isFollowing ? colors.muted : colors.primary.main }]}
+                    onPress={() => handleFollowToggle(item)}
+                    disabled={isMutating}
+                >
+                    {isMutating ? (
+                        <ActivityIndicator size="small" color={item.isFollowing ? colors.foreground : '#FFF'} />
+                    ) : (
+                        <Text style={[styles.followText, { color: item.isFollowing ? colors.foreground : '#FFF' }]}>
+                            {item.isFollowing ? 'Following' : 'Follow'}
+                        </Text>
+                    )}
+                </TouchableOpacity>
+            </TouchableOpacity>
+        );
+    };
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
@@ -52,31 +106,68 @@ export function SearchUsersScreen({ navigation }: any) {
                 </TouchableOpacity>
                 <View style={[styles.searchBar, { backgroundColor: colors.muted, flex: 1, marginHorizontal: 12 }]}>
                     <Ionicons name="search" size={20} color={colors.mutedForeground} />
-                    <TextInput style={[styles.searchInput, { color: colors.foreground }]} placeholder="Search users..." placeholderTextColor={colors.mutedForeground} value={search} onChangeText={setSearch} autoFocus />
-                    {search.length > 0 && <TouchableOpacity onPress={() => setSearch('')}><Ionicons name="close-circle" size={20} color={colors.mutedForeground} /></TouchableOpacity>}
+                    <TextInput
+                        style={[styles.searchInput, { color: colors.foreground }]}
+                        placeholder="Search users..."
+                        placeholderTextColor={colors.mutedForeground}
+                        value={search}
+                        onChangeText={setSearch}
+                        autoFocus
+                        onSubmitEditing={(e) => onSubmitSearch(e.nativeEvent.text)}
+                        returnKeyType="search"
+                    />
+                    {search.length > 0 ? (
+                        <TouchableOpacity onPress={() => setSearch('')}>
+                            <Ionicons name="close-circle" size={20} color={colors.mutedForeground} />
+                        </TouchableOpacity>
+                    ) : null}
                 </View>
-                <TouchableOpacity><Text style={[styles.cancel, { color: colors.primary.main }]}>Cancel</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <Text style={[styles.cancel, { color: colors.primary.main }]}>Cancel</Text>
+                </TouchableOpacity>
             </View>
 
-            {search.length === 0 && recent.length > 0 && (
+            {search.trim().length < 2 ? (
                 <View style={[styles.recentSection, { backgroundColor: colors.card }]}>
                     <View style={styles.recentHeader}>
                         <Text style={[styles.recentTitle, { color: colors.foreground }]}>Recent Searches</Text>
-                        <TouchableOpacity onPress={clearRecent}><Text style={[styles.clearText, { color: colors.primary.main }]}>Clear All</Text></TouchableOpacity>
+                        <TouchableOpacity onPress={() => setRecent([])}>
+                            <Text style={[styles.clearText, { color: colors.primary.main }]}>Clear All</Text>
+                        </TouchableOpacity>
                     </View>
                     <View style={styles.recentTags}>
-                        {recent.map((term, i) => (
-                            <TouchableOpacity key={i} style={[styles.recentTag, { backgroundColor: colors.muted }]} onPress={() => setSearch(term)}>
+                        {recent.map((term) => (
+                            <TouchableOpacity key={term} style={[styles.recentTag, { backgroundColor: colors.muted }]} onPress={() => setSearch(term)}>
                                 <Ionicons name="time-outline" size={14} color={colors.mutedForeground} />
                                 <Text style={[styles.recentTagText, { color: colors.foreground }]}>{term}</Text>
                             </TouchableOpacity>
                         ))}
                     </View>
+                    <Text style={[styles.tipText, { color: colors.mutedForeground }]}>Type at least 2 characters to search.</Text>
                 </View>
-            )}
-
-            {search.length > 0 && (
-                <FlatList data={filtered} keyExtractor={(item) => item.id.toString()} renderItem={renderUser} contentContainerStyle={{ paddingBottom: insets.bottom + 20 }} ListEmptyComponent={<View style={styles.empty}><Ionicons name="search-outline" size={48} color={colors.mutedForeground} /><Text style={[styles.emptyText, { color: colors.mutedForeground }]}>No users found for "{search}"</Text></View>} />
+            ) : (
+                <FlatList
+                    data={results}
+                    keyExtractor={(item) => String(item.id)}
+                    renderItem={renderUser}
+                    contentContainerStyle={{ paddingBottom: insets.bottom + 20 }}
+                    ListHeaderComponent={
+                        isLoading || isFetching ? (
+                            <View style={styles.loadingWrap}>
+                                <ActivityIndicator size="small" color={colors.primary.main} />
+                                <Text style={[styles.loadingText, { color: colors.mutedForeground }]}>Searching users...</Text>
+                            </View>
+                        ) : null
+                    }
+                    ListEmptyComponent={
+                        <View style={styles.empty}>
+                            <Ionicons name={error ? 'alert-circle-outline' : 'search-outline'} size={48} color={error ? colors.error : colors.mutedForeground} />
+                            <Text style={[styles.emptyText, { color: error ? colors.error : colors.mutedForeground }]}>
+                                {error ? 'Failed to search users' : `No users found for "${search}"`}
+                            </Text>
+                        </View>
+                    }
+                />
             )}
         </View>
     );
@@ -96,6 +187,9 @@ const styles = StyleSheet.create({
     recentTags: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
     recentTag: { flexDirection: 'row', alignItems: 'center', gap: 6, paddingHorizontal: 12, paddingVertical: 8, borderRadius: 20 },
     recentTagText: { fontSize: 14 },
+    tipText: { marginTop: 14, fontSize: 13 },
+    loadingWrap: { flexDirection: 'row', alignItems: 'center', gap: 8, padding: 16 },
+    loadingText: { fontSize: 14 },
     userItem: { flexDirection: 'row', alignItems: 'center', padding: 16, borderBottomWidth: 1 },
     avatar: { width: 52, height: 52, borderRadius: 26, marginRight: 14 },
     userInfo: { flex: 1 },
@@ -104,7 +198,9 @@ const styles = StyleSheet.create({
     levelBadge: { paddingHorizontal: 8, paddingVertical: 2, borderRadius: 8 },
     level: { fontSize: 11, fontWeight: '700', fontFamily: fontFamilies.mono },
     name: { fontSize: 13, marginTop: 2 },
-    followers: { fontSize: 12 },
-    empty: { alignItems: 'center', paddingVertical: 60 },
+    followers: { fontSize: 12, marginTop: 2 },
+    followBtn: { minWidth: 92, height: 36, borderRadius: 18, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 14 },
+    followText: { fontSize: 13, fontWeight: '700' },
+    empty: { alignItems: 'center', paddingVertical: 60, paddingHorizontal: 24 },
     emptyText: { fontSize: 16, marginTop: 12, textAlign: 'center' },
 });

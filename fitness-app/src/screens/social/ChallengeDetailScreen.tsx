@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, Dimensions
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
-import { useChallengeDetail, useJoinChallenge, useLeaveChallenge } from '../../hooks/queries/useLeaderboardQueries';
+import { useChallengeDetail, useJoinChallenge } from '../../hooks/queries/useLeaderboardQueries';
 import { fontFamilies } from '../../theme/typography';
 import type { Challenge } from '../../api/leaderboard.api';
 
@@ -47,7 +47,6 @@ export function ChallengeDetailScreen({ route, navigation }: any) {
     // Fetch challenge data
     const { data: challenge, isLoading, error } = useChallengeDetail(challengeId);
     const joinChallengeMutation = useJoinChallenge();
-    const leaveChallengeMutation = useLeaveChallenge();
 
     // Handle loading state
     if (isLoading) {
@@ -217,17 +216,9 @@ export function ChallengeDetailScreen({ route, navigation }: any) {
             )}
             {challenge.isJoined && !challenge.isCompleted && (
                 <View style={[styles.ctaWrap, { paddingBottom: insets.bottom + 16, backgroundColor: colors.card, borderTopColor: colors.border }]}>
-                    <TouchableOpacity
-                        style={[styles.ctaBtn, styles.leaveBtn]}
-                        onPress={() => leaveChallengeMutation.mutate(challenge.id)}
-                        disabled={leaveChallengeMutation.isPending}
-                    >
-                        <View style={[styles.ctaGrad, { backgroundColor: colors.muted }]}>
-                            <Text style={[styles.ctaText, { color: colors.foreground }]}>
-                                {leaveChallengeMutation.isPending ? 'Leaving...' : 'Leave Challenge'}
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
+                    <View style={[styles.ctaGrad, { backgroundColor: colors.muted }]}>
+                        <Text style={[styles.ctaText, { color: colors.foreground }]}>You joined this challenge</Text>
+                    </View>
                 </View>
             )}
         </View>

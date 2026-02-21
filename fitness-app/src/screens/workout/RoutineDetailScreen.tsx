@@ -56,7 +56,12 @@ export function RoutineDetailScreen({ route, navigation }: any) {
             });
             navigation.navigate('ActiveWorkout');
         } catch (error: any) {
-            Alert.alert('Could not start workout', error?.message || 'Please try again.');
+            const message = String(error?.message || 'Please try again.');
+            if (message.toLowerCase().includes('already have a workout in progress')) {
+                navigation.navigate('ActiveWorkout');
+                return;
+            }
+            Alert.alert('Could not start workout', message);
         }
     };
 

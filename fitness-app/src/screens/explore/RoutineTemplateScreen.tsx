@@ -88,14 +88,21 @@ export function RoutineTemplateScreen({ navigation, route }: any) {
             return;
         }
 
+        const getTabNav = () => navigation.getParent?.() ?? navigation;
+
         try {
             await useWorkoutStore.getState().startWorkout({
                 routineId: Number(routine.id),
                 name: routine.name,
             });
-            navigation.navigate('ActiveWorkout');
+            getTabNav().navigate('WorkoutTab', { screen: 'ActiveWorkout' });
         } catch (error: any) {
-            Alert.alert('Could not start workout', error?.message || 'Please try again.');
+            const message = String(error?.message || 'Please try again.');
+            if (message.toLowerCase().includes('already have a workout in progress')) {
+                getTabNav().navigate('WorkoutTab', { screen: 'ActiveWorkout' });
+                return;
+            }
+            Alert.alert('Could not start workout', message);
         }
     };
 

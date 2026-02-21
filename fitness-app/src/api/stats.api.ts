@@ -21,6 +21,19 @@ export interface DashboardStatsResponse {
     };
 }
 
+export type VolumeTimeframe = 'week' | 'month' | 'year';
+
+export interface VolumeTrendPoint {
+    date: string;
+    volume: number;
+}
+
+export interface VolumeStatsResponse {
+    totalVolume: number;
+    trend: VolumeTrendPoint[];
+    workoutCount: number;
+}
+
 export const statsApi = {
     /**
      * Get aggregated dashboard statistics
@@ -36,5 +49,15 @@ export const statsApi = {
     getConsistencyHeatmap: async (): Promise<number[][]> => {
         const response = await apiClient.get<{ data: number[][] }>('/stats/consistency');
         return response.data.data;
-    }
+    },
+
+    /**
+     * Get volume stats for a given timeframe
+     */
+    getVolumeStats: async (timeframe: VolumeTimeframe): Promise<VolumeStatsResponse> => {
+        const response = await apiClient.get<{ data: VolumeStatsResponse }>('/stats/volume', {
+            params: { timeframe },
+        });
+        return response.data.data;
+    },
 };

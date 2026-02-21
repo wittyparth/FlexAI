@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { statsApi, DashboardStatsResponse } from '../../api/stats.api';
+import { statsApi, DashboardStatsResponse, VolumeStatsResponse, VolumeTimeframe } from '../../api/stats.api';
 
 /**
  * Hook to fetch dashboard statistics
@@ -34,5 +34,16 @@ export function useConsistencyHeatmap() {
     queryKey: ['dashboard', 'heatmap'],
     queryFn: () => statsApi.getConsistencyHeatmap(),
     staleTime: 1000 * 60 * 60, // 1 hour
+  });
+}
+
+/**
+ * Hook to fetch volume analytics
+ */
+export function useVolumeStats(timeframe: VolumeTimeframe) {
+  return useQuery<VolumeStatsResponse>({
+    queryKey: ['stats', 'volume', timeframe],
+    queryFn: () => statsApi.getVolumeStats(timeframe),
+    staleTime: 1000 * 60 * 5,
   });
 }

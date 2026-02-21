@@ -15,7 +15,7 @@ Every integration PR must update this file.
 - If scope changes, add a `Change Note` entry before implementation.
 
 ## Current Status
-- Current Phase: Phase 7
+- Current Phase: Phase 8
 - Overall Completion: 99%
 - Blockers: Global TypeScript type drift outside current integration scope (auth/home/theme typing mismatches) still prevents clean `tsc`.
 
@@ -195,7 +195,7 @@ Every integration PR must update this file.
   - [x] Added robust feed response normalization for raw/envelope payloads and `_count` fallback parsing in `feed.api.ts`.
   - [x] Normalized social post/comment user fields with safe username and id/date coercion.
   - [x] Improved `getUserPosts` fallback by combining my-feed + global-feed sources and filtering by target user id.
-- [ ] Fix leaderboards/challenges endpoint paths and params.
+- [x] Fix leaderboards/challenges endpoint paths and params.
 - [x] Integrate social screens with paginated/infinite query flows.
   - [x] Replaced `SocialHomeScreen` feed tab mocks with live infinite-query feed data (`useMyFeed` with global fallback), load-more pagination, and like mutations.
   - [x] Replaced `SocialHomeScreen` leaderboard/challenges/friends tab mocks with live query data.
@@ -205,7 +205,7 @@ Every integration PR must update this file.
   - [x] Removed unsupported challenge leave CTA from `ChallengeDetailScreen` to match current backend contract (join-only).
 
 ### Acceptance
-- [ ] Social tab is fully API-backed, including posting and interactions.
+- [x] Social tab is fully API-backed, including posting and interactions.
 
 ## Phase 8 - AI Coach Integration
 ### Objectives
@@ -308,6 +308,7 @@ Every integration PR must update this file.
 - 2026-02-21 | PR: `30c99ca` | Phase: 7 | Aligned social follow/following contracts and UI with backend shapes, added follow-status query integration, and normalized user list/profile parsing to handle missing username and consistency fields safely.
 - 2026-02-21 | PR: `a952ff6` | Phase: 7 | Replaced `SocialHomeScreen` feed/leaderboard/challenges/friends mock datasets with live query data, hardened feed API normalization and user-post fallback filtering, and aligned `PostDetail`/followers/following navigation contracts.
 - 2026-02-21 | PR: `f5fd697` | Phase: 7 | Replaced social search/activity mock screens with live backend query flows (search aggregation and notifications), added notifications query hooks/envelope parsing normalization, and removed unsupported leave-challenge action from challenge detail.
+- 2026-02-21 | PR: `N/A` | Phase: 7 | Completed leaderboard/challenge contract integration by adding user-specific challenge flags/progress (`isJoined`, `currentValue`, `isCompleted`) from backend, aligning frontend period/metric-to-type mapping, and hardening join/detail/list challenge UX against backend response shapes.
 
 ## Change Notes
 - 2026-02-20: Added mandatory backend persistence of `workoutInterests` in onboarding (Phase 2).

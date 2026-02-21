@@ -27,6 +27,11 @@ const getDaysLeft = (endDate: string): number => {
     return Math.max(0, diffDays);
 };
 
+const formatParticipants = (count: number): string => {
+    if (count >= 1000) return `${(count / 1000).toFixed(1)}K`;
+    return String(count);
+};
+
 // Helper to format date
 const formatDate = (dateStr: string): string => {
     const date = new Date(dateStr);
@@ -110,9 +115,7 @@ export function ChallengeDetailScreen({ route, navigation }: any) {
                     {/* Stats Row */}
                     <View style={[styles.statsRow, { backgroundColor: colors.card, borderColor: colors.border }]}>
                         <View style={styles.stat}>
-                            <Text style={[styles.statValue, { color: colors.foreground }]}>
-                                {(challenge.participantsCount / 1000).toFixed(1)}K
-                            </Text>
+                            <Text style={[styles.statValue, { color: colors.foreground }]}>{formatParticipants(challenge.participantsCount)}</Text>
                             <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>Participants</Text>
                         </View>
                         <View style={[styles.statDivider, { backgroundColor: colors.border }]} />
@@ -199,7 +202,7 @@ export function ChallengeDetailScreen({ route, navigation }: any) {
             </ScrollView>
 
             {/* CTA Button */}
-            {!challenge.isJoined && (
+            {!challenge.isJoined && !challenge.isCompleted && daysLeft > 0 && (
                 <View style={[styles.ctaWrap, { paddingBottom: insets.bottom + 16, backgroundColor: colors.card, borderTopColor: colors.border }]}>
                     <TouchableOpacity
                         style={styles.ctaBtn}

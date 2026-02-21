@@ -31,9 +31,10 @@ export class LeaderboardController {
   /**
    * Get active challenges
    */
-  async getChallenges(_req: ValidatedRequest<any>, res: Response, next: NextFunction) {
+  async getChallenges(req: ValidatedRequest<any>, res: Response, next: NextFunction) {
     try {
-      const result = await leaderboardService.getChallenges();
+      const userId = (req as any).userId!;
+      const result = await leaderboardService.getChallenges(userId);
       res.status(200).json({ success: true, data: result });
     } catch (error) {
       next(error);

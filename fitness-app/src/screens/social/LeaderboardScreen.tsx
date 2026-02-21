@@ -250,7 +250,7 @@ export function LeaderboardScreen({ navigation }: any) {
                                         </>
                                     )}
                                     {(!entry.change || entry.change === 0) && (
-                                        <Text style={[styles.changeText, { color: colors.mutedForeground }]}>—</Text>
+                                        <Text style={[styles.changeText, { color: colors.mutedForeground }]}>-</Text>
                                     )}
                                 </View>
                             </View>

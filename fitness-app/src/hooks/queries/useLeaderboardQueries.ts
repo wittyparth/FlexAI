@@ -49,11 +49,12 @@ export const useChallenges = (params?: {
 /**
  * Hook to fetch a specific challenge
  */
-export const useChallengeDetail = (challengeId: string) => {
+export const useChallengeDetail = (challengeId: string | number) => {
+    const normalizedId = String(challengeId);
     return useQuery({
-        queryKey: leaderboardKeys.challenge(challengeId),
-        queryFn: () => leaderboardApi.getChallengeById(challengeId),
-        enabled: !!challengeId,
+        queryKey: leaderboardKeys.challenge(normalizedId),
+        queryFn: () => leaderboardApi.getChallengeById(normalizedId),
+        enabled: Boolean(challengeId),
     });
 };
 

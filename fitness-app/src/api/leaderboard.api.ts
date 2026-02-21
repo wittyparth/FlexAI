@@ -80,6 +80,19 @@ export const leaderboardApi = {
         }
     },
 
+    mapParamsToType(
+        metric?: LeaderboardMetric,
+        period?: LeaderboardPeriod
+    ): 'strength' | 'volume' | 'consistency' | 'weekly' {
+        if (metric) {
+            return leaderboardApi.mapMetricToType(metric);
+        }
+
+        if (period === 'weekly') return 'weekly';
+        if (period === 'monthly') return 'consistency';
+        return 'strength';
+    },
+
     /**
      * Get leaderboard rankings
      */
@@ -89,7 +102,7 @@ export const leaderboardApi = {
         page?: number;
         limit?: number;
     }): Promise<RankingsResponse> => {
-        const type = leaderboardApi.mapMetricToType(params?.metric);
+        const type = leaderboardApi.mapParamsToType(params?.metric, params?.period);
         const response = await apiClient.get<{ success: boolean; data: any[] }>(
             `/leaderboards/rankings/${type}`,
             { params: { limit: params?.limit } }
@@ -134,10 +147,13 @@ export const leaderboardApi = {
             name: challenge.name,
             description: challenge.description,
             type: challenge.challengeType ?? 'custom',
-            targetValue: challenge.targetValue ?? 0,
+            targetValue: Number(challenge.targetValue ?? 0),
+            currentValue: Number(challenge.currentValue ?? 0),
             startDate: challenge.startDate,
             endDate: challenge.endDate,
-            participantsCount: challenge._count?.participants ?? 0,
+            participantsCount: Number(challenge.participantsCount ?? challenge._count?.participants ?? 0),
+            isJoined: Boolean(challenge.isJoined),
+            isCompleted: Boolean(challenge.isCompleted),
         })) as Challenge[];
 
         return {
@@ -167,10 +183,18 @@ export const leaderboardApi = {
      * Join a challenge
      */
     joinChallenge: async (challengeId: string): Promise<{ success: boolean }> => {
-        const response = await apiClient.post<{ success: boolean }>(
-            `/leaderboards/challenges/${challengeId}/join`
-        );
-        return response.data;
+        try {
+            const response = await apiClient.post<{ success: boolean }>(
+                `/leaderboards/challenges/${challengeId}/join`
+            );
+            return { success: Boolean(response.data?.success ?? true) };
+        } catch (error: any) {
+            const message = String(error?.message ?? '').toLowerCase();
+            if (message.includes('already joined')) {
+                return { success: true };
+            }
+            throw error;
+        }
     },
 
     /**

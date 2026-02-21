@@ -115,15 +115,40 @@ export class LeaderboardService {
   /**
    * Get active challenges
    */
-  async getChallenges() {
-    return prisma.challenge.findMany({
+  async getChallenges(userId?: number) {
+    const challenges = await prisma.challenge.findMany({
       where: { isActive: true },
       include: {
         _count: {
           select: { participants: true }
-        }
+        },
+        participants: userId
+          ? {
+              where: { userId },
+              select: {
+                id: true,
+                progress: true
+              }
+            }
+          : {
+              take: 0
+            }
       },
       orderBy: { endDate: 'asc' }
+    });
+
+    return challenges.map((challenge: any) => {
+      const participant = challenge.participants?.[0];
+      const currentValue = participant ? Number(participant.progress ?? 0) : 0;
+      const targetValue = challenge.targetValue != null ? Number(challenge.targetValue) : 0;
+      const isCompleted = targetValue > 0 ? currentValue >= targetValue : false;
+
+      return {
+        ...challenge,
+        currentValue,
+        isJoined: Boolean(participant),
+        isCompleted
+      };
     });
   }
 }

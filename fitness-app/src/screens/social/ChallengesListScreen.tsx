@@ -19,17 +19,24 @@ const getDaysLeft = (endDate: string): number => {
 
 // Helper to calculate progress percentage
 const getProgress = (challenge: Challenge): number => {
-    if (!challenge.currentValue || !challenge.targetValue) return 0;
-    return Math.round((challenge.currentValue / challenge.targetValue) * 100);
+    if (challenge.currentValue === undefined || challenge.targetValue <= 0) return 0;
+    return Math.min(100, Math.round((challenge.currentValue / challenge.targetValue) * 100));
 };
 
 // Helper to get challenge status
 const getChallengeStatus = (challenge: Challenge): 'active' | 'upcoming' | 'completed' => {
     if (challenge.isCompleted) return 'completed';
     const now = new Date();
+    const end = new Date(challenge.endDate);
     const start = new Date(challenge.startDate);
+    if (end <= now) return 'completed';
     if (start > now) return 'upcoming';
     return 'active';
+};
+
+const formatParticipants = (count: number): string => {
+    if (count >= 1000) return `${(count / 1000).toFixed(1)}K participants`;
+    return `${count} participants`;
 };
 
 // Placeholder images for challenges
@@ -127,7 +134,7 @@ export function ChallengesListScreen({ navigation }: any) {
                         <TouchableOpacity
                             key={c.id}
                             style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}
-                            onPress={() => navigation.navigate('ChallengeDetail', { challengeId: c.id })}
+                            onPress={() => navigation.navigate('ChallengeDetail', { challengeId: Number(c.id) })}
                         >
                             <View style={styles.imgWrap}>
                                 <Image source={{ uri: imageUrl }} style={styles.img} />
@@ -149,7 +156,7 @@ export function ChallengesListScreen({ navigation }: any) {
                                 <Text style={[styles.cardTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>{c.name}</Text>
                                 <Text style={[styles.cardDesc, { color: colors.mutedForeground }]}>{c.description}</Text>
                                 <Text style={[styles.participants, { color: colors.mutedForeground }]}>
-                                    {(c.participantsCount / 1000).toFixed(1)}K participants
+                                    {formatParticipants(c.participantsCount)}
                                 </Text>
                                 {status === 'active' && c.isJoined && (
                                     <View style={styles.progressWrap}>
@@ -164,10 +171,11 @@ export function ChallengesListScreen({ navigation }: any) {
                                         </View>
                                     </View>
                                 )}
-                                {status === 'upcoming' && !c.isJoined && (
+                                {status !== 'completed' && !c.isJoined && (
                                     <TouchableOpacity
                                         style={styles.joinBtn}
                                         onPress={() => joinChallengeMutation.mutate(c.id)}
+                                        disabled={joinChallengeMutation.isPending}
                                     >
                                         <View style={styles.joinGrad}>
                                             <Text style={styles.joinText}>

@@ -191,9 +191,15 @@ Every integration PR must update this file.
   - [x] Normalized follower/following payloads into stable frontend user shape (safe username fallback, id typing, level/xp defaults).
   - [x] Added follow-status integration (`/social/follow-status/:userId`) and query hook for per-user follow state resolution.
   - [x] Hardened social followers/following/profile UI to avoid missing-username crashes and stale query-key collisions for paginated params.
-- [ ] Fix feed endpoints (global/following/posts/comments/likes).
+- [x] Fix feed endpoints (global/following/posts/comments/likes).
+  - [x] Added robust feed response normalization for raw/envelope payloads and `_count` fallback parsing in `feed.api.ts`.
+  - [x] Normalized social post/comment user fields with safe username and id/date coercion.
+  - [x] Improved `getUserPosts` fallback by combining my-feed + global-feed sources and filtering by target user id.
 - [ ] Fix leaderboards/challenges endpoint paths and params.
 - [ ] Integrate social screens with paginated/infinite query flows.
+  - [x] Replaced `SocialHomeScreen` feed tab mocks with live infinite-query feed data (`useMyFeed` with global fallback), load-more pagination, and like mutations.
+  - [x] Replaced `SocialHomeScreen` leaderboard/challenges/friends tab mocks with live query data.
+  - [x] Aligned social navigation contracts for `PostDetail` payload and follower/following route names to remove runtime route mismatches.
 
 ### Acceptance
 - [ ] Social tab is fully API-backed, including posting and interactions.
@@ -297,6 +303,7 @@ Every integration PR must update this file.
 - 2026-02-21 | PR: `355f4c4` | Phase: 3/6 UX | Passed live workout completion metrics into `WorkoutSummaryScreen` from active session, expanded summary params typing, and added session muscle-map visualization for completed workouts.
 - 2026-02-21 | PR: `cd85800` | Phase: 6 | Replaced `UserProfileScreen` mock achievements/XP progress with live gamification achievements preview and computed level progress, closing remaining profile mock dependency.
 - 2026-02-21 | PR: `30c99ca` | Phase: 7 | Aligned social follow/following contracts and UI with backend shapes, added follow-status query integration, and normalized user list/profile parsing to handle missing username and consistency fields safely.
+- 2026-02-21 | PR: `a952ff6` | Phase: 7 | Replaced `SocialHomeScreen` feed/leaderboard/challenges/friends mock datasets with live query data, hardened feed API normalization and user-post fallback filtering, and aligned `PostDetail`/followers/following navigation contracts.
 
 ## Change Notes
 - 2026-02-20: Added mandatory backend persistence of `workoutInterests` in onboarding (Phase 2).

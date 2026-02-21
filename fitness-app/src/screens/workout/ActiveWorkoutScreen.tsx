@@ -19,17 +19,20 @@ import { ExerciseCard } from '../../components/active-workout/ExerciseCard';
 import { RestTimerOverlay } from '../../components/active-workout/RestTimerOverlay';
 import { TimerSettingsModal } from '../../components/active-workout/TimerSettingsModal';
 import { MuscleHighlighterCard } from '../../components/muscles/MuscleHighlighterCard';
+import { useWorkoutStore } from '../../store/workoutStore';
 
 export function ActiveWorkoutScreen({ navigation, route }: any) {
   const colors = useColors();
   const insets = useSafeAreaInsets();
   const scrollRef = useRef<ScrollView>(null);
   const lastHandledSelectionKeyRef = useRef<string | null>(null);
+  const workoutSyncAttemptRef = useRef<number | null>(null);
 
   const [cancelModalVisible, setCancelModalVisible] = React.useState(false);
   const [completeModalVisible, setCompleteModalVisible] = React.useState(false);
   const [settingsModalVisible, setSettingsModalVisible] = React.useState(false);
   const [isMuscleMapCollapsed, setIsMuscleMapCollapsed] = React.useState(false);
+  const [isSyncingWorkout, setIsSyncingWorkout] = React.useState(false);
 
   const {
     // Store data
@@ -171,6 +174,35 @@ export function ActiveWorkoutScreen({ navigation, route }: any) {
     }
   }, [isResting, restRemaining, stopRest]);
 
+  // If we have an active workout but no local exercises, force a one-time sync before rendering empty state.
+  useEffect(() => {
+    if (!activeWorkoutId) {
+      workoutSyncAttemptRef.current = null;
+      setIsSyncingWorkout(false);
+      return;
+    }
+
+    if (exercises.length > 0) {
+      workoutSyncAttemptRef.current = activeWorkoutId;
+      setIsSyncingWorkout(false);
+      return;
+    }
+
+    if (workoutSyncAttemptRef.current === activeWorkoutId) {
+      return;
+    }
+
+    workoutSyncAttemptRef.current = activeWorkoutId;
+    setIsSyncingWorkout(true);
+
+    useWorkoutStore
+      .getState()
+      .syncCurrentWorkout()
+      .finally(() => {
+        setIsSyncingWorkout(false);
+      });
+  }, [activeWorkoutId, exercises.length]);
+
   // ─── Handlers ───
   const handleComplete = useCallback(() => {
     setCompleteModalVisible(true);
@@ -246,7 +278,25 @@ export function ActiveWorkoutScreen({ navigation, route }: any) {
   }, [exercises, setsByExercise]);
 
   // ─── Empty state ───
-  if (!activeWorkoutId || exercises.length === 0) {
+  if (!activeWorkoutId) {
+    return (
+      <View style={[styles.container, { backgroundColor: colors.background, justifyContent: 'center', alignItems: 'center' }]}>
+        <MaterialCommunityIcons name="dumbbell" size={48} color={colors.mutedForeground} />
+        <Text style={[styles.emptyText, { color: colors.mutedForeground }]}>No active workout found</Text>
+      </View>
+    );
+  }
+
+  if (exercises.length === 0) {
+    if (isLoading || isSyncingWorkout) {
+      return (
+        <View style={[styles.container, { backgroundColor: colors.background, justifyContent: 'center', alignItems: 'center' }]}>
+          <ActivityIndicator size="large" color={colors.primary.main} />
+          <Text style={[styles.emptyText, { color: colors.mutedForeground, marginTop: 12 }]}>Syncing workout...</Text>
+        </View>
+      );
+    }
+
     return (
       <View style={[styles.container, { backgroundColor: colors.background, justifyContent: 'center', alignItems: 'center' }]}>
         <MaterialCommunityIcons name="dumbbell" size={48} color={colors.mutedForeground} />

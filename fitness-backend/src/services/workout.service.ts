@@ -496,8 +496,9 @@ export const workoutService = {
    * Get current in-progress workout
    */
   async getCurrentWorkout(userId: number) {
-    const workout = await prisma.workout.findFirst({
+    const inProgressWorkouts = await prisma.workout.findMany({
       where: { userId, status: 'in_progress' },
+      orderBy: { startedAt: 'desc' },
       include: {
         exercises: {
           orderBy: { orderIndex: 'asc' },
@@ -511,7 +512,14 @@ export const workoutService = {
       },
     });
 
-    return workout;
+    if (inProgressWorkouts.length === 0) {
+      return null;
+    }
+
+    // Prefer non-empty sessions to avoid opening stale empty workouts when duplicates exist.
+    const workoutWithExercises = inProgressWorkouts.find((workout) => workout.exercises.length > 0);
+
+    return workoutWithExercises ?? inProgressWorkouts[0];
   },
 
   // Helper methods

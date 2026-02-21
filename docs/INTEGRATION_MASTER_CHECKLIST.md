@@ -15,7 +15,7 @@ Every integration PR must update this file.
 - If scope changes, add a `Change Note` entry before implementation.
 
 ## Current Status
-- Current Phase: Phase 5
+- Current Phase: Phase 6
 - Overall Completion: 99%
 - Blockers: Global TypeScript type drift outside current integration scope (auth/home/theme typing mismatches) still prevents clean `tsc`.
 
@@ -140,19 +140,23 @@ Every integration PR must update this file.
 - Replace analytics/profile metrics mocks with API-backed data.
 
 ### Checklist
-- [ ] Integrate stats endpoints in analytics screens.
+- [x] Integrate stats endpoints in analytics screens.
   - [x] `AnalyticsHubScreen`: quick stats + volume snapshot now derive from `/stats/dashboard` (`useDashboardStats`) and backend recent workouts.
   - [x] `VolumeAnalyticsScreen`: replaced mock volume cards/chart/lists with API-backed `/stats/volume` period queries (`week|month|year`) and live 7D/30D/1Y chart buckets.
+  - [x] `PersonalRecordsScreen`: replaced mock records/cards with live `/stats/prs` data, type-distribution chart, and filterable PR list.
+  - [x] `StrengthProgressionScreen`: replaced mock exercise progression with live `/stats/strength-progression/:exerciseId` chart + exercise selector from real PR history.
+  - [x] `MuscleDistributionScreen`: replaced mock pie/breakdown/alerts with live `/stats/muscle-distribution` data and imbalance insights.
+  - [x] `MuscleHeatmapScreen`: replaced static heatmap tiles and insights with live muscle-distribution intensity mapping.
 - [x] Integrate body tracking endpoints (weight/measurements/photos).
   - [x] `BodyTrackingHubScreen`: replaced mock cards/trend/recent logs with live weight/measurement/photo data and chart shaping.
   - [x] `WeightLogScreen`: replaced mock weight trend/history with API-backed chart/history and live logging mutation.
   - [x] `MeasurementsScreen`: replaced mock measurement cards with API-backed latest/previous deltas and live save flow.
   - [x] `ProgressPhotosScreen`: completed API-backed read + log flow (`/body/photos`) with pose/notes support.
 - [x] Normalize units and chart payload shaping.
-- [ ] Ensure PR/volume/consistency metrics reflect completed workouts.
+- [x] Ensure PR/volume/consistency metrics reflect completed workouts.
 
 ### Acceptance
-- [ ] Analytics and body screens are fully API-backed and consistent.
+- [x] Analytics and body screens are fully API-backed and consistent.
 
 ## Phase 6 - Profile + Gamification Integration
 ### Objectives
@@ -270,6 +274,7 @@ Every integration PR must update this file.
 - 2026-02-20 | PR: `aa8ad31` | Phase: 3 | Replaced `useExerciseQueries` mock-backed implementations with backend `exerciseApi` calls for filters, featured, search, and exercise detail lookups.
 - 2026-02-20 | PR: `9215982` | Phase: 5 | Integrated all body tracking screens with backend body endpoints, normalized body API response mapping (`imageUrl/pose`, measurement field aliases), switched charts/stats to live data using `react-native-gifted-charts`, and enabled end-to-end weight/measurement/photo logging mutations.
 - 2026-02-20 | PR: `0d9f3b0` | Phase: 5 | Integrated `/stats/volume` into `VolumeAnalyticsScreen`, added typed volume stats query APIs/hooks, and replaced mock trend/breakdown/comparison sections with charted live data buckets.
+- 2026-02-21 | PR: `7cce041` | Phase: 5 | Integrated remaining analytics screens with live stats APIs (`/stats/prs`, `/stats/strength-progression/:exerciseId`, `/stats/muscle-distribution`), removed analytics mock datasets, and upgraded charts/stat cards to API-backed data across PR, strength, distribution, and heatmap flows.
 
 ## Change Notes
 - 2026-02-20: Added mandatory backend persistence of `workoutInterests` in onboarding (Phase 2).

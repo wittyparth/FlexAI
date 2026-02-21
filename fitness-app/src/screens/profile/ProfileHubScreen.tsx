@@ -12,14 +12,14 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { useQuery } from '@tanstack/react-query';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { WorkoutHeatmap } from '../../components/WorkoutHeatmap';
+import { MuscleHighlighterCard } from '../../components/muscles/MuscleHighlighterCard';
 import { useUserQueries } from '../../hooks/queries/useUserQueries';
 import { useDashboardStats, useMuscleDistribution, usePersonalRecords } from '../../hooks/queries/useStatsQueries';
 import { useWorkouts } from '../../hooks/queries/useWorkoutQueries';
-import { gamificationApi } from '../../api/gamification.api';
+import { useAchievements, useGamificationStats } from '../../hooks/queries/useGamificationQueries';
 import { useAuthQueries } from '../../hooks/queries/useAuthQueries';
 
 const { width } = Dimensions.get('window');
@@ -164,12 +164,8 @@ export function ProfileHubScreen({ navigation }: any) {
     const { data: prRecords = [] } = usePersonalRecords();
     const { data: muscleDistribution } = useMuscleDistribution();
     const { data: workoutsResponse } = useWorkouts({ page: 1, limit: 500, status: 'completed' });
-
-    const { data: gamificationStats } = useQuery({
-        queryKey: ['gamification', 'stats', 'profile-hub'],
-        queryFn: gamificationApi.getStats,
-        staleTime: 1000 * 60 * 5,
-    });
+    const { data: gamificationStats } = useGamificationStats();
+    const { data: achievements = [] } = useAchievements();
 
     const { logoutMutation } = useAuthQueries();
 
@@ -192,6 +188,7 @@ export function ProfileHubScreen({ navigation }: any) {
     const xp = gamificationStats?.currentLevelXp ?? 0;
     const xpTarget = gamificationStats?.nextLevelXp ?? 100;
     const xpProgress = Math.max(0, Math.min(100, (gamificationStats?.levelProgress ?? 0) * 100));
+    const unlockedAchievements = achievements.filter((achievement) => achievement.unlocked || achievement.unlockedAt).length;
 
     const totalWorkoutCount = completedWorkouts.length;
     const totalVolume = completedWorkouts.reduce((sum: number, workout: any) => sum + Number(workout?.totalVolume ?? 0), 0);
@@ -276,6 +273,12 @@ export function ProfileHubScreen({ navigation }: any) {
                                 <Ionicons name="flame" size={13} color={colors.warning} />
                                 <Text style={[styles.streakPillText, { color: colors.warning }]}>{streak} day streak</Text>
                             </View>
+                            <View style={[styles.achievementPill, { backgroundColor: `${colors.primary.main}20` }]}>
+                                <Ionicons name="trophy-outline" size={13} color={colors.primary.main} />
+                                <Text style={[styles.achievementPillText, { color: colors.primary.main }]}>
+                                    {unlockedAchievements}/{achievements.length} achievements
+                                </Text>
+                            </View>
                         </View>
                     </View>
 
@@ -319,6 +322,13 @@ export function ProfileHubScreen({ navigation }: any) {
 
                 <Animated.View style={[styles.section, { opacity: fadeAnim }]}> 
                     <SectionHeader title="Analytics" onViewAll={() => goToAnalytics('AnalyticsHub')} />
+
+                    <MuscleHighlighterCard
+                        title="Muscle Distribution Snapshot"
+                        subtitle="Your current training emphasis from recent completed workouts."
+                        muscleSets={muscleDistribution?.muscleSets}
+                        compact
+                    />
 
                     <View style={styles.analyticsSummaryRow}>
                         {analyticsSummary.map((item) => (
@@ -399,6 +409,8 @@ const styles = StyleSheet.create({
     heroHandle: { fontSize: 14 },
     streakPill: { flexDirection: 'row', alignItems: 'center', gap: 4, paddingHorizontal: 10, paddingVertical: 4, borderRadius: 20, alignSelf: 'flex-start' },
     streakPillText: { fontSize: 13, fontWeight: '600' },
+    achievementPill: { flexDirection: 'row', alignItems: 'center', gap: 4, paddingHorizontal: 10, paddingVertical: 4, borderRadius: 20, alignSelf: 'flex-start' },
+    achievementPillText: { fontSize: 12, fontWeight: '600' },
     xpSection: { gap: 8 },
     xpLabelRow: { flexDirection: 'row', justifyContent: 'space-between' },
     xpLevelText: { fontSize: 13, fontWeight: '700' },
@@ -431,7 +443,7 @@ const styles = StyleSheet.create({
     viewAllText: { fontSize: 13, fontWeight: '600' },
     heatmapCard: { borderRadius: 16, borderWidth: 1, paddingHorizontal: 16, paddingVertical: 16, overflow: 'hidden' },
 
-    analyticsSummaryRow: { flexDirection: 'row', gap: 10, marginBottom: 12 },
+    analyticsSummaryRow: { flexDirection: 'row', gap: 10, marginTop: 12, marginBottom: 12 },
     analyticsMiniCard: { flex: 1, borderRadius: 14, borderWidth: 1, padding: 12, alignItems: 'center', gap: 6 },
     analyticsValue: { fontSize: 16, fontWeight: '800' },
     analyticsLabel: { fontSize: 10, fontWeight: '500', textAlign: 'center' },

@@ -15,6 +15,7 @@ import { Ionicons, MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-ico
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { useExerciseDetail } from '../../hooks/queries/useExerciseQueries';
+import { MuscleHighlighterCard } from '../../components/muscles/MuscleHighlighterCard';
 
 const { width } = Dimensions.get('window');
 
@@ -202,6 +203,11 @@ export function ExerciseDetailScreen({ navigation, route }: any) {
 
                             <View style={styles.section}>
                                 <Text style={[styles.sectionTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Muscles Worked</Text>
+                                <MuscleHighlighterCard
+                                    subtitle="Primary and secondary muscles activated by this movement."
+                                    muscles={[exercise.muscleGroup, ...(exercise.secondaryMuscleGroups || [])]}
+                                    compact
+                                />
                                 <View style={styles.muscleBubbles}>
                                     <View style={[styles.muscleBubble, { backgroundColor: colors.primary.main + '10', borderColor: colors.primary.main }]}>
                                         <Text style={[styles.muscleLabel, { color: colors.primary.main }]}>Primary</Text>
@@ -453,6 +459,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap',
         gap: 12,
+        marginTop: 12,
     },
     muscleBubble: {
         paddingHorizontal: 16,

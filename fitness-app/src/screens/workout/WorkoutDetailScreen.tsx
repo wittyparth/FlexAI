@@ -14,6 +14,7 @@ import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useColors, useWorkout, useDeleteWorkout } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { Workout, WorkoutExercise, WorkoutSet } from '../../types/backend.types';
+import { MuscleHighlighterCard } from '../../components/muscles/MuscleHighlighterCard';
 
 // ============================================================================
 // HELPER FUNCTIONS
@@ -107,6 +108,28 @@ function getSetTypeLabel(setType: string): string {
     }
 }
 
+function buildWorkoutMuscleSets(workout: Workout): Record<string, number> {
+    const distribution: Record<string, number> = {};
+
+    workout.exercises?.forEach((workoutExercise: WorkoutExercise) => {
+        const primary = workoutExercise.exercise?.muscleGroup;
+        if (!primary) return;
+
+        const performedSets = (workoutExercise.sets || []).length;
+        const targetSets = Number(workoutExercise.targetSets || 0);
+        const baseScore = Math.max(1, performedSets, targetSets);
+
+        distribution[primary] = (distribution[primary] ?? 0) + baseScore;
+
+        const secondary = workoutExercise.exercise?.secondaryMuscleGroups || [];
+        secondary.forEach((muscle) => {
+            distribution[muscle] = (distribution[muscle] ?? 0) + baseScore * 0.5;
+        });
+    });
+
+    return distribution;
+}
+
 // ============================================================================
 // COMPONENT
 // ============================================================================
@@ -120,6 +143,7 @@ export function WorkoutDetailScreen({ route, navigation }: any) {
 
     const workout = workoutResponse?.data;
     const stats = workout ? calculateWorkoutStats(workout) : null;
+    const workoutMuscleSets = workout ? buildWorkoutMuscleSets(workout) : {};
 
     const handleShare = async () => {
         if (!workout || !stats) return;
@@ -311,6 +335,15 @@ export function WorkoutDetailScreen({ route, navigation }: any) {
                         </View>
                     </View>
                 )}
+
+                <View style={styles.muscleMapSection}>
+                    <MuscleHighlighterCard
+                        title="Muscles Stimulated"
+                        subtitle="Estimated from the completed set count for this workout."
+                        muscleSets={workoutMuscleSets}
+                        compact
+                    />
+                </View>
 
                 {/* Exercise List Header */}
                 <View style={styles.sectionHeader}>
@@ -610,6 +643,10 @@ const styles = StyleSheet.create({
     topSetValue: {
         fontSize: 14,
         fontWeight: '600',
+    },
+    muscleMapSection: {
+        marginHorizontal: 16,
+        marginBottom: 24,
     },
     sectionHeader: {
         flexDirection: 'row',

@@ -14,6 +14,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { useMuscleDistribution } from '../../hooks/queries/useStatsQueries';
+import { MuscleHighlighterCard } from '../../components/muscles/MuscleHighlighterCard';
 
 const { width } = Dimensions.get('window');
 const SQUARE_SIZE = (width - 80) / 3;
@@ -217,6 +218,14 @@ export function MuscleHeatmapScreen({ navigation }: any) {
                         </View>
                     </View>
 
+                    <View style={styles.bodyMapSection}>
+                        <MuscleHighlighterCard
+                            title="Body Activation View"
+                            subtitle="Tap front/back to inspect total training load by body area."
+                            muscleSets={data?.muscleSets}
+                        />
+                    </View>
+
                     <Animated.View style={[styles.gridContainer, { opacity: fadeAnim }]}> 
                         <View style={[styles.gridCard, { backgroundColor: colors.card, borderColor: colors.border }]}> 
                             <Text style={[styles.gridTitle, { color: colors.foreground }]}>{view === 'front' ? 'Front View' : 'Back View'}</Text>
@@ -290,6 +299,7 @@ const styles = StyleSheet.create({
     periodRow: { alignItems: 'center', paddingVertical: 16 },
     periodBadge: { borderWidth: 1, borderRadius: 12, paddingHorizontal: 14, paddingVertical: 8 },
     periodText: { fontSize: 13, fontWeight: '700' },
+    bodyMapSection: { paddingHorizontal: 16 },
     gridContainer: { paddingHorizontal: 16 },
     gridCard: { padding: 20, borderRadius: 24, borderWidth: 1, alignItems: 'center' },
     gridTitle: { fontSize: 18, fontWeight: '700', marginBottom: 20 },

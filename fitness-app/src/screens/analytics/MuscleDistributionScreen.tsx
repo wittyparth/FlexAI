@@ -14,6 +14,7 @@ import { PieChart } from 'react-native-gifted-charts';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { useMuscleDistribution } from '../../hooks/queries/useStatsQueries';
+import { MuscleHighlighterCard } from '../../components/muscles/MuscleHighlighterCard';
 
 const MUSCLE_GROUP_COLORS: Record<string, string> = {
     Chest: '#6366F1',
@@ -186,6 +187,14 @@ export function MuscleDistributionScreen({ navigation }: any) {
                         <View style={[styles.periodBadge, { backgroundColor: `${colors.primary.main}15`, borderColor: `${colors.primary.main}40` }]}> 
                             <Text style={[styles.periodText, { color: colors.primary.main }]}>Last 30 Days</Text>
                         </View>
+                    </View>
+
+                    <View style={styles.section}>
+                        <MuscleHighlighterCard
+                            title="Body Activation Map"
+                            subtitle="Visualized from completed set distribution across the last 30 days."
+                            muscleSets={data?.muscleSets}
+                        />
                     </View>
 
                     <Animated.View style={[styles.chartSection, { opacity: fadeAnim }]}> 

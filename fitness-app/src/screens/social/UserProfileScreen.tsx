@@ -196,7 +196,7 @@ export function UserProfileScreen({ route, navigation }: any) {
                         {isOwnProfile ? (
                             <TouchableOpacity
                                 style={styles.followButton}
-                                onPress={() => navigation.navigate('SettingsStack', { screen: 'EditProfile' })}
+                                onPress={() => (navigation.getParent()?.getParent() ?? navigation).navigate('SettingsNavigator', { screen: 'EditProfile' })}
                             >
                                 <View style={[styles.followButtonGradient, { backgroundColor: colors.muted }]}>
                                     <Text style={[styles.followButtonText, { color: colors.foreground }]}>

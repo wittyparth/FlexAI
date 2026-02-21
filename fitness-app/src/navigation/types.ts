@@ -177,6 +177,7 @@ export type BodyTrackingStackParamList = {
 // ==========================================
 export type SettingsStackParamList = {
   Settings: undefined;
+  EditProfile: undefined;
   NotificationSettings: undefined;
   PrivacySettings: undefined;
   UnitsPreferences: undefined;

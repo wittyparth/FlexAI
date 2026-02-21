@@ -16,11 +16,11 @@ Every integration PR must update this file.
 
 ## Current Status
 - Current Phase: Phase 9 Completed
-- Overall Completion: 100%
+- Overall Completion: 99%
 - Blockers: Global TypeScript type drift outside current integration scope (auth/home/theme typing mismatches) still prevents clean `tsc`.
 
 ## Global Exit Criteria
-- [x] Frontend TypeScript passes (`tsc`) with no integration-related errors.
+- [ ] Frontend TypeScript passes (`tsc`) with no integration-related errors.
 - [x] Backend build/tests pass for touched modules.
 - [x] API contract changes are documented in `fitness-app/docs/architecture/API_CONTRACTS.md`.
 - [x] No production flow depends on mock data.

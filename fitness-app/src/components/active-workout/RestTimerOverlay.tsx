@@ -147,10 +147,16 @@ export const RestTimerOverlay: React.FC<RestTimerProps> = ({
                         <View style={styles.miniInfo}>
                             <Text style={styles.miniLabel}>REST</Text>
                             <Text style={styles.miniTimeMain}>{mins}:{secs}</Text>
+                            {isPaused && <Text style={styles.miniPausedText}>PAUSED</Text>}
                         </View>
 
                         {/* Controls */}
                         <View style={styles.miniActions}>
+                            {onPauseToggle && (
+                                <TouchableOpacity onPress={onPauseToggle} style={styles.miniBtn}>
+                                    <Ionicons name={isPaused ? 'play' : 'pause'} size={16} color="#94A3B8" />
+                                </TouchableOpacity>
+                            )}
                             <TouchableOpacity onPress={() => setMode('fullscreen')} style={styles.miniBtn}>
                                 <Ionicons name="expand" size={18} color="#94A3B8" />
                             </TouchableOpacity>
@@ -211,7 +217,12 @@ export const RestTimerOverlay: React.FC<RestTimerProps> = ({
                     {/* Minimize */}
                     <TouchableOpacity
                         style={styles.topBtn}
-                        onPress={() => setMode('minimized')}
+                        onPress={() => {
+                            if (!isPaused && onPauseToggle) {
+                                onPauseToggle();
+                            }
+                            setMode('minimized');
+                        }}
                     >
                         <Ionicons name="remove" size={20} color="#94A3B8" />
                     </TouchableOpacity>
@@ -682,6 +693,13 @@ const styles = StyleSheet.create({
         color: '#F1F5F9',
         fontFamily: fontFamilies.mono,
         lineHeight: 24,
+    },
+    miniPausedText: {
+        fontSize: 10,
+        fontWeight: '700',
+        color: '#94A3B8',
+        marginTop: 1,
+        letterSpacing: 1.1,
     },
     miniActions: {
         flexDirection: 'row',

@@ -83,8 +83,50 @@ export const FloatingWorkoutPill = memo(() => {
   };
 
   const handlePress = () => {
-    // Navigate to Workout tab's active session from the tabs container
-    navigation.navigate('WorkoutTab', { screen: 'ActiveWorkout' });
+    // Route-aware navigation through nested stacks: Root -> Main -> MainTabs -> WorkoutTab -> ActiveWorkout
+    const navChain: any[] = [];
+    let cursor: any = navigation;
+    while (cursor) {
+      navChain.push(cursor);
+      cursor = cursor.getParent?.();
+    }
+
+    for (const nav of navChain) {
+      const routeNames: string[] = nav?.getState?.()?.routeNames || [];
+
+      if (routeNames.includes('Main')) {
+        nav.navigate('Main', {
+          screen: 'MainTabs',
+          params: {
+            screen: 'WorkoutTab',
+            params: { screen: 'ActiveWorkout' },
+          },
+        });
+        return;
+      }
+
+      if (routeNames.includes('MainTabs')) {
+        nav.navigate('MainTabs', {
+          screen: 'WorkoutTab',
+          params: { screen: 'ActiveWorkout' },
+        });
+        return;
+      }
+
+      if (routeNames.includes('WorkoutTab')) {
+        nav.navigate('WorkoutTab', { screen: 'ActiveWorkout' });
+        return;
+      }
+    }
+
+    // Final fallback
+    navigation.navigate('Main', {
+      screen: 'MainTabs',
+      params: {
+        screen: 'WorkoutTab',
+        params: { screen: 'ActiveWorkout' },
+      },
+    });
   };
 
   return (

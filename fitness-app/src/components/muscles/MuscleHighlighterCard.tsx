@@ -27,17 +27,17 @@ export function MuscleHighlighterCard({
 }: MuscleHighlighterCardProps) {
   const colors = useColors();
   const [side, setSide] = useState<Side>(defaultSide);
+  const [showAllTargets, setShowAllTargets] = useState(false);
 
   const merged = useMemo(() => mergeMuscleInputs(muscleSets, muscles), [muscleSets, muscles]);
   const bodyData = useMemo(() => buildBodyHighlighterData(muscleSets, muscles), [muscleSets, muscles]);
-  const topMuscles = useMemo(
+  const sortedMuscles = useMemo(
     () =>
-      Object.entries(merged)
-        .sort((a, b) => b[1] - a[1])
-        .slice(0, 3)
-        .map(([name]) => name),
+      Object.entries(merged).sort((a, b) => b[1] - a[1]),
     [merged],
   );
+  const hasExtraTargets = sortedMuscles.length > 6;
+  const visibleMuscles = showAllTargets ? sortedMuscles : sortedMuscles.slice(0, 6);
 
   const hasData = bodyData.length > 0;
   const intensityColors = [colors.heatmap.light, colors.chart1, colors.primary.main, colors.chart4];
@@ -85,16 +85,39 @@ export function MuscleHighlighterCard({
         </Text>
       )}
 
-      {topMuscles.length > 0 && (
-        <View style={styles.topMusclesRow}>
-          {topMuscles.map((muscle) => (
-            <View key={muscle} style={[styles.muscleTag, { backgroundColor: `${colors.primary.main}15` }]}>
-              <Text style={[styles.muscleTagText, { color: colors.primary.main }]} numberOfLines={1}>
-                {muscle}
-              </Text>
-            </View>
-          ))}
+      {visibleMuscles.length > 0 && (
+        <View style={styles.targetedSection}>
+          <View style={styles.targetedHeader}>
+            <Text style={[styles.targetedTitle, { color: colors.foreground }]}>Targeted Muscles</Text>
+            {hasExtraTargets && (
+              <TouchableOpacity onPress={() => setShowAllTargets((prev) => !prev)} activeOpacity={0.8}>
+                <Text style={[styles.targetedToggleText, { color: colors.primary.main }]}>
+                  {showAllTargets ? 'Show Less' : `Show All (${sortedMuscles.length})`}
+                </Text>
+              </TouchableOpacity>
+            )}
+          </View>
+
+          <View style={styles.topMusclesRow}>
+            {visibleMuscles.map(([muscleName]) => (
+              <View key={muscleName} style={[styles.muscleTag, { backgroundColor: `${colors.primary.main}15` }]}>
+                <Text
+                  style={[styles.muscleTagText, { color: colors.primary.main }]}
+                  numberOfLines={1}
+                  ellipsizeMode="tail"
+                >
+                  {muscleName}
+                </Text>
+              </View>
+            ))}
+          </View>
         </View>
+      )}
+
+      {hasExtraTargets && showAllTargets && (
+        <TouchableOpacity style={[styles.collapseBtn, { backgroundColor: colors.muted }]} onPress={() => setShowAllTargets(false)}>
+          <Text style={[styles.collapseBtnText, { color: colors.foreground }]}>Close Expanded List</Text>
+        </TouchableOpacity>
       )}
 
       <View style={styles.legendRow}>
@@ -153,6 +176,23 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingVertical: 20,
   },
+  targetedSection: {
+    gap: 10,
+  },
+  targetedHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 8,
+  },
+  targetedTitle: {
+    fontSize: 13,
+    fontWeight: '700',
+  },
+  targetedToggleText: {
+    fontSize: 12,
+    fontWeight: '700',
+  },
   topMusclesRow: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -167,6 +207,17 @@ const styles = StyleSheet.create({
   muscleTagText: {
     fontSize: 12,
     fontWeight: '600',
+    maxWidth: 130,
+  },
+  collapseBtn: {
+    alignSelf: 'flex-start',
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+  },
+  collapseBtnText: {
+    fontSize: 11,
+    fontWeight: '700',
   },
   legendRow: {
     flexDirection: 'row',
@@ -187,4 +238,3 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
 });
-

@@ -29,6 +29,7 @@ export function ActiveWorkoutScreen({ navigation, route }: any) {
   const [cancelModalVisible, setCancelModalVisible] = React.useState(false);
   const [completeModalVisible, setCompleteModalVisible] = React.useState(false);
   const [settingsModalVisible, setSettingsModalVisible] = React.useState(false);
+  const [isMuscleMapCollapsed, setIsMuscleMapCollapsed] = React.useState(false);
 
   const {
     // Store data
@@ -40,6 +41,7 @@ export function ActiveWorkoutScreen({ navigation, route }: any) {
     isRestPaused,
     restRemaining,
     restDurationSeconds,
+    defaultTimerSeconds,
 
     // Derived
     exercises,
@@ -63,6 +65,7 @@ export function ActiveWorkoutScreen({ navigation, route }: any) {
     handleLogSet,
     handleSkipRest,
     handlePauseRest,
+    handleStartManualRest,
     handleExpandExercise,
     beginEditSet,
     cycleSetType,
@@ -313,6 +316,25 @@ export function ActiveWorkoutScreen({ navigation, route }: any) {
             </Text>
           </View>
 
+          <TouchableOpacity
+            style={[
+              styles.restBtn,
+              {
+                backgroundColor: colors.muted,
+                borderColor: colors.border,
+                opacity: isResting ? 0.65 : 1,
+              },
+            ]}
+            onPress={handleStartManualRest}
+            disabled={isResting}
+            activeOpacity={0.8}
+          >
+            <Ionicons name="timer-outline" size={14} color={colors.foreground} />
+            <Text style={[styles.restBtnText, { color: colors.foreground }]}>
+              {isResting ? 'Resting' : `Rest ${defaultTimerSeconds}s`}
+            </Text>
+          </TouchableOpacity>
+
           {/* Progress */}
           <View style={styles.statItem}>
             <Text style={[styles.statValue, { color: colors.foreground }]}>{totalSetsCompleted}</Text>
@@ -347,12 +369,31 @@ export function ActiveWorkoutScreen({ navigation, route }: any) {
         keyboardShouldPersistTaps="handled"
       >
         <View style={styles.muscleMapWrap}>
-          <MuscleHighlighterCard
-            title="Live Muscle Stimulation"
-            subtitle="Updates as you log sets, based on current workout focus."
-            muscleSets={workoutMuscleSets}
-            compact
-          />
+          <View style={[styles.muscleMapHeader, { borderBottomColor: colors.border }]}>
+            <Text style={[styles.muscleMapTitle, { color: colors.foreground }]}>Live Muscle Stimulation</Text>
+            <TouchableOpacity
+              style={[styles.muscleMapToggle, { backgroundColor: colors.muted }]}
+              onPress={() => setIsMuscleMapCollapsed((prev) => !prev)}
+              activeOpacity={0.8}
+            >
+              <Text style={[styles.muscleMapToggleText, { color: colors.foreground }]}>
+                {isMuscleMapCollapsed ? 'Expand' : 'Collapse'}
+              </Text>
+              <Ionicons
+                name={isMuscleMapCollapsed ? 'chevron-down' : 'chevron-up'}
+                size={14}
+                color={colors.foreground}
+              />
+            </TouchableOpacity>
+          </View>
+
+          {!isMuscleMapCollapsed && (
+            <MuscleHighlighterCard
+              subtitle="Updates as you log sets, based on current workout focus."
+              muscleSets={workoutMuscleSets}
+              compact
+            />
+          )}
         </View>
 
         {exercises.map((exercise) => {
@@ -535,6 +576,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 6,
   },
+  restBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    paddingHorizontal: 10,
+    height: 30,
+    borderRadius: 10,
+    borderWidth: 1,
+  },
+  restBtnText: {
+    fontSize: 11,
+    fontWeight: '700',
+    fontFamily: fontFamilies.mono,
+  },
   liveDot: {
     width: 7,
     height: 7,
@@ -580,6 +635,30 @@ const styles = StyleSheet.create({
   muscleMapWrap: {
     marginTop: 10,
     marginBottom: 12,
+    gap: 8,
+  },
+  muscleMapHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingBottom: 8,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  muscleMapTitle: {
+    fontSize: 14,
+    fontWeight: '700',
+  },
+  muscleMapToggle: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 10,
+  },
+  muscleMapToggleText: {
+    fontSize: 12,
+    fontWeight: '600',
   },
   addExerciseBtn: {
     flexDirection: 'row',

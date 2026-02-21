@@ -315,6 +315,12 @@ export function useActiveWorkout() {
     }
   }, [store.isResting, store.isRestPaused, pauseRest, resumeRest]);
 
+  const handleStartManualRest = useCallback(() => {
+    if (store.isResting) return;
+    const duration = Math.max(1, store.defaultTimerSeconds || 90);
+    startRest(duration);
+  }, [store.isResting, store.defaultTimerSeconds, startRest]);
+
   const handleExpandExercise = useCallback((exerciseId: number) => {
     dispatch({ type: 'EXPAND_EXERCISE', exerciseId });
     setCurrentExercise(exerciseId);
@@ -382,6 +388,7 @@ export function useActiveWorkout() {
     isRestPaused: store.isRestPaused,
     restRemaining,
     restDurationSeconds: store.restDurationSeconds,
+    defaultTimerSeconds: store.defaultTimerSeconds,
 
     // Derived
     exercises,
@@ -399,6 +406,7 @@ export function useActiveWorkout() {
     handleLogSet,
     handleSkipRest,
     handlePauseRest,
+    handleStartManualRest,
     handleExpandExercise,
     beginEditSet,
     cycleSetType,

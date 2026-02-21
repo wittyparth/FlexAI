@@ -15,3 +15,4 @@ export * from './queries/useExerciseQueries';
 export * from './queries/useAIQueries';
 export * from './queries/useGamificationQueries';
 export * from './queries/useNotificationsQueries';
+export * from './queries/useCoachQueries';

@@ -15,7 +15,7 @@ Every integration PR must update this file.
 - If scope changes, add a `Change Note` entry before implementation.
 
 ## Current Status
-- Current Phase: Phase 8
+- Current Phase: Phase 9
 - Overall Completion: 99%
 - Blockers: Global TypeScript type drift outside current integration scope (auth/home/theme typing mismatches) still prevents clean `tsc`.
 
@@ -212,13 +212,13 @@ Every integration PR must update this file.
 - Replace local mock coach chat with backend conversation APIs.
 
 ### Checklist
-- [ ] Integrate send message API.
-- [ ] Integrate conversation list/detail/delete APIs.
-- [ ] Remove mock response generator from production path.
-- [ ] Add timeout/error handling and fallback UX.
+- [x] Integrate send message API.
+- [x] Integrate conversation list/detail/delete APIs.
+- [x] Remove mock response generator from production path.
+- [x] Add timeout/error handling and fallback UX.
 
 ### Acceptance
-- [ ] AI coach chats persist and reload across sessions.
+- [x] AI coach chats persist and reload across sessions.
 
 ## Phase 9 - Notifications + Settings + Hardening
 ### Objectives
@@ -309,6 +309,7 @@ Every integration PR must update this file.
 - 2026-02-21 | PR: `a952ff6` | Phase: 7 | Replaced `SocialHomeScreen` feed/leaderboard/challenges/friends mock datasets with live query data, hardened feed API normalization and user-post fallback filtering, and aligned `PostDetail`/followers/following navigation contracts.
 - 2026-02-21 | PR: `f5fd697` | Phase: 7 | Replaced social search/activity mock screens with live backend query flows (search aggregation and notifications), added notifications query hooks/envelope parsing normalization, and removed unsupported leave-challenge action from challenge detail.
 - 2026-02-21 | PR: `N/A` | Phase: 7 | Completed leaderboard/challenge contract integration by adding user-specific challenge flags/progress (`isJoined`, `currentValue`, `isCompleted`) from backend, aligning frontend period/metric-to-type mapping, and hardening join/detail/list challenge UX against backend response shapes.
+- 2026-02-21 | PR: `N/A` | Phase: 8 | Replaced coach local mock store usage with API-backed coach clients/hooks (`/coach/message`, `/coach/conversations`, `/coach/conversations/:id`, delete), rewired Coach Hub/Chat/History screens to backend persistence, and added explicit timeout/error fallback UX in chat send flow.
 
 ## Change Notes
 - 2026-02-20: Added mandatory backend persistence of `workoutInterests` in onboarding (Phase 2).

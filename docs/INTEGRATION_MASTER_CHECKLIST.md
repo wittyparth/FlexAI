@@ -290,6 +290,7 @@ Every integration PR must update this file.
 - 2026-02-21 | PR: `7f48cc6` | Phase: 6 | Hardened gamification API parsing for envelope/raw responses, added shared gamification query hooks, and wired home dashboard + XP/streak screens to live streak/XP/level/achievement data.
 - 2026-02-21 | PR: `846b3bb` | Phase: 6/5 UX | Added reusable muscle highlighter body-map component (`react-native-body-highlighter`) and integrated it into profile hub, muscle analytics, exercise detail, and workout detail views using live muscle distribution/selection data.
 - 2026-02-21 | PR: `92a50e7` | Phase: 6 | Rewrote `HomeScreen` to use live backend queries for active workout, routine plan, consistency heatmap, and recent activity rows; removed production dependence on home mock datasets.
+- 2026-02-21 | PR: `355f4c4` | Phase: 3/6 UX | Passed live workout completion metrics into `WorkoutSummaryScreen` from active session, expanded summary params typing, and added session muscle-map visualization for completed workouts.
 
 ## Change Notes
 - 2026-02-20: Added mandatory backend persistence of `workoutInterests` in onboarding (Phase 2).

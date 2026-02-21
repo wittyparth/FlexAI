@@ -15,7 +15,7 @@ Every integration PR must update this file.
 - If scope changes, add a `Change Note` entry before implementation.
 
 ## Current Status
-- Current Phase: Phase 6
+- Current Phase: Phase 7
 - Overall Completion: 99%
 - Blockers: Global TypeScript type drift outside current integration scope (auth/home/theme typing mismatches) still prevents clean `tsc`.
 
@@ -163,9 +163,10 @@ Every integration PR must update this file.
 - Connect profile hub and gamification to live backend data.
 
 ### Checklist
-- [ ] Remove mock profile/dashboard data usage.
+- [x] Remove mock profile/dashboard data usage.
   - [x] `ProfileHubScreen`: removed `mockData` dependencies (`DUMMY_USER`, `PROFILE_*`, `HEATMAP_DATA`) and replaced with live profile/workout/stats/gamification queries.
   - [x] `HomeScreen`: replaced `mockData` dependencies for active workout, today plan, heatmap, and recent activity with live workout/routine/dashboard/gamification query data.
+  - [x] `UserProfileScreen`: replaced mock achievement badges and fixed XP progress width with live gamification-backed achievement preview and computed XP progress.
 - [x] Integrate profile read/update flows.
   - [x] Added API-backed `EditProfileScreen` in settings stack using `/users/me` (`useUserQueries.profileQuery` + `updateProfileMutation`).
   - [x] Fixed settings navigator typing/routes and wired `EditProfile` route end-to-end.
@@ -179,7 +180,7 @@ Every integration PR must update this file.
   - [x] Added profile hub achievement surfacing plus muscle activation snapshot card for live distribution context.
 
 ### Acceptance
-- [ ] Profile and gamification screens have no mock dependencies.
+- [x] Profile and gamification screens have no mock dependencies.
 
 ## Phase 7 - Social + Feed + Leaderboards + Challenges
 ### Objectives
@@ -291,6 +292,7 @@ Every integration PR must update this file.
 - 2026-02-21 | PR: `846b3bb` | Phase: 6/5 UX | Added reusable muscle highlighter body-map component (`react-native-body-highlighter`) and integrated it into profile hub, muscle analytics, exercise detail, and workout detail views using live muscle distribution/selection data.
 - 2026-02-21 | PR: `92a50e7` | Phase: 6 | Rewrote `HomeScreen` to use live backend queries for active workout, routine plan, consistency heatmap, and recent activity rows; removed production dependence on home mock datasets.
 - 2026-02-21 | PR: `355f4c4` | Phase: 3/6 UX | Passed live workout completion metrics into `WorkoutSummaryScreen` from active session, expanded summary params typing, and added session muscle-map visualization for completed workouts.
+- 2026-02-21 | PR: `cd85800` | Phase: 6 | Replaced `UserProfileScreen` mock achievements/XP progress with live gamification achievements preview and computed level progress, closing remaining profile mock dependency.
 
 ## Change Notes
 - 2026-02-20: Added mandatory backend persistence of `workoutInterests` in onboarding (Phase 2).

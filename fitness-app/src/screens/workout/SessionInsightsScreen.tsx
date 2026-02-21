@@ -61,7 +61,10 @@ const buildMuscleVolume = (workout: any) => {
     const exercises = Array.isArray(workout?.exercises) ? workout.exercises : [];
 
     exercises.forEach((exerciseItem: any) => {
-        const muscle = exerciseItem?.exercise?.muscleGroup || 'Other';
+        const exerciseMeta = exerciseItem?.exercise ?? {};
+        const muscle = exerciseMeta?.muscleGroup
+            || (Array.isArray(exerciseMeta?.primaryMuscleGroups) ? exerciseMeta.primaryMuscleGroups[0] : undefined)
+            || 'Other';
         const sets = Array.isArray(exerciseItem?.sets) ? exerciseItem.sets : [];
         const volume = sets.reduce((sum: number, setItem: any) => sum + (getSetWeight(setItem) * getSetReps(setItem)), 0);
         grouped.set(muscle, (grouped.get(muscle) || 0) + volume);

@@ -37,6 +37,7 @@ export function ActiveWorkoutScreen({ navigation, route }: any) {
     elapsedSeconds,
     isLoading,
     isResting,
+    isRestPaused,
     restRemaining,
     restDurationSeconds,
 
@@ -61,6 +62,7 @@ export function ActiveWorkoutScreen({ navigation, route }: any) {
     dispatch,
     handleLogSet,
     handleSkipRest,
+    handlePauseRest,
     handleExpandExercise,
     beginEditSet,
     cycleSetType,
@@ -72,6 +74,7 @@ export function ActiveWorkoutScreen({ navigation, route }: any) {
     removeExercise,
     deleteSet,
     stopRest,
+    extendRest,
 
     // Helpers
     formatTime,
@@ -204,11 +207,20 @@ export function ActiveWorkoutScreen({ navigation, route }: any) {
     return prev.id === expandedExerciseId;
   });
 
+  const handleNextExercise = useCallback(() => {
+    if (nextExerciseAfterRest?.id) {
+      handleExpandExercise(nextExerciseAfterRest.id);
+    }
+    handleSkipRest();
+  }, [nextExerciseAfterRest, handleExpandExercise, handleSkipRest]);
+
   const workoutMuscleSets = useMemo(() => {
     const distribution: Record<string, number> = {};
 
     exercises.forEach((exerciseItem: any) => {
-      const primaryMuscle = exerciseItem?.exercise?.muscleGroup;
+      const exerciseMeta = exerciseItem?.exercise ?? {};
+      const primaryMuscle = exerciseMeta?.muscleGroup
+        || (Array.isArray(exerciseMeta?.primaryMuscleGroups) ? exerciseMeta.primaryMuscleGroups[0] : undefined);
       if (!primaryMuscle) return;
 
       const completedSets = (setsByExercise[exerciseItem.id] || []).length;
@@ -219,8 +231,8 @@ export function ActiveWorkoutScreen({ navigation, route }: any) {
 
       distribution[primaryMuscle] = (distribution[primaryMuscle] ?? 0) + baseScore;
 
-      const secondary = Array.isArray(exerciseItem?.exercise?.secondaryMuscleGroups)
-        ? exerciseItem.exercise.secondaryMuscleGroups
+      const secondary = Array.isArray(exerciseMeta?.secondaryMuscleGroups)
+        ? exerciseMeta.secondaryMuscleGroups
         : [];
       secondary.forEach((muscle: string) => {
         distribution[muscle] = (distribution[muscle] ?? 0) + baseScore * 0.45;
@@ -388,13 +400,12 @@ export function ActiveWorkoutScreen({ navigation, route }: any) {
       {/* ─── REST TIMER OVERLAY ─── */}
       <RestTimerOverlay
         isVisible={isResting}
+        isPaused={isRestPaused}
         durationSeconds={restDurationSeconds}
         elapsedSeconds={restDurationSeconds - restRemaining}
-        onAddTime={(seconds) => {
-          // Extend the rest timer by dispatching to the store
-          // useWorkoutStore.getState().extendRest(seconds);
-          // For now this is a no-op — stubbed until store action is added
-        }}
+        onAddTime={(seconds) => extendRest(seconds)}
+        onPauseToggle={handlePauseRest}
+        onNextExercise={nextExerciseAfterRest ? handleNextExercise : undefined}
         onSkip={handleSkipRest}
         onClose={handleSkipRest}
         onOpenSettings={() => setSettingsModalVisible(true)}

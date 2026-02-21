@@ -3,6 +3,7 @@ import { persist, createJSONStorage } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 import { workoutApi } from '../api/workout.api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { queryClient } from '../lib/react-query';
 import { 
   StartWorkoutInput, 
   LogSetInput, 
@@ -29,6 +30,8 @@ interface WorkoutState {
   
   // Rest Timer (Global so floating pill can show it)
   isResting: boolean;
+  isRestPaused: boolean;
+  restPausedRemaining: number;
   restEndTime: string | null; // ISO Date String when rest finishes
   restDurationSeconds: number; // Original duration for display
   
@@ -61,6 +64,9 @@ interface WorkoutActions {
   // Exercise & Rest
   setCurrentExercise: (id: number) => void;
   startRest: (durationSeconds: number) => void;
+  pauseRest: () => void;
+  resumeRest: () => void;
+  extendRest: (seconds: number) => void;
   stopRest: () => void;
   
   // Timer & UI
@@ -81,6 +87,8 @@ const initialState: Omit<WorkoutState, 'exercises'|'sets'> & { exercises: any, s
   exercises: {},
   sets: {},
   isResting: false,
+  isRestPaused: false,
+  restPausedRemaining: 0,
   restEndTime: null,
   restDurationSeconds: 0,
   autoStartTimer: true,
@@ -446,6 +454,11 @@ export const useWorkoutStore = create<WorkoutState & WorkoutActions>()(
           set({ isLoading: true });
           try {
               await workoutApi.completeWorkout(activeWorkoutId, input);
+              await Promise.all([
+                queryClient.invalidateQueries({ queryKey: ['workouts'] }),
+                queryClient.invalidateQueries({ queryKey: ['stats'] }),
+                queryClient.invalidateQueries({ queryKey: ['dashboard', 'stats'] }),
+              ]);
               set(initialState);
           } catch (error: any) {
               set({ isLoading: false, error: 'Failed to complete' });
@@ -462,14 +475,58 @@ export const useWorkoutStore = create<WorkoutState & WorkoutActions>()(
         const endTime = new Date(Date.now() + durationSeconds * 1000).toISOString();
         set((state) => {
           state.isResting = true;
+          state.isRestPaused = false;
+          state.restPausedRemaining = 0;
           state.restEndTime = endTime;
           state.restDurationSeconds = durationSeconds;
+        });
+      },
+
+      pauseRest: () => {
+        set((state) => {
+          if (!state.isResting || state.isRestPaused) return;
+          const remaining = state.restEndTime
+            ? Math.max(0, Math.floor((new Date(state.restEndTime).getTime() - Date.now()) / 1000))
+            : state.restPausedRemaining;
+          state.isRestPaused = true;
+          state.restPausedRemaining = remaining;
+          state.restEndTime = null;
+        });
+      },
+
+      resumeRest: () => {
+        set((state) => {
+          if (!state.isResting || !state.isRestPaused) return;
+          const remaining = Math.max(1, state.restPausedRemaining || state.restDurationSeconds || 1);
+          state.isRestPaused = false;
+          state.restEndTime = new Date(Date.now() + remaining * 1000).toISOString();
+        });
+      },
+
+      extendRest: (seconds) => {
+        if (!Number.isFinite(seconds) || seconds === 0) return;
+
+        set((state) => {
+          if (!state.isResting) return;
+
+          const nextDuration = Math.max(1, state.restDurationSeconds + seconds);
+          state.restDurationSeconds = nextDuration;
+
+          if (state.isRestPaused) {
+            state.restPausedRemaining = Math.max(1, state.restPausedRemaining + seconds);
+            return;
+          }
+
+          const baseEndTime = state.restEndTime ? new Date(state.restEndTime).getTime() : Date.now();
+          state.restEndTime = new Date(baseEndTime + seconds * 1000).toISOString();
         });
       },
 
       stopRest: () => {
         set((state) => {
           state.isResting = false;
+          state.isRestPaused = false;
+          state.restPausedRemaining = 0;
           state.restEndTime = null;
           state.restDurationSeconds = 0;
         });
@@ -509,6 +566,8 @@ export const useWorkoutStore = create<WorkoutState & WorkoutActions>()(
           exercises: state.exercises,
           sets: state.sets,
           isResting: state.isResting,
+          isRestPaused: state.isRestPaused,
+          restPausedRemaining: state.restPausedRemaining,
           restEndTime: state.restEndTime,
           restDurationSeconds: state.restDurationSeconds,
           autoStartTimer: state.autoStartTimer,

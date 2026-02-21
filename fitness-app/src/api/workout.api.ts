@@ -16,6 +16,33 @@ interface ApiResponse<T> {
   message?: string;
 }
 
+const normalizeExercise = (exercise: any) => {
+  if (!exercise || typeof exercise !== 'object') return exercise;
+
+  const primaryMuscleGroups = Array.isArray(exercise.primaryMuscleGroups)
+    ? exercise.primaryMuscleGroups
+    : (exercise.muscleGroup ? [exercise.muscleGroup] : []);
+  const secondaryMuscleGroups = Array.isArray(exercise.secondaryMuscleGroups)
+    ? exercise.secondaryMuscleGroups
+    : [];
+  const equipmentList = Array.isArray(exercise.equipment)
+    ? exercise.equipment
+    : (Array.isArray(exercise.equipmentList) ? exercise.equipmentList : (exercise.equipment ? [exercise.equipment] : []));
+  const media = exercise.media && typeof exercise.media === 'object' ? exercise.media : {};
+
+  return {
+    ...exercise,
+    muscleGroup: exercise.muscleGroup ?? primaryMuscleGroups[0] ?? 'Unknown',
+    primaryMuscleGroups,
+    secondaryMuscleGroups,
+    equipment: typeof exercise.equipment === 'string' ? exercise.equipment : (equipmentList[0] ?? ''),
+    equipmentList,
+    thumbnailUrl: exercise.thumbnailUrl ?? media.thumbnail ?? media.imageUrl ?? '',
+    videoUrl: exercise.videoUrl ?? media.videoUrl ?? '',
+    instructions: Array.isArray(exercise.instructions) ? exercise.instructions : [],
+  };
+};
+
 const normalizeSet = (set: any) => ({
   ...set,
   id: String(set.id),
@@ -23,6 +50,7 @@ const normalizeSet = (set: any) => ({
 
 const normalizeWorkoutExercise = (exercise: any) => ({
   ...exercise,
+  exercise: normalizeExercise(exercise?.exercise),
   sets: Array.isArray(exercise?.sets) ? exercise.sets.map(normalizeSet) : [],
 });
 

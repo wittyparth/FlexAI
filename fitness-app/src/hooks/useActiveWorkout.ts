@@ -145,6 +145,8 @@ export function useActiveWorkout() {
     status: state.status,
     currentExerciseId: state.currentExerciseId,
     isResting: state.isResting,
+    isRestPaused: state.isRestPaused,
+    restPausedRemaining: state.restPausedRemaining,
     restEndTime: state.restEndTime,
     restDurationSeconds: state.restDurationSeconds,
     autoStartTimer: state.autoStartTimer,
@@ -163,6 +165,9 @@ export function useActiveWorkout() {
     minimize,
     setCurrentExercise,
     startRest,
+    pauseRest,
+    resumeRest,
+    extendRest,
     stopRest,
   } = useWorkoutStore(useShallow(state => ({
     logSet: state.logSet,
@@ -176,6 +181,9 @@ export function useActiveWorkout() {
     minimize: state.minimize,
     setCurrentExercise: state.setCurrentExercise,
     startRest: state.startRest,
+    pauseRest: state.pauseRest,
+    resumeRest: state.resumeRest,
+    extendRest: state.extendRest,
     stopRest: state.stopRest,
   })));
 
@@ -234,10 +242,12 @@ export function useActiveWorkout() {
 
   // ──── Rest Timer Remaining ────
   const restRemaining = useMemo(() => {
-    if (!store.isResting || !store.restEndTime) return 0;
+    if (!store.isResting) return 0;
+    if (store.isRestPaused) return Math.max(0, Math.floor(store.restPausedRemaining || 0));
+    if (!store.restEndTime) return 0;
     const remaining = Math.max(0, Math.floor((new Date(store.restEndTime).getTime() - Date.now()) / 1000));
     return remaining;
-  }, [store.isResting, store.restEndTime, store.elapsedSeconds]); // elapsedSeconds triggers re-calc each second
+  }, [store.isResting, store.isRestPaused, store.restPausedRemaining, store.restEndTime, store.elapsedSeconds]); // elapsedSeconds triggers re-calc each second
 
   // ──── Actions ────
   const handleLogSet = useCallback(async (exerciseId: number) => {
@@ -295,6 +305,15 @@ export function useActiveWorkout() {
   const handleSkipRest = useCallback(() => {
     stopRest();
   }, [stopRest]);
+
+  const handlePauseRest = useCallback(() => {
+    if (!store.isResting) return;
+    if (store.isRestPaused) {
+      resumeRest();
+    } else {
+      pauseRest();
+    }
+  }, [store.isResting, store.isRestPaused, pauseRest, resumeRest]);
 
   const handleExpandExercise = useCallback((exerciseId: number) => {
     dispatch({ type: 'EXPAND_EXERCISE', exerciseId });
@@ -360,6 +379,7 @@ export function useActiveWorkout() {
     isLoading: store.isLoading,
     status: store.status,
     isResting: store.isResting,
+    isRestPaused: store.isRestPaused,
     restRemaining,
     restDurationSeconds: store.restDurationSeconds,
 
@@ -378,6 +398,7 @@ export function useActiveWorkout() {
     dispatch,
     handleLogSet,
     handleSkipRest,
+    handlePauseRest,
     handleExpandExercise,
     beginEditSet,
     cycleSetType,
@@ -391,6 +412,7 @@ export function useActiveWorkout() {
     deleteSet: storeDeleteSet,
     stopRest,
     startRest,
+    extendRest,
 
     // Helpers
     formatTime,

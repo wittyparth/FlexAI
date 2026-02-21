@@ -37,9 +37,12 @@ type TimerMode = 'fullscreen' | 'minimized';
 
 interface RestTimerProps {
     isVisible: boolean;
+    isPaused?: boolean;
     durationSeconds: number;
     elapsedSeconds: number;
     onAddTime: (seconds: number) => void;
+    onPauseToggle?: () => void;
+    onNextExercise?: () => void;
     onSkip: () => void;
     onClose: () => void;
     onOpenSettings?: () => void;
@@ -50,9 +53,12 @@ interface RestTimerProps {
 
 export const RestTimerOverlay: React.FC<RestTimerProps> = ({
     isVisible,
+    isPaused = false,
     durationSeconds,
     elapsedSeconds,
     onAddTime,
+    onPauseToggle,
+    onNextExercise,
     onSkip,
     onClose,
     onOpenSettings,
@@ -193,6 +199,15 @@ export const RestTimerOverlay: React.FC<RestTimerProps> = ({
                         </TouchableOpacity>
                     )}
 
+                    {onPauseToggle && (
+                        <TouchableOpacity
+                            style={styles.topBtn}
+                            onPress={onPauseToggle}
+                        >
+                            <Ionicons name={isPaused ? 'play' : 'pause'} size={20} color="#94A3B8" />
+                        </TouchableOpacity>
+                    )}
+
                     {/* Minimize */}
                     <TouchableOpacity
                         style={styles.topBtn}
@@ -255,7 +270,7 @@ export const RestTimerOverlay: React.FC<RestTimerProps> = ({
                 {/* Center Timer Text */}
                 <View style={styles.timerCenter}>
                     <Text style={styles.timerDigits}>{mins}:{secs}</Text>
-                    <Text style={styles.timerSubLabel}>RECOVERY</Text>
+                    <Text style={styles.timerSubLabel}>{isPaused ? 'PAUSED' : 'RECOVERY'}</Text>
 
                     {/* Progress % */}
                     <View style={styles.progressBadge}>
@@ -268,7 +283,13 @@ export const RestTimerOverlay: React.FC<RestTimerProps> = ({
 
             {/* ── CONTROLS ── */}
             <Animated.View
-                style={[styles.controls, { transform: [{ translateY: slideAnim }] }]}
+                style={[
+                    styles.controls,
+                    {
+                        paddingBottom: insets.bottom + 140,
+                        transform: [{ translateY: slideAnim }],
+                    },
+                ]}
             >
                 {/* Add time buttons */}
                 <View style={styles.addTimeRow}>
@@ -296,6 +317,32 @@ export const RestTimerOverlay: React.FC<RestTimerProps> = ({
                         <Text style={styles.addTimeBtnText}>+1m</Text>
                     </TouchableOpacity>
                 </View>
+
+                {(onPauseToggle || onNextExercise) && (
+                    <View style={styles.secondaryActionRow}>
+                        {onPauseToggle && (
+                            <TouchableOpacity
+                                style={styles.secondaryActionBtn}
+                                onPress={onPauseToggle}
+                                activeOpacity={0.8}
+                            >
+                                <Ionicons name={isPaused ? 'play' : 'pause'} size={18} color="#CBD5E1" />
+                                <Text style={styles.secondaryActionText}>{isPaused ? 'RESUME' : 'PAUSE'}</Text>
+                            </TouchableOpacity>
+                        )}
+
+                        {onNextExercise && (
+                            <TouchableOpacity
+                                style={styles.secondaryActionBtn}
+                                onPress={onNextExercise}
+                                activeOpacity={0.8}
+                            >
+                                <Ionicons name="play-forward" size={18} color="#CBD5E1" />
+                                <Text style={styles.secondaryActionText}>NEXT EXERCISE</Text>
+                            </TouchableOpacity>
+                        )}
+                    </View>
+                )}
 
                 {/* Skip Button */}
                 <TouchableOpacity
@@ -457,6 +504,28 @@ const styles = StyleSheet.create({
     addTimeRow: {
         flexDirection: 'row',
         gap: 12,
+    },
+    secondaryActionRow: {
+        flexDirection: 'row',
+        gap: 12,
+    },
+    secondaryActionBtn: {
+        flex: 1,
+        height: 48,
+        borderRadius: 14,
+        backgroundColor: '#1E293B',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth: 1,
+        borderColor: '#334155',
+        flexDirection: 'row',
+        gap: 8,
+    },
+    secondaryActionText: {
+        fontSize: 13,
+        fontWeight: '700',
+        color: '#CBD5E1',
+        letterSpacing: 0.6,
     },
     addTimeBtn: {
         flex: 1,

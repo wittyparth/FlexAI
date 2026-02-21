@@ -6,7 +6,7 @@ import { Platform } from 'react-native';
 // ----------------------------------------------------------------------------
 // IMPORTANT: Update this IP to match your development machine's local IP
 // Run 'ipconfig' (Windows) or 'ifconfig' (Mac/Linux) to find your IP address
-const DEV_MACHINE_IP = '192.168.1.6'; // ⚠️ UPDATE THIS TO YOUR MACHINE'S IP
+const DEV_MACHINE_IP = '192.168.1.5'; // ⚠️ UPDATE THIS TO YOUR MACHINE'S IP
 const PROD_URL = 'https://your-production-api.com/api/v1';
 
 const getBaseUrl = () => {

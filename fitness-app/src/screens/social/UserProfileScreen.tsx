@@ -11,19 +11,11 @@ import {
 import { useState } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { useColors } from '../../hooks';
+import { useAchievements, useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
-import { colors as themeColors } from '../../theme/colors';
-import { useUserQueries } from '../../hooks/queries/useUserQueries';
 import { useUserProfile, useFollowUser, useUnfollowUser } from '../../hooks/queries/useSocialQueries';
 import { useUserPosts } from '../../hooks/queries/useFeedQueries';
 import { useAuthStore } from '../../store/authStore';
-
-const MOCK_ACHIEVEMENTS = [
-    { id: 1, icon: 'trophy', color: '#F59E0B', name: 'First PR' },
-    { id: 2, icon: 'fire', color: '#EF4444', name: '30 Day Streak' },
-    { id: 3, icon: 'medal', color: '#8B5CF6', name: 'Top 10%' },
-];
 
 const { width } = Dimensions.get('window');
 
@@ -42,6 +34,7 @@ export function UserProfileScreen({ route, navigation }: any) {
     const userId = (paramUserId || authUserId)?.toString();
 
     const isOwnProfile = !paramUserId || paramUserId === authUserId;
+    const { data: achievements = [] } = useAchievements();
 
     // Fetch user profile
     const { data: userProfile, isLoading: isProfileLoading } = useUserProfile(userId);
@@ -76,6 +69,23 @@ export function UserProfileScreen({ route, navigation }: any) {
 
     const posts = postsData?.pages.flatMap(page => page.posts) || [];
     const isLoading = isProfileLoading || (isPostsLoading && !posts.length);
+    const profileXp = Number(userProfile?.xp ?? 0);
+    const profileLevel = Math.max(1, Number(userProfile?.level ?? 1));
+    const currentLevelBaseXp = Math.pow(profileLevel - 1, 2) * 100;
+    const nextLevelXp = Math.pow(profileLevel, 2) * 100;
+    const levelRange = Math.max(1, nextLevelXp - currentLevelBaseXp);
+    const xpProgress = Math.max(0, Math.min(1, (profileXp - currentLevelBaseXp) / levelRange));
+    const achievementPreview = isOwnProfile
+        ? achievements.filter((achievement) => achievement.unlocked || achievement.unlockedAt).slice(0, 4)
+        : [];
+
+    const iconFromAchievement = (icon?: string, name?: string): keyof typeof MaterialCommunityIcons.glyphMap => {
+        const value = `${icon ?? ''} ${name ?? ''}`.toLowerCase();
+        if (value.includes('fire') || value.includes('streak')) return 'fire';
+        if (value.includes('medal')) return 'medal';
+        if (value.includes('star')) return 'star';
+        return 'trophy';
+    };
 
     if (isLoading) {
         return (
@@ -173,22 +183,36 @@ export function UserProfileScreen({ route, navigation }: any) {
                             </View>
                             <View style={[styles.xpBarBg, { backgroundColor: colors.muted }]}>
                                 <View
-                                    style={[styles.xpBarFill, { width: '65%' }]}
+                                    style={[styles.xpBarFill, { width: `${Math.round(xpProgress * 100)}%` }]}
                                 />
                             </View>
                         </View>
 
                         {/* Achievements Preview */}
-                        <View style={styles.achievementsRow}>
-                            {MOCK_ACHIEVEMENTS.map((achievement) => (
-                                <View key={achievement.id} style={[styles.achievementBadge, { backgroundColor: `${achievement.color}15` }]}>
-                                    <MaterialCommunityIcons name={achievement.icon as any} size={18} color={achievement.color} />
-                                </View>
-                            ))}
-                            <View style={[styles.achievementMore, { backgroundColor: colors.muted }]}>
-                                <Text style={[styles.achievementMoreText, { color: colors.mutedForeground }]}>+5</Text>
+                        {achievementPreview.length > 0 ? (
+                            <View style={styles.achievementsRow}>
+                                {achievementPreview.map((achievement) => (
+                                    <View key={achievement.id} style={[styles.achievementBadge, { backgroundColor: `${colors.primary.main}15` }]}>
+                                        <MaterialCommunityIcons
+                                            name={iconFromAchievement(achievement.icon, achievement.name)}
+                                            size={18}
+                                            color={colors.primary.main}
+                                        />
+                                    </View>
+                                ))}
+                                {achievements.length > achievementPreview.length && (
+                                    <View style={[styles.achievementMore, { backgroundColor: colors.muted }]}>
+                                        <Text style={[styles.achievementMoreText, { color: colors.mutedForeground }]}>
+                                            +{achievements.length - achievementPreview.length}
+                                        </Text>
+                                    </View>
+                                )}
                             </View>
-                        </View>
+                        ) : (
+                            <Text style={[styles.noAchievementsText, { color: colors.mutedForeground }]}>
+                                No unlocked achievements yet
+                            </Text>
+                        )}
                     </View>
 
                     {/* Action Buttons */}
@@ -461,6 +485,10 @@ const styles = StyleSheet.create({
     achievementsRow: {
         flexDirection: 'row',
         gap: 10,
+    },
+    noAchievementsText: {
+        fontSize: 13,
+        fontWeight: '500',
     },
     achievementBadge: {
         width: 40,

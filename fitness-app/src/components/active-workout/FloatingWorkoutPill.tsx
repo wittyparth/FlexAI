@@ -83,11 +83,8 @@ export const FloatingWorkoutPill = memo(() => {
   };
 
   const handlePress = () => {
-    // Navigate safely through the nested navigators
-    navigation.navigate('MainApp', {
-      screen: 'WorkoutTab',
-      params: { screen: 'ActiveWorkout' }
-    });
+    // Navigate to Workout tab's active session from the tabs container
+    navigation.navigate('WorkoutTab', { screen: 'ActiveWorkout' });
   };
 
   return (

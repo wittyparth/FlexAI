@@ -25,25 +25,96 @@ export const workoutService = {
     });
 
     if (existingWorkout) {
+      // Recovery path: if the in-progress workout is empty and user is starting a routine,
+      // auto-cancel the empty session so routine start can proceed.
+      const existingExerciseCount = await prisma.workoutExercise.count({
+        where: { workoutId: existingWorkout.id },
+      });
+
+      if (existingExerciseCount === 0 && input.routineId) {
+        await prisma.workout.update({
+          where: { id: existingWorkout.id },
+          data: { status: 'cancelled' },
+        });
+      } else {
+        throw new BadRequestError('You already have a workout in progress');
+      }
+    }
+
+    // Safety: the previous block may have cancelled an empty in-progress workout.
+    const stillInProgress = await prisma.workout.findFirst({
+      where: { userId, status: 'in_progress' },
+    });
+
+    if (stillInProgress) {
       throw new BadRequestError('You already have a workout in progress');
     }
 
-    const workout = await prisma.workout.create({
-      data: {
-        userId,
-        name: input.name,
-        routineId: input.routineId,
-        notes: input.notes,
-        status: 'in_progress',
-      },
-      include: {
-        exercises: {
-          include: {
-            exercise: true,
-            sets: true,
+    let routineExercises:
+      Array<{ exerciseId: number; orderIndex: number; notes: string | null }> = [];
+
+    if (input.routineId) {
+      const routine = await prisma.routine.findFirst({
+        where: {
+          id: input.routineId,
+          OR: [
+            { userId },
+            { isPublic: true },
+            { isTemplate: true },
+          ],
+        },
+        include: {
+          exercises: {
+            orderBy: { orderIndex: 'asc' },
           },
         },
-      },
+      });
+
+      if (!routine) {
+        throw new NotFoundError('Routine');
+      }
+
+      routineExercises = routine.exercises.map((routineExercise) => ({
+        exerciseId: routineExercise.exerciseId,
+        orderIndex: routineExercise.orderIndex,
+        notes: routineExercise.notes ?? null,
+      }));
+    }
+
+    const workout = await prisma.$transaction(async (tx) => {
+      const createdWorkout = await tx.workout.create({
+        data: {
+          userId,
+          name: input.name,
+          routineId: input.routineId,
+          notes: input.notes,
+          status: 'in_progress',
+        },
+      });
+
+      if (routineExercises.length > 0) {
+        await tx.workoutExercise.createMany({
+          data: routineExercises.map((routineExercise) => ({
+            workoutId: createdWorkout.id,
+            exerciseId: routineExercise.exerciseId,
+            orderIndex: routineExercise.orderIndex,
+            notes: routineExercise.notes,
+          })),
+        });
+      }
+
+      return tx.workout.findUniqueOrThrow({
+        where: { id: createdWorkout.id },
+        include: {
+          exercises: {
+            orderBy: { orderIndex: 'asc' },
+            include: {
+              exercise: true,
+              sets: true,
+            },
+          },
+        },
+      });
     });
 
     return workout;

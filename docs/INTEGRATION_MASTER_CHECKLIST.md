@@ -319,6 +319,7 @@ Every integration PR must update this file.
 - 2026-02-21 | PR: `ec18a29` | Phase: 3 Data Consistency | Fixed backend routine query boolean parsing so `isTemplate=false` and `isArchived=false` are interpreted correctly (instead of truthy string coercion), restoring correct routine/workout list retrieval for frontend screens that pass explicit boolean filters.
 - 2026-02-21 | PR: `4df9c85` | Phase: 3 Data Consistency | Replaced `ExerciseSwapScreen` mock alternative exercise dataset with live backend exercise search results (muscle-filtered, searchable, and return-path aware), so swap flow uses real API data instead of hardcoded entries.
 - 2026-02-21 | PR: `b7f6772` | Phase: 3 UX Restoration | Restored `RoutineDetailScreen` and `RoutineTemplateScreen` from baseline UI and re-integrated backend routine/template data flows (live routine fetch, duplicate/save to library, and start-workout from routine ID) without redesigning screen styling.
+- 2026-02-21 | PR: `TBD` | Phase: 3 UX Restoration | Restored `WorkoutDetailScreen` to baseline UI (`43aa592`) using git restore so workout viewing matches original styling while keeping backend workout detail/delete integration path.
 
 ## Change Notes
 - 2026-02-20: Added mandatory backend persistence of `workoutInterests` in onboarding (Phase 2).

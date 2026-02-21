@@ -152,8 +152,10 @@ export const useWorkoutStore = create<WorkoutState & WorkoutActions>()(
       },
 
       syncCurrentWorkout: async () => {
-        const { activeWorkoutId, status } = get();
-        if (activeWorkoutId && status === 'in_progress') {
+        const { activeWorkoutId, status, exercises } = get();
+        const hasLocalExercises = Object.keys(exercises || {}).length > 0;
+
+        if (activeWorkoutId && status === 'in_progress' && hasLocalExercises) {
           return;
         }
 
@@ -165,6 +167,20 @@ export const useWorkoutStore = create<WorkoutState & WorkoutActions>()(
           if (!currentWorkout) {
             set((state) => {
               state.isLoading = false;
+              state.activeWorkoutId = null;
+              state.workoutName = null;
+              state.startTime = null;
+              state.status = 'idle';
+              state.currentExerciseId = null;
+              state.exercises = {};
+              state.sets = {};
+              state.isResting = false;
+              state.isRestPaused = false;
+              state.restPausedRemaining = 0;
+              state.restEndTime = null;
+              state.restDurationSeconds = 0;
+              state.elapsedSeconds = 0;
+              state.minimized = false;
             });
             return;
           }

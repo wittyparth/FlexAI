@@ -324,6 +324,7 @@ Every integration PR must update this file.
 - 2026-02-21 | PR: `c39cb7f` | Phase: 3 Navigation Fix | Fixed start-workout launch path from restored routine/template view screens so successful workout start always routes to `WorkoutTab -> ActiveWorkout` from Explore stack and falls back to resuming active session when backend returns `already have a workout in progress`.
 - 2026-02-21 | PR: `bdcf688` | Phase: 3 Start Reliability | Fixed routine start behavior to pre-populate workout exercises from routine definitions at backend workout creation, auto-recover stale empty in-progress sessions when launching a routine, and corrected floating active-workout pill tap navigation to route into `WorkoutTab -> ActiveWorkout`.
 - 2026-02-21 | PR: `4673dae` | Phase: 3 UX Fix | Updated active rest timer fullscreen overlay to use an opaque dark backdrop (`#020617`) instead of a transparent background layer.
+- 2026-02-21 | PR: `N/A` | Phase: Global Navigation Hardening | Root-caused bottom-nav overlap to absolute tab bar being visible across nested stack screens; fixed centrally in `MainTabs` by showing tab bar only on root tab screens (`HomeDashboard`, `WorkoutHub`, `ExploreHub`, `SocialHome`, `ProfileHub`) and hiding it on pushed detail/flow screens (timer, AI generator, etc.).
 
 ## Change Notes
 - 2026-02-20: Added mandatory backend persistence of `workoutInterests` in onboarding (Phase 2).

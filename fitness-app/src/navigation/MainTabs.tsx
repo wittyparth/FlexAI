@@ -1,13 +1,14 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { MainTabParamList, HomeStackParamList } from './types';
 import { HomeScreen } from '../screens/home/HomeScreen';
 import { NotificationsScreen } from '../screens/home/NotificationsScreen';
 import { StreakCalendarScreen } from '../screens/home/StreakCalendarScreen';
 import { LevelXpModalScreen } from '../screens/home/LevelXpModalScreen';
-import { Text, View, StyleSheet, Platform } from 'react-native';
+import { View, StyleSheet, Platform } from 'react-native';
 import { useColors } from '../hooks';
 import { Ionicons } from '@expo/vector-icons';
 import { fontFamilies } from '../theme/typography';
@@ -15,7 +16,6 @@ import { WorkoutNavigator } from './WorkoutNavigator';
 import { SocialNavigator } from './SocialNavigator';
 import { ProfileNavigator } from './ProfileNavigator';
 import { ExploreNavigator } from './ExploreNavigator';
-import { BlurView } from 'expo-blur';
 import { FloatingWorkoutPill } from '../components/active-workout/FloatingWorkoutPill';
 
 const Tab = createBottomTabNavigator<MainTabParamList>();
@@ -122,6 +122,31 @@ export function MainTabs() {
 
     const bottomInset = Math.max(insets.bottom, 8);
     const tabBarHeight = 72 + bottomInset;
+    const baseTabBarStyle = {
+        position: 'absolute' as const,
+        backgroundColor: colors.tabBarBackground + 'F2',
+        borderTopColor: colors.tabBarBorder,
+        borderTopWidth: StyleSheet.hairlineWidth,
+        height: tabBarHeight,
+        paddingTop: 8,
+        paddingBottom: bottomInset + 4,
+        ...Platform.select({
+            ios: {
+                shadowColor: colors.primary.main,
+                shadowOffset: { width: 0, height: -4 },
+                shadowOpacity: 0.08,
+                shadowRadius: 16,
+            },
+            android: {
+                elevation: 12,
+            },
+        }),
+    };
+
+    const shouldShowTabBar = (route: any, rootRouteName: string) => {
+        const nestedRoute = getFocusedRouteNameFromRoute(route) ?? rootRouteName;
+        return nestedRoute === rootRouteName;
+    };
 
     return (
         <View style={{ flex: 1 }}>
@@ -130,26 +155,7 @@ export function MainTabs() {
                     headerShown: false,
                     tabBarActiveTintColor: colors.primary.main,
                     tabBarInactiveTintColor: colors.mutedForeground,
-                    tabBarStyle: {
-                        position: 'absolute',
-                        backgroundColor: colors.tabBarBackground + 'F2',
-                        borderTopColor: colors.tabBarBorder,
-                        borderTopWidth: StyleSheet.hairlineWidth,
-                        height: tabBarHeight,
-                        paddingTop: 8,
-                        paddingBottom: bottomInset + 4,
-                        ...Platform.select({
-                            ios: {
-                                shadowColor: colors.primary.main,
-                                shadowOffset: { width: 0, height: -4 },
-                                shadowOpacity: 0.08,
-                                shadowRadius: 16,
-                            },
-                            android: {
-                                elevation: 12,
-                            },
-                        }),
-                    },
+                    tabBarStyle: baseTabBarStyle,
                     tabBarLabelStyle: {
                         fontSize: 10,
                         fontWeight: '600',
@@ -165,27 +171,52 @@ export function MainTabs() {
                 <Tab.Screen
                     name="HomeTab"
                     component={HomeStackNavigator}
-                    options={{ tabBarLabel: 'Home' }}
+                    options={({ route }) => ({
+                        tabBarLabel: 'Home',
+                        tabBarStyle: shouldShowTabBar(route, 'HomeDashboard')
+                            ? baseTabBarStyle
+                            : { display: 'none' },
+                    })}
                 />
                 <Tab.Screen
                     name="WorkoutTab"
                     component={WorkoutNavigator}
-                    options={{ tabBarLabel: 'Workout' }}
+                    options={({ route }) => ({
+                        tabBarLabel: 'Workout',
+                        tabBarStyle: shouldShowTabBar(route, 'WorkoutHub')
+                            ? baseTabBarStyle
+                            : { display: 'none' },
+                    })}
                 />
                 <Tab.Screen
                     name="ExploreTab"
                     component={ExploreNavigator}
-                    options={{ tabBarLabel: 'Explore' }}
+                    options={({ route }) => ({
+                        tabBarLabel: 'Explore',
+                        tabBarStyle: shouldShowTabBar(route, 'ExploreHub')
+                            ? baseTabBarStyle
+                            : { display: 'none' },
+                    })}
                 />
                 <Tab.Screen
                     name="SocialTab"
                     component={SocialNavigator}
-                    options={{ tabBarLabel: 'Social' }}
+                    options={({ route }) => ({
+                        tabBarLabel: 'Social',
+                        tabBarStyle: shouldShowTabBar(route, 'SocialHome')
+                            ? baseTabBarStyle
+                            : { display: 'none' },
+                    })}
                 />
                 <Tab.Screen
                     name="ProfileTab"
                     component={ProfileNavigator}
-                    options={{ tabBarLabel: 'Profile' }}
+                    options={({ route }) => ({
+                        tabBarLabel: 'Profile',
+                        tabBarStyle: shouldShowTabBar(route, 'ProfileHub')
+                            ? baseTabBarStyle
+                            : { display: 'none' },
+                    })}
                 />
             </Tab.Navigator>
 

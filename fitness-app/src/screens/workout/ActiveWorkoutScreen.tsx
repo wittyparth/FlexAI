@@ -4,7 +4,7 @@
  * with inline set tables and collapsible cards.
  */
 
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert,
   KeyboardAvoidingView, Platform, ActivityIndicator
@@ -18,6 +18,7 @@ import { CustomAlert } from '../../components/ui/CustomAlert';
 import { ExerciseCard } from '../../components/active-workout/ExerciseCard';
 import { RestTimerOverlay } from '../../components/active-workout/RestTimerOverlay';
 import { TimerSettingsModal } from '../../components/active-workout/TimerSettingsModal';
+import { MuscleHighlighterCard } from '../../components/muscles/MuscleHighlighterCard';
 
 export function ActiveWorkoutScreen({ navigation, route }: any) {
   const colors = useColors();
@@ -146,6 +147,32 @@ export function ActiveWorkoutScreen({ navigation, route }: any) {
     return prev.id === expandedExerciseId;
   });
 
+  const workoutMuscleSets = useMemo(() => {
+    const distribution: Record<string, number> = {};
+
+    exercises.forEach((exerciseItem: any) => {
+      const primaryMuscle = exerciseItem?.exercise?.muscleGroup;
+      if (!primaryMuscle) return;
+
+      const completedSets = (setsByExercise[exerciseItem.id] || []).length;
+      const targetSets = Number(exerciseItem?.targetSets || 0);
+      const baseScore = completedSets > 0
+        ? completedSets
+        : Math.max(1, Math.round(Math.max(targetSets, 3) * 0.35));
+
+      distribution[primaryMuscle] = (distribution[primaryMuscle] ?? 0) + baseScore;
+
+      const secondary = Array.isArray(exerciseItem?.exercise?.secondaryMuscleGroups)
+        ? exerciseItem.exercise.secondaryMuscleGroups
+        : [];
+      secondary.forEach((muscle: string) => {
+        distribution[muscle] = (distribution[muscle] ?? 0) + baseScore * 0.45;
+      });
+    });
+
+    return distribution;
+  }, [exercises, setsByExercise]);
+
   // ─── Empty state ───
   if (!activeWorkoutId || exercises.length === 0) {
     return (
@@ -250,6 +277,15 @@ export function ActiveWorkoutScreen({ navigation, route }: any) {
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
       >
+        <View style={styles.muscleMapWrap}>
+          <MuscleHighlighterCard
+            title="Live Muscle Stimulation"
+            subtitle="Updates as you log sets, based on current workout focus."
+            muscleSets={workoutMuscleSets}
+            compact
+          />
+        </View>
+
         {exercises.map((exercise) => {
           const sets = setsByExercise[exercise.id] || [];
           const isExpanded = expandedExerciseId === exercise.id;
@@ -348,7 +384,15 @@ export function ActiveWorkoutScreen({ navigation, route }: any) {
         onPrimaryPress={async () => {
           setCompleteModalVisible(false);
           await completeWorkout({});
-          navigation.navigate('WorkoutSummary');
+          navigation.navigate('WorkoutSummary', {
+            workoutId: activeWorkoutId,
+            workoutName: workoutName || 'Workout Session',
+            elapsedSeconds,
+            totalVolume,
+            totalSetsCompleted,
+            totalSetsTarget,
+            muscleSets: workoutMuscleSets,
+          });
         }}
         onSecondaryPress={() => setCompleteModalVisible(false)}
       />
@@ -465,6 +509,10 @@ const styles = StyleSheet.create({
   },
 
   // ─── Add Exercise ───
+  muscleMapWrap: {
+    marginTop: 10,
+    marginBottom: 12,
+  },
   addExerciseBtn: {
     flexDirection: 'row',
     alignItems: 'center',

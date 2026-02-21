@@ -87,7 +87,15 @@ export type WorkoutStackParamList = {
   ActiveWorkout: { routineId?: number; workoutId?: number };
   ExerciseSwap: { exerciseId: number; currentExerciseName: string };
   SetConfig: { setId: number; exerciseId: number };
-  WorkoutSummary: { workoutId: number };
+  WorkoutSummary: {
+    workoutId?: number;
+    workoutName?: string;
+    elapsedSeconds?: number;
+    totalVolume?: number;
+    totalSetsCompleted?: number;
+    totalSetsTarget?: number;
+    muscleSets?: Record<string, number>;
+  } | undefined;
   
   // Phase 2C: History & AI
   WorkoutHistory: undefined;

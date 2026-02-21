@@ -1,22 +1,17 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
     View,
     Text,
     StyleSheet,
     ScrollView,
     TouchableOpacity,
-    Dimensions,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
+import { MuscleHighlighterCard } from '../../components/muscles/MuscleHighlighterCard';
 
-const { width } = Dimensions.get('window');
-
-// ============================================================
-// MOCK DATA
-// ============================================================
 const ACHIEVEMENTS = [
     { id: 1, title: 'Early Bird', desc: 'Workout before 7AM', icon: 'emoji-events', color: '#FEF3C7', iconColor: '#D97706' },
     { id: 2, title: 'Heavy Lifter', desc: 'Total volume > 10k', icon: 'fitness-center', color: '#E0E7FF', iconColor: '#4F46E5' },
@@ -28,9 +23,46 @@ const PERSONAL_RECORDS = [
     { id: 2, exercise: 'Back Squat', value: '315', prev: '305', unit: 'lbs' },
 ];
 
-export function WorkoutSummaryScreen({ navigation }: any) {
+const formatDuration = (seconds: number) => {
+    const hrs = Math.floor(seconds / 3600);
+    const mins = Math.floor((seconds % 3600) / 60);
+    if (hrs > 0) return `${hrs}h ${mins}m`;
+    return `${mins}m`;
+};
+
+export function WorkoutSummaryScreen({ navigation, route }: any) {
     const colors = useColors();
     const insets = useSafeAreaInsets();
+    const params = route?.params || {};
+
+    const workoutName = typeof params?.workoutName === 'string' ? params.workoutName : 'Workout Session';
+    const elapsedSeconds = Number(params?.elapsedSeconds ?? 75 * 60);
+    const totalVolume = Number(params?.totalVolume ?? 12450);
+    const totalSetsCompleted = Number(params?.totalSetsCompleted ?? 18);
+    const totalSetsTarget = Number(params?.totalSetsTarget ?? 24);
+
+    const fallbackMuscleSets = useMemo(
+        () => ({
+            Chest: 4,
+            Shoulders: 3,
+            Triceps: 2,
+            Core: 1,
+        }),
+        [],
+    );
+
+    const summaryMuscleSets = useMemo(() => {
+        if (!params?.muscleSets || typeof params.muscleSets !== 'object') return fallbackMuscleSets;
+        const entries = Object.entries(params.muscleSets as Record<string, unknown>);
+        if (!entries.length) return fallbackMuscleSets;
+
+        const normalized: Record<string, number> = {};
+        entries.forEach(([muscle, score]) => {
+            const parsed = Number(score);
+            if (Number.isFinite(parsed) && parsed > 0) normalized[muscle] = parsed;
+        });
+        return Object.keys(normalized).length > 0 ? normalized : fallbackMuscleSets;
+    }, [params?.muscleSets, fallbackMuscleSets]);
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
@@ -38,38 +70,45 @@ export function WorkoutSummaryScreen({ navigation }: any) {
                 contentContainerStyle={[styles.scrollContent, { paddingBottom: insets.bottom + 120 }]}
                 showsVerticalScrollIndicator={false}
             >
-                {/* Header */}
                 <View style={[styles.header, { paddingTop: insets.top + 24 }]}>
                     <Text style={[styles.celebration, { color: colors.foreground, fontFamily: fontFamilies.display }]}>
-                        🎉 Workout{'\n'}Complete!
+                        Workout{'\n'}Complete!
                     </Text>
                     <Text style={[styles.subtitle, { color: colors.mutedForeground }]}>
-                        Tuesday Morning Session • 1h 15m
+                        {workoutName} - {formatDuration(elapsedSeconds)}
                     </Text>
                 </View>
 
-                {/* Major Stats Card */}
                 <View style={styles.statsCardContainer}>
-                    <View
-                        style={styles.statsCardGradient}
-                    >
+                    <View style={styles.statsCardGradient}>
                         <View style={[styles.statsCardInner, { backgroundColor: colors.background }]}>
                             <View style={styles.statBox}>
                                 <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>VOLUME</Text>
                                 <Text style={[styles.statValue, { color: colors.foreground }]}>
-                                    12,450 <Text style={styles.statUnit}>lbs</Text>
+                                    {totalVolume.toLocaleString()} <Text style={styles.statUnit}>lbs</Text>
                                 </Text>
                             </View>
                             <View style={[styles.divider, { backgroundColor: colors.border }]} />
                             <View style={[styles.statBox, { alignItems: 'flex-end' }]}>
                                 <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>XP GAINED</Text>
-                                <Text style={[styles.xpValue]}>+150</Text>
+                                <Text style={styles.xpValue}>+150</Text>
                             </View>
                         </View>
                     </View>
                 </View>
 
-                {/* Achievements */}
+                <View style={styles.section}>
+                    <Text style={[styles.sectionTitle, { color: colors.foreground, marginBottom: 12 }]}>Muscles Stimulated</Text>
+                    <Text style={[styles.muscleSummaryText, { color: colors.mutedForeground }]}>
+                        {totalSetsCompleted} / {totalSetsTarget} sets completed
+                    </Text>
+                    <MuscleHighlighterCard
+                        subtitle="Session body map based on the exercises and sets you completed."
+                        muscleSets={summaryMuscleSets}
+                        compact
+                    />
+                </View>
+
                 <View style={styles.section}>
                     <View style={styles.sectionHeader}>
                         <Text style={[styles.sectionTitle, { color: colors.foreground }]}>New Achievements</Text>
@@ -78,13 +117,13 @@ export function WorkoutSummaryScreen({ navigation }: any) {
                         </View>
                     </View>
                     <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.achievementScroll}>
-                        {ACHIEVEMENTS.map(item => (
+                        {ACHIEVEMENTS.map((item) => (
                             <View
                                 key={item.id}
                                 style={[
                                     styles.achievementCard,
                                     { backgroundColor: colors.muted, borderColor: colors.border },
-                                    item.locked && { opacity: 0.6 }
+                                    item.locked && { opacity: 0.6 },
                                 ]}
                             >
                                 {!item.locked && <View style={styles.pulseDot} />}
@@ -100,12 +139,11 @@ export function WorkoutSummaryScreen({ navigation }: any) {
                     </ScrollView>
                 </View>
 
-                {/* Personal Records */}
                 <View style={styles.section}>
                     <Text style={[styles.sectionTitle, { color: colors.foreground, marginBottom: 16 }]}>Personal Records</Text>
-                    {PERSONAL_RECORDS.map(pr => (
+                    {PERSONAL_RECORDS.map((pr) => (
                         <View key={pr.id} style={[styles.prCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-                            <Text style={[styles.ghostValue, { color: colors.foreground + '08' }]}>{pr.value}</Text>
+                            <Text style={[styles.ghostValue, { color: `${colors.foreground}08` }]}>{pr.value}</Text>
                             <View style={styles.prContent}>
                                 <View>
                                     <View style={styles.prHeader}>
@@ -124,18 +162,14 @@ export function WorkoutSummaryScreen({ navigation }: any) {
                 </View>
             </ScrollView>
 
-            {/* Bottom Actions */}
             <View style={[styles.footer, { paddingBottom: insets.bottom + 16 }]}>
-                {/* Level Progress */}
                 <View style={styles.levelProgress}>
                     <View style={styles.levelLabels}>
                         <Text style={[styles.levelText, { color: colors.mutedForeground }]}>LEVEL 12</Text>
                         <Text style={[styles.levelText, { color: colors.mutedForeground }]}>LEVEL 13</Text>
                     </View>
                     <View style={[styles.levelBarBg, { backgroundColor: colors.muted }]}>
-                        <View
-                            style={[styles.levelBarFill, { width: '75%' }]}
-                        />
+                        <View style={[styles.levelBarFill, { width: '75%' }]} />
                     </View>
                     <Text style={styles.xpFraction}>1,250 / 1,500 XP</Text>
                 </View>
@@ -144,9 +178,7 @@ export function WorkoutSummaryScreen({ navigation }: any) {
                     style={styles.doneButton}
                     onPress={() => navigation.navigate('WorkoutHub')}
                 >
-                    <View
-                        style={styles.doneGradient}
-                    >
+                    <View style={styles.doneGradient}>
                         <Text style={styles.doneText}>Done</Text>
                         <Ionicons name="checkmark" size={20} color="#FFFFFF" />
                     </View>
@@ -221,6 +253,11 @@ const styles = StyleSheet.create({
     },
     section: {
         marginBottom: 32,
+    },
+    muscleSummaryText: {
+        fontSize: 13,
+        marginBottom: 10,
+        fontWeight: '600',
     },
     sectionHeader: {
         flexDirection: 'row',
@@ -397,3 +434,4 @@ const styles = StyleSheet.create({
         fontWeight: '800',
     },
 });
+

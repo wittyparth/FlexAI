@@ -165,7 +165,10 @@ Every integration PR must update this file.
 ### Checklist
 - [ ] Remove mock profile/dashboard data usage.
   - [x] `ProfileHubScreen`: removed `mockData` dependencies (`DUMMY_USER`, `PROFILE_*`, `HEATMAP_DATA`) and replaced with live profile/workout/stats/gamification queries.
-- [ ] Integrate profile read/update flows.
+- [x] Integrate profile read/update flows.
+  - [x] Added API-backed `EditProfileScreen` in settings stack using `/users/me` (`useUserQueries.profileQuery` + `updateProfileMutation`).
+  - [x] Fixed settings navigator typing/routes and wired `EditProfile` route end-to-end.
+  - [x] Updated social own-profile "Edit Profile" action to navigate into `SettingsNavigator -> EditProfile`.
 - [ ] Align gamification endpoints and response parsing.
 - [ ] Surface streak/XP/level/achievements in profile/home.
 
@@ -277,6 +280,7 @@ Every integration PR must update this file.
 - 2026-02-20 | PR: `0d9f3b0` | Phase: 5 | Integrated `/stats/volume` into `VolumeAnalyticsScreen`, added typed volume stats query APIs/hooks, and replaced mock trend/breakdown/comparison sections with charted live data buckets.
 - 2026-02-21 | PR: `7cce041` | Phase: 5 | Integrated remaining analytics screens with live stats APIs (`/stats/prs`, `/stats/strength-progression/:exerciseId`, `/stats/muscle-distribution`), removed analytics mock datasets, and upgraded charts/stat cards to API-backed data across PR, strength, distribution, and heatmap flows.
 - 2026-02-21 | PR: `8eff021` | Phase: 6 | Migrated `ProfileHubScreen` to live data sources (`/users/me`, `/stats/dashboard`, `/stats/prs`, `/stats/muscle-distribution`, completed workout history, and `/gamification/stats`), removed profile mock-data dependencies, and aligned profile heatmap generation with real completed workouts.
+- 2026-02-21 | PR: `1aed303` | Phase: 6 | Added API-backed `EditProfile` flow, fixed settings navigator typing/routes, converted privacy/notification preferences to backend-synced settings where supported, and wired social self-profile edit action to `SettingsNavigator`.
 
 ## Change Notes
 - 2026-02-20: Added mandatory backend persistence of `workoutInterests` in onboarding (Phase 2).

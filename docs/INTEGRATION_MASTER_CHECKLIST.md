@@ -165,6 +165,7 @@ Every integration PR must update this file.
 ### Checklist
 - [ ] Remove mock profile/dashboard data usage.
   - [x] `ProfileHubScreen`: removed `mockData` dependencies (`DUMMY_USER`, `PROFILE_*`, `HEATMAP_DATA`) and replaced with live profile/workout/stats/gamification queries.
+  - [x] `HomeScreen`: replaced `mockData` dependencies for active workout, today plan, heatmap, and recent activity with live workout/routine/dashboard/gamification query data.
 - [x] Integrate profile read/update flows.
   - [x] Added API-backed `EditProfileScreen` in settings stack using `/users/me` (`useUserQueries.profileQuery` + `updateProfileMutation`).
   - [x] Fixed settings navigator typing/routes and wired `EditProfile` route end-to-end.
@@ -288,6 +289,7 @@ Every integration PR must update this file.
 - 2026-02-21 | PR: `1aed303` | Phase: 6 | Added API-backed `EditProfile` flow, fixed settings navigator typing/routes, converted privacy/notification preferences to backend-synced settings where supported, and wired social self-profile edit action to `SettingsNavigator`.
 - 2026-02-21 | PR: `7f48cc6` | Phase: 6 | Hardened gamification API parsing for envelope/raw responses, added shared gamification query hooks, and wired home dashboard + XP/streak screens to live streak/XP/level/achievement data.
 - 2026-02-21 | PR: `846b3bb` | Phase: 6/5 UX | Added reusable muscle highlighter body-map component (`react-native-body-highlighter`) and integrated it into profile hub, muscle analytics, exercise detail, and workout detail views using live muscle distribution/selection data.
+- 2026-02-21 | PR: `92a50e7` | Phase: 6 | Rewrote `HomeScreen` to use live backend queries for active workout, routine plan, consistency heatmap, and recent activity rows; removed production dependence on home mock datasets.
 
 ## Change Notes
 - 2026-02-20: Added mandatory backend persistence of `workoutInterests` in onboarding (Phase 2).

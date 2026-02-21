@@ -34,6 +34,33 @@ export interface VolumeStatsResponse {
     workoutCount: number;
 }
 
+export type PersonalRecordType = 'max_weight' | 'max_reps' | 'max_volume' | 'estimated_1rm';
+
+export interface PersonalRecordResponse {
+    id: number;
+    userId: number;
+    exerciseId: number;
+    recordType: PersonalRecordType;
+    value: number;
+    reps?: number | null;
+    bodyWeight?: number | null;
+    workoutId?: number | null;
+    setId?: number | null;
+    date: string;
+    exercise?: {
+        name: string;
+    };
+}
+
+export interface MuscleDistributionResponse {
+    muscleSets: Record<string, number>;
+    imbalances: {
+        pushRatio: number;
+        pullRatio: number;
+        alert?: string | null;
+    };
+}
+
 export const statsApi = {
     /**
      * Get aggregated dashboard statistics
@@ -58,6 +85,32 @@ export const statsApi = {
         const response = await apiClient.get<{ data: VolumeStatsResponse }>('/stats/volume', {
             params: { timeframe },
         });
+        return response.data.data;
+    },
+
+    /**
+     * Get personal records. Optionally filter by exercise.
+     */
+    getPersonalRecords: async (exerciseId?: number): Promise<PersonalRecordResponse[]> => {
+        const response = await apiClient.get<{ data: PersonalRecordResponse[] }>('/stats/prs', {
+            params: exerciseId ? { exerciseId } : undefined,
+        });
+        return response.data.data;
+    },
+
+    /**
+     * Get strength progression records for one exercise.
+     */
+    getStrengthProgression: async (exerciseId: number): Promise<PersonalRecordResponse[]> => {
+        const response = await apiClient.get<{ data: PersonalRecordResponse[] }>(`/stats/strength-progression/${exerciseId}`);
+        return response.data.data;
+    },
+
+    /**
+     * Get muscle distribution and imbalance analysis.
+     */
+    getMuscleDistribution: async (): Promise<MuscleDistributionResponse> => {
+        const response = await apiClient.get<{ data: MuscleDistributionResponse }>('/stats/muscle-distribution');
         return response.data.data;
     },
 };

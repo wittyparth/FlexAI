@@ -1,5 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
-import { statsApi, DashboardStatsResponse, VolumeStatsResponse, VolumeTimeframe } from '../../api/stats.api';
+import {
+  statsApi,
+  DashboardStatsResponse,
+  VolumeStatsResponse,
+  VolumeTimeframe,
+  PersonalRecordResponse,
+  MuscleDistributionResponse,
+} from '../../api/stats.api';
 
 /**
  * Hook to fetch dashboard statistics
@@ -44,6 +51,40 @@ export function useVolumeStats(timeframe: VolumeTimeframe) {
   return useQuery<VolumeStatsResponse>({
     queryKey: ['stats', 'volume', timeframe],
     queryFn: () => statsApi.getVolumeStats(timeframe),
+    staleTime: 1000 * 60 * 5,
+  });
+}
+
+/**
+ * Hook to fetch personal records
+ */
+export function usePersonalRecords(exerciseId?: number) {
+  return useQuery<PersonalRecordResponse[]>({
+    queryKey: ['stats', 'prs', exerciseId ?? 'all'],
+    queryFn: () => statsApi.getPersonalRecords(exerciseId),
+    staleTime: 1000 * 60 * 5,
+  });
+}
+
+/**
+ * Hook to fetch strength progression for one exercise
+ */
+export function useStrengthProgression(exerciseId?: number) {
+  return useQuery<PersonalRecordResponse[]>({
+    queryKey: ['stats', 'strength-progression', exerciseId ?? 'none'],
+    queryFn: () => statsApi.getStrengthProgression(exerciseId!),
+    enabled: Boolean(exerciseId),
+    staleTime: 1000 * 60 * 5,
+  });
+}
+
+/**
+ * Hook to fetch muscle distribution
+ */
+export function useMuscleDistribution() {
+  return useQuery<MuscleDistributionResponse>({
+    queryKey: ['stats', 'muscle-distribution'],
+    queryFn: () => statsApi.getMuscleDistribution(),
     staleTime: 1000 * 60 * 5,
   });
 }

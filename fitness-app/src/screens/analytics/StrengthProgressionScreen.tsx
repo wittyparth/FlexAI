@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import {
     View,
     Text,
@@ -7,259 +7,331 @@ import {
     TouchableOpacity,
     Dimensions,
     Animated,
+    ActivityIndicator,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { LineChart } from 'react-native-gifted-charts';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
-import { colors as themeColors } from '../../theme/colors';
+import { usePersonalRecords, useStrengthProgression } from '../../hooks/queries/useStatsQueries';
+import { PersonalRecordResponse } from '../../api/stats.api';
 
 const { width } = Dimensions.get('window');
 
-// ============================================================
-// MOCK DATA - Strength progression for Bench Press
-// ============================================================
-const EXERCISES = [
-    { id: 1, name: 'Bench Press', icon: 'dumbbell' },
-    { id: 2, name: 'Squat', icon: 'human' },
-    { id: 3, name: 'Deadlift', icon: 'weight-lifter' },
-    { id: 4, name: 'Overhead Press', icon: 'human-handsup' },
-];
+type Period = '3M' | '6M' | '1Y' | 'ALL';
 
-const PROGRESSION_DATA: Record<string, any[]> = {
-    '3M': [
-        { value: 200, date: 'Jan 1', label: 'Jan' }, { value: 205, date: 'Jan 15', label: '' },
-        { value: 210, date: 'Feb 1', label: 'Feb' }, { value: 215, date: 'Feb 15', label: '' },
-        { value: 220, date: 'Mar 1', label: 'Mar' }, { value: 225, date: 'Mar 15', label: '', isPR: true },
-    ],
-    '6M': [
-        { value: 185, date: 'Oct 1', label: 'Oct' }, { value: 195, date: 'Nov 1', label: 'Nov' },
-        { value: 200, date: 'Dec 1', label: 'Dec' }, { value: 210, date: 'Jan 1', label: 'Jan' },
-        { value: 215, date: 'Feb 1', label: 'Feb' }, { value: 225, date: 'Mar 1', label: 'Mar', isPR: true },
-    ],
-    '1Y': [
-        { value: 155, date: 'Apr', label: 'Apr' }, { value: 165, date: 'Jun', label: 'Jun' },
-        { value: 185, date: 'Aug', label: 'Aug' }, { value: 200, date: 'Oct', label: 'Oct' },
-        { value: 215, date: 'Dec', label: 'Dec' }, { value: 225, date: 'Feb', label: 'Feb', isPR: true },
-    ],
-    'ALL': [
-        { value: 135, date: '2023', label: "'23" }, { value: 165, date: '2024', label: "'24" },
-        { value: 225, date: '2025', label: "'25", isPR: true },
-    ]
+type ExerciseOption = {
+    id: number;
+    name: string;
+    icon: string;
 };
 
-const RECENT_SESSIONS = [
-    { date: 'Mar 5, 2025', weight: 205, reps: 5, e1rm: 225, isPR: true },
-    { date: 'Feb 28, 2025', weight: 200, reps: 5, e1rm: 220 },
-    { date: 'Feb 21, 2025', weight: 195, reps: 6, e1rm: 218 },
-    { date: 'Feb 14, 2025', weight: 195, reps: 5, e1rm: 215 },
-    { date: 'Feb 7, 2025', weight: 190, reps: 6, e1rm: 212 },
-];
+const getExerciseIcon = (exerciseName: string) => {
+    const name = exerciseName.toLowerCase();
+    if (name.includes('deadlift')) return 'weight-lifter';
+    if (name.includes('squat') || name.includes('leg')) return 'human';
+    if (name.includes('press') || name.includes('bench')) return 'dumbbell';
+    if (name.includes('pull') || name.includes('row') || name.includes('lat')) return 'arm-flex';
+    return 'dumbbell';
+};
 
-export function StrengthProgressionScreen({ navigation }: any) {
+const formatShortDate = (date: string) => {
+    const value = new Date(date);
+    if (Number.isNaN(value.getTime())) return 'Unknown';
+    return value.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+};
+
+const formatLongDate = (date: string) => {
+    const value = new Date(date);
+    if (Number.isNaN(value.getTime())) return 'Unknown';
+    return value.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+};
+
+const isInPeriod = (date: string, period: Period) => {
+    if (period === 'ALL') return true;
+
+    const recordDate = new Date(date);
+    if (Number.isNaN(recordDate.getTime())) return false;
+
+    const now = new Date();
+    const start = new Date(now);
+
+    if (period === '3M') start.setMonth(now.getMonth() - 3);
+    if (period === '6M') start.setMonth(now.getMonth() - 6);
+    if (period === '1Y') start.setFullYear(now.getFullYear() - 1);
+
+    return recordDate >= start;
+};
+
+const sortByDateAsc = (records: PersonalRecordResponse[]) => {
+    return [...records].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+};
+
+export function StrengthProgressionScreen({ navigation, route }: any) {
     const colors = useColors();
     const insets = useSafeAreaInsets();
     const fadeAnim = useRef(new Animated.Value(0)).current;
-    const [selectedExercise, setSelectedExercise] = useState(EXERCISES[0]);
-    const [period, setPeriod] = useState('6M');
+
+    const routeExerciseId = route?.params?.exerciseId as number | undefined;
+
+    const [selectedExerciseId, setSelectedExerciseId] = useState<number | undefined>(routeExerciseId);
+    const [period, setPeriod] = useState<Period>('6M');
+
+    const { data: allRecords = [], isLoading: isExerciseLoading, isError: isExerciseError, refetch: refetchExercises } = usePersonalRecords();
+
+    const exerciseOptions = useMemo<ExerciseOption[]>(() => {
+        const map = new Map<number, ExerciseOption>();
+        allRecords.forEach((record) => {
+            if (!map.has(record.exerciseId)) {
+                const name = record.exercise?.name ?? `Exercise #${record.exerciseId}`;
+                map.set(record.exerciseId, {
+                    id: record.exerciseId,
+                    name,
+                    icon: getExerciseIcon(name),
+                });
+            }
+        });
+        return Array.from(map.values());
+    }, [allRecords]);
+
+    useEffect(() => {
+        if (!selectedExerciseId && exerciseOptions.length) {
+            setSelectedExerciseId(exerciseOptions[0].id);
+        }
+    }, [exerciseOptions, selectedExerciseId]);
+
+    const selectedExercise = useMemo(
+        () => exerciseOptions.find((exercise) => exercise.id === selectedExerciseId),
+        [exerciseOptions, selectedExerciseId],
+    );
+
+    const {
+        data: progressionRecords = [],
+        isLoading: isProgressLoading,
+        isError: isProgressError,
+        refetch: refetchProgression,
+    } = useStrengthProgression(selectedExerciseId);
 
     useEffect(() => {
         Animated.timing(fadeAnim, { toValue: 1, duration: 500, useNativeDriver: true }).start();
-    }, []);
+    }, [fadeAnim, period, selectedExerciseId]);
 
-    const currentE1RM = 225;
-    const allTimeBest = 225;
-    const improvement = 21.6; // percentage improvement
+    const sortedProgression = useMemo(() => sortByDateAsc(progressionRecords), [progressionRecords]);
 
-    const currentData = PROGRESSION_DATA[period];
+    const periodRecords = useMemo(
+        () => sortedProgression.filter((record) => isInPeriod(record.date, period)),
+        [period, sortedProgression],
+    );
+
+    const chartData = useMemo(() => {
+        const points = periodRecords;
+        if (!points.length) return [];
+
+        const highest = Math.max(...points.map((point) => point.value));
+        const labelStep = Math.max(1, Math.floor(points.length / 5));
+
+        return points.map((point, index) => ({
+            value: Number(point.value.toFixed(1)),
+            label: index % labelStep === 0 ? formatShortDate(point.date) : '',
+            customDataPoint:
+                point.value === highest
+                    ? () => (
+                          <View style={[styles.prDot, { backgroundColor: colors.stats.pr }]}> 
+                              <MaterialCommunityIcons name="crown" size={12} color="#FFF" />
+                          </View>
+                      )
+                    : undefined,
+        }));
+    }, [colors.stats.pr, periodRecords]);
+
+    const currentValue = sortedProgression.length ? sortedProgression[sortedProgression.length - 1].value : 0;
+    const allTimeBest = sortedProgression.length ? Math.max(...sortedProgression.map((record) => record.value)) : 0;
+
+    const improvement = useMemo(() => {
+        if (periodRecords.length < 2) return 0;
+        const first = periodRecords[0].value;
+        const last = periodRecords[periodRecords.length - 1].value;
+        if (first <= 0) return 0;
+        return ((last - first) / first) * 100;
+    }, [periodRecords]);
+
+    const recentSessions = useMemo(
+        () => [...sortedProgression].reverse().slice(0, 5),
+        [sortedProgression],
+    );
+
+    const isLoading = isExerciseLoading || (Boolean(selectedExerciseId) && isProgressLoading);
+    const hasAnyData = exerciseOptions.length > 0;
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
-            {/* Header */}
-            <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.background }]}>
+            <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.background }]}> 
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerBtn}>
                     <Ionicons name="arrow-back" size={24} color={colors.foreground} />
                 </TouchableOpacity>
                 <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Strength</Text>
-                <View style={styles.headerBtn} />
+                <TouchableOpacity
+                    onPress={() => {
+                        refetchExercises();
+                        refetchProgression();
+                    }}
+                    style={styles.headerBtn}
+                >
+                    <Ionicons name="refresh" size={20} color={colors.foreground} />
+                </TouchableOpacity>
             </View>
 
-            <ScrollView showsVerticalScrollIndicator={false}>
-                {/* Exercise Selector */}
-                <View style={styles.exerciseSelector}>
-                    <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.exerciseScroll}>
-                        {EXERCISES.map((ex) => (
-                            <TouchableOpacity
-                                key={ex.id}
-                                style={[
-                                    styles.exerciseChip,
-                                    selectedExercise.id === ex.id
-                                        ? { backgroundColor: colors.primary.main }
-                                        : { backgroundColor: colors.card, borderColor: colors.border, borderWidth: 1 }
-                                ]}
-                                onPress={() => setSelectedExercise(ex)}
-                            >
-                                <MaterialCommunityIcons
-                                    name={ex.icon as any}
-                                    size={18}
-                                    color={selectedExercise.id === ex.id ? '#FFF' : colors.foreground}
-                                />
-                                <Text style={[
-                                    styles.exerciseChipText,
-                                    { color: selectedExercise.id === ex.id ? '#FFF' : colors.foreground }
-                                ]}>{ex.name}</Text>
-                            </TouchableOpacity>
-                        ))}
-                    </ScrollView>
+            {isLoading ? (
+                <View style={styles.centerState}>
+                    <ActivityIndicator size="large" color={colors.primary.main} />
                 </View>
-
-                {/* Stats Summary Cards */}
-                <Animated.View style={[styles.statsRow, { opacity: fadeAnim }]}>
-                    <View style={[styles.statCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-                        <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>Current 1RM</Text>
-                        <Text style={[styles.statValue, { color: colors.foreground }]}>{currentE1RM}</Text>
-                        <Text style={[styles.statUnit, { color: colors.mutedForeground }]}>lbs</Text>
-                    </View>
-                    <View style={[styles.statCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-                        <View style={[styles.prBadge, { backgroundColor: `${colors.stats.pr}15` }]}>
-                            <MaterialCommunityIcons name="crown" size={14} color={colors.stats.pr} />
-                        </View>
-                        <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>All-Time Best</Text>
-                        <Text style={[styles.statValue, { color: colors.foreground }]}>{allTimeBest}</Text>
-                        <Text style={[styles.statUnit, { color: colors.mutedForeground }]}>lbs</Text>
-                    </View>
-                    <View style={[styles.statCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-                        <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>Improvement</Text>
-                        <Text style={[styles.statValue, { color: colors.success }]}>+{improvement}%</Text>
-                        <Text style={[styles.statUnit, { color: colors.mutedForeground }]}>6 months</Text>
-                    </View>
-                </Animated.View>
-
-                {/* Main Chart */}
-                <View style={styles.section}>
-                    <View style={styles.sectionHeader}>
-                        <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Estimated 1RM Trend</Text>
-                        <View style={styles.periodSelector}>
-                            {['3M', '6M', '1Y', 'ALL'].map((p) => (
+            ) : isExerciseError || isProgressError ? (
+                <View style={styles.centerState}>
+                    <Text style={{ color: colors.error, marginBottom: 12 }}>Failed to load strength progression.</Text>
+                    <TouchableOpacity style={[styles.retryBtn, { backgroundColor: colors.primary.main }]} onPress={() => {
+                        refetchExercises();
+                        refetchProgression();
+                    }}>
+                        <Text style={styles.retryText}>Retry</Text>
+                    </TouchableOpacity>
+                </View>
+            ) : !hasAnyData ? (
+                <View style={styles.centerState}>
+                    <Text style={{ color: colors.mutedForeground, textAlign: 'center' }}>No PR history found yet. Complete workouts to build strength progression.</Text>
+                </View>
+            ) : (
+                <ScrollView showsVerticalScrollIndicator={false}>
+                    <View style={styles.exerciseSelector}>
+                        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.exerciseScroll}>
+                            {exerciseOptions.map((exercise) => (
                                 <TouchableOpacity
-                                    key={p}
-                                    style={[styles.periodBtn, period === p && { backgroundColor: `${colors.primary.main}20` }]}
-                                    onPress={() => setPeriod(p)}
+                                    key={exercise.id}
+                                    style={[
+                                        styles.exerciseChip,
+                                        selectedExerciseId === exercise.id
+                                            ? { backgroundColor: colors.primary.main }
+                                            : { backgroundColor: colors.card, borderColor: colors.border, borderWidth: 1 },
+                                    ]}
+                                    onPress={() => setSelectedExerciseId(exercise.id)}
                                 >
-                                    <Text style={[styles.periodText, { color: period === p ? colors.primary.main : colors.mutedForeground }]}>{p}</Text>
+                                    <MaterialCommunityIcons name={exercise.icon as any} size={18} color={selectedExerciseId === exercise.id ? '#FFF' : colors.foreground} />
+                                    <Text style={[styles.exerciseChipText, { color: selectedExerciseId === exercise.id ? '#FFF' : colors.foreground }]}>{exercise.name}</Text>
                                 </TouchableOpacity>
                             ))}
+                        </ScrollView>
+                    </View>
+
+                    <Animated.View style={[styles.statsRow, { opacity: fadeAnim }]}>
+                        <View style={[styles.statCard, { backgroundColor: colors.card, borderColor: colors.border }]}> 
+                            <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>Current</Text>
+                            <Text style={[styles.statValue, { color: colors.foreground }]}>{currentValue.toFixed(0)}</Text>
+                            <Text style={[styles.statUnit, { color: colors.mutedForeground }]}>kg</Text>
+                        </View>
+                        <View style={[styles.statCard, { backgroundColor: colors.card, borderColor: colors.border }]}> 
+                            <View style={[styles.prBadge, { backgroundColor: `${colors.stats.pr}15` }]}> 
+                                <MaterialCommunityIcons name="crown" size={14} color={colors.stats.pr} />
+                            </View>
+                            <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>All-Time Best</Text>
+                            <Text style={[styles.statValue, { color: colors.foreground }]}>{allTimeBest.toFixed(0)}</Text>
+                            <Text style={[styles.statUnit, { color: colors.mutedForeground }]}>kg</Text>
+                        </View>
+                        <View style={[styles.statCard, { backgroundColor: colors.card, borderColor: colors.border }]}> 
+                            <Text style={[styles.statLabel, { color: colors.mutedForeground }]}>Improvement</Text>
+                            <Text style={[styles.statValue, { color: improvement >= 0 ? colors.success : colors.error }]}>{improvement >= 0 ? '+' : ''}{improvement.toFixed(1)}%</Text>
+                            <Text style={[styles.statUnit, { color: colors.mutedForeground }]}>{period}</Text>
+                        </View>
+                    </Animated.View>
+
+                    <View style={styles.section}>
+                        <View style={styles.sectionHeader}>
+                            <Text style={[styles.sectionTitle, { color: colors.foreground }]}>{selectedExercise?.name ?? 'Exercise'} Trend</Text>
+                            <View style={styles.periodSelector}>
+                                {(['3M', '6M', '1Y', 'ALL'] as Period[]).map((p) => (
+                                    <TouchableOpacity
+                                        key={p}
+                                        style={[styles.periodBtn, period === p && { backgroundColor: `${colors.primary.main}20` }]}
+                                        onPress={() => setPeriod(p)}
+                                    >
+                                        <Text style={[styles.periodText, { color: period === p ? colors.primary.main : colors.mutedForeground }]}>{p}</Text>
+                                    </TouchableOpacity>
+                                ))}
+                            </View>
+                        </View>
+                        <View style={[styles.chartCard, { backgroundColor: colors.card, borderColor: colors.border }]}> 
+                            {chartData.length < 2 ? (
+                                <Text style={[styles.emptyText, { color: colors.mutedForeground }]}>Not enough points in this period to draw a trend.</Text>
+                            ) : (
+                                <LineChart
+                                    data={chartData}
+                                    width={width - 80}
+                                    height={220}
+                                    color={colors.primary.main}
+                                    thickness={4}
+                                    hideDataPoints={false}
+                                    dataPointsColor={colors.primary.main}
+                                    dataPointsRadius={5}
+                                    curved
+                                    areaChart
+                                    startFillColor={`${colors.primary.main}80`}
+                                    endFillColor={`${colors.primary.main}00`}
+                                    startOpacity={0.6}
+                                    endOpacity={0.05}
+                                    noOfSections={4}
+                                    yAxisThickness={0}
+                                    xAxisThickness={0}
+                                    xAxisLabelTextStyle={{ color: colors.mutedForeground, fontSize: 11, fontWeight: '500' }}
+                                    yAxisTextStyle={{ color: colors.mutedForeground, fontSize: 11, fontWeight: '500' }}
+                                    rulesType="solid"
+                                    rulesColor={colors.border}
+                                    isAnimated
+                                    animationDuration={800}
+                                />
+                            )}
                         </View>
                     </View>
-                    <View style={[styles.chartCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-                        <LineChart
-                            data={currentData.map((d: any) => ({
-                                value: d.value,
-                                label: d.label,
-                                customDataPoint: d.isPR ? () => (
-                                    <View style={[styles.prDot, { backgroundColor: colors.stats.pr }]}>
-                                        <MaterialCommunityIcons name="crown" size={12} color="#FFF" />
-                                    </View>
-                                ) : undefined,
-                            }))}
-                            width={width - 80}
-                            height={220}
-                            color={colors.primary.main}
-                            thickness={4}
-                            hideDataPoints={false}
-                            dataPointsColor={colors.primary.main}
-                            dataPointsRadius={6}
-                            curved
-                            areaChart
-                            startFillColor={`${colors.primary.main}80`}
-                            endFillColor={`${colors.primary.main}00`}
-                            startOpacity={0.6}
-                            endOpacity={0.05}
-                            noOfSections={4}
-                            yAxisThickness={0}
-                            xAxisThickness={0}
-                            xAxisLabelTextStyle={{ color: colors.mutedForeground, fontSize: 11, fontWeight: '500' }}
-                            yAxisTextStyle={{ color: colors.mutedForeground, fontSize: 11, fontWeight: '500' }}
-                            rulesType="solid"
-                            rulesColor={colors.border}
-                            isAnimated
-                            animationDuration={800}
-                            pointerConfig={{
-                                pointerStripHeight: 220,
-                                pointerStripColor: colors.primary.main,
-                                pointerStripWidth: 2,
-                                pointerColor: colors.primary.main,
-                                radius: 6,
-                                pointerLabelWidth: 80,
-                                pointerLabelHeight: 30,
-                                activatePointersOnLongPress: true,
-                                autoAdjustPointerLabelPosition: true,
-                                pointerLabelComponent: (items: any) => (
-                                    <View style={{
-                                        backgroundColor: colors.card,
-                                        padding: 8,
-                                        borderRadius: 8,
-                                        borderWidth: 1,
-                                        borderColor: colors.border,
-                                        left: -20,
-                                    }}>
-                                        <Text style={{ color: colors.foreground, fontSize: 12, fontWeight: '700' }}>
-                                            {items[0].value} lbs
-                                        </Text>
-                                    </View>
-                                ),
-                            }}
-                        />
-                    </View>
-                </View>
 
-                {/* Recent Sessions */}
-                <View style={styles.section}>
-                    <Text style={[styles.sectionTitle, { color: colors.foreground, marginBottom: 14 }]}>Recent Sessions</Text>
-                    {RECENT_SESSIONS.map((session, index) => (
-                        <Animated.View
-                            key={index}
-                            style={{
-                                opacity: fadeAnim,
-                                transform: [{
-                                    translateY: fadeAnim.interpolate({
-                                        inputRange: [0, 1],
-                                        outputRange: [15 + index * 3, 0]
-                                    })
-                                }]
-                            }}
-                        >
-                            <View style={[styles.sessionCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-                                <View style={styles.sessionInfo}>
-                                    <Text style={[styles.sessionDate, { color: colors.foreground }]}>{session.date}</Text>
-                                    <View style={styles.sessionMeta}>
-                                        <Text style={[styles.sessionDetail, { color: colors.mutedForeground }]}>
-                                            {session.weight} × {session.reps}
-                                        </Text>
-                                        <View style={[styles.dot, { backgroundColor: colors.border }]} />
-                                        <Text style={[styles.sessionDetail, { color: colors.mutedForeground }]}>
-                                            e1RM: {session.e1rm}
-                                        </Text>
-                                    </View>
-                                </View>
-                                <View style={styles.sessionRight}>
-                                    {session.isPR ? (
-                                        <View style={[styles.prSessionBadge, { backgroundColor: `${colors.stats.pr}15` }]}>
-                                            <MaterialCommunityIcons name="crown" size={14} color={colors.stats.pr} />
-                                            <Text style={[styles.prSessionText, { color: colors.stats.pr }]}>PR</Text>
+                    <View style={styles.section}>
+                        <Text style={[styles.sectionTitle, { color: colors.foreground, marginBottom: 14 }]}>Recent Records</Text>
+                        {recentSessions.length === 0 ? (
+                            <Text style={[styles.emptyText, { color: colors.mutedForeground }]}>No records yet for this exercise.</Text>
+                        ) : (
+                            recentSessions.map((session, index) => (
+                                <Animated.View
+                                    key={session.id}
+                                    style={{
+                                        opacity: fadeAnim,
+                                        transform: [{
+                                            translateY: fadeAnim.interpolate({ inputRange: [0, 1], outputRange: [12 + index * 2, 0] }),
+                                        }],
+                                    }}
+                                >
+                                    <View style={[styles.sessionCard, { backgroundColor: colors.card, borderColor: colors.border }]}> 
+                                        <View style={styles.sessionInfo}>
+                                            <Text style={[styles.sessionDate, { color: colors.foreground }]}>{formatLongDate(session.date)}</Text>
+                                            <View style={styles.sessionMeta}>
+                                                <Text style={[styles.sessionDetail, { color: colors.mutedForeground }]}>{session.recordType.replace('_', ' ')}</Text>
+                                                {typeof session.reps === 'number' && (
+                                                    <>
+                                                        <View style={[styles.dot, { backgroundColor: colors.border }]} />
+                                                        <Text style={[styles.sessionDetail, { color: colors.mutedForeground }]}>{session.reps} reps</Text>
+                                                    </>
+                                                )}
+                                            </View>
                                         </View>
-                                    ) : (
-                                        <Text style={[styles.e1rmValue, { color: colors.foreground }]}>{session.e1rm}</Text>
-                                    )}
-                                </View>
-                            </View>
-                        </Animated.View>
-                    ))}
-                </View>
+                                        <View style={styles.sessionRight}>
+                                            <Text style={[styles.e1rmValue, { color: colors.foreground }]}>{session.value.toFixed(0)}</Text>
+                                            <Text style={[styles.sessionDetail, { color: colors.mutedForeground }]}>kg</Text>
+                                        </View>
+                                    </View>
+                                </Animated.View>
+                            ))
+                        )}
+                    </View>
 
-                <View style={{ height: 100 }} />
-            </ScrollView>
+                    <View style={{ height: 100 }} />
+                </ScrollView>
+            )}
         </View>
     );
 }
@@ -269,6 +341,9 @@ const styles = StyleSheet.create({
     header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, paddingBottom: 16 },
     headerBtn: { width: 44, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(150,150,150,0.1)' },
     headerTitle: { fontSize: 20, fontWeight: '700' },
+    centerState: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 24 },
+    retryBtn: { borderRadius: 10, paddingHorizontal: 16, paddingVertical: 10 },
+    retryText: { color: '#FFF', fontWeight: '700' },
     exerciseSelector: { paddingVertical: 16 },
     exerciseScroll: { paddingHorizontal: 16, gap: 10 },
     exerciseChip: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, paddingVertical: 12, borderRadius: 14, gap: 8 },
@@ -294,7 +369,6 @@ const styles = StyleSheet.create({
     sessionDetail: { fontSize: 14 },
     dot: { width: 4, height: 4, borderRadius: 2 },
     sessionRight: { alignItems: 'flex-end' },
-    prSessionBadge: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 12, paddingVertical: 6, borderRadius: 10, gap: 6 },
-    prSessionText: { fontSize: 14, fontWeight: '700' },
     e1rmValue: { fontSize: 20, fontWeight: '700', fontFamily: fontFamilies.mono },
+    emptyText: { fontSize: 14, textAlign: 'center' },
 });

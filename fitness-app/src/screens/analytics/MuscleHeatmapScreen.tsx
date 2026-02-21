@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useMemo, useState } from 'react';
 import {
     View,
     Text,
@@ -7,188 +7,270 @@ import {
     TouchableOpacity,
     Dimensions,
     Animated,
+    ActivityIndicator,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
+import { useMuscleDistribution } from '../../hooks/queries/useStatsQueries';
 
 const { width } = Dimensions.get('window');
-
-// ============================================================
-// MUSCLE HEATMAP DATA - Simple squares with intensity
-// ============================================================
-const BODY_FRONT = [
-    { id: 'chest', name: 'Chest', intensity: 85, row: 0, col: 1 },
-    { id: 'shoulders_l', name: 'L Shoulder', intensity: 70, row: 0, col: 0 },
-    { id: 'shoulders_r', name: 'R Shoulder', intensity: 65, row: 0, col: 2 },
-    { id: 'biceps_l', name: 'L Bicep', intensity: 55, row: 1, col: 0 },
-    { id: 'biceps_r', name: 'R Bicep', intensity: 60, row: 1, col: 2 },
-    { id: 'abs', name: 'Abs', intensity: 40, row: 1, col: 1 },
-    { id: 'quads_l', name: 'L Quad', intensity: 30, row: 2, col: 0 },
-    { id: 'quads_r', name: 'R Quad', intensity: 35, row: 2, col: 2 },
-    { id: 'core', name: 'Core', intensity: 45, row: 2, col: 1 },
-];
-
-const BODY_BACK = [
-    { id: 'traps', name: 'Traps', intensity: 75, row: 0, col: 1 },
-    { id: 'rear_delt_l', name: 'L Rear Delt', intensity: 50, row: 0, col: 0 },
-    { id: 'rear_delt_r', name: 'R Rear Delt', intensity: 55, row: 0, col: 2 },
-    { id: 'lats_l', name: 'L Lat', intensity: 80, row: 1, col: 0 },
-    { id: 'lats_r', name: 'R Lat', intensity: 78, row: 1, col: 2 },
-    { id: 'lower_back', name: 'Lower Back', intensity: 60, row: 1, col: 1 },
-    { id: 'glutes_l', name: 'L Glute', intensity: 25, row: 2, col: 0 },
-    { id: 'glutes_r', name: 'R Glute', intensity: 28, row: 2, col: 2 },
-    { id: 'hamstrings', name: 'Hamstrings', intensity: 20, row: 2, col: 1 },
-];
-
 const SQUARE_SIZE = (width - 80) / 3;
+
+const GROUP_ALIASES: Record<string, string[]> = {
+    Chest: ['chest', 'pecs', 'pectorals'],
+    Back: ['back', 'lats', 'latissimus', 'traps', 'trapezius', 'rhomboids', 'erectors'],
+    Shoulders: ['shoulders', 'shoulder', 'delts', 'delt'],
+    Legs: ['legs', 'leg', 'quadriceps', 'quads', 'hamstrings', 'glutes', 'calves', 'calf', 'adductors'],
+    Arms: ['arms', 'arm', 'biceps', 'triceps', 'forearms', 'forearm'],
+    Core: ['core', 'abs', 'abdominals', 'obliques'],
+};
+
+type GroupIntensity = {
+    name: string;
+    value: number;
+    percentage: number;
+    intensity: number;
+};
+
+type HeatCell = {
+    id: string;
+    name: string;
+    group: keyof typeof GROUP_ALIASES;
+    row: number;
+    col: number;
+};
+
+const FRONT_CELLS: HeatCell[] = [
+    { id: 'front-shoulder-l', name: 'L Shoulder', group: 'Shoulders', row: 0, col: 0 },
+    { id: 'front-chest', name: 'Chest', group: 'Chest', row: 0, col: 1 },
+    { id: 'front-shoulder-r', name: 'R Shoulder', group: 'Shoulders', row: 0, col: 2 },
+    { id: 'front-arm-l', name: 'L Arm', group: 'Arms', row: 1, col: 0 },
+    { id: 'front-core', name: 'Core', group: 'Core', row: 1, col: 1 },
+    { id: 'front-arm-r', name: 'R Arm', group: 'Arms', row: 1, col: 2 },
+    { id: 'front-leg-l', name: 'L Leg', group: 'Legs', row: 2, col: 0 },
+    { id: 'front-abs', name: 'Abs', group: 'Core', row: 2, col: 1 },
+    { id: 'front-leg-r', name: 'R Leg', group: 'Legs', row: 2, col: 2 },
+];
+
+const BACK_CELLS: HeatCell[] = [
+    { id: 'back-shoulder-l', name: 'L Rear Delt', group: 'Shoulders', row: 0, col: 0 },
+    { id: 'back-upper', name: 'Upper Back', group: 'Back', row: 0, col: 1 },
+    { id: 'back-shoulder-r', name: 'R Rear Delt', group: 'Shoulders', row: 0, col: 2 },
+    { id: 'back-lat-l', name: 'L Lat', group: 'Back', row: 1, col: 0 },
+    { id: 'back-mid', name: 'Lower Back', group: 'Back', row: 1, col: 1 },
+    { id: 'back-lat-r', name: 'R Lat', group: 'Back', row: 1, col: 2 },
+    { id: 'back-leg-l', name: 'L Posterior', group: 'Legs', row: 2, col: 0 },
+    { id: 'back-core', name: 'Posterior Core', group: 'Core', row: 2, col: 1 },
+    { id: 'back-leg-r', name: 'R Posterior', group: 'Legs', row: 2, col: 2 },
+];
+
+const toGroupedIntensity = (muscleSets: Record<string, number>): GroupIntensity[] => {
+    const grouped: Record<string, number> = {
+        Chest: 0,
+        Back: 0,
+        Shoulders: 0,
+        Legs: 0,
+        Arms: 0,
+        Core: 0,
+    };
+
+    Object.entries(muscleSets).forEach(([rawKey, value]) => {
+        const key = rawKey.toLowerCase();
+        let mapped = false;
+
+        Object.entries(GROUP_ALIASES).forEach(([group, aliases]) => {
+            if (!mapped && aliases.some((alias) => key.includes(alias))) {
+                grouped[group] += value;
+                mapped = true;
+            }
+        });
+
+        if (!mapped) grouped.Core += value * 0.1;
+    });
+
+    const total = Object.values(grouped).reduce((sum, value) => sum + value, 0);
+
+    return Object.entries(grouped).map(([name, value]) => {
+        const percentage = total > 0 ? (value / total) * 100 : 0;
+        return {
+            name,
+            value,
+            percentage,
+            intensity: Math.min(100, Math.round(percentage * 3)),
+        };
+    });
+};
 
 export function MuscleHeatmapScreen({ navigation }: any) {
     const colors = useColors();
     const insets = useSafeAreaInsets();
     const fadeAnim = useRef(new Animated.Value(0)).current;
-    const [view, setView] = React.useState<'front' | 'back'>('front');
+    const [view, setView] = useState<'front' | 'back'>('front');
+
+    const { data, isLoading, isError, refetch } = useMuscleDistribution();
 
     useEffect(() => {
         Animated.timing(fadeAnim, { toValue: 1, duration: 500, useNativeDriver: true }).start();
-    }, []);
+    }, [fadeAnim, view]);
+
+    const grouped = useMemo(() => toGroupedIntensity(data?.muscleSets ?? {}), [data?.muscleSets]);
+
+    const groupedMap = useMemo(() => {
+        const map: Record<string, GroupIntensity> = {};
+        grouped.forEach((item) => {
+            map[item.name] = item;
+        });
+        return map;
+    }, [grouped]);
+
+    const cells = view === 'front' ? FRONT_CELLS : BACK_CELLS;
+
+    const cellsWithIntensity = cells.map((cell) => {
+        const source = groupedMap[cell.group];
+        return {
+            ...cell,
+            intensity: source?.intensity ?? 0,
+            percentage: source?.percentage ?? 0,
+        };
+    });
 
     const getIntensityColor = (intensity: number) => {
-        if (intensity >= 80) return '#EF4444'; // Hot red
-        if (intensity >= 60) return '#F97316'; // Orange
-        if (intensity >= 40) return '#FBBF24'; // Yellow
-        if (intensity >= 20) return '#34D399'; // Green
-        return '#6B7280'; // Gray (rested)
+        if (intensity >= 80) return '#EF4444';
+        if (intensity >= 60) return '#F97316';
+        if (intensity >= 40) return '#FBBF24';
+        if (intensity >= 20) return '#34D399';
+        return '#6B7280';
     };
 
-    const getIntensityLabel = (intensity: number) => {
-        if (intensity >= 80) return 'High Volume';
-        if (intensity >= 60) return 'Moderate';
-        if (intensity >= 40) return 'Light';
-        if (intensity >= 20) return 'Recovery';
-        return 'Rested';
-    };
+    const topGroup = useMemo(() => {
+        if (!grouped.length) return null;
+        return [...grouped].sort((a, b) => b.percentage - a.percentage)[0];
+    }, [grouped]);
 
-    const currentData = view === 'front' ? BODY_FRONT : BODY_BACK;
+    const lowGroups = useMemo(
+        () => grouped.filter((item) => item.percentage > 0 && item.percentage < 10).map((item) => item.name),
+        [grouped],
+    );
 
     const renderGrid = () => {
         const rows: React.ReactNode[][] = [[], [], []];
-        currentData.forEach((muscle) => {
-            rows[muscle.row].push(
-                <TouchableOpacity
-                    key={muscle.id}
-                    style={[styles.muscleSquare, { backgroundColor: getIntensityColor(muscle.intensity) }]}
-                    activeOpacity={0.8}
-                >
-                    <Text style={styles.muscleEmoji}>
-                        {muscle.intensity >= 80 ? '🔥' : muscle.intensity >= 60 ? '💪' : muscle.intensity >= 40 ? '✨' : '💤'}
-                    </Text>
-                    <Text style={styles.muscleName}>{muscle.name}</Text>
-                    <Text style={styles.muscleIntensity}>{muscle.intensity}%</Text>
-                </TouchableOpacity>
+
+        cellsWithIntensity.forEach((cell) => {
+            rows[cell.row].push(
+                <View key={cell.id} style={[styles.muscleSquare, { backgroundColor: getIntensityColor(cell.intensity) }]}> 
+                    <Text style={styles.muscleName}>{cell.name}</Text>
+                    <Text style={styles.muscleIntensity}>{cell.intensity}%</Text>
+                </View>,
             );
         });
+
         return rows;
     };
 
     return (
-        <View style={[styles.container, { backgroundColor: colors.background }]}>
-            {/* Header */}
-            <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.card, borderBottomColor: colors.border }]}>
+        <View style={[styles.container, { backgroundColor: colors.background }]}> 
+            <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.card, borderBottomColor: colors.border }]}> 
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerBtn}>
                     <Ionicons name="arrow-back" size={24} color={colors.foreground} />
                 </TouchableOpacity>
                 <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Muscle Heatmap</Text>
-                <View style={styles.headerBtn} />
+                <TouchableOpacity onPress={() => refetch()} style={styles.headerBtn}>
+                    <Ionicons name="refresh" size={20} color={colors.foreground} />
+                </TouchableOpacity>
             </View>
 
-            <ScrollView showsVerticalScrollIndicator={false}>
-                {/* View Toggle */}
-                <View style={styles.toggleContainer}>
-                    <View style={[styles.toggleBg, { backgroundColor: colors.muted }]}>
-                        <TouchableOpacity
-                            style={[styles.toggleBtn, view === 'front' && { backgroundColor: colors.primary.main }]}
-                            onPress={() => setView('front')}
-                        >
-                            <Text style={[styles.toggleText, { color: view === 'front' ? '#FFF' : colors.foreground }]}>Front</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={[styles.toggleBtn, view === 'back' && { backgroundColor: colors.primary.main }]}
-                            onPress={() => setView('back')}
-                        >
-                            <Text style={[styles.toggleText, { color: view === 'back' ? '#FFF' : colors.foreground }]}>Back</Text>
-                        </TouchableOpacity>
-                    </View>
+            {isLoading ? (
+                <View style={styles.centerState}>
+                    <ActivityIndicator size="large" color={colors.primary.main} />
                 </View>
-
-                {/* Period Selector */}
-                <View style={styles.periodRow}>
-                    {['7D', '30D', '90D'].map((p, i) => (
-                        <TouchableOpacity
-                            key={p}
-                            style={[styles.periodBtn, i === 1 && { backgroundColor: colors.primary.main }]}
-                        >
-                            <Text style={[styles.periodText, { color: i === 1 ? '#FFF' : colors.mutedForeground }]}>{p}</Text>
-                        </TouchableOpacity>
-                    ))}
+            ) : isError ? (
+                <View style={styles.centerState}>
+                    <Text style={{ color: colors.error, marginBottom: 12 }}>Failed to load muscle heatmap.</Text>
+                    <TouchableOpacity style={[styles.retryBtn, { backgroundColor: colors.primary.main }]} onPress={() => refetch()}>
+                        <Text style={styles.retryText}>Retry</Text>
+                    </TouchableOpacity>
                 </View>
-
-                {/* Heatmap Grid */}
-                <Animated.View style={[styles.gridContainer, { opacity: fadeAnim }]}>
-                    <View style={[styles.gridCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-                        <Text style={[styles.gridTitle, { color: colors.foreground }]}>
-                            {view === 'front' ? '👤 Front View' : '🔙 Back View'}
-                        </Text>
-                        {renderGrid().map((row, rowIndex) => (
-                            <View key={rowIndex} style={styles.gridRow}>
-                                {row}
-                            </View>
-                        ))}
-                    </View>
-                </Animated.View>
-
-                {/* Legend */}
-                <View style={styles.legendSection}>
-                    <Text style={[styles.legendTitle, { color: colors.foreground }]}>Intensity Legend</Text>
-                    <View style={[styles.legendCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-                        {[
-                            { color: '#EF4444', label: 'High Volume (80%+)', emoji: '🔥' },
-                            { color: '#F97316', label: 'Moderate (60-79%)', emoji: '💪' },
-                            { color: '#FBBF24', label: 'Light (40-59%)', emoji: '✨' },
-                            { color: '#34D399', label: 'Recovery (20-39%)', emoji: '🌱' },
-                            { color: '#6B7280', label: 'Rested (<20%)', emoji: '💤' },
-                        ].map((item) => (
-                            <View key={item.label} style={styles.legendItem}>
-                                <View style={[styles.legendDot, { backgroundColor: item.color }]} />
-                                <Text style={styles.legendEmoji}>{item.emoji}</Text>
-                                <Text style={[styles.legendLabel, { color: colors.foreground }]}>{item.label}</Text>
-                            </View>
-                        ))}
-                    </View>
-                </View>
-
-                {/* Insights */}
-                <View style={styles.insightsSection}>
-                    <Text style={[styles.insightsTitle, { color: colors.foreground }]}>💡 Insights</Text>
-                    <View style={[styles.insightCard, { backgroundColor: `${colors.warning}10`, borderColor: `${colors.warning}30` }]}>
-                        <Ionicons name="alert-circle" size={24} color={colors.warning} />
-                        <View style={styles.insightContent}>
-                            <Text style={[styles.insightHeadline, { color: colors.warning }]}>Leg Day Needed</Text>
-                            <Text style={[styles.insightText, { color: colors.foreground }]}>Your lower body is undertrained. Consider adding a leg workout this week.</Text>
+            ) : (
+                <ScrollView showsVerticalScrollIndicator={false}>
+                    <View style={styles.toggleContainer}>
+                        <View style={[styles.toggleBg, { backgroundColor: colors.muted }]}> 
+                            <TouchableOpacity
+                                style={[styles.toggleBtn, view === 'front' && { backgroundColor: colors.primary.main }]}
+                                onPress={() => setView('front')}
+                            >
+                                <Text style={[styles.toggleText, { color: view === 'front' ? '#FFF' : colors.foreground }]}>Front</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={[styles.toggleBtn, view === 'back' && { backgroundColor: colors.primary.main }]}
+                                onPress={() => setView('back')}
+                            >
+                                <Text style={[styles.toggleText, { color: view === 'back' ? '#FFF' : colors.foreground }]}>Back</Text>
+                            </TouchableOpacity>
                         </View>
                     </View>
-                    <View style={[styles.insightCard, { backgroundColor: `${colors.success}10`, borderColor: `${colors.success}30` }]}>
-                        <Ionicons name="checkmark-circle" size={24} color={colors.success} />
-                        <View style={styles.insightContent}>
-                            <Text style={[styles.insightHeadline, { color: colors.success }]}>Great Upper Body Work</Text>
-                            <Text style={[styles.insightText, { color: colors.foreground }]}>Chest and back are well-trained. Keep up the balanced pushing and pulling!</Text>
+
+                    <View style={styles.periodRow}>
+                        <View style={[styles.periodBadge, { backgroundColor: `${colors.primary.main}15`, borderColor: `${colors.primary.main}40` }]}> 
+                            <Text style={[styles.periodText, { color: colors.primary.main }]}>Last 30 Days</Text>
                         </View>
                     </View>
-                </View>
 
-                <View style={{ height: 100 }} />
-            </ScrollView>
+                    <Animated.View style={[styles.gridContainer, { opacity: fadeAnim }]}> 
+                        <View style={[styles.gridCard, { backgroundColor: colors.card, borderColor: colors.border }]}> 
+                            <Text style={[styles.gridTitle, { color: colors.foreground }]}>{view === 'front' ? 'Front View' : 'Back View'}</Text>
+                            {renderGrid().map((row, rowIndex) => (
+                                <View key={String(rowIndex)} style={styles.gridRow}>
+                                    {row}
+                                </View>
+                            ))}
+                        </View>
+                    </Animated.View>
+
+                    <View style={styles.legendSection}>
+                        <Text style={[styles.legendTitle, { color: colors.foreground }]}>Intensity Legend</Text>
+                        <View style={[styles.legendCard, { backgroundColor: colors.card, borderColor: colors.border }]}> 
+                            {[
+                                { color: '#EF4444', label: 'High load (80%+)' },
+                                { color: '#F97316', label: 'Moderate load (60-79%)' },
+                                { color: '#FBBF24', label: 'Light load (40-59%)' },
+                                { color: '#34D399', label: 'Recovery load (20-39%)' },
+                                { color: '#6B7280', label: 'Low load (<20%)' },
+                            ].map((item) => (
+                                <View key={item.label} style={styles.legendItem}>
+                                    <View style={[styles.legendDot, { backgroundColor: item.color }]} />
+                                    <Text style={[styles.legendLabel, { color: colors.foreground }]}>{item.label}</Text>
+                                </View>
+                            ))}
+                        </View>
+                    </View>
+
+                    <View style={styles.insightsSection}>
+                        <Text style={[styles.insightsTitle, { color: colors.foreground }]}>Insights</Text>
+                        <View style={[styles.insightCard, { backgroundColor: `${colors.success}10`, borderColor: `${colors.success}30` }]}> 
+                            <Ionicons name="trending-up" size={24} color={colors.success} />
+                            <View style={styles.insightContent}>
+                                <Text style={[styles.insightHeadline, { color: colors.success }]}>Most Trained Group</Text>
+                                <Text style={[styles.insightText, { color: colors.foreground }]}>
+                                    {topGroup ? `${topGroup.name} at ${topGroup.percentage.toFixed(1)}% of effective sets.` : 'No training distribution data available yet.'}
+                                </Text>
+                            </View>
+                        </View>
+                        <View style={[styles.insightCard, { backgroundColor: `${colors.warning}10`, borderColor: `${colors.warning}30` }]}> 
+                            <Ionicons name="alert-circle" size={24} color={colors.warning} />
+                            <View style={styles.insightContent}>
+                                <Text style={[styles.insightHeadline, { color: colors.warning }]}>Undertrained Groups</Text>
+                                <Text style={[styles.insightText, { color: colors.foreground }]}>
+                                    {lowGroups.length ? `${lowGroups.join(', ')} are below 10% training share.` : 'No major low-volume muscle groups detected.'}
+                                </Text>
+                            </View>
+                        </View>
+                    </View>
+
+                    <View style={{ height: 100 }} />
+                </ScrollView>
+            )}
         </View>
     );
 }
@@ -198,27 +280,28 @@ const styles = StyleSheet.create({
     header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 12, paddingBottom: 16, borderBottomWidth: 1 },
     headerBtn: { width: 44, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center' },
     headerTitle: { fontSize: 20, fontWeight: '700' },
+    centerState: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 24 },
+    retryBtn: { borderRadius: 10, paddingHorizontal: 16, paddingVertical: 10 },
+    retryText: { color: '#FFF', fontWeight: '700' },
     toggleContainer: { paddingHorizontal: 16, paddingTop: 20 },
     toggleBg: { flexDirection: 'row', borderRadius: 14, padding: 4 },
     toggleBtn: { flex: 1, paddingVertical: 12, borderRadius: 10, alignItems: 'center' },
     toggleText: { fontSize: 15, fontWeight: '600' },
-    periodRow: { flexDirection: 'row', justifyContent: 'center', paddingVertical: 16, gap: 8 },
-    periodBtn: { paddingHorizontal: 20, paddingVertical: 10, borderRadius: 12 },
-    periodText: { fontSize: 14, fontWeight: '600' },
+    periodRow: { alignItems: 'center', paddingVertical: 16 },
+    periodBadge: { borderWidth: 1, borderRadius: 12, paddingHorizontal: 14, paddingVertical: 8 },
+    periodText: { fontSize: 13, fontWeight: '700' },
     gridContainer: { paddingHorizontal: 16 },
     gridCard: { padding: 20, borderRadius: 24, borderWidth: 1, alignItems: 'center' },
     gridTitle: { fontSize: 18, fontWeight: '700', marginBottom: 20 },
     gridRow: { flexDirection: 'row', gap: 12, marginBottom: 12 },
     muscleSquare: { width: SQUARE_SIZE, height: SQUARE_SIZE, borderRadius: 16, alignItems: 'center', justifyContent: 'center', padding: 8 },
-    muscleEmoji: { fontSize: 24, marginBottom: 4 },
     muscleName: { color: '#FFF', fontSize: 12, fontWeight: '600', textAlign: 'center' },
-    muscleIntensity: { color: 'rgba(255,255,255,0.8)', fontSize: 14, fontWeight: '800', marginTop: 4 },
+    muscleIntensity: { color: 'rgba(255,255,255,0.85)', fontSize: 14, fontWeight: '800', marginTop: 6 },
     legendSection: { paddingHorizontal: 16, marginTop: 24 },
     legendTitle: { fontSize: 16, fontWeight: '700', marginBottom: 12 },
     legendCard: { borderRadius: 18, borderWidth: 1, padding: 16 },
-    legendItem: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 8 },
-    legendDot: { width: 20, height: 20, borderRadius: 6 },
-    legendEmoji: { fontSize: 18 },
+    legendItem: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 7 },
+    legendDot: { width: 18, height: 18, borderRadius: 6 },
     legendLabel: { fontSize: 14, flex: 1 },
     insightsSection: { paddingHorizontal: 16, marginTop: 24 },
     insightsTitle: { fontSize: 16, fontWeight: '700', marginBottom: 12 },

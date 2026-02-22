@@ -1,36 +1,22 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
     View,
     Text,
     StyleSheet,
     ScrollView,
-    TouchableOpacity,
-    TextInput,
-    Animated,
-    ActivityIndicator,
     Alert,
 } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
 import { useAuthQueries } from '../../hooks/queries/useAuthQueries';
-import { fontFamilies } from '../../theme/typography';
+import { NavigationBar, Input, Button } from '../../components/ui';
 
 export function ChangePasswordScreen({ navigation }: any) {
     const colors = useColors();
-    const insets = useSafeAreaInsets();
-    const fadeAnim = useRef(new Animated.Value(0)).current;
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [showCurrent, setShowCurrent] = useState(false);
-    const [showNew, setShowNew] = useState(false);
-    const [showConfirm, setShowConfirm] = useState(false);
     const { changePasswordMutation } = useAuthQueries();
-
-    useEffect(() => {
-        Animated.timing(fadeAnim, { toValue: 1, duration: 500, useNativeDriver: true }).start();
-    }, []);
 
     const isValid = currentPassword.length >= 8 && newPassword.length >= 8 && newPassword === confirmPassword;
 
@@ -85,77 +71,38 @@ export function ChangePasswordScreen({ navigation }: any) {
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
-            {/* Header */}
-            <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.card, borderBottomColor: colors.border }]}>
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerBtn}>
-                    <Ionicons name="arrow-back" size={24} color={colors.foreground} />
-                </TouchableOpacity>
-                <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Change Password</Text>
-                <View style={styles.headerBtn} />
-            </View>
+            <NavigationBar title="Change Password" onBack={() => navigation.goBack()} />
 
             <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
-                <Animated.View style={[styles.content, { opacity: fadeAnim }]}>
-                    {/* Current Password */}
-                    <View style={styles.inputGroup}>
-                        <Text style={[styles.inputLabel, { color: colors.foreground }]}>Current Password</Text>
-                        <View style={[styles.inputContainer, { backgroundColor: colors.muted, borderColor: colors.border }]}>
-                            <Ionicons name="lock-closed-outline" size={20} color={colors.mutedForeground} />
-                            <TextInput
-                                style={[styles.textInput, { color: colors.foreground }]}
-                                placeholder="Enter current password"
-                                placeholderTextColor={colors.mutedForeground}
-                                value={currentPassword}
-                                onChangeText={setCurrentPassword}
-                                secureTextEntry={!showCurrent}
-                            />
-                            <TouchableOpacity onPress={() => setShowCurrent(!showCurrent)}>
-                                <Ionicons name={showCurrent ? 'eye-off-outline' : 'eye-outline'} size={20} color={colors.mutedForeground} />
-                            </TouchableOpacity>
-                        </View>
-                    </View>
+                <View style={styles.content}>
+                    <Input
+                        label="Current Password"
+                        placeholder="Enter current password"
+                        value={currentPassword}
+                        onChangeText={setCurrentPassword}
+                        secureTextEntry
+                        leftIcon="lock-closed-outline"
+                    />
 
-                    {/* New Password */}
-                    <View style={styles.inputGroup}>
-                        <Text style={[styles.inputLabel, { color: colors.foreground }]}>New Password</Text>
-                        <View style={[styles.inputContainer, { backgroundColor: colors.muted, borderColor: colors.border }]}>
-                            <Ionicons name="key-outline" size={20} color={colors.mutedForeground} />
-                            <TextInput
-                                style={[styles.textInput, { color: colors.foreground }]}
-                                placeholder="Enter new password"
-                                placeholderTextColor={colors.mutedForeground}
-                                value={newPassword}
-                                onChangeText={setNewPassword}
-                                secureTextEntry={!showNew}
-                            />
-                            <TouchableOpacity onPress={() => setShowNew(!showNew)}>
-                                <Ionicons name={showNew ? 'eye-off-outline' : 'eye-outline'} size={20} color={colors.mutedForeground} />
-                            </TouchableOpacity>
-                        </View>
-                        <PasswordStrength password={newPassword} />
-                    </View>
+                    <Input
+                        label="New Password"
+                        placeholder="Enter new password"
+                        value={newPassword}
+                        onChangeText={setNewPassword}
+                        secureTextEntry
+                        leftIcon="key-outline"
+                    />
+                    <PasswordStrength password={newPassword} />
 
-                    {/* Confirm Password */}
-                    <View style={styles.inputGroup}>
-                        <Text style={[styles.inputLabel, { color: colors.foreground }]}>Confirm New Password</Text>
-                        <View style={[styles.inputContainer, { backgroundColor: colors.muted, borderColor: colors.border }]}>
-                            <Ionicons name="checkmark-circle-outline" size={20} color={colors.mutedForeground} />
-                            <TextInput
-                                style={[styles.textInput, { color: colors.foreground }]}
-                                placeholder="Confirm new password"
-                                placeholderTextColor={colors.mutedForeground}
-                                value={confirmPassword}
-                                onChangeText={setConfirmPassword}
-                                secureTextEntry={!showConfirm}
-                            />
-                            <TouchableOpacity onPress={() => setShowConfirm(!showConfirm)}>
-                                <Ionicons name={showConfirm ? 'eye-off-outline' : 'eye-outline'} size={20} color={colors.mutedForeground} />
-                            </TouchableOpacity>
-                        </View>
-                        {confirmPassword && newPassword !== confirmPassword && (
-                            <Text style={[styles.errorText, { color: colors.error }]}>Passwords do not match</Text>
-                        )}
-                    </View>
+                    <Input
+                        label="Confirm New Password"
+                        placeholder="Confirm new password"
+                        value={confirmPassword}
+                        onChangeText={setConfirmPassword}
+                        secureTextEntry
+                        leftIcon="checkmark-circle-outline"
+                        error={confirmPassword && newPassword !== confirmPassword ? 'Passwords do not match' : undefined}
+                    />
 
                     {/* Requirements */}
                     <View style={[styles.requirementsCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
@@ -180,21 +127,16 @@ export function ChangePasswordScreen({ navigation }: any) {
                     </View>
 
                     {/* Submit Button */}
-                    <TouchableOpacity
-                        style={[styles.submitBtn, { opacity: isValid ? 1 : 0.5 }]}
-                        disabled={!isValid || changePasswordMutation.isPending}
-                        activeOpacity={0.9}
+                    <Button
+                        label="Update Password"
                         onPress={handleSubmit}
-                    >
-                        <View style={styles.submitGradient}>
-                            {changePasswordMutation.isPending ? (
-                                <ActivityIndicator size="small" color="#FFF" />
-                            ) : (
-                                <Text style={styles.submitText}>Update Password</Text>
-                            )}
-                        </View>
-                    </TouchableOpacity>
-                </Animated.View>
+                        disabled={!isValid || changePasswordMutation.isPending}
+                        loading={changePasswordMutation.isPending}
+                        variant="primary"
+                        size="lg"
+                        style={styles.submitBtn}
+                    />
+                </View>
             </ScrollView>
         </View>
     );

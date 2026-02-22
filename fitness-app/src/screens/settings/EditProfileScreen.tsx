@@ -1,21 +1,16 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import {
     View,
-    Text,
     StyleSheet,
     ScrollView,
-    TouchableOpacity,
-    TextInput,
-    ActivityIndicator,
     Alert,
     KeyboardAvoidingView,
     Platform,
+    ActivityIndicator,
 } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Ionicons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
-import { fontFamilies } from '../../theme/typography';
 import { useUserQueries } from '../../hooks/queries/useUserQueries';
+import { NavigationBar, Input } from '../../components/ui';
 
 type ProfileFormState = {
     firstName: string;
@@ -27,7 +22,6 @@ type ProfileFormState = {
 
 export function EditProfileScreen({ navigation }: any) {
     const colors = useColors();
-    const insets = useSafeAreaInsets();
     const { profileQuery, updateProfileMutation } = useUserQueries();
 
     const [form, setForm] = useState<ProfileFormState>({
@@ -105,66 +99,59 @@ export function EditProfileScreen({ navigation }: any) {
             style={[styles.container, { backgroundColor: colors.background }]}
             behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         >
-            <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.card, borderBottomColor: colors.border }]}>
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerBtn}>
-                    <Ionicons name="arrow-back" size={24} color={colors.foreground} />
-                </TouchableOpacity>
-                <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Edit Profile</Text>
-                <TouchableOpacity
-                    onPress={handleSave}
-                    style={styles.saveBtn}
-                    disabled={!canSave}
-                >
-                    {updateProfileMutation.isPending ? (
-                        <ActivityIndicator size="small" color={colors.primary.main} />
-                    ) : (
-                        <Text style={[styles.saveBtnText, { color: canSave ? colors.primary.main : colors.mutedForeground }]}>Save</Text>
-                    )}
-                </TouchableOpacity>
-            </View>
+            <NavigationBar
+                title="Edit Profile"
+                onBack={() => navigation.goBack()}
+                rightActions={[{
+                    icon: 'checkmark-done-outline',
+                    onPress: handleSave,
+                    color: canSave ? colors.primary.main : colors.mutedForeground,
+                    label: 'Save',
+                }]}
+            />
 
             <ScrollView
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 20, paddingBottom: 100 }}
             >
                 <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
-                    <FormField
+                    <Input
                         label="First Name"
                         value={form.firstName}
-                        onChangeText={(value: string) => setForm((prev) => ({ ...prev, firstName: value }))}
+                        onChangeText={(value) => setForm((prev) => ({ ...prev, firstName: value }))}
                         placeholder="Enter first name"
-                        colors={colors}
+                        editable={!updateProfileMutation.isPending}
                     />
-                    <FormField
+                    <Input
                         label="Last Name"
                         value={form.lastName}
-                        onChangeText={(value: string) => setForm((prev) => ({ ...prev, lastName: value }))}
+                        onChangeText={(value) => setForm((prev) => ({ ...prev, lastName: value }))}
                         placeholder="Enter last name"
-                        colors={colors}
+                        editable={!updateProfileMutation.isPending}
                     />
-                    <FormField
+                    <Input
                         label="Age"
                         value={form.age}
-                        onChangeText={(value: string) => setForm((prev) => ({ ...prev, age: value }))}
+                        onChangeText={(value) => setForm((prev) => ({ ...prev, age: value }))}
                         placeholder="Optional"
                         keyboardType="numeric"
-                        colors={colors}
+                        editable={!updateProfileMutation.isPending}
                     />
-                    <FormField
-                        label="Height"
+                    <Input
+                        label="Height (cm)"
                         value={form.height}
-                        onChangeText={(value: string) => setForm((prev) => ({ ...prev, height: value }))}
+                        onChangeText={(value) => setForm((prev) => ({ ...prev, height: value }))}
                         placeholder="Optional"
                         keyboardType="numeric"
-                        colors={colors}
+                        editable={!updateProfileMutation.isPending}
                     />
-                    <FormField
-                        label="Weight"
+                    <Input
+                        label="Weight (kg)"
                         value={form.weight}
-                        onChangeText={(value: string) => setForm((prev) => ({ ...prev, weight: value }))}
+                        onChangeText={(value) => setForm((prev) => ({ ...prev, weight: value }))}
                         placeholder="Optional"
                         keyboardType="numeric"
-                        colors={colors}
+                        editable={!updateProfileMutation.isPending}
                     />
                 </View>
             </ScrollView>
@@ -172,86 +159,12 @@ export function EditProfileScreen({ navigation }: any) {
     );
 }
 
-function FormField({
-    label,
-    value,
-    onChangeText,
-    placeholder,
-    keyboardType,
-    colors,
-}: {
-    label: string;
-    value: string;
-    onChangeText: (value: string) => void;
-    placeholder: string;
-    keyboardType?: 'default' | 'numeric';
-    colors: any;
-}) {
-    return (
-        <View style={styles.field}>
-            <Text style={[styles.fieldLabel, { color: colors.mutedForeground }]}>{label}</Text>
-            <TextInput
-                value={value}
-                onChangeText={onChangeText}
-                placeholder={placeholder}
-                placeholderTextColor={colors.mutedForeground}
-                keyboardType={keyboardType ?? 'default'}
-                style={[styles.input, { color: colors.foreground, borderColor: colors.border, backgroundColor: colors.background }]}
-            />
-        </View>
-    );
-}
-
 const styles = StyleSheet.create({
     container: { flex: 1 },
-    header: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        paddingHorizontal: 12,
-        paddingBottom: 16,
-        borderBottomWidth: 1,
-    },
-    headerBtn: {
-        width: 44,
-        height: 44,
-        borderRadius: 22,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    headerTitle: {
-        fontSize: 18,
-        fontWeight: '700',
-    },
-    saveBtn: {
-        width: 56,
-        height: 44,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    saveBtnText: {
-        fontSize: 15,
-        fontWeight: '700',
-    },
     card: {
         borderRadius: 18,
         borderWidth: 1,
         padding: 16,
-        gap: 14,
-    },
-    field: {
         gap: 8,
-    },
-    fieldLabel: {
-        fontSize: 13,
-        fontWeight: '600',
-    },
-    input: {
-        height: 48,
-        borderWidth: 1,
-        borderRadius: 12,
-        paddingHorizontal: 14,
-        fontSize: 16,
-        fontWeight: '500',
     },
 });

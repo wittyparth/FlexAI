@@ -48,6 +48,7 @@ import {
     useSendCoachMessage,
 } from '../../hooks/queries/useCoachQueries';
 import { MarkdownRenderer } from '../../components/MarkdownRenderer';
+import { IconButton } from '../../components/ui';
 
 type MessageReaction = 'up' | 'down' | null;
 type AIModel = 'pro' | 'fast';
@@ -668,9 +669,7 @@ export function CoachChatScreen({ navigation, route }: any) {
         <View style={[styles.container, { backgroundColor: colors.background }]}>
             {/* ── Header ── */}
             <View style={[styles.header, { paddingTop: insets.top + 6, backgroundColor: colors.card, borderBottomColor: colors.border }]}>
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerBtn} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
-                    <Ionicons name="chevron-back" size={26} color={colors.foreground} />
-                </TouchableOpacity>
+                <IconButton icon="chevron-back" variant="ghost" onPress={() => navigation.goBack()} />
 
                 <TouchableOpacity style={styles.headerCenter} onPress={() => setShowModelPicker(true)} activeOpacity={0.8}>
                     <View style={[styles.headerAvatar, { backgroundColor: colors.primary.main }]}>
@@ -690,13 +689,7 @@ export function CoachChatScreen({ navigation, route }: any) {
                     <Ionicons name="chevron-down" size={14} color={colors.mutedForeground} style={{ marginLeft: -4 }} />
                 </TouchableOpacity>
 
-                <TouchableOpacity
-                    style={styles.headerBtn}
-                    onPress={() => navigation.navigate('ChatHistory')}
-                    hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-                >
-                    <Ionicons name="time-outline" size={22} color={colors.foreground} />
-                </TouchableOpacity>
+                <IconButton icon="time-outline" variant="ghost" onPress={() => navigation.navigate('ChatHistory')} />
             </View>
 
             {/* ── Messages + Input ── */}

@@ -16,6 +16,7 @@ import { useMyFeed, useGlobalFeed, useToggleLike } from '../../hooks/queries/use
 import { useAuthStore } from '../../store/authStore';
 import type { FeedPost } from '../../api/feed.api';
 import type { ThemeColors } from '../../hooks/useColors';
+import { Card, Avatar, IconButton } from '../../components/ui';
 
 const TABS: Array<'Feed' | 'Leaderboard' | 'Challenges' | 'Friends'> = ['Feed', 'Leaderboard', 'Challenges', 'Friends'];
 
@@ -66,13 +67,17 @@ function PostCard({
     colors: ThemeColors;
 }) {
     return (
-        <TouchableOpacity
-            activeOpacity={0.9}
-            style={[styles.postCard, { backgroundColor: colors.card, borderColor: colors.border }]}
+        <Card
+            variant="elevated"
             onPress={onOpen}
+            style={styles.postCard}
         >
             <View style={styles.postHeader}>
-                <Image source={{ uri: post.user.avatarUrl || 'https://i.pravatar.cc/150?u=flexai' }} style={styles.postAvatar} />
+                <Avatar
+                    uri={post.user.avatarUrl || undefined}
+                    initials={`${post.user.firstName?.[0] ?? ''}${post.user.lastName?.[0] ?? ''}`}
+                    size="sm"
+                />
                 <View style={{ flex: 1 }}>
                     <Text style={[styles.postUsername, { color: colors.foreground }]}>
                         {post.user.firstName} {post.user.lastName}
@@ -117,18 +122,19 @@ function PostCard({
                     <Ionicons name="share-outline" size={20} color={colors.mutedForeground} />
                 </TouchableOpacity>
             </View>
-        </TouchableOpacity>
+        </Card>
     );
 }
 
 function LeaderboardRow({ entry, colors }: { entry: any; colors: ThemeColors }) {
     return (
-        <TouchableOpacity
-            style={[styles.lbRow, { backgroundColor: colors.card, borderColor: colors.border }]}
-            activeOpacity={0.85}
-        >
+        <View style={[styles.lbRow, { backgroundColor: colors.card, borderColor: colors.border }]}>
             <Text style={[styles.lbRank, { color: colors.mutedForeground, fontFamily: fontFamilies.mono }]}>#{entry.rank}</Text>
-            <Image source={{ uri: entry.user?.avatarUrl || 'https://i.pravatar.cc/150' }} style={styles.lbAvatar} />
+            <Avatar
+                uri={entry.user?.avatarUrl || undefined}
+                initials={entry.user?.username?.slice(0, 2)?.toUpperCase() || '?'}
+                size="sm"
+            />
             <View style={{ flex: 1 }}>
                 <Text style={[styles.lbUsername, { color: colors.foreground }]}>
                     @{entry.user?.username || `user${entry.user?.id ?? '0'}`}
@@ -137,7 +143,7 @@ function LeaderboardRow({ entry, colors }: { entry: any; colors: ThemeColors }) 
                     {fmtNum(entry.score)} XP
                 </Text>
             </View>
-        </TouchableOpacity>
+        </View>
     );
 }
 

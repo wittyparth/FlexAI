@@ -4,17 +4,16 @@ import {
     Text,
     StyleSheet,
     ScrollView,
-    TouchableOpacity,
-    Dimensions,
     Animated,
+    Dimensions,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { LineChart, BarChart } from 'react-native-gifted-charts';
 import { useColors, useDashboardStats } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { AnalyticsNavigationProp } from '../../navigation/types';
+import { NavigationBar, StatCard, ListItem, Chip } from '../../components/ui';
 
 const { width } = Dimensions.get('window');
 
@@ -98,10 +97,9 @@ const NAV_CARDS = [
     { id: 'records', title: 'Personal Records', subtitle: 'All-time achievements', icon: 'trophy', color: '#F59E0B', route: 'PersonalRecords' },
 ];
 
-export function AnalyticsHubScreen() { // Renamed function and removed navigation prop
-    const navigation = useNavigation<AnalyticsNavigationProp>(); // Added navigation hook
+export function AnalyticsHubScreen() {
+    const navigation = useNavigation<AnalyticsNavigationProp>();
     const colors = useColors();
-    const insets = useSafeAreaInsets();
     const fadeAnim = useRef(new Animated.Value(0)).current;
     const [period, setPeriod] = useState<Period>('7D');
     const { data: dashboardStats, isLoading: isStatsLoading } = useDashboardStats();
@@ -142,47 +140,41 @@ export function AnalyticsHubScreen() { // Renamed function and removed navigatio
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
-            {/* Header */}
-            <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.background }]}>
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerBtn}>
-                    <Ionicons name="arrow-back" size={24} color={colors.foreground} />
-                </TouchableOpacity>
-                <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Analytics</Text>
-                <TouchableOpacity style={styles.headerBtn}>
-                    <Ionicons name="share-outline" size={24} color={colors.foreground} />
-                </TouchableOpacity>
-            </View>
+            <NavigationBar
+                title="Analytics"
+                onBack={() => navigation.goBack()}
+                rightActions={[{ icon: 'share-outline', onPress: () => {}, label: 'Share' }]}
+            />
 
             <ScrollView showsVerticalScrollIndicator={false}>
                 {/* Quick Stats Row */}
                 <Animated.View style={[styles.quickStatsRow, { opacity: fadeAnim }]}>
-                    <View style={[styles.quickStatCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-                        <View style={[styles.quickStatIcon, { backgroundColor: `${colors.stats.consistency}15` }]}>
-                            <MaterialCommunityIcons name="fire" size={22} color={colors.stats.consistency} />
-                        </View>
-                        <Text style={[styles.quickStatValue, { color: colors.foreground }]}>
-                            {isStatsLoading ? '--' : quickStats.streak}
-                        </Text>
-                        <Text style={[styles.quickStatLabel, { color: colors.mutedForeground }]}>Streak</Text>
-                    </View>
-                    <View style={[styles.quickStatCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-                        <View style={[styles.quickStatIcon, { backgroundColor: `${colors.primary.main}15` }]}>
-                            <MaterialCommunityIcons name="weight" size={22} color={colors.primary.main} />
-                        </View>
-                        <Text style={[styles.quickStatValue, { color: colors.foreground }]}>
-                            {isStatsLoading ? '--' : `${(quickStats.totalVolume / 1000).toFixed(1)}k`}
-                        </Text>
-                        <Text style={[styles.quickStatLabel, { color: colors.mutedForeground }]}>Volume</Text>
-                    </View>
-                    <View style={[styles.quickStatCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-                        <View style={[styles.quickStatIcon, { backgroundColor: `${colors.stats.pr}15` }]}>
-                            <MaterialCommunityIcons name="trophy" size={22} color={colors.stats.pr} />
-                        </View>
-                        <Text style={[styles.quickStatValue, { color: colors.foreground }]}>
-                            {isStatsLoading ? '--' : quickStats.prsThisMonth}
-                        </Text>
-                        <Text style={[styles.quickStatLabel, { color: colors.mutedForeground }]}>PRs</Text>
-                    </View>
+                    <StatCard
+                        value={isStatsLoading ? 0 : parseInt(quickStats.streak) || 0}
+                        label="Streak"
+                        suffix=" days"
+                        icon="flame"
+                        type="warning"
+                        compact
+                        style={styles.quickStatCard}
+                    />
+                    <StatCard
+                        value={isStatsLoading ? 0 : Math.round(quickStats.totalVolume / 1000)}
+                        label="Volume"
+                        suffix="k"
+                        icon="barbell"
+                        type="primary"
+                        compact
+                        style={styles.quickStatCard}
+                    />
+                    <StatCard
+                        value={isStatsLoading ? 0 : quickStats.prsThisMonth}
+                        label="PRs"
+                        icon="trophy"
+                        type="success"
+                        compact
+                        style={styles.quickStatCard}
+                    />
                 </Animated.View>
 
                 {/* Weekly Overview Chart */}
@@ -191,19 +183,13 @@ export function AnalyticsHubScreen() { // Renamed function and removed navigatio
                         <Text style={[styles.sectionTitle, { color: colors.foreground }]}>Volume Snapshot</Text>
                         <View style={styles.periodSelector}>
                             {(['7D', '30D', '90D'] as const).map((p) => (
-                                <TouchableOpacity
+                                <Chip
                                     key={p}
-                                    style={[
-                                        styles.periodBtn,
-                                        period === p && { backgroundColor: `${colors.primary.main}20` }
-                                    ]}
+                                    label={p}
+                                    size="sm"
+                                    selected={period === p}
                                     onPress={() => setPeriod(p)}
-                                >
-                                    <Text style={[
-                                        styles.periodText,
-                                        { color: period === p ? colors.primary.main : colors.mutedForeground }
-                                    ]}>{p}</Text>
-                                </TouchableOpacity>
+                                />
                             ))}
                         </View>
                     </View>
@@ -324,20 +310,15 @@ export function AnalyticsHubScreen() { // Renamed function and removed navigatio
                                 }]
                             }}
                         >
-                            <TouchableOpacity
-                                style={[styles.navCard, { backgroundColor: colors.card, borderColor: colors.border }]}
+                            <ListItem
+                                title={card.title}
+                                subtitle={card.subtitle}
+                                icon={card.icon as any}
+                                iconColor={card.color}
+                                showChevron
                                 onPress={() => navigation.navigate(card.route as any)}
-                                activeOpacity={0.9}
-                            >
-                                <View style={[styles.navIcon, { backgroundColor: `${card.color}15` }]}>
-                                    <Ionicons name={card.icon as any} size={24} color={card.color} />
-                                </View>
-                                <View style={styles.navContent}>
-                                    <Text style={[styles.navTitle, { color: colors.foreground }]}>{card.title}</Text>
-                                    <Text style={[styles.navSubtitle, { color: colors.mutedForeground }]}>{card.subtitle}</Text>
-                                </View>
-                                <Ionicons name="chevron-forward" size={22} color={colors.mutedForeground} />
-                            </TouchableOpacity>
+                                style={{ marginBottom: 8 }}
+                            />
                         </Animated.View>
                     ))}
                 </View>

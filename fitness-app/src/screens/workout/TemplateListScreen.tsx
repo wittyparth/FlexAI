@@ -12,9 +12,9 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
-import { fontFamilies } from '../../theme/typography';
 import { useTemplateStore } from '../../store/templateStore';
 import { useRoutines } from '../../hooks/queries/useRoutineQueries';
+import { NavigationBar, IconButton } from '../../components/ui';
 
 const { width } = Dimensions.get('window');
 const CARD_WIDTH = (width - 48) / 2;
@@ -110,25 +110,8 @@ export function TemplateListScreen({ navigation }: any) {
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
-            <View
-                style={[
-                    styles.header,
-                    {
-                        paddingTop: insets.top + 12,
-                        backgroundColor: colors.card,
-                        borderBottomColor: colors.border,
-                    },
-                ]}
-            >
-                <View style={styles.headerTop}>
-                    <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-                        <Ionicons name="arrow-back" size={24} color={colors.foreground} />
-                    </TouchableOpacity>
-                    <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Templates</Text>
-                    <View style={{ width: 44 }} />
-                </View>
-
-                <View style={[styles.searchContainer, { backgroundColor: colors.background }]}>
+            <NavigationBar title="Templates" onBack={() => navigation.goBack()} />
+            <View style={[styles.searchContainer, { backgroundColor: colors.background }]}>
                     <Ionicons name="search" size={20} color={colors.mutedForeground} />
                     <TextInput
                         style={[styles.searchInput, { color: colors.foreground }]}
@@ -138,12 +121,9 @@ export function TemplateListScreen({ navigation }: any) {
                         onChangeText={setSearchQuery}
                     />
                     {searchQuery.length > 0 && (
-                        <TouchableOpacity onPress={() => setSearchQuery('')}>
-                            <Ionicons name="close-circle" size={18} color={colors.mutedForeground} />
-                        </TouchableOpacity>
+                        <IconButton icon="close-circle" variant="ghost" size="sm" onPress={() => setSearchQuery('')} />
                     )}
                 </View>
-            </View>
 
             <ScrollView
                 showsVerticalScrollIndicator={false}

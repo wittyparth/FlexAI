@@ -50,9 +50,7 @@ export function WorkoutDurationScreen({ navigation }: any) {
                         <Text style={[styles.stepText, { color: colors.mutedForeground }]}>STEP 7 OF 10</Text>
                     </View>
 
-                    <TouchableOpacity onPress={handleContinue}>
-                        <Text style={[styles.skipText, { color: colors.primary.main }]}>Skip</Text>
-                    </TouchableOpacity>
+                    <Button title="Skip" onPress={handleContinue} variant="ghost" size="sm" />
                 </View>
 
                 <ProgressBar progress={0.7} style={styles.progressBar} />

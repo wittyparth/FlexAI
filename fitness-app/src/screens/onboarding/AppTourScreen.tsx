@@ -7,6 +7,7 @@ import { OnboardingStackParamList } from '../../navigation/types';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useColors } from '../../hooks/useColors';
 import { typography, fontFamilies } from '../../theme/typography';
+import { Button } from '../../components/ui';
 
 type AppTourScreenNavigationProp = StackNavigationProp<OnboardingStackParamList, 'AppTour'>;
 
@@ -27,9 +28,7 @@ export const AppTourScreen: React.FC<Props> = ({ navigation }) => {
         <View style={[styles.container, { backgroundColor: colors.background }]}>
             {/* Top Bar: Skip Button */}
             <View style={[styles.topBar, { paddingTop: Platform.OS === 'android' ? 40 : 60 }]}>
-                <TouchableOpacity onPress={handleNext}>
-                    <Text style={[styles.skipText, { color: colors.mutedForeground }]}>Skip</Text>
-                </TouchableOpacity>
+                <Button title="Skip" onPress={handleNext} variant="ghost" size="sm" />
             </View>
 
             <View style={styles.content}>
@@ -129,14 +128,12 @@ export const AppTourScreen: React.FC<Props> = ({ navigation }) => {
                 </View>
 
                 {/* Next Button */}
-                <TouchableOpacity onPress={handleNext} style={styles.buttonContainer} activeOpacity={0.9}>
-                    <View
-                        style={styles.continueButton}
-                    >
-                        <Text style={styles.continueButtonText}>Next</Text>
-                        <Ionicons name="arrow-forward" size={20} color="#ffffff" />
-                    </View>
-                </TouchableOpacity>
+                <Button
+                    title="Next"
+                    onPress={handleNext}
+                    rightElement={<Ionicons name="arrow-forward" size={20} color="#FFF" />}
+                    fullWidth
+                />
             </View>
         </View>
     );

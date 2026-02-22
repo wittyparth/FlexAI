@@ -19,6 +19,7 @@ import { LineChart } from 'react-native-gifted-charts';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { useLogWeight, useWeightHistory } from '../../hooks/queries/useBodyQueries';
+import { NavigationBar, Button } from '../../components/ui';
 
 const { width } = Dimensions.get('window');
 const WEIGHT_UNIT = 'kg';
@@ -120,15 +121,7 @@ export function WeightLogScreen({ navigation }: any) {
     return (
         <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
             <View style={[styles.container, { backgroundColor: colors.background }]}>
-                <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.card, borderBottomColor: colors.border }]}>
-                    <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerBtn}>
-                        <Ionicons name="arrow-back" size={24} color={colors.foreground} />
-                    </TouchableOpacity>
-                    <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Weight Log</Text>
-                    <TouchableOpacity style={styles.headerBtn} onPress={() => refetch()}>
-                        <Ionicons name="refresh" size={20} color={colors.foreground} />
-                    </TouchableOpacity>
-                </View>
+                <NavigationBar title="Weight Log" onBack={() => navigation.goBack()} rightActions={[{ icon: 'refresh', onPress: () => refetch(), label: 'Refresh' }]} />
 
                 {isLoading && !weightEntries.length ? (
                     <View style={styles.centerState}>
@@ -137,9 +130,7 @@ export function WeightLogScreen({ navigation }: any) {
                 ) : isError && !weightEntries.length ? (
                     <View style={styles.centerState}>
                         <Text style={[styles.emptyText, { color: colors.error }]}>Failed to load weight history.</Text>
-                        <TouchableOpacity style={[styles.retryBtn, { backgroundColor: colors.primary.main }]} onPress={() => refetch()}>
-                            <Text style={styles.retryBtnText}>Retry</Text>
-                        </TouchableOpacity>
+                        <Button title="Retry" variant="primary" onPress={() => refetch()} />
                     </View>
                 ) : (
                     <ScrollView showsVerticalScrollIndicator={false}>

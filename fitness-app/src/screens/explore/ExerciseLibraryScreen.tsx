@@ -16,6 +16,7 @@ import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { useExerciseSearch, useFeaturedExercises } from '../../hooks/queries/useExerciseQueries';
 import { useDebounce } from '../../hooks/useDebounce';
+import { IconButton } from '../../components/ui';
 
 export function ExerciseLibraryScreen({ navigation, route }: any) {
     const colors = useColors();
@@ -126,15 +127,11 @@ export function ExerciseLibraryScreen({ navigation, route }: any) {
             {/* Header Area */}
             <View style={[styles.headerWrapper, { paddingTop: insets.top + 8, backgroundColor: colors.card, borderBottomColor: colors.border }]}>
                 <View style={styles.header}>
-                    <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-                        <Ionicons name="chevron-back" size={26} color={colors.foreground} />
-                    </TouchableOpacity>
+                    <IconButton icon="chevron-back" variant="ghost" onPress={() => navigation.goBack()} />
                     <Text style={[styles.title, { color: colors.foreground, fontFamily: fontFamilies.display }]}>
                         Exercise Library
                     </Text>
-                    <TouchableOpacity onPress={() => navigation.navigate('ExerciseFilter')} hitSlop={{top:10, bottom:10, left:10, right:10}}>
-                        <Ionicons name="options-outline" size={24} color={colors.foreground} />
-                    </TouchableOpacity>
+                    <IconButton icon="options-outline" variant="ghost" onPress={() => navigation.navigate('ExerciseFilter')} />
                 </View>
 
                 {/* Search */}
@@ -149,9 +146,7 @@ export function ExerciseLibraryScreen({ navigation, route }: any) {
                             onChangeText={setSearchQuery}
                         />
                         {searchQuery.length > 0 && (
-                            <TouchableOpacity onPress={() => setSearchQuery('')} hitSlop={{top:10, bottom:10, left:10, right:10}}>
-                                <Ionicons name="close-circle" size={20} color={colors.mutedForeground} />
-                            </TouchableOpacity>
+                            <IconButton icon="close-circle" variant="ghost" size="sm" onPress={() => setSearchQuery('')} />
                         )}
                     </View>
                 </View>

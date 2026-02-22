@@ -17,6 +17,7 @@ import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { BodyMeasurements } from '../../api/body.api';
 import { useLogMeasurements, useMeasurementHistory } from '../../hooks/queries/useBodyQueries';
+import { IconButton, Button } from '../../components/ui';
 
 const { width } = Dimensions.get('window');
 
@@ -150,9 +151,7 @@ export function MeasurementsScreen({ navigation }: any) {
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
             <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.card, borderBottomColor: colors.border }]}> 
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerBtn}>
-                    <Ionicons name="arrow-back" size={24} color={colors.foreground} />
-                </TouchableOpacity>
+                <IconButton icon="arrow-back" variant="ghost" onPress={() => navigation.goBack()} />
                 <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Measurements</Text>
                 <TouchableOpacity style={styles.headerBtn} onPress={handleHeaderAction} disabled={logMeasurementsMutation.isPending}>
                     <Ionicons name={editMode ? 'checkmark' : 'pencil'} size={22} color={colors.foreground} />
@@ -166,9 +165,7 @@ export function MeasurementsScreen({ navigation }: any) {
             ) : isError && !measurementHistory.length ? (
                 <View style={styles.centerState}>
                     <Text style={{ color: colors.error, marginBottom: 12 }}>Failed to load measurements.</Text>
-                    <TouchableOpacity onPress={() => refetch()} style={[styles.retryBtn, { backgroundColor: colors.primary.main }]}>
-                        <Text style={styles.retryText}>Retry</Text>
-                    </TouchableOpacity>
+                    <Button title="Retry" variant="primary" onPress={() => refetch()} />
                 </View>
             ) : (
                 <ScrollView showsVerticalScrollIndicator={false}>

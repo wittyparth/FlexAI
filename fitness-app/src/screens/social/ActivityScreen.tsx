@@ -5,6 +5,7 @@ import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useColors, useNotifications, useMarkNotificationRead, useMarkAllNotificationsRead } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import type { NotificationItem } from '../../api/notifications.api';
+import { IconButton } from '../../components/ui';
 
 const formatTimeAgo = (dateString: string) => {
     const date = new Date(dateString);
@@ -88,9 +89,7 @@ export function ActivityScreen({ navigation }: any) {
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
             <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.card }]}>
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.btn}>
-                    <Ionicons name="arrow-back" size={24} color={colors.foreground} />
-                </TouchableOpacity>
+                <IconButton icon="arrow-back" variant="ghost" onPress={() => navigation.goBack()} />
                 <View style={{ alignItems: 'center' }}>
                     <Text style={[styles.title, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Activity</Text>
                     <Text style={[styles.count, { color: colors.mutedForeground }]}>

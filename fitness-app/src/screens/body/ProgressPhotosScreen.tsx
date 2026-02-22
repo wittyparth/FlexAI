@@ -12,12 +12,12 @@ import {
     Alert,
 } from 'react-native';
 import { Image } from 'expo-image';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { useLogProgressPhoto, useProgressPhotos } from '../../hooks/queries/useBodyQueries';
 import { ProgressPhoto } from '../../api/body.api';
+import { NavigationBar, Button } from '../../components/ui';
 
 const { width } = Dimensions.get('window');
 const SPACING = 16;
@@ -27,7 +27,6 @@ type PhotoPose = 'front' | 'side' | 'back';
 
 export function ProgressPhotosScreen({ navigation }: any) {
     const colors = useColors();
-    const insets = useSafeAreaInsets();
 
     const [selectedPhoto, setSelectedPhoto] = useState<ProgressPhoto | null>(null);
     const [showLogModal, setShowLogModal] = useState(false);
@@ -120,24 +119,14 @@ export function ProgressPhotosScreen({ navigation }: any) {
         return (
             <View style={[styles.container, { backgroundColor: colors.background, justifyContent: 'center', alignItems: 'center' }]}>
                 <Text style={{ color: colors.error, marginBottom: 16 }}>Failed to load photos</Text>
-                <TouchableOpacity onPress={() => refetch()} style={[styles.retryBtn, { backgroundColor: colors.primary.main }]}> 
-                    <Text style={{ color: '#FFF', fontWeight: 'bold' }}>Retry</Text>
-                </TouchableOpacity>
+                <Button title="Retry" variant="primary" onPress={() => refetch()} />
             </View>
         );
     }
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
-            <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.card, borderBottomColor: colors.border }]}> 
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerBtn}>
-                    <Ionicons name="arrow-back" size={24} color={colors.foreground} />
-                </TouchableOpacity>
-                <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Progress Photos</Text>
-                <TouchableOpacity style={styles.headerBtn} onPress={() => setShowLogModal(true)}>
-                    <Ionicons name="add" size={24} color={colors.foreground} />
-                </TouchableOpacity>
-            </View>
+            <NavigationBar title="Progress Photos" onBack={() => navigation.goBack()} rightActions={[{ icon: 'add', onPress: () => setShowLogModal(true), label: 'Add' }]} />
 
             {photos.length === 0 ? (
                 <View style={styles.emptyState}>

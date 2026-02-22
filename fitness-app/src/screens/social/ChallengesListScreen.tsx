@@ -6,6 +6,7 @@ import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useColors, useChallenges, useJoinChallenge } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { Challenge } from '../../api/leaderboard.api';
+import { NavigationBar, Chip } from '../../components/ui';
 
 const { width } = Dimensions.get('window');
 
@@ -70,13 +71,7 @@ export function ChallengesListScreen({ navigation }: any) {
     if (isLoading) {
         return (
             <View style={[styles.container, { backgroundColor: colors.background }]}>
-                <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.card }]}>
-                    <TouchableOpacity onPress={() => navigation.goBack()} style={styles.btn}>
-                        <Ionicons name="arrow-back" size={24} color={colors.foreground} />
-                    </TouchableOpacity>
-                    <Text style={[styles.title, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Challenges</Text>
-                    <View style={{ width: 44 }} />
-                </View>
+                <NavigationBar title="Challenges" onBack={() => navigation.goBack()} />
                 <View style={styles.loadingContainer}>
                     <ActivityIndicator size="large" color={colors.primary.main} />
                     <Text style={[styles.loadingText, { color: colors.mutedForeground }]}>Loading challenges...</Text>
@@ -89,13 +84,7 @@ export function ChallengesListScreen({ navigation }: any) {
     if (error) {
         return (
             <View style={[styles.container, { backgroundColor: colors.background }]}>
-                <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.card }]}>
-                    <TouchableOpacity onPress={() => navigation.goBack()} style={styles.btn}>
-                        <Ionicons name="arrow-back" size={24} color={colors.foreground} />
-                    </TouchableOpacity>
-                    <Text style={[styles.title, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Challenges</Text>
-                    <View style={{ width: 44 }} />
-                </View>
+                <NavigationBar title="Challenges" onBack={() => navigation.goBack()} />
                 <View style={styles.errorContainer}>
                     <Ionicons name="alert-circle-outline" size={48} color={colors.error} />
                     <Text style={[styles.errorText, { color: colors.error }]}>Failed to load challenges</Text>
@@ -106,21 +95,11 @@ export function ChallengesListScreen({ navigation }: any) {
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
-            <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.card }]}>
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.btn}>
-                    <Ionicons name="arrow-back" size={24} color={colors.foreground} />
-                </TouchableOpacity>
-                <Text style={[styles.title, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Challenges</Text>
-                <View style={{ width: 44 }} />
-            </View>
+            <NavigationBar title="Challenges" onBack={() => navigation.goBack()} />
 
             <View style={[styles.tabs, { backgroundColor: colors.card, borderBottomColor: colors.border }]}>
                 {(['active', 'upcoming', 'completed'] as Tab[]).map((t) => (
-                    <TouchableOpacity key={t} style={[styles.tab, tab === t && { borderBottomColor: colors.primary.main }]} onPress={() => setTab(t)}>
-                        <Text style={[styles.tabText, { color: tab === t ? colors.primary.main : colors.mutedForeground }]}>
-                            {t.charAt(0).toUpperCase() + t.slice(1)}
-                        </Text>
-                    </TouchableOpacity>
+                    <Chip key={t} label={t.charAt(0).toUpperCase() + t.slice(1)} selected={tab === t} onPress={() => setTab(t)} size="sm" />
                 ))}
             </View>
 

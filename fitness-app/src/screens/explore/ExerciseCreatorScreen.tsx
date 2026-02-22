@@ -12,10 +12,10 @@ import {
     KeyboardAvoidingView,
     Platform,
 } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
+import { NavigationBar, Button } from '../../components/ui';
 import { colors as themeColors } from '../../theme/colors';
 
 const { width } = Dimensions.get('window');
@@ -51,7 +51,6 @@ const DIFFICULTIES = [
 
 export function ExerciseCreatorScreen({ navigation }: any) {
     const colors = useColors();
-    const insets = useSafeAreaInsets();
     const fadeAnim = useRef(new Animated.Value(0)).current;
 
     const [name, setName] = useState('');
@@ -85,20 +84,7 @@ export function ExerciseCreatorScreen({ navigation }: any) {
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
-            {/* Header */}
-            <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.card, borderBottomColor: colors.border }]}>
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerBtn}>
-                    <Ionicons name="close" size={26} color={colors.foreground} />
-                </TouchableOpacity>
-                <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Create Exercise</Text>
-                <TouchableOpacity disabled={!canSave} onPress={handlePublish}>
-                    <View
-                        style={styles.publishBtn}
-                    >
-                        <Text style={[styles.publishText, { color: canSave ? '#FFF' : colors.mutedForeground }]}>Publish</Text>
-                    </View>
-                </TouchableOpacity>
-            </View>
+            <NavigationBar title="Create Exercise" onBack={() => navigation.goBack()} rightActions={[{ icon: 'checkmark', onPress: handlePublish, label: 'Publish' }]} />
 
             <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={{ flex: 1 }}>
                 <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scroll}>

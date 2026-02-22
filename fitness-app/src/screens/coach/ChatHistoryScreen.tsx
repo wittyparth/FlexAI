@@ -28,6 +28,7 @@ import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { useCoachConversations, useDeleteCoachConversation } from '../../hooks/queries/useCoachQueries';
 import { CoachConversation } from '../../api/coach.api';
+import { IconButton } from '../../components/ui';
 
 type FilterTab = 'all' | 'pinned' | 'today';
 type SortMode = 'recent' | 'az';
@@ -278,9 +279,7 @@ export function ChatHistoryScreen({ navigation }: any) {
         <View style={[styles.container, { backgroundColor: colors.background }]}>
             {/* Header */}
             <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.card, borderBottomColor: colors.border }]}>
-                <TouchableOpacity style={styles.headerBtn} onPress={() => navigation.goBack()}>
-                    <Ionicons name="chevron-back" size={26} color={colors.foreground} />
-                </TouchableOpacity>
+                <IconButton icon="chevron-back" variant="ghost" onPress={() => navigation.goBack()} />
                 <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>
                     Chat History
                 </Text>
@@ -299,12 +298,7 @@ export function ChatHistoryScreen({ navigation }: any) {
                             {sortMode === 'recent' ? 'Recent' : 'A–Z'}
                         </Text>
                     </TouchableOpacity>
-                    <TouchableOpacity
-                        style={[styles.newBtn, { backgroundColor: colors.primary.main }]}
-                        onPress={() => navigation.navigate('CoachChat')}
-                    >
-                        <Ionicons name="add" size={20} color="#FFF" />
-                    </TouchableOpacity>
+                    <IconButton icon="add" variant="filled" onPress={() => navigation.navigate('CoachChat')} />
                 </View>
             </View>
 

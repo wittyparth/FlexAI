@@ -23,6 +23,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
 import { useTheme } from '../../contexts';
+import { IconButton } from '../../components/ui';
 import { authApi } from '../../api/auth.api';
 import { fonts, fontSize, spacing, borderRadius, shadows } from '../../constants';
 
@@ -136,12 +137,7 @@ export function ResetVerifyScreen({ navigation, route }: ResetVerifyScreenProps)
             >
                 {/* Header */}
                 <View style={styles.header}>
-                    <TouchableOpacity
-                        style={[styles.backButton, { backgroundColor: colors.backgroundSecondary }]}
-                        onPress={() => navigation.goBack()}
-                    >
-                        <Ionicons name="chevron-back" size={24} color={colors.foreground} />
-                    </TouchableOpacity>
+                    <IconButton icon="chevron-back" variant="tinted" onPress={() => navigation.goBack()} />
                 </View>
 
                 {/* Content */}

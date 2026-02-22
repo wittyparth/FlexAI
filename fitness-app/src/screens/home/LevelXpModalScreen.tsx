@@ -6,12 +6,12 @@ import {
     ScrollView,
     RefreshControl,
     ActivityIndicator,
-    TouchableOpacity,
 } from 'react-native';
 import { HomeStackScreenProps } from '../../navigation/types';
 import { useAchievements, useColors, useGamificationStats } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { Card } from '../../components/ui/Card';
+import { Button } from '../../components/ui';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { XPGain } from '../../api/gamification.api';
 
@@ -93,12 +93,7 @@ export function LevelXpModalScreen({ navigation }: HomeStackScreenProps<'XPLevel
                 <Text style={[styles.errorText, { color: colors.destructive }]}>
                     {error?.message || 'Failed to load stats'}
                 </Text>
-                <TouchableOpacity
-                    style={[styles.retryButton, { backgroundColor: colors.primary.main }]}
-                    onPress={fetchStats}
-                >
-                    <Text style={styles.retryText}>Retry</Text>
-                </TouchableOpacity>
+                <Button title="Retry" variant="primary" onPress={fetchStats} />
             </View>
         );
     }

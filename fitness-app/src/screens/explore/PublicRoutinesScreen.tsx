@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, FlatList, TextInput, Dimensions, ActivityIndicator } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useColors, usePublicRoutines } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
+import { NavigationBar, Chip } from '../../components/ui';
 
 const { width } = Dimensions.get('window');
 
@@ -11,7 +11,6 @@ const FILTERS = ['All', 'Beginner', 'Intermediate', 'Advanced'];
 
 export function PublicRoutinesScreen({ navigation }: any) {
     const colors = useColors();
-    const insets = useSafeAreaInsets();
     const [search, setSearch] = useState('');
     const [filter, setFilter] = useState('All');
     const normalizedSearch = search.trim() || undefined;
@@ -58,13 +57,7 @@ export function PublicRoutinesScreen({ navigation }: any) {
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
-            <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.card, borderBottomColor: colors.border }]}>
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.btn}>
-                    <Ionicons name="arrow-back" size={24} color={colors.foreground} />
-                </TouchableOpacity>
-                <Text style={[styles.title, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Public Routines</Text>
-                <View style={{ width: 44 }} />
-            </View>
+            <NavigationBar title="Public Routines" onBack={() => navigation.goBack()} />
 
             <View style={[styles.searchWrap, { backgroundColor: colors.card }]}>
                 <View style={[styles.searchBar, { backgroundColor: colors.muted }]}>
@@ -75,9 +68,7 @@ export function PublicRoutinesScreen({ navigation }: any) {
 
             <View style={[styles.filterRow, { backgroundColor: colors.card, borderBottomColor: colors.border }]}>
                 {FILTERS.map(f => (
-                    <TouchableOpacity key={f} style={[styles.filterChip, filter === f && { backgroundColor: colors.primary.main }]} onPress={() => setFilter(f)}>
-                        <Text style={[styles.filterText, { color: filter === f ? '#FFF' : colors.foreground }]}>{f}</Text>
-                    </TouchableOpacity>
+                    <Chip key={f} label={f} selected={filter === f} onPress={() => setFilter(f)} size="sm" />
                 ))}
             </View>
 

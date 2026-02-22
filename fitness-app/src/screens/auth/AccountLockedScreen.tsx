@@ -12,7 +12,6 @@ import {
     Text,
     StyleSheet,
     StatusBar,
-    TouchableOpacity,
     Platform,
     Linking,
 } from 'react-native';
@@ -20,6 +19,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
 import { useTheme } from '../../contexts';
 import { fonts, fontSize, spacing, borderRadius, shadows } from '../../constants';
+import { Button } from '../../components/ui';
 
 interface AccountLockedScreenProps {
     navigation: any;
@@ -95,26 +95,12 @@ export function AccountLockedScreen({ navigation, route }: AccountLockedScreenPr
                 </View>
 
                 {/* Action Button */}
-                <TouchableOpacity
-                    onPress={handleContactSupport}
-                    activeOpacity={0.8}
-                    style={styles.actionButton}
-                >
-                    <View style={[styles.buttonInner, { borderColor: colors.primary.main }]}>
-                        <Text style={styles.buttonText}>Contact Support</Text>
-                    </View>
-                </TouchableOpacity>
+                <Button title="Contact Support" variant="outlined" onPress={handleContactSupport} fullWidth />
             </View>
 
             {/* Footer */}
             <View style={styles.footer}>
-                <TouchableOpacity
-                    onPress={() => navigation.navigate('Login')}
-                    style={styles.returnButton}
-                >
-                    <Ionicons name="arrow-back" size={18} color="#94A3B8" />
-                    <Text style={styles.returnText}>Return to Login</Text>
-                </TouchableOpacity>
+                <Button title="Return to Login" variant="ghost" onPress={() => navigation.navigate('Login')} fullWidth />
             </View>
         </View>
     );

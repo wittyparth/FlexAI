@@ -6,7 +6,6 @@ import {
     ScrollView,
     RefreshControl,
     ActivityIndicator,
-    TouchableOpacity,
 } from 'react-native';
 import { HomeStackScreenProps } from '../../navigation/types';
 import { useColors, useStreakData } from '../../hooks';
@@ -14,6 +13,7 @@ import { useTheme } from '../../contexts/ThemeContext';
 import { fontFamilies } from '../../theme/typography';
 import { Card } from '../../components/ui/Card';
 import { StatCard } from '../../components/ui/StatCard';
+import { Button } from '../../components/ui';
 import { Ionicons } from '@expo/vector-icons';
 
 const DAY_LABELS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -64,12 +64,7 @@ export function StreakCalendarScreen({ navigation }: HomeStackScreenProps<'FullS
                 <Text style={[styles.errorText, { color: '#ef4444' }]}>
                     {error?.message || 'Failed to load data'}
                 </Text>
-                <TouchableOpacity
-                    style={[styles.retryButton, { backgroundColor: colors.primary.main }]}
-                    onPress={fetchStreakData}
-                >
-                    <Text style={styles.retryText}>Retry</Text>
-                </TouchableOpacity>
+                <Button title="Retry" variant="primary" onPress={fetchStreakData} />
             </View>
         );
     }

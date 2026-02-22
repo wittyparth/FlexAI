@@ -8,14 +8,13 @@ import {
     Animated,
     Linking,
 } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
+import { NavigationBar } from '../../components/ui';
 
 export function AboutScreen({ navigation }: any) {
     const colors = useColors();
-    const insets = useSafeAreaInsets();
     const fadeAnim = useRef(new Animated.Value(0)).current;
 
     useEffect(() => {
@@ -24,14 +23,7 @@ export function AboutScreen({ navigation }: any) {
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
-            {/* Header */}
-            <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.card, borderBottomColor: colors.border }]}>
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerBtn}>
-                    <Ionicons name="arrow-back" size={24} color={colors.foreground} />
-                </TouchableOpacity>
-                <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>About</Text>
-                <View style={styles.headerBtn} />
-            </View>
+            <NavigationBar title="About" onBack={() => navigation.goBack()} />
 
             <ScrollView showsVerticalScrollIndicator={false}>
                 <Animated.View style={{ opacity: fadeAnim }}>

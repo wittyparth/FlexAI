@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { NavigationBar, Button } from '../../components/ui';
 import { useColors, useCreateRoutine, useAddExerciseToRoutine } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { colors as themeColors } from '../../theme/colors';
@@ -287,23 +288,12 @@ export function AIPreviewScreen({ navigation, route }: any) {
     if (!generatedWorkout || !generatedWorkout.workoutName) {
         return (
             <View style={[styles.container, { backgroundColor: colors.background }]}> 
-                <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.card, borderBottomColor: colors.border }]}> 
-                    <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerBtn}>
-                        <Ionicons name="arrow-back" size={24} color={colors.foreground} />
-                    </TouchableOpacity>
-                    <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>AI Preview</Text>
-                    <View style={styles.headerBtn} />
-                </View>
+            <NavigationBar title="AI Preview" onBack={() => navigation.goBack()} />
                 <View style={styles.emptyState}>
                     <MaterialCommunityIcons name="alert-circle-outline" size={40} color={colors.mutedForeground} />
                     <Text style={[styles.emptyStateTitle, { color: colors.foreground }]}>No generated workout found</Text>
                     <Text style={[styles.emptyStateSubtitle, { color: colors.mutedForeground }]}>Generate a workout first to preview and save it.</Text>
-                    <TouchableOpacity
-                        style={[styles.emptyStateButton, { backgroundColor: colors.primary.main }]}
-                        onPress={() => navigation.navigate('AIGenerator')}
-                    >
-                        <Text style={styles.emptyStateButtonText}>Generate Workout</Text>
-                    </TouchableOpacity>
+                    <Button title="Generate Workout" variant="primary" onPress={() => navigation.navigate('AIGenerator')} />
                 </View>
             </View>
         );
@@ -311,22 +301,11 @@ export function AIPreviewScreen({ navigation, route }: any) {
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}> 
-            <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.card, borderBottomColor: colors.border }]}> 
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerBtn}>
-                    <Ionicons name="arrow-back" size={24} color={colors.foreground} />
-                </TouchableOpacity>
-                <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>AI Preview</Text>
-                <TouchableOpacity
-                    style={styles.headerBtn}
-                    onPress={() => navigation.navigate('AIGenerator', {
-                        presetGoal: displayGoal,
-                        presetDuration: displayDuration,
-                        customPrompt: input?.preferences,
-                    })}
-                >
-                    <Ionicons name="refresh" size={22} color={colors.primary.main} />
-                </TouchableOpacity>
-            </View>
+            <NavigationBar
+                title="AI Preview"
+                onBack={() => navigation.goBack()}
+                rightActions={[{ icon: 'refresh', onPress: () => navigation.navigate('AIGenerator', { presetGoal: displayGoal, presetDuration: displayDuration, customPrompt: input?.preferences }), label: 'Refresh' }]}
+            />
 
             <ScrollView showsVerticalScrollIndicator={false}>
                 <Animated.View style={{ opacity: fadeAnim }}>

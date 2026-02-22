@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { IconButton, Button } from '../../components/ui';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import {
@@ -371,23 +372,11 @@ export function RoutineEditorScreen({ navigation, route }: any) {
         <View style={[styles.container, { backgroundColor: colors.background }]}>
             {/* Header */}
             <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.background }]}>
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.navButton}>
-                    <Ionicons name="arrow-back" size={24} color={colors.foreground} />
-                </TouchableOpacity>
+                <IconButton icon="arrow-back" variant="ghost" onPress={() => navigation.goBack()} />
                 <Text style={[styles.title, { color: colors.foreground, fontFamily: fontFamilies.display }]}>
                     {isEditing ? 'Edit Routine' : 'Build Workout'}
                 </Text>
-                <TouchableOpacity onPress={handleSave} disabled={isSaving}>
-                    <View
-                        style={styles.saveButton}
-                    >
-                        {isSaving ? (
-                            <ActivityIndicator size="small" color="#FFF" />
-                        ) : (
-                            <Text style={styles.saveText}>Save</Text>
-                        )}
-                    </View>
-                </TouchableOpacity>
+                <Button title="Save" variant="primary" size="sm" loading={isSaving} disabled={isSaving} onPress={handleSave} />
             </View>
 
             <KeyboardAvoidingView

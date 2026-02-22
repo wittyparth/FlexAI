@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput, Switch } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { IconButton } from '../../components/ui';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 
@@ -59,9 +60,7 @@ export function ExerciseFilterScreen({ navigation, route }: any) {
         <View style={[styles.container, { backgroundColor: colors.background }]}>
             {/* Header */}
             <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.card, borderBottomColor: colors.border }]}>
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.closeBtn}>
-                    <Ionicons name="close" size={26} color={colors.foreground} />
-                </TouchableOpacity>
+                <IconButton icon="close" variant="ghost" onPress={() => navigation.goBack()} />
                 <Text style={[styles.title, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Filter Exercises</Text>
                 <TouchableOpacity onPress={clearFilters}>
                     <Text style={[styles.clearText, { color: colors.primary.main }]}>Clear</Text>

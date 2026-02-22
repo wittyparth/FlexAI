@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { NavigationBar } from '../../components/ui';
 import { useColors } from '../../hooks';
 import { useWorkoutAIGeneration } from '../../hooks/useAIGeneration';
 import { aiApi } from '../../api/ai.api';
@@ -196,18 +197,11 @@ export function AIGeneratorScreen({ navigation, route }: any) {
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
-            {/* Header */}
-            <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.card, borderBottomColor: colors.border }]}>
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerBtn}>
-                    <Ionicons name="arrow-back" size={24} color={colors.foreground} />
-                </TouchableOpacity>
-                <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>
-                    AI Generator
-                </Text>
-                <TouchableOpacity style={styles.headerBtn} onPress={() => navigation.navigate('AIPrompts')}>
-                    <MaterialCommunityIcons name="lightning-bolt" size={22} color={colors.primary.main} />
-                </TouchableOpacity>
-            </View>
+            <NavigationBar
+                title="AI Generator"
+                onBack={() => navigation.goBack()}
+                rightActions={[{ icon: 'flash-outline', onPress: () => navigation.navigate('AIPrompts'), label: 'Prompts' }]}
+            />
 
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={[styles.scroll, { paddingBottom: insets.bottom + 140 }]}>
 

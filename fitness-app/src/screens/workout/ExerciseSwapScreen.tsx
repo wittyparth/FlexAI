@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { NavigationBar } from '../../components/ui';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { colors as themeColors } from '../../theme/colors';
@@ -120,14 +121,7 @@ export function ExerciseSwapScreen({ navigation, route }: any) {
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
-            {/* Header */}
-            <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.card, borderBottomColor: colors.border }]}>
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerBtn}>
-                    <Ionicons name="close" size={26} color={colors.foreground} />
-                </TouchableOpacity>
-                <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Swap Exercise</Text>
-                <View style={styles.headerBtn} />
-            </View>
+            <NavigationBar title="Swap Exercise" onBack={() => navigation.goBack()} />
 
             <ScrollView showsVerticalScrollIndicator={false}>
                 {/* Current Exercise Card */}

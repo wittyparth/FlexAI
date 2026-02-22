@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { IconButton, Button } from '../../components/ui';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { useExerciseSearch } from '../../hooks/queries/useExerciseQueries';
@@ -176,25 +177,18 @@ export function ExercisePickerScreen({ navigation, route }: any) {
             {/* Header Area */}
             <View style={[styles.headerWrapper, { paddingTop: insets.top + 8, backgroundColor: colors.card, borderBottomColor: colors.border }]}>
                 <View style={styles.header}>
-                    <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-                        <Ionicons name="chevron-back" size={26} color={colors.foreground} />
-                    </TouchableOpacity>
+                    <IconButton icon="chevron-back" variant="ghost" onPress={() => navigation.goBack()} />
                     <Text style={[styles.title, { color: colors.foreground, fontFamily: fontFamilies.display }]}>
                         {isMultiSelectMode ? 'Select Exercises' : 'Select Exercise'}
                     </Text>
                     {isMultiSelectMode ? (
-                        <TouchableOpacity
-                            onPress={handleApplySelection}
+                        <Button
+                            title="Done"
+                            variant="primary"
+                            size="sm"
                             disabled={selectedCount === 0}
-                            style={[
-                                styles.doneButton,
-                                {
-                                    backgroundColor: selectedCount > 0 ? colors.primary.main : colors.muted,
-                                }
-                            ]}
-                        >
-                            <Text style={styles.doneButtonText}>Done</Text>
-                        </TouchableOpacity>
+                            onPress={handleApplySelection}
+                        />
                     ) : (
                         <View style={{ width: 44 }} />
                     )}

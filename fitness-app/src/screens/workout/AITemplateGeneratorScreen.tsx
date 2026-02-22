@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { NavigationBar } from '../../components/ui';
 import { useColors } from '../../hooks';
 import { useTemplateAIGeneration } from '../../hooks/useAIGeneration';
 import type { AITemplateResult } from '../../store/types/ai.types';
@@ -185,16 +186,7 @@ export function AITemplateGeneratorScreen({ navigation, route }: any) {
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
-            {/* Header */}
-            <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.card, borderBottomColor: colors.border }]}>
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerBtn}>
-                    <Ionicons name="arrow-back" size={24} color={colors.foreground} />
-                </TouchableOpacity>
-                <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>
-                    Template Generator
-                </Text>
-                <View style={styles.headerBtn} />
-            </View>
+            <NavigationBar title="Template Generator" onBack={() => navigation.goBack()} />
 
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={[styles.scroll, { paddingBottom: insets.bottom + 140 }]}>
 

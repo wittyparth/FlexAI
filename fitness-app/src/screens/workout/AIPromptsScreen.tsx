@@ -8,8 +8,8 @@ import {
     Dimensions,
     Animated,
 } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { NavigationBar } from '../../components/ui';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { colors as themeColors } from '../../theme/colors';
@@ -36,7 +36,6 @@ const RECENT_PROMPTS = [
 
 export function AIPromptsScreen({ navigation, route }: any) {
     const colors = useColors();
-    const insets = useSafeAreaInsets();
     const fadeAnim = useRef(new Animated.Value(0)).current;
 
     useEffect(() => {
@@ -49,14 +48,7 @@ export function AIPromptsScreen({ navigation, route }: any) {
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
-            {/* Header */}
-            <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.card, borderBottomColor: colors.border }]}>
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerBtn}>
-                    <Ionicons name="close" size={26} color={colors.foreground} />
-                </TouchableOpacity>
-                <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Quick Prompts</Text>
-                <View style={styles.headerBtn} />
-            </View>
+            <NavigationBar title="Quick Prompts" onBack={() => navigation.goBack()} />
 
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scroll}>
                 {/* Hero Section */}

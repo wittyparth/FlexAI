@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput } from 
 import { Image } from 'expo-image';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { IconButton, Button } from '../../components/ui';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 
@@ -32,13 +33,9 @@ export function CustomExerciseScreen({ navigation }: any) {
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
             <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.card, borderBottomColor: colors.border }]}>
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.btn}>
-                    <Ionicons name="close" size={26} color={colors.foreground} />
-                </TouchableOpacity>
+                <IconButton icon="close" variant="ghost" onPress={() => navigation.goBack()} />
                 <Text style={[styles.title, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Create Exercise</Text>
-                <TouchableOpacity disabled={!canSave} onPress={() => navigation.goBack()}>
-                    <Text style={[styles.saveText, { color: canSave ? colors.primary.main : colors.mutedForeground }]}>Save</Text>
-                </TouchableOpacity>
+                <Button title="Save" variant="primary" size="sm" disabled={!canSave} onPress={() => navigation.goBack()} />
             </View>
 
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scroll}>

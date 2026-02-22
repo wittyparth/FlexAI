@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { IconButton } from '../../components/ui';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 
@@ -93,12 +94,7 @@ export function AIRoutinePlannerScreen({ navigation }: any) {
         <View style={[styles.container, { backgroundColor: c.bg }]}>
             {/* HEADER */}
             <View style={[styles.header, { paddingTop: insets.top + 16 }]}>
-                <TouchableOpacity
-                    style={[styles.backBtn, { backgroundColor: c.card, borderColor: c.border }]}
-                    onPress={() => navigation.goBack()}
-                >
-                    <Ionicons name="chevron-back" size={22} color={c.text} />
-                </TouchableOpacity>
+                <IconButton icon="chevron-back" variant="ghost" onPress={() => navigation.goBack()} />
                 <View style={styles.headerCenter}>
                     <Text style={[styles.headerSub, { color: c.muted }]}>POWERED BY AI</Text>
                     <Text style={[styles.headerTitle, { color: c.text, fontFamily: fontFamilies.display }]}>AI Planner</Text>

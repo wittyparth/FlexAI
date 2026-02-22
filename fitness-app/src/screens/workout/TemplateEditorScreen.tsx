@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { IconButton, Button } from '../../components/ui';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { useTemplateStore } from '../../store/templateStore';
@@ -179,19 +180,11 @@ export function TemplateEditorScreen({ navigation, route }: any) {
             {/* Header */}
             <View style={[styles.header, { paddingTop: insets.top + 12, borderBottomColor: colors.border }]}>
                 <View style={styles.headerTop}>
-                    <TouchableOpacity onPress={() => navigation.goBack()} style={styles.iconButton}>
-                        <Ionicons name="close" size={26} color={colors.foreground} />
-                    </TouchableOpacity>
+                    <IconButton icon="close" variant="ghost" onPress={() => navigation.goBack()} />
                     <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>
                         {isEditing ? 'Edit Template' : 'New Template'}
                     </Text>
-                    <TouchableOpacity onPress={handleSave} style={styles.saveBtn} disabled={!name.trim() || isSaving}>
-                        {isSaving ? (
-                            <ActivityIndicator size="small" color={colors.primary.main} />
-                        ) : (
-                            <Text style={[styles.saveText, { color: name.trim() ? colors.primary.main : colors.mutedForeground }]}>Save</Text>
-                        )}
-                    </TouchableOpacity>
+                    <Button title="Save" variant="primary" size="sm" disabled={!name.trim() || isSaving} loading={isSaving} onPress={handleSave} />
                 </View>
             </View>
 

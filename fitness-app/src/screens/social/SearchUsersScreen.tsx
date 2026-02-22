@@ -16,6 +16,7 @@ import { fontFamilies } from '../../theme/typography';
 import { useSearchUsers, useFollowUser, useUnfollowUser } from '../../hooks/queries/useSocialQueries';
 import { useAuthStore } from '../../store/authStore';
 import type { UserProfile } from '../../api/social.api';
+import { IconButton } from '../../components/ui';
 
 const RECENT_SEARCHES = ['strength', 'hypertrophy', 'coach'];
 
@@ -101,9 +102,7 @@ export function SearchUsersScreen({ navigation }: any) {
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
             <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.card }]}>
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.btn}>
-                    <Ionicons name="arrow-back" size={24} color={colors.foreground} />
-                </TouchableOpacity>
+                <IconButton icon="arrow-back" variant="ghost" onPress={() => navigation.goBack()} />
                 <View style={[styles.searchBar, { backgroundColor: colors.muted, flex: 1, marginHorizontal: 12 }]}>
                     <Ionicons name="search" size={20} color={colors.mutedForeground} />
                     <TextInput
@@ -117,9 +116,7 @@ export function SearchUsersScreen({ navigation }: any) {
                         returnKeyType="search"
                     />
                     {search.length > 0 ? (
-                        <TouchableOpacity onPress={() => setSearch('')}>
-                            <Ionicons name="close-circle" size={20} color={colors.mutedForeground} />
-                        </TouchableOpacity>
+                        <IconButton icon="close-circle" variant="ghost" size="sm" onPress={() => setSearch('')} />
                     ) : null}
                 </View>
                 <TouchableOpacity onPress={() => navigation.goBack()}>

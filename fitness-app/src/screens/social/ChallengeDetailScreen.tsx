@@ -7,6 +7,7 @@ import { useColors } from '../../hooks';
 import { useChallengeDetail, useJoinChallenge } from '../../hooks/queries/useLeaderboardQueries';
 import { fontFamilies } from '../../theme/typography';
 import type { Challenge } from '../../api/leaderboard.api';
+import { IconButton, Button } from '../../components/ui';
 
 const { width } = Dimensions.get('window');
 
@@ -59,9 +60,7 @@ export function ChallengeDetailScreen({ route, navigation }: any) {
         return (
             <View style={[styles.container, { backgroundColor: colors.background }]}>
                 <View style={[styles.backBtn, { top: insets.top + 8, backgroundColor: colors.card }]}>
-                    <TouchableOpacity onPress={() => navigation.goBack()}>
-                        <Ionicons name="arrow-back" size={24} color={colors.foreground} />
-                    </TouchableOpacity>
+                    <IconButton icon="arrow-back" variant="ghost" onPress={() => navigation.goBack()} />
                 </View>
                 <View style={styles.loadingContainer}>
                     <ActivityIndicator size="large" color={colors.primary.main} />
@@ -76,9 +75,7 @@ export function ChallengeDetailScreen({ route, navigation }: any) {
         return (
             <View style={[styles.container, { backgroundColor: colors.background }]}>
                 <View style={[styles.backBtn, { top: insets.top + 8, backgroundColor: colors.card }]}>
-                    <TouchableOpacity onPress={() => navigation.goBack()}>
-                        <Ionicons name="arrow-back" size={24} color={colors.foreground} />
-                    </TouchableOpacity>
+                    <IconButton icon="arrow-back" variant="ghost" onPress={() => navigation.goBack()} />
                 </View>
                 <View style={styles.errorContainer}>
                     <Ionicons name="alert-circle-outline" size={48} color={colors.error} />
@@ -205,17 +202,7 @@ export function ChallengeDetailScreen({ route, navigation }: any) {
             {/* CTA Button */}
             {!challenge.isJoined && !challenge.isCompleted && daysLeft > 0 && (
                 <View style={[styles.ctaWrap, { paddingBottom: insets.bottom + 16, backgroundColor: colors.card, borderTopColor: colors.border }]}>
-                    <TouchableOpacity
-                        style={styles.ctaBtn}
-                        onPress={() => joinChallengeMutation.mutate(challenge.id)}
-                        disabled={joinChallengeMutation.isPending}
-                    >
-                        <View style={styles.ctaGrad}>
-                            <Text style={styles.ctaText}>
-                                {joinChallengeMutation.isPending ? 'Joining...' : 'Join Challenge'}
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
+                    <Button title="Join Challenge" variant="primary" fullWidth loading={joinChallengeMutation.isPending} disabled={joinChallengeMutation.isPending} onPress={() => joinChallengeMutation.mutate(challenge.id)} />
                 </View>
             )}
             {challenge.isJoined && !challenge.isCompleted && (

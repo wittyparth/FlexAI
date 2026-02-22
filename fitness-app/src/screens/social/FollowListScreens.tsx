@@ -8,6 +8,7 @@ import { fontFamilies } from '../../theme/typography';
 
 import { useFollowers, useFollowing, useFollowUser, useUnfollowUser } from '../../hooks/queries/useSocialQueries';
 import { useAuthStore } from '../../store/authStore';
+import { NavigationBar, IconButton } from '../../components/ui';
 
 export function FollowersListScreen({ route, navigation }: any) {
     const colors = useColors();
@@ -77,19 +78,13 @@ export function FollowersListScreen({ route, navigation }: any) {
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
-            <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.card }]}>
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.btn}>
-                    <Ionicons name="arrow-back" size={24} color={colors.foreground} />
-                </TouchableOpacity>
-                <Text style={[styles.title, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Followers</Text>
-                <View style={{ width: 44 }} />
-            </View>
+            <NavigationBar title="Followers" onBack={() => navigation.goBack()} />
 
             <View style={[styles.searchWrap, { backgroundColor: colors.card }]}>
                 <View style={[styles.searchBar, { backgroundColor: colors.muted }]}>
                     <Ionicons name="search" size={20} color={colors.mutedForeground} />
                     <TextInput style={[styles.searchInput, { color: colors.foreground }]} placeholder="Search followers..." placeholderTextColor={colors.mutedForeground} value={search} onChangeText={setSearch} />
-                    {search.length > 0 && <TouchableOpacity onPress={() => setSearch('')}><Ionicons name="close-circle" size={20} color={colors.mutedForeground} /></TouchableOpacity>}
+                    {search.length > 0 && <IconButton icon="close-circle" variant="ghost" size="sm" onPress={() => setSearch('')} />}
                 </View>
             </View>
 
@@ -160,19 +155,13 @@ export function FollowingListScreen({ route, navigation }: any) {
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
-            <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.card }]}>
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.btn}>
-                    <Ionicons name="arrow-back" size={24} color={colors.foreground} />
-                </TouchableOpacity>
-                <Text style={[styles.title, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Following</Text>
-                <View style={{ width: 44 }} />
-            </View>
+            <NavigationBar title="Following" onBack={() => navigation.goBack()} />
 
             <View style={[styles.searchWrap, { backgroundColor: colors.card }]}>
                 <View style={[styles.searchBar, { backgroundColor: colors.muted }]}>
                     <Ionicons name="search" size={20} color={colors.mutedForeground} />
                     <TextInput style={[styles.searchInput, { color: colors.foreground }]} placeholder="Search following..." placeholderTextColor={colors.mutedForeground} value={search} onChangeText={setSearch} />
-                    {search.length > 0 && <TouchableOpacity onPress={() => setSearch('')}><Ionicons name="close-circle" size={20} color={colors.mutedForeground} /></TouchableOpacity>}
+                    {search.length > 0 && <IconButton icon="close-circle" variant="ghost" size="sm" onPress={() => setSearch('')} />}
                 </View>
             </View>
 

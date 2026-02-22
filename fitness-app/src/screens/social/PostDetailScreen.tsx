@@ -19,6 +19,7 @@ import { useColors, useComments, useToggleLike, useAddComment } from '../../hook
 import { fontFamilies } from '../../theme/typography';
 import { colors as themeColors } from '../../theme/colors';
 import type { FeedPost } from '../../api/feed.api';
+import { NavigationBar } from '../../components/ui';
 // Format time ago helper (Native implementation)
 const formatTimeAgo = (dateString: string) => {
     try {
@@ -118,16 +119,7 @@ export function PostDetailScreen({ route, navigation }: any) {
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
-            {/* Header */}
-            <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.card, borderBottomColor: colors.border }]}>
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-                    <Ionicons name="arrow-back" size={24} color={colors.foreground} />
-                </TouchableOpacity>
-                <Text style={[styles.headerTitle, { color: colors.foreground }]}>Post</Text>
-                <TouchableOpacity style={styles.moreButton}>
-                    <Ionicons name="ellipsis-horizontal" size={24} color={colors.foreground} />
-                </TouchableOpacity>
-            </View>
+            <NavigationBar title="Post" onBack={() => navigation.goBack()} rightActions={[{ icon: 'ellipsis-horizontal', onPress: () => {}, label: 'More' }]} />
 
             <KeyboardAvoidingView
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}

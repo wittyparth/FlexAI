@@ -16,6 +16,7 @@ import { fontFamilies } from '../../theme/typography';
 import { useUserProfile, useFollowUser, useUnfollowUser } from '../../hooks/queries/useSocialQueries';
 import { useUserPosts } from '../../hooks/queries/useFeedQueries';
 import { useAuthStore } from '../../store/authStore';
+import { IconButton } from '../../components/ui';
 
 const { width } = Dimensions.get('window');
 
@@ -105,13 +106,9 @@ export function UserProfileScreen({ route, navigation }: any) {
         <View style={[styles.container, { backgroundColor: colors.background }]}>
             {/* Header */}
             <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.card }]}>
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-                    <Ionicons name="arrow-back" size={24} color={colors.foreground} />
-                </TouchableOpacity>
+                <IconButton icon="arrow-back" variant="ghost" onPress={() => navigation.goBack()} />
                 <Text style={[styles.headerUsername, { color: colors.foreground }]}>@{userProfile?.username || 'user'}</Text>
-                <TouchableOpacity style={styles.moreButton}>
-                    <Ionicons name="ellipsis-horizontal" size={24} color={colors.foreground} />
-                </TouchableOpacity>
+                <IconButton icon="ellipsis-horizontal" variant="ghost" onPress={() => {}} />
             </View>
 
             <ScrollView showsVerticalScrollIndicator={false}>

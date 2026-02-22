@@ -17,6 +17,7 @@ import { fontFamilies } from '../../theme/typography';
 import { colors as themeColors } from '../../theme/colors';
 import { useRoutine, useDuplicateRoutine } from '../../hooks/queries/useRoutineQueries';
 import { useWorkoutStore } from '../../store/workoutStore';
+import { NavigationBar } from '../../components/ui';
 
 const { width } = Dimensions.get('window');
 
@@ -109,15 +110,7 @@ export function RoutineTemplateScreen({ navigation, route }: any) {
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
             {/* Header */}
-            <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.card, borderBottomColor: colors.border }]}>
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerBtn}>
-                    <Ionicons name="arrow-back" size={24} color={colors.foreground} />
-                </TouchableOpacity>
-                <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Routine</Text>
-                <TouchableOpacity style={styles.headerBtn}>
-                    <Ionicons name="share-outline" size={22} color={colors.foreground} />
-                </TouchableOpacity>
-            </View>
+            <NavigationBar title="Routine" onBack={() => navigation.goBack()} rightActions={[{ icon: 'share-outline', onPress: () => {}, label: 'Share' }]} />
 
             <ScrollView showsVerticalScrollIndicator={false}>
                 {/* Hero Card */}

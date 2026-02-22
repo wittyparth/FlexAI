@@ -4,12 +4,11 @@ import {
     Text,
     StyleSheet,
     ScrollView,
-    TouchableOpacity,
     Dimensions,
     Animated,
     ActivityIndicator,
 } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { NavigationBar, Button, Chip } from '../../components/ui';
 import { Ionicons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
@@ -106,7 +105,6 @@ const toGroupedIntensity = (muscleSets: Record<string, number>): GroupIntensity[
 
 export function MuscleHeatmapScreen({ navigation }: any) {
     const colors = useColors();
-    const insets = useSafeAreaInsets();
     const fadeAnim = useRef(new Animated.Value(0)).current;
     const [view, setView] = useState<'front' | 'back'>('front');
 
@@ -172,15 +170,11 @@ export function MuscleHeatmapScreen({ navigation }: any) {
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}> 
-            <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.card, borderBottomColor: colors.border }]}> 
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerBtn}>
-                    <Ionicons name="arrow-back" size={24} color={colors.foreground} />
-                </TouchableOpacity>
-                <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Muscle Heatmap</Text>
-                <TouchableOpacity onPress={() => refetch()} style={styles.headerBtn}>
-                    <Ionicons name="refresh" size={20} color={colors.foreground} />
-                </TouchableOpacity>
-            </View>
+            <NavigationBar
+                title="Muscle Heatmap"
+                onBack={() => navigation.goBack()}
+                rightActions={[{ icon: 'refresh', onPress: () => refetch(), label: 'Refresh' }]}
+            />
 
             {isLoading ? (
                 <View style={styles.centerState}>
@@ -189,26 +183,14 @@ export function MuscleHeatmapScreen({ navigation }: any) {
             ) : isError ? (
                 <View style={styles.centerState}>
                     <Text style={{ color: colors.error, marginBottom: 12 }}>Failed to load muscle heatmap.</Text>
-                    <TouchableOpacity style={[styles.retryBtn, { backgroundColor: colors.primary.main }]} onPress={() => refetch()}>
-                        <Text style={styles.retryText}>Retry</Text>
-                    </TouchableOpacity>
+                    <Button title="Retry" onPress={() => refetch()} size="sm" />
                 </View>
             ) : (
                 <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={styles.toggleContainer}>
-                        <View style={[styles.toggleBg, { backgroundColor: colors.muted }]}> 
-                            <TouchableOpacity
-                                style={[styles.toggleBtn, view === 'front' && { backgroundColor: colors.primary.main }]}
-                                onPress={() => setView('front')}
-                            >
-                                <Text style={[styles.toggleText, { color: view === 'front' ? '#FFF' : colors.foreground }]}>Front</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                style={[styles.toggleBtn, view === 'back' && { backgroundColor: colors.primary.main }]}
-                                onPress={() => setView('back')}
-                            >
-                                <Text style={[styles.toggleText, { color: view === 'back' ? '#FFF' : colors.foreground }]}>Back</Text>
-                            </TouchableOpacity>
+                        <View style={{ flexDirection: 'row', gap: 8 }}>
+                            <Chip label="Front" selected={view === 'front'} onPress={() => setView('front')} size="sm" />
+                            <Chip label="Back" selected={view === 'back'} onPress={() => setView('back')} size="sm" />
                         </View>
                     </View>
 

@@ -9,7 +9,7 @@ import {
     Animated,
     ActivityIndicator,
 } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { NavigationBar, Button, Chip } from '../../components/ui';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { LineChart } from 'react-native-gifted-charts';
 import { useColors } from '../../hooks';
@@ -70,7 +70,6 @@ const sortByDateAsc = (records: PersonalRecordResponse[]) => {
 
 export function StrengthProgressionScreen({ navigation, route }: any) {
     const colors = useColors();
-    const insets = useSafeAreaInsets();
     const fadeAnim = useRef(new Animated.Value(0)).current;
 
     const routeExerciseId = route?.params?.exerciseId as number | undefined;
@@ -166,21 +165,11 @@ export function StrengthProgressionScreen({ navigation, route }: any) {
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
-            <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.background }]}> 
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerBtn}>
-                    <Ionicons name="arrow-back" size={24} color={colors.foreground} />
-                </TouchableOpacity>
-                <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Strength</Text>
-                <TouchableOpacity
-                    onPress={() => {
-                        refetchExercises();
-                        refetchProgression();
-                    }}
-                    style={styles.headerBtn}
-                >
-                    <Ionicons name="refresh" size={20} color={colors.foreground} />
-                </TouchableOpacity>
-            </View>
+            <NavigationBar
+                title="Strength"
+                onBack={() => navigation.goBack()}
+                rightActions={[{ icon: 'refresh', onPress: () => { refetchExercises(); refetchProgression(); }, label: 'Refresh' }]}
+            />
 
             {isLoading ? (
                 <View style={styles.centerState}>
@@ -189,12 +178,7 @@ export function StrengthProgressionScreen({ navigation, route }: any) {
             ) : isExerciseError || isProgressError ? (
                 <View style={styles.centerState}>
                     <Text style={{ color: colors.error, marginBottom: 12 }}>Failed to load strength progression.</Text>
-                    <TouchableOpacity style={[styles.retryBtn, { backgroundColor: colors.primary.main }]} onPress={() => {
-                        refetchExercises();
-                        refetchProgression();
-                    }}>
-                        <Text style={styles.retryText}>Retry</Text>
-                    </TouchableOpacity>
+                    <Button title="Retry" onPress={() => { refetchExercises(); refetchProgression(); }} size="sm" />
                 </View>
             ) : !hasAnyData ? (
                 <View style={styles.centerState}>
@@ -248,13 +232,13 @@ export function StrengthProgressionScreen({ navigation, route }: any) {
                             <Text style={[styles.sectionTitle, { color: colors.foreground }]}>{selectedExercise?.name ?? 'Exercise'} Trend</Text>
                             <View style={styles.periodSelector}>
                                 {(['3M', '6M', '1Y', 'ALL'] as Period[]).map((p) => (
-                                    <TouchableOpacity
+                                    <Chip
                                         key={p}
-                                        style={[styles.periodBtn, period === p && { backgroundColor: `${colors.primary.main}20` }]}
+                                        label={p}
+                                        selected={period === p}
                                         onPress={() => setPeriod(p)}
-                                    >
-                                        <Text style={[styles.periodText, { color: period === p ? colors.primary.main : colors.mutedForeground }]}>{p}</Text>
-                                    </TouchableOpacity>
+                                        size="sm"
+                                    />
                                 ))}
                             </View>
                         </View>

@@ -4,12 +4,11 @@ import {
     Text,
     StyleSheet,
     ScrollView,
-    TouchableOpacity,
     Dimensions,
     Animated,
     ActivityIndicator,
 } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { NavigationBar, Button, Chip } from '../../components/ui';
 import { Ionicons } from '@expo/vector-icons';
 import { BarChart } from 'react-native-gifted-charts';
 import { useColors } from '../../hooks';
@@ -102,7 +101,6 @@ const buildBuckets = (timeframe: VolumeTimeframe, trend: Array<{ date: string; v
 
 export function VolumeAnalyticsScreen({ navigation }: any) {
     const colors = useColors();
-    const insets = useSafeAreaInsets();
     const fadeAnim = useRef(new Animated.Value(0)).current;
     const [period, setPeriod] = useState<VolumeTimeframe>('month');
 
@@ -146,15 +144,11 @@ export function VolumeAnalyticsScreen({ navigation }: any) {
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}> 
-            <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.background }]}> 
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerBtn}>
-                    <Ionicons name="arrow-back" size={24} color={colors.foreground} />
-                </TouchableOpacity>
-                <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Volume</Text>
-                <TouchableOpacity onPress={() => refetch()} style={styles.headerBtn}>
-                    <Ionicons name="refresh" size={20} color={colors.foreground} />
-                </TouchableOpacity>
-            </View>
+            <NavigationBar
+                title="Volume"
+                onBack={() => navigation.goBack()}
+                rightActions={[{ icon: 'refresh', onPress: () => refetch(), label: 'Refresh' }]}
+            />
 
             {isLoading ? (
                 <View style={styles.centerState}>
@@ -163,9 +157,7 @@ export function VolumeAnalyticsScreen({ navigation }: any) {
             ) : isError ? (
                 <View style={styles.centerState}>
                     <Text style={{ color: colors.error, marginBottom: 12 }}>Failed to load volume stats.</Text>
-                    <TouchableOpacity style={[styles.retryBtn, { backgroundColor: colors.primary.main }]} onPress={() => refetch()}>
-                        <Text style={styles.retryText}>Retry</Text>
-                    </TouchableOpacity>
+                    <Button title="Retry" onPress={() => refetch()} size="sm" />
                 </View>
             ) : (
                 <ScrollView showsVerticalScrollIndicator={false}>
@@ -200,13 +192,13 @@ export function VolumeAnalyticsScreen({ navigation }: any) {
                                     { key: 'month', label: '30D' },
                                     { key: 'year', label: '1Y' },
                                 ] as const).map((item) => (
-                                    <TouchableOpacity
+                                    <Chip
                                         key={item.key}
-                                        style={[styles.periodBtn, period === item.key && { backgroundColor: `${colors.primary.main}20` }]}
+                                        label={item.label}
+                                        selected={period === item.key}
                                         onPress={() => setPeriod(item.key)}
-                                    >
-                                        <Text style={[styles.periodText, { color: period === item.key ? colors.primary.main : colors.mutedForeground }]}>{item.label}</Text>
-                                    </TouchableOpacity>
+                                        size="sm"
+                                    />
                                 ))}
                             </View>
                         </View>

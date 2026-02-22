@@ -12,6 +12,7 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
+import { NavigationBar, Button } from '../../components/ui';
 import { useWorkoutStore } from '../../store/workoutStore';
 import { useRoutine } from '../../hooks/queries/useRoutineQueries';
 
@@ -68,22 +69,14 @@ export function RoutineDetailScreen({ route, navigation }: any) {
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
             {/* ── TOP NAV BAR ── */}
-            <View style={[styles.topBar, { paddingTop: insets.top + 12, backgroundColor: colors.background + 'F0' }]}>
-                <TouchableOpacity
-                    onPress={() => navigation.goBack()}
-                    style={[styles.iconBtn, { backgroundColor: colors.card, borderColor: colors.border }]}
-                >
-                    <Ionicons name="arrow-back" size={20} color={colors.foreground} />
-                </TouchableOpacity>
-                <Text style={[styles.topBarTitle, { color: colors.foreground }]} numberOfLines={1}>
-                    {routineName}
-                </Text>
-                <View style={{ width: 40 }} />
-            </View>
+            <NavigationBar
+                title={routineName}
+                onBack={() => navigation.goBack()}
+            />
 
             <ScrollView
                 showsVerticalScrollIndicator={false}
-                contentContainerStyle={{ paddingBottom: insets.bottom + 140, paddingTop: insets.top + 72 }}
+                contentContainerStyle={{ paddingBottom: insets.bottom + 140 }}
             >
                 {/* ── HEADER ── */}
                 <View style={styles.headerSection}>
@@ -119,18 +112,14 @@ export function RoutineDetailScreen({ route, navigation }: any) {
 
                 {/* ── START/SELECT BUTTON ── */}
                 <View style={styles.startSection}>
-                    <TouchableOpacity
+                    <Button
+                        title={mode === 'select' ? 'Select Workout' : 'Start Workout'}
                         onPress={handlePrimaryAction}
-                        activeOpacity={0.88}
-                        style={styles.startBtnWrapper}
-                    >
-                        <View
-                            style={styles.startBtn}
-                        >
-                            <Ionicons name={mode === 'select' ? 'checkmark-circle' : 'play-circle'} size={26} color="#FFFFFF" />
-                            <Text style={styles.startBtnText}>{mode === 'select' ? 'SELECT WORKOUT' : 'START WORKOUT'}</Text>
-                        </View>
-                    </TouchableOpacity>
+                        variant="primary"
+                        size="large"
+                        fullWidth
+                        leftElement={<Ionicons name={mode === 'select' ? 'checkmark-circle' : 'play-circle'} size={22} color="#FFFFFF" />}
+                    />
                 </View>
 
                 {/* ── EXERCISES LIST ── */}
@@ -204,18 +193,14 @@ export function RoutineDetailScreen({ route, navigation }: any) {
 
                 {/* ── BOTTOM START/SELECT BUTTON (repeat at end of list) ── */}
                 <View style={[styles.startSection, { marginTop: 8 }]}>
-                    <TouchableOpacity
+                    <Button
+                        title={mode === 'select' ? 'Select Workout' : 'Start Workout'}
                         onPress={handlePrimaryAction}
-                        activeOpacity={0.88}
-                        style={styles.startBtnWrapper}
-                    >
-                        <View
-                            style={styles.startBtn}
-                        >
-                            <Ionicons name={mode === 'select' ? 'checkmark-circle' : 'play-circle'} size={26} color="#FFFFFF" />
-                            <Text style={styles.startBtnText}>{mode === 'select' ? 'SELECT WORKOUT' : 'START WORKOUT'}</Text>
-                        </View>
-                    </TouchableOpacity>
+                        variant="primary"
+                        size="large"
+                        fullWidth
+                        leftElement={<Ionicons name={mode === 'select' ? 'checkmark-circle' : 'play-circle'} size={22} color="#FFFFFF" />}
+                    />
                 </View>
             </ScrollView>
         </View>

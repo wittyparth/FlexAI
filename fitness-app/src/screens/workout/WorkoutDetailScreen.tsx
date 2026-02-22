@@ -9,6 +9,7 @@ import {
     Share,
     Alert,
 } from 'react-native';
+import { NavigationBar, IconButton, Button, ListItem } from '../../components/ui';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useColors, useWorkout, useDeleteWorkout } from '../../hooks';
@@ -406,12 +407,13 @@ export function WorkoutDetailScreen({ route, navigation }: any) {
                 <Text style={[styles.errorSubtitle, { color: colors.mutedForeground }]}>
                     Unable to load workout details.
                 </Text>
-                <TouchableOpacity
+                <Button
+                    title="Go Back"
                     onPress={() => navigation.goBack()}
-                    style={[styles.errorButton, { backgroundColor: colors.primary.main }]}
-                >
-                    <Text style={styles.errorButtonText}>Go Back</Text>
-                </TouchableOpacity>
+                    variant="primary"
+                    size="default"
+                    style={{ marginTop: 16 }}
+                />
             </View>
         );
     }
@@ -423,31 +425,14 @@ export function WorkoutDetailScreen({ route, navigation }: any) {
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
             {/* Top Navigation */}
-            <View
-                style={[
-                    styles.topBar,
-                    {
-                        paddingTop: insets.top + 12,
-                        backgroundColor: colors.background + 'E6',
-                    },
+            <NavigationBar
+                title={workout.name || 'Workout Session'}
+                onBack={() => navigation.goBack()}
+                rightActions={[
+                    { icon: 'share-outline', onPress: handleShare, label: 'Share' },
+                    { icon: 'trash-outline', onPress: handleDelete, label: 'Delete', color: colors.error },
                 ]}
-            >
-                <TouchableOpacity
-                    onPress={() => navigation.goBack()}
-                    style={[styles.circleButton, { backgroundColor: colors.card, borderColor: colors.border }]}
-                >
-                    <Ionicons name="arrow-back" size={20} color={colors.foreground} />
-                </TouchableOpacity>
-
-                <View style={styles.topBarActions}>
-                    <TouchableOpacity style={styles.iconButton} onPress={handleShare}>
-                        <Ionicons name="share-outline" size={22} color={colors.mutedForeground} />
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.iconButton} onPress={handleDelete}>
-                        <Ionicons name="trash-outline" size={22} color={colors.mutedForeground} />
-                    </TouchableOpacity>
-                </View>
-            </View>
+            />
 
             <ScrollView
                 showsVerticalScrollIndicator={false}
@@ -582,12 +567,12 @@ export function WorkoutDetailScreen({ route, navigation }: any) {
                                             </Text>
                                         )}
                                     </View>
-                                    <TouchableOpacity
+                                    <IconButton
+                                        icon="chevron-forward"
+                                        variant="ghost"
+                                        size="sm"
                                         onPress={() => navigation.navigate('ExerciseDetail', { exerciseId: exercise?.id })}
-                                        style={styles.exerciseAction}
-                                    >
-                                        <Ionicons name="chevron-forward" size={18} color={colors.mutedForeground} />
-                                    </TouchableOpacity>
+                                    />
                                 </View>
 
                                 {/* Sets Table */}
@@ -647,21 +632,15 @@ export function WorkoutDetailScreen({ route, navigation }: any) {
                 </View>
 
                 {/* View Insights CTA */}
-                <TouchableOpacity
-                    style={[styles.insightsCta, { backgroundColor: colors.card, borderColor: colors.border }]}
+                <ListItem
+                    icon="chart-line"
+                    iconLibrary="MaterialCommunityIcons"
+                    title="View Session Insights"
+                    subtitle="Performance analysis & recommendations"
+                    showChevron
                     onPress={() => navigation.navigate('SessionInsights', { workoutId: workout.id })}
-                >
-                    <MaterialCommunityIcons name="chart-line" size={22} color={colors.primary.main} />
-                    <View style={styles.insightsCtaContent}>
-                        <Text style={[styles.insightsCtaTitle, { color: colors.foreground }]}>
-                            View Session Insights
-                        </Text>
-                        <Text style={[styles.insightsCtaSubtitle, { color: colors.mutedForeground }]}>
-                            Performance analysis & recommendations
-                        </Text>
-                    </View>
-                    <Ionicons name="chevron-forward" size={20} color={colors.mutedForeground} />
-                </TouchableOpacity>
+                    style={styles.insightsCta}
+                />
             </ScrollView>
         </View>
     );

@@ -13,6 +13,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
+import { NavigationBar, ListItem } from '../../components/ui';
 import { useUserQueries } from '../../hooks/queries/useUserQueries';
 
 export function AccountSecurityScreen({ navigation }: any) {
@@ -90,39 +91,35 @@ export function AccountSecurityScreen({ navigation }: any) {
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}> 
-            <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.card, borderBottomColor: colors.border }]}> 
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerBtn}>
-                    <Ionicons name="arrow-back" size={24} color={colors.foreground} />
-                </TouchableOpacity>
-                <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Account & Security</Text>
-                <View style={styles.headerBtn}>
-                    {deleteAccountMutation.isPending && (
-                        <ActivityIndicator size="small" color={colors.error} />
-                    )}
-                </View>
-            </View>
+            <NavigationBar
+                title="Account & Security"
+                onBack={() => navigation.goBack()}
+                rightActions={deleteAccountMutation.isPending ? [{ icon: 'time-outline', onPress: () => {}, label: 'Loading' }] : []}
+            />
 
             <ScrollView showsVerticalScrollIndicator={false}>
                 <Animated.View style={{ opacity: fadeAnim }}>
                     <View style={styles.section}>
                         <Text style={[styles.sectionTitle, { color: colors.mutedForeground }]}>Security</Text>
                         <View style={[styles.sectionCard, { backgroundColor: colors.card, borderColor: colors.border }]}> 
-                            <SecurityRow
+                            <ListItem
                                 icon="lock-closed-outline"
-                                label="Change Password"
-                                value="Update your login credentials"
+                                title="Change Password"
+                                subtitle="Update your login credentials"
+                                showChevron
+                                showDivider
                                 onPress={() => navigation.navigate('ChangePassword')}
                             />
-                            <SecurityRow
+                            <ListItem
                                 icon="mail-outline"
-                                label="Email"
-                                value={email}
+                                title="Email"
+                                subtitle={email}
+                                showDivider
                             />
-                            <SecurityRow
+                            <ListItem
                                 icon="calendar-outline"
-                                label="Joined"
-                                value={joinedOn}
-                                isLast
+                                title="Joined"
+                                subtitle={joinedOn}
                             />
                         </View>
                     </View>
@@ -130,13 +127,13 @@ export function AccountSecurityScreen({ navigation }: any) {
                     <View style={styles.section}>
                         <Text style={[styles.sectionTitle, { color: colors.error }]}>Danger Zone</Text>
                         <View style={[styles.sectionCard, { backgroundColor: colors.card, borderColor: colors.border }]}> 
-                            <SecurityRow
+                            <ListItem
                                 icon="trash-outline"
-                                label="Delete Account"
-                                value="Permanently remove your account"
+                                title="Delete Account"
+                                subtitle="Permanently remove your account"
+                                showChevron
+                                destructive
                                 onPress={handleDelete}
-                                danger
-                                isLast
                             />
                         </View>
                     </View>

@@ -9,6 +9,7 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
+import { Button } from '../../components/ui';
 import { fontFamilies } from '../../theme/typography';
 import { MuscleHighlighterCard } from '../../components/muscles/MuscleHighlighterCard';
 import { useWorkoutStore, selectCompletedSummary } from '../../store/workoutStore';
@@ -194,15 +195,14 @@ export function WorkoutSummaryScreen({ navigation, route }: any) {
                     <Text style={styles.xpFraction}>1,250 / 1,500 XP</Text>
                 </View>
 
-                <TouchableOpacity
-                    style={styles.doneButton}
+                <Button
+                    title="Done"
                     onPress={() => navigation.navigate('WorkoutHub')}
-                >
-                    <View style={styles.doneGradient}>
-                        <Text style={styles.doneText}>Done</Text>
-                        <Ionicons name="checkmark" size={20} color="#FFFFFF" />
-                    </View>
-                </TouchableOpacity>
+                    variant="primary"
+                    size="large"
+                    fullWidth
+                    rightElement={<Ionicons name="checkmark" size={20} color="#FFFFFF" />}
+                />
             </View>
         </View>
     );

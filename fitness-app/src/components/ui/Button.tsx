@@ -40,7 +40,7 @@ interface ButtonProps {
     title: string;
     onPress: () => void;
     variant?: 'primary' | 'secondary' | 'tertiary' | 'destructive' | 'ghost' | 'outlined';
-    size?: 'default' | 'small' | 'large';
+    size?: 'default' | 'small' | 'large' | 'sm' | 'md' | 'lg';
     disabled?: boolean;
     loading?: boolean;
     /** Element rendered left of the title */
@@ -113,9 +113,12 @@ export function Button({
     const getSizeStyle = (): ViewStyle => {
         switch (size) {
             case 'small':
+            case 'sm':
                 return { paddingVertical: spacing[2], paddingHorizontal: spacing[4], minHeight: 36 };
             case 'large':
+            case 'lg':
                 return { paddingVertical: subtitle ? spacing[3] : spacing[4], paddingHorizontal: spacing[8], minHeight: subtitle ? 64 : 56 };
+            case 'md':
             default:
                 return { paddingVertical: subtitle ? spacing[2] : spacing[3], paddingHorizontal: spacing[6], minHeight: subtitle ? 56 : 48 };
         }

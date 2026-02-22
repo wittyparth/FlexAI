@@ -21,12 +21,13 @@ export const SPACING = {
 // Border Radius System (Global Radius: 1rem = 16px)
 export const RADIUS = {
   none: 0,
-  xs: 4,               // calc(var(--radius) - 12px) approx? No, let's stick to safe smalls
+  xs: 4,
   sm: 12,              // calc(var(--radius) - 4px) -> 16 - 4
   md: 14,              // calc(var(--radius) - 2px) -> 16 - 2
   lg: 16,              // var(--radius)
   xl: 20,              // calc(var(--radius) + 4px) -> 16 + 4
   xxl: 24,
+  xxxl: 32,
   full: 999,
 } as const;
 
@@ -63,7 +64,7 @@ export const borderRadius = {
   lg: RADIUS.lg,    // 16
   xl: RADIUS.xl,    // 20
   '2xl': RADIUS.xxl,// 24
-  '3xl': 28,
+  '3xl': RADIUS.xxxl,  // 32
   round: RADIUS.full,
   full: RADIUS.full,
 } as const;

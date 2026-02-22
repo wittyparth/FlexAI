@@ -133,9 +133,18 @@ const createThemePalette = (baseColors: typeof COLORS_LIGHT, isDark: boolean) =>
     tabBarInactive:   baseColors.mutedForeground,
 
     // ── Input Fields ──
-    inputBackground:        baseColors.input,
+    inputBackground:         baseColors.input,
     inputBackgroundFocused:  isDark ? '#0F172A' : '#FFFFFF',
-    placeholder:            baseColors.mutedForeground,
+    placeholder:             baseColors.mutedForeground,
+
+    // ── NEW: Premium Surface Tokens ──
+    surfaceHover:  (baseColors as any).surfaceHover,
+    divider:       (baseColors as any).divider,
+    overlay:       (baseColors as any).overlay,
+    overlayLight:  (baseColors as any).overlayLight,
+    cardBorder:    (baseColors as any).cardBorder,
+    surface2:      (baseColors as any).surface2,
+    surface3:      (baseColors as any).surface3,
 
     // ── Gradients ──
     gradients: isDark ? {

@@ -18,6 +18,7 @@ import Animated, {
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useTheme } from '../../contexts';
 
 export type ToastType = 'success' | 'error' | 'warning' | 'info';
 
@@ -32,16 +33,19 @@ interface ToastItemProps extends ToastConfig {
     onDismiss: (id: string) => void;
 }
 
-const TYPE_CONFIG: Record<ToastType, { icon: string; bg: string; border: string; text: string }> = {
-    success: { icon: 'check-circle', bg: '#ECFDF5', border: '#10B981', text: '#065F46' },
-    error:   { icon: 'alert-circle', bg: '#FEF2F2', border: '#EF4444', text: '#991B1B' },
-    warning: { icon: 'alert',        bg: '#FFFBEB', border: '#F59E0B', text: '#92400E' },
-    info:    { icon: 'information',  bg: '#EFF6FF', border: '#3B82F6', text: '#1E40AF' },
+const TYPE_CONFIG: Record<ToastType, { icon: string; bgLight: string; bgDark: string; border: string; textLight: string; textDark: string }> = {
+    success: { icon: 'check-circle',  bgLight: '#ECFDF5', bgDark: '#064E3B', border: '#10B981', textLight: '#065F46', textDark: '#6EE7B7' },
+    error:   { icon: 'alert-circle',  bgLight: '#FEF2F2', bgDark: '#7F1D1D', border: '#EF4444', textLight: '#991B1B', textDark: '#FCA5A5' },
+    warning: { icon: 'alert',         bgLight: '#FFFBEB', bgDark: '#451A03', border: '#F59E0B', textLight: '#92400E', textDark: '#FCD34D' },
+    info:    { icon: 'information',   bgLight: '#EFF6FF', bgDark: '#1E3A5F', border: '#3B82F6', textLight: '#1E40AF', textDark: '#93C5FD' },
 };
 
 export function ToastItem({ id, message, type, duration = 3000, onDismiss }: ToastItemProps) {
     const insets = useSafeAreaInsets();
+    const { isDark } = useTheme();
     const cfg = TYPE_CONFIG[type];
+    const bg   = isDark ? cfg.bgDark   : cfg.bgLight;
+    const text = isDark ? cfg.textDark : cfg.textLight;
 
     const translateY = useSharedValue(-120);
     const opacity = useSharedValue(0);
@@ -81,14 +85,14 @@ export function ToastItem({ id, message, type, duration = 3000, onDismiss }: Toa
                 styles.toast,
                 {
                     top: insets.top + 12,
-                    backgroundColor: cfg.bg,
+                    backgroundColor: bg,
                     borderLeftColor: cfg.border,
                 },
                 animStyle,
             ]}
         >
             <MaterialCommunityIcons name={cfg.icon as any} size={20} color={cfg.border} style={styles.icon} />
-            <Text style={[styles.message, { color: cfg.text }]} numberOfLines={3}>
+            <Text style={[styles.message, { color: text }]} numberOfLines={3}>
                 {message}
             </Text>
         </Animated.View>

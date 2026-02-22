@@ -1,9 +1,13 @@
 /**
- * Card Component (Theme-Aware)
+ * Card Component — Production Grade
  *
- * Premium Design System Cards
- * Variants: default, elevated, flat, glass, feature
- * Upgrade: optional onPress with Reanimated spring press-scale
+ * Variants: default | elevated | flat | glass | feature
+ * Features:
+ *  - `gradient?: [string, string]` — LinearGradient background
+ *  - `accentLeft?: string` — 4px colored left-border stripe
+ *  - `bordered?: boolean` — subtle 1px outline
+ *  - `glass` variant uses expo-blur BlurView for real frosted glass
+ *  - Reanimated spring press-scale (damping: 20, stiffness: 350)
  */
 
 import React from 'react';
@@ -13,6 +17,8 @@ import Animated, {
     useAnimatedStyle,
     withSpring,
 } from 'react-native-reanimated';
+import { LinearGradient } from 'expo-linear-gradient';
+import { BlurView } from 'expo-blur';
 import { useColors } from '../../hooks';
 import { borderRadius, spacing } from '../../constants';
 import { SHADOWS_LIGHT, SHADOWS_DARK } from '../../constants/shadows';
@@ -25,6 +31,12 @@ interface CardProps {
     variant?: 'default' | 'elevated' | 'flat' | 'glass' | 'feature';
     padding?: 'none' | 'sm' | 'md' | 'lg' | 'xl';
     style?: StyleProp<ViewStyle>;
+    /** LinearGradient colors — overrides variant background */
+    gradient?: [string, string];
+    /** Colored left-side accent stripe (width: 4) */
+    accentLeft?: string;
+    /** Add a subtle 1px border outline */
+    bordered?: boolean;
     /** When provided, card becomes pressable with spring scale feedback */
     onPress?: () => void;
 }
@@ -34,6 +46,9 @@ export function Card({
     variant = 'default',
     padding = 'md',
     style,
+    gradient,
+    accentLeft,
+    bordered = false,
     onPress,
 }: CardProps) {
     const colors = useColors();
@@ -46,10 +61,10 @@ export function Card({
         transform: [{ scale: scale.value }],
     }));
     const handlePressIn = () => {
-        if (onPress) scale.value = withSpring(0.97, { damping: 15, stiffness: 300 });
+        if (onPress) scale.value = withSpring(0.97, { damping: 20, stiffness: 350 });
     };
     const handlePressOut = () => {
-        if (onPress) scale.value = withSpring(1, { damping: 15, stiffness: 300 });
+        if (onPress) scale.value = withSpring(1, { damping: 20, stiffness: 350 });
     };
 
     const paddingValue = {
@@ -72,21 +87,22 @@ export function Card({
                 return {
                     backgroundColor: colors.card,
                     borderWidth: 1,
-                    borderColor: colors.border,
+                    borderColor: (colors as any).cardBorder ?? colors.border,
                     elevation: 0,
                     shadowOpacity: 0,
                 };
             case 'glass':
                 return {
-                    backgroundColor: isDark ? 'rgba(31, 41, 55, 0.7)' : 'rgba(255, 255, 255, 0.7)',
+                    backgroundColor: 'transparent',
                     borderWidth: 1,
-                    borderColor: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.5)',
+                    borderColor: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0.6)',
                     ...shadows.md,
+                    overflow: 'hidden',
                 };
             case 'feature':
                 return {
-                    backgroundColor: colors.primary.light + '80', // Transparent primary
-                    borderColor: colors.primary.lighter,
+                    backgroundColor: colors.primary.light + '18',
+                    borderColor: colors.primary.main + '30',
                     borderWidth: 1,
                     ...shadows.colored,
                 };
@@ -95,18 +111,60 @@ export function Card({
                 return {
                     backgroundColor: colors.card,
                     ...shadows.md,
-                    borderWidth: 0,
+                    borderWidth: bordered ? 0 : 0, // handled below
                 };
         }
     };
 
-    const cardStyle = [
+    const variantStyle = getVariantStyle();
+
+    // Bordered override
+    if (bordered && variant !== 'flat' && variant !== 'glass') {
+        variantStyle.borderWidth = 1;
+        variantStyle.borderColor = (colors as any).cardBorder ?? colors.border;
+    }
+
+    const cardStyle: StyleProp<ViewStyle> = [
         styles.base,
-        { borderRadius: borderRadius.xl },
-        getVariantStyle(),
+        { borderRadius: borderRadius['2xl'] },
+        variantStyle,
         { padding: paddingValue },
         style,
     ];
+
+    // ── Glass variant uses BlurView ──
+    const renderGlassContent = () => (
+        <BlurView
+            intensity={isDark ? 20 : 40}
+            tint={isDark ? 'dark' : 'light'}
+            style={StyleSheet.absoluteFill}
+        />
+    );
+
+    const renderInner = () => (
+        <>
+            {variant === 'glass' && renderGlassContent()}
+            {gradient && (
+                <LinearGradient
+                    colors={gradient}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 1 }}
+                    style={StyleSheet.absoluteFill}
+                />
+            )}
+            {accentLeft && (
+                <View
+                    style={[
+                        styles.accentStripe,
+                        { backgroundColor: accentLeft, borderTopLeftRadius: borderRadius['2xl'], borderBottomLeftRadius: borderRadius['2xl'] },
+                    ]}
+                />
+            )}
+            <View style={accentLeft ? styles.accentContent : undefined}>
+                {children}
+            </View>
+        </>
+    );
 
     if (onPress) {
         return (
@@ -116,14 +174,14 @@ export function Card({
                 onPressOut={handlePressOut}
                 style={[cardStyle, animatedStyle]}
             >
-                {children}
+                {renderInner()}
             </AnimatedPressable>
         );
     }
 
     return (
         <View style={cardStyle}>
-            {children}
+            {renderInner()}
         </View>
     );
 }
@@ -131,6 +189,16 @@ export function Card({
 const styles = StyleSheet.create({
     base: {
         width: '100%',
-        overflow: 'hidden', // For borderRadius
+        overflow: 'hidden',
+    },
+    accentStripe: {
+        position: 'absolute',
+        left: 0,
+        top: 0,
+        bottom: 0,
+        width: 4,
+    },
+    accentContent: {
+        marginLeft: 12,
     },
 });

@@ -7,19 +7,11 @@
 
 import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, StyleProp, ViewStyle } from 'react-native';
-import Animated, {
-    useSharedValue,
-    withTiming,
-    useDerivedValue,
-    useAnimatedProps,
-    Easing,
-} from 'react-native-reanimated';
+import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { Card } from './Card';
-
-const AnimatedText = Animated.createAnimatedComponent(Text);
 
 type IconName = keyof typeof Ionicons.glyphMap;
 type MaterialIconName = keyof typeof MaterialCommunityIcons.glyphMap;
@@ -45,6 +37,8 @@ export interface StatCardProps {
     trendText?: string;
     /** Show gradient background */
     gradient?: boolean;
+    /** Compact horizontal layout: icon+label on left, value on right */
+    compact?: boolean;
     /** Custom style */
     style?: StyleProp<ViewStyle>;
     /** Size variant */
@@ -53,56 +47,29 @@ export interface StatCardProps {
     onPress?: () => void;
 }
 
-/** Animated count-up for numeric stat values */
-function CountUpValue({
-    target,
-    style,
-}: {
-    target: number;
-    style: any;
-}) {
-    const progress = useSharedValue(0);
-
-    useEffect(() => {
-        progress.value = withTiming(target, {
-            duration: 800,
-            easing: Easing.out(Easing.cubic),
-        });
-    }, [target]);
-
-    const animatedProps = useAnimatedProps(() => ({
-        text: String(Math.round(progress.value)),
-        defaultValue: String(Math.round(progress.value)),
-    } as any));
-
-    // Fallback: derive display text via useDerivedValue and bind via children
-    const displayText = useDerivedValue(() => String(Math.round(progress.value)));
-
-    // Workaround: use Animated.Text with animatedProps for 'text'
-    // Since RN Text doesn't accept animatedProps 'text', use a simple
-    // re-render approach via a wrapper component.
-    return <_CountUpText progress={progress} target={target} style={style} />;
-}
-
-function _CountUpText({ progress, target, style }: { progress: any; target: number; style: any }) {
-    // Frame-by-frame update using Reanimated worklet isn't directly possible
-    // with RN Text. We use a derived shared value → JS state bridge pattern.
+/** Clean count-up using requestAnimationFrame */
+function CountUpValue({ target, style }: { target: number; style: any }) {
     const [display, setDisplay] = React.useState(0);
+    const raf = React.useRef<ReturnType<typeof setTimeout> | null>(null);
 
     useEffect(() => {
-        const steps = 30;
-        const stepDuration = 800 / steps;
-        let current = 0;
-        const interval = setInterval(() => {
-            current += target / steps;
-            if (current >= target) {
-                setDisplay(typeof target === 'number' && Number.isInteger(target) ? target : Math.round(target));
-                clearInterval(interval);
-            } else {
-                setDisplay(Math.round(current));
+        const duration = 800;
+        const startTime = Date.now();
+        const startVal = 0;
+
+        const tick = () => {
+            const elapsed = Date.now() - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            // Ease-out cubic
+            const ease = 1 - Math.pow(1 - progress, 3);
+            const current = Math.round(startVal + (target - startVal) * ease);
+            setDisplay(current);
+            if (progress < 1) {
+                raf.current = setTimeout(tick, 16);
             }
-        }, stepDuration);
-        return () => clearInterval(interval);
+        };
+        tick();
+        return () => { if (raf.current) clearTimeout(raf.current); };
     }, [target]);
 
     return <Text style={style}>{display}</Text>;
@@ -119,25 +86,25 @@ export function StatCard({
     trend,
     trendText,
     gradient = false,
+    compact = false,
     style,
     size = 'md',
     onPress,
 }: StatCardProps) {
     const colors = useColors();
 
-    const finalIconBg = iconBackground || (colors.primary.main + '20');
-    const finalIconColor = iconColor || colors.primary.main;
+    const finalIconBg   = iconBackground || (colors.primary.main + '20');
+    const finalIconColor = iconColor     || colors.primary.main;
 
     const sizeStyles = {
         sm: { iconSize: 16, iconContainer: 32, valueSize: 18, labelSize: 10 },
         md: { iconSize: 20, iconContainer: 40, valueSize: 24, labelSize: 11 },
         lg: { iconSize: 24, iconContainer: 48, valueSize: 28, labelSize: 12 },
     };
-
-    const currentSize = sizeStyles[size];
+    const sz = sizeStyles[size];
 
     const renderContent = () => (
-        <View style={styles.content}>
+        <View style={compact ? styles.contentCompact : styles.content}>
             {/* Icon */}
             {(icon || materialIcon) && (
                 <View
@@ -145,99 +112,67 @@ export function StatCard({
                         styles.iconContainer,
                         {
                             backgroundColor: finalIconBg,
-                            width: currentSize.iconContainer,
-                            height: currentSize.iconContainer,
-                            borderRadius: currentSize.iconContainer / 2,
+                            width: sz.iconContainer,
+                            height: sz.iconContainer,
+                            borderRadius: sz.iconContainer / 2,
                         },
+                        compact && { marginRight: 12, marginBottom: 0 },
                     ]}
                 >
                     {icon ? (
-                        <Ionicons name={icon} size={currentSize.iconSize} color={finalIconColor} />
+                        <Ionicons name={icon} size={sz.iconSize} color={finalIconColor} />
                     ) : materialIcon ? (
-                        <MaterialCommunityIcons name={materialIcon} size={currentSize.iconSize} color={finalIconColor} />
+                        <MaterialCommunityIcons name={materialIcon} size={sz.iconSize} color={finalIconColor} />
                     ) : null}
                 </View>
             )}
 
-            {/* Label */}
-            <Text
-                style={[
-                    styles.label,
-                    { color: colors.mutedForeground, fontSize: currentSize.labelSize },
-                ]}
-                numberOfLines={1}
-            >
-                {label}
-            </Text>
-
-            {/* Value + Unit */}
-            <View style={styles.valueRow}>
-                {typeof value === 'number' ? (
-                    <_CountUpText
-                        progress={null}
-                        target={value}
-                        style={[
-                            styles.value,
-                            {
-                                color: gradient ? '#FFFFFF' : colors.foreground,
-                                fontSize: currentSize.valueSize,
-                            },
-                        ]}
-                    />
-                ) : (
-                    <Text
-                        style={[
-                            styles.value,
-                            {
-                                color: gradient ? '#FFFFFF' : colors.foreground,
-                                fontSize: currentSize.valueSize,
-                            },
-                        ]}
-                        numberOfLines={1}
-                    >
-                        {value}
+            {compact ? (
+                // Compact: label+value side-by-side
+                <View style={styles.compactRight}>
+                    <Text style={[styles.label, { color: gradient ? 'rgba(255,255,255,0.7)' : colors.mutedForeground, fontSize: sz.labelSize }]} numberOfLines={1}>
+                        {label}
                     </Text>
-                )}
-                {unit && (
-                    <Text
-                        style={[
-                            styles.unit,
-                            {
-                                color: gradient ? 'rgba(255,255,255,0.7)' : colors.mutedForeground,
-                                fontSize: currentSize.valueSize * 0.5,
-                            },
-                        ]}
-                    >
-                        {unit}
-                    </Text>
-                )}
-            </View>
-
-            {/* Trend */}
-            {(trend !== undefined || trendText) && (
-                <View style={styles.trendContainer}>
-                    {trend !== undefined && (
-                        <Ionicons
-                            name={trend >= 0 ? 'trending-up' : 'trending-down'}
-                            size={12}
-                            color={trend >= 0 ? colors.success : '#ef4444'}
-                        />
-                    )}
-                    <Text
-                        style={[
-                            styles.trendText,
-                            {
-                                color: trendText
-                                    ? colors.mutedForeground
-                                    : trend !== undefined && trend >= 0
-                                        ? colors.success
-                                        : '#ef4444',
-                            },
-                        ]}
-                    >
-                        {trendText || `${trend! >= 0 ? '+' : ''}${trend}%`}
-                    </Text>
+                    <View style={styles.valueRow}>
+                        {typeof value === 'number' ? (
+                            <CountUpValue target={value} style={[styles.value, { color: gradient ? '#FFFFFF' : colors.foreground, fontSize: sz.valueSize }]} />
+                        ) : (
+                            <Text style={[styles.value, { color: gradient ? '#FFFFFF' : colors.foreground, fontSize: sz.valueSize }]} numberOfLines={1}>{value}</Text>
+                        )}
+                        {unit && <Text style={[styles.unit, { color: gradient ? 'rgba(255,255,255,0.6)' : colors.mutedForeground, fontSize: sz.valueSize * 0.5 }]}>{unit}</Text>}
+                    </View>
                 </View>
+            ) : (
+                // Standard centered layout
+                <>
+                    <Text style={[styles.label, { color: gradient ? 'rgba(255,255,255,0.7)' : colors.mutedForeground, fontSize: sz.labelSize }]} numberOfLines={1}>
+                        {label}
+                    </Text>
+
+                    <View style={styles.valueRow}>
+                        {typeof value === 'number' ? (
+                            <CountUpValue target={value} style={[styles.value, { color: gradient ? '#FFFFFF' : colors.foreground, fontSize: sz.valueSize }]} />
+                        ) : (
+                            <Text style={[styles.value, { color: gradient ? '#FFFFFF' : colors.foreground, fontSize: sz.valueSize }]} numberOfLines={1}>{value}</Text>
+                        )}
+                        {unit && <Text style={[styles.unit, { color: gradient ? 'rgba(255,255,255,0.7)' : colors.mutedForeground, fontSize: sz.valueSize * 0.5 }]}>{unit}</Text>}
+                    </View>
+
+                    {(trend !== undefined || trendText) && (
+                        <View style={styles.trendContainer}>
+                            {trend !== undefined && (
+                                <Ionicons name={trend >= 0 ? 'trending-up' : 'trending-down'} size={12}
+                                    color={trend >= 0 ? colors.success : colors.error} />
+                            )}
+                            <Text style={[styles.trendText, {
+                                color: trendText ? colors.mutedForeground
+                                    : trend !== undefined && trend >= 0 ? colors.success : colors.error,
+                            }]}>
+                                {trendText || `${trend! >= 0 ? '+' : ''}${trend}%`}
+                            </Text>
+                        </View>
+                    )}
+                </>
             )}
         </View>
     );
@@ -245,11 +180,14 @@ export function StatCard({
     if (gradient) {
         return (
             <View style={[styles.container, style]}>
-                <View
+                <LinearGradient
+                    colors={[colors.primary.main, colors.gradients?.primary?.[1] ?? '#7C3AED']}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 1 }}
                     style={styles.gradientCard}
                 >
                     {renderContent()}
-                </View>
+                </LinearGradient>
             </View>
         );
     }
@@ -270,13 +208,21 @@ const styles = StyleSheet.create({
     },
     gradientCard: {
         padding: 16,
-        borderRadius: 16,
+        borderRadius: 20,
         flex: 1,
     },
     content: {
         alignItems: 'center',
         justifyContent: 'center',
-        gap: 8,
+        gap: 6,
+    },
+    contentCompact: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    compactRight: {
+        flex: 1,
+        gap: 2,
     },
     iconContainer: {
         alignItems: 'center',
@@ -292,7 +238,7 @@ const styles = StyleSheet.create({
     valueRow: {
         flexDirection: 'row',
         alignItems: 'baseline',
-        gap: 4,
+        gap: 3,
     },
     value: {
         fontFamily: fontFamilies.mono,
@@ -305,7 +251,8 @@ const styles = StyleSheet.create({
     trendContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 4,
+        gap: 3,
+        marginTop: 2,
     },
     trendText: {
         fontSize: 11,

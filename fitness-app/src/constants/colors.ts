@@ -87,6 +87,15 @@ export const COLORS_LIGHT = {
     800: '#1E293B',
     900: '#0F172A',
   },
+
+  // ── NEW: Premium Surface Tokens ──
+  surfaceHover:   '#F1F5F9',   // slate-100 — pressed/hover tint
+  divider:        '#E8EDF2',   // slightly deeper than border for section dividers
+  overlay:        'rgba(15, 23, 42, 0.5)',  // modal scrim
+  overlayLight:   'rgba(15, 23, 42, 0.08)', // card pressed states
+  cardBorder:     '#EDF0F4',   // very subtle card outline
+  surface2:       '#F4F7FA',   // secondary surface (slightly darker than bg)
+  surface3:       '#EDF0F4',   // tertiary surface
 };
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -168,6 +177,15 @@ export const COLORS_DARK = {
     800: '#F1F5F9',
     900: '#F8FAFC',
   },
+
+  // ── NEW: Premium Surface Tokens (dark) ──
+  surfaceHover:   '#1E293B',   // slate-800 — pressed/hover tint
+  divider:        '#1A2436',   // deeper than border for section dividers
+  overlay:        'rgba(0, 0, 0, 0.6)',    // modal scrim
+  overlayLight:   'rgba(0, 0, 0, 0.12)',   // card pressed states
+  cardBorder:     '#1A2436',   // very subtle card outline
+  surface2:       '#131D2E',   // secondary surface
+  surface3:       '#1A2436',   // tertiary surface
 };
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

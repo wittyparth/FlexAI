@@ -1,10 +1,16 @@
 /**
- * Button Component (Theme-Aware)
+ * Button Component — Production Grade
  *
- * Production upgrades:
- *  - Reanimated spring press-scale (replaces activeOpacity flicker)
- *  - expo-linear-gradient fills primary & destructive variants
- *  - expo-haptics light impact on every press
+ * Variants: primary | secondary | tertiary | destructive | ghost | outlined
+ * Sizes: small | default | large
+ * Features:
+ *  - Reanimated spring press-scale (damping: 20, stiffness: 350)
+ *  - LinearGradient fill: blue → violet (primary), red gradient (destructive)
+ *  - Primary-tinted glow shadow on CTAs
+ *  - Pill shape via `rounded` prop
+ *  - Two-line layout via `subtitle` prop for action buttons
+ *  - Haptic feedback on every press
+ *  - Clean disabled state (opacity + muted background)
  */
 
 import React from 'react';
@@ -33,14 +39,25 @@ const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 interface ButtonProps {
     title: string;
     onPress: () => void;
-    variant?: 'primary' | 'secondary' | 'tertiary' | 'destructive' | 'ghost';
+    variant?: 'primary' | 'secondary' | 'tertiary' | 'destructive' | 'ghost' | 'outlined';
     size?: 'default' | 'small' | 'large';
     disabled?: boolean;
     loading?: boolean;
+    /** Element rendered left of the title */
+    leftElement?: React.ReactNode;
+    /** Element rendered right of the title */
+    rightElement?: React.ReactNode;
+    /** @deprecated use leftElement / rightElement */
     icon?: React.ReactNode;
+    /** @deprecated use leftElement / rightElement */
     iconPosition?: 'left' | 'right';
     fullWidth?: boolean;
+    /** Pill (borderRadius.full) shape */
+    rounded?: boolean;
+    /** Optional second line below title — useful for "Start Workout / 6 exercises" */
+    subtitle?: string;
     style?: ViewStyle;
+    textStyle?: TextStyle;
     /** Skip haptic for silent actions */
     noHaptic?: boolean;
 }
@@ -52,29 +69,38 @@ export function Button({
     size = 'default',
     disabled = false,
     loading = false,
+    leftElement,
+    rightElement,
     icon,
     iconPosition = 'right',
     fullWidth = false,
+    rounded = false,
+    subtitle,
     style,
+    textStyle,
     noHaptic = false,
 }: ButtonProps) {
     const colors = useColors();
     const isDisabled = disabled || loading;
 
-    // Map 'ghost' to 'tertiary' for backward compatibility
-    const activeVariant = variant === 'ghost' ? 'tertiary' : variant;
+    // Map aliases to core variants
+    const activeVariant = (variant === 'ghost' || variant === 'outlined') ? 'tertiary' : variant;
 
-    // ---- Reanimated press-scale ----
+    // Resolve icon backward compat
+    const resolvedLeft  = leftElement  ?? (icon && iconPosition === 'left'  ? icon : undefined);
+    const resolvedRight = rightElement ?? (icon && iconPosition !== 'left' ? icon : undefined);
+
+    // ── Reanimated spring press-scale ──────────────────────
     const scale = useSharedValue(1);
     const animatedStyle = useAnimatedStyle(() => ({
         transform: [{ scale: scale.value }],
     }));
 
     const handlePressIn = () => {
-        scale.value = withSpring(0.96, { damping: 15, stiffness: 300 });
+        scale.value = withSpring(0.96, { damping: 20, stiffness: 350 });
     };
     const handlePressOut = () => {
-        scale.value = withSpring(1, { damping: 15, stiffness: 300 });
+        scale.value = withSpring(1.0, { damping: 20, stiffness: 350 });
     };
     const handlePress = () => {
         if (!noHaptic) {
@@ -83,68 +109,85 @@ export function Button({
         onPress();
     };
 
-    // ---- Size ----
+    // ── Size ───────────────────────────────────────────────
     const getSizeStyle = (): ViewStyle => {
         switch (size) {
             case 'small':
                 return { paddingVertical: spacing[2], paddingHorizontal: spacing[4], minHeight: 36 };
             case 'large':
-                return { paddingVertical: spacing[4], paddingHorizontal: spacing[8], minHeight: 56 };
+                return { paddingVertical: subtitle ? spacing[3] : spacing[4], paddingHorizontal: spacing[8], minHeight: subtitle ? 64 : 56 };
             default:
-                return { paddingVertical: spacing[3], paddingHorizontal: spacing[6], minHeight: 48 };
+                return { paddingVertical: subtitle ? spacing[2] : spacing[3], paddingHorizontal: spacing[6], minHeight: subtitle ? 56 : 48 };
         }
     };
 
-    // ---- Text color ----
+    // ── Text color ─────────────────────────────────────────
     const getTextColor = (): string => {
+        if (isDisabled) return colors.text.tertiary;
         switch (activeVariant) {
             case 'primary':
             case 'destructive':
-                return (colors as any).text?.inverse ?? '#FFFFFF';
+                return '#FFFFFF';
             case 'secondary':
             case 'tertiary':
                 return colors.primary.main;
             default:
-                return (colors as any).text?.primary ?? '#0F172A';
+                return colors.text.primary;
         }
     };
 
     const sizeStyle = getSizeStyle();
     const textColor = getTextColor();
+    const radius = rounded ? borderRadius.full : borderRadius.md;
 
-    // ---- Content ----
+    // ── Content ────────────────────────────────────────────
     const content = (
         <View style={styles.content}>
             {loading ? (
                 <ActivityIndicator
-                    color={activeVariant === 'secondary' || activeVariant === 'tertiary' ? colors.primary.main : '#FFFFFF'}
+                    color={activeVariant === 'secondary' || activeVariant === 'tertiary'
+                        ? colors.primary.main : '#FFFFFF'}
                     size="small"
                 />
             ) : (
                 <>
-                    {icon && iconPosition === 'left' && <View style={styles.iconLeft}>{icon}</View>}
-                    <Text
-                        style={[
-                            styles.text,
-                            size === 'small' && styles.textSmall,
-                            { color: textColor },
-                            isDisabled && { color: (colors as any).text?.tertiary ?? '#94A3B8' },
-                        ]}
-                    >
-                        {title}
-                    </Text>
-                    {icon && iconPosition === 'right' && <View style={styles.iconRight}>{icon}</View>}
+                    {resolvedLeft && <View style={styles.iconLeft}>{resolvedLeft}</View>}
+                    <View style={subtitle ? styles.textColumn : undefined}>
+                        <Text
+                            style={[
+                                styles.text,
+                                size === 'small' && styles.textSmall,
+                                size === 'large' && styles.textLarge,
+                                { color: textColor },
+                                textStyle,
+                            ]}
+                            numberOfLines={1}
+                        >
+                            {title}
+                        </Text>
+                        {subtitle && (
+                            <Text style={[styles.subtitleText, { color: textColor + 'B3' }]} numberOfLines={1}>
+                                {subtitle}
+                            </Text>
+                        )}
+                    </View>
+                    {resolvedRight && <View style={styles.iconRight}>{resolvedRight}</View>}
                 </>
             )}
         </View>
     );
 
-    // ---- Gradient primary / destructive ----
+    // ── Gradient primary / destructive ─────────────────────
     if ((activeVariant === 'primary' || activeVariant === 'destructive') && !isDisabled) {
         const gradientColors: [string, string] =
             activeVariant === 'primary'
-                ? [colors.primary.main, colors.primary.light ?? '#4D7CFF']
-                : ['#EF4444', '#F87171'];
+                ? ['#2563EB', '#7C3AED']   // blue → violet — premium brand gradient
+                : ['#EF4444', '#DC2626'];   // warm red gradient
+
+        const glowShadow: ViewStyle = activeVariant === 'primary'
+            ? (SHADOWS.coloredLg as ViewStyle)
+            : { shadowColor: '#EF4444', shadowOffset: { width: 0, height: 8 },
+                shadowOpacity: 0.30, shadowRadius: 20, elevation: 10 };
 
         return (
             <AnimatedPressable
@@ -155,16 +198,17 @@ export function Button({
                 style={[
                     animatedStyle,
                     styles.base,
+                    { borderRadius: radius },
                     sizeStyle,
                     fullWidth && styles.fullWidth,
-                    (SHADOWS.md as ViewStyle),
+                    glowShadow,
                     style,
                 ]}
             >
                 <LinearGradient
                     colors={gradientColors}
                     start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 0 }}
+                    end={{ x: 1, y: 0.5 }}
                     style={StyleSheet.absoluteFill}
                 />
                 {content}
@@ -172,11 +216,15 @@ export function Button({
         );
     }
 
-    // ---- Secondary / Tertiary ----
-    const flatStyle: ViewStyle =
-        activeVariant === 'secondary'
-            ? { backgroundColor: 'transparent', borderWidth: 1.5, borderColor: colors.primary.main }
-            : { backgroundColor: 'transparent' };
+    // ── Secondary / Tertiary / Disabled ───────────────────
+    const flatStyle: ViewStyle = (() => {
+        if (isDisabled) return { backgroundColor: colors.neutral[100], opacity: 0.55 };
+        if (activeVariant === 'secondary') {
+            return { backgroundColor: 'transparent', borderWidth: 1.5, borderColor: colors.primary.main };
+        }
+        // tertiary / ghost
+        return { backgroundColor: (colors as any).surfaceHover ?? colors.neutral[100] };
+    })();
 
     return (
         <AnimatedPressable
@@ -187,10 +235,10 @@ export function Button({
             style={[
                 animatedStyle,
                 styles.base,
+                { borderRadius: radius },
                 flatStyle,
                 sizeStyle,
                 fullWidth && styles.fullWidth,
-                isDisabled && styles.disabled,
                 style,
             ]}
         >
@@ -205,28 +253,38 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row',
-        overflow: 'hidden', // clips LinearGradient to border radius
+        overflow: 'hidden',
     },
     fullWidth: {
         width: '100%',
-    },
-    disabled: {
-        opacity: 0.5,
-        backgroundColor: '#E2E8F0',
-        borderWidth: 0,
-        elevation: 0,
     },
     content: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
     },
+    textColumn: {
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
     text: {
         ...typography.button,
         textAlign: 'center',
+        letterSpacing: 0.1,
     },
     textSmall: {
         fontSize: 14,
+        fontWeight: '500' as const,
+    },
+    textLarge: {
+        fontSize: 18,
+        fontWeight: '700' as const,
+    },
+    subtitleText: {
+        fontSize: 12,
+        fontWeight: '400' as const,
+        marginTop: 1,
+        textAlign: 'center',
     },
     iconLeft: {
         marginRight: 8,

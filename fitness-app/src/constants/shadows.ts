@@ -16,91 +16,125 @@ export const SHADOWS_LIGHT = {
     shadowRadius: 0,
     elevation: 0,
   },
-  // --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05)
+  // Hair-line lift — buttons, chips
   '2xs': {
-    shadowColor: '#000',
+    shadowColor: '#0F172A',
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 3,
+    shadowOpacity: 0.06,
+    shadowRadius: 2,
     elevation: 1,
   },
-  // --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05)
   xs: {
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 3,
-    elevation: 1,
-  },
-  // --shadow-sm: ...
-  sm: {
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 3,
+    shadowColor: '#0F172A',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.07,
+    shadowRadius: 4,
     elevation: 2,
   },
-  // --shadow (base): ...
-  md: {
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 3,
+  // Subtle card lift
+  sm: {
+    shadowColor: '#0F172A',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.09,
+    shadowRadius: 8,
     elevation: 3,
   },
-  // --shadow-md: ...
-  lg: {
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 4,
-  },
-  // --shadow-lg: ...
-  xl: {
-    shadowColor: '#000',
+  // Standard card
+  md: {
+    shadowColor: '#0F172A',
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.1,
-    shadowRadius: 6,
+    shadowOpacity: 0.10,
+    shadowRadius: 12,
+    elevation: 5,
+  },
+  // Elevated card / feature section
+  lg: {
+    shadowColor: '#0F172A',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.12,
+    shadowRadius: 20,
     elevation: 8,
   },
-  // --shadow-xl: ...
+  // Hero elements / modals
+  xl: {
+    shadowColor: '#0F172A',
+    shadowOffset: { width: 0, height: 16 },
+    shadowOpacity: 0.14,
+    shadowRadius: 32,
+    elevation: 14,
+  },
+  // Full-screen bottom sheet
   '2xl': {
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.1,
-    shadowRadius: 10,
+    shadowColor: '#0F172A',
+    shadowOffset: { width: 0, height: 24 },
+    shadowOpacity: 0.18,
+    shadowRadius: 48,
+    elevation: 20,
+  },
+  '3xl': {
+    shadowColor: '#0F172A',
+    shadowOffset: { width: 0, height: 32 },
+    shadowOpacity: 0.22,
+    shadowRadius: 64,
+    elevation: 24,
+  },
+  // Primary-brand tinted shadow (electric blue glow)
+  colored: {
+    shadowColor: '#2563EB',
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.28,
+    shadowRadius: 16,
+    elevation: 8,
+  },
+  // Stronger primary glow for CTAs
+  coloredLg: {
+    shadowColor: '#2563EB',
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.35,
+    shadowRadius: 24,
     elevation: 12,
   },
-  // --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25)
-  '3xl': {
-     shadowColor: '#000',
-     shadowOffset: { width: 0, height: 1 },
-     shadowOpacity: 0.25,
-     shadowRadius: 3,
-     elevation: 16,
-  },
-  colored: {
-    shadowColor: '#000', // shadcn doesn't use colored shadows by default
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.1,
-    shadowRadius: 12,
-    elevation: 4,
+  // Bottom sheet float shadow
+  float: {
+    shadowColor: '#0F172A',
+    shadowOffset: { width: 0, height: -4 },
+    shadowOpacity: 0.12,
+    shadowRadius: 20,
+    elevation: 16,
   },
 };
 
 export const SHADOWS_DARK = {
-  // Dark mode shadows are often more subtle or just elevation in RN
   none: SHADOWS_LIGHT.none,
-  '2xs': { ...SHADOWS_LIGHT['2xs'], shadowOpacity: 0.3 },
-  xs: { ...SHADOWS_LIGHT.xs, shadowOpacity: 0.3 },
-  sm: { ...SHADOWS_LIGHT.sm, shadowOpacity: 0.4 },
-  md: { ...SHADOWS_LIGHT.md, shadowOpacity: 0.4 },
-  lg: { ...SHADOWS_LIGHT.lg, shadowOpacity: 0.5 },
-  xl: { ...SHADOWS_LIGHT.xl, shadowOpacity: 0.6 },
-  '2xl': { ...SHADOWS_LIGHT['2xl'], shadowOpacity: 0.6 },
-  '3xl': { ...SHADOWS_LIGHT['3xl'], shadowOpacity: 0.7 },
-  colored: { ...SHADOWS_LIGHT.colored, shadowOpacity: 0.4 },
+  '2xs': { ...SHADOWS_LIGHT['2xs'], shadowOpacity: 0.35 },
+  xs:   { ...SHADOWS_LIGHT.xs,   shadowOpacity: 0.40 },
+  sm:   { ...SHADOWS_LIGHT.sm,   shadowOpacity: 0.45 },
+  md:   { ...SHADOWS_LIGHT.md,   shadowOpacity: 0.50 },
+  lg:   { ...SHADOWS_LIGHT.lg,   shadowOpacity: 0.55 },
+  xl:   { ...SHADOWS_LIGHT.xl,   shadowOpacity: 0.60 },
+  '2xl':{ ...SHADOWS_LIGHT['2xl'], shadowOpacity: 0.65 },
+  '3xl':{ ...SHADOWS_LIGHT['3xl'], shadowOpacity: 0.70 },
+  colored: {
+    shadowColor: '#3B82F6',
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.40,
+    shadowRadius: 16,
+    elevation: 8,
+  },
+  coloredLg: {
+    shadowColor: '#3B82F6',
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.50,
+    shadowRadius: 24,
+    elevation: 12,
+  },
+  float: {
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: -4 },
+    shadowOpacity: 0.40,
+    shadowRadius: 20,
+    elevation: 16,
+  },
 };
 
 export const SHADOWS = {
@@ -110,5 +144,6 @@ export const SHADOWS = {
 
 export const shadows = {
   ...SHADOWS_LIGHT,
-  accent: SHADOWS_LIGHT.colored,
+  accent:     SHADOWS_LIGHT.colored,
+  accentLarge: SHADOWS_LIGHT.coloredLg,
 } as const;

@@ -1,25 +1,29 @@
 /**
- * SelectableCard Component
- * 
- * Reusable selection card with icon, title, description, and radio indicator.
- * Used in onboarding screens for goal selection, experience level, etc.
- * 
- * Usage:
- * <SelectableCard
- *   title="Muscle Gain"
- *   description="Build mass & strength"
- *   icon="barbell-outline"
- *   selected={selectedGoal === 'muscle_gain'}
- *   onPress={() => setSelectedGoal('muscle_gain')}
- * />
+ * SelectableCard Component — Production Grade
+ *
+ * Reusable selection card with icon, title, description.
+ * Features:
+ *  - Reanimated spring press-scale feedback
+ *  - Animated spring checkmark that scales in when selected
+ *  - Haptic feedback on selection
+ *  - `badge` prop for "Popular" / "Recommended" corner label
+ *  - Subtle gradient tint on selected state
  */
 
-import React from 'react';
-import { TouchableOpacity, View, Text, StyleSheet, ViewStyle } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, Text, StyleSheet, ViewStyle, Pressable } from 'react-native';
+import Animated, {
+    useSharedValue,
+    useAnimatedStyle,
+    withSpring,
+} from 'react-native-reanimated';
 import { Ionicons } from '@expo/vector-icons';
+import * as Haptics from 'expo-haptics';
 import { useColors } from '../../hooks';
 import { useTheme } from '../../contexts';
 import { fonts, fontSize, spacing, borderRadius, shadows } from '../../constants';
+
+const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 interface SelectableCardProps {
   title: string;
@@ -29,6 +33,8 @@ interface SelectableCardProps {
   selected?: boolean;
   onPress: () => void;
   disabled?: boolean;
+  /** Corner badge label e.g. "Popular" */
+  badge?: string;
   style?: ViewStyle;
 }
 
@@ -40,30 +46,54 @@ export function SelectableCard({
   selected = false,
   onPress,
   disabled = false,
+  badge,
   style,
 }: SelectableCardProps) {
   const colors = useColors();
   const { isDark } = useTheme();
 
+  // Press scale animation
+  const scale = useSharedValue(1);
+  const handlePressIn = () => scale.value = withSpring(0.97, { damping: 20, stiffness: 350 });
+  const handlePressOut = () => scale.value = withSpring(1.0, { damping: 20, stiffness: 350 });
+  const cardAnimStyle = useAnimatedStyle(() => ({ transform: [{ scale: scale.value }] }));
+
+  // Checkmark scale animation
+  const checkScale = useSharedValue(selected ? 1 : 0);
+  useEffect(() => {
+    checkScale.value = withSpring(selected ? 1 : 0, { damping: 18, stiffness: 400 });
+  }, [selected]);
+  const checkAnimStyle = useAnimatedStyle(() => ({ transform: [{ scale: checkScale.value }] }));
+
+  const handlePress = () => {
+    if (!selected) Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    onPress();
+  };
+
   return (
-    <TouchableOpacity
-      onPress={onPress}
+    <AnimatedPressable
+      onPress={handlePress}
+      onPressIn={handlePressIn}
+      onPressOut={handlePressOut}
       disabled={disabled}
-      activeOpacity={0.8}
       style={[
+        cardAnimStyle,
         styles.card,
         {
           backgroundColor: colors.card,
           borderColor: selected ? colors.primary.main : colors.border,
+          borderWidth: selected ? 2 : 1,
         },
-        selected && styles.selectedCard,
+        selected && { ...shadows.colored },
         disabled && styles.disabledCard,
         style,
       ]}
     >
-      {/* Selection highlight border */}
-      {selected && (
-        <View style={[styles.selectedBorder, { borderColor: colors.primary.main }]} />
+      {/* Corner badge */}
+      {badge && (
+        <View style={[styles.cornerBadge, { backgroundColor: colors.primary.main }]}>
+          <Text style={styles.cornerBadgeText}>{badge}</Text>
+        </View>
       )}
 
       <View style={styles.cardContent}>
@@ -75,9 +105,51 @@ export function SelectableCard({
               {
                 backgroundColor: selected
                   ? colors.primary.main
-                  : isDark
-                  ? colors.muted
-                  : colors.primary.main + '10',
+                  : isDark ? colors.neutral[200] : colors.primary.main + '12',
+              },
+            ]}
+          >
+            {iconComponent || (
+              <Ionicons
+                name={icon!}
+                size={26}
+                color={selected ? '#FFFFFF' : colors.primary.main}
+              />
+            )}
+          </View>
+        )}
+
+        {/* Text Container */}
+        <View style={styles.textContainer}>
+          <Text style={[styles.title, { color: selected ? colors.primary.main : colors.foreground }]}>
+            {title}
+          </Text>
+          {description && (
+            <Text style={[styles.description, { color: colors.mutedForeground }]}>
+              {description}
+            </Text>
+          )}
+        </View>
+
+        {/* Animated Checkmark (replaces radio) */}
+        <Animated.View
+          style={[
+            styles.checkCircle,
+            {
+              backgroundColor: selected ? colors.primary.main : 'transparent',
+              borderColor: selected ? colors.primary.main : colors.border,
+            },
+            checkAnimStyle,
+          ]}
+        >
+          {selected && (
+            <Ionicons name="checkmark" size={14} color="#FFFFFF" />
+          )}
+        </Animated.View>
+      </View>
+    </AnimatedPressable>
+  );
+}
               },
             ]}
           >
@@ -127,28 +199,29 @@ export function SelectableCard({
 
 const styles = StyleSheet.create({
   card: {
-    borderRadius: borderRadius.xl,
-    borderWidth: 1,
+    borderRadius: borderRadius['2xl'],
     padding: spacing[4],
     position: 'relative',
     overflow: 'hidden',
     ...shadows.sm,
   },
-  selectedCard: {
-    ...shadows.md,
-  },
   disabledCard: {
-    opacity: 0.6,
+    opacity: 0.55,
   },
-  selectedBorder: {
+  cornerBadge: {
     position: 'absolute',
-    top: -2,
-    left: -2,
-    right: -2,
-    bottom: -2,
-    borderWidth: 2,
-    borderRadius: borderRadius.xl,
-    zIndex: -1,
+    top: 0,
+    right: 0,
+    paddingHorizontal: spacing[3],
+    paddingVertical: 3,
+    borderBottomLeftRadius: borderRadius.lg,
+    borderTopRightRadius: borderRadius['2xl'],
+  },
+  cornerBadgeText: {
+    fontSize: 10,
+    fontWeight: '700' as const,
+    color: '#FFFFFF',
+    letterSpacing: 0.3,
   },
   cardContent: {
     flexDirection: 'row',
@@ -168,24 +241,21 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: fonts.bodyBold,
     fontSize: fontSize.base,
+    fontWeight: '700' as const,
     marginBottom: 2,
   },
   description: {
     fontFamily: fonts.body,
     fontSize: fontSize.sm,
+    lineHeight: 18,
   },
-  radioCircle: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
+  checkCircle: {
+    width: 26,
+    height: 26,
+    borderRadius: 13,
     borderWidth: 2,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  radioInner: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-    backgroundColor: '#FFFFFF',
+    marginLeft: spacing[2],
   },
 });

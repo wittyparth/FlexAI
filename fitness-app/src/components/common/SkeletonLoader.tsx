@@ -1,11 +1,22 @@
 /**
  * Skeleton Loader Component
- * 
- * Animated skeleton placeholders for loading states
+ *
+ * Shimmer skeleton placeholders using Reanimated + LinearGradient.
+ * The shimmer sweep (left → right light band) gives a production-quality
+ * loading feel identical to iOS / Android native apps.
  */
 
-import React, { useEffect, useRef } from 'react';
-import { View, StyleSheet, Animated } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, StyleSheet, LayoutChangeEvent } from 'react-native';
+import Animated, {
+    useSharedValue,
+    useAnimatedStyle,
+    withRepeat,
+    withTiming,
+    Easing,
+    interpolate,
+} from 'react-native-reanimated';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useColors } from '../../hooks';
 
 interface SkeletonProps {
@@ -17,45 +28,63 @@ interface SkeletonProps {
 
 export function Skeleton({ width = '100%', height = 20, borderRadius = 8, style }: SkeletonProps) {
     const colors = useColors();
-    const animatedValue = useRef(new Animated.Value(0)).current;
+    const isDark = colors.background === '#0F172A' || colors.background < '#888888';
+
+    // Base and shimmer colors based on theme
+    const baseColor = isDark ? '#1E293B' : '#E2E8F0';
+    const shimmerLight = isDark ? '#334155' : '#F8FAFC';
+
+    const progress = useSharedValue(0);
+    const containerWidth = useSharedValue(300);
 
     useEffect(() => {
-        const animation = Animated.loop(
-            Animated.sequence([
-                Animated.timing(animatedValue, {
-                    toValue: 1,
-                    duration: 1000,
-                    useNativeDriver: true,
-                }),
-                Animated.timing(animatedValue, {
-                    toValue: 0,
-                    duration: 1000,
-                    useNativeDriver: true,
-                }),
-            ])
+        progress.value = withRepeat(
+            withTiming(1, { duration: 1200, easing: Easing.linear }),
+            -1,
+            false,
         );
-        animation.start();
-        return () => animation.stop();
     }, []);
 
-    const opacity = animatedValue.interpolate({
-        inputRange: [0, 1],
-        outputRange: [0.3, 0.7],
-    });
+    const animatedStyle = useAnimatedStyle(() => ({
+        transform: [
+            {
+                translateX: interpolate(
+                    progress.value,
+                    [0, 1],
+                    [-containerWidth.value, containerWidth.value],
+                ),
+            },
+        ],
+    }));
+
+    const onLayout = (e: LayoutChangeEvent) => {
+        containerWidth.value = e.nativeEvent.layout.width;
+    };
 
     return (
-        <Animated.View
+        <View
+            onLayout={onLayout}
             style={[
                 {
                     width,
                     height,
                     borderRadius,
-                    backgroundColor: colors.border,
-                    opacity,
+                    backgroundColor: baseColor,
+                    overflow: 'hidden',
                 },
                 style,
             ]}
-        />
+        >
+            <Animated.View style={[StyleSheet.absoluteFill, animatedStyle]}>
+                <LinearGradient
+                    colors={[baseColor, shimmerLight, shimmerLight, baseColor]}
+                    locations={[0, 0.35, 0.65, 1]}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}
+                    style={StyleSheet.absoluteFill}
+                />
+            </Animated.View>
+        </View>
     );
 }
 

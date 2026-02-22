@@ -1,16 +1,25 @@
 /**
  * StatCard Component
- * 
+ *
  * Reusable card for displaying statistics with icon, label, value, and optional trend.
- * Uses theme colors from useColors() hook for light/dark mode support.
+ * Upgrade: count-up animation for numeric values on mount.
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, StyleProp, ViewStyle } from 'react-native';
+import Animated, {
+    useSharedValue,
+    withTiming,
+    useDerivedValue,
+    useAnimatedProps,
+    Easing,
+} from 'react-native-reanimated';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { Card } from './Card';
+
+const AnimatedText = Animated.createAnimatedComponent(Text);
 
 type IconName = keyof typeof Ionicons.glyphMap;
 type MaterialIconName = keyof typeof MaterialCommunityIcons.glyphMap;
@@ -40,6 +49,63 @@ export interface StatCardProps {
     style?: StyleProp<ViewStyle>;
     /** Size variant */
     size?: 'sm' | 'md' | 'lg';
+    /** Optional press handler — triggers scale animation */
+    onPress?: () => void;
+}
+
+/** Animated count-up for numeric stat values */
+function CountUpValue({
+    target,
+    style,
+}: {
+    target: number;
+    style: any;
+}) {
+    const progress = useSharedValue(0);
+
+    useEffect(() => {
+        progress.value = withTiming(target, {
+            duration: 800,
+            easing: Easing.out(Easing.cubic),
+        });
+    }, [target]);
+
+    const animatedProps = useAnimatedProps(() => ({
+        text: String(Math.round(progress.value)),
+        defaultValue: String(Math.round(progress.value)),
+    } as any));
+
+    // Fallback: derive display text via useDerivedValue and bind via children
+    const displayText = useDerivedValue(() => String(Math.round(progress.value)));
+
+    // Workaround: use Animated.Text with animatedProps for 'text'
+    // Since RN Text doesn't accept animatedProps 'text', use a simple
+    // re-render approach via a wrapper component.
+    return <_CountUpText progress={progress} target={target} style={style} />;
+}
+
+function _CountUpText({ progress, target, style }: { progress: any; target: number; style: any }) {
+    // Frame-by-frame update using Reanimated worklet isn't directly possible
+    // with RN Text. We use a derived shared value → JS state bridge pattern.
+    const [display, setDisplay] = React.useState(0);
+
+    useEffect(() => {
+        const steps = 30;
+        const stepDuration = 800 / steps;
+        let current = 0;
+        const interval = setInterval(() => {
+            current += target / steps;
+            if (current >= target) {
+                setDisplay(typeof target === 'number' && Number.isInteger(target) ? target : Math.round(target));
+                clearInterval(interval);
+            } else {
+                setDisplay(Math.round(current));
+            }
+        }, stepDuration);
+        return () => clearInterval(interval);
+    }, [target]);
+
+    return <Text style={style}>{display}</Text>;
 }
 
 export function StatCard({
@@ -55,6 +121,7 @@ export function StatCard({
     gradient = false,
     style,
     size = 'md',
+    onPress,
 }: StatCardProps) {
     const colors = useColors();
 
@@ -105,18 +172,32 @@ export function StatCard({
 
             {/* Value + Unit */}
             <View style={styles.valueRow}>
-                <Text
-                    style={[
-                        styles.value,
-                        {
-                            color: gradient ? '#FFFFFF' : colors.foreground,
-                            fontSize: currentSize.valueSize,
-                        },
-                    ]}
-                    numberOfLines={1}
-                >
-                    {value}
-                </Text>
+                {typeof value === 'number' ? (
+                    <_CountUpText
+                        progress={null}
+                        target={value}
+                        style={[
+                            styles.value,
+                            {
+                                color: gradient ? '#FFFFFF' : colors.foreground,
+                                fontSize: currentSize.valueSize,
+                            },
+                        ]}
+                    />
+                ) : (
+                    <Text
+                        style={[
+                            styles.value,
+                            {
+                                color: gradient ? '#FFFFFF' : colors.foreground,
+                                fontSize: currentSize.valueSize,
+                            },
+                        ]}
+                        numberOfLines={1}
+                    >
+                        {value}
+                    </Text>
+                )}
                 {unit && (
                     <Text
                         style={[
@@ -174,7 +255,7 @@ export function StatCard({
     }
 
     return (
-        <Card style={[styles.cardStyle, style]}>
+        <Card style={[styles.cardStyle, style]} onPress={onPress}>
             {renderContent()}
         </Card>
     );

@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image, Platform } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Platform } from 'react-native';
+import { Image } from 'expo-image';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { OnboardingStackParamList } from '../../navigation/types';
@@ -53,7 +54,7 @@ export const AppTourScreen: React.FC<Props> = ({ navigation }) => {
                     <Image
                         source={{ uri: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCfYUc201MJzpeQi6QkYfF17TrW3U3XhEmnKikwXI9xh5jxoLdlUpN_61spRKxqEW8Hr5rD8s29_h7pXD_gz9pxVU4HlM65JzBHhg4JwfkZrnUQPn--KOi5SL6c4n6Tu0kyioTMQyD3ubWyiNQVKlogMqMwskx3LwDc-7JvFyWWtXXrWsEhGE10yOTgKg3RsfsIBplwQLedjLsDrDxrvqcG6kFdBI7Z2DHtdvWsPpny2hPLQnU8Y2kPNyW24X33u2-lBxewyxFDg_A' }}
                         style={StyleSheet.absoluteFill}
-                        resizeMode="cover"
+                        contentFit="cover"
                     />
 
                     {/* Overlay to tint/style */}

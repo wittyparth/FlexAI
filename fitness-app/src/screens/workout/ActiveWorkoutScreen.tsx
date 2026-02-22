@@ -21,8 +21,10 @@ import { RestTimerOverlay } from '../../components/active-workout/RestTimerOverl
 import { TimerSettingsModal } from '../../components/active-workout/TimerSettingsModal';
 import { MuscleHighlighterCard } from '../../components/muscles/MuscleHighlighterCard';
 import { useWorkoutStore, selectActiveWorkoutId, selectWorkoutName, selectTimerPrefs } from '../../store/workoutStore';
+import { useFlowGuard } from '../../hooks/useFlowGuard';
 
 export function ActiveWorkoutScreen({ navigation, route }: any) {
+  useFlowGuard('workout_active'); // redirect back if no active session
   const colors = useColors();
   const insets = useSafeAreaInsets();
   const scrollRef = useRef<ScrollView>(null);
@@ -270,21 +272,21 @@ export function ActiveWorkoutScreen({ navigation, route }: any) {
     const distribution: Record<string, number> = {};
 
     exercises.forEach((exerciseItem) => {
-      // NormalizedExercise stores muscle groups captured during normalization
       const primaryMuscle = exerciseItem.primaryMuscle;
       if (!primaryMuscle) return;
 
-      const completedSets = (setsByExercise[exerciseItem.id] || []).length;
-      const targetSets = Number(exerciseItem.targetSets || 0);
-      const baseScore = completedSets > 0
-        ? completedSets
-        : Math.max(1, Math.round(Math.max(targetSets, 3) * 0.35));
+      // Only count sets that have been actually logged (status !== 'pending')
+      const allSetsForExercise = setsByExercise[exerciseItem.id] || [];
+      const completedSets = allSetsForExercise.filter((s: any) => s.status !== 'pending').length;
 
-      distribution[primaryMuscle] = (distribution[primaryMuscle] ?? 0) + baseScore;
+      // Skip exercise entirely if no sets have been completed yet
+      if (completedSets === 0) return;
+
+      distribution[primaryMuscle] = (distribution[primaryMuscle] ?? 0) + completedSets;
 
       const secondary = exerciseItem.secondaryMuscles ?? [];
       secondary.forEach((muscle: string) => {
-        distribution[muscle] = (distribution[muscle] ?? 0) + baseScore * 0.45;
+        distribution[muscle] = (distribution[muscle] ?? 0) + completedSets * 0.45;
       });
     });
 
@@ -452,11 +454,21 @@ export function ActiveWorkoutScreen({ navigation, route }: any) {
           </View>
 
           {!isMuscleMapCollapsed && (
-            <MuscleHighlighterCard
-              subtitle="Updates as you log sets, based on current workout focus."
-              muscleSets={workoutMuscleSets}
-              compact
-            />
+            <>
+              {Object.keys(workoutMuscleSets).length === 0 ? (
+                <View style={styles.muscleMapEmpty}>
+                  <Text style={[styles.muscleMapEmptyText, { color: colors.mutedForeground }]}>
+                    Complete a set to see muscle stimulation
+                  </Text>
+                </View>
+              ) : (
+                <MuscleHighlighterCard
+                  subtitle="Showing muscles targeted by completed sets only."
+                  muscleSets={workoutMuscleSets}
+                  compact
+                />
+              )}
+            </>
           )}
         </View>
 
@@ -720,6 +732,16 @@ const styles = StyleSheet.create({
   muscleMapToggleText: {
     fontSize: 12,
     fontWeight: '600',
+  },
+  muscleMapEmpty: {
+    paddingVertical: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  muscleMapEmptyText: {
+    fontSize: 13,
+    fontWeight: '500',
+    textAlign: 'center',
   },
   addExerciseBtn: {
     flexDirection: 'row',

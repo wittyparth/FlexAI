@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity, Pressable } from '
 import { Ionicons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
-import { WorkoutSet } from '../../types/backend.types';
+import { NormalizedSet } from '../../store/types/workout.types';
 import { CustomAlert } from '../ui/CustomAlert';
 
 const SET_TYPE_CONFIG: Record<string, { label: string; color: string; short: string }> = {
@@ -30,7 +30,7 @@ const SetTypeBadge = memo(({ type, onPress, interactive }: { type: string; onPre
 
 interface Props {
   exerciseId: number;
-  completedSets: WorkoutSet[];
+  completedSets: NormalizedSet[];
   targetSets: number;
   targetRepsMin?: number;
   targetRepsMax?: number;
@@ -47,7 +47,7 @@ interface Props {
   onRepsChange: (value: string) => void;
   onRpeChange: (value: number | null) => void;
   onSetTypeChange: () => void;
-  onBeginEditSet: (setId: string, setItem: WorkoutSet) => void;
+  onBeginEditSet: (setId: string, setItem: NormalizedSet) => void;
   onLogSet: () => void;
   onDeleteSet: (exerciseId: number, setId: string) => void;
 }
@@ -62,10 +62,10 @@ const CompletedSetRow = memo(({
   previousWeight,
   isEditing,
 }: {
-  set: WorkoutSet;
+  set: NormalizedSet;
   index: number;
   onDelete: (exerciseId: number, setId: string) => void;
-  onBeginEdit: (setId: string, setItem: WorkoutSet) => void;
+  onBeginEdit: (setId: string, setItem: NormalizedSet) => void;
   exerciseId: number;
   colors: any;
   previousWeight?: number;

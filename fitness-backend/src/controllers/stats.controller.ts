@@ -61,7 +61,9 @@ export const statsController = {
   async getMuscleHeatmap(req: Request, res: Response, next: NextFunction) {
       try {
           const userId = req.userId!;
-          const data = await statsService.getMuscleDistribution(userId);
+          const startDate = req.query.startDate as string | undefined;
+          const endDate = req.query.endDate as string | undefined;
+          const data = await statsService.getMuscleDistribution(userId, startDate, endDate);
           res.json({ success: true, data });
       } catch (error) {
           next(error);

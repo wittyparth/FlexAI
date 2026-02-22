@@ -9,12 +9,15 @@ import {
     KeyboardAvoidingView,
     Platform,
     Modal,
+    Alert,
+    ActivityIndicator,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { useTemplateStore } from '../../store/templateStore';
+import { useCreationStore, selectTemplatePhase } from '../../store/creationStore';
 import { Template, TemplateDay } from '../../types/backend.types';
 import { usePublicRoutines, useRoutines } from '../../hooks/queries/useRoutineQueries';
 
@@ -32,6 +35,12 @@ export function TemplateEditorScreen({ navigation, route }: any) {
     const updateTemplate = useTemplateStore(state => state.updateTemplate);
     const updateTemplateDay = useTemplateStore(state => state.updateTemplateDay);
 
+    // ── FSM: creationStore phase tracking ────────────────────────────────────
+    const templatePhase = useCreationStore(selectTemplatePhase);
+    const { startTemplate, saveTemplateDraft, saveTemplate } = useCreationStore.getState();
+    /** Derived from FSM — prevents double-saves and reflects true state */
+    const isSaving = templatePhase.phase === 'saving';
+
     const [name, setName] = useState(existingTemplate?.name || templateData?.name || '');
     const [description, setDescription] = useState(existingTemplate?.description || templateData?.description || '');
     const [color, setColor] = useState(existingTemplate?.color || '#6366F1');
@@ -46,6 +55,29 @@ export function TemplateEditorScreen({ navigation, route }: any) {
     );
 
     const [showDayActionOptions, setShowDayActionOptions] = useState(false);
+
+    // Enter draft phase on mount with initial metadata
+    useEffect(() => {
+        startTemplate({
+            templateId: isEditing ? templateId : undefined,
+            existingData: {
+                name: existingTemplate?.name || templateData?.name || '',
+                description: existingTemplate?.description || templateData?.description || '',
+            },
+        });
+        return () => {
+            useCreationStore.getState().discardTemplate();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    // Keep store draft in sync with name / description changes
+    useEffect(() => {
+        if (templatePhase.phase === 'draft') {
+            saveTemplateDraft({ name, description });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [name, description]);
 
     const { data: myRoutinesResponse } = useRoutines({ page: 1, limit: 100, isTemplate: false });
     const { data: publicRoutinesResponse } = usePublicRoutines({ page: 1, limit: 100 });
@@ -69,23 +101,24 @@ export function TemplateEditorScreen({ navigation, route }: any) {
         }
     }, [existingTemplate]);
 
-    const handleSave = () => {
+    const handleSave = async () => {
         if (!name.trim()) {
-            return; // Needs validation
+            return;
         }
-
-        if (isEditing) {
-            updateTemplate(templateId, { name, description, color, days: localDays });
-        } else {
-            createTemplate({
-                id: `t_${Date.now()}`,
-                name,
-                description,
-                color,
-                days: localDays,
+        try {
+            await saveTemplate(async (_draft) => {
+                const resolvedId = templateId || `t_${Date.now()}`;
+                if (isEditing) {
+                    updateTemplate(templateId, { name, description, color, days: localDays });
+                } else {
+                    createTemplate({ id: resolvedId, name, description, color, days: localDays });
+                }
+                return resolvedId;
             });
+            navigation.goBack();
+        } catch (error: any) {
+            Alert.alert('Error', `Failed to save template: ${error?.message ?? 'Unknown error'}`);
         }
-        navigation.goBack();
     };
 
     const toggleRestDay = (dayId: number) => {
@@ -152,8 +185,12 @@ export function TemplateEditorScreen({ navigation, route }: any) {
                     <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>
                         {isEditing ? 'Edit Template' : 'New Template'}
                     </Text>
-                    <TouchableOpacity onPress={handleSave} style={styles.saveBtn} disabled={!name.trim()}>
-                        <Text style={[styles.saveText, { color: name.trim() ? colors.primary.main : colors.mutedForeground }]}>Save</Text>
+                    <TouchableOpacity onPress={handleSave} style={styles.saveBtn} disabled={!name.trim() || isSaving}>
+                        {isSaving ? (
+                            <ActivityIndicator size="small" color={colors.primary.main} />
+                        ) : (
+                            <Text style={[styles.saveText, { color: name.trim() ? colors.primary.main : colors.mutedForeground }]}>Save</Text>
+                        )}
                     </TouchableOpacity>
                 </View>
             </View>

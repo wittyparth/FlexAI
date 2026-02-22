@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
     View,
     Text,
@@ -12,7 +12,10 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { useColors, useGenerateWorkout } from '../../hooks';
+import { useColors } from '../../hooks';
+import { useWorkoutAIGeneration } from '../../hooks/useAIGeneration';
+import { aiApi } from '../../api/ai.api';
+import type { AIWorkoutResult } from '../../store/types/ai.types';
 import { fontFamilies } from '../../theme/typography';
 import { colors as themeColors } from '../../theme/colors';
 
@@ -104,26 +107,51 @@ export function AIGeneratorScreen({ navigation, route }: any) {
     const [equipment, setEquipment] = useState('full');
     const [customPrompt, setCustomPrompt] = useState(initPrompt || '');
 
-    const [loading, setLoading] = useState(false);
-    const generateWorkoutMutation = useGenerateWorkout();
+    // ── FSM-backed AI generation ────────────────────────────────────────────────
+    const { phase, result, error: genError, generate, cancel } = useWorkoutAIGeneration();
+    const loading = phase === 'generating';
+
+    // When generation reaches 'preview', navigate to AIPreview
+    useEffect(() => {
+        if (phase === 'preview' && result) {
+            navigation.navigate('AIPreview', { workout: result, fromFSM: true });
+        }
+    }, [phase, result, navigation]);
+
+    // Surface FSM error as an Alert
+    useEffect(() => {
+        if (phase === 'error' && genError) {
+            Alert.alert('Generation failed', genError);
+        }
+    }, [phase, genError]);
 
     const spinAnim = useRef(new Animated.Value(0)).current;
+    const loopRef  = useRef<Animated.CompositeAnimation | null>(null);
 
     const startLoadingAnimation = () => {
-        Animated.loop(
+        const loop = Animated.loop(
             Animated.timing(spinAnim, { toValue: 1, duration: 2000, useNativeDriver: true })
-        ).start();
+        );
+        loopRef.current = loop;
+        loop.start();
     };
 
     const stopLoadingAnimation = () => {
-        spinAnim.stopAnimation();
+        loopRef.current?.stop();
         spinAnim.setValue(0);
     };
 
-    const generate = async () => {
-        setLoading(true);
-        startLoadingAnimation();
+    // Sync animation with FSM loading state
+    useEffect(() => {
+        if (loading) {
+            startLoadingAnimation();
+        } else {
+            stopLoadingAnimation();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [loading]);
 
+    const generate_workout = async () => {
         const input = {
             goal,
             duration,
@@ -131,20 +159,36 @@ export function AIGeneratorScreen({ navigation, route }: any) {
             experienceLevel: 'intermediate',
             preferences: `Focus area: ${focus}. ${customPrompt}`.trim(),
         };
+        // Build prompt string for FSM store
+        const prompt = `Goal: ${goal}, Duration: ${duration}min, Equipment: ${input.equipment.join(',')}, Focus: ${focus}. ${customPrompt}`.trim();
 
-        try {
-            const generatedWorkout = await generateWorkoutMutation.mutateAsync(input as any);
-            setLoading(false);
-            stopLoadingAnimation();
-            navigation.navigate('AIPreview', {
-                workout: generatedWorkout,
-                input,
-            });
-        } catch (error: any) {
-            setLoading(false);
-            stopLoadingAnimation();
-            Alert.alert('Generation failed', formatGenerationError(error));
-        }
+        await generate(prompt, async (_prompt, signal) => {
+            // Bridge: calls the real API with structured input, maps to AIWorkoutResult
+            const generated = await aiApi.generateWorkout(input as any);
+            // Map GeneratedWorkout → AIWorkoutResult
+            const allExercises = [
+                ...generated.warmup,
+                ...generated.main,
+                ...generated.cooldown,
+            ];
+            const result: AIWorkoutResult = {
+                name: generated.workoutName,
+                description: generated.description,
+                estimatedDuration: duration,
+                difficulty: 'intermediate',
+                targetMuscles: [...new Set(allExercises.map((e: any) => e.exercise?.targetMuscle).filter(Boolean))],
+                exercises: allExercises.map((e: any) => ({
+                    exerciseId: e.exerciseId,
+                    exerciseName: e.exercise?.name ?? `Exercise #${e.exerciseId}`,
+                    sets: e.sets,
+                    reps: e.reps,
+                    rest: `${e.rest}s`,
+                    notes: e.notes,
+                })),
+                rawResponse: JSON.stringify(generated),
+            };
+            return result;
+        });
     };
 
     const selectedGoal = GOALS.find(g => g.id === goal);
@@ -305,7 +349,7 @@ export function AIGeneratorScreen({ navigation, route }: any) {
             <View style={[styles.footer, { paddingBottom: insets.bottom + 16, backgroundColor: colors.card, borderTopColor: colors.border }]}>
                 <TouchableOpacity
                     style={[styles.generateBtn, { backgroundColor: loading ? colors.muted : colors.primary.main }]}
-                    onPress={generate}
+                    onPress={generate_workout}
                     disabled={loading}
                     activeOpacity={0.9}
                 >

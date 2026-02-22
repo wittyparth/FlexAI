@@ -4,7 +4,6 @@ import {
     Text,
     StyleSheet,
     TouchableOpacity,
-    Image,
     Dimensions,
     FlatList,
     Modal,
@@ -12,6 +11,7 @@ import {
     TextInput,
     Alert,
 } from 'react-native';
+import { Image } from 'expo-image';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
@@ -83,7 +83,7 @@ export function ProgressPhotosScreen({ navigation }: any) {
             onPress={() => setSelectedPhoto(item)}
             activeOpacity={0.9}
         >
-            <Image source={{ uri: item.url }} style={styles.photoImage} resizeMode="cover" />
+            <Image source={{ uri: item.url }} style={styles.photoImage} contentFit="cover" />
             <View style={styles.photoDateBadge}>
                 <Text style={styles.photoDateText}>
                     {new Date(item.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
@@ -169,7 +169,7 @@ export function ProgressPhotosScreen({ navigation }: any) {
                         <Ionicons name="close" size={28} color="#FFF" />
                     </TouchableOpacity>
                     {selectedPhoto && (
-                        <Image source={{ uri: selectedPhoto.url }} style={styles.fullImage} resizeMode="contain" />
+                        <Image source={{ uri: selectedPhoto.url }} style={styles.fullImage} contentFit="contain" />
                     )}
                 </View>
             </Modal>

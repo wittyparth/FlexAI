@@ -1,10 +1,12 @@
 import React, { useMemo, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import Body from 'react-native-body-highlighter';
 import { useColors } from '../../hooks';
 import { buildBodyHighlighterData, mergeMuscleInputs } from '../../utils/muscleHighlighter';
 
 type Side = 'front' | 'back';
+type Gender = 'male' | 'female';
 
 interface MuscleHighlighterCardProps {
   title?: string;
@@ -12,7 +14,8 @@ interface MuscleHighlighterCardProps {
   muscleSets?: Record<string, number>;
   muscles?: ReadonlyArray<string>;
   defaultSide?: Side;
-  gender?: 'male' | 'female';
+  gender?: Gender;
+  showGenderToggle?: boolean;
   compact?: boolean;
 }
 
@@ -22,11 +25,13 @@ export function MuscleHighlighterCard({
   muscleSets,
   muscles,
   defaultSide = 'front',
-  gender = 'male',
+  gender: genderProp = 'male',
+  showGenderToggle = false,
   compact = false,
 }: MuscleHighlighterCardProps) {
   const colors = useColors();
   const [side, setSide] = useState<Side>(defaultSide);
+  const [gender, setGender] = useState<Gender>(genderProp);
   const [showAllTargets, setShowAllTargets] = useState(false);
 
   const merged = useMemo(() => mergeMuscleInputs(muscleSets, muscles), [muscleSets, muscles]);
@@ -51,21 +56,43 @@ export function MuscleHighlighterCard({
         </View>
       )}
 
-      <View style={[styles.toggleWrap, { backgroundColor: colors.muted }]}>
-        <TouchableOpacity
-          style={[styles.toggleBtn, side === 'front' && { backgroundColor: colors.primary.main }]}
-          onPress={() => setSide('front')}
-          activeOpacity={0.8}
-        >
-          <Text style={[styles.toggleText, { color: side === 'front' ? '#FFFFFF' : colors.foreground }]}>Front</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.toggleBtn, side === 'back' && { backgroundColor: colors.primary.main }]}
-          onPress={() => setSide('back')}
-          activeOpacity={0.8}
-        >
-          <Text style={[styles.toggleText, { color: side === 'back' ? '#FFFFFF' : colors.foreground }]}>Back</Text>
-        </TouchableOpacity>
+      {/* Front / Back + Gender toggle row */}
+      <View style={styles.controlsRow}>
+        <View style={[styles.toggleWrap, { backgroundColor: colors.muted, flex: 1 }]}>
+          <TouchableOpacity
+            style={[styles.toggleBtn, side === 'front' && { backgroundColor: colors.primary.main }]}
+            onPress={() => setSide('front')}
+            activeOpacity={0.8}
+          >
+            <Text style={[styles.toggleText, { color: side === 'front' ? '#FFFFFF' : colors.foreground }]}>Front</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.toggleBtn, side === 'back' && { backgroundColor: colors.primary.main }]}
+            onPress={() => setSide('back')}
+            activeOpacity={0.8}
+          >
+            <Text style={[styles.toggleText, { color: side === 'back' ? '#FFFFFF' : colors.foreground }]}>Back</Text>
+          </TouchableOpacity>
+        </View>
+
+        {showGenderToggle && (
+          <View style={[styles.genderToggleWrap, { backgroundColor: colors.muted }]}>
+            <TouchableOpacity
+              style={[styles.genderBtn, gender === 'male' && { backgroundColor: colors.primary.main }]}
+              onPress={() => setGender('male')}
+              activeOpacity={0.8}
+            >
+              <Ionicons name="man" size={14} color={gender === 'male' ? '#FFFFFF' : colors.foreground} />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.genderBtn, gender === 'female' && { backgroundColor: colors.primary.main }]}
+              onPress={() => setGender('female')}
+              activeOpacity={0.8}
+            >
+              <Ionicons name="woman" size={14} color={gender === 'female' ? '#FFFFFF' : colors.foreground} />
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
 
       {hasData ? (
@@ -150,6 +177,11 @@ const styles = StyleSheet.create({
     fontSize: 13,
     lineHeight: 18,
   },
+  controlsRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
   toggleWrap: {
     flexDirection: 'row',
     borderRadius: 12,
@@ -164,6 +196,19 @@ const styles = StyleSheet.create({
   toggleText: {
     fontSize: 13,
     fontWeight: '600',
+  },
+  genderToggleWrap: {
+    flexDirection: 'row',
+    borderRadius: 12,
+    padding: 4,
+    gap: 2,
+  },
+  genderBtn: {
+    width: 36,
+    height: 36,
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   bodyWrap: {
     alignItems: 'center',

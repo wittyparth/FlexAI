@@ -5,9 +5,9 @@ import {
     StyleSheet,
     ScrollView,
     TouchableOpacity,
-    Image,
     ActivityIndicator,
 } from 'react-native';
+import { Image } from 'expo-image';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useColors, useChallenges, useFollowing, useRankings } from '../../hooks';
@@ -96,7 +96,7 @@ function PostCard({
                 </View>
             ) : null}
 
-            {post.imageUrl ? <Image source={{ uri: post.imageUrl }} style={styles.postImage} resizeMode="cover" /> : null}
+            {post.imageUrl ? <Image source={{ uri: post.imageUrl }} style={styles.postImage} contentFit="cover" /> : null}
 
             <View style={styles.postActions}>
                 <TouchableOpacity style={styles.postAction} onPress={onLike}>

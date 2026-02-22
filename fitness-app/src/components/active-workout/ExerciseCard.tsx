@@ -11,7 +11,7 @@ import {
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
 import { NormalizedExercise } from '../../store/types/workout.types';
-import { WorkoutSet } from '../../types/backend.types';
+import { NormalizedSet } from '../../store/types/workout.types';
 import { ExerciseSetTable } from './ExerciseSetTable';
 import type { SetType } from '../../hooks/useActiveWorkout';
 
@@ -50,7 +50,7 @@ const ProgressDots = memo(({ completed, total, color }: { completed: number; tot
 
 interface Props {
   exercise: NormalizedExercise;
-  completedSets: WorkoutSet[];
+  completedSets: NormalizedSet[];
   isExpanded: boolean; // kept for API compat — card is always expanded now
   isActive: boolean;
   weightInput: string;
@@ -65,7 +65,7 @@ interface Props {
   onRepsChange: (value: string) => void;
   onRpeChange: (value: number | null) => void;
   onSetTypeChange: () => void;
-  onBeginEditSet: (setId: string, setItem: WorkoutSet) => void;
+  onBeginEditSet: (setId: string, setItem: NormalizedSet) => void;
   onLogSet: () => void;
   onDeleteSet: (exerciseId: number, setId: string) => void;
   onRemoveExercise?: (exerciseId: number) => void;

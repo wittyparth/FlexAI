@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useMemo } from 'react';
+import React, { useRef, useEffect, useMemo, useState } from 'react';
 import {
     View,
     Text,
@@ -16,6 +16,7 @@ import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { WorkoutHeatmap } from '../../components/WorkoutHeatmap';
 import { MuscleHighlighterCard } from '../../components/muscles/MuscleHighlighterCard';
+import { DateRangePicker, DateRange } from '../../components/common/DateRangePicker';
 import { useUserQueries } from '../../hooks/queries/useUserQueries';
 import { useDashboardStats, useMuscleDistribution, usePersonalRecords } from '../../hooks/queries/useStatsQueries';
 import { useWorkouts } from '../../hooks/queries/useWorkoutQueries';
@@ -159,10 +160,26 @@ export function ProfileHubScreen({ navigation }: any) {
     const fadeAnim = useRef(new Animated.Value(0)).current;
     const slideAnim = useRef(new Animated.Value(30)).current;
 
+    // ── Muscle distribution date range ──────────────────────────────────────
+    const [calendarOpen, setCalendarOpen] = useState(false);
+    const todayStr = useMemo(() => {
+        const d = new Date();
+        return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    }, []);
+    const thirtyDaysAgoStr = useMemo(() => {
+        const d = new Date();
+        d.setDate(d.getDate() - 29);
+        return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    }, []);
+    const [muscleRange, setMuscleRange] = useState<DateRange>({
+        startDate: thirtyDaysAgoStr,
+        endDate: todayStr,
+    });
+
     const { profileQuery } = useUserQueries();
     const { data: dashboardStats } = useDashboardStats();
     const { data: prRecords = [] } = usePersonalRecords();
-    const { data: muscleDistribution } = useMuscleDistribution();
+    const { data: muscleDistribution } = useMuscleDistribution(muscleRange.startDate, muscleRange.endDate);
     const { data: workoutsResponse } = useWorkouts({ page: 1, limit: 500, status: 'completed' });
     const { data: gamificationStats } = useGamificationStats();
     const { data: achievements = [] } = useAchievements();
@@ -323,12 +340,38 @@ export function ProfileHubScreen({ navigation }: any) {
                 <Animated.View style={[styles.section, { opacity: fadeAnim }]}> 
                     <SectionHeader title="Analytics" onViewAll={() => goToAnalytics('AnalyticsHub')} />
 
+                    {/* ── Muscle Distribution Card ── */}
                     <MuscleHighlighterCard
-                        title="Muscle Distribution Snapshot"
-                        subtitle="Your current training emphasis from recent completed workouts."
+                        title="Muscle Distribution"
+                        subtitle={`${muscleRange.startDate} → ${muscleRange.endDate}`}
                         muscleSets={muscleDistribution?.muscleSets}
+                        showGenderToggle
                         compact
                     />
+
+                    {/* ── Calendar date range selector ── */}
+                    <TouchableOpacity
+                        style={[styles.calendarToggleBtn, { backgroundColor: colors.muted, borderColor: colors.border }]}
+                        onPress={() => setCalendarOpen((prev) => !prev)}
+                        activeOpacity={0.8}
+                    >
+                        <Ionicons name="calendar-outline" size={16} color={colors.primary.main} />
+                        <Text style={[styles.calendarToggleText, { color: colors.foreground }]}>
+                            {calendarOpen ? 'Hide Date Filter' : 'Filter by Date'}
+                        </Text>
+                        <Ionicons
+                            name={calendarOpen ? 'chevron-up' : 'chevron-down'}
+                            size={14}
+                            color={colors.mutedForeground}
+                        />
+                    </TouchableOpacity>
+
+                    {calendarOpen && (
+                        <DateRangePicker
+                            value={muscleRange}
+                            onChange={(range) => setMuscleRange(range)}
+                        />
+                    )}
 
                     <View style={styles.analyticsSummaryRow}>
                         {analyticsSummary.map((item) => (
@@ -442,6 +485,18 @@ const styles = StyleSheet.create({
     sectionTitle: { fontSize: 18, fontWeight: '800' },
     viewAllText: { fontSize: 13, fontWeight: '600' },
     heatmapCard: { borderRadius: 16, borderWidth: 1, paddingHorizontal: 16, paddingVertical: 16, overflow: 'hidden' },
+
+    calendarToggleBtn: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 8,
+        paddingHorizontal: 14,
+        paddingVertical: 10,
+        borderRadius: 12,
+        borderWidth: 1,
+        marginTop: 4,
+    },
+    calendarToggleText: { fontSize: 13, fontWeight: '600', flex: 1 },
 
     analyticsSummaryRow: { flexDirection: 'row', gap: 10, marginTop: 12, marginBottom: 12 },
     analyticsMiniCard: { flex: 1, borderRadius: 14, borderWidth: 1, padding: 12, alignItems: 'center', gap: 6 },

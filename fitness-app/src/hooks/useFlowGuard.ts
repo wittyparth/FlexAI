@@ -14,7 +14,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useAuthStore, selectIsReady, selectNeedsOnboarding } from '../store/authStore';
 import { useWorkoutStore, selectIsActive } from '../store/workoutStore';
 
-type GuardType = 'auth' | 'onboarding' | 'workout_active';
+type GuardType = 'auth' | 'onboarding' | 'workout_active' | 'workout_completed';
 
 /**
  * Guards a screen based on current FSM phase.
@@ -25,7 +25,8 @@ export function useFlowGuard(guard: GuardType) {
 
   const isReady         = useAuthStore(selectIsReady);
   const needsOnboarding = useAuthStore(selectNeedsOnboarding);
-  const hasActiveWorkout = useWorkoutStore(selectIsActive);
+  const hasActiveWorkout    = useWorkoutStore(selectIsActive);
+  const hasCompletedWorkout = useWorkoutStore((s) => s.sessionPhase.phase === 'completed');
 
   useEffect(() => {
     switch (guard) {
@@ -53,6 +54,13 @@ export function useFlowGuard(guard: GuardType) {
           navigation.goBack();
         }
         break;
+
+      case 'workout_completed':
+        // This screen requires a completed workout summary in store
+        if (!hasCompletedWorkout) {
+          navigation.navigate('WorkoutHub');
+        }
+        break;
     }
-  }, [guard, isReady, needsOnboarding, hasActiveWorkout, navigation]);
+  }, [guard, isReady, needsOnboarding, hasActiveWorkout, hasCompletedWorkout, navigation]);
 }

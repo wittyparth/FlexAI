@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
     View,
     Text,
@@ -12,6 +12,9 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
+import { useTemplateAIGeneration } from '../../hooks/useAIGeneration';
+import type { AITemplateResult } from '../../store/types/ai.types';
+import { Alert } from 'react-native';
 import { fontFamilies } from '../../theme/typography';
 import { colors as themeColors } from '../../theme/colors';
 
@@ -73,87 +76,108 @@ export function AITemplateGeneratorScreen({ navigation, route }: any) {
     const [focus, setFocus] = useState('full');
     const [equipment, setEquipment] = useState('full');
     const [customPrompt, setCustomPrompt] = useState(initPrompt || '');
-    const [loading, setLoading] = useState(false);
+
+    // ── FSM-backed AI generation ────────────────────────────────────────────────
+    const { phase, result, error: genError, generate } = useTemplateAIGeneration();
+    const loading = phase === 'generating';
+
+    // When generation reaches 'preview', navigate to TemplateEditor with FSM result
+    useEffect(() => {
+        if (phase === 'preview' && result) {
+            // Map AITemplateResult → TemplateEditor format
+            const templateDays = result.days.map((d) => ({
+                dayId: d.dayId,
+                isRestDay: d.isRestDay,
+                routineData: d.isRestDay ? undefined : {
+                    id: `ai_gen_${d.dayId}`,
+                    name: d.focus ? `${d.focus} Day` : 'Training Day',
+                    description: `AI-generated ${duration} min session`,
+                    estimatedDuration: duration,
+                    exercises: d.exercises.map((e, i) => ({
+                        exerciseId: e.exerciseId || 0,
+                        orderIndex: i,
+                        targetSets: e.sets,
+                        targetRepsMin: parseInt(e.reps) || 8,
+                        targetRepsMax: parseInt(e.reps.split('-')[1] || e.reps) || 12,
+                        restSeconds: parseInt(e.rest) || 60,
+                        exercise: { id: e.exerciseId || 0, name: e.exerciseName, muscleGroup: 'General' },
+                    })),
+                },
+            }));
+            const mappedTemplate = {
+                id: `t_ai_${Date.now()}`,
+                name: result.name,
+                description: result.description ?? '',
+                color: '#6366F1',
+                days: templateDays,
+            };
+            navigation.navigate('TemplateEditor', { templateData: mappedTemplate });
+        }
+    }, [phase, result, navigation, duration]);
+
+    // Surface FSM error as an Alert
+    useEffect(() => {
+        if (phase === 'error' && genError) {
+            Alert.alert('Generation failed', genError);
+        }
+    }, [phase, genError]);
 
     const pulseAnim = useRef(new Animated.Value(1)).current;
     const spinAnim = useRef(new Animated.Value(0)).current;
+    const loopRefs = useRef<Animated.CompositeAnimation[]>([]);
 
     const startLoadingAnimation = () => {
-        Animated.loop(
-            Animated.sequence([
-                Animated.timing(pulseAnim, { toValue: 1.05, duration: 500, useNativeDriver: true }),
-                Animated.timing(pulseAnim, { toValue: 1, duration: 500, useNativeDriver: true }),
-            ])
-        ).start();
-
-        Animated.loop(
-            Animated.timing(spinAnim, { toValue: 1, duration: 2000, useNativeDriver: true })
-        ).start();
+        const l1 = Animated.loop(Animated.sequence([
+            Animated.timing(pulseAnim, { toValue: 1.05, duration: 500, useNativeDriver: true }),
+            Animated.timing(pulseAnim, { toValue: 1, duration: 500, useNativeDriver: true }),
+        ]));
+        const l2 = Animated.loop(Animated.timing(spinAnim, { toValue: 1, duration: 2000, useNativeDriver: true }));
+        loopRefs.current = [l1, l2];
+        l1.start();
+        l2.start();
     };
 
     const stopLoadingAnimation = () => {
-        pulseAnim.stopAnimation();
-        spinAnim.stopAnimation();
+        loopRefs.current.forEach((l) => l.stop());
         pulseAnim.setValue(1);
         spinAnim.setValue(0);
     };
 
-    const generate = () => {
-        setLoading(true);
-        startLoadingAnimation();
+    // Sync animation with FSM loading state
+    useEffect(() => {
+        if (loading) startLoadingAnimation();
+        else stopLoadingAnimation();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [loading]);
 
-        const input = {
-            goal,
-            duration,
-            equipment: [equipment],
-            days: selectedDays.length,
-            experienceLevel: 'intermediate',
-            preferences: `Focus area: ${focus}. ${customPrompt}`,
-        };
+    const generate_template = async () => {
+        const selectedGoalLabel = GOALS.find(g => g.id === goal)?.label || 'Workout';
+        const prompt = `Goal: ${selectedGoalLabel}, Duration: ${duration}min, Focus: ${focus}, Equipment: ${equipment}, Days: ${selectedDays.length}, Instructions: ${customPrompt}`.trim();
 
-        // Simulate API taking some time then returning dummy elegant data
-        setTimeout(() => {
-            const selectedGoalLabel = GOALS.find(g => g.id === goal)?.label || 'Workout';
-            
-            // Build Array of Template Days based on selected configuration
-            const templateDaysArray = Array.from({ length: 7 }, (_, i) => {
+        await generate(prompt, async (_prompt, _signal): Promise<AITemplateResult> => {
+            // Build a structured template result from local config
+            // (Production: replace with real AI API call)
+            await new Promise<void>((resolve) => setTimeout(resolve, 1500));
+            const days: AITemplateResult['days'] = Array.from({ length: 7 }, (_, i) => {
                 const dayId = i + 1;
                 const isTrainingDay = selectedDays.includes(dayId);
-                
-                let dayData: any = { dayId, isRestDay: !isTrainingDay };
-                
-                if (isTrainingDay) {
-                    dayData.routineData = {
-                        id: `ai_gen_${dayId}`,
-                        name: `${focus.toUpperCase()} Day`,
-                        description: `Auto-generated ${input.duration} min session for your ${input.goal} goal.`,
-                        estimatedDuration: input.duration,
-                        exercises: [
-                            { exerciseId: 1, targetSets: 3, targetRepsMin: 8, targetRepsMax: 12, restSeconds: 60, exercise: { id: 1, name: 'Barbell Bench Press', muscleGroup: 'Chest' } },
-                            { exerciseId: 2, targetSets: 3, targetRepsMin: 10, targetRepsMax: 15, restSeconds: 60, exercise: { id: 2, name: 'Dumbbell Row', muscleGroup: 'Back' } }
-                        ]
-                    };
-                }
-                
-                return dayData;
+                return {
+                    dayId,
+                    isRestDay: !isTrainingDay,
+                    focus: isTrainingDay ? focus.toUpperCase() : undefined,
+                    exercises: isTrainingDay ? [
+                        { exerciseId: 1, exerciseName: 'Barbell Bench Press', sets: 3, reps: '8-12', rest: '60s' },
+                        { exerciseId: 2, exerciseName: 'Dumbbell Row', sets: 3, reps: '10-15', rest: '60s' },
+                    ] : [],
+                };
             });
-
-            const dummyTemplate = {
-                id: `t_ai_${Date.now()}`,
+            return {
                 name: `AI Template: ${selectedGoalLabel} (${focus.toUpperCase()})`,
-                description: `A highly optimized ${input.duration} min template for ${selectedDays.length} day(s) a week.`,
-                color: '#6366F1',
-                days: templateDaysArray
+                description: `Optimised ${duration} min template for ${selectedDays.length} day(s) per week.`,
+                durationWeeks: 4,
+                days,
             };
-
-            setLoading(false);
-            stopLoadingAnimation();
-
-            // Direct to TemplateEditor to display the beautiful template summary for editing
-            navigation.navigate('TemplateEditor', {
-                templateData: dummyTemplate
-            });
-        }, 2000);
+        });
     };
 
     const selectedGoal = GOALS.find(g => g.id === goal);
@@ -345,7 +369,7 @@ export function AITemplateGeneratorScreen({ navigation, route }: any) {
             <View style={[styles.footer, { paddingBottom: insets.bottom + 16, backgroundColor: colors.card, borderTopColor: colors.border }]}>
                 <TouchableOpacity
                     style={[styles.generateBtn, { backgroundColor: loading ? colors.muted : colors.primary.main }]}
-                    onPress={generate}
+                    onPress={generate_template}
                     disabled={loading}
                     activeOpacity={0.9}
                 >

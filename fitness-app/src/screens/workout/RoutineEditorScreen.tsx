@@ -25,6 +25,7 @@ import {
     useRemoveExerciseFromRoutine
 } from '../../hooks/queries/useRoutineQueries';
 import { Routine, RoutineExercise } from '../../types/backend.types';
+import { useCreationStore, selectRoutinePhase } from '../../store/creationStore';
 
 /** Stable string ID avoids collision between DB IDs (small ints) and temp IDs */
 function genTempId() { return `tmp_${Date.now()}_${Math.random().toString(36).slice(2)}`; }
@@ -66,8 +67,39 @@ export function RoutineEditorScreen({ navigation, route }: any) {
     const [description, setDescription] = useState('');
     const [isPublic, setIsPublic] = useState(false);
     const [exercises, setExercises] = useState<EditorExercise[]>([]);
-    const [isSaving, setIsSaving] = useState(false);
     const lastHandledSelectionKeyRef = useRef<string | null>(null);
+
+    // ── FSM: creationStore phase tracking ────────────────────────────────────
+    const routinePhase = useCreationStore(selectRoutinePhase);
+    const { startRoutine, saveRoutineDraft, saveRoutine, discardRoutine } = useCreationStore.getState();
+    /** Derived from FSM — replaces isSaving boolean */
+    const isSaving = routinePhase.phase === 'saving';
+
+    // Enter draft phase on mount (non-template mode only)
+    useEffect(() => {
+        if (!isTemplateMode) {
+            startRoutine({
+                routineId: isEditing ? parsedRoutineId : undefined,
+                existingData: { name: '', description: '', isPublic: false, exercises: [] },
+            });
+        }
+        return () => {
+            // Discard the draft when leaving the screen so next open starts fresh.
+            // (Does nothing if the routine was saved successfully.)
+            if (!isTemplateMode) {
+                useCreationStore.getState().discardRoutine();
+            }
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    // Keep store draft in sync with name / description / isPublic changes
+    useEffect(() => {
+        if (!isTemplateMode && routinePhase.phase === 'draft') {
+            saveRoutineDraft({ name, description, isPublic });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [name, description, isPublic]);
 
     // Initialize state when editing or creating with preset data
     useEffect(() => {
@@ -206,151 +238,124 @@ export function RoutineEditorScreen({ navigation, route }: any) {
             return;
         }
 
-        setIsSaving(true);
-        try {
-            if (isTemplateMode) {
-                // In template mode, we just build the object and return it back via onSaveReturn
-                if (onSaveReturn) {
-                    const formattedExercises = exercises.map((ex, idx) => {
-                        const { min, max } = parseReps(ex.targetReps);
-                        return {
-                            id: ex.dbId ?? ex.key, // Use DB id if present
-                            exerciseId: ex.exerciseId,
-                            orderIndex: idx,
-                            targetSets: parseInt(ex.targetSets) || 3,
-                            targetRepsMin: min || 8,
-                            targetRepsMax: max || 12,
-                            restSeconds: parseInt(ex.restSeconds) || 60,
-                            exercise: { id: ex.exerciseId, name: ex.name }
-                        };
-                    });
-                    
-                    const newRoutineData = {
-                        id: routineId || genTempId(),
-                        name,
-                        description,
-                        isPublic: false,
-                        exercises: formattedExercises,
-                        estimatedDuration: routineData?.estimatedDuration // Pass back so template editor has duration
-                    };
-                    
-                    onSaveReturn(newRoutineData);
-                    navigation.goBack();
-                    return;
-                }
-            } else if (isEditing) {
-                // Update Routine Metadata
-                await updateRoutine.mutateAsync({
-                    id: parsedRoutineId,
-                    data: {
-                        name,
-                        description,
-                        isPublic,
-                    }
-                });
-
-                // Identify added and removed exercises
-                const originalExercises = routineResponse?.data?.exercises || [];
-                const currentExercises = exercises;
-
-                // Use dbId for set operations — new exercises have no dbId
-                const originalDbIds = new Set(originalExercises.map((e: RoutineExercise) => e.id));
-
-                // Exercises to Remove: those in DB not in current list
-                const toRemove = originalExercises.filter((e: RoutineExercise) => {
-                    return !currentExercises.some((ce) => ce.dbId === e.id);
-                });
-
-                // Exercises to Add: current exercises with no DB id
-                const toAdd = currentExercises.filter(e => !e.dbId);
-
-                // Execute Removals
-                const removePromises = toRemove.map((ex: RoutineExercise) =>
-                    removeExerciseMutation.mutateAsync({
-                        routineId: parsedRoutineId,
-                        exerciseId: ex.id
-                    })
-                );
-
-                // Execute Additions
-                const addPromises = toAdd.map((ex) => {
+        // ── Template-day mode: pure callback path, no store ──────────────────
+        if (isTemplateMode) {
+            if (onSaveReturn) {
+                const formattedExercises = exercises.map((ex, idx) => {
                     const { min, max } = parseReps(ex.targetReps);
-                    return addExercise.mutateAsync({
-                        routineId: parsedRoutineId,
-                        data: {
-                            exerciseId: ex.exerciseId,
-                            orderIndex: currentExercises.indexOf(ex),
-                            targetSets: parseInt(ex.targetSets) || 3,
-                            targetRepsMin: min || 8,
-                            targetRepsMax: max || 12,
-                            restSeconds: parseInt(ex.restSeconds) || 60,
-                            notes: '',
-                        }
-                    });
+                    return {
+                        id: ex.dbId ?? ex.key,
+                        exerciseId: ex.exerciseId,
+                        orderIndex: idx,
+                        targetSets: parseInt(ex.targetSets) || 3,
+                        targetRepsMin: min || 8,
+                        targetRepsMax: max || 12,
+                        restSeconds: parseInt(ex.restSeconds) || 60,
+                        exercise: { id: ex.exerciseId, name: ex.name }
+                    };
                 });
-
-                await Promise.all([...removePromises, ...addPromises]);
-                await queryClient.invalidateQueries({ queryKey: ['routines'] });
-                await queryClient.invalidateQueries({ queryKey: ['routine', parsedRoutineId] });
-
-                Alert.alert('Success', 'Routine updated successfully');
-                navigation.goBack();
-            } else {
-                // Create New Routine
-                const result = await createRoutine.mutateAsync({
+                const newRoutineData = {
+                    id: routineId || genTempId(),
                     name,
                     description,
-                    isPublic,
-                    // defaults
-                    difficulty: 'intermediate',
-                    goal: 'general',
-                });
-
-                const newRoutineId = result.data.id;
-
-                // Add all exercises
-                // Sequential insert gives deterministic order and resilient per-item failure handling.
-                const failedAdds: string[] = [];
-                for (const [index, ex] of exercises.entries()) {
-                    const { min, max } = parseReps(ex.targetReps);
-                    try {
-                        await addExercise.mutateAsync({
-                            routineId: newRoutineId,
-                            data: {
-                                exerciseId: ex.exerciseId,
-                                orderIndex: index,
-                                targetSets: parseInt(ex.targetSets) || 3,
-                                targetRepsMin: min || 8,
-                                targetRepsMax: max || 12,
-                                restSeconds: parseInt(ex.restSeconds) || 60,
-                                notes: '',
-                            }
-                        });
-                    } catch (error) {
-                        failedAdds.push(ex.name || `Exercise #${index + 1}`);
-                    }
-                }
-
-                await queryClient.invalidateQueries({ queryKey: ['routines'] });
-                await queryClient.invalidateQueries({ queryKey: ['routine', newRoutineId] });
-
-                if (failedAdds.length > 0) {
-                    Alert.alert(
-                        'Routine saved with warnings',
-                        `Routine was created, but ${failedAdds.length} exercise(s) could not be added. You can add them from edit mode.`
-                    );
-                    navigation.navigate('RoutineDetail', { routineId: newRoutineId });
-                    return;
-                }
-
-                Alert.alert('Success', 'Routine created successfully');
-                navigation.navigate('RoutineDetail', { routineId: newRoutineId });
+                    isPublic: false,
+                    exercises: formattedExercises,
+                    estimatedDuration: routineData?.estimatedDuration
+                };
+                onSaveReturn(newRoutineData);
+                navigation.goBack();
             }
+            return;
+        }
+
+        // ── FSM-guarded save path ─────────────────────────────────────────────
+        try {
+            await saveRoutine(async (_draft) => {
+                if (isEditing) {
+                    // Update metadata
+                    await updateRoutine.mutateAsync({
+                        id: parsedRoutineId,
+                        data: { name, description, isPublic }
+                    });
+
+                    // Diff exercises
+                    const originalExercises = routineResponse?.data?.exercises || [];
+                    const toRemove = originalExercises.filter(
+                        (e: RoutineExercise) => !exercises.some((ce) => ce.dbId === e.id)
+                    );
+                    const toAdd = exercises.filter((e) => !e.dbId);
+
+                    await Promise.all([
+                        ...toRemove.map((ex: RoutineExercise) =>
+                            removeExerciseMutation.mutateAsync({ routineId: parsedRoutineId, exerciseId: ex.id })
+                        ),
+                        ...toAdd.map((ex) => {
+                            const { min, max } = parseReps(ex.targetReps);
+                            return addExercise.mutateAsync({
+                                routineId: parsedRoutineId,
+                                data: {
+                                    exerciseId: ex.exerciseId,
+                                    orderIndex: exercises.indexOf(ex),
+                                    targetSets: parseInt(ex.targetSets) || 3,
+                                    targetRepsMin: min || 8,
+                                    targetRepsMax: max || 12,
+                                    restSeconds: parseInt(ex.restSeconds) || 60,
+                                    notes: '',
+                                }
+                            });
+                        }),
+                    ]);
+
+                    await queryClient.invalidateQueries({ queryKey: ['routines'] });
+                    await queryClient.invalidateQueries({ queryKey: ['routine', parsedRoutineId] });
+                    navigation.goBack();
+                    return parsedRoutineId;
+                } else {
+                    // Create new routine
+                    const result = await createRoutine.mutateAsync({
+                        name, description, isPublic,
+                        difficulty: 'intermediate',
+                        goal: 'general',
+                    });
+                    const newRoutineId = result.data.id;
+                    const failedAdds: string[] = [];
+
+                    for (const [index, ex] of exercises.entries()) {
+                        const { min, max } = parseReps(ex.targetReps);
+                        try {
+                            await addExercise.mutateAsync({
+                                routineId: newRoutineId,
+                                data: {
+                                    exerciseId: ex.exerciseId,
+                                    orderIndex: index,
+                                    targetSets: parseInt(ex.targetSets) || 3,
+                                    targetRepsMin: min || 8,
+                                    targetRepsMax: max || 12,
+                                    restSeconds: parseInt(ex.restSeconds) || 60,
+                                    notes: '',
+                                }
+                            });
+                        } catch {
+                            failedAdds.push(ex.name || `Exercise #${index + 1}`);
+                        }
+                    }
+
+                    await queryClient.invalidateQueries({ queryKey: ['routines'] });
+                    await queryClient.invalidateQueries({ queryKey: ['routine', newRoutineId] });
+
+                    if (failedAdds.length > 0) {
+                        Alert.alert(
+                            'Routine saved with warnings',
+                            `Routine was created, but ${failedAdds.length} exercise(s) could not be added. You can add them from edit mode.`
+                        );
+                    }
+                    navigation.navigate('RoutineDetail', { routineId: newRoutineId });
+                    return newRoutineId;
+                }
+            });
         } catch (error: any) {
             console.error('Failed to save routine', error);
             Alert.alert('Error', `Failed to save routine: ${getErrorMessage(error)}`);
-        } finally {
-            setIsSaving(false);
         }
     };
 

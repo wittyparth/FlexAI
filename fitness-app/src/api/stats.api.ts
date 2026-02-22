@@ -108,9 +108,15 @@ export const statsApi = {
 
     /**
      * Get muscle distribution and imbalance analysis.
+     * Pass optional startDate / endDate ('YYYY-MM-DD') to filter by date range.
      */
-    getMuscleDistribution: async (): Promise<MuscleDistributionResponse> => {
-        const response = await apiClient.get<{ data: MuscleDistributionResponse }>('/stats/muscle-distribution');
+    getMuscleDistribution: async (startDate?: string, endDate?: string): Promise<MuscleDistributionResponse> => {
+        const params: Record<string, string> = {};
+        if (startDate) params.startDate = startDate;
+        if (endDate) params.endDate = endDate;
+        const response = await apiClient.get<{ data: MuscleDistributionResponse }>('/stats/muscle-distribution', {
+            params: Object.keys(params).length ? params : undefined,
+        });
         return response.data.data;
     },
 };

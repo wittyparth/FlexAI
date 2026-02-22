@@ -13,7 +13,7 @@ import {
 import { JetBrainsMono_400Regular } from '@expo-google-fonts/jetbrains-mono';
 
 import { queryClient } from './src/lib/react-query';
-import { ThemeProvider, useTheme } from './src/contexts';
+import { ThemeProvider, useTheme, ToastProvider } from './src/contexts';
 import { RootNavigator } from './src/navigation/RootNavigator';
 
 function AppContent() {
@@ -49,7 +49,9 @@ export default function App() {
     <GestureHandlerRootView style={styles.root}>
       <ThemeProvider>
         <QueryClientProvider client={queryClient}>
-          <AppContent />
+          <ToastProvider>
+            <AppContent />
+          </ToastProvider>
         </QueryClientProvider>
       </ThemeProvider>
     </GestureHandlerRootView>

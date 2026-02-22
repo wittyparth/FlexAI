@@ -1,29 +1,39 @@
 /**
  * Button Component (Theme-Aware)
- * 
- * Premium Design System Buttons
- * Variants match style guide: primary, secondary, tertiary (ghost), destructive
+ *
+ * Production upgrades:
+ *  - Reanimated spring press-scale (replaces activeOpacity flicker)
+ *  - expo-linear-gradient fills primary & destructive variants
+ *  - expo-haptics light impact on every press
  */
 
 import React from 'react';
 import {
-    TouchableOpacity,
+    Pressable,
     Text,
     StyleSheet,
     ViewStyle,
     ActivityIndicator,
     View,
-    TextStyle
+    TextStyle,
 } from 'react-native';
+import Animated, {
+    useSharedValue,
+    useAnimatedStyle,
+    withSpring,
+} from 'react-native-reanimated';
+import { LinearGradient } from 'expo-linear-gradient';
+import * as Haptics from 'expo-haptics';
 import { useColors } from '../../hooks';
 import { typography, borderRadius, spacing } from '../../constants';
-// shadows import might be needed if not using colors.shadow
 import { SHADOWS_LIGHT as SHADOWS } from '../../constants/shadows';
+
+const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 interface ButtonProps {
     title: string;
     onPress: () => void;
-    variant?: 'primary' | 'secondary' | 'tertiary' | 'destructive' | 'ghost'; // ghost alias for tertiary
+    variant?: 'primary' | 'secondary' | 'tertiary' | 'destructive' | 'ghost';
     size?: 'default' | 'small' | 'large';
     disabled?: boolean;
     loading?: boolean;
@@ -31,6 +41,8 @@ interface ButtonProps {
     iconPosition?: 'left' | 'right';
     fullWidth?: boolean;
     style?: ViewStyle;
+    /** Skip haptic for silent actions */
+    noHaptic?: boolean;
 }
 
 export function Button({
@@ -44,6 +56,7 @@ export function Button({
     iconPosition = 'right',
     fullWidth = false,
     style,
+    noHaptic = false,
 }: ButtonProps) {
     const colors = useColors();
     const isDisabled = disabled || loading;
@@ -51,127 +64,155 @@ export function Button({
     // Map 'ghost' to 'tertiary' for backward compatibility
     const activeVariant = variant === 'ghost' ? 'tertiary' : variant;
 
-    // Dynamic Styles based on variant
-    const getVariantStyle = (): ViewStyle => {
-        switch (activeVariant) {
-            case 'primary':
-                return {
-                    backgroundColor: colors.primary.main,
-                    ...SHADOWS.md, // Use token shadow directly
-                };
-            case 'secondary':
-                return {
-                    backgroundColor: 'transparent',
-                    borderWidth: 1.5,
-                    borderColor: colors.primary.main,
-                };
-            case 'tertiary':
-                return {
-                    backgroundColor: 'transparent',
-                };
-            case 'destructive':
-                return {
-                    backgroundColor: colors.error,
-                    ...SHADOWS.md, // Use token shadow directly
-                };
-            default:
-                return {};
+    // ---- Reanimated press-scale ----
+    const scale = useSharedValue(1);
+    const animatedStyle = useAnimatedStyle(() => ({
+        transform: [{ scale: scale.value }],
+    }));
+
+    const handlePressIn = () => {
+        scale.value = withSpring(0.96, { damping: 15, stiffness: 300 });
+    };
+    const handlePressOut = () => {
+        scale.value = withSpring(1, { damping: 15, stiffness: 300 });
+    };
+    const handlePress = () => {
+        if (!noHaptic) {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
         }
+        onPress();
     };
 
-    const getTextStyle = (): TextStyle => {
-        switch (activeVariant) {
-            case 'primary':
-            case 'destructive':
-                return { 
-                    color: colors.text.inverse 
-                };
-            case 'secondary':
-            case 'tertiary':
-                return { 
-                    color: colors.primary.main 
-                };
-            default:
-                return { color: colors.text.primary };
-        }
-    };
-
+    // ---- Size ----
     const getSizeStyle = (): ViewStyle => {
         switch (size) {
             case 'small':
-                return {
-                    paddingVertical: spacing[2], // 8px
-                    paddingHorizontal: spacing[4], // 16px
-                    minHeight: 36,
-                };
+                return { paddingVertical: spacing[2], paddingHorizontal: spacing[4], minHeight: 36 };
             case 'large':
-                return {
-                    paddingVertical: spacing[4], // 16px
-                    paddingHorizontal: spacing[8], // 32px
-                    minHeight: 56,
-                };
-            case 'default':
+                return { paddingVertical: spacing[4], paddingHorizontal: spacing[8], minHeight: 56 };
             default:
-                return {
-                    paddingVertical: spacing[3], // 12px
-                    paddingHorizontal: spacing[6], // 24px
-                    minHeight: 48,
-                };
+                return { paddingVertical: spacing[3], paddingHorizontal: spacing[6], minHeight: 48 };
         }
     };
 
+    // ---- Text color ----
+    const getTextColor = (): string => {
+        switch (activeVariant) {
+            case 'primary':
+            case 'destructive':
+                return (colors as any).text?.inverse ?? '#FFFFFF';
+            case 'secondary':
+            case 'tertiary':
+                return colors.primary.main;
+            default:
+                return (colors as any).text?.primary ?? '#0F172A';
+        }
+    };
+
+    const sizeStyle = getSizeStyle();
+    const textColor = getTextColor();
+
+    // ---- Content ----
+    const content = (
+        <View style={styles.content}>
+            {loading ? (
+                <ActivityIndicator
+                    color={activeVariant === 'secondary' || activeVariant === 'tertiary' ? colors.primary.main : '#FFFFFF'}
+                    size="small"
+                />
+            ) : (
+                <>
+                    {icon && iconPosition === 'left' && <View style={styles.iconLeft}>{icon}</View>}
+                    <Text
+                        style={[
+                            styles.text,
+                            size === 'small' && styles.textSmall,
+                            { color: textColor },
+                            isDisabled && { color: (colors as any).text?.tertiary ?? '#94A3B8' },
+                        ]}
+                    >
+                        {title}
+                    </Text>
+                    {icon && iconPosition === 'right' && <View style={styles.iconRight}>{icon}</View>}
+                </>
+            )}
+        </View>
+    );
+
+    // ---- Gradient primary / destructive ----
+    if ((activeVariant === 'primary' || activeVariant === 'destructive') && !isDisabled) {
+        const gradientColors: [string, string] =
+            activeVariant === 'primary'
+                ? [colors.primary.main, colors.primary.light ?? '#4D7CFF']
+                : ['#EF4444', '#F87171'];
+
+        return (
+            <AnimatedPressable
+                onPress={handlePress}
+                onPressIn={handlePressIn}
+                onPressOut={handlePressOut}
+                disabled={isDisabled}
+                style={[
+                    animatedStyle,
+                    styles.base,
+                    sizeStyle,
+                    fullWidth && styles.fullWidth,
+                    (SHADOWS.md as ViewStyle),
+                    style,
+                ]}
+            >
+                <LinearGradient
+                    colors={gradientColors}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}
+                    style={StyleSheet.absoluteFill}
+                />
+                {content}
+            </AnimatedPressable>
+        );
+    }
+
+    // ---- Secondary / Tertiary ----
+    const flatStyle: ViewStyle =
+        activeVariant === 'secondary'
+            ? { backgroundColor: 'transparent', borderWidth: 1.5, borderColor: colors.primary.main }
+            : { backgroundColor: 'transparent' };
+
     return (
-        <TouchableOpacity
-            onPress={onPress}
+        <AnimatedPressable
+            onPress={handlePress}
+            onPressIn={handlePressIn}
+            onPressOut={handlePressOut}
             disabled={isDisabled}
-            activeOpacity={0.8}
             style={[
+                animatedStyle,
                 styles.base,
-                getVariantStyle(),
-                getSizeStyle(),
+                flatStyle,
+                sizeStyle,
                 fullWidth && styles.fullWidth,
                 isDisabled && styles.disabled,
                 style,
             ]}
         >
-            <View style={styles.content}>
-                {loading ? (
-                    <ActivityIndicator
-                        color={activeVariant === 'secondary' || activeVariant === 'tertiary' ? colors.primary.main : '#FFFFFF'}
-                        size="small"
-                    />
-                ) : (
-                    <>
-                        {icon && iconPosition === 'left' && <View style={styles.iconLeft}>{icon}</View>}
-                        <Text style={[
-                            styles.text,
-                            size === 'small' && styles.textSmall,
-                            getTextStyle(),
-                            isDisabled && { color: colors.text.tertiary },
-                        ]}>
-                            {title}
-                        </Text>
-                        {icon && iconPosition === 'right' && <View style={styles.iconRight}>{icon}</View>}
-                    </>
-                )}
-            </View>
-        </TouchableOpacity>
+            {content}
+        </AnimatedPressable>
     );
 }
 
 const styles = StyleSheet.create({
     base: {
-        borderRadius: borderRadius.md, // Match Premium Guide (12px)
+        borderRadius: borderRadius.md,
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row',
+        overflow: 'hidden', // clips LinearGradient to border radius
     },
     fullWidth: {
         width: '100%',
     },
     disabled: {
         opacity: 0.5,
-        backgroundColor: '#E2E8F0', // Slate 200 fallback
+        backgroundColor: '#E2E8F0',
         borderWidth: 0,
         elevation: 0,
     },

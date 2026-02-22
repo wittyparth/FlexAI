@@ -79,12 +79,14 @@ export function useStrengthProgression(exerciseId?: number) {
 }
 
 /**
- * Hook to fetch muscle distribution
+ * Hook to fetch muscle distribution.
+ * Optionally accepts startDate / endDate ('YYYY-MM-DD') to filter by date range.
+ * When neither is provided the backend defaults to the last 30 days.
  */
-export function useMuscleDistribution() {
+export function useMuscleDistribution(startDate?: string, endDate?: string) {
   return useQuery<MuscleDistributionResponse>({
-    queryKey: ['stats', 'muscle-distribution'],
-    queryFn: () => statsApi.getMuscleDistribution(),
+    queryKey: ['stats', 'muscle-distribution', startDate ?? 'default', endDate ?? 'default'],
+    queryFn: () => statsApi.getMuscleDistribution(startDate, endDate),
     staleTime: 1000 * 60 * 5,
   });
 }

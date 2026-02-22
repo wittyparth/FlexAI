@@ -327,16 +327,29 @@ export class StatsService {
 
   /**
    * 3.4 Muscle Analysis (3D Heatmap & Imbalances)
+   * Accepts optional startDate / endDate (ISO strings) for date filtering.
+   * Defaults to the last 30 days when no dates are supplied.
    */
-  async getMuscleDistribution(userId: number) {
-    const startDate = new Date();
-    startDate.setDate(startDate.getDate() - 30);
+  async getMuscleDistribution(userId: number, startDate?: string, endDate?: string) {
+    let dateFrom: Date;
+    let dateTo: Date;
+
+    if (startDate && endDate) {
+      dateFrom = new Date(startDate);
+      dateFrom.setHours(0, 0, 0, 0);
+      dateTo = new Date(endDate);
+      dateTo.setHours(23, 59, 59, 999);
+    } else {
+      dateTo = new Date();
+      dateFrom = new Date();
+      dateFrom.setDate(dateFrom.getDate() - 30);
+    }
 
     const workoutExercises = await prisma.workoutExercise.findMany({
       where: {
         workout: {
             userId,
-            completedAt: { gte: startDate }
+            completedAt: { gte: dateFrom, lte: dateTo }
         }
       },
       include: {

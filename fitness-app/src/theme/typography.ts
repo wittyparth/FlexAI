@@ -46,6 +46,12 @@ export const fontFamilies = {
     android: 'Inter',
     default: 'System',
   }) as string,
+  // Heading is an alias for display (same font, used by some components)
+  heading: Platform.select({
+    ios: 'Calistoga',
+    android: 'Calistoga',
+    default: 'Georgia',
+  }) as string,
 };
 
 // Font Weights - React Native compatible

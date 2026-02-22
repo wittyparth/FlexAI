@@ -8,6 +8,7 @@ import { useTheme } from '../../contexts/ThemeContext';
 import { useColors } from '../../hooks/useColors';
 import { UnitSystem } from '../../types/user';
 import { fontFamilies } from '../../theme/typography';
+import { IconButton } from '../../components/ui';
 
 type UnitsScreenNavigationProp = StackNavigationProp<OnboardingStackParamList, 'Units'>;
 
@@ -36,12 +37,11 @@ export const UnitsScreen: React.FC<Props> = ({ navigation }) => {
             {/* Header */}
             <View style={styles.header}>
                 <View style={styles.headerRow}>
-                    <TouchableOpacity
+                    <IconButton
+                        icon="arrow-back"
+                        variant="tinted"
                         onPress={() => navigation.goBack()}
-                        style={[styles.iconButton, { backgroundColor: colors.muted }]}
-                    >
-                        <Ionicons name="arrow-back" size={24} color={colors.mutedForeground} />
-                    </TouchableOpacity>
+                    />
                     <View style={styles.headerCenter}>
                         <Text style={[styles.stepText, { color: colors.mutedForeground }]}>Step 9 of 10</Text>
                         <View style={[styles.miniProgressBarBg, { backgroundColor: colors.muted }]}>

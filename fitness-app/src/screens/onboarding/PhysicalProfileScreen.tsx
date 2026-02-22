@@ -11,7 +11,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { useColors, useOnboardingFlow } from '../../hooks';
 import { useTheme } from '../../contexts';
-import { Button, ProgressBar } from '../../components/ui';
+import { Button, ProgressBar, IconButton } from '../../components/ui';
 import { fonts, fontSize, spacing, borderRadius, shadows } from '../../constants';
 import { Gender, UnitSystem } from '../../types/user';
 
@@ -47,12 +47,11 @@ export function PhysicalProfileScreen({ navigation }: PhysicalProfileScreenProps
 
             {/* Top Navigation */}
             <View style={styles.header}>
-                <TouchableOpacity
-                    style={[styles.backButton, { backgroundColor: colors.muted }]}
+                <IconButton
+                    icon="chevron-back"
+                    variant="tinted"
                     onPress={() => navigation.goBack()}
-                >
-                    <Ionicons name="chevron-back" size={24} color={colors.foreground} />
-                </TouchableOpacity>
+                />
                 <Text style={[styles.stepText, { color: colors.mutedForeground }]}>Step 3 of 10</Text>
                 <View style={{ width: 44 }} />
             </View>

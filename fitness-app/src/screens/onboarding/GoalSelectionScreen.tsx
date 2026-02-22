@@ -12,7 +12,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
 import { useTheme } from '../../contexts';
 import { fonts, fontSize, spacing, borderRadius, shadows } from '../../constants';
-import { Button, ProgressBar } from '../../components/ui';
+import { Button, ProgressBar, IconButton } from '../../components/ui';
 import { PrimaryGoal } from '../../types/user';
 
 interface GoalOption {
@@ -73,12 +73,11 @@ export function GoalSelectionScreen({ navigation }: any) {
             {/* Header */}
             <View style={styles.header}>
                 <View style={styles.headerTop}>
-                    <TouchableOpacity
+                    <IconButton
+                        icon="log-out-outline"
+                        variant="tinted"
                         onPress={logout}
-                        style={[styles.backButton, { backgroundColor: colors.muted }]}
-                    >
-                        <Ionicons name="log-out-outline" size={24} color={colors.foreground} />
-                    </TouchableOpacity>
+                    />
 
                     <View style={[styles.stepChip, { backgroundColor: isDark ? colors.card : colors.background }]}>
                         {/* Note: In previous screens we used simple Text. Keeping design consistent with provided HTML implies looking at chip styling. 

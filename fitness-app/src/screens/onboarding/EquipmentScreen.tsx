@@ -7,6 +7,7 @@ import { OnboardingStackParamList } from '../../navigation/types';
 import { useOnboardingFlow } from '../../hooks/useOnboardingFlow';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useColors } from '../../hooks/useColors';
+import { IconButton } from '../../components/ui';
 
 type EquipmentScreenNavigationProp = StackNavigationProp<OnboardingStackParamList, 'Equipment'>;
 
@@ -66,12 +67,11 @@ export const EquipmentScreen: React.FC<Props> = ({ navigation }) => {
             {/* Header */}
             <View style={styles.header}>
                 <View style={styles.headerRow}>
-                    <TouchableOpacity
+                    <IconButton
+                        icon="arrow-back"
+                        variant="tinted"
                         onPress={() => navigation.goBack()}
-                        style={[styles.iconButton, { backgroundColor: colors.muted }]}
-                    >
-                        <Ionicons name="arrow-back" size={24} color={colors.foreground} />
-                    </TouchableOpacity>
+                    />
                     <Text style={[styles.stepText, { color: colors.mutedForeground }]}>Step 8 of 10</Text>
                     <TouchableOpacity
                         style={[styles.iconButton, { backgroundColor: colors.muted }]}

@@ -317,15 +317,12 @@ export function WorkoutHubScreen({ navigation }: any) {
                         <Text style={[styles.headerSub, { color: colors.mutedForeground }]}>READY TO TRAIN</Text>
                         <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Workout</Text>
                     </View>
-                    <TouchableOpacity onPress={() => nav('WorkoutHistory')}>
-                        <IconButton
+                    <IconButton
                             icon="time-outline"
                             variant="tinted"
                             size="sm"
-                            haptic={false}
                             onPress={() => nav('WorkoutHistory')}
                         />
-                    </TouchableOpacity>
                 </View>
 
                 <Animated.View style={{ opacity: fade }}>

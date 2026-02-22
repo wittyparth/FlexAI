@@ -11,7 +11,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
 import { useTheme } from '../../contexts';
-import { Button, ProgressBar } from '../../components/ui';
+import { Button, ProgressBar, IconButton } from '../../components/ui';
 import { fonts, fontSize, spacing, borderRadius, shadows } from '../../constants';
 import { ExperienceLevel } from '../../types/user';
 
@@ -68,12 +68,11 @@ export function ExperienceLevelScreen({ navigation }: ExperienceLevelScreenProps
 
             {/* Top Navigation */}
             <View style={styles.header}>
-                <TouchableOpacity
-                    style={[styles.backButton, { backgroundColor: colors.muted }]}
+                <IconButton
+                    icon="chevron-back"
+                    variant="tinted"
                     onPress={() => navigation.goBack()}
-                >
-                    <Ionicons name="chevron-back" size={24} color={colors.foreground} />
-                </TouchableOpacity>
+                />
             </View>
 
             {/* Progress Bar */}

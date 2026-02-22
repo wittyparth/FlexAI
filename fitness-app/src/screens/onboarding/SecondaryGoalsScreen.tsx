@@ -12,7 +12,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useColors, useOnboardingFlow } from '../../hooks';
 import { useTheme } from '../../contexts';
 import { fonts, fontSize, spacing, borderRadius, shadows } from '../../constants';
-import { Button, ProgressBar } from '../../components/ui';
+import { Button, ProgressBar, IconButton } from '../../components/ui';
 import { SecondaryGoal } from '../../types/user';
 
 interface GoalOption {
@@ -59,12 +59,11 @@ export function SecondaryGoalsScreen({ navigation }: any) {
             {/* Header */}
             <View style={styles.header}>
                 <View style={styles.headerTop}>
-                    <TouchableOpacity
+                    <IconButton
+                        icon="arrow-back"
+                        variant="tinted"
                         onPress={() => navigation.goBack()}
-                        style={[styles.backButton, { backgroundColor: colors.muted }]}
-                    >
-                        <Ionicons name="arrow-back" size={24} color={colors.foreground} />
-                    </TouchableOpacity>
+                    />
 
                     <View style={[styles.stepChip, { backgroundColor: colors.muted }]}>
                         <Text style={[styles.stepText, { color: colors.mutedForeground }]}>STEP 4 OF 10</Text>

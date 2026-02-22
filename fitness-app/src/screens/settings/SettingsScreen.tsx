@@ -4,9 +4,7 @@ import {
     Text,
     StyleSheet,
     ScrollView,
-    TouchableOpacity,
     Switch,
-    Animated,
     Alert,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -16,20 +14,16 @@ import { useTheme } from '../../contexts';
 import { fontFamilies } from '../../theme/typography';
 import { useAuthQueries } from '../../hooks/queries/useAuthQueries';
 import { useUserQueries } from '../../hooks/queries/useUserQueries';
+import { NavigationBar, ListItem, Button, Divider } from '../../components/ui';
 
 export function SettingsScreen({ navigation }: any) {
     const colors = useColors();
     const { isDark, toggleTheme } = useTheme();
     const insets = useSafeAreaInsets();
-    const fadeAnim = useRef(new Animated.Value(0)).current;
 
     const { settingsQuery, deleteAccountMutation } = useUserQueries();
     const { logoutMutation } = useAuthQueries();
     const units = settingsQuery.data?.units || 'metric';
-
-    useEffect(() => {
-        Animated.timing(fadeAnim, { toValue: 1, duration: 500, useNativeDriver: true }).start();
-    }, []);
 
     const getSettingsSections = () => [
         {
@@ -140,81 +134,69 @@ export function SettingsScreen({ navigation }: any) {
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
-            {/* Header */}
-            <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.card, borderBottomColor: colors.border }]}>
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerBtn}>
-                    <Ionicons name="arrow-back" size={24} color={colors.foreground} />
-                </TouchableOpacity>
-                <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Settings</Text>
-                <View style={styles.headerBtn} />
-            </View>
+            <NavigationBar
+                title="Settings"
+                showBack
+                onBack={() => navigation.goBack()}
+            />
 
             <ScrollView showsVerticalScrollIndicator={false}>
-                <Animated.View style={{ opacity: fadeAnim }}>
                     {getSettingsSections().map((section) => (
                         <View key={section.title} style={styles.section}>
                             <Text style={[styles.sectionTitle, { color: colors.mutedForeground }]}>{section.title}</Text>
-                            <View style={[styles.sectionCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+                            <View style={[styles.sectionCard, { backgroundColor: colors.card, borderColor: (colors as any).cardBorder ?? colors.border }]}>
                                 {section.items.map((item, index) => (
-                                    <TouchableOpacity
-                                        key={item.id}
-                                        style={[
-                                            styles.settingItem,
-                                            index < section.items.length - 1 && { borderBottomColor: colors.border, borderBottomWidth: 1 }
-                                        ]}
-                                        activeOpacity={item.type === 'toggle' || item.type === 'info' ? 1 : 0.7}
-                                        disabled={item.type === 'toggle' || item.type === 'info'}
-                                        onPress={() => handleNavigation(item)}
-                                    >
-                                        <View style={[styles.settingIcon, { backgroundColor: `${colors.primary.main}10` }]}>
-                                            <Ionicons name={item.icon as any} size={22} color={colors.primary.main} />
-                                        </View>
-                                        <View style={styles.settingContent}>
-                                            <Text style={[styles.settingLabel, { color: colors.foreground }]}>{item.label}</Text>
-                                            {item.value && item.type !== 'toggle' && (
-                                                <Text style={[styles.settingValue, { color: colors.mutedForeground }]}>{item.value}</Text>
-                                            )}
-                                        </View>
-                                        {item.type === 'toggle' && (
-                                            <Switch
-                                                value={item.id === 'theme' ? isDark : false}
-                                                onValueChange={item.id === 'theme' ? toggleTheme : undefined}
-                                                trackColor={{ false: colors.muted, true: colors.primary.main }}
-                                                thumbColor="#FFF"
-                                            />
-                                        )}
-                                        {item.type === 'nav' && (
-                                            <Ionicons name="chevron-forward" size={20} color={colors.mutedForeground} />
-                                        )}
-                                    </TouchableOpacity>
+                                    item.type === 'toggle' ? (
+                                        <ListItem
+                                            key={item.id}
+                                            icon={item.icon as any}
+                                            title={item.label}
+                                            showChevron={false}
+                                            showDivider={index < section.items.length - 1}
+                                            rightElement={
+                                                <Switch
+                                                    value={item.id === 'theme' ? isDark : false}
+                                                    onValueChange={item.id === 'theme' ? toggleTheme : undefined}
+                                                    trackColor={{ false: (colors as any).cardBorder ?? colors.border, true: colors.primary.main }}
+                                                    thumbColor="#FFF"
+                                                />
+                                            }
+                                        />
+                                    ) : (
+                                        <ListItem
+                                            key={item.id}
+                                            icon={item.icon as any}
+                                            title={item.label}
+                                            subtitle={item.value}
+                                            showChevron={item.type === 'nav'}
+                                            showDivider={index < section.items.length - 1}
+                                            onPress={item.type === 'nav' ? () => handleNavigation(item) : undefined}
+                                        />
+                                    )
                                 ))}
                             </View>
                         </View>
                     ))}
 
                     {/* Logout Button */}
-                    <TouchableOpacity
-                        style={[styles.logoutBtn, { borderColor: colors.error }]}
-                        onPress={handleLogout}
-                        disabled={logoutMutation.isPending || deleteAccountMutation.isPending}
-                    >
-                        <Ionicons name="log-out-outline" size={22} color={colors.error} />
-                        <Text style={[styles.logoutText, { color: colors.error }]}>
-                            {logoutMutation.isPending ? 'Logging out...' : 'Log Out'}
-                        </Text>
-                    </TouchableOpacity>
-
-                    {/* Delete Account */}
-                    <TouchableOpacity
-                        style={styles.deleteBtn}
-                        onPress={handleDeleteAccount}
-                        disabled={deleteAccountMutation.isPending || logoutMutation.isPending}
-                    >
-                        <Text style={[styles.deleteText, { color: colors.mutedForeground }]}>
-                            {deleteAccountMutation.isPending ? 'Deleting account...' : 'Delete Account'}
-                        </Text>
-                    </TouchableOpacity>
-                </Animated.View>
+                    <View style={styles.actionSection}>
+                        <Button
+                            variant="outlined"
+                            label={logoutMutation.isPending ? 'Logging out...' : 'Log Out'}
+                            leftElement={<Ionicons name="log-out-outline" size={20} color={colors.error} />}
+                            textStyle={{ color: colors.error }}
+                            style={{ borderColor: colors.error }}
+                            onPress={handleLogout}
+                            disabled={logoutMutation.isPending || deleteAccountMutation.isPending}
+                        />
+                        <Button
+                            variant="ghost"
+                            label={deleteAccountMutation.isPending ? 'Deleting account...' : 'Delete Account'}
+                            textStyle={{ color: colors.mutedForeground, fontSize: 14 }}
+                            onPress={handleDeleteAccount}
+                            disabled={deleteAccountMutation.isPending || logoutMutation.isPending}
+                        />
+                    </View>
 
                 <View style={{ height: 100 }} />
             </ScrollView>
@@ -224,19 +206,8 @@ export function SettingsScreen({ navigation }: any) {
 
 const styles = StyleSheet.create({
     container: { flex: 1 },
-    header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 12, paddingBottom: 16, borderBottomWidth: 1 },
-    headerBtn: { width: 44, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center' },
-    headerTitle: { fontSize: 20, fontWeight: '700' },
     section: { marginTop: 24, paddingHorizontal: 16 },
-    sectionTitle: { fontSize: 13, fontWeight: '600', marginBottom: 10, marginLeft: 4, textTransform: 'uppercase', letterSpacing: 0.5 },
+    sectionTitle: { fontSize: 11, fontWeight: '600', marginBottom: 8, marginLeft: 4, textTransform: 'uppercase', letterSpacing: 0.8 },
     sectionCard: { borderRadius: 18, borderWidth: 1, overflow: 'hidden' },
-    settingItem: { flexDirection: 'row', alignItems: 'center', padding: 14, gap: 14 },
-    settingIcon: { width: 40, height: 40, borderRadius: 12, alignItems: 'center', justifyContent: 'center' },
-    settingContent: { flex: 1 },
-    settingLabel: { fontSize: 16, fontWeight: '500' },
-    settingValue: { fontSize: 14, marginTop: 2 },
-    logoutBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: 32, marginHorizontal: 16, padding: 16, borderRadius: 16, borderWidth: 1, gap: 10 },
-    logoutText: { fontSize: 16, fontWeight: '600' },
-    deleteBtn: { alignItems: 'center', marginTop: 20, padding: 12 },
-    deleteText: { fontSize: 14 },
+    actionSection: { marginTop: 32, paddingHorizontal: 16, gap: 8 },
 });

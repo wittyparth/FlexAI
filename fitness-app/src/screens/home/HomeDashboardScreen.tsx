@@ -7,7 +7,7 @@ import { useAuthStore } from '../../store/authStore';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useColors } from '../../hooks';
 import { typography, fontFamilies } from '../../theme/typography';
-import { Card } from '../../components/ui/Card';
+import { Card, Button, Badge, StatCard, ProgressBar, IconButton } from '../../components/ui';
 
 // Interfaces ensuring backend data matching
 // (Removed local DashboardData interface as we import it now)
@@ -145,22 +145,26 @@ export function HomeDashboardScreen({ navigation }: HomeStackScreenProps<'HomeDa
                     </Text>
                 </View>
                 {/* Theme Toggle */}
-                <TouchableOpacity
-                    style={[styles.notificationBtn, { backgroundColor: colors.card, borderColor: colors.border, marginRight: 8 }]}
+                <IconButton
+                    icon={isDark ? 'sunny-outline' : 'moon-outline'}
+                    variant="outline"
+                    size="sm"
                     onPress={toggleTheme}
-                >
-                    <Ionicons name={isDark ? 'sunny-outline' : 'moon-outline'} size={22} color={colors.foreground} />
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={[styles.notificationBtn, { backgroundColor: colors.card, borderColor: colors.border }]}
-                    onPress={() => navigation.navigate('HomeNotifications')}
-                >
-                    <Ionicons name="notifications-outline" size={24} color={colors.foreground} />
+                    style={{ marginRight: 8 }}
+                    accessibilityLabel="Toggle theme"
+                />
+                <View style={{ position: 'relative' }}>
+                    <IconButton
+                        icon="notifications-outline"
+                        variant="outline"
+                        size="sm"
+                        onPress={() => navigation.navigate('HomeNotifications')}
+                        accessibilityLabel="Notifications"
+                    />
                     <View style={styles.notificationDot}>
-                        <View style={[styles.dotPing, { backgroundColor: colors.primary.main }]} />
                         <View style={[styles.dotCore, { backgroundColor: colors.primary.main }]} />
                     </View>
-                </TouchableOpacity>
+                </View>
             </View>
 
             <ScrollView
@@ -187,24 +191,25 @@ export function HomeDashboardScreen({ navigation }: HomeStackScreenProps<'HomeDa
                                     </View>
                                 </View>
 
-                                <View style={styles.levelProgressContainer}>
-                                    <View style={styles.levelMeta}>
-                                        <Text style={[styles.nextLevel, { color: colors.mutedForeground }]}>
-                                            Next: {data.userLevel.nextTitle}
-                                        </Text>
-                                        <Text style={[styles.xpText, { color: colors.foreground }]}>
-                                            <Text style={{ color: colors.primary.main, fontWeight: '700' }}>
-                                                {data.userLevel.currentXp}
+                                    <View style={styles.levelProgressContainer}>
+                                        <View style={styles.levelMeta}>
+                                            <Text style={[styles.nextLevel, { color: colors.mutedForeground }]}>
+                                                Next: {data.userLevel.nextTitle}
                                             </Text>
-                                            /{data.userLevel.nextLevelXp} XP
-                                        </Text>
-                                    </View>
-                                    <View style={[styles.progressBarBg, { backgroundColor: colors.slate[200] }]}>
-                                        <View
-                                            style={[styles.progressBarFill, { width: `${data.userLevel.progress * 100}%` }]}
+                                            <Text style={[styles.xpText, { color: colors.foreground }]}>
+                                                <Text style={{ color: colors.primary.main, fontWeight: '700' }}>
+                                                    {data.userLevel.currentXp}
+                                                </Text>
+                                                /{data.userLevel.nextLevelXp} XP
+                                            </Text>
+                                        </View>
+                                        <ProgressBar
+                                            progress={data.userLevel.progress}
+                                            gradient={[colors.primary.main, '#7C3AED']}
+                                            height={6}
+                                            style={{ marginTop: 8, borderRadius: 4 }}
                                         />
                                     </View>
-                                </View>
                             </View>
                         </Card>
                     </TouchableOpacity>
@@ -273,33 +278,14 @@ export function HomeDashboardScreen({ navigation }: HomeStackScreenProps<'HomeDa
                             </View>
 
                             <View style={styles.badgesRow}>
-                                {data.todaysWorkout.muscleStatus.map((status: { part: string; status: 'fresh' | 'recovering' | 'fatigued'; icon: string }, i: number) => (
-                                    <View
+                                {data.todaysWorkout.muscleStatus.map((status, i) => (
+                                    <Badge
                                         key={i}
-                                        style={[
-                                            styles.statusBadge,
-                                            {
-                                                backgroundColor: status.status === 'fresh'
-                                                    ? (mode === 'dark' ? '#064e3b' : '#ecfdf5')
-                                                    : (mode === 'dark' ? '#78350f' : '#fffbeb'),
-                                                borderColor: status.status === 'fresh'
-                                                    ? (mode === 'dark' ? '#065f46' : '#d1fae5')
-                                                    : (mode === 'dark' ? '#92400e' : '#fef3c7')
-                                            }
-                                        ]}
-                                    >
-                                        <Ionicons
-                                            name={status.icon === 'flash' ? 'flash' : 'time'}
-                                            size={14}
-                                            color={status.status === 'fresh' ? '#059669' : '#d97706'}
-                                        />
-                                        <Text style={[
-                                            styles.statusText,
-                                            { color: status.status === 'fresh' ? '#047857' : '#b45309' }
-                                        ]}>
-                                            {status.part}
-                                        </Text>
-                                    </View>
+                                        label={status.part}
+                                        variant={status.status === 'fresh' ? 'success' : 'warning'}
+                                        icon={status.icon === 'flash' ? 'flash' : 'time-outline'}
+                                        size="sm"
+                                    />
                                 ))}
                             </View>
 
@@ -318,14 +304,13 @@ export function HomeDashboardScreen({ navigation }: HomeStackScreenProps<'HomeDa
                                 </View>
                             </View>
 
-                            <TouchableOpacity style={styles.startBtnContainer} activeOpacity={0.9}>
-                                <View
-                                    style={styles.startBtn}
-                                >
-                                    <Text style={styles.startBtnText}>START WORKOUT</Text>
-                                    <Ionicons name="arrow-forward" size={20} color="#fff" />
-                                </View>
-                            </TouchableOpacity>
+                            <Button
+                                variant="primary"
+                                label="START WORKOUT"
+                                rightElement={<Ionicons name="arrow-forward" size={20} color="#fff" />}
+                                style={{ marginTop: 16 }}
+                                onPress={() => {}}
+                            />
                         </Card>
                     </View>
                 )}
@@ -336,53 +321,35 @@ export function HomeDashboardScreen({ navigation }: HomeStackScreenProps<'HomeDa
                         <Text style={[styles.sectionTitle, { color: colors.foreground, fontFamily: fontFamilies.display, paddingHorizontal: 4 }]}>
                             Quick Stats
                         </Text>
-                        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.statsScroll}>
-                            {/* Volume Card */}
-                            <View style={[styles.statBox, { backgroundColor: colors.card, borderColor: colors.border }]}>
-                                <View style={styles.statHeader}>
-                                    <MaterialCommunityIcons name="scale-bathroom" size={20} color={colors.primary.main} />
-                                    <Text style={styles.statLabel}>TOTAL VOL</Text>
-                                </View>
-                                <Text style={[styles.statMainValue, { color: colors.foreground }]}>
-                                    {data.quickStats.totalVolume.toLocaleString()}
-                                    <Text style={[styles.statUnit, { color: colors.mutedForeground }]}>{data.quickStats.volumeUnit}</Text>
-                                </Text>
-                                <View style={styles.trendRow}>
-                                    <Ionicons name="trending-up" size={14} color={colors.success} />
-                                    <Text style={[styles.trendText, { color: colors.success }]}>+{data.quickStats.volumeTrend}%</Text>
-                                </View>
-                            </View>
-
-                            {/* Active Time Card */}
-                            <View style={[styles.statBox, { backgroundColor: colors.card, borderColor: colors.border }]}>
-                                <View style={styles.statHeader}>
-                                    <MaterialCommunityIcons name="timer-outline" size={20} color={colors.primary.main} />
-                                    <Text style={styles.statLabel}>ACTIVE</Text>
-                                </View>
-                                <Text style={[styles.statMainValue, { color: colors.foreground }]}>
-                                    {data.quickStats.activeMinutesAvg}
-                                    <Text style={[styles.statUnit, { color: colors.mutedForeground }]}>min</Text>
-                                </Text>
-                                <Text style={[styles.trendText, { color: colors.mutedForeground }]}>Avg per session</Text>
-                            </View>
-
-                            {/* Streak Card */}
-                            <TouchableOpacity
+                        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={[styles.statsScroll, { gap: 12 }]}>
+                            <StatCard
+                                materialIcon="scale-bathroom"
+                                label="Total Volume"
+                                value={data.quickStats.totalVolume}
+                                unit={data.quickStats.volumeUnit}
+                                trend={data.quickStats.volumeTrend}
+                                size="md"
+                                style={styles.statCardBox}
+                            />
+                            <StatCard
+                                materialIcon="timer-outline"
+                                label="Active Avg"
+                                value={data.quickStats.activeMinutesAvg}
+                                unit="min"
+                                trendText="Per session"
+                                size="md"
+                                style={styles.statCardBox}
+                            />
+                            <StatCard
+                                icon="flame"
+                                label="Streak"
+                                value={data.quickStats.streakDays}
+                                unit="days"
+                                trendText={data.quickStats.isStreakRecord ? 'Personal Best!' : undefined}
+                                size="md"
+                                style={styles.statCardBox}
                                 onPress={() => navigation.navigate('FullStreakCalendar')}
-                                style={[styles.statBox, { backgroundColor: colors.card, borderColor: colors.border }]}
-                            >
-                                <View style={styles.statHeader}>
-                                    <Ionicons name="flame" size={20} color={colors.primary.main} />
-                                    <Text style={styles.statLabel}>STREAK</Text>
-                                </View>
-                                <Text style={[styles.statMainValue, { color: colors.foreground }]}>
-                                    {data.quickStats.streakDays}
-                                    <Text style={[styles.statUnit, { color: colors.mutedForeground }]}>days</Text>
-                                </Text>
-                                {data.quickStats.isStreakRecord && (
-                                    <Text style={[styles.trendText, { color: colors.success }]}>Personal Best!</Text>
-                                )}
-                            </TouchableOpacity>
+                            />
                         </ScrollView>
                     </View>
                 )}
@@ -651,8 +618,11 @@ const styles = StyleSheet.create({
     // Quick Stats
     statsScroll: {
         paddingHorizontal: 4,
-        gap: 16,
         paddingBottom: 16,
+    },
+    statCardBox: {
+        minWidth: 148,
+        padding: 16,
     },
     statBox: {
         minWidth: 140,

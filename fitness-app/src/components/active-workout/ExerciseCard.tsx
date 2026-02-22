@@ -10,7 +10,8 @@ import {
 } from 'react-native';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
-import { WorkoutExercise, WorkoutSet } from '../../types/backend.types';
+import { NormalizedExercise } from '../../store/types/workout.types';
+import { WorkoutSet } from '../../types/backend.types';
 import { ExerciseSetTable } from './ExerciseSetTable';
 import type { SetType } from '../../hooks/useActiveWorkout';
 
@@ -48,7 +49,7 @@ const ProgressDots = memo(({ completed, total, color }: { completed: number; tot
 });
 
 interface Props {
-  exercise: WorkoutExercise;
+  exercise: NormalizedExercise;
   completedSets: WorkoutSet[];
   isExpanded: boolean; // kept for API compat — card is always expanded now
   isActive: boolean;
@@ -97,7 +98,7 @@ export const ExerciseCard = memo(({
   const targetSets = exercise.targetSets || 3;
   const setsCompleted = completedSets.length;
   const allDone = setsCompleted >= targetSets;
-  const muscleGroup = exercise.exercise?.muscleGroup || 'default';
+  const muscleGroup = exercise.primaryMuscle || 'default';
   const iconName = MUSCLE_ICONS[muscleGroup] || MUSCLE_ICONS.default;
 
   const targetRepsLabel = exercise.targetRepsMin && exercise.targetRepsMax
@@ -142,7 +143,7 @@ export const ExerciseCard = memo(({
         {/* Info */}
         <View style={styles.headerInfo}>
           <Text style={[styles.exerciseName, { color: colors.foreground }]} numberOfLines={1}>
-            {exercise.exercise?.name || 'Exercise'}
+            {exercise.exerciseName || 'Exercise'}
           </Text>
           <View style={styles.metaRow}>
             <Text style={[styles.metaText, { color: allDone ? (colors.success || '#10B981') : colors.mutedForeground }]}>

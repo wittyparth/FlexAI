@@ -109,8 +109,8 @@ export function ExploreHubScreen({ navigation }: any) {
 
     const categories = useMemo(() => {
         const exerciseCount = Number(exerciseSummaryResponse?.pagination?.total || 0);
-        const routineCount = Number(publicRoutinesResponse?.data?.pagination?.total || routineEntries.length);
-        const templateCount = Number(templatesResponse?.data?.pagination?.total || templatesResponse?.data?.routines?.length || 0);
+        const routineCount = Number((publicRoutinesResponse?.data as any)?.pagination?.total || routineEntries.length);
+        const templateCount = Number((templatesResponse?.data as any)?.pagination?.total || templatesResponse?.data?.routines?.length || 0);
         const challengeCount = Number(challengesResponse?.pagination?.total || challengeEntries.length);
 
         return [
@@ -119,7 +119,7 @@ export function ExploreHubScreen({ navigation }: any) {
             { id: 'templates', label: 'Templates', icon: 'file-document-multiple-outline', count: templateCount, color: colors.success },
             { id: 'challenges', label: 'Challenges', icon: 'trophy-outline', count: challengeCount, color: colors.warning },
         ];
-    }, [challengeEntries.length, challengesResponse?.pagination?.total, colors.chart1, colors.chart4, colors.success, colors.warning, exerciseSummaryResponse?.pagination?.total, publicRoutinesResponse?.data?.pagination?.total, routineEntries.length, templatesResponse?.data?.pagination?.total, templatesResponse?.data?.routines?.length]);
+    }, [challengeEntries.length, challengesResponse?.pagination?.total, colors.chart1, colors.chart4, colors.success, colors.warning, exerciseSummaryResponse?.pagination?.total, (publicRoutinesResponse?.data as any)?.pagination?.total, routineEntries.length, (templatesResponse?.data as any)?.pagination?.total, templatesResponse?.data?.routines?.length]);
 
     const featuredItems = useMemo(() => {
         return featuredExercises.slice(0, 6).map((exercise: any) => ({

@@ -1,5 +1,9 @@
 export { useColors } from './useColors';
 export { useActiveWorkout } from './useActiveWorkout';
+export { useOnboardingFlow } from './useOnboardingFlow';
+export { useWorkoutSession } from './useWorkoutSession';
+export { useFlowGuard } from './useFlowGuard';
+export { useWorkoutAIGeneration, useRoutineAIGeneration, useTemplateAIGeneration } from './useAIGeneration';
 
 // Query hooks
 export * from './queries/useStatsQueries';

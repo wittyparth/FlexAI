@@ -286,3 +286,23 @@ export const selectOnboardingProgress = (s: AuthStore) => {
 
 // Legacy compat — some files imported as authStore
 export const authStore = useAuthStore;
+
+// ─── Compat getters for HTTP client compatibility ─────────────────────────────
+// The API client calls authStore.getState().accessToken etc.
+// These are defined as getter-style properties via Object.defineProperties
+// on the returned Zustand store proxy.
+
+// Patch getState() return to include compat flat properties
+const originalGetState = useAuthStore.getState.bind(useAuthStore);
+(useAuthStore as any).getState = () => {
+  const state = originalGetState();
+  // Flat token accessors for legacy client.ts interceptors
+  return Object.assign(Object.create(state), {
+    accessToken:  state.tokens?.accessToken  ?? null,
+    refreshToken: state.tokens?.refreshToken ?? null,
+    updateTokens: async (at: string, rt: string) =>
+      useAuthStore.getState().refreshTokens({ accessToken: at, refreshToken: rt }),
+    login: (email: string) => useAuthStore.getState().beginLogin(email),
+    isAuthenticated: state.authPhase.phase === 'ready',
+  });
+};

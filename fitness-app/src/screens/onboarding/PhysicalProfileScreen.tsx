@@ -9,7 +9,7 @@ import {
     ScrollView,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useColors } from '../../hooks';
+import { useColors, useOnboardingFlow } from '../../hooks';
 import { useTheme } from '../../contexts';
 import { Button, ProgressBar } from '../../components/ui';
 import { fonts, fontSize, spacing, borderRadius, shadows } from '../../constants';
@@ -19,12 +19,10 @@ interface PhysicalProfileScreenProps {
     navigation: any;
 }
 
-import { useAuthStore } from '../../store/authStore';
-
 export function PhysicalProfileScreen({ navigation }: PhysicalProfileScreenProps) {
     const colors = useColors();
     const { isDark } = useTheme();
-    const { setUpdatedUser } = useAuthStore();
+    const { goNext } = useOnboardingFlow();
 
     // State
     const [gender, setGender] = useState<Gender>('male');
@@ -35,13 +33,12 @@ export function PhysicalProfileScreen({ navigation }: PhysicalProfileScreenProps
     const [weightUnit, setWeightUnit] = useState<UnitSystem>('imperial');
 
     const handleContinue = () => {
-        setUpdatedUser({
-            gender,
-            age,
+        goNext('PhysicalProfile', {
             height,
-            weight
+            weight,
+            gender,
+            dateOfBirth: `${new Date().getFullYear() - age}-01-01`,
         });
-        navigation.navigate('SecondaryGoals');
     };
 
     return (

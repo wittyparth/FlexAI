@@ -64,6 +64,14 @@ export interface NormalizedExercise {
   order: number;
   notes?: string;
   restSeconds?: number;
+  targetSets?: number;
+  targetRepsMin?: number;
+  targetRepsMax?: number;
+  targetWeight?: number;
+  /** Primary muscle group string (e.g. 'chest') */
+  primaryMuscle?: string;
+  /** Secondary muscle groups for the muscle highlighter */
+  secondaryMuscles?: string[];
 }
 
 // ─── Rest Timer ───────────────────────────────────────────────────────────────

@@ -216,11 +216,13 @@ export function WorkoutHubScreen({ navigation }: any) {
     const colors = useColors();
     const fade = useRef(new Animated.Value(0)).current;
 
-    const { workoutStatus, workoutName, totalSets } = useWorkoutStore(useShallow(state => ({
-        workoutStatus: state.status,
-        workoutName: state.workoutName,
+    const { sessionPhase, totalSets } = useWorkoutStore(useShallow(state => ({
+        sessionPhase: state.sessionPhase,
         totalSets: Object.keys(state.sets).length,
     })));
+
+    const workoutStatus = sessionPhase.phase === 'active' ? 'in_progress' : 'idle';
+    const workoutName   = (sessionPhase.phase === 'active' || sessionPhase.phase === 'completing') ? sessionPhase.name : null;
 
     const oneYearRange = useMemo(() => {
         const start = startOfDay(addDays(new Date(), -364));

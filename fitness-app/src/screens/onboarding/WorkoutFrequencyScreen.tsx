@@ -24,18 +24,17 @@ const FREQUENCY_OPTIONS = [
     { value: 7, label: '7 days', description: 'No rest days' },
 ];
 
-import { useAuthStore } from '../../store/authStore';
+import { useOnboardingFlow } from '../../hooks/useOnboardingFlow';
 
 export function WorkoutFrequencyScreen({ navigation }: any) {
     const colors = useColors();
     const { isDark } = useTheme();
-    const { setUpdatedUser } = useAuthStore();
+    const { goNext } = useOnboardingFlow();
     const [selectedFrequency, setSelectedFrequency] = useState<number | null>(4);
 
     const handleContinue = () => {
         if (selectedFrequency) {
-            setUpdatedUser({ trainingDaysPerWeek: selectedFrequency });
-            navigation.navigate('WorkoutDuration');
+            goNext('WorkoutFrequency', { daysPerWeek: selectedFrequency });
         }
     };
 

@@ -87,7 +87,8 @@ interface WorkoutSessionActions {
   clearError:  () => void;
 
   // Crash recovery
-  recoverFromStorage: () => Promise<void>;
+  recoverFromStorage:  () => Promise<void>;
+  syncCurrentWorkout:  () => Promise<void>;
 }
 
 type WorkoutStore = WorkoutSessionState & WorkoutSessionActions;
@@ -102,12 +103,21 @@ function normalizeWorkout(
 
   (workout.exercises ?? []).forEach((ex: WorkoutExercise) => {
     exercises[ex.id] = {
-      id:           ex.id,
-      exerciseId:   (ex as any).exerciseId ?? ex.id,
-      exerciseName: (ex as any).exerciseName ?? (ex as any).exercise?.name ?? '',
-      order:        (ex as any).order ?? 0,
-      notes:        (ex as any).notes,
-      restSeconds:  (ex as any).restSeconds,
+      id:               ex.id,
+      exerciseId:       (ex as any).exerciseId ?? ex.id,
+      exerciseName:     (ex as any).exerciseName ?? (ex as any).exercise?.name ?? '',
+      order:            (ex as any).order ?? 0,
+      notes:            (ex as any).notes,
+      restSeconds:      (ex as any).restSeconds,
+      targetSets:       (ex as any).targetSets ?? (ex as any).exercise?.targetSets,
+      targetRepsMin:    (ex as any).targetRepsMin ?? (ex as any).exercise?.targetRepsMin,
+      targetRepsMax:    (ex as any).targetRepsMax ?? (ex as any).exercise?.targetRepsMax,
+      targetWeight:     (ex as any).targetWeight ?? (ex as any).exercise?.targetWeight,
+      primaryMuscle:    (ex as any).exercise?.muscleGroup
+                          ?? (Array.isArray((ex as any).exercise?.primaryMuscleGroups)
+                               ? (ex as any).exercise.primaryMuscleGroups[0]
+                               : undefined),
+      secondaryMuscles: (ex as any).exercise?.secondaryMuscleGroups ?? [],
     };
     (ex.sets ?? []).forEach((s: WorkoutSet) => {
       sets[String(s.id)] = {
@@ -273,11 +283,20 @@ export const useWorkoutStore = create<WorkoutStore>()(
 
           set((s) => {
             s.exercises[workoutExercise.id] = {
-              id:           workoutExercise.id,
-              exerciseId:   (workoutExercise as any).exerciseId ?? exerciseId,
-              exerciseName: (workoutExercise as any).exerciseName ?? (workoutExercise as any).exercise?.name ?? '',
-              order:        Object.keys(s.exercises).length,
+              id:               workoutExercise.id,
+              exerciseId:       (workoutExercise as any).exerciseId ?? exerciseId,
+              exerciseName:     (workoutExercise as any).exerciseName ?? (workoutExercise as any).exercise?.name ?? '',
+              order:            Object.keys(s.exercises).length,
               notes,
+              targetSets:       (workoutExercise as any).targetSets ?? (workoutExercise as any).exercise?.targetSets,
+              targetRepsMin:    (workoutExercise as any).targetRepsMin ?? (workoutExercise as any).exercise?.targetRepsMin,
+              targetRepsMax:    (workoutExercise as any).targetRepsMax ?? (workoutExercise as any).exercise?.targetRepsMax,
+              targetWeight:     (workoutExercise as any).targetWeight ?? (workoutExercise as any).exercise?.targetWeight,
+              primaryMuscle:    (workoutExercise as any).exercise?.muscleGroup
+                                  ?? (Array.isArray((workoutExercise as any).exercise?.primaryMuscleGroups)
+                                       ? (workoutExercise as any).exercise.primaryMuscleGroups[0]
+                                       : undefined),
+              secondaryMuscles: (workoutExercise as any).exercise?.secondaryMuscleGroups ?? [],
             };
             (workoutExercise.sets ?? []).forEach((sv: WorkoutSet) => {
               s.sets[String(sv.id)] = { id: String(sv.id), workoutExerciseId: workoutExercise.id, setType: 'working', status: 'synced', weight: sv.weight, reps: sv.reps };
@@ -497,10 +516,20 @@ export const useWorkoutStore = create<WorkoutStore>()(
       // ── Crash Recovery ─────────────────────────────────────────────────────
 
       recoverFromStorage: async () => {
+        // The persist middleware rehydrates slice automatically;
+        // this trigger is a no-op signal for the navigator guard.
+        await get().syncCurrentWorkout();
+      },
+
+      syncCurrentWorkout: async () => {
         const { sessionPhase } = get();
-        // If we have an active session from persistence, re-sync with server
-        if (sessionPhase.phase === 'active') {
-          await get().syncWorkout();
+        if (sessionPhase.phase !== 'active') return;
+        try {
+          const workout = (await workoutApi.getWorkoutById(sessionPhase.workoutId)).data as unknown as Workout;
+          const { exercises, sets } = normalizeWorkout(workout);
+          set((s) => { s.exercises = exercises; s.sets = sets; });
+        } catch (err) {
+          console.warn('[workoutStore] syncCurrentWorkout failed:', err);
         }
       },
     })),

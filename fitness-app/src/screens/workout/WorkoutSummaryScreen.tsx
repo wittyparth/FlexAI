@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import {
     View,
     Text,
@@ -11,6 +11,7 @@ import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { MuscleHighlighterCard } from '../../components/muscles/MuscleHighlighterCard';
+import { useWorkoutStore, selectCompletedSummary } from '../../store/workoutStore';
 
 const ACHIEVEMENTS = [
     { id: 1, title: 'Early Bird', desc: 'Workout before 7AM', icon: 'emoji-events', color: '#FEF3C7', iconColor: '#D97706' },
@@ -35,11 +36,28 @@ export function WorkoutSummaryScreen({ navigation, route }: any) {
     const insets = useSafeAreaInsets();
     const params = route?.params || {};
 
-    const workoutName = typeof params?.workoutName === 'string' ? params.workoutName : 'Workout Session';
-    const elapsedSeconds = Number(params?.elapsedSeconds ?? 75 * 60);
-    const totalVolume = Number(params?.totalVolume ?? 12450);
-    const totalSetsCompleted = Number(params?.totalSetsCompleted ?? 18);
-    const totalSetsTarget = Number(params?.totalSetsTarget ?? 24);
+    // Primary data source: store (populated by completeWorkout FSM transition)
+    const storeSummary = useWorkoutStore(selectCompletedSummary);
+
+    // Reset to idle once the user reaches this screen so the session is cleared
+    useEffect(() => {
+        return () => {
+            // When unmounting (user navigates away), clear completed state
+            const { sessionPhase } = useWorkoutStore.getState();
+            if (sessionPhase.phase === 'completed') {
+                useWorkoutStore.setState((s) => { (s as any).sessionPhase = { phase: 'idle' }; });
+            }
+        };
+    }, []);
+
+    // Merge: store summary takes precedence over route params (allows deep-link fallback)
+    const workoutName       = storeSummary?.workoutName ?? (typeof params?.workoutName === 'string' ? params.workoutName : 'Workout Session');
+    const elapsedSeconds    = storeSummary?.elapsedSeconds ?? Number(params?.elapsedSeconds ?? 75 * 60);
+    const totalVolume       = storeSummary?.totalVolume ?? Number(params?.totalVolume ?? 12450);
+    const totalSetsCompleted = storeSummary?.totalSetsCompleted ?? Number(params?.totalSetsCompleted ?? 18);
+    const totalSetsTarget   = Number(params?.totalSetsTarget ?? 24);
+    const personalRecords   = storeSummary?.personalRecords ?? [];
+    const storeMuscleSets   = storeSummary?.muscleSets;
 
     const fallbackMuscleSets = useMemo(
         () => ({
@@ -52,8 +70,10 @@ export function WorkoutSummaryScreen({ navigation, route }: any) {
     );
 
     const summaryMuscleSets = useMemo(() => {
-        if (!params?.muscleSets || typeof params.muscleSets !== 'object') return fallbackMuscleSets;
-        const entries = Object.entries(params.muscleSets as Record<string, unknown>);
+        // Prefer store muscle sets over route params
+        const raw = storeMuscleSets ?? params?.muscleSets;
+        if (!raw || typeof raw !== 'object') return fallbackMuscleSets;
+        const entries = Object.entries(raw as Record<string, unknown>);
         if (!entries.length) return fallbackMuscleSets;
 
         const normalized: Record<string, number> = {};
@@ -62,7 +82,7 @@ export function WorkoutSummaryScreen({ navigation, route }: any) {
             if (Number.isFinite(parsed) && parsed > 0) normalized[muscle] = parsed;
         });
         return Object.keys(normalized).length > 0 ? normalized : fallbackMuscleSets;
-    }, [params?.muscleSets, fallbackMuscleSets]);
+    }, [storeMuscleSets, params?.muscleSets, fallbackMuscleSets]);
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>

@@ -136,22 +136,25 @@ function reducer(state: ActiveWorkoutState, action: Action): ActiveWorkoutState 
 export function useActiveWorkout() {
   // ──── Store Connection ────
   const store = useWorkoutStore(useShallow(state => ({
-    activeWorkoutId: state.activeWorkoutId,
-    workoutName: state.workoutName,
-    exercisesMap: state.exercises,
-    setsMap: state.sets,
-    elapsedSeconds: state.elapsedSeconds,
-    isLoading: state.isLoading,
-    status: state.status,
-    currentExerciseId: state.currentExerciseId,
-    isResting: state.isResting,
-    isRestPaused: state.isRestPaused,
-    restPausedRemaining: state.restPausedRemaining,
-    restEndTime: state.restEndTime,
-    restDurationSeconds: state.restDurationSeconds,
-    autoStartTimer: state.autoStartTimer,
-    defaultTimerSeconds: state.defaultTimerSeconds,
+    sessionPhase:       state.sessionPhase,
+    exercisesMap:       state.exercises,
+    setsMap:            state.sets,
+    elapsedSeconds:     state.elapsedSeconds,
+    currentExerciseId:  state.currentExerciseId,
+    restTimer:          state.restTimer,
+    timerPrefs:         state.timerPrefs,
   })));
+
+  // Derived flat values from FSM shape
+  const activeWorkoutId  = store.sessionPhase.phase === 'active' ? store.sessionPhase.workoutId : null;
+  const workoutName      = (store.sessionPhase as any).name ?? '';
+  const isLoading        = store.sessionPhase.phase === 'starting' || store.sessionPhase.phase === 'completing';
+  const status           = store.sessionPhase.phase;
+  const isResting        = store.restTimer.active;
+  const isRestPaused     = store.restTimer.active && store.restTimer.paused;
+  const restDurationSeconds = store.restTimer.active ? store.restTimer.durationSeconds : store.timerPrefs.defaultSeconds;
+  const autoStartTimer   = store.timerPrefs.autoStart;
+  const defaultTimerSeconds = store.timerPrefs.defaultSeconds;
 
   const {
     logSet: storeLogSet,
@@ -189,7 +192,7 @@ export function useActiveWorkout() {
 
   // ──── Derived Data ────
   const exercises = useMemo(() =>
-    Object.values(store.exercisesMap).sort((a, b) => a.orderIndex - b.orderIndex),
+    Object.values(store.exercisesMap).sort((a, b) => a.order - b.order),
     [store.exercisesMap]
   );
 
@@ -235,19 +238,17 @@ export function useActiveWorkout() {
   tickRef.current = tick;
 
   useEffect(() => {
-    if (!store.activeWorkoutId) return;
+    if (!activeWorkoutId) return;
     const interval = setInterval(() => tickRef.current(), 1000);
     return () => clearInterval(interval);
-  }, [store.activeWorkoutId]);
+  }, [activeWorkoutId]);
 
   // ──── Rest Timer Remaining ────
   const restRemaining = useMemo(() => {
-    if (!store.isResting) return 0;
-    if (store.isRestPaused) return Math.max(0, Math.floor(store.restPausedRemaining || 0));
-    if (!store.restEndTime) return 0;
-    const remaining = Math.max(0, Math.floor((new Date(store.restEndTime).getTime() - Date.now()) / 1000));
-    return remaining;
-  }, [store.isResting, store.isRestPaused, store.restPausedRemaining, store.restEndTime, store.elapsedSeconds]); // elapsedSeconds triggers re-calc each second
+    if (!store.restTimer.active) return 0;
+    if (store.restTimer.paused) return Math.max(0, Math.floor(store.restTimer.remainingSeconds));
+    return Math.max(0, Math.floor((store.restTimer.endTimeMs - Date.now()) / 1000));
+  }, [store.restTimer, store.elapsedSeconds]); // elapsedSeconds triggers re-calc each second
 
   // ──── Actions ────
   const handleLogSet = useCallback(async (exerciseId: number) => {
@@ -278,9 +279,9 @@ export function useActiveWorkout() {
 
       // Find exercise rest time
       const exercise = store.exercisesMap[exerciseId];
-      const restDuration = exercise?.restSeconds || store.defaultTimerSeconds || 90;
+      const restDuration = exercise?.restSeconds || defaultTimerSeconds || 90;
       
-      if (store.autoStartTimer) {
+      if (autoStartTimer) {
         startRest(restDuration);
       }
 
@@ -300,26 +301,26 @@ export function useActiveWorkout() {
     } catch (error) {
       return { success: false, error: 'Failed to log set' };
     }
-  }, [state.weightInput, state.repsInput, state.rpeInput, state.setType, state.editingSetId, storeLogSet, storeUpdateSet, store.exercisesMap, setsByExercise, exercises, startRest, setCurrentExercise]);
+  }, [state.weightInput, state.repsInput, state.rpeInput, state.setType, state.editingSetId, storeLogSet, storeUpdateSet, store.exercisesMap, setsByExercise, exercises, startRest, setCurrentExercise, autoStartTimer, defaultTimerSeconds]);
 
   const handleSkipRest = useCallback(() => {
     stopRest();
   }, [stopRest]);
 
   const handlePauseRest = useCallback(() => {
-    if (!store.isResting) return;
-    if (store.isRestPaused) {
+    if (!isResting) return;
+    if (isRestPaused) {
       resumeRest();
     } else {
       pauseRest();
     }
-  }, [store.isResting, store.isRestPaused, pauseRest, resumeRest]);
+  }, [isResting, isRestPaused, pauseRest, resumeRest]);
 
   const handleStartManualRest = useCallback(() => {
-    if (store.isResting) return;
-    const duration = Math.max(1, store.defaultTimerSeconds || 90);
+    if (isResting) return;
+    const duration = Math.max(1, defaultTimerSeconds || 90);
     startRest(duration);
-  }, [store.isResting, store.defaultTimerSeconds, startRest]);
+  }, [isResting, defaultTimerSeconds, startRest]);
 
   const handleExpandExercise = useCallback((exerciseId: number) => {
     dispatch({ type: 'EXPAND_EXERCISE', exerciseId });
@@ -379,16 +380,16 @@ export function useActiveWorkout() {
 
   return {
     // Store data
-    activeWorkoutId: store.activeWorkoutId,
-    workoutName: store.workoutName,
+    activeWorkoutId,
+    workoutName,
     elapsedSeconds: store.elapsedSeconds,
-    isLoading: store.isLoading,
-    status: store.status,
-    isResting: store.isResting,
-    isRestPaused: store.isRestPaused,
+    isLoading,
+    status,
+    isResting,
+    isRestPaused,
     restRemaining,
-    restDurationSeconds: store.restDurationSeconds,
-    defaultTimerSeconds: store.defaultTimerSeconds,
+    restDurationSeconds,
+    defaultTimerSeconds,
 
     // Derived
     exercises,

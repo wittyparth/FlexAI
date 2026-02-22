@@ -49,19 +49,20 @@ const GOAL_OPTIONS: GoalOption[] = [
     },
 ];
 
+import { useOnboardingFlow } from '../../hooks/useOnboardingFlow';
 import { useAuthStore } from '../../store/authStore';
 
 export function GoalSelectionScreen({ navigation }: any) {
     const colors = useColors();
     const { isDark } = useTheme();
 
-    const { setUpdatedUser, logout } = useAuthStore();
+    const { goNext, skip } = useOnboardingFlow();
+    const logout = useAuthStore((s) => s.logout);
     const [selectedGoal, setSelectedGoal] = useState<PrimaryGoal | null>(null);
 
     const handleContinue = () => {
         if (selectedGoal) {
-            setUpdatedUser({ primaryGoal: selectedGoal });
-            navigation.navigate('ExperienceLevel');
+            goNext('GoalSelection', { goals: [selectedGoal] });
         }
     };
 

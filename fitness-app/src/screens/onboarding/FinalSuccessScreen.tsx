@@ -15,13 +15,15 @@ import { fonts, fontSize, spacing } from '../../constants';
 import { Button } from '../../components/ui';
 import { useAuthStore } from '../../store/authStore';
 import { useUserQueries } from '../../hooks/queries/useUserQueries';
+import { useOnboardingFlow } from '../../hooks/useOnboardingFlow';
 
 const { width } = Dimensions.get('window');
 
 export function FinalSuccessScreen() {
     const colors = useColors();
     const { isDark } = useTheme();
-    const { setOnboardingCompleted, updatedUser } = useAuthStore();
+    const { completeOnboarding } = useAuthStore.getState();
+    const { user, onboardingData } = useAuthStore();
     const { submitOnboardingMutation } = useUserQueries();
 
     const scaleAnim = new Animated.Value(0);
@@ -51,27 +53,19 @@ export function FinalSuccessScreen() {
 
     const handleFinish = async () => {
         try {
-            // Submit all onboarding data to the backend
-            if (updatedUser && Object.keys(updatedUser).length > 0) {
-                await submitOnboardingMutation.mutateAsync(updatedUser as any);
+            // Submit staged onboarding data to backend
+            if (onboardingData && Object.keys(onboardingData).length > 0) {
+                await submitOnboardingMutation.mutateAsync(onboardingData as any);
             }
-
-            // Mark onboarding as completed (this also updates local state)
-            setOnboardingCompleted(true);
+            // Merge all staged data + mark onboarding complete in store & storage
+            await completeOnboarding();
+            // RootNavigator detects phase='ready' and renders MainDrawer
         } catch (error: any) {
             console.error('Failed to complete onboarding:', error);
-
-            // Still allow user to proceed even if API fails (offline-first UX)
-            // But warn them
             Alert.alert(
                 'Sync Issue',
                 'We couldn\'t sync your profile to the cloud. Your data is saved locally and will sync when you reconnect.',
-                [
-                    {
-                        text: 'Continue',
-                        onPress: () => setOnboardingCompleted(true),
-                    }
-                ]
+                [{ text: 'Continue', onPress: () => completeOnboarding() }]
             );
         }
     };

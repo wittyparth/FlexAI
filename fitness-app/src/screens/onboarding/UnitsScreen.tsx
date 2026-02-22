@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-nati
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
 import { OnboardingStackParamList } from '../../navigation/types';
-import { useAuthStore } from '../../store/authStore';
+import { useOnboardingFlow } from '../../hooks/useOnboardingFlow';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useColors } from '../../hooks/useColors';
 import { UnitSystem } from '../../types/user';
@@ -18,18 +18,17 @@ interface Props {
 export const UnitsScreen: React.FC<Props> = ({ navigation }) => {
     const { mode: theme } = useTheme();
     const colors = useColors();
-    const { updatedUser, setUpdatedUser } = useAuthStore();
+    const { goNext } = useOnboardingFlow();
 
-    // Default to metric if not set
-    const [unitSystem, setUnitSystem] = useState<UnitSystem>(updatedUser?.units || 'metric');
+    // Default to metric
+    const [unitSystem, setUnitSystem] = useState<UnitSystem>('metric');
 
     const handleSystemChange = (system: UnitSystem) => {
         setUnitSystem(system);
     };
 
     const handleContinue = () => {
-        setUpdatedUser({ units: unitSystem });
-        navigation.navigate('Notification');
+        goNext('Units', { system: unitSystem });
     };
 
     return (

@@ -24,7 +24,12 @@ export function useUserQueries() {
         mutationFn: userApi.updateProfile,
         onSuccess: (updatedUser) => {
             queryClient.setQueryData(userKeys.profile(), updatedUser);
-            updateUser(updatedUser); // Sync with auth store
+            updateUser({
+                ...updatedUser,
+                id: Number(updatedUser.id),
+                firstName: updatedUser.firstName ?? undefined,
+                lastName: updatedUser.lastName ?? undefined,
+            }); // Sync with auth store
         },
     });
 
@@ -45,7 +50,12 @@ export function useUserQueries() {
         onSuccess: (updatedUser) => {
             console.log('🎉 Onboarding completed, updating local state');
             queryClient.setQueryData(userKeys.profile(), updatedUser);
-            updateUser(updatedUser); // Sync with auth store
+            updateUser({
+                ...updatedUser,
+                id: Number(updatedUser.id),
+                firstName: updatedUser.firstName ?? undefined,
+                lastName: updatedUser.lastName ?? undefined,
+            }); // Sync with auth store
             queryClient.invalidateQueries({ queryKey: userKeys.settings() });
         },
         onError: (error: any) => {

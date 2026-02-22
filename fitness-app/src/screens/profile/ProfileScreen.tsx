@@ -16,7 +16,8 @@ import { API_BASE_URL } from '../../api/client';
 export function ProfileScreen() {
     const colors = useColors();
     const user = authStore((state) => state.user);
-    const isAuthenticated = authStore((state) => state.isAuthenticated);
+    const authPhase = authStore((state) => state.authPhase);
+    const isAuthenticated = authPhase.phase === 'ready';
     const logout = authStore((state) => state.logout);
 
     const handleLogout = () => {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import {
     View,
@@ -26,16 +26,20 @@ import {
 } from '../../hooks/queries/useRoutineQueries';
 import { Routine, RoutineExercise } from '../../types/backend.types';
 
+/** Stable string ID avoids collision between DB IDs (small ints) and temp IDs */
+function genTempId() { return `tmp_${Date.now()}_${Math.random().toString(36).slice(2)}`; }
+
 interface EditorExercise {
-    id: number; // This acts as a temp ID or exercise ID
+    /** Stable string key — DB exercises use String(dbId), new ones use genTempId() */
+    key: string;
+    /** Real DB id when editing an existing routine exercise, undefined for new */
+    dbId?: number;
     exerciseId: number;
     name: string;
     targetSets: string;
     targetReps: string; // e.g., "8-10" or "12"
     restSeconds: string;
     orderIndex?: number;
-    // Track if it's existing in DB or new, for update logic if we needed complex diffing
-    // For now we treat all as new payload for addExercise logic in creation
 }
 
 export function RoutineEditorScreen({ navigation, route }: any) {
@@ -73,7 +77,8 @@ export function RoutineEditorScreen({ navigation, route }: any) {
             setDescription(routineData.description || '');
             if (routineData.exercises) {
                 setExercises(routineData.exercises.map((ex: any) => ({
-                    id: ex.id || Date.now() + Math.random(),
+                    key: ex.id ? String(ex.id) : genTempId(),
+                    dbId: typeof ex.id === 'number' ? ex.id : undefined,
                     exerciseId: ex.exerciseId || ex.exercise?.id,
                     name: ex.exercise?.name || 'Unknown Exercise',
                     targetSets: ex.targetSets?.toString() || '3',
@@ -92,7 +97,8 @@ export function RoutineEditorScreen({ navigation, route }: any) {
 
             if (r.exercises) {
                 setExercises(r.exercises.map((ex: RoutineExercise) => ({
-                    id: ex.id, 
+                    key: String(ex.id),
+                    dbId: ex.id,
                     exerciseId: ex.exerciseId,
                     name: ex.exercise?.name || 'Unknown Exercise',
                     targetSets: ex.targetSets?.toString() || '3',
@@ -124,7 +130,7 @@ export function RoutineEditorScreen({ navigation, route }: any) {
                 existingExerciseIds.add(exerciseId);
                 localCounter += 1;
                 next.push({
-                    id: Date.now() + localCounter,
+                    key: genTempId(),
                     exerciseId,
                     name: exerciseItem.name,
                     targetSets: '3',
@@ -172,12 +178,12 @@ export function RoutineEditorScreen({ navigation, route }: any) {
         navigation,
     ]);
 
-    const removeExercise = (id: number) => {
-        setExercises(exercises.filter(ex => ex.id !== id));
+    const removeExercise = (key: string) => {
+        setExercises(exercises.filter(ex => ex.key !== key));
     };
 
-    const updateExercise = (id: number, field: keyof EditorExercise, value: string) => {
-        setExercises(exercises.map(ex => ex.id === id ? { ...ex, [field]: value } : ex));
+    const updateExercise = (key: string, field: keyof EditorExercise, value: string) => {
+        setExercises(exercises.map(ex => ex.key === key ? { ...ex, [field]: value } : ex));
     };
 
     const parseReps = (repsStr: string) => {
@@ -208,19 +214,19 @@ export function RoutineEditorScreen({ navigation, route }: any) {
                     const formattedExercises = exercises.map((ex, idx) => {
                         const { min, max } = parseReps(ex.targetReps);
                         return {
-                            id: ex.id || Date.now() + idx, // Temp ID for embedded routines
+                            id: ex.dbId ?? ex.key, // Use DB id if present
                             exerciseId: ex.exerciseId,
                             orderIndex: idx,
                             targetSets: parseInt(ex.targetSets) || 3,
                             targetRepsMin: min || 8,
                             targetRepsMax: max || 12,
                             restSeconds: parseInt(ex.restSeconds) || 60,
-                            exercise: { id: ex.exerciseId, name: ex.name } // Need exercise name for UI
+                            exercise: { id: ex.exerciseId, name: ex.name }
                         };
                     });
                     
                     const newRoutineData = {
-                        id: routineId || `temp_${Date.now()}`,
+                        id: routineId || genTempId(),
                         name,
                         description,
                         isPublic: false,
@@ -247,16 +253,16 @@ export function RoutineEditorScreen({ navigation, route }: any) {
                 const originalExercises = routineResponse?.data?.exercises || [];
                 const currentExercises = exercises;
 
-                // Existing IDs are from DB (small integers), New IDs are Date.now() (large integers)
-                // Reliable way: Check against original list IDs
-                const originalIds = new Set(originalExercises.map((e: RoutineExercise) => e.id));
-                const currentIds = new Set(currentExercises.map(e => e.id));
+                // Use dbId for set operations — new exercises have no dbId
+                const originalDbIds = new Set(originalExercises.map((e: RoutineExercise) => e.id));
 
-                // Exercises to Remove: Present in Original but not in Current
-                const toRemove = originalExercises.filter((e: RoutineExercise) => !currentIds.has(e.id));
+                // Exercises to Remove: those in DB not in current list
+                const toRemove = originalExercises.filter((e: RoutineExercise) => {
+                    return !currentExercises.some((ce) => ce.dbId === e.id);
+                });
 
-                // Exercises to Add: Present in Current but ID match in Original
-                const toAdd = currentExercises.filter(e => !originalIds.has(e.id));
+                // Exercises to Add: current exercises with no DB id
+                const toAdd = currentExercises.filter(e => !e.dbId);
 
                 // Execute Removals
                 const removePromises = toRemove.map((ex: RoutineExercise) =>
@@ -457,7 +463,7 @@ export function RoutineEditorScreen({ navigation, route }: any) {
                         </View>
                     ) : (
                         exercises.map((item, index) => (
-                            <View key={item.id} style={[styles.exerciseCard, { backgroundColor: colors.card, borderColor: colors.border, shadowColor: colors.primary.main }]}>
+                            <View key={item.key} style={[styles.exerciseCard, { backgroundColor: colors.card, borderColor: colors.border, shadowColor: colors.primary.main }]}>
                                 <View style={styles.cardHeader}>
                                     <View style={styles.cardHeaderLeft}>
                                         <Text style={[styles.exerciseIndex, { color: colors.mutedForeground }]}>{String(index + 1).padStart(2, '0')}</Text>
@@ -467,7 +473,7 @@ export function RoutineEditorScreen({ navigation, route }: any) {
                                     </View>
                                     <View style={styles.cardHeaderRight}>
                                         <MaterialCommunityIcons name="drag" size={22} color={colors.mutedForeground} style={{ marginRight: 8 }} />
-                                        <TouchableOpacity onPress={() => removeExercise(item.id)} style={[styles.deleteBtn, { backgroundColor: `${colors.error}15` }]}>
+                                        <TouchableOpacity onPress={() => removeExercise(item.key)} style={[styles.deleteBtn, { backgroundColor: `${colors.error}15` }]}>
                                             <Ionicons name="close" size={18} color={colors.error} />
                                         </TouchableOpacity>
                                     </View>
@@ -479,7 +485,7 @@ export function RoutineEditorScreen({ navigation, route }: any) {
                                         <TextInput
                                             style={[styles.metricBoxInput, { color: colors.foreground }]}
                                             value={item.targetSets}
-                                            onChangeText={(v) => updateExercise(item.id, 'targetSets', v)}
+                                            onChangeText={(v) => updateExercise(item.key, 'targetSets', v)}
                                             keyboardType="numeric"
                                             placeholder="3"
                                             placeholderTextColor={colors.mutedForeground}
@@ -490,7 +496,7 @@ export function RoutineEditorScreen({ navigation, route }: any) {
                                         <TextInput
                                             style={[styles.metricBoxInput, { color: colors.foreground }]}
                                             value={item.targetReps}
-                                            onChangeText={(v) => updateExercise(item.id, 'targetReps', v)}
+                                            onChangeText={(v) => updateExercise(item.key, 'targetReps', v)}
                                             placeholder="8-12"
                                             placeholderTextColor={colors.mutedForeground}
                                         />
@@ -500,7 +506,7 @@ export function RoutineEditorScreen({ navigation, route }: any) {
                                         <TextInput
                                             style={[styles.metricBoxInput, { color: colors.foreground }]}
                                             value={item.restSeconds}
-                                            onChangeText={(v) => updateExercise(item.id, 'restSeconds', v)}
+                                            onChangeText={(v) => updateExercise(item.key, 'restSeconds', v)}
                                             keyboardType="numeric"
                                             placeholder="90"
                                             placeholderTextColor={colors.mutedForeground}

@@ -40,7 +40,7 @@ export function RootNavigator() {
 
     return (
         <NavigationContainer>
-            <Stack.Navigator screenOptions={{ headerShown: false, animationEnabled: false }}>
+            <Stack.Navigator screenOptions={{ headerShown: false, animation: 'none' }}>
                 {isReady ? (
                     <Stack.Screen name="Main" component={MainDrawer} />
                 ) : needsOnboarding ? (

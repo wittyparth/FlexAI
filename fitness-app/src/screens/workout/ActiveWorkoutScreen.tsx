@@ -13,13 +13,14 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
-import { useActiveWorkout } from '../../hooks/useActiveWorkout';
+import { useWorkoutSession } from '../../hooks/useWorkoutSession';
+import { useShallow } from 'zustand/react/shallow';
 import { CustomAlert } from '../../components/ui/CustomAlert';
 import { ExerciseCard } from '../../components/active-workout/ExerciseCard';
 import { RestTimerOverlay } from '../../components/active-workout/RestTimerOverlay';
 import { TimerSettingsModal } from '../../components/active-workout/TimerSettingsModal';
 import { MuscleHighlighterCard } from '../../components/muscles/MuscleHighlighterCard';
-import { useWorkoutStore } from '../../store/workoutStore';
+import { useWorkoutStore, selectActiveWorkoutId, selectWorkoutName, selectTimerPrefs } from '../../store/workoutStore';
 
 export function ActiveWorkoutScreen({ navigation, route }: any) {
   const colors = useColors();
@@ -35,57 +36,73 @@ export function ActiveWorkoutScreen({ navigation, route }: any) {
   const [isSyncingWorkout, setIsSyncingWorkout] = React.useState(false);
 
   const {
-    // Store data
-    activeWorkoutId,
-    workoutName,
+    sessionPhase,
     elapsedSeconds,
-    isLoading,
+    exerciseList: exercises,
+    sets,
+    restTimer,
+    restRemainingSeconds,
     isResting,
-    isRestPaused,
-    restRemaining,
-    restDurationSeconds,
-    defaultTimerSeconds,
-
-    // Derived
-    exercises,
-    setsByExercise,
-    totalSetsTarget,
-    totalSetsCompleted,
-    totalVolume,
-    progressPercent,
-
-    // Local state
-    weightInput,
-    repsInput,
-    rpeInput,
-    setType,
-    editingSetId,
-    expandedExerciseId,
-    lastLoggedSet,
-
-    // Dispatchers
+    ui: { weightInput, repsInput, rpeInput, setType, editingSetId, expandedExerciseId },
     dispatch,
     handleLogSet,
-    handleSkipRest,
-    handlePauseRest,
-    handleStartManualRest,
-    handleExpandExercise,
-    beginEditSet,
-    cycleSetType,
-
-    // Store actions
-    completeWorkout,
-    cancelWorkout,
-    addExercise,
-    removeExercise,
-    deleteSet,
+    handleUpdateSet,
+    handleDeleteSet,
+    handleStartEdit: beginEditSet,
+    handleChangeExercise: handleExpandExercise,
+    handleAddExercise: addExercise,
+    handleRemoveExercise: removeExercise,
+    handleStartRest: handleStartManualRest,
     stopRest,
-    extendRest,
+  } = useWorkoutSession();
 
-    // Helpers
-    formatTime,
-    formatVolume,
-  } = useActiveWorkout();
+  // ── Compatibility shims ────────────────────────────────────────────────────
+  const activeWorkoutId   = useWorkoutStore(selectActiveWorkoutId);
+  const workoutName       = useWorkoutStore(selectWorkoutName);
+  const timerPrefs        = useWorkoutStore(selectTimerPrefs);
+
+  const isLoading           = sessionPhase.phase === 'starting';
+  const isRestPaused        = restTimer.active && restTimer.paused;
+  const restRemaining       = restRemainingSeconds;
+  const restDurationSeconds = restTimer.active ? (restTimer as any).durationSeconds : timerPrefs.defaultSeconds;
+  const defaultTimerSeconds = timerPrefs.defaultSeconds;
+  const lastLoggedSet: any  = null; // Not tracked separately; inputs stay prefilled
+
+  // Build setsByExercise (Record<workoutExerciseId, Set[]>) for muscle highlighter
+  const setsByExercise = useMemo(() => {
+    const result: Record<number, any[]> = {};
+    Object.values(sets).forEach((s) => {
+      if (!result[s.workoutExerciseId]) result[s.workoutExerciseId] = [];
+      result[s.workoutExerciseId].push(s);
+    });
+    return result;
+  }, [sets]);
+
+  // Stats
+  const totalSetsTarget    = useMemo(() => exercises.reduce((sum, ex) => sum + (ex.targetSets ?? 3), 0), [exercises]);
+  const totalSetsCompleted = useMemo(() => Object.values(sets).filter((s) => s.status !== 'pending').length, [sets]);
+  const totalVolume        = useMemo(() => Object.values(sets).reduce((sum, s) => sum + ((s.weight ?? 0) * (s.reps ?? 0)), 0), [sets]);
+  const progressPercent    = totalSetsTarget > 0 ? totalSetsCompleted / totalSetsTarget : 0;
+
+  const { completeWorkout, cancelWorkout, pauseRest } = useWorkoutStore.getState();
+  const deleteSet   = useCallback((exerciseId: number, setId: string) => handleDeleteSet(exerciseId, setId), [handleDeleteSet]);
+  const extendRest  = useCallback((extra: number) => handleStartManualRest(restRemainingSeconds + extra), [handleStartManualRest, restRemainingSeconds]);
+  const handleSkipRest  = stopRest;
+  const handlePauseRest = pauseRest;
+  const cycleSetType    = useCallback(() => dispatch({ type: 'CYCLE_SET_TYPE' }), [dispatch]);
+
+  const formatTime = useCallback((seconds: number) => {
+    const h = Math.floor(seconds / 3600);
+    const m = Math.floor((seconds % 3600) / 60);
+    const s = seconds % 60;
+    if (h > 0) return `${h}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+  }, []);
+
+  const formatVolume = useCallback((vol: number) => {
+    if (vol >= 1000) return `${(vol / 1000).toFixed(1)}k`;
+    return String(Math.round(vol));
+  }, []);
 
   useEffect(() => {
     const selectedExercise = route.params?.selectedExercise;
@@ -252,23 +269,20 @@ export function ActiveWorkoutScreen({ navigation, route }: any) {
   const workoutMuscleSets = useMemo(() => {
     const distribution: Record<string, number> = {};
 
-    exercises.forEach((exerciseItem: any) => {
-      const exerciseMeta = exerciseItem?.exercise ?? {};
-      const primaryMuscle = exerciseMeta?.muscleGroup
-        || (Array.isArray(exerciseMeta?.primaryMuscleGroups) ? exerciseMeta.primaryMuscleGroups[0] : undefined);
+    exercises.forEach((exerciseItem) => {
+      // NormalizedExercise stores muscle groups captured during normalization
+      const primaryMuscle = exerciseItem.primaryMuscle;
       if (!primaryMuscle) return;
 
       const completedSets = (setsByExercise[exerciseItem.id] || []).length;
-      const targetSets = Number(exerciseItem?.targetSets || 0);
+      const targetSets = Number(exerciseItem.targetSets || 0);
       const baseScore = completedSets > 0
         ? completedSets
         : Math.max(1, Math.round(Math.max(targetSets, 3) * 0.35));
 
       distribution[primaryMuscle] = (distribution[primaryMuscle] ?? 0) + baseScore;
 
-      const secondary = Array.isArray(exerciseMeta?.secondaryMuscleGroups)
-        ? exerciseMeta.secondaryMuscleGroups
-        : [];
+      const secondary = exerciseItem.secondaryMuscles ?? [];
       secondary.forEach((muscle: string) => {
         distribution[muscle] = (distribution[muscle] ?? 0) + baseScore * 0.45;
       });
@@ -375,7 +389,7 @@ export function ActiveWorkoutScreen({ navigation, route }: any) {
                 opacity: isResting ? 0.65 : 1,
               },
             ]}
-            onPress={handleStartManualRest}
+            onPress={() => handleStartManualRest(defaultTimerSeconds)}
             disabled={isResting}
             activeOpacity={0.8}
           >
@@ -465,12 +479,12 @@ export function ActiveWorkoutScreen({ navigation, route }: any) {
               editingSetId={isActiveExercise ? editingSetId : null}
               isLoading={isLoading}
               onToggleExpand={handleExpandExercise}
-              onWeightChange={(v) => dispatch({ type: 'UPDATE_INPUT', field: 'weightInput', value: v })}
-              onRepsChange={(v) => dispatch({ type: 'UPDATE_INPUT', field: 'repsInput', value: v })}
+              onWeightChange={(v) => dispatch({ type: 'SET_WEIGHT', value: v })}
+              onRepsChange={(v) => dispatch({ type: 'SET_REPS', value: v })}
               onRpeChange={(v) => dispatch({ type: 'SET_RPE', value: v })}
               onSetTypeChange={cycleSetType}
               onBeginEditSet={beginEditSet}
-              onLogSet={() => handleLogSet(exercise.id)}
+              onLogSet={() => { handleExpandExercise(exercise.id); handleLogSet(); }}
               onDeleteSet={deleteSet}
               onRemoveExercise={handleRemoveExercise}
             />
@@ -500,7 +514,7 @@ export function ActiveWorkoutScreen({ navigation, route }: any) {
         onSkip={handleSkipRest}
         onClose={handleSkipRest}
         onOpenSettings={() => setSettingsModalVisible(true)}
-        nextExerciseName={nextExerciseAfterRest?.exercise?.name}
+        nextExerciseName={nextExerciseAfterRest?.exerciseName}
         nextSetNumber={(nextExerciseAfterRest
           ? setsByExercise[nextExerciseAfterRest.id]?.length ?? 0
           : 0) + 1}
@@ -543,14 +557,11 @@ export function ActiveWorkoutScreen({ navigation, route }: any) {
         onPrimaryPress={async () => {
           setCompleteModalVisible(false);
           await completeWorkout({});
+          // Store transitions to 'completed' phase with summary embedded.
+          // WorkoutSummaryScreen reads selectCompletedSummary from the store.
           navigation.navigate('WorkoutSummary', {
             workoutId: activeWorkoutId,
             workoutName: workoutName || 'Workout Session',
-            elapsedSeconds,
-            totalVolume,
-            totalSetsCompleted,
-            totalSetsTarget,
-            muscleSets: workoutMuscleSets,
           });
         }}
         onSecondaryPress={() => setCompleteModalVisible(false)}

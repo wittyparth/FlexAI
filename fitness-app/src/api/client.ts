@@ -108,7 +108,7 @@ const flushRefreshQueue = (error: ApiError | null, accessToken?: string) => {
 // ----------------------------------------------------------------------------
 apiClient.interceptors.request.use(
   async (config: InternalAxiosRequestConfig) => {
-    const token = authStore.getState().accessToken;
+    const token = (authStore.getState() as any).accessToken;
     
     if (token && config.headers) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -148,7 +148,7 @@ apiClient.interceptors.response.use(
       !originalRequest._retry &&
       !shouldSkipRefresh(originalRequest.url)
     ) {
-      const refreshToken = authStore.getState().refreshToken;
+      const refreshToken = (authStore.getState() as any).refreshToken;
       if (!refreshToken) {
         await authStore.getState().logout();
         return Promise.reject({
@@ -185,7 +185,7 @@ apiClient.interceptors.response.use(
         const { accessToken: newAccessToken, refreshToken: newRefreshToken } =
           refreshResponse.data.data;
 
-        await authStore.getState().updateTokens(newAccessToken, newRefreshToken);
+        await (authStore.getState() as any).updateTokens(newAccessToken, newRefreshToken);
         flushRefreshQueue(null, newAccessToken);
 
         if (originalRequest.headers) {

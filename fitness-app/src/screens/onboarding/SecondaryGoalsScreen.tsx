@@ -9,7 +9,7 @@ import {
     Platform,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useColors } from '../../hooks';
+import { useColors, useOnboardingFlow } from '../../hooks';
 import { useTheme } from '../../contexts';
 import { fonts, fontSize, spacing, borderRadius, shadows } from '../../constants';
 import { Button, ProgressBar } from '../../components/ui';
@@ -34,12 +34,10 @@ const SECONDARY_GOALS: GoalOption[] = [
 
 // ... imports remain same ...
 
-import { useAuthStore } from '../../store/authStore';
-
 export function SecondaryGoalsScreen({ navigation }: any) {
     const colors = useColors();
     const { isDark } = useTheme();
-    const { setUpdatedUser } = useAuthStore();
+    const { goNext } = useOnboardingFlow();
     const [selectedGoals, setSelectedGoals] = useState<SecondaryGoal[]>([]);
 
     const toggleGoal = (id: SecondaryGoal) => {
@@ -51,8 +49,7 @@ export function SecondaryGoalsScreen({ navigation }: any) {
     };
 
     const handleContinue = () => {
-        setUpdatedUser({ secondaryGoals: selectedGoals });
-        navigation.navigate('WorkoutInterests');
+        goNext('SecondaryGoals', { goals: selectedGoals });
     };
 
     return (

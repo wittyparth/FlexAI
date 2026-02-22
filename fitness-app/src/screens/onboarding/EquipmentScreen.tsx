@@ -4,7 +4,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { OnboardingStackParamList } from '../../navigation/types';
-import { useAuthStore } from '../../store/authStore';
+import { useOnboardingFlow } from '../../hooks/useOnboardingFlow';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useColors } from '../../hooks/useColors';
 
@@ -28,10 +28,8 @@ const EQUIPMENT_OPTIONS = [
 export const EquipmentScreen: React.FC<Props> = ({ navigation }) => {
     const { mode: theme } = useTheme();
     const colors = useColors();
-    const { user, updatedUser, setUpdatedUser } = useAuthStore();
-    const [selectedEquipment, setSelectedEquipment] = useState<string[]>(
-        updatedUser?.equipmentAvailable || []
-    );
+    const { goNext } = useOnboardingFlow();
+    const [selectedEquipment, setSelectedEquipment] = useState<string[]>([]);
 
     const isFullGym = selectedEquipment.length === EQUIPMENT_OPTIONS.length - 1 && !selectedEquipment.includes('none');
 
@@ -60,8 +58,7 @@ export const EquipmentScreen: React.FC<Props> = ({ navigation }) => {
     };
 
     const handleContinue = () => {
-        setUpdatedUser({ equipmentAvailable: selectedEquipment });
-        navigation.navigate('Units');
+        goNext('Equipment', { equipment: selectedEquipment });
     };
 
     return (

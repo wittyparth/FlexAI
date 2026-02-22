@@ -48,18 +48,17 @@ const EXPERIENCE_OPTIONS: ExperienceOption[] = [
     },
 ];
 
-import { useAuthStore } from '../../store/authStore';
+import { useOnboardingFlow } from '../../hooks/useOnboardingFlow';
 
 export function ExperienceLevelScreen({ navigation }: ExperienceLevelScreenProps) {
     const colors = useColors();
     const { isDark } = useTheme();
-    const { setUpdatedUser } = useAuthStore();
+    const { goNext } = useOnboardingFlow();
     const [selectedLevel, setSelectedLevel] = useState<ExperienceLevel | null>(null);
 
     const handleContinue = () => {
         if (selectedLevel) {
-            setUpdatedUser({ experienceLevel: selectedLevel });
-            navigation.navigate('PhysicalProfile');
+            goNext('ExperienceLevel', { level: selectedLevel });
         }
     };
 

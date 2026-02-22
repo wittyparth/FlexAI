@@ -9,7 +9,7 @@ import {
     Platform,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useColors } from '../../hooks';
+import { useColors, useOnboardingFlow } from '../../hooks';
 import { useTheme } from '../../contexts';
 import { fonts, fontSize, spacing, borderRadius, shadows } from '../../constants';
 import { Button, ProgressBar } from '../../components/ui';
@@ -21,18 +21,15 @@ const DURATION_OPTIONS = [
     { value: 90, label: '75+ mins', description: 'Pro-level marathon sessions' },
 ];
 
-import { useAuthStore } from '../../store/authStore';
-
 export function WorkoutDurationScreen({ navigation }: any) {
     const colors = useColors();
     const { isDark } = useTheme();
-    const { setUpdatedUser } = useAuthStore();
+    const { goNext } = useOnboardingFlow();
     const [selectedDuration, setSelectedDuration] = useState<number | null>(45);
 
     const handleContinue = () => {
         if (selectedDuration) {
-            setUpdatedUser({ workoutDuration: selectedDuration });
-            navigation.navigate('Equipment');
+            goNext('WorkoutDuration', { minutes: selectedDuration });
         }
     };
 

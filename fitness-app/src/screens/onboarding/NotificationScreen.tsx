@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-nati
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
 import { OnboardingStackParamList } from '../../navigation/types';
-import { useAuthStore } from '../../store/authStore';
+import { useOnboardingFlow } from '../../hooks/useOnboardingFlow';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useColors } from '../../hooks/useColors';
 
@@ -18,22 +18,15 @@ const { width } = Dimensions.get('window');
 export const NotificationScreen: React.FC<Props> = ({ navigation }) => {
     const { mode: theme } = useTheme();
     const colors = useColors();
-    const { setUpdatedUser } = useAuthStore();
+    const { goNext } = useOnboardingFlow();
     const isDark = theme === 'dark';
 
     const handleEnableNotifications = async () => {
-        // In a real app, request permission here
-        // const { status } = await Notifications.requestPermissionsAsync();
-        // if (status === 'granted') ...
-
-        // For now, simulate success
-        setUpdatedUser({ pushEnabled: true });
-        navigation.navigate('AppTour');
+        goNext('Notification', { enabled: true });
     };
 
     const handleSkip = () => {
-        setUpdatedUser({ pushEnabled: false });
-        navigation.navigate('AppTour');
+        goNext('Notification', { enabled: false });
     };
 
     return (

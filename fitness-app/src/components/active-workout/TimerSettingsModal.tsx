@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Modal, TouchableOpacity, Switch, TextInput, KeyboardAvoidingView, Platform, Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
-import { useWorkoutStore } from '../../store/workoutStore';
+import { useWorkoutStore, selectTimerPrefs } from '../../store/workoutStore';
 import { fontFamilies } from '../../theme/typography';
 
 interface Props {
@@ -12,22 +12,25 @@ interface Props {
 
 export function TimerSettingsModal({ visible, onClose }: Props) {
   const colors = useColors();
-  const { autoStartTimer, defaultTimerSeconds, updateTimerSettings } = useWorkoutStore();
+  const timerPrefs = useWorkoutStore(selectTimerPrefs);
+  const updateTimerPrefs = useWorkoutStore((s) => s.updateTimerPrefs);
+  const autoStartTimer     = timerPrefs.autoStart;
+  const defaultTimerSeconds = timerPrefs.defaultSeconds;
   
   const [autoStart, setAutoStart] = useState(autoStartTimer);
   const [durationStr, setDurationStr] = useState(defaultTimerSeconds.toString());
 
   useEffect(() => {
     if (visible) {
-      setAutoStart(autoStartTimer);
-      setDurationStr(defaultTimerSeconds.toString());
+      setAutoStart(timerPrefs.autoStart);
+      setDurationStr(timerPrefs.defaultSeconds.toString());
     }
-  }, [visible, autoStartTimer, defaultTimerSeconds]);
+  }, [visible, timerPrefs]);
 
   const handleSave = () => {
     const parsed = parseInt(durationStr, 10);
     const duration = isNaN(parsed) || parsed < 0 ? 90 : parsed;
-    updateTimerSettings(autoStart, duration);
+    updateTimerPrefs({ autoStart, defaultSeconds: duration });
     onClose();
   };
 

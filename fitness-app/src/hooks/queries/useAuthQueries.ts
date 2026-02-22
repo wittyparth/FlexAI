@@ -13,12 +13,11 @@ export const useAuthQueries = () => {
     const loginMutation = useMutation({
         mutationFn: (credentials: LoginRequest) => authApi.login(credentials),
         onSuccess: async (data) => {
-            // Update client-side auth state
-            await authStore.getState().login(
+            // Transition auth FSM to 'ready' (or 'onboarding' if not completed)
+            await authStore.getState().loginSuccess(
                 { accessToken: data.accessToken, refreshToken: data.refreshToken },
-                data.user
+                data.user as any,
             );
-            // Invalidate any user-related queries
             queryClient.invalidateQueries({ queryKey: ['user'] });
         },
     });
@@ -28,7 +27,7 @@ export const useAuthQueries = () => {
     });
 
     const logoutMutation = useMutation({
-        mutationFn: () => authApi.logout(authStore.getState().refreshToken ?? undefined),
+        mutationFn: () => authApi.logout(authStore.getState().tokens?.refreshToken ?? undefined),
         onSuccess: async () => {
              await authStore.getState().logout();
             queryClient.clear();

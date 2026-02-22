@@ -7,7 +7,7 @@ import React, { useEffect, useRef, memo } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Animated, Easing } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation, useNavigationState } from '@react-navigation/native';
-import { useWorkoutStore } from '../../store/workoutStore';
+import { useWorkoutStore, selectHasActiveSession, selectWorkoutName, selectActiveWorkoutId } from '../../store/workoutStore';
 import { useShallow } from 'zustand/react/shallow';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
@@ -17,16 +17,19 @@ export const FloatingWorkoutPill = memo(() => {
   const colors = useColors();
   const navigation = useNavigation<any>();
 
-  const { status, workoutName, elapsedSeconds, isResting, totalSets, cancelWorkout } = useWorkoutStore(
+  const { sessionPhase, elapsedSeconds, sets, cancelWorkout } = useWorkoutStore(
     useShallow((state) => ({
-      status: state.status,
-      workoutName: state.workoutName,
+      sessionPhase:  state.sessionPhase,
       elapsedSeconds: state.elapsedSeconds,
-      isResting: state.isResting,
-      totalSets: Object.keys(state.sets).length,
+      sets:          state.sets,
       cancelWorkout: state.cancelWorkout,
     }))
   );
+
+  const isActiveSession = sessionPhase.phase === 'active' || sessionPhase.phase === 'completing';
+  const workoutName     = sessionPhase.phase === 'active' || sessionPhase.phase === 'completing' ? sessionPhase.name : null;
+  const totalSets       = Object.keys(sets).length;
+  const isResting       = useWorkoutStore((s) => s.restTimer.active);
 
   const [cancelModalVisible, setCancelModalVisible] = React.useState(false);
 
@@ -45,7 +48,7 @@ export const FloatingWorkoutPill = memo(() => {
     return current?.name;
   });
 
-  const isActive = status === 'in_progress' && currentRouteName !== 'ActiveWorkout';
+  const isActive = isActiveSession && currentRouteName !== 'ActiveWorkout';
 
   useEffect(() => {
     if (isActive) {
@@ -135,7 +138,7 @@ export const FloatingWorkoutPill = memo(() => {
       .syncCurrentWorkout()
       .finally(() => {
         const latest = useWorkoutStore.getState();
-        if (latest.activeWorkoutId && latest.status === 'in_progress') {
+        if (latest.sessionPhase.phase === 'active') {
           openActiveWorkout();
         }
       });

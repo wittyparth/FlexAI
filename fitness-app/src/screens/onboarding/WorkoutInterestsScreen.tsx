@@ -9,7 +9,7 @@ import {
     Platform,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useColors } from '../../hooks';
+import { useColors, useOnboardingFlow } from '../../hooks';
 import { useTheme } from '../../contexts';
 import { fonts, fontSize, spacing, borderRadius, shadows } from '../../constants';
 import { Button, ProgressBar } from '../../components/ui';
@@ -32,12 +32,10 @@ const INTEREST_OPTIONS: InterestOption[] = [
     { id: 'sports', title: 'Sports', icon: 'basketball-outline' },
 ];
 
-import { useAuthStore } from '../../store/authStore';
-
 export function WorkoutInterestsScreen({ navigation }: any) {
     const colors = useColors();
     const { isDark } = useTheme();
-    const { setUpdatedUser } = useAuthStore();
+    const { goNext } = useOnboardingFlow();
     const [selectedInterests, setSelectedInterests] = useState<WorkoutInterest[]>([]);
 
     const toggleInterest = (id: WorkoutInterest) => {
@@ -49,8 +47,7 @@ export function WorkoutInterestsScreen({ navigation }: any) {
     };
 
     const handleContinue = () => {
-        setUpdatedUser({ workoutInterests: selectedInterests });
-        navigation.navigate('WorkoutFrequency');
+        goNext('WorkoutInterests', { types: selectedInterests });
     };
 
     return (

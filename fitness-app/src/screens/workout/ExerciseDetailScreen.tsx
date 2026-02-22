@@ -42,9 +42,7 @@ export function ExerciseDetailScreen({ navigation, route }: any) {
         return (
             <View style={[styles.loadingContainer, { backgroundColor: colors.background }]}>
                 <Text style={{ color: colors.foreground }}>Failed to load exercise details.</Text>
-                <TouchableOpacity onPress={() => navigation.goBack()} style={{ marginTop: 20 }}>
-                    <Text style={{ color: colors.primary.main }}>Go Back</Text>
-                </TouchableOpacity>
+                <Button title="Go Back" variant="primary" size="sm" onPress={() => navigation.goBack()} style={{ marginTop: 20 }} />
             </View>
         );
     }

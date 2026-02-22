@@ -8,8 +8,8 @@ import {
     Animated,
     ActivityIndicator,
 } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { NavigationBar, Button } from '../../components/ui';
 import { PieChart } from 'react-native-gifted-charts';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
@@ -98,7 +98,6 @@ const toMuscleGroupStats = (muscleSets: Record<string, number>): GroupStat[] => 
 
 export function MuscleDistributionScreen({ navigation }: any) {
     const colors = useColors();
-    const insets = useSafeAreaInsets();
     const fadeAnim = useRef(new Animated.Value(0)).current;
 
     const { data, isLoading, isError, refetch } = useMuscleDistribution();
@@ -160,15 +159,11 @@ export function MuscleDistributionScreen({ navigation }: any) {
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
-            <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.background }]}> 
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerBtn}>
-                    <Ionicons name="arrow-back" size={24} color={colors.foreground} />
-                </TouchableOpacity>
-                <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Muscles</Text>
-                <TouchableOpacity onPress={() => refetch()} style={styles.headerBtn}>
-                    <Ionicons name="refresh" size={20} color={colors.foreground} />
-                </TouchableOpacity>
-            </View>
+            <NavigationBar
+                title="Muscles"
+                onBack={() => navigation.goBack()}
+                rightActions={[{ icon: 'refresh', onPress: () => refetch(), label: 'Refresh' }]}
+            />
 
             {isLoading ? (
                 <View style={styles.centerState}>
@@ -177,9 +172,7 @@ export function MuscleDistributionScreen({ navigation }: any) {
             ) : isError ? (
                 <View style={styles.centerState}>
                     <Text style={{ color: colors.error, marginBottom: 12 }}>Failed to load muscle distribution.</Text>
-                    <TouchableOpacity style={[styles.retryBtn, { backgroundColor: colors.primary.main }]} onPress={() => refetch()}>
-                        <Text style={styles.retryText}>Retry</Text>
-                    </TouchableOpacity>
+                    <Button title="Retry" variant="primary" size="sm" onPress={() => refetch()} />
                 </View>
             ) : (
                 <ScrollView showsVerticalScrollIndicator={false}>

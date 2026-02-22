@@ -25,7 +25,8 @@ const MUSCLE_RULES: ReadonlyArray<MuscleRule> = [
   { pattern: /(full[\s-]?body|cardio)/i, slugs: ['chest', 'upper-back', 'deltoids', 'abs', 'quadriceps', 'hamstring', 'calves'] },
 ];
 
-const getSlugsForMuscle = (muscleName: string): ReadonlyArray<Slug> => {
+const getSlugsForMuscle = (muscleName?: string): ReadonlyArray<Slug> => {
+  if (!muscleName) return [];
   const trimmed = muscleName.trim();
   if (!trimmed) return [];
 
@@ -56,6 +57,7 @@ export const mergeMuscleInputs = (
 
   if (muscles) {
     muscles.forEach((muscle) => {
+      if (!muscle) return;
       const key = muscle.trim();
       if (!key) return;
       merged[key] = (merged[key] ?? 0) + 1;

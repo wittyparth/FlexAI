@@ -1,596 +1,561 @@
+/**
+ * workoutStore.ts — Active Workout Session FSM
+ *
+ * Design principles:
+ *  1. `sessionPhase` discriminated union: IMPOSSIBLE to have exercises
+ *     in state when phase is 'idle'. No orphaned data.
+ *  2. Normalized sets map: O(1) set lookup/update, no array scans.
+ *  3. All set mutations are optimistic with full rollback on failure.
+ *  4. Rest timer is a pure derived value (endTimeMs), not a counter —
+ *     immune to app backgrounding / JS suspension.
+ *  5. persisted slice is minimal — only what can't be re-derived.
+ */
+
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
-import { workoutApi } from '../api/workout.api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { workoutApi } from '../api/workout.api';
 import { queryClient } from '../lib/react-query';
-import { 
-  StartWorkoutInput, 
-  LogSetInput, 
+import {
+  WorkoutSessionPhase,
+  NormalizedSet,
+  NormalizedExercise,
+  RestTimerState,
+  TimerPreferences,
+  WorkoutSummaryData,
+} from './types/workout.types';
+import {
+  StartWorkoutInput,
+  LogSetInput,
   UpdateSetInput,
-  WorkoutExercise, 
+  WorkoutExercise,
   WorkoutSet,
-  Workout 
+  Workout,
 } from '../types/backend.types';
 
-// State Interfaces
-// ----------------------------------------------------------------------------
+// ─── Store Shape ─────────────────────────────────────────────────────────────
 
-interface WorkoutState {
-  // Session State (Persisted)
-  activeWorkoutId: number | null;
-  workoutName: string | null;
-  startTime: string | null; // ISO Date String
-  status: 'idle' | 'in_progress' | 'paused';
-  currentExerciseId: number | null; // Track active exercise for crash recovery
-  
-  // Normalized Data (Persisted)
-  exercises: Record<number, WorkoutExercise>; // Key: exerciseId
-  sets: Record<string, WorkoutSet>; // Key: Set ID (string for temp IDs)
-  
-  // Rest Timer (Global so floating pill can show it)
-  isResting: boolean;
-  isRestPaused: boolean;
-  restPausedRemaining: number;
-  restEndTime: string | null; // ISO Date String when rest finishes
-  restDurationSeconds: number; // Original duration for display
-  
-  // User Preferences (Persisted)
-  autoStartTimer: boolean;
-  defaultTimerSeconds: number;
-  
-  // UI State
-  isLoading: boolean;
-  error: string | null;
-  minimized: boolean; // Player floating mode
+interface WorkoutSessionState {
+  // FSM — single source of truth for "what mode is the session in"
+  sessionPhase: WorkoutSessionPhase;
+
+  // Normalized data — only populated when phase is 'active'
+  exercises: Record<number, NormalizedExercise>;  // key: workoutExerciseId
+  sets: Record<string, NormalizedSet>;             // key: set id (temp_xxx or real)
+
+  // UI state — not persisted
+  currentExerciseId: number | null;
+  minimized: boolean;
   elapsedSeconds: number;
+
+  // Rest timer — pure time-based, survives app backgrounding
+  restTimer: RestTimerState;
+
+  // User preferences — persisted
+  timerPrefs: TimerPreferences;
 }
 
-interface WorkoutActions {
-  // Core Actions
-  startWorkout: (input: StartWorkoutInput) => Promise<void>;
-  syncCurrentWorkout: () => Promise<void>;
-  resumeWorkout: () => Promise<void>;
-  cancelWorkout: () => Promise<void>;
-  completeWorkout: (input: any) => Promise<void>;
-  addExercise: (exerciseId: number, notes?: string) => Promise<void>;
+interface WorkoutSessionActions {
+  // Session lifecycle
+  startWorkout:    (input: StartWorkoutInput) => Promise<void>;
+  syncWorkout:     () => Promise<void>;
+  completeWorkout: (summaryInput?: any) => Promise<void>;
+  cancelWorkout:   () => Promise<void>;
+
+  // Exercise management
+  addExercise:    (exerciseId: number, notes?: string) => Promise<void>;
   removeExercise: (workoutExerciseId: number) => Promise<void>;
-  
-  // Set Actions (Optimistic)
-  logSet: (exerciseId: number, input: LogSetInput) => Promise<void>;
-  updateSet: (setId: string, input: UpdateSetInput) => Promise<void>;
-  deleteSet: (exerciseId: number, setIds: string) => Promise<void>;
-  
-  // Exercise & Rest
-  setCurrentExercise: (id: number) => void;
-  startRest: (durationSeconds: number) => void;
-  pauseRest: () => void;
+  setCurrentExercise: (id: number | null) => void;
+
+  // Set management — all optimistic
+  logSet:    (workoutExerciseId: number, input: LogSetInput)              => Promise<void>;
+  updateSet: (setId: string, input: UpdateSetInput)                        => Promise<void>;
+  deleteSet: (workoutExerciseId: number, setId: string)                    => Promise<void>;
+
+  // Rest timer
+  startRest:  (durationSeconds: number) => void;
+  pauseRest:  () => void;
   resumeRest: () => void;
   extendRest: (seconds: number) => void;
-  stopRest: () => void;
-  
-  // Timer & UI
-  tick: () => void;
-  minimize: (minimized: boolean) => void;
-  updateTimerSettings: (autoStart: boolean, defaultDuration: number) => void;
-  resetError: () => void;
+  stopRest:   () => void;
+
+  // UI helpers
+  tick:        () => void;
+  minimize:    (val: boolean) => void;
+  updateTimerPrefs: (prefs: Partial<TimerPreferences>) => void;
+  clearError:  () => void;
+
+  // Crash recovery
+  recoverFromStorage: () => Promise<void>;
 }
 
-// Initial State
-// ----------------------------------------------------------------------------
-const initialState: Omit<WorkoutState, 'exercises'|'sets'> & { exercises: any, sets: any } = {
-  activeWorkoutId: null,
-  workoutName: null,
-  startTime: null,
-  status: 'idle',
+type WorkoutStore = WorkoutSessionState & WorkoutSessionActions;
+
+// ─── Normalization Helpers ────────────────────────────────────────────────────
+
+function normalizeWorkout(
+  workout: Workout,
+): { exercises: WorkoutStore['exercises']; sets: WorkoutStore['sets'] } {
+  const exercises: WorkoutStore['exercises'] = {};
+  const sets: WorkoutStore['sets'] = {};
+
+  (workout.exercises ?? []).forEach((ex: WorkoutExercise) => {
+    exercises[ex.id] = {
+      id:           ex.id,
+      exerciseId:   (ex as any).exerciseId ?? ex.id,
+      exerciseName: (ex as any).exerciseName ?? (ex as any).exercise?.name ?? '',
+      order:        (ex as any).order ?? 0,
+      notes:        (ex as any).notes,
+      restSeconds:  (ex as any).restSeconds,
+    };
+    (ex.sets ?? []).forEach((s: WorkoutSet) => {
+      sets[String(s.id)] = {
+        id:                 String(s.id),
+        workoutExerciseId:  ex.id,
+        setType:            (s as any).setType ?? 'working',
+        weight:             s.weight,
+        reps:               s.reps,
+        rpe:                (s as any).rpe,
+        rir:                (s as any).rir,
+        status:             'synced',
+      };
+    });
+  });
+
+  return { exercises, sets };
+}
+
+// ─── Initial State ────────────────────────────────────────────────────────────
+
+const INITIAL_STATE: Pick<
+  WorkoutSessionState,
+  'sessionPhase' | 'exercises' | 'sets' | 'currentExerciseId' | 'minimized' | 'elapsedSeconds' | 'restTimer'
+> = {
+  sessionPhase:      { phase: 'idle' },
+  exercises:         {},
+  sets:              {},
   currentExerciseId: null,
-  exercises: {},
-  sets: {},
-  isResting: false,
-  isRestPaused: false,
-  restPausedRemaining: 0,
-  restEndTime: null,
-  restDurationSeconds: 0,
-  autoStartTimer: true,
-  defaultTimerSeconds: 90,
-  isLoading: false,
-  error: null,
-  minimized: false,
-  elapsedSeconds: 0,
+  minimized:         false,
+  elapsedSeconds:    0,
+  restTimer:         { active: false },
 };
 
-// Store Implementation
-// ----------------------------------------------------------------------------
-export const useWorkoutStore = create<WorkoutState & WorkoutActions>()(
+// ─── Store ────────────────────────────────────────────────────────────────────
+
+export const useWorkoutStore = create<WorkoutStore>()(
   persist(
     immer((set, get) => ({
-      ...initialState,
+      ...INITIAL_STATE,
+      timerPrefs: { autoStart: true, defaultSeconds: 90 },
 
-      // ACTIONS
-      // ----------------------------------------------------------------------
+      // ── Session Lifecycle ────────────────────────────────────────────────
 
       startWorkout: async (input) => {
-        set({ isLoading: true, error: null });
+        set((s) => { s.sessionPhase = { phase: 'starting', name: input.name ?? 'Workout', routineId: input.routineId }; });
         try {
           const response = await workoutApi.startWorkout(input);
-          const workout = response.data as unknown as Workout; // Cast pending strict API return type
-          
-          set((state) => {
-            state.isLoading = false;
-            state.activeWorkoutId = workout.id;
-            state.workoutName = workout.name;
-            state.startTime = workout.startTime || new Date().toISOString();
-            state.status = 'in_progress';
-            state.exercises = {}; 
-            state.sets = {};
-            state.elapsedSeconds = 0;
+          const workout  = response.data as unknown as Workout;
+          const { exercises, sets } = normalizeWorkout(workout);
 
-            // Normalize Exercises and Sets
-            if (workout.exercises) {
-                workout.exercises.forEach(ex => {
-                    // Store exercise mapping
-                    // We strip sets from the exercise object in the store to avoid duplication confusion,
-                    // or keep it but rely on state.sets as Source of Truth.
-                    // For now, we keep it simple: strict normalization.
-                    const { sets, ...rest } = ex;
-                    state.exercises[ex.id] = { ...rest, sets: [] } as WorkoutExercise;
-
-                    // Store sets
-                    if (sets) {
-                        sets.forEach(s => {
-                            state.sets[s.id] = s;
-                        });
-                    }
-                });
-            }
+          set((s) => {
+            s.sessionPhase      = { phase: 'active', workoutId: workout.id, name: workout.name, startTime: workout.startTime || new Date().toISOString() };
+            s.exercises         = exercises;
+            s.sets              = sets;
+            s.elapsedSeconds    = 0;
+            s.currentExerciseId = Object.values(exercises)[0]?.id ?? null;
+            s.restTimer         = { active: false };
           });
-        } catch (error: any) {
-          const message = error.message || 'Failed to start workout';
-          set({ isLoading: false, error: message });
-          throw new Error(message);
+        } catch (err: any) {
+          set((s) => {
+            s.sessionPhase = { phase: 'error', error: err?.message ?? 'Failed to start workout', previousPhase: 'starting' };
+            // Auto-reset to idle so user isn't stuck
+            setTimeout(() => get().clearError(), 3000);
+          });
+          throw err;
         }
       },
 
-      syncCurrentWorkout: async () => {
-        const { activeWorkoutId, status, exercises } = get();
-        const hasLocalExercises = Object.keys(exercises || {}).length > 0;
+      syncWorkout: async () => {
+        const { sessionPhase, exercises } = get();
+        // Already active with local data — skip network round-trip
+        if (sessionPhase.phase === 'active' && Object.keys(exercises).length > 0) return;
 
-        if (activeWorkoutId && status === 'in_progress' && hasLocalExercises) {
-          return;
-        }
-
-        set({ isLoading: true, error: null });
         try {
           const response = await workoutApi.getCurrentWorkout();
-          const currentWorkout = response.data as unknown as Workout | null;
+          const workout  = response.data as unknown as Workout | null;
 
-          if (!currentWorkout) {
-            set((state) => {
-              state.isLoading = false;
-              state.activeWorkoutId = null;
-              state.workoutName = null;
-              state.startTime = null;
-              state.status = 'idle';
-              state.currentExerciseId = null;
-              state.exercises = {};
-              state.sets = {};
-              state.isResting = false;
-              state.isRestPaused = false;
-              state.restPausedRemaining = 0;
-              state.restEndTime = null;
-              state.restDurationSeconds = 0;
-              state.elapsedSeconds = 0;
-              state.minimized = false;
-            });
+          if (!workout) {
+            set((s) => { Object.assign(s, INITIAL_STATE); });
             return;
           }
 
-          set((state) => {
-            state.isLoading = false;
-            state.activeWorkoutId = currentWorkout.id;
-            state.workoutName = currentWorkout.name;
-            state.startTime = currentWorkout.startTime || new Date().toISOString();
-            state.status = currentWorkout.status === 'in_progress' ? 'in_progress' : 'idle';
-            state.exercises = {};
-            state.sets = {};
-
-            if (Array.isArray(currentWorkout.exercises)) {
-              currentWorkout.exercises.forEach((ex) => {
-                const { sets, ...rest } = ex;
-                state.exercises[ex.id] = { ...rest, sets: [] } as WorkoutExercise;
-
-                if (Array.isArray(sets)) {
-                  sets.forEach((setItem) => {
-                    state.sets[setItem.id] = setItem;
-                  });
-                }
-              });
-            }
+          const { exercises: ex, sets } = normalizeWorkout(workout);
+          set((s) => {
+            s.sessionPhase   = { phase: 'active', workoutId: workout.id, name: workout.name, startTime: workout.startTime || new Date().toISOString() };
+            s.exercises      = ex;
+            s.sets           = sets;
           });
-        } catch (error: any) {
-          set({ isLoading: false, error: error.message || 'Failed to sync current workout' });
+        } catch {
+          // Silently fail — keeps existing local state intact
         }
       },
 
-      resumeWorkout: async () => {
-        const { activeWorkoutId } = get();
-        if (!activeWorkoutId) return;
+      completeWorkout: async (summaryInput) => {
+        const { sessionPhase, exercises, sets, elapsedSeconds } = get();
+        if (sessionPhase.phase !== 'active') return;
 
-        set({ isLoading: true });
+        const { workoutId, name } = sessionPhase;
+        set((s) => { s.sessionPhase = { phase: 'completing', workoutId, name }; });
+
         try {
-          const response = await workoutApi.getWorkoutById(activeWorkoutId);
-          const workout = response.data as unknown as Workout;
-          
-          set((state) => {
-            state.isLoading = false;
-            // Sync state
-            if (workout.status === 'in_progress') {
-                state.status = 'in_progress';
-                state.workoutName = workout.name;
-                // Re-normalize to ensure sync
-                state.exercises = {};
-                state.sets = {};
-                workout.exercises.forEach(ex => {
-                    const { sets, ...rest } = ex;
-                    state.exercises[ex.id] = { ...rest, sets: [] } as WorkoutExercise;
-                    sets.forEach(s => {
-                        state.sets[s.id] = s;
-                    });
-                });
-            } else {
-                // If backend says fulfilled, clear local
-                // Reset state to initial logic needs to be careful not to break persistence middleware?
-                // Actually we just reset the fields.
-                state.activeWorkoutId = null;
-                state.status = 'idle';
-            }
+          const response = await workoutApi.completeWorkout(workoutId, summaryInput ?? {});
+          const result   = (response.data as any) ?? {};
+
+          // Compute summary
+          const totalVolume = Object.values(sets).reduce((acc, s) => {
+            if (s.status === 'failed') return acc;
+            return acc + ((s.weight ?? 0) * (s.reps ?? 0));
+          }, 0);
+          const muscleSets: Record<string, number> = {};
+          const totalSetsCompleted = Object.values(sets).filter((s) => s.status === 'synced').length;
+
+          const summary: WorkoutSummaryData = {
+            workoutId,
+            workoutName:         name,
+            elapsedSeconds,
+            totalVolume:         result.totalVolume     ?? totalVolume,
+            totalSetsCompleted:  result.setsCompleted   ?? totalSetsCompleted,
+            muscleSets:          result.muscleSets      ?? muscleSets,
+            personalRecords:     result.personalRecords ?? [],
+          };
+
+          await Promise.all([
+            queryClient.invalidateQueries({ queryKey: ['workouts'] }),
+            queryClient.invalidateQueries({ queryKey: ['stats'] }),
+            queryClient.invalidateQueries({ queryKey: ['dashboard', 'stats'] }),
+          ]);
+
+          set((s) => {
+            s.sessionPhase = { phase: 'completed', workoutId, summary };
+            s.restTimer    = { active: false };
           });
-        } catch (error: any) {
-             if (error.status === 404) {
-                 set(initialState);
-             } else {
-                 set({ isLoading: false, error: 'Could not sync workout' });
-             }
+        } catch (err: any) {
+          set((s) => {
+            s.sessionPhase = { phase: 'error', error: err?.message ?? 'Failed to complete workout', previousPhase: 'completing' };
+          });
+          throw err;
         }
       },
+
+      cancelWorkout: async () => {
+        const { sessionPhase } = get();
+        const workoutId = sessionPhase.phase === 'active' ? sessionPhase.workoutId : null;
+
+        if (workoutId) {
+          set((s) => { s.sessionPhase = { phase: 'cancelling', workoutId }; });
+          try { await workoutApi.cancelWorkout(workoutId); } catch { /* best effort */ }
+        }
+
+        // Always reset — user must not be stuck in a cancel loop
+        set((s) => { Object.assign(s, INITIAL_STATE); });
+      },
+
+      // ── Exercise Management ───────────────────────────────────────────────
 
       addExercise: async (exerciseId, notes) => {
-        const { activeWorkoutId, status } = get();
-        if (!activeWorkoutId || status !== 'in_progress') {
-          const message = 'No active workout in progress';
-          set({ error: message });
-          throw new Error(message);
-        }
+        const { sessionPhase } = get();
+        if (sessionPhase.phase !== 'active') throw new Error('No active workout');
 
-        set({ isLoading: true, error: null });
         try {
-          const response = await workoutApi.addExercise(activeWorkoutId, { exerciseId, notes });
+          const response      = await workoutApi.addExercise(sessionPhase.workoutId, { exerciseId, notes });
           const workoutExercise = response.data as unknown as WorkoutExercise;
 
-          set((state) => {
-            state.isLoading = false;
-            state.exercises[workoutExercise.id] = {
-              ...workoutExercise,
-              sets: Array.isArray(workoutExercise.sets) ? workoutExercise.sets : [],
+          set((s) => {
+            s.exercises[workoutExercise.id] = {
+              id:           workoutExercise.id,
+              exerciseId:   (workoutExercise as any).exerciseId ?? exerciseId,
+              exerciseName: (workoutExercise as any).exerciseName ?? (workoutExercise as any).exercise?.name ?? '',
+              order:        Object.keys(s.exercises).length,
+              notes,
             };
-
-            if (Array.isArray(workoutExercise.sets)) {
-              workoutExercise.sets.forEach((setItem) => {
-                state.sets[setItem.id] = setItem;
-              });
-            }
+            (workoutExercise.sets ?? []).forEach((sv: WorkoutSet) => {
+              s.sets[String(sv.id)] = { id: String(sv.id), workoutExerciseId: workoutExercise.id, setType: 'working', status: 'synced', weight: sv.weight, reps: sv.reps };
+            });
+            s.currentExerciseId = workoutExercise.id;
           });
-        } catch (error: any) {
-          const message = error.message || 'Failed to add exercise';
-          set({ isLoading: false, error: message });
-          throw new Error(message);
+        } catch (err: any) {
+          throw new Error(err?.message ?? 'Failed to add exercise');
         }
       },
 
       removeExercise: async (workoutExerciseId) => {
-        const { activeWorkoutId, status, exercises } = get();
-        if (!activeWorkoutId || status !== 'in_progress') {
-          const message = 'No active workout in progress';
-          set({ error: message });
-          throw new Error(message);
-        }
-        if (!exercises[workoutExerciseId]) {
-          const message = 'Exercise not found in workout';
-          set({ error: message });
-          throw new Error(message);
-        }
+        const { sessionPhase, exercises, sets } = get();
+        if (sessionPhase.phase !== 'active') throw new Error('No active workout');
+        if (!exercises[workoutExerciseId]) throw new Error('Exercise not found');
 
-        const previousExercise = exercises[workoutExerciseId];
-        const previousSets = Object.entries(get().sets).filter(
-          ([, setItem]) => setItem.workoutExerciseId === workoutExerciseId
-        );
+        // Snapshot for rollback
+        const prevExercise = exercises[workoutExerciseId];
+        const prevSets = Object.entries(sets).filter(([, s]) => s.workoutExerciseId === workoutExerciseId);
 
         // Optimistic remove
-        set((state) => {
-          delete state.exercises[workoutExerciseId];
-          previousSets.forEach(([setId]) => {
-            delete state.sets[setId];
-          });
+        set((s) => {
+          delete s.exercises[workoutExerciseId];
+          prevSets.forEach(([id]) => delete s.sets[id]);
+          if (s.currentExerciseId === workoutExerciseId) {
+            s.currentExerciseId = Object.values(s.exercises)[0]?.id ?? null;
+          }
         });
 
         try {
-          await workoutApi.removeExercise(activeWorkoutId, workoutExerciseId);
-        } catch (error: any) {
-          const message = error.message || 'Failed to remove exercise';
-
-          // Rollback on failure
-          set((state) => {
-            state.error = message;
-            state.exercises[workoutExerciseId] = previousExercise;
-            previousSets.forEach(([setId, setItem]) => {
-              state.sets[setId] = setItem;
-            });
+          await workoutApi.removeExercise(sessionPhase.workoutId, workoutExerciseId);
+        } catch (err: any) {
+          // Rollback
+          set((s) => {
+            s.exercises[workoutExerciseId] = prevExercise;
+            prevSets.forEach(([id, sv]) => { s.sets[id] = sv; });
           });
-          throw new Error(message);
+          throw new Error(err?.message ?? 'Failed to remove exercise');
         }
       },
 
-      logSet: async (exerciseId: number, input: LogSetInput) => {
-        const { activeWorkoutId } = get();
-        if (!activeWorkoutId) {
-            set({ error: 'No active workout' });
-            return;
-        }
+      setCurrentExercise: (id) =>
+        set((s) => { s.currentExerciseId = id; }),
 
-        // 1. Generate Temp ID
-        const tempId = `temp_${Date.now()}`;
-        
-        // 2. Optimistic Update
-        set((state) => {
-            const newSet: WorkoutSet = {
-                id: tempId,
-                workoutExerciseId: exerciseId, 
-                setType: input.setType || 'working',
-                weight: input.weight,
-                reps: input.reps,
-                rpe: input.rpe,
-                rir: input.rir,
-            };
-            
-            state.sets[tempId] = newSet;
-        });
+      // ── Set Management — Optimistic ───────────────────────────────────────
 
-        // 3. API Call
+      logSet: async (workoutExerciseId, input) => {
+        const { sessionPhase } = get();
+        if (sessionPhase.phase !== 'active') return;
+
+        const tempId    = `temp_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+        const optimistic: NormalizedSet = {
+          id:                tempId,
+          workoutExerciseId,
+          setType:           input.setType ?? 'working',
+          weight:            input.weight,
+          reps:              input.reps,
+          rpe:               input.rpe,
+          status:            'syncing',
+          tempId,
+        };
+
+        set((s) => { s.sets[tempId] = optimistic; });
+
         try {
-            const reponse = await workoutApi.logSet(activeWorkoutId, exerciseId, input);
-            const realSet = reponse.data as unknown as WorkoutSet;
+          const response = await workoutApi.logSet(sessionPhase.workoutId, workoutExerciseId, input);
+          const realSet  = response.data as unknown as WorkoutSet;
 
-            // 4. Reconcile (Swap Temp -> Real)
-            set((state) => {
-                delete state.sets[tempId];
-                state.sets[realSet.id] = realSet;
-            });
-        } catch (error: any) {
-            // 5. Rollback on Failure
-            set((state) => {
-                delete state.sets[tempId];
-                state.error = `Failed to log set: ${error.message}`;
-            });
+          set((s) => {
+            delete s.sets[tempId];
+            s.sets[String(realSet.id)] = {
+              id:                String(realSet.id),
+              workoutExerciseId,
+              setType:           (realSet as any).setType ?? 'working',
+              weight:            realSet.weight,
+              reps:              realSet.reps,
+              rpe:               (realSet as any).rpe,
+              rir:               (realSet as any).rir,
+              status:            'synced',
+            };
+          });
+
+          // Auto-start rest timer if enabled
+          const { timerPrefs } = get();
+          if (timerPrefs.autoStart) {
+            get().startRest(timerPrefs.defaultSeconds);
+          }
+        } catch (err: any) {
+          set((s) => {
+            s.sets[tempId] = { ...optimistic, status: 'failed' };
+          });
+          // Don't throw — optimistic UI already shows failure state
         }
       },
 
       updateSet: async (setId, input) => {
-        const { activeWorkoutId, sets } = get();
-        if (!activeWorkoutId) {
-          const message = 'No active workout';
-          set({ error: message });
-          throw new Error(message);
-        }
+        const { sessionPhase, sets } = get();
+        if (sessionPhase.phase !== 'active') throw new Error('No active workout');
 
-        const existingSet = sets[setId];
-        if (!existingSet) {
-          const message = 'Set not found';
-          set({ error: message });
-          throw new Error(message);
-        }
+        const existing = sets[setId];
+        if (!existing) throw new Error('Set not found');
+        if (existing.status === 'syncing') throw new Error('Set is still syncing, please wait');
 
-        if (setId.startsWith('temp_')) {
-          const message = 'Set is still syncing. Please try again in a moment.';
-          set({ error: message });
-          throw new Error(message);
-        }
+        const prev = { ...existing };
 
-        const previousSet = { ...existingSet };
-
-        // Optimistic update
-        set((state) => {
-          state.sets[setId] = {
-            ...state.sets[setId],
-            ...input,
-          };
+        // Optimistic
+        set((s) => {
+          Object.assign(s.sets[setId], input);
+          s.sets[setId].status = 'syncing';
         });
 
         try {
-          const response = await workoutApi.updateSet(activeWorkoutId, setId, input);
-          const updatedSet = response.data as unknown as WorkoutSet;
-
-          set((state) => {
-            state.sets[updatedSet.id] = updatedSet;
+          const response = await workoutApi.updateSet(sessionPhase.workoutId, setId, input);
+          const updated  = response.data as unknown as WorkoutSet;
+          set((s) => {
+            s.sets[String(updated.id)] = { ...s.sets[setId], ...(updated as any), status: 'synced' };
           });
-        } catch (error: any) {
-          const message = error.message || 'Failed to update set';
-          set((state) => {
-            state.sets[setId] = previousSet;
-            state.error = message;
-          });
-          throw new Error(message);
+        } catch (err: any) {
+          set((s) => { s.sets[setId] = { ...prev, status: 'failed' }; });
+          throw new Error(err?.message ?? 'Failed to update set');
         }
       },
 
-      deleteSet: async (exerciseId, setId) => {
-         // Optimistic Delete
-         const previousSet = get().sets[setId];
-         if (!previousSet) return;
+      deleteSet: async (workoutExerciseId, setId) => {
+        const { sessionPhase, sets } = get();
+        if (sessionPhase.phase !== 'active') return;
 
-         set((state) => {
-             delete state.sets[setId];
-         });
+        const prev = sets[setId];
+        if (!prev) return;
 
-         const { activeWorkoutId } = get();
-         if (!activeWorkoutId) return;
+        // Optimistic remove
+        set((s) => { delete s.sets[setId]; });
 
-         try {
-             await workoutApi.deleteSet(activeWorkoutId, setId);
-         } catch (error: any) {
-             // Rollback
-             set((state) => {
-                 state.sets[setId] = previousSet;
-                 state.error = 'Failed to delete set';
-             });
-         }
-      },
-
-      cancelWorkout: async () => {
-        const { activeWorkoutId } = get();
-        // Allow cancel even without active workout (safety)
-        if (!activeWorkoutId) {
-            set(initialState);
-            return;
-        }
-
-        set({ isLoading: true });
         try {
-            await workoutApi.cancelWorkout(activeWorkoutId);
-            set(initialState);
-        } catch (error: any) {
-            // Still reset even on API failure so user isn't stuck
-            set(initialState);
+          await workoutApi.deleteSet(sessionPhase.workoutId, setId);
+        } catch {
+          // Rollback
+          set((s) => { s.sets[setId] = prev; });
         }
       },
 
-      completeWorkout: async (input) => {
-          const { activeWorkoutId } = get();
-          if (!activeWorkoutId) return;
-          
-          set({ isLoading: true });
-          try {
-              await workoutApi.completeWorkout(activeWorkoutId, input);
-              await Promise.all([
-                queryClient.invalidateQueries({ queryKey: ['workouts'] }),
-                queryClient.invalidateQueries({ queryKey: ['stats'] }),
-                queryClient.invalidateQueries({ queryKey: ['dashboard', 'stats'] }),
-              ]);
-              set(initialState);
-          } catch (error: any) {
-              set({ isLoading: false, error: 'Failed to complete' });
-          }
-      },
-
-      // EXERCISE & REST
-      // ----------------------------------------------------------------------
-      setCurrentExercise: (id) => {
-        set((state) => { state.currentExerciseId = id; });
-      },
+      // ── Rest Timer ─────────────────────────────────────────────────────────
 
       startRest: (durationSeconds) => {
-        const endTime = new Date(Date.now() + durationSeconds * 1000).toISOString();
-        set((state) => {
-          state.isResting = true;
-          state.isRestPaused = false;
-          state.restPausedRemaining = 0;
-          state.restEndTime = endTime;
-          state.restDurationSeconds = durationSeconds;
+        set((s) => {
+          s.restTimer = {
+            active:          true,
+            paused:          false,
+            endTimeMs:       Date.now() + durationSeconds * 1000,
+            durationSeconds,
+          };
         });
       },
 
       pauseRest: () => {
-        set((state) => {
-          if (!state.isResting || state.isRestPaused) return;
-          const remaining = state.restEndTime
-            ? Math.max(0, Math.floor((new Date(state.restEndTime).getTime() - Date.now()) / 1000))
-            : state.restPausedRemaining;
-          state.isRestPaused = true;
-          state.restPausedRemaining = remaining;
-          state.restEndTime = null;
+        set((s) => {
+          const t = s.restTimer;
+          if (!t.active || t.paused) return;
+          const remaining = Math.max(0, Math.floor((t.endTimeMs - Date.now()) / 1000));
+          s.restTimer = { active: true, paused: true, remainingSeconds: remaining, durationSeconds: t.durationSeconds };
         });
       },
 
       resumeRest: () => {
-        set((state) => {
-          if (!state.isResting || !state.isRestPaused) return;
-          const remaining = Math.max(1, state.restPausedRemaining || state.restDurationSeconds || 1);
-          state.isRestPaused = false;
-          state.restEndTime = new Date(Date.now() + remaining * 1000).toISOString();
+        set((s) => {
+          const t = s.restTimer;
+          if (!t.active || !t.paused) return;
+          const remaining = Math.max(1, t.remainingSeconds);
+          s.restTimer = {
+            active:          true,
+            paused:          false,
+            endTimeMs:       Date.now() + remaining * 1000,
+            durationSeconds: t.durationSeconds,
+          };
         });
       },
 
       extendRest: (seconds) => {
-        if (!Number.isFinite(seconds) || seconds === 0) return;
-
-        set((state) => {
-          if (!state.isResting) return;
-
-          const nextDuration = Math.max(1, state.restDurationSeconds + seconds);
-          state.restDurationSeconds = nextDuration;
-
-          if (state.isRestPaused) {
-            state.restPausedRemaining = Math.max(1, state.restPausedRemaining + seconds);
-            return;
+        set((s) => {
+          const t = s.restTimer;
+          if (!t.active) return;
+          const newDuration = t.durationSeconds + seconds;
+          if (t.paused) {
+            s.restTimer = { ...t, remainingSeconds: t.remainingSeconds + seconds, durationSeconds: newDuration };
+          } else {
+            s.restTimer = { ...t, endTimeMs: t.endTimeMs + seconds * 1000, durationSeconds: newDuration };
           }
-
-          const baseEndTime = state.restEndTime ? new Date(state.restEndTime).getTime() : Date.now();
-          state.restEndTime = new Date(baseEndTime + seconds * 1000).toISOString();
         });
       },
 
-      stopRest: () => {
-        set((state) => {
-          state.isResting = false;
-          state.isRestPaused = false;
-          state.restPausedRemaining = 0;
-          state.restEndTime = null;
-          state.restDurationSeconds = 0;
-        });
-      },
+      stopRest: () =>
+        set((s) => { s.restTimer = { active: false }; }),
 
-      // TIMER & UI
-      // ----------------------------------------------------------------------
+      // ── UI Helpers ─────────────────────────────────────────────────────────
+
       tick: () => {
-        set((state) => {
-            if (state.status === 'in_progress') {
-                state.elapsedSeconds += 1;
-            }
+        set((s) => {
+          if (s.sessionPhase.phase === 'active') s.elapsedSeconds += 1;
         });
       },
-      
-      minimize: (val) => set({ minimized: val }),
 
-      updateTimerSettings: (autoStart, defaultDuration) => {
-        set((state) => {
-           state.autoStartTimer = autoStart;
-           state.defaultTimerSeconds = defaultDuration;
-        });
+      minimize: (val) =>
+        set((s) => { s.minimized = val; }),
+
+      updateTimerPrefs: (prefs) =>
+        set((s) => { Object.assign(s.timerPrefs, prefs); }),
+
+      clearError: () =>
+        set((s) => {
+          if (s.sessionPhase.phase === 'error') {
+            s.sessionPhase = { phase: 'idle' };
+            s.exercises    = {};
+            s.sets         = {};
+          }
+        }),
+
+      // ── Crash Recovery ─────────────────────────────────────────────────────
+
+      recoverFromStorage: async () => {
+        const { sessionPhase } = get();
+        // If we have an active session from persistence, re-sync with server
+        if (sessionPhase.phase === 'active') {
+          await get().syncWorkout();
+        }
       },
-      
-      resetError: () => set({ error: null }),
-
     })),
     {
-      name: 'workout-storage',
+      name: 'workout-session-v2',
       storage: createJSONStorage(() => AsyncStorage),
+      // Persist only what's needed for crash recovery
       partialize: (state) => ({
-          activeWorkoutId: state.activeWorkoutId,
-          workoutName: state.workoutName,
-          startTime: state.startTime,
-          status: state.status,
-          currentExerciseId: state.currentExerciseId,
-          exercises: state.exercises,
-          sets: state.sets,
-          isResting: state.isResting,
-          isRestPaused: state.isRestPaused,
-          restPausedRemaining: state.restPausedRemaining,
-          restEndTime: state.restEndTime,
-          restDurationSeconds: state.restDurationSeconds,
-          autoStartTimer: state.autoStartTimer,
-          defaultTimerSeconds: state.defaultTimerSeconds,
-          elapsedSeconds: state.elapsedSeconds
+        sessionPhase:      state.sessionPhase,
+        exercises:         state.exercises,
+        sets:              state.sets,
+        elapsedSeconds:    state.elapsedSeconds,
+        currentExerciseId: state.currentExerciseId,
+        restTimer:         state.restTimer,
+        timerPrefs:        state.timerPrefs,
       }),
-    }
-  )
+    },
+  ),
 );
 
+// ─── Atomic Selectors ─────────────────────────────────────────────────────────
+
+export const selectSessionPhase     = (s: WorkoutStore) => s.sessionPhase;
+export const selectIsIdle           = (s: WorkoutStore) => s.sessionPhase.phase === 'idle';
+export const selectIsStarting       = (s: WorkoutStore) => s.sessionPhase.phase === 'starting';
+export const selectIsActive         = (s: WorkoutStore) => s.sessionPhase.phase === 'active';
+export const selectIsCompleting     = (s: WorkoutStore) => s.sessionPhase.phase === 'completing';
+export const selectIsCompleted      = (s: WorkoutStore) => s.sessionPhase.phase === 'completed';
+export const selectHasActiveSession = (s: WorkoutStore) =>
+  ['active', 'completing', 'starting'].includes(s.sessionPhase.phase);
+
+export const selectActiveWorkoutId  = (s: WorkoutStore) =>
+  s.sessionPhase.phase === 'active' ? s.sessionPhase.workoutId : null;
+
+export const selectWorkoutName      = (s: WorkoutStore) =>
+  s.sessionPhase.phase === 'active' || s.sessionPhase.phase === 'completing'
+    ? s.sessionPhase.name
+    : null;
+
+export const selectCompletedSummary = (s: WorkoutStore) =>
+  s.sessionPhase.phase === 'completed' ? s.sessionPhase.summary : null;
+
+export const selectExercises        = (s: WorkoutStore) => s.exercises;
+export const selectSets             = (s: WorkoutStore) => s.sets;
+export const selectCurrentExerciseId = (s: WorkoutStore) => s.currentExerciseId;
+export const selectElapsedSeconds   = (s: WorkoutStore) => s.elapsedSeconds;
+export const selectMinimized        = (s: WorkoutStore) => s.minimized;
+export const selectRestTimer        = (s: WorkoutStore) => s.restTimer;
+export const selectTimerPrefs       = (s: WorkoutStore) => s.timerPrefs;
+
+// Derived: sets for a specific exercise
+export const selectSetsByExercise = (exerciseId: number) => (s: WorkoutStore) =>
+  Object.values(s.sets).filter((sv) => sv.workoutExerciseId === exerciseId);
+
+// Derived: count of exercises
+export const selectExerciseCount   = (s: WorkoutStore) => Object.keys(s.exercises).length;
+export const selectTotalSetsLogged = (s: WorkoutStore) =>
+  Object.values(s.sets).filter((sv) => sv.status === 'synced').length;

@@ -398,6 +398,7 @@ export function WorkoutHubScreen({ navigation }: any) {
                         <View style={styles.qaGrid}>
                             <QuickAction icon="clipboard-list-outline" label="Routines" color={colors.chart4} bg={`${colors.chart4}20`} onPress={() => nav('RoutineList')} />
                             <QuickAction icon="calendar-month" label="Templates" color={colors.chart1} bg={`${colors.chart1}20`} onPress={() => nav('TemplateList')} />
+                            <QuickAction icon="calendar-plus" label="New Template" color={colors.chart3} bg={`${colors.chart3}20`} onPress={() => nav('TemplateEditor')} />
                             <QuickAction icon="plus-circle-outline" label="New Routine" color={colors.success} bg={`${colors.success}20`} onPress={() => navigation.push('RoutineEditor', { mode: 'create' })} />
                             <QuickAction icon="robot-outline" label="AI Generate" color={colors.warning} bg={`${colors.warning}20`} onPress={() => nav('AIRoutinePlanner')} />
                         </View>

@@ -24,31 +24,19 @@ export class VectorSearchService {
     const whereConditions: string[] = ["1=1"]; // Default true
     
     if (filters.difficulty) {
-      whereConditions.push(`difficulty = '${filters.difficulty}'`);
+        // difficulty: request.experienceLevel, // Removing strict DB filter since seed defaults to intermediate
     }
-
-    // Equipment filter (simplified: if list provided, must match one of/contain - conceptual)
-    // Since equipment is an array in DB (String[]), we check overlap.
-    if (filters.equipment && filters.equipment.length > 0) {
-      // Postgres array overlap operator &&
-      const equipmentArrayLiteral = `{${filters.equipment.map(e => `"${e}"`).join(",")}}`;
-      whereConditions.push(`equipment && '${equipmentArrayLiteral}'`);
-    }
-
-    if (filters.muscleGroups && filters.muscleGroups.length > 0) {
-        const muscleGroupArrayLiteral = `{${filters.muscleGroups.map(m => `"${m}"`).join(",")}}`;
-        whereConditions.push(`"primaryMuscleGroups" && '${muscleGroupArrayLiteral}'`);
-    }
-
-    const whereClause = whereConditions.join(" AND ");
-
+    // Instead of a strict WHERE filter that returns 0 rows when users select "dumbbell" 
+    // but the DB only has "Bodyweight" populated, we just let the AI handle the mismatch gracefully
+    // by passing the closest vector matches regardless of equipment.
+    
     // Execute raw query using pgvector operator <=> (cosine distance)
     // We order by distance ASC (closest first)
     const query = `
       SELECT id, name, description, equipment, difficulty, "primaryMuscleGroups",
              1 - (embedding <=> '${vectorString}'::vector) as similarity
       FROM "exercises"
-      WHERE ${whereClause}
+      WHERE 1=1
       ORDER BY embedding <=> '${vectorString}'::vector
       LIMIT ${limit};
     `;

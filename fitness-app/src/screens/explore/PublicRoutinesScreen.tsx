@@ -1,19 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, FlatList, TextInput, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, FlatList, TextInput, Dimensions, ActivityIndicator } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { useColors } from '../../hooks';
+import { useColors, usePublicRoutines } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 
 const { width } = Dimensions.get('window');
-
-// Mock aligned with Routine schema
-const ROUTINES = [
-    { id: 1, name: 'PPL - Push Day', description: 'Classic push workout', exerciseCount: 6, estimatedDuration: 60, difficulty: 'intermediate', usageCount: 2400 },
-    { id: 2, name: 'Full Body Blast', description: 'Hit every muscle group', exerciseCount: 8, estimatedDuration: 75, difficulty: 'advanced', usageCount: 1800 },
-    { id: 3, name: 'Beginner Upper', description: 'Perfect for beginners', exerciseCount: 5, estimatedDuration: 45, difficulty: 'beginner', usageCount: 3200 },
-    { id: 4, name: 'Leg Destroyer', description: 'Intense leg workout', exerciseCount: 7, estimatedDuration: 65, difficulty: 'advanced', usageCount: 1200 },
-];
 
 const FILTERS = ['All', 'Beginner', 'Intermediate', 'Advanced'];
 
@@ -22,14 +14,23 @@ export function PublicRoutinesScreen({ navigation }: any) {
     const insets = useSafeAreaInsets();
     const [search, setSearch] = useState('');
     const [filter, setFilter] = useState('All');
+    const normalizedSearch = search.trim() || undefined;
 
-    const filtered = ROUTINES.filter(r => {
+    const { data: publicResponse, isLoading } = usePublicRoutines({
+        page: 1,
+        limit: 100,
+        search: normalizedSearch,
+    });
+
+    const routines = publicResponse?.data?.routines || [];
+
+    const filtered = routines.filter((r: any) => {
         const matchSearch = r.name.toLowerCase().includes(search.toLowerCase());
         const matchFilter = filter === 'All' || r.difficulty === filter.toLowerCase();
         return matchSearch && matchFilter;
     });
 
-    const renderRoutine = ({ item }: { item: typeof ROUTINES[0] }) => (
+    const renderRoutine = ({ item }: { item: any }) => (
         <TouchableOpacity style={[styles.routineCard, { backgroundColor: colors.card, borderColor: colors.border }]} onPress={() => navigation.navigate('RoutineTemplate', { routineId: item.id })}>
             <View style={[styles.routineImage, { backgroundColor: colors.primary.main }]}>
                 <MaterialCommunityIcons name="clipboard-list-outline" size={28} color="#FFF" />
@@ -40,7 +41,7 @@ export function PublicRoutinesScreen({ navigation }: any) {
                 <View style={styles.routineMeta}>
                     <View style={styles.metaItem}>
                         <Ionicons name="barbell-outline" size={14} color={colors.mutedForeground} />
-                        <Text style={[styles.metaText, { color: colors.mutedForeground }]}>{item.exerciseCount}</Text>
+                        <Text style={[styles.metaText, { color: colors.mutedForeground }]}>{item.exercises?.length ?? 0}</Text>
                     </View>
                     <View style={styles.metaItem}>
                         <Ionicons name="time-outline" size={14} color={colors.mutedForeground} />
@@ -48,7 +49,7 @@ export function PublicRoutinesScreen({ navigation }: any) {
                     </View>
                     <View style={styles.metaItem}>
                         <Ionicons name="people-outline" size={14} color={colors.mutedForeground} />
-                        <Text style={[styles.metaText, { color: colors.mutedForeground }]}>{(item.usageCount / 1000).toFixed(1)}k</Text>
+                        <Text style={[styles.metaText, { color: colors.mutedForeground }]}>{((item.copiedCount || 0) / 1000).toFixed(1)}k</Text>
                     </View>
                 </View>
             </View>
@@ -80,7 +81,25 @@ export function PublicRoutinesScreen({ navigation }: any) {
                 ))}
             </View>
 
-            <FlatList data={filtered} renderItem={renderRoutine} keyExtractor={item => item.id.toString()} contentContainerStyle={styles.list} showsVerticalScrollIndicator={false} />
+            {isLoading ? (
+                <View style={styles.loadingContainer}>
+                    <ActivityIndicator size="large" color={colors.primary.main} />
+                </View>
+            ) : (
+                <FlatList
+                    data={filtered}
+                    renderItem={renderRoutine}
+                    keyExtractor={item => String(item.id)}
+                    contentContainerStyle={styles.list}
+                    showsVerticalScrollIndicator={false}
+                    ListEmptyComponent={
+                        <View style={styles.emptyState}>
+                            <Text style={[styles.emptyTitle, { color: colors.foreground }]}>No public routines found</Text>
+                            <Text style={[styles.emptySub, { color: colors.mutedForeground }]}>Try a different search or difficulty filter.</Text>
+                        </View>
+                    }
+                />
+            )}
         </View>
     );
 }
@@ -105,4 +124,8 @@ const styles = StyleSheet.create({
     routineMeta: { flexDirection: 'row', gap: 16 },
     metaItem: { flexDirection: 'row', alignItems: 'center', gap: 4 },
     metaText: { fontSize: 12 },
+    loadingContainer: { flex: 1, alignItems: 'center', justifyContent: 'center' },
+    emptyState: { paddingTop: 40, alignItems: 'center' },
+    emptyTitle: { fontSize: 16, fontWeight: '700', marginBottom: 6 },
+    emptySub: { fontSize: 13 },
 });

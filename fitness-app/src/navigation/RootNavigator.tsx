@@ -5,25 +5,34 @@ import { RootStackParamList } from './types';
 import { AuthStack } from './AuthStack';
 import { OnboardingStack } from './OnboardingStack';
 import { MainDrawer } from './MainDrawer';
-import { authStore } from '../store/authStore';
+import { useAuthStore, selectIsHydrating, selectIsReady, selectNeedsOnboarding } from '../store/authStore';
+import { useWorkoutStore } from '../store/workoutStore';
 import { View, ActivityIndicator } from 'react-native';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
 export function RootNavigator() {
-    const isAuthenticated = authStore((state) => state.isAuthenticated);
-    const user = authStore((state) => state.user);
-    const isLoading = authStore((state) => state.isLoading);
+    // Atomic selectors — each triggers re-render ONLY when its boolean flips
+    const isHydrating      = useAuthStore(selectIsHydrating);
+    const isReady          = useAuthStore(selectIsReady);
+    const needsOnboarding  = useAuthStore(selectNeedsOnboarding);
 
-    // Hydrate auth state on app start
+    // Kick off auth hydration once on mount
     useEffect(() => {
-        authStore.getState().hydrate();
+        useAuthStore.getState().hydrate();
     }, []);
 
-    // Show loading spinner while hydrating
-    if (isLoading) {
+    // Attempt crash recovery for in-progress workout session
+    useEffect(() => {
+        if (isReady) {
+            useWorkoutStore.getState().recoverFromStorage();
+        }
+    }, [isReady]);
+
+    // Block render until we know which stack to show
+    if (isHydrating) {
         return (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#FAFAFA' }}>
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#0A0A0A' }}>
                 <ActivityIndicator size="large" color="#0052FF" />
             </View>
         );
@@ -31,13 +40,13 @@ export function RootNavigator() {
 
     return (
         <NavigationContainer>
-            <Stack.Navigator screenOptions={{ headerShown: false }}>
-                {!isAuthenticated ? (
-                    <Stack.Screen name="Auth" component={AuthStack} />
-                ) : !user?.onboardingCompleted ? (
+            <Stack.Navigator screenOptions={{ headerShown: false, animationEnabled: false }}>
+                {isReady ? (
+                    <Stack.Screen name="Main" component={MainDrawer} />
+                ) : needsOnboarding ? (
                     <Stack.Screen name="Onboarding" component={OnboardingStack} />
                 ) : (
-                    <Stack.Screen name="Main" component={MainDrawer} />
+                    <Stack.Screen name="Auth" component={AuthStack} />
                 )}
             </Stack.Navigator>
         </NavigationContainer>

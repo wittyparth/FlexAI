@@ -1,9 +1,7 @@
 
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GoogleGenAI } from "@google/genai";
 
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY || "";
-const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: "text-embedding-004" });
+
 
 export class EmbeddingService {
   /**
@@ -12,14 +10,23 @@ export class EmbeddingService {
    * @returns An array of numbers representing the embedding vector (768 dimensions).
    */
   async generateEmbedding(text: string): Promise<number[]> {
-    if (!GEMINI_API_KEY) {
+    const apiKey = process.env.GEMINI_API_KEY || "";
+    if (!apiKey) {
       throw new Error("GEMINI_API_KEY is not set in environment variables.");
     }
 
+    const ai = new GoogleGenAI({ apiKey });
+
     try {
-      const result = await model.embedContent(text);
-      const embedding = result.embedding;
-      return embedding.values;
+      const response = await ai.models.embedContent({
+        model: 'gemini-embedding-001',
+        contents: [text],
+      });
+      
+      const rawValues = response.embeddings?.[0]?.values || [];
+      // Truncate to 768 dimensions to match our database pgvector schema constraint 
+      // Matryoshka Representation Learning in Gemini makes this valid
+      return rawValues.slice(0, 768);
     } catch (error) {
       console.error("Error generating embedding:", error);
       throw new Error("Failed to generate embedding");

@@ -1,5 +1,5 @@
 
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GoogleGenAI } from "@google/genai";
 import { EmbeddingService } from "./EmbeddingService";
 import { VectorSearchService } from "./VectorSearchService";
 
@@ -7,8 +7,6 @@ import { VectorSearchService } from "./VectorSearchService";
 
 const embeddingService = new EmbeddingService();
 const vectorSearchService = new VectorSearchService();
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY || "";
-const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
 
 interface GenerationRequest {
   goal: string;
@@ -22,9 +20,11 @@ interface GenerationRequest {
 
 export class WorkoutGenerationService {
   async generateWorkout(request: GenerationRequest) {
-    if (!GEMINI_API_KEY) {
+    const apiKey = process.env.GEMINI_API_KEY || "";
+    if (!apiKey) {
         throw new Error("GEMINI_API_KEY is not set.");
     }
+    const ai = new GoogleGenAI({ apiKey });
 
     // 1. Construct search query from requirements
     // We combine key factors to find semantically relevant exercises
@@ -38,14 +38,19 @@ export class WorkoutGenerationService {
     // 2. Generate embedding for query
     const queryEmbedding = await embeddingService.generateEmbedding(searchQuery);
 
+    // Normalize equipment and ignore "full gym" as a strict filter restriction
+    const normalizedEquipment = request.equipment.map(e => e.toLowerCase().trim().replace('-', ' '));
+    const isFullGym = normalizedEquipment.some(e => e === "full gym" || e === "any" || e === "all");
+    const equipmentFilter = isFullGym ? [] : normalizedEquipment;
+
     // 3. Search for relevant exercises (RAG Retrieval)
     // We select top 30 to give AI enough variety to choose from
     const relevantExercises = await vectorSearchService.searchExercises(
       queryEmbedding, 
       30, 
       {
-        equipment: request.equipment,
-        difficulty: request.experienceLevel, // This acts as a soft filter or strict depending on implementation
+        equipment: equipmentFilter,
+        // difficulty: request.experienceLevel, // Removing strict DB filter since seed data defaults to intermediate
         // For simplicity search service applies these strictly if provided
       }
     );
@@ -88,16 +93,16 @@ export class WorkoutGenerationService {
       }
     `;
 
-    // 5. Generate with AI
-    const model = genAI.getGenerativeModel({ 
-        model: "gemini-flash-latest",
-        generationConfig: { responseMimeType: "application/json" } // Force JSON
-    });
-
     try {
-        const result = await model.generateContent(prompt);
-        const responseText = result.response.text();
-        const workoutData = JSON.parse(responseText);
+        const response = await ai.models.generateContent({
+            model: "gemini-3-flash-preview",
+            contents: prompt,
+            config: {
+                responseMimeType: "application/json"
+            }
+        });
+        const responseText = response.text;
+        const workoutData = JSON.parse(responseText || "{}");
 
         // 6. Basic Validation (Optional but recommended)
         // Verify IDs exist in relevantExercises to be safe

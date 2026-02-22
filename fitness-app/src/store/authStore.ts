@@ -1,165 +1,288 @@
+/**
+ * authStore.ts — Auth + Onboarding FSM
+ *
+ * Design principles:
+ *  1. Discriminated union `AuthPhase` makes impossible states impossible.
+ *     You CANNOT have phase='ready' without a userId.
+ *  2. All transitions are explicit named methods — no raw set() from UI.
+ *  3. Tokens live outside user object to prevent accidental exposure.
+ *  4. Onboarding data is accumulated progressively via saveOnboardingStep().
+ *  5. hydrate() is the ONLY entry point on app start.
+ */
+
 import { create } from 'zustand';
+import { immer } from 'zustand/middleware/immer';
 import { storage } from '../utils/storage';
-import { UserProfile } from '../api/auth.api';
+import {
+  AuthPhase,
+  AuthUser,
+  OnboardingStep,
+  OnboardingStepData,
+  ONBOARDING_STEPS,
+} from './types/auth.types';
 
-// Re-export UserProfile as User for backward compatibility if needed, or update references
-type User = UserProfile;
+// ─── Types ────────────────────────────────────────────────────────────────────
 
-interface AuthState {
-  user: User | null;
-  accessToken: string | null;
-  refreshToken: string | null;
-  isAuthenticated: boolean;
-  isLoading: boolean;
-  updatedUser: Partial<User> | null;
-  
-  // Actions
-  login: (tokens: { accessToken: string; refreshToken: string }, user: User) => Promise<void>;
-  logout: () => Promise<void>;
-  updateTokens: (accessToken: string, refreshToken: string) => Promise<void>;
-  updateUser: (user: Partial<User>) => void;
-  setOnboardingCompleted: (completed: boolean) => void;
-  setUpdatedUser: (updates: Partial<User>) => void;
-  hydrate: () => Promise<void>;
+export interface AuthTokens {
+  accessToken: string;
+  refreshToken: string;
 }
 
-export const authStore = create<AuthState>((set, get) => ({
-  user: null,
-  accessToken: null,
-  refreshToken: null,
-  isAuthenticated: false,
-  isLoading: true,
-  updatedUser: null,
+interface AuthStoreState {
+  authPhase: AuthPhase;
+  user: AuthUser | null;
+  tokens: AuthTokens | null;
+  // Staged onboarding data — accumulated across steps, merged on complete
+  onboardingData: Partial<OnboardingStepData>;
+}
 
-  // Login action
-  login: async (tokens, user) => {
-    await storage.saveAccessToken(tokens.accessToken);
-    await storage.saveRefreshToken(tokens.refreshToken);
-    await storage.saveUser(user);
-    
-    set({
-      user,
-      accessToken: tokens.accessToken,
-      refreshToken: tokens.refreshToken,
-      isAuthenticated: true,
-      isLoading: false,
-    });
-  },
+interface AuthStoreActions {
+  // Lifecycle
+  hydrate: () => Promise<void>;
 
-  // Logout action
-  logout: async () => {
-    console.log('🚪 [AUTH STORE] Starting logout...');
-    console.log('🚪 [AUTH STORE] Current state:', {
-      isAuthenticated: get().isAuthenticated,
-      hasUser: !!get().user,
-      hasToken: !!get().accessToken,
-    });
-    
-    try {
-      // Clear storage first
-      await storage.clearAuth();
-      console.log('✅ [AUTH STORE] Storage cleared');
-      
-      // Then update state
-      set({
-        user: null,
-        accessToken: null,
-        refreshToken: null,
-        isAuthenticated: false,
-        isLoading: false,
-        updatedUser: null,
-      });
-      
-      console.log('✅ [AUTH STORE] State reset - isAuthenticated:', false);
-      console.log('✅ [AUTH STORE] Logout complete');
-    } catch (error) {
-      console.error('❌ [AUTH STORE] Logout failed:', error);
-      throw error;
-    }
-  },
+  // Auth transitions — called by screen handlers
+  beginLogin: (email: string) => void;
+  loginSuccess: (tokens: AuthTokens, user: AuthUser) => Promise<void>;
+  beginRegister: (email: string) => void;
+  registerSuccessNeedsVerify: (email: string) => void;
+  verifyEmailSuccess: (tokens: AuthTokens, user: AuthUser) => Promise<void>;
+  loginFailed: () => void;
+  lockAccount: (email: string, waitSeconds: number) => void;
+  logout: () => Promise<void>;
 
-  // Update tokens (after refresh)
-  updateTokens: async (accessToken, refreshToken) => {
-    await storage.saveAccessToken(accessToken);
-    await storage.saveRefreshToken(refreshToken);
-    
-    set({ accessToken, refreshToken });
-  },
+  // Token refresh — called by HTTP interceptor ONLY, never by UI
+  refreshTokens: (tokens: AuthTokens) => Promise<void>;
 
-  // Update user data
-  updateUser: (userData) => {
-    const currentUser = get().user;
-    if (currentUser) {
-      const updatedUser = { ...currentUser, ...userData };
-      storage.saveUser(updatedUser);
-      set({ user: updatedUser });
-    }
-  },
+  // User data
+  updateUser: (updates: Partial<AuthUser>) => Promise<void>;
 
-  // Set onboarding as completed
-  // Set onboarding as completed and merge pending updates
-  setOnboardingCompleted: (completed) => {
-    const user = get().user;
-    const pendingUpdates = get().updatedUser || {};
-    
-    if (user) {
-      const finalUser = { 
-        ...user, 
-        ...pendingUpdates,
-        onboardingCompleted: completed 
-      };
-      storage.saveUser(finalUser);
-      set({ 
-        user: finalUser,
-        updatedUser: null 
-      });
-    }
-  },
+  // Onboarding flow
+  saveOnboardingStep: <K extends keyof OnboardingStepData>(
+    step: OnboardingStep,
+    data: NonNullable<OnboardingStepData[K]>,
+  ) => void;
+  advanceOnboarding: (nextStep: OnboardingStep) => void;
+  completeOnboarding: () => Promise<void>;
+}
 
-  // Stage user updates (for onboarding)
-  setUpdatedUser: (updates) => {
-    const current = get().updatedUser || {};
-    set({ updatedUser: { ...current, ...updates } });
-  },
+type AuthStore = AuthStoreState & AuthStoreActions;
 
-  // Hydrate from AsyncStorage on app start
-  hydrate: async () => {
-    console.log('🔄 [AUTH STORE] Starting hydration...');
-    try {
-      const [accessToken, refreshToken, user] = await Promise.all([
-        storage.getAccessToken(),
-        storage.getRefreshToken(),
-        storage.getUser(),
-      ]);
+// ─── Helpers ──────────────────────────────────────────────────────────────────
 
-      if (accessToken && refreshToken && user) {
-        console.log('✅ [AUTH STORE] User found, setting authenticated');
-        set({
-          accessToken,
-          refreshToken,
-          user,
-          isAuthenticated: true,
-          isLoading: false,
-        });
-      } else {
-        if (accessToken || refreshToken || user) {
-          await storage.clearAuth();
+const firstOnboardingStep = (): OnboardingStep => ONBOARDING_STEPS[0];
+
+// ─── Store ────────────────────────────────────────────────────────────────────
+
+export const useAuthStore = create<AuthStore>()(
+  immer((set, get) => ({
+    // Purposely "hydrating" until hydrate() resolves — prevents flash of wrong UI
+    authPhase: { phase: 'hydrating' },
+    user: null,
+    tokens: null,
+    onboardingData: {},
+
+    // ── Lifecycle ────────────────────────────────────────────────────────────
+
+    hydrate: async () => {
+      try {
+        const [accessToken, refreshToken, user] = await Promise.all([
+          storage.getAccessToken(),
+          storage.getRefreshToken(),
+          storage.getUser(),
+        ]);
+
+        if (accessToken && refreshToken && user) {
+          set((s) => {
+            s.tokens = { accessToken, refreshToken };
+            s.user = user as AuthUser;
+            s.authPhase = user.onboardingCompleted
+              ? { phase: 'ready', userId: user.id }
+              : {
+                  phase: 'onboarding',
+                  userId: user.id,
+                  currentStep: firstOnboardingStep(),
+                  completedSteps: [],
+                };
+          });
+        } else {
+          // Partial/corrupted session — wipe it
+          if (accessToken || refreshToken || user) {
+            await storage.clearAuth();
+          }
+          set((s) => {
+            s.authPhase = { phase: 'guest' };
+            s.user = null;
+            s.tokens = null;
+          });
         }
-
-        console.log('❌ [AUTH STORE] No user found, setting unauthenticated');
-        set({ 
-          isAuthenticated: false,
-          isLoading: false 
+      } catch {
+        set((s) => {
+          s.authPhase = { phase: 'guest' };
+          s.user = null;
+          s.tokens = null;
         });
       }
-    } catch (error) {
-      console.error('❌ [AUTH STORE] Hydration failed:', error);
-      set({ 
-        isAuthenticated: false,
-        isLoading: false 
-      });
-    }
-  },
-}));
+    },
 
-export const useAuthStore = authStore;
+    // ── Auth Transitions ─────────────────────────────────────────────────────
+
+    beginLogin: (email) =>
+      set((s) => { s.authPhase = { phase: 'logging_in', email }; }),
+
+    loginSuccess: async (tokens, user) => {
+      await Promise.all([
+        storage.saveAccessToken(tokens.accessToken),
+        storage.saveRefreshToken(tokens.refreshToken),
+        storage.saveUser(user as any),
+      ]);
+      set((s) => {
+        s.tokens = tokens;
+        s.user = user;
+        s.authPhase = user.onboardingCompleted
+          ? { phase: 'ready', userId: user.id }
+          : { phase: 'onboarding', userId: user.id, currentStep: firstOnboardingStep(), completedSteps: [] };
+      });
+    },
+
+    beginRegister: (email) =>
+      set((s) => { s.authPhase = { phase: 'registering', email }; }),
+
+    registerSuccessNeedsVerify: (email) =>
+      set((s) => { s.authPhase = { phase: 'verifying_email', email }; }),
+
+    verifyEmailSuccess: async (tokens, user) => {
+      await Promise.all([
+        storage.saveAccessToken(tokens.accessToken),
+        storage.saveRefreshToken(tokens.refreshToken),
+        storage.saveUser(user as any),
+      ]);
+      set((s) => {
+        s.tokens = tokens;
+        s.user = user;
+        // New users always need onboarding
+        s.authPhase = {
+          phase: 'onboarding',
+          userId: user.id,
+          currentStep: firstOnboardingStep(),
+          completedSteps: [],
+        };
+      });
+    },
+
+    loginFailed: () =>
+      set((s) => { s.authPhase = { phase: 'guest' }; }),
+
+    lockAccount: (email, waitSeconds) =>
+      set((s) => {
+        s.authPhase = { phase: 'locked', email, unlockAtMs: Date.now() + waitSeconds * 1000 };
+      }),
+
+    logout: async () => {
+      await storage.clearAuth();
+      set((s) => {
+        s.authPhase = { phase: 'guest' };
+        s.user = null;
+        s.tokens = null;
+        s.onboardingData = {};
+      });
+    },
+
+    refreshTokens: async (tokens) => {
+      await Promise.all([
+        storage.saveAccessToken(tokens.accessToken),
+        storage.saveRefreshToken(tokens.refreshToken),
+      ]);
+      set((s) => { s.tokens = tokens; });
+    },
+
+    updateUser: async (updates) => {
+      const current = get().user;
+      if (!current) return;
+      const next: AuthUser = { ...current, ...updates };
+      await storage.saveUser(next as any);
+      set((s) => { s.user = next; });
+    },
+
+    // ── Onboarding ───────────────────────────────────────────────────────────
+
+    saveOnboardingStep: (step, data) =>
+      set((s) => { (s.onboardingData as any)[step] = data; }),
+
+    advanceOnboarding: (nextStep) =>
+      set((s) => {
+        if (s.authPhase.phase !== 'onboarding') return;
+        const completed = [...s.authPhase.completedSteps, s.authPhase.currentStep];
+        s.authPhase = {
+          phase: 'onboarding',
+          userId: s.authPhase.userId,
+          currentStep: nextStep,
+          completedSteps: completed,
+        };
+      }),
+
+    completeOnboarding: async () => {
+      const { user, onboardingData } = get();
+      if (!user) return;
+
+      const od = onboardingData as any;
+      const updatedUser: AuthUser = {
+        ...user,
+        onboardingCompleted:  true,
+        goals:                od.GoalSelection?.goals          ?? user.goals,
+        experienceLevel:      od.ExperienceLevel?.level        ?? user.experienceLevel,
+        height:               od.PhysicalProfile?.height       ?? user.height,
+        weight:               od.PhysicalProfile?.weight       ?? user.weight,
+        gender:               od.PhysicalProfile?.gender       ?? user.gender,
+        dateOfBirth:          od.PhysicalProfile?.dateOfBirth  ?? user.dateOfBirth,
+        secondaryGoals:       od.SecondaryGoals?.goals         ?? user.secondaryGoals,
+        workoutTypes:         od.WorkoutInterests?.types       ?? user.workoutTypes,
+        workoutFrequency:     od.WorkoutFrequency?.daysPerWeek ?? user.workoutFrequency,
+        workoutDuration:      od.WorkoutDuration?.minutes      ?? user.workoutDuration,
+        availableEquipment:   od.Equipment?.equipment          ?? user.availableEquipment,
+        preferredUnits:       od.Units?.system                 ?? user.preferredUnits,
+        notificationsEnabled: od.Notification?.enabled         ?? user.notificationsEnabled,
+      };
+
+      await storage.saveUser(updatedUser as any);
+      set((s) => {
+        s.user = updatedUser;
+        s.onboardingData = {};
+        s.authPhase = { phase: 'ready', userId: updatedUser.id };
+      });
+    },
+  })),
+);
+
+// ─── Atomic Selectors ─────────────────────────────────────────────────────────
+// Components subscribe to the SMALLEST slice possible.
+// Each selector triggers a re-render ONLY when its specific value changes.
+
+export const selectAuthPhase       = (s: AuthStore) => s.authPhase;
+export const selectIsHydrating     = (s: AuthStore) => s.authPhase.phase === 'hydrating';
+export const selectIsReady         = (s: AuthStore) => s.authPhase.phase === 'ready';
+export const selectNeedsOnboarding = (s: AuthStore) => s.authPhase.phase === 'onboarding';
+export const selectIsGuest         = (s: AuthStore) =>
+  (['guest', 'logging_in', 'registering', 'verifying_email', 'locked'] as const)
+    .includes(s.authPhase.phase as any);
+
+export const selectUser          = (s: AuthStore) => s.user;
+export const selectUserId        = (s: AuthStore) => s.user?.id ?? null;
+export const selectAccessToken   = (s: AuthStore) => s.tokens?.accessToken ?? null;
+export const selectRefreshToken  = (s: AuthStore) => s.tokens?.refreshToken ?? null;
+
+export const selectOnboardingStep = (s: AuthStore) =>
+  s.authPhase.phase === 'onboarding' ? s.authPhase.currentStep : null;
+
+export const selectOnboardingProgress = (s: AuthStore) => {
+  if (s.authPhase.phase !== 'onboarding')
+    return { current: 0, total: ONBOARDING_STEPS.length, percent: 0 };
+  const current = s.authPhase.completedSteps.length;
+  return {
+    current,
+    total:   ONBOARDING_STEPS.length,
+    percent: Math.round((current / ONBOARDING_STEPS.length) * 100),
+  };
+};
+
+// Legacy compat — some files imported as authStore
+export const authStore = useAuthStore;

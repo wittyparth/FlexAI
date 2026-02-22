@@ -13,6 +13,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useColors, useRankings } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
+import { NavigationBar, Chip } from '../../components/ui';
 
 const { width } = Dimensions.get('window');
 
@@ -52,15 +53,7 @@ export function LeaderboardScreen({ navigation }: any) {
     if (isLoading) {
         return (
             <View style={[styles.container, { backgroundColor: colors.background }]}>
-                <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.card }]}>
-                    <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-                        <Ionicons name="arrow-back" size={24} color={colors.foreground} />
-                    </TouchableOpacity>
-                    <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>
-                        Leaderboard
-                    </Text>
-                    <View style={{ width: 44 }} />
-                </View>
+                <NavigationBar title="Leaderboard" onBack={() => navigation.goBack()} />
                 <View style={styles.loadingContainer}>
                     <ActivityIndicator size="large" color={colors.primary.main} />
                     <Text style={[styles.loadingText, { color: colors.mutedForeground }]}>
@@ -74,15 +67,7 @@ export function LeaderboardScreen({ navigation }: any) {
     if (error) {
         return (
             <View style={[styles.container, { backgroundColor: colors.background }]}>
-                <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.card }]}>
-                    <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-                        <Ionicons name="arrow-back" size={24} color={colors.foreground} />
-                    </TouchableOpacity>
-                    <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>
-                        Leaderboard
-                    </Text>
-                    <View style={{ width: 44 }} />
-                </View>
+                <NavigationBar title="Leaderboard" onBack={() => navigation.goBack()} />
                 <View style={styles.errorContainer}>
                     <Ionicons name="alert-circle-outline" size={48} color={colors.error} />
                     <Text style={[styles.errorText, { color: colors.error }]}>
@@ -96,38 +81,18 @@ export function LeaderboardScreen({ navigation }: any) {
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
             {/* Header */}
-            <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.card }]}>
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-                    <Ionicons name="arrow-back" size={24} color={colors.foreground} />
-                </TouchableOpacity>
-                <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>
-                    Leaderboard
-                </Text>
-                <View style={{ width: 44 }} />
-            </View>
+            <NavigationBar title="Leaderboard" onBack={() => navigation.goBack()} />
 
             {/* Period Selector */}
             <View style={[styles.periodSelector, { backgroundColor: colors.card }]}>
                 {(['weekly', 'monthly', 'allTime'] as Period[]).map((p) => (
-                    <TouchableOpacity
+                    <Chip
                         key={p}
-                        style={[styles.periodTab, period === p && styles.periodTabActive]}
+                        label={p === 'weekly' ? 'Weekly' : p === 'monthly' ? 'Monthly' : 'All Time'}
+                        selected={period === p}
                         onPress={() => setPeriod(p)}
-                    >
-                        {period === p ? (
-                            <View
-                                style={styles.periodTabGradient}
-                            >
-                                <Text style={styles.periodTextActive}>
-                                    {p === 'weekly' ? 'Weekly' : p === 'monthly' ? 'Monthly' : 'All Time'}
-                                </Text>
-                            </View>
-                        ) : (
-                            <Text style={[styles.periodText, { color: colors.mutedForeground }]}>
-                                {p === 'weekly' ? 'Weekly' : p === 'monthly' ? 'Monthly' : 'All Time'}
-                            </Text>
-                        )}
-                    </TouchableOpacity>
+                        size="sm"
+                    />
                 ))}
             </View>
 

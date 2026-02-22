@@ -14,6 +14,7 @@ import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { LineChart } from 'react-native-gifted-charts';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
+import { NavigationBar, IconButton } from '../../components/ui';
 import { useMeasurementHistory, useProgressPhotos, useWeightHistory } from '../../hooks/queries/useBodyQueries';
 
 const { width } = Dimensions.get('window');
@@ -125,13 +126,7 @@ export function BodyTrackingHubScreen({ navigation }: any) {
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
-            <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.card, borderBottomColor: colors.border }]}> 
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerBtn}>
-                    <Ionicons name="arrow-back" size={24} color={colors.foreground} />
-                </TouchableOpacity>
-                <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Body Tracking</Text>
-                <View style={styles.headerBtn} />
-            </View>
+            <NavigationBar title="Body Tracking" onBack={() => navigation.goBack()} />
 
             {isLoading ? (
                 <View style={styles.centerState}>
@@ -253,11 +248,13 @@ export function BodyTrackingHubScreen({ navigation }: any) {
                 </ScrollView>
             )}
 
-            <TouchableOpacity style={styles.fab} activeOpacity={0.9} onPress={() => navigation.navigate('WeightLog')}>
-                <View style={[styles.fabGradient, { backgroundColor: colors.primary.main }]}> 
-                    <Ionicons name="add" size={30} color="#FFF" />
-                </View>
-            </TouchableOpacity>
+            <IconButton
+                icon="add"
+                variant="filled"
+                size="lg"
+                onPress={() => navigation.navigate('WeightLog')}
+                style={styles.fab}
+            />
         </View>
     );
 }

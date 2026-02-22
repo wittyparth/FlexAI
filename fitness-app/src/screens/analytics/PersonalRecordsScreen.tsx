@@ -13,6 +13,7 @@ import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { BarChart } from 'react-native-gifted-charts';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
+import { NavigationBar, Button, Chip } from '../../components/ui';
 import { usePersonalRecords } from '../../hooks/queries/useStatsQueries';
 import { PersonalRecordResponse, PersonalRecordType } from '../../api/stats.api';
 
@@ -108,15 +109,13 @@ export function PersonalRecordsScreen({ navigation }: any) {
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
-            <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.background }]}> 
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerBtn}>
-                    <Ionicons name="arrow-back" size={24} color={colors.foreground} />
-                </TouchableOpacity>
-                <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Records</Text>
-                <TouchableOpacity onPress={() => refetch()} style={styles.headerBtn}>
-                    <Ionicons name="refresh" size={20} color={colors.foreground} />
-                </TouchableOpacity>
-            </View>
+            <NavigationBar
+                title="Records"
+                onBack={() => navigation.goBack()}
+                rightActions={[
+                    { icon: 'refresh', onPress: () => refetch(), label: 'Refresh' },
+                ]}
+            />
 
             {isLoading ? (
                 <View style={styles.centerState}>
@@ -125,9 +124,7 @@ export function PersonalRecordsScreen({ navigation }: any) {
             ) : isError ? (
                 <View style={styles.centerState}>
                     <Text style={{ color: colors.error, marginBottom: 12 }}>Failed to load personal records.</Text>
-                    <TouchableOpacity style={[styles.retryBtn, { backgroundColor: colors.primary.main }]} onPress={() => refetch()}>
-                        <Text style={styles.retryText}>Retry</Text>
-                    </TouchableOpacity>
+                    <Button title="Retry" onPress={() => refetch()} variant="primary" size="default" />
                 </View>
             ) : (
                 <ScrollView showsVerticalScrollIndicator={false}>
@@ -246,19 +243,13 @@ export function PersonalRecordsScreen({ navigation }: any) {
                             { key: 'max_reps', label: 'Max Reps' },
                             { key: 'max_volume', label: 'Volume' },
                         ] as const).map((item) => (
-                            <TouchableOpacity
+                            <Chip
                                 key={item.key}
-                                style={[
-                                    styles.filterPill,
-                                    filter === item.key
-                                        ? { backgroundColor: `${colors.primary.main}20`, borderColor: colors.primary.main, borderWidth: 1 }
-                                        : { backgroundColor: colors.card, borderColor: colors.border, borderWidth: 1 },
-                                ]}
+                                label={item.label}
+                                selected={filter === item.key}
                                 onPress={() => setFilter(item.key)}
-                                activeOpacity={0.7}
-                            >
-                                <Text style={[styles.filterText, { color: filter === item.key ? colors.primary.main : colors.mutedForeground }]}>{item.label}</Text>
-                            </TouchableOpacity>
+                                size="sm"
+                            />
                         ))}
                     </ScrollView>
 

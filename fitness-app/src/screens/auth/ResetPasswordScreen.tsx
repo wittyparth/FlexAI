@@ -11,7 +11,7 @@ import {
     ActivityIndicator,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { Input } from '../../components/ui';
+import { Input, NavigationBar, Button } from '../../components/ui';
 import { useColors } from '../../hooks';
 import { useTheme } from '../../contexts';
 import { useAuthQueries } from '../../hooks/queries/useAuthQueries';
@@ -122,16 +122,7 @@ export function ResetPasswordScreen({ navigation, route }: ResetPasswordScreenPr
             <StatusBar barStyle={isDark ? 'light-content' : 'dark-content'} />
 
             {/* Header */}
-            <View style={[styles.header, { backgroundColor: colors.card, borderBottomColor: colors.border }]}>
-                <TouchableOpacity
-                    onPress={() => navigation.goBack()}
-                    style={[styles.backButton, { backgroundColor: colors.muted }]}
-                >
-                    <Ionicons name="arrow-back" size={24} color={colors.foreground} />
-                </TouchableOpacity>
-                <Text style={[styles.headerTitle, { color: colors.foreground }]}>Reset Password</Text>
-                <View style={styles.placeholder} />
-            </View>
+            <NavigationBar title="Reset Password" onBack={() => navigation.goBack()} />
 
             <ScrollView
                 showsVerticalScrollIndicator={false}
@@ -209,21 +200,15 @@ export function ResetPasswordScreen({ navigation, route }: ResetPasswordScreenPr
                 </View>
 
                 {/* Reset Button */}
-                <TouchableOpacity
+                <Button
+                    title="Reset Password"
                     onPress={handleReset}
+                    variant="primary"
+                    size="large"
+                    fullWidth
+                    loading={loading}
                     disabled={loading}
-                    style={[styles.button, { opacity: loading ? 0.7 : 1 }]}
-                >
-                    <View
-                        style={styles.gradient}
-                    >
-                        {loading ? (
-                            <ActivityIndicator color="white" />
-                        ) : (
-                            <Text style={styles.buttonText}>Reset Password</Text>
-                        )}
-                    </View>
-                </TouchableOpacity>
+                />
 
             </ScrollView>
         </View>

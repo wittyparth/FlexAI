@@ -20,7 +20,7 @@ import {
     Alert,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { Input } from '../../components/ui';
+import { Input, IconButton, Button } from '../../components/ui';
 import { useColors } from '../../hooks';
 import { useTheme } from '../../contexts';
 import { useAuthQueries } from '../../hooks/queries/useAuthQueries';
@@ -87,13 +87,13 @@ export function ForgotPasswordScreen({ navigation }: ForgotPasswordScreenProps) 
             >
                 {/* Header */}
                 <View style={styles.header}>
-                    <TouchableOpacity
-                        style={[styles.backButton, { backgroundColor: colors.muted }]}
+                    <IconButton
+                        icon="arrow-back"
+                        variant="tinted"
+                        size="md"
                         onPress={() => navigation.goBack()}
                         disabled={loading}
-                    >
-                        <Ionicons name="arrow-back" size={24} color={colors.foreground} />
-                    </TouchableOpacity>
+                    />
                 </View>
 
                 {/* Content */}
@@ -133,20 +133,15 @@ export function ForgotPasswordScreen({ navigation }: ForgotPasswordScreenProps) 
                     </View>
 
                     {/* Submit Button */}
-                    <TouchableOpacity
+                    <Button
+                        title={loading ? 'Sending...' : 'Send Reset Code'}
                         onPress={handleSubmit}
+                        variant="primary"
+                        size="large"
+                        fullWidth
+                        loading={loading}
                         disabled={loading}
-                        activeOpacity={0.9}
-                        style={[styles.submitButton, shadows.accent, loading && styles.buttonDisabled]}
-                    >
-                        <View
-                            style={styles.submitButtonGradient}
-                        >
-                            <Text style={styles.submitButtonText}>
-                                {loading ? 'Sending...' : 'Send Reset Code'}
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
+                    />
 
                     {/* Back to Login */}
                     <TouchableOpacity

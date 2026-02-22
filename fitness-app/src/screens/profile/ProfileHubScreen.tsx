@@ -14,6 +14,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
+import { Avatar, IconButton, Button, ListItem } from '../../components/ui';
 import { WorkoutHeatmap } from '../../components/WorkoutHeatmap';
 import { MuscleHighlighterCard } from '../../components/muscles/MuscleHighlighterCard';
 import { DateRangePicker, DateRange } from '../../components/common/DateRangePicker';
@@ -119,38 +120,6 @@ function SectionHeader({ title, onViewAll }: { title: string; onViewAll?: () => 
                 </TouchableOpacity>
             )}
         </View>
-    );
-}
-
-function NavCard({
-    icon,
-    label,
-    subtitle,
-    color,
-    onPress,
-}: {
-    icon: string;
-    label: string;
-    subtitle?: string;
-    color: string;
-    onPress: () => void;
-}) {
-    const colors = useColors();
-    return (
-        <TouchableOpacity
-            style={[styles.navCard, { backgroundColor: colors.card, borderColor: colors.border }]}
-            onPress={onPress}
-            activeOpacity={0.7}
-        >
-            <View style={[styles.navCardIcon, { backgroundColor: `${color}18` }]}>
-                <Ionicons name={icon as any} size={22} color={color} />
-            </View>
-            <View style={styles.navCardText}>
-                <Text style={[styles.navCardLabel, { color: colors.foreground }]}>{label}</Text>
-                {subtitle && <Text style={[styles.navCardSub, { color: colors.mutedForeground }]}>{subtitle}</Text>}
-            </View>
-            <Ionicons name="chevron-forward" size={18} color={colors.mutedForeground} />
-        </TouchableOpacity>
     );
 }
 
@@ -266,18 +235,20 @@ export function ProfileHubScreen({ navigation }: any) {
                 <View style={[styles.heroGradient, { backgroundColor: colors.card, paddingTop: insets.top + 12 }]}> 
                     <View style={styles.heroTopBar}>
                         <Text style={[styles.heroPageTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Profile</Text>
-                        <TouchableOpacity style={[styles.heroIconBtn, { backgroundColor: colors.muted }]} onPress={() => goToSettings('Settings')}>
-                            <Ionicons name="settings-outline" size={22} color={colors.mutedForeground} />
-                        </TouchableOpacity>
+                        <IconButton
+                            icon="settings-outline"
+                            variant="ghost"
+                            size="md"
+                            onPress={() => goToSettings('Settings')}
+                        />
                     </View>
 
                     <View style={styles.heroBody}>
                         <View style={styles.avatarWrapper}>
-                            <View style={[styles.avatarRing, { backgroundColor: colors.primary.main }]}> 
-                                <View style={[styles.avatarInner, { backgroundColor: colors.card }]}> 
-                                    <Text style={[styles.avatarText, { color: colors.primary.main }]}>{firstName.charAt(0).toUpperCase()}</Text>
-                                </View>
-                            </View>
+                            <Avatar
+                                initials={`${firstName.charAt(0)}${lastName?.charAt(0) ?? ''}`.toUpperCase()}
+                                size="xl"
+                            />
                             <View style={[styles.levelBadge, { backgroundColor: colors.warning }]}> 
                                 <Text style={styles.levelBadgeText}>{level}</Text>
                             </View>
@@ -384,19 +355,19 @@ export function ProfileHubScreen({ navigation }: any) {
                     </View>
 
                     <View style={styles.navCardList}>
-                        <NavCard icon="trophy-outline" label="Personal Records" subtitle={`${prRecords.length} all-time records`} color="#F59E0B" onPress={() => goToAnalytics('PersonalRecords')} />
-                        <NavCard icon="trending-up" label="Strength Progression" subtitle="Track your lifts over time" color="#6366F1" onPress={() => goToAnalytics('StrengthProgression')} />
-                        <NavCard icon="bar-chart-outline" label="Volume Analytics" subtitle="Weekly and monthly volume" color="#3B82F6" onPress={() => goToAnalytics('VolumeAnalytics')} />
-                        <NavCard icon="body-outline" label="Muscle Heatmap" subtitle="Muscle group distribution" color="#EC4899" onPress={() => goToAnalytics('MuscleHeatmap')} />
+                        <ListItem icon="trophy-outline" title="Personal Records" subtitle={`${prRecords.length} all-time records`} showChevron showDivider onPress={() => goToAnalytics('PersonalRecords')} />
+                        <ListItem icon="trending-up" title="Strength Progression" subtitle="Track your lifts over time" showChevron showDivider onPress={() => goToAnalytics('StrengthProgression')} />
+                        <ListItem icon="bar-chart-outline" title="Volume Analytics" subtitle="Weekly and monthly volume" showChevron showDivider onPress={() => goToAnalytics('VolumeAnalytics')} />
+                        <ListItem icon="body-outline" title="Muscle Heatmap" subtitle="Muscle group distribution" showChevron onPress={() => goToAnalytics('MuscleHeatmap')} />
                     </View>
                 </Animated.View>
 
                 <Animated.View style={[styles.section, { opacity: fadeAnim }]}> 
                     <SectionHeader title="Body Tracking" onViewAll={() => goToBodyTracking('BodyTrackingHub')} />
                     <View style={styles.navCardList}>
-                        <NavCard icon="scale-outline" label="Weight Log" subtitle="Track weight over time" color="#10B981" onPress={() => goToBodyTracking('WeightLog')} />
-                        <NavCard icon="resize-outline" label="Measurements" subtitle="Body measurements" color="#14B8A6" onPress={() => goToBodyTracking('Measurements')} />
-                        <NavCard icon="camera-outline" label="Progress Photos" subtitle="Visual progress timeline" color="#8B5CF6" onPress={() => goToBodyTracking('ProgressPhotos')} />
+                        <ListItem icon="scale-outline" title="Weight Log" subtitle="Track weight over time" showChevron showDivider onPress={() => goToBodyTracking('WeightLog')} />
+                        <ListItem icon="resize-outline" title="Measurements" subtitle="Body measurements" showChevron showDivider onPress={() => goToBodyTracking('Measurements')} />
+                        <ListItem icon="camera-outline" title="Progress Photos" subtitle="Visual progress timeline" showChevron onPress={() => goToBodyTracking('ProgressPhotos')} />
                     </View>
                 </Animated.View>
 
@@ -419,16 +390,22 @@ export function ProfileHubScreen({ navigation }: any) {
                 <Animated.View style={[styles.section, { opacity: fadeAnim }]}> 
                     <SectionHeader title="Settings" />
                     <View style={styles.navCardList}>
-                        <NavCard icon="settings-outline" label="App Settings" subtitle="Notifications, units, theme" color="#6B7280" onPress={() => goToSettings('Settings')} />
-                        <NavCard icon="lock-closed-outline" label="Account and Security" subtitle="Password and privacy" color="#EF4444" onPress={() => goToSettings('AccountSecurity')} />
-                        <NavCard icon="help-circle-outline" label="Help and Support" subtitle="FAQ and contact" color="#6B7280" onPress={() => goToSettings('HelpSupport')} />
+                        <ListItem icon="settings-outline" title="App Settings" subtitle="Notifications, units, theme" showChevron showDivider onPress={() => goToSettings('Settings')} />
+                        <ListItem icon="lock-closed-outline" title="Account and Security" subtitle="Password and privacy" showChevron showDivider onPress={() => goToSettings('AccountSecurity')} />
+                        <ListItem icon="help-circle-outline" title="Help and Support" subtitle="FAQ and contact" showChevron onPress={() => goToSettings('HelpSupport')} />
                     </View>
                 </Animated.View>
 
-                <TouchableOpacity style={[styles.logoutBtn, { borderColor: `${colors.error}40` }]} activeOpacity={0.7} onPress={handleLogout} disabled={logoutMutation.isPending}>
-                    <Ionicons name="log-out-outline" size={20} color={colors.error} />
-                    <Text style={[styles.logoutText, { color: colors.error }]}>{logoutMutation.isPending ? 'Logging out...' : 'Log Out'}</Text>
-                </TouchableOpacity>
+                <Button
+                    title={logoutMutation.isPending ? 'Logging out...' : 'Log Out'}
+                    onPress={handleLogout}
+                    variant="destructive"
+                    size="default"
+                    fullWidth
+                    disabled={logoutMutation.isPending}
+                    leftElement={<Ionicons name="log-out-outline" size={20} color="#FFFFFF" />}
+                    style={styles.logoutBtn}
+                />
             </ScrollView>
         </View>
     );

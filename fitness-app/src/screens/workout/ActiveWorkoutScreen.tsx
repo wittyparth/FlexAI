@@ -16,6 +16,7 @@ import { fontFamilies } from '../../theme/typography';
 import { useWorkoutSession } from '../../hooks/useWorkoutSession';
 import { useShallow } from 'zustand/react/shallow';
 import { CustomAlert } from '../../components/ui/CustomAlert';
+import { IconButton, Button } from '../../components/ui';
 import { ExerciseCard } from '../../components/active-workout/ExerciseCard';
 import { RestTimerOverlay } from '../../components/active-workout/RestTimerOverlay';
 import { TimerSettingsModal } from '../../components/active-workout/TimerSettingsModal';
@@ -318,18 +319,18 @@ export function ActiveWorkoutScreen({ navigation, route }: any) {
         <MaterialCommunityIcons name="dumbbell" size={48} color={colors.mutedForeground} />
         <Text style={[styles.emptyText, { color: colors.mutedForeground }]}>No exercises in this workout</Text>
         <View style={styles.emptyActions}>
-          <TouchableOpacity
-            style={[styles.emptyBtn, { borderColor: colors.primary.main }]}
+          <Button
+            title="Add Exercise"
+            variant="outlined"
+            size="default"
             onPress={() => navigation.navigate('ExercisePicker', { returnTo: 'ActiveWorkout', multiSelect: true })}
-          >
-            <Text style={{ color: colors.primary.main }}>Add Exercise</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.emptyBtn, { borderColor: colors.border }]}
+          />
+          <Button
+            title="Cancel Workout"
+            variant="destructive"
+            size="default"
             onPress={handleCancel}
-          >
-            <Text style={{ color: colors.error }}>Cancel Workout</Text>
-          </TouchableOpacity>
+          />
         </View>
       </View>
     );
@@ -344,9 +345,12 @@ export function ActiveWorkoutScreen({ navigation, route }: any) {
       <View style={[styles.topBar, { paddingTop: insets.top + 8, borderBottomColor: colors.border }]}>
         {/* Row 1: Nav + Title + Actions */}
         <View style={styles.topRow}>
-          <TouchableOpacity onPress={handleMinimize} style={[styles.iconBtn, { backgroundColor: colors.muted }]}>
-            <Ionicons name="chevron-down" size={22} color={colors.foreground} />
-          </TouchableOpacity>
+          <IconButton
+            icon="chevron-down"
+            variant="tinted"
+            size="md"
+            onPress={handleMinimize}
+          />
 
           <View style={styles.titleBlock}>
             <Text style={[styles.workoutTitle, { color: colors.foreground }]} numberOfLines={1}>
@@ -355,20 +359,25 @@ export function ActiveWorkoutScreen({ navigation, route }: any) {
           </View>
 
           <View style={styles.topActions}>
-            <TouchableOpacity onPress={() => setSettingsModalVisible(true)} style={[styles.iconBtn, { backgroundColor: colors.muted }]}>
-              <Ionicons name="settings-outline" size={18} color={colors.foreground} />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={handleCancel} style={[styles.iconBtn, { backgroundColor: colors.muted }]}>
-              <MaterialCommunityIcons name="close" size={20} color={colors.mutedForeground} />
-            </TouchableOpacity>
-            <TouchableOpacity
+            <IconButton
+              icon="settings-outline"
+              variant="tinted"
+              size="sm"
+              onPress={() => setSettingsModalVisible(true)}
+            />
+            <IconButton
+              icon="close"
+              variant="tinted"
+              size="sm"
+              onPress={handleCancel}
+            />
+            <Button
+              title="Finish"
+              variant="primary"
+              size="sm"
               onPress={handleComplete}
-              style={[styles.finishBtn, { backgroundColor: colors.primary.main }]}
-              activeOpacity={0.8}
-            >
-              <Ionicons name="checkmark" size={18} color="#FFFFFF" />
-              <Text style={styles.finishBtnText}>Finish</Text>
-            </TouchableOpacity>
+              rightElement={<Ionicons name="checkmark" size={16} color="#FFFFFF" />}
+            />
           </View>
         </View>
 
@@ -504,14 +513,15 @@ export function ActiveWorkoutScreen({ navigation, route }: any) {
         })}
 
         {/* Add Exercise placeholder */}
-        <TouchableOpacity
-          style={[styles.addExerciseBtn, { borderColor: colors.border }]}
+        <Button
+          title="Add Exercise"
+          variant="ghost"
+          size="default"
+          fullWidth
           onPress={() => navigation.navigate('ExercisePicker', { returnTo: 'ActiveWorkout', multiSelect: true })}
-          activeOpacity={0.7}
-        >
-          <Ionicons name="add-circle-outline" size={20} color={colors.primary.main} />
-          <Text style={[styles.addExerciseText, { color: colors.primary.main }]}>Add Exercise</Text>
-        </TouchableOpacity>
+          leftElement={<Ionicons name="add-circle-outline" size={20} color={colors.primary.main} />}
+          style={styles.addExerciseBtn}
+        />
       </ScrollView>
 
       {/* ─── REST TIMER OVERLAY ─── */}

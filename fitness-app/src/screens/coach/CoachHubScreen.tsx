@@ -28,9 +28,9 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { NavigationBar, Button } from '../../components/ui';
 
 import { useColors } from '../../hooks';
-import { fontFamilies } from '../../theme/typography';
 import { useCoachConversations, useDeleteCoachConversation } from '../../hooks/queries/useCoachQueries';
 import { CoachConversation } from '../../api/coach.api';
 
@@ -150,15 +150,20 @@ const RenameModal = ({ visible, initialTitle, colors, onConfirm, onClose }: Rena
                         placeholderTextColor={colors.mutedForeground}
                     />
                     <View style={renameStyles.btnRow}>
-                        <TouchableOpacity style={[renameStyles.btn, { borderColor: colors.border }]} onPress={onClose}>
-                            <Text style={{ color: colors.mutedForeground, fontWeight: '600' }}>Cancel</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={[renameStyles.btn, { backgroundColor: colors.primary.main, borderColor: colors.primary.main }]}
+                        <Button
+                            title="Cancel"
+                            variant="ghost"
+                            size="default"
+                            onPress={onClose}
+                            style={{ flex: 1 }}
+                        />
+                        <Button
+                            title="Rename"
+                            variant="primary"
+                            size="default"
                             onPress={() => { onConfirm(value); onClose(); }}
-                        >
-                            <Text style={{ color: '#FFF', fontWeight: '700' }}>Rename</Text>
-                        </TouchableOpacity>
+                            style={{ flex: 1 }}
+                        />
                     </View>
                 </View>
             </Pressable>
@@ -373,31 +378,24 @@ export function CoachHubScreen({ navigation }: any) {
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
             {/* ── Header ── */}
-            <View
-                style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.background }]}
-            >
-                <View style={styles.headerTop}>
-                    <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerBtn}>
-                        <Ionicons name="chevron-back" size={26} color={colors.foreground} />
-                    </TouchableOpacity>
+            <NavigationBar
+                title="AI Coach"
+                onBack={() => navigation.goBack()}
+                rightActions={[
+                    { icon: 'time-outline', onPress: () => navigation.navigate('ChatHistory'), label: 'History' },
+                ]}
+            />
 
-                    <View style={styles.headerTitleGroup}>
-                        <MaterialCommunityIcons name="robot-excited" size={20} color={colors.primary.main} />
-                        <Text style={[styles.headerTitle, { fontFamily: fontFamilies.display, color: colors.foreground }]}>AI Coach</Text>
-                    </View>
-
-                    <TouchableOpacity style={styles.headerBtn} onPress={() => navigation.navigate('ChatHistory')}>
-                        <Ionicons name="time-outline" size={22} color={colors.foreground} />
-                    </TouchableOpacity>
-                </View>
-
-                {/* New Chat Button */}
-                <TouchableOpacity style={[styles.newChatBtn, { backgroundColor: colors.primary.main }]} onPress={handleNewChat} activeOpacity={0.9}>
-                    <View style={styles.newChatInner}>
-                        <Ionicons name="add" size={20} color="#FFF" />
-                        <Text style={[styles.newChatText, { color: "#FFF" }]}>New Chat</Text>
-                    </View>
-                </TouchableOpacity>
+            {/* New Chat Button */}
+            <View style={styles.newChatSection}>
+                <Button
+                    title="New Chat"
+                    variant="primary"
+                    size="default"
+                    fullWidth
+                    onPress={handleNewChat}
+                    leftElement={<Ionicons name="add" size={20} color="#FFF" />}
+                />
             </View>
 
             <ScrollView
@@ -581,6 +579,7 @@ const styles = StyleSheet.create({
     statPill: { flexDirection: 'row', alignItems: 'center', gap: 5, backgroundColor: 'rgba(255,255,255,0.15)', paddingHorizontal: 10, paddingVertical: 5, borderRadius: 20 },
     statText: { fontSize: 12, color: 'rgba(255,255,255,0.85)', fontWeight: '500' },
 
+    newChatSection: { paddingHorizontal: 16, paddingVertical: 10 },
     newChatBtn: { backgroundColor: '#FFFFFF', borderRadius: 22 },
     newChatInner: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingVertical: 14, gap: 8 },
     newChatText: { fontSize: 17, fontWeight: '700' },

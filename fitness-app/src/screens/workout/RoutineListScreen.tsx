@@ -9,11 +9,13 @@ import {
     TextInput,
     ActivityIndicator,
 } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { usePublicRoutines, useRoutines } from '../../hooks/queries/useRoutineQueries';
+import { NavigationBar, Chip, Card } from '../../components/ui';
 
 const { width } = Dimensions.get('window');
 const CARD_WIDTH = (width - 48) / 2;
@@ -103,24 +105,9 @@ export function RoutineListScreen({ navigation, route }: any) {
     };
 
     return (
-        <View style={[styles.container, { backgroundColor: colors.background }]}> 
-            <View style={[
-                styles.header,
-                {
-                    paddingTop: insets.top + 12,
-                    backgroundColor: colors.card,
-                    borderBottomColor: colors.border,
-                },
-            ]}>
-                <View style={styles.headerTop}>
-                    <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-                        <Ionicons name="arrow-back" size={24} color={colors.foreground} />
-                    </TouchableOpacity>
-                    <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>
-                        Workouts
-                    </Text>
-                    <View style={{ width: 44 }} />
-                </View>
+        <View style={[styles.container, { backgroundColor: colors.background }]}>
+            <NavigationBar title="Workouts" onBack={() => navigation.goBack()} />
+            <View style={[styles.headerExtension, { backgroundColor: colors.card, borderBottomColor: colors.border }]}>
 
                 <View style={[styles.searchContainer, { backgroundColor: colors.background }]}> 
                     <Ionicons name="search" size={20} color={colors.mutedForeground} />
@@ -166,28 +153,15 @@ export function RoutineListScreen({ navigation, route }: any) {
                     contentContainerStyle={styles.filtersScroll}
                 >
                     {FILTERS.map(filter => (
-                        <TouchableOpacity
+                        <Chip
                             key={filter}
-                            style={[
-                                styles.filterChip,
-                                activeFilter === filter
-                                    ? { backgroundColor: colors.primary.main }
-                                    : { backgroundColor: colors.muted, borderWidth: 1, borderColor: colors.border },
-                            ]}
+                            label={filter}
+                            selected={activeFilter === filter}
                             onPress={() => setActiveFilter(filter)}
-                        >
-                            <Text
-                                style={[
-                                    styles.filterText,
-                                    { color: activeFilter === filter ? '#FFFFFF' : colors.mutedForeground },
-                                ]}
-                            >
-                                {filter}
-                            </Text>
-                        </TouchableOpacity>
+                        />
                     ))}
                 </ScrollView>
-            </View>
+                </View>
 
             <ScrollView
                 showsVerticalScrollIndicator={false}
@@ -217,13 +191,14 @@ export function RoutineListScreen({ navigation, route }: any) {
                             const routineColor = DIFFICULTY_COLOR[difficultyKey] || colors.primary.main;
 
                             return (
-                                <TouchableOpacity
+                                <Card
                                     key={routine.id}
-                                    style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}
-                                    activeOpacity={0.8}
+                                    variant="elevated"
+                                    padding="none"
+                                    style={styles.card}
                                     onPress={() => handleRoutinePress(Number(routine.id))}
                                 >
-                                    <View style={[styles.cardImageContainer, { backgroundColor: `${routineColor}22` }]}> 
+                                    <View style={[styles.cardImageContainer, { backgroundColor: `${routineColor}22` }]}>
                                         <View style={[StyleSheet.absoluteFill, { backgroundColor: routineColor, opacity: 0.12 }]} />
                                         <MaterialCommunityIcons name="notebook" size={32} color={routineColor} style={{ opacity: 0.7 }} />
                                         <View style={styles.cardOverlay} />
@@ -239,11 +214,11 @@ export function RoutineListScreen({ navigation, route }: any) {
                                         <Text style={[styles.cardSubtitle, { color: colors.mutedForeground }]} numberOfLines={1}>
                                             {toTitleCase(routine.difficulty)} - {toTitleCase(routine.splitType)}
                                         </Text>
-                                        <Text style={[styles.cardSubtitle, { color: routineColor, marginTop: 2 }]}> 
+                                        <Text style={[styles.cardSubtitle, { color: routineColor, marginTop: 2 }]}>
                                             {(routine.exercises || []).length} exercises
                                         </Text>
                                     </View>
-                                </TouchableOpacity>
+                                </Card>
                             );
                         })}
                     </View>
@@ -256,9 +231,14 @@ export function RoutineListScreen({ navigation, route }: any) {
                     onPress={handleCreateRoutine}
                     activeOpacity={0.9}
                 >
-                    <View style={styles.fabGradient}>
+                    <LinearGradient
+                        colors={['#2563EB', '#7C3AED']}
+                        start={{ x: 0, y: 0 }}
+                        end={{ x: 1, y: 1 }}
+                        style={styles.fabGradient}
+                    >
                         <Ionicons name="add" size={28} color="#FFFFFF" />
-                    </View>
+                    </LinearGradient>
                 </TouchableOpacity>
             )}
         </View>
@@ -288,6 +268,11 @@ const styles = StyleSheet.create({
     headerTitle: {
         fontSize: 20,
         fontWeight: '700',
+    },
+    headerExtension: {
+        borderBottomWidth: 1,
+        paddingTop: 8,
+    },
     },
     searchContainer: {
         flexDirection: 'row',
@@ -324,14 +309,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 16,
         gap: 8,
     },
-    filterChip: {
-        paddingHorizontal: 16,
-        paddingVertical: 8,
-        borderRadius: 20,
-    },
-    filterText: {
-        fontSize: 13,
-        fontWeight: '600',
     },
     loadingContainer: {
         flex: 1,

@@ -22,7 +22,7 @@ import {
     Alert,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { Input } from '../../components/ui';
+import { Input, Button } from '../../components/ui';
 import { useColors } from '../../hooks';
 import { useTheme } from '../../contexts';
 import { useAuthQueries } from '../../hooks/queries/useAuthQueries';
@@ -187,20 +187,15 @@ export function LoginScreen({ navigation }: LoginScreenProps) {
                             </TouchableOpacity>
 
                             {/* Login Button */}
-                            <TouchableOpacity
+                            <Button
+                                label={loading ? 'Logging in...' : 'Log In'}
                                 onPress={handleLogin}
                                 disabled={loading}
-                                activeOpacity={0.9}
-                                style={[styles.loginButton, shadows.accent, loading && styles.buttonDisabled]}
-                            >
-                                <View
-                                    style={styles.loginButtonGradient}
-                                >
-                                    <Text style={styles.loginButtonText}>
-                                        {loading ? 'Logging in...' : 'Log In'}
-                                    </Text>
-                                </View>
-                            </TouchableOpacity>
+                                loading={loading}
+                                variant="primary"
+                                size="lg"
+                                style={styles.loginButton}
+                            />
                         </View>
 
                         {/* Footer */}

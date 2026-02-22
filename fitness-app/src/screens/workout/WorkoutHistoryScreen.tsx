@@ -4,16 +4,14 @@ import {
     Text,
     StyleSheet,
     FlatList,
-    TouchableOpacity,
     ActivityIndicator,
     RefreshControl
 } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useColors, useWorkouts } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
-import { colors as themeColors } from '../../theme/colors';
 import { Workout } from '../../types/backend.types';
+import { NavigationBar, Card, Badge, Divider } from '../../components/ui';
 
 export function WorkoutHistoryScreen({ navigation }: any) {
     const colors = useColors();
@@ -54,20 +52,22 @@ export function WorkoutHistoryScreen({ navigation }: any) {
         }
 
         return (
-            <TouchableOpacity
-                style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}
-                activeOpacity={0.7}
+            <Card
+                variant="elevated"
                 onPress={() => navigation.navigate('WorkoutDetail', { workoutId: item.id })}
+                style={styles.card}
             >
                 <View style={styles.cardHeader}>
-                    <View>
+                    <View style={styles.cardHeaderText}>
                         <Text style={[styles.cardTitle, { color: colors.foreground }]}>{item.name}</Text>
                         <Text style={[styles.cardDate, { color: colors.mutedForeground }]}>{dateString} • {timeString}</Text>
                     </View>
-                    <Ionicons name="chevron-forward" size={20} color={colors.mutedForeground} />
+                    {item.status === 'in_progress' && (
+                        <Badge label="LIVE" variant="success" pulse />
+                    )}
                 </View>
 
-                <View style={styles.divider} />
+                <Divider style={{ marginVertical: 12 }} />
 
                 <View style={styles.cardStats}>
                     <View style={styles.statItem}>
@@ -77,7 +77,7 @@ export function WorkoutHistoryScreen({ navigation }: any) {
                         </Text>
                     </View>
                     <View style={styles.statItem}>
-                        <Ionicons name="timer-outline" size={14} color={colors.mutedForeground} />
+                        <MaterialCommunityIcons name="timer-outline" size={14} color={colors.mutedForeground} />
                         <Text style={[styles.statText, { color: colors.foreground }]}>{duration}</Text>
                     </View>
                     <View style={styles.statItem}>
@@ -85,35 +85,16 @@ export function WorkoutHistoryScreen({ navigation }: any) {
                         <Text style={[styles.statText, { color: colors.foreground }]}>{item.exercises?.length || 0} Exercises</Text>
                     </View>
                 </View>
-
-                {item.status === 'in_progress' && (
-                    <View style={[styles.statusBadge, { backgroundColor: colors.primary.main + '20' }]}>
-                        <Text style={[styles.statusText, { color: colors.primary.main }]}>IN PROGRESS</Text>
-                    </View>
-                )}
-            </TouchableOpacity>
+            </Card>
         );
     };
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
-            {/* Header */}
-            <View style={[
-                styles.header,
-                {
-                    paddingTop: insets.top + 12,
-                    backgroundColor: colors.card,
-                    borderBottomColor: colors.border
-                }
-            ]}>
-                <View style={styles.headerTop}>
-                    <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-                        <Ionicons name="arrow-back" size={24} color={colors.foreground} />
-                    </TouchableOpacity>
-                    <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>History</Text>
-                    <View style={{ width: 44 }} />
-                </View>
-            </View>
+            <NavigationBar
+                title="History"
+                onBack={() => navigation.goBack()}
+            />
 
             {isLoading ? (
                 <View style={[styles.centerContainer, { backgroundColor: colors.background }]}>
@@ -178,16 +159,16 @@ const styles = StyleSheet.create({
         gap: 12,
     },
     card: {
-        padding: 16,
-        borderRadius: 16,
-        borderWidth: 1,
         marginBottom: 12,
     },
     cardHeader: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center',
-        marginBottom: 12,
+        alignItems: 'flex-start',
+    },
+    cardHeaderText: {
+        flex: 1,
+        marginRight: 8,
     },
     cardTitle: {
         fontSize: 16,
@@ -196,11 +177,6 @@ const styles = StyleSheet.create({
     },
     cardDate: {
         fontSize: 12,
-    },
-    divider: {
-        height: 1,
-        backgroundColor: 'rgba(150, 150, 150, 0.1)',
-        marginBottom: 12,
     },
     cardStats: {
         flexDirection: 'row',
@@ -215,18 +191,6 @@ const styles = StyleSheet.create({
         fontSize: 13,
         fontWeight: '600',
         fontFamily: fontFamilies.mono,
-    },
-    statusBadge: {
-        position: 'absolute',
-        top: 12,
-        right: 12,
-        paddingHorizontal: 8,
-        paddingVertical: 2,
-        borderRadius: 4,
-    },
-    statusText: {
-        fontSize: 10,
-        fontWeight: '700',
     },
     emptyState: {
         alignItems: 'center',

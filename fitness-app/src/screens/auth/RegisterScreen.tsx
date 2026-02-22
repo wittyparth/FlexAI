@@ -23,7 +23,7 @@ import {
     Alert,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { Input } from '../../components/ui';
+import { Input, Button } from '../../components/ui';
 import { useColors } from '../../hooks';
 import { useTheme } from '../../contexts';
 import { useAuthQueries } from '../../hooks/queries/useAuthQueries';
@@ -288,20 +288,15 @@ export function RegisterScreen({ navigation }: RegisterScreenProps) {
                         )}
 
                         {/* Sign Up Button */}
-                        <TouchableOpacity
+                        <Button
+                            label={loading ? 'Creating Account...' : 'Create Account'}
                             onPress={handleRegister}
                             disabled={loading}
-                            activeOpacity={0.9}
-                            style={[styles.signUpButton, shadows.accent, loading && styles.buttonDisabled]}
-                        >
-                            <View
-                                style={styles.signUpButtonGradient}
-                            >
-                                <Text style={styles.signUpButtonText}>
-                                    {loading ? 'Creating Account...' : 'Create Account'}
-                                </Text>
-                            </View>
-                        </TouchableOpacity>
+                            loading={loading}
+                            variant="primary"
+                            size="lg"
+                            style={styles.signUpButton}
+                        />
                     </View>
 
                     {/* Footer */}

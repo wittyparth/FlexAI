@@ -10,7 +10,9 @@ import {
     Platform,
     Alert,
     ActivityIndicator,
+    Pressable,
 } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
@@ -21,6 +23,7 @@ import { useShallow } from 'zustand/react/shallow';
 import type { ThemeColors } from '../../hooks/useColors';
 import { useRoutines } from '../../hooks/queries/useRoutineQueries';
 import { useWorkouts } from '../../hooks/queries/useWorkoutQueries';
+import { StatCard, IconButton, Card, Badge, ListItem } from '../../components/ui';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
@@ -314,11 +317,14 @@ export function WorkoutHubScreen({ navigation }: any) {
                         <Text style={[styles.headerSub, { color: colors.mutedForeground }]}>READY TO TRAIN</Text>
                         <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Workout</Text>
                     </View>
-                    <TouchableOpacity
-                        style={[styles.headerBtn, { backgroundColor: colors.card, borderColor: colors.border }]}
-                        onPress={() => nav('WorkoutHistory')}
-                    >
-                        <Ionicons name="time-outline" size={20} color={colors.foreground} />
+                    <TouchableOpacity onPress={() => nav('WorkoutHistory')}>
+                        <IconButton
+                            icon="time-outline"
+                            variant="tinted"
+                            size="sm"
+                            haptic={false}
+                            onPress={() => nav('WorkoutHistory')}
+                        />
                     </TouchableOpacity>
                 </View>
 
@@ -350,9 +356,29 @@ export function WorkoutHubScreen({ navigation }: any) {
                     )}
 
                     <View style={[styles.px, styles.statsRow]}>
-                        <StatTile value={weeklyMetrics.weeklyWorkouts.toString()} label="This Week" icon="clipboard-check" color={colors.chart4} colors={colors} />
-                        <StatTile value={`${(weeklyMetrics.weeklyVolume / 1000).toFixed(0)}k`} label="Volume (lbs)" icon="weight" color={colors.chart1} colors={colors} />
-                        <StatTile value={`${weeklyMetrics.streak}d`} label="Streak" icon="fire" color={colors.warning} colors={colors} />
+                        <StatCard
+                            materialIcon="clipboard-check"
+                            label="This Week"
+                            value={weeklyMetrics.weeklyWorkouts}
+                            compact
+                            style={styles.statTileNew}
+                        />
+                        <StatCard
+                            materialIcon="weight"
+                            label="Volume"
+                            value={parseFloat((weeklyMetrics.weeklyVolume / 1000).toFixed(1))}
+                            unit="k"
+                            compact
+                            style={styles.statTileNew}
+                        />
+                        <StatCard
+                            icon="flame"
+                            label="Streak"
+                            value={weeklyMetrics.streak}
+                            unit="d"
+                            compact
+                            style={styles.statTileNew}
+                        />
                     </View>
 
                     <View style={styles.px}>
@@ -368,7 +394,7 @@ export function WorkoutHubScreen({ navigation }: any) {
                     </View>
 
                     <View style={[styles.px, styles.mt]}>
-                        <TouchableOpacity
+                        <Pressable
                             onPress={async () => {
                                 try {
                                     await useWorkoutStore.getState().startWorkout({ name: 'Quick Workout' });
@@ -377,22 +403,26 @@ export function WorkoutHubScreen({ navigation }: any) {
                                     Alert.alert('Unable to start workout', error?.message || 'Please try again.');
                                 }
                             }}
-                            activeOpacity={0.9}
                             style={styles.startWrapper}
                         >
-                            <View style={styles.startGrad}>
+                            <LinearGradient
+                                colors={['#2563EB', '#7C3AED']}
+                                start={{ x: 0, y: 0 }}
+                                end={{ x: 1, y: 1 }}
+                                style={styles.startGrad}
+                            >
                                 <View style={styles.startContent}>
                                     <View>
-                                        <Text style={[styles.startLabel, { color: colors.primaryForeground + 'A0' }]}>TAP TO BEGIN</Text>
-                                        <Text style={[styles.startTitle, { color: colors.primaryForeground }]}>Start Empty Workout</Text>
+                                        <Text style={[styles.startLabel, { color: 'rgba(255,255,255,0.7)' }]}>TAP TO BEGIN</Text>
+                                        <Text style={[styles.startTitle, { color: '#FFFFFF' }]}>Start Empty Workout</Text>
                                     </View>
                                     <View style={styles.startPlay}>
-                                        <Ionicons name="play" size={24} color={colors.primaryForeground} />
+                                        <Ionicons name="play" size={24} color="#FFFFFF" />
                                     </View>
                                 </View>
                                 <View style={styles.startDecor} />
-                            </View>
-                        </TouchableOpacity>
+                            </LinearGradient>
+                        </Pressable>
                     </View>
 
                     <View style={[styles.px, styles.mt]}>
@@ -527,6 +557,7 @@ const styles = StyleSheet.create({
     },
 
     statsRow: { flexDirection: 'row', gap: 12, marginBottom: 16 },
+    statTileNew: { flex: 1, padding: 12 },
     statTile: { flex: 1, borderRadius: 16, borderWidth: 1, padding: 14, alignItems: 'center', gap: 8 },
     statTileIcon: { width: 36, height: 36, borderRadius: 10, alignItems: 'center', justifyContent: 'center' },
     statTileVal: { fontSize: 20, fontWeight: '800' },

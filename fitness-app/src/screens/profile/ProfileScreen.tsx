@@ -5,13 +5,14 @@
  */
 
 import React from 'react';
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, ScrollView, Alert } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, ScrollView, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { spacing } from '../../theme/spacing';
 import { authStore } from '../../store/authStore';
 import { API_BASE_URL } from '../../api/client';
+import { Avatar, Button, Card, ListItem, Divider } from '../../components/ui';
 
 export function ProfileScreen() {
     const colors = useColors();
@@ -53,80 +54,76 @@ export function ProfileScreen() {
 
     return (
         <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
-            <ScrollView style={styles.scrollView}>
+            <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
                 {/* Header */}
                 <View style={styles.header}>
                     <Text style={[styles.title, { color: colors.foreground }]}>Profile</Text>
                 </View>
 
                 {/* User Info Card */}
-                <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
-                    <View style={[styles.avatarContainer, { backgroundColor: colors.primary.main }]}>
-                        <Ionicons name="person" size={40} color="white" />
-                    </View>
+                <Card style={styles.profileCard} variant="elevated">
+                    <Avatar
+                        initials={`${user?.firstName ?? ''} ${user?.lastName ?? ''}`}
+                        size="xl"
+                        backgroundColor={colors.primary.main}
+                        style={{ marginBottom: 12 }}
+                    />
                     <Text style={[styles.name, { color: colors.foreground }]}>
                         {user?.firstName || 'User'} {user?.lastName || ''}
                     </Text>
                     <Text style={[styles.email, { color: colors.mutedForeground }]}>
                         {user?.email || 'user@example.com'}
                     </Text>
-                </View>
+                </Card>
 
                 {/* Settings Section */}
                 <View style={styles.section}>
-                    <Text style={[styles.sectionTitle, { color: colors.mutedForeground }]}>
-                        SETTINGS
-                    </Text>
-
-                    <TouchableOpacity
-                        style={[styles.menuItem, { backgroundColor: colors.card, borderColor: colors.border }]}
-                        activeOpacity={0.7}
-                    >
-                        <Ionicons name="settings-outline" size={24} color={colors.foreground} />
-                        <Text style={[styles.menuText, { color: colors.foreground }]}>Settings</Text>
-                        <Ionicons name="chevron-forward" size={20} color={colors.mutedForeground} />
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                        style={[styles.menuItem, { backgroundColor: colors.card, borderColor: colors.border }]}
-                        activeOpacity={0.7}
-                    >
-                        <Ionicons name="notifications-outline" size={24} color={colors.foreground} />
-                        <Text style={[styles.menuText, { color: colors.foreground }]}>Notifications</Text>
-                        <Ionicons name="chevron-forward" size={20} color={colors.mutedForeground} />
-                    </TouchableOpacity>
+                    <Text style={[styles.sectionTitle, { color: colors.mutedForeground }]}>SETTINGS</Text>
+                    <Card style={styles.menuCard} padding="none">
+                        <ListItem
+                            icon="settings-outline"
+                            title="Settings"
+                            showDivider
+                        />
+                        <ListItem
+                            icon="notifications-outline"
+                            title="Notifications"
+                            showDivider={false}
+                        />
+                    </Card>
                 </View>
 
                 {/* Debug Info */}
                 <View style={styles.section}>
-                    <Text style={[styles.sectionTitle, { color: colors.mutedForeground }]}>
-                        DEBUG INFO
-                    </Text>
-                    <View style={[styles.debugCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-                        <Text style={[styles.debugText, { color: colors.mutedForeground }]}>
-                            API: {API_BASE_URL}
-                        </Text>
-                        <Text style={[styles.debugText, { color: colors.mutedForeground }]}>
-                            User ID: {user?.id || 'Not logged in'}
-                        </Text>
-                        <Text style={[styles.debugText, { color: colors.mutedForeground }]}>
-                            Authenticated: {isAuthenticated ? 'Yes' : 'No'}
-                        </Text>
-                        <Text style={[styles.debugText, { color: colors.mutedForeground }]}>
-                            Onboarded: {user?.onboardingCompleted ? 'Yes' : 'No'}
-                        </Text>
-                    </View>
+                    <Text style={[styles.sectionTitle, { color: colors.mutedForeground }]}>DEBUG INFO</Text>
+                    <Card style={styles.debugCard} padding="none">
+                        {[
+                            ['API', API_BASE_URL],
+                            ['User ID', user?.id || 'Not logged in'],
+                            ['Authenticated', isAuthenticated ? 'Yes' : 'No'],
+                            ['Onboarded', user?.onboardingCompleted ? 'Yes' : 'No'],
+                        ].map(([label, value], i, arr) => (
+                            <ListItem
+                                key={label}
+                                title={label}
+                                subtitle={String(value)}
+                                showChevron={false}
+                                showDivider={i < arr.length - 1}
+                            />
+                        ))}
+                    </Card>
                 </View>
 
                 {/* Logout Button */}
-                <TouchableOpacity
-                    style={[styles.logoutButton, { backgroundColor: colors.destructive }]}
-                    onPress={handleLogout}
-                    activeOpacity={0.8}
-                >
-                    <Ionicons name="log-out-outline" size={24} color="white" />
-                    <Text style={styles.logoutText}>Logout</Text>
-                </TouchableOpacity>
+                <View style={styles.actionSection}>
+                    <Button
+                        variant="primary"
+                        label="Logout"
+                        leftElement={<Ionicons name="log-out-outline" size={20} color="#fff" />}
+                        style={{ backgroundColor: colors.error }}
+                        onPress={handleLogout}
+                    />
+                </View>
 
                 <View style={{ height: 40 }} />
             </ScrollView>
@@ -148,80 +145,43 @@ const styles = StyleSheet.create({
     title: {
         fontFamily: fontFamilies.display,
         fontSize: 32,
-        fontWeight: '600',
+        fontWeight: '700',
     },
-    card: {
+    profileCard: {
         marginHorizontal: spacing[6],
         padding: spacing[6],
-        borderRadius: 20,
-        borderWidth: 1,
         alignItems: 'center',
         marginBottom: spacing[6],
     },
-    avatarContainer: {
-        width: 80,
-        height: 80,
-        borderRadius: 40,
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginBottom: spacing[4],
-    },
     name: {
         fontFamily: fontFamilies.display,
-        fontSize: 24,
-        fontWeight: '600',
-        marginBottom: spacing[1],
+        fontSize: 22,
+        fontWeight: '700',
+        marginBottom: 2,
     },
     email: {
         fontFamily: fontFamilies.body,
         fontSize: 14,
     },
     section: {
-        marginBottom: spacing[6],
+        marginBottom: spacing[4],
         paddingHorizontal: spacing[6],
     },
     sectionTitle: {
         fontFamily: fontFamilies.bodySemibold,
-        fontSize: 12,
-        letterSpacing: 1,
+        fontSize: 11,
+        letterSpacing: 0.8,
         marginBottom: spacing[3],
+        textTransform: 'uppercase',
     },
-    menuItem: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        padding: spacing[4],
-        borderRadius: 16,
-        borderWidth: 1,
-        marginBottom: spacing[2],
-    },
-    menuText: {
-        fontFamily: fontFamilies.body,
-        fontSize: 16,
-        flex: 1,
-        marginLeft: spacing[3],
+    menuCard: {
+        overflow: 'hidden',
     },
     debugCard: {
-        padding: spacing[4],
-        borderRadius: 12,
-        borderWidth: 1,
+        overflow: 'hidden',
     },
-    debugText: {
-        fontFamily: fontFamilies.mono,
-        fontSize: 11,
-        marginBottom: spacing[1],
-    },
-    logoutButton: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginHorizontal: spacing[6],
-        padding: spacing[4],
-        borderRadius: 16,
-        gap: spacing[2],
-    },
-    logoutText: {
-        fontFamily: fontFamilies.bodySemibold,
-        fontSize: 16,
-        color: 'white',
+    actionSection: {
+        paddingHorizontal: spacing[6],
+        marginTop: spacing[4],
     },
 });

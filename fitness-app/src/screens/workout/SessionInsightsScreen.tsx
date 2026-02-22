@@ -4,11 +4,10 @@ import {
     Text,
     StyleSheet,
     ScrollView,
-    TouchableOpacity,
     Animated,
     ActivityIndicator,
 } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { NavigationBar, Button } from '../../components/ui';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useColors, useWorkout, useWorkouts } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
@@ -159,7 +158,6 @@ const getRating = (score: number) => {
 
 export function SessionInsightsScreen({ navigation, route }: any) {
     const colors = useColors();
-    const insets = useSafeAreaInsets();
     const fadeAnim = useRef(new Animated.Value(0)).current;
     const workoutId = Number(route?.params?.workoutId || 0);
 
@@ -298,27 +296,18 @@ export function SessionInsightsScreen({ navigation, route }: any) {
                 <MaterialCommunityIcons name="alert-circle-outline" size={46} color={colors.mutedForeground} />
                 <Text style={[styles.errorTitle, { color: colors.foreground }]}>Insights unavailable</Text>
                 <Text style={[styles.errorSubtitle, { color: colors.mutedForeground }]}>Unable to load this workout session.</Text>
-                <TouchableOpacity
-                    style={[styles.backButton, { backgroundColor: colors.primary.main }]}
-                    onPress={() => navigation.goBack()}
-                >
-                    <Text style={styles.backButtonText}>Go Back</Text>
-                </TouchableOpacity>
+                <Button title="Go Back" onPress={() => navigation.goBack()} size="sm" />
             </View>
         );
     }
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}> 
-            <View style={[styles.header, { paddingTop: insets.top + 8, backgroundColor: colors.card, borderBottomColor: colors.border }]}> 
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerBtn}>
-                    <Ionicons name="arrow-back" size={24} color={colors.foreground} />
-                </TouchableOpacity>
-                <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Session Insights</Text>
-                <TouchableOpacity style={styles.headerBtn}>
-                    <Ionicons name="share-outline" size={22} color={colors.foreground} />
-                </TouchableOpacity>
-            </View>
+            <NavigationBar
+                title="Session Insights"
+                onBack={() => navigation.goBack()}
+                rightActions={[{ icon: 'share-outline', onPress: () => {}, label: 'Share' }]}
+            />
 
             <ScrollView showsVerticalScrollIndicator={false}>
                 <Animated.View style={{ opacity: fadeAnim }}>

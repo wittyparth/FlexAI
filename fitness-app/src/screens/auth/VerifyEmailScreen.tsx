@@ -26,6 +26,7 @@ import { useColors } from '../../hooks';
 import { useTheme } from '../../contexts';
 import { useAuthQueries } from '../../hooks/queries/useAuthQueries';
 import { fonts, fontSize, spacing, borderRadius, shadows } from '../../constants';
+import { IconButton, Button } from '../../components/ui';
 
 const OTP_LENGTH = 6;
 
@@ -140,13 +141,12 @@ export function VerifyEmailScreen({ navigation, route }: VerifyEmailScreenProps)
             >
                 {/* Header */}
                 <View style={styles.header}>
-                    <TouchableOpacity
-                        style={[styles.backButton, { backgroundColor: colors.muted }]}
+                    <IconButton
+                        icon="arrow-back"
                         onPress={() => navigation.goBack()}
                         disabled={loading}
-                    >
-                        <Ionicons name="arrow-back" size={24} color={colors.foreground} />
-                    </TouchableOpacity>
+                        variant="tinted"
+                    />
                 </View>
 
                 {/* Content */}
@@ -200,24 +200,14 @@ export function VerifyEmailScreen({ navigation, route }: VerifyEmailScreenProps)
                     ) : null}
 
                     {/* Verify Button */}
-                    <TouchableOpacity
+                    <Button
+                        title="Verify Email"
                         onPress={() => handleVerify()}
                         disabled={loading || otp.join('').length !== OTP_LENGTH}
-                        activeOpacity={0.9}
-                        style={[
-                            styles.verifyButton,
-                            shadows.accent,
-                            (loading || otp.join('').length !== OTP_LENGTH) && styles.buttonDisabled
-                        ]}
-                    >
-                        <View
-                            style={styles.verifyButtonGradient}
-                        >
-                            <Text style={styles.verifyButtonText}>
-                                {loading ? 'Verifying...' : 'Verify Email'}
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
+                        loading={loading}
+                        fullWidth
+                        size="large"
+                    />
 
                     {/* Resend */}
                     <View style={styles.resendContainer}>

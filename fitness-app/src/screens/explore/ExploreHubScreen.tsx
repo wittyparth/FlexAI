@@ -13,6 +13,7 @@ import {
     useRoutines,
 } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
+import { IconButton, Button } from '../../components/ui';
 import type { ThemeColors } from '../../hooks/useColors';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
@@ -73,7 +74,7 @@ function CommunityCard({ routine, onPress, colors }: { routine: any; onPress: ()
             <View style={s.commFooter}>
                 <View style={s.metaItem}><Ionicons name="calendar-outline" size={13} color={colors.mutedForeground} /><Text style={{ fontSize: 12, color: colors.mutedForeground }}>{routine.days}x/week</Text></View>
                 <View style={s.metaItem}><Ionicons name="heart" size={13} color={colors.destructive} /><Text style={{ fontSize: 12, color: colors.mutedForeground }}>{routine.likes.toLocaleString()}</Text></View>
-                <TouchableOpacity style={[s.useBtn, { borderColor: colors.primary.main }]} onPress={onPress}><Text style={[s.useBtnText, { color: colors.primary.main }]}>Use</Text></TouchableOpacity>
+                <Button title="Use" onPress={onPress} size="sm" variant="outlined" />
             </View>
         </TouchableOpacity>
     );
@@ -84,7 +85,7 @@ function ChallengeCard({ ch, onPress, colors }: { ch: any; onPress: () => void; 
         <TouchableOpacity style={[s.challCard, { backgroundColor: colors.card, borderColor: colors.border }]} onPress={onPress} activeOpacity={0.8}>
             <View style={[s.challIcon, { backgroundColor: colors.muted }]}><Text style={{ fontSize: 24 }}>{ch.badge}</Text></View>
             <View style={{ flex: 1 }}><Text style={[s.challName, { color: colors.foreground }]}>{ch.name}</Text><Text style={{ fontSize: 12, color: colors.mutedForeground }}>{ch.participants.toLocaleString()} participants - {ch.daysLeft} days left</Text></View>
-            <TouchableOpacity style={[s.joinBtn, { borderColor: colors.primary.main }]} onPress={onPress}><Text style={[s.joinText, { color: colors.primary.main }]}>Join</Text></TouchableOpacity>
+            <Button title="Join" onPress={onPress} size="sm" variant="outlined" />
         </TouchableOpacity>
     );
 }
@@ -169,7 +170,7 @@ export function ExploreHubScreen({ navigation }: any) {
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: insets.bottom + 140 }}>
                 <View style={[s.header, { paddingTop: insets.top + 16 }]}>
                     <View><Text style={[s.headerSub, { color: colors.mutedForeground }]}>DISCOVER</Text><Text style={[s.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Explore</Text></View>
-                    <TouchableOpacity style={[s.headerBtn, { backgroundColor: colors.card, borderColor: colors.border }]}><Ionicons name="search-outline" size={20} color={colors.foreground} /></TouchableOpacity>
+                <IconButton icon="search-outline" variant="outline" onPress={() => {}} />
                 </View>
                 <Animated.View style={{ opacity: fade }}>
                     <View style={[s.px, s.mt]}>

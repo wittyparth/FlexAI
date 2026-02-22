@@ -16,6 +16,7 @@ import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { useExerciseDetail } from '../../hooks/queries/useExerciseQueries';
 import { MuscleHighlighterCard } from '../../components/muscles/MuscleHighlighterCard';
+import { IconButton, Button } from '../../components/ui';
 
 const { width } = Dimensions.get('window');
 
@@ -73,15 +74,20 @@ export function ExerciseDetailScreen({ navigation, route }: any) {
 
                     {/* Floating Controls */}
                     <View style={[styles.headerActions, { top: insets.top + 12 }]}>
-                        <TouchableOpacity
+                        <IconButton
+                            icon="chevron-back"
                             onPress={() => navigation.goBack()}
-                            style={styles.iconBtn}
-                        >
-                            <Ionicons name="chevron-back" size={24} color="#FFFFFF" />
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.iconBtn}>
-                            <Ionicons name="heart-outline" size={24} color="#FFFFFF" />
-                        </TouchableOpacity>
+                            variant="filled"
+                            size="md"
+                            style={{ backgroundColor: 'rgba(0,0,0,0.4)' }}
+                        />
+                        <IconButton
+                            icon="heart-outline"
+                            onPress={() => {}}
+                            variant="filled"
+                            size="md"
+                            style={{ backgroundColor: 'rgba(0,0,0,0.4)' }}
+                        />
                     </View>
 
                     <View style={styles.heroContent}>
@@ -258,10 +264,13 @@ export function ExerciseDetailScreen({ navigation, route }: any) {
                 style={[styles.stickyFooter, { paddingBottom: insets.bottom + 96 }]}
                 pointerEvents="box-none"
             >
-                <TouchableOpacity style={[styles.primaryBtn, { backgroundColor: colors.primary.main }]} onPress={() => navigation.navigate('ActiveWorkout')}>
-                    <Text style={styles.btnText}>Start with this Exercise</Text>
-                    <Ionicons name="play" size={20} color="#FFFFFF" />
-                </TouchableOpacity>
+                <Button
+                    label="Start with this Exercise"
+                    onPress={() => navigation.navigate('ActiveWorkout')}
+                    variant="primary"
+                    size="lg"
+                    rightElement={<Ionicons name="play" size={20} color="#FFFFFF" />}
+                />
             </View>
         </View>
     );

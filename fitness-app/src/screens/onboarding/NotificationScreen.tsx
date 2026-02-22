@@ -6,6 +6,7 @@ import { OnboardingStackParamList } from '../../navigation/types';
 import { useOnboardingFlow } from '../../hooks/useOnboardingFlow';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useColors } from '../../hooks/useColors';
+import { Button } from '../../components/ui';
 
 type NotificationScreenNavigationProp = StackNavigationProp<OnboardingStackParamList, 'Notification'>;
 
@@ -83,17 +84,19 @@ export const NotificationScreen: React.FC<Props> = ({ navigation }) => {
 
             {/* Footer */}
             <View style={styles.footer}>
-                <TouchableOpacity onPress={handleEnableNotifications} style={styles.buttonContainer}>
-                    <View
-                        style={styles.primaryButton}
-                    >
-                        <Text style={styles.primaryButtonText}>Enable Notifications</Text>
-                    </View>
-                </TouchableOpacity>
+                <Button
+                    title="Enable Notifications"
+                    onPress={handleEnableNotifications}
+                    fullWidth
+                    size="large"
+                />
 
-                <TouchableOpacity onPress={handleSkip} style={styles.secondaryButton}>
-                    <Text style={[styles.secondaryButtonText, { color: colors.mutedForeground }]}>Maybe Later</Text>
-                </TouchableOpacity>
+                <Button
+                    title="Maybe Later"
+                    onPress={handleSkip}
+                    variant="ghost"
+                    fullWidth
+                />
             </View>
         </View>
     );

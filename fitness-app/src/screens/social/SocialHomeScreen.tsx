@@ -16,7 +16,7 @@ import { useMyFeed, useGlobalFeed, useToggleLike } from '../../hooks/queries/use
 import { useAuthStore } from '../../store/authStore';
 import type { FeedPost } from '../../api/feed.api';
 import type { ThemeColors } from '../../hooks/useColors';
-import { Card, Avatar, IconButton } from '../../components/ui';
+import { Card, Avatar, IconButton, Chip, Button } from '../../components/ui';
 
 const TABS: Array<'Feed' | 'Leaderboard' | 'Challenges' | 'Friends'> = ['Feed', 'Leaderboard', 'Challenges', 'Friends'];
 
@@ -237,39 +237,19 @@ export function SocialHomeScreen({ navigation }: any) {
                         <Text style={[styles.headerTitle, { color: colors.foreground, fontFamily: fontFamilies.display }]}>Community</Text>
                     </View>
                     <View style={styles.headerBtns}>
-                        <TouchableOpacity
-                            style={[styles.headerBtn, { backgroundColor: colors.card, borderColor: colors.border }]}
-                            onPress={() => navigation.navigate('SearchUsers')}
-                        >
-                            <Ionicons name="search-outline" size={20} color={colors.foreground} />
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={[styles.headerBtn, { backgroundColor: colors.primary.main }]}
-                            onPress={() => navigation.navigate('CreatePost')}
-                        >
-                            <Ionicons name="add" size={22} color={colors.primaryForeground} />
-                        </TouchableOpacity>
+                        <IconButton icon="search-outline" variant="outline" onPress={() => navigation.navigate('SearchUsers')} />
+                        <IconButton icon="add" variant="filled" onPress={() => navigation.navigate('CreatePost')} />
                     </View>
                 </View>
 
                 <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.tabScroll}>
                     {TABS.map((tab) => (
-                        <TouchableOpacity
+                        <Chip
                             key={tab}
-                            style={[
-                                styles.tabPill,
-                                {
-                                    backgroundColor: activeTab === tab ? colors.primary.main : colors.card,
-                                    borderColor: activeTab === tab ? colors.primary.main : colors.border,
-                                },
-                            ]}
+                            label={tab}
+                            selected={activeTab === tab}
                             onPress={() => setActiveTab(tab)}
-                            activeOpacity={0.8}
-                        >
-                            <Text style={[styles.tabLabel, { color: activeTab === tab ? colors.primaryForeground : colors.mutedForeground }]}>
-                                {tab}
-                            </Text>
-                        </TouchableOpacity>
+                        />
                     ))}
                 </ScrollView>
 
@@ -294,17 +274,14 @@ export function SocialHomeScreen({ navigation }: any) {
                                     );
                                 })}
                                 {activeFeedSource.hasNextPage ? (
-                                    <TouchableOpacity
-                                        style={[styles.loadMoreBtn, { borderColor: colors.border, backgroundColor: colors.card }]}
+                                    <Button
+                                        title="Load more posts"
                                         onPress={() => activeFeedSource.fetchNextPage()}
                                         disabled={activeFeedSource.isFetchingNextPage}
-                                    >
-                                        {activeFeedSource.isFetchingNextPage ? (
-                                            <ActivityIndicator size="small" color={colors.primary.main} />
-                                        ) : (
-                                            <Text style={{ color: colors.primary.main, fontWeight: '700' }}>Load more posts</Text>
-                                        )}
-                                    </TouchableOpacity>
+                                        loading={activeFeedSource.isFetchingNextPage}
+                                        variant="outlined"
+                                        fullWidth
+                                    />
                                 ) : null}
                             </>
                         ) : (
@@ -331,13 +308,13 @@ export function SocialHomeScreen({ navigation }: any) {
                                 {leaderboardEntries.slice(0, 6).map((entry) => (
                                     <LeaderboardRow key={`${entry.userId}-${entry.rank}`} entry={entry} colors={colors} />
                                 ))}
-                                <TouchableOpacity
-                                    style={[styles.viewFullLb, { backgroundColor: colors.card, borderColor: colors.border }]}
-                                    onPress={() => navigation.navigate('Leaderboard')}
-                                >
-                                    <Text style={{ fontSize: 14, fontWeight: '700', color: colors.primary.main }}>Open Leaderboard</Text>
-                                    <Ionicons name="arrow-forward" size={16} color={colors.primary.main} />
-                                </TouchableOpacity>
+                                <Button
+                                        title="Open Leaderboard"
+                                        onPress={() => navigation.navigate('Leaderboard')}
+                                        variant="outlined"
+                                        rightElement={<Ionicons name="arrow-forward" size={16} color={colors.primary.main} />}
+                                        fullWidth
+                                    />
                             </>
                         ) : (
                             <View style={styles.emptyBox}>
@@ -405,14 +382,13 @@ export function SocialHomeScreen({ navigation }: any) {
                                         <Text style={{ fontSize: 12, color: colors.mutedForeground }}>Lv.{friend.level ?? 1}</Text>
                                     </TouchableOpacity>
                                 ))}
-                                <TouchableOpacity
-                                    style={[styles.findFriendsBtn, { borderColor: colors.primary.main }]}
-                                    onPress={() => navigation.navigate('SearchUsers')}
-                                    activeOpacity={0.85}
-                                >
-                                    <Ionicons name="person-add-outline" size={18} color={colors.primary.main} />
-                                    <Text style={{ fontSize: 14, fontWeight: '700', color: colors.primary.main }}>Find More Users</Text>
-                                </TouchableOpacity>
+                                <Button
+                                        title="Find More Users"
+                                        onPress={() => navigation.navigate('SearchUsers')}
+                                        variant="outlined"
+                                        leftElement={<Ionicons name="person-add-outline" size={18} color={colors.primary.main} />}
+                                        fullWidth
+                                    />
                             </>
                         ) : (
                             <View style={styles.emptyBox}>

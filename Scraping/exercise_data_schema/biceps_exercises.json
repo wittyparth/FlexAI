@@ -1,0 +1,6101 @@
+[
+  {
+    "name": "Dumbbell Curl On Arm Blaster",
+    "slug": "dumbbell-curl-on-arm-blaster",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/08/Dumbbell-Curl-On-Arm-Blaster.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/08/Dumbbell-Curl-On-Arm-Blaster.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/08/Dumbbell-Curl-On-Arm-Blaster.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/dumbbell-curl-on-arm-blaster/"
+  },
+  {
+    "name": "Dumbbell Curl",
+    "slug": "dumbbell-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "biceps",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "athletic_performance",
+      "strength",
+      "endurance",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/biceps-anatomy-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/dumbbell-curl/"
+  },
+  {
+    "name": "Zottman Curl",
+    "slug": "zottman-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/04/zottman-curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Brachioradialis-and-bicep-and-brachialis.jpg",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/biceps-anatomy-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/zottman-curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/zottman-curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/zottman-curl/"
+  },
+  {
+    "name": "Seated Biceps Curl",
+    "slug": "seated-biceps-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/04/seated-biceps-curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/biceps-anatomy-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/seated-biceps-curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/seated-biceps-curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/seated-biceps-curl/"
+  },
+  {
+    "name": "Dumbbell High Curl",
+    "slug": "dumbbell-high-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/09/Dumbbell-High-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/09/Dumbbell-High-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/09/Dumbbell-High-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/dumbbell-high-curl/"
+  },
+  {
+    "name": "One Arm Prone Dumbbell Curl",
+    "slug": "one-arm-prone-dumbbell-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/02/One-Arm-Prone-Dumbbell-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/One-Arm-Prone-Dumbbell-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/One-Arm-Prone-Dumbbell-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/one-arm-prone-dumbbell-curl/"
+  },
+  {
+    "name": "Seated Bicep Curl With Resistance Band",
+    "slug": "seated-bicep-curl-with-resistance-band",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/06/Seated-Bicep-Curl-With-Resistance-Band.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/06/Seated-Bicep-Curl-With-Resistance-Band.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/06/Seated-Bicep-Curl-With-Resistance-Band.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/seated-bicep-curl-with-resistance-band/"
+  },
+  {
+    "name": "Seated Close-Grip Concentration Curl",
+    "slug": "seated-close-grip-concentration-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/04/Seated-close-grip-concentration-curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/biceps-anatomy-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Seated-close-grip-concentration-curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Seated-close-grip-concentration-curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/seated-close-grip-concentration-curl/"
+  },
+  {
+    "name": "Cable Rope Hammer Curl",
+    "slug": "cable-rope-hammer-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/06/rope-bicep-curls.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/biceps-anatomy-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/rope-bicep-curls.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/rope-bicep-curls.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/cable-rope-hammer-curl/"
+  },
+  {
+    "name": "Hammer Curl",
+    "slug": "hammer-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "biceps",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/02/Hammer-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Brachioradialis-and-bicep-and-brachialis.jpg",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/biceps-anatomy-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Hammer-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Hammer-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/hammer-curl/"
+  },
+  {
+    "name": "Hammer Curl with Resistance Band",
+    "slug": "hammer-curl-with-resistance-band",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/07/Hammer-Curl-with-Resistance-Band.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/07/Hammer-Curl-with-Resistance-Band.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/07/Hammer-Curl-with-Resistance-Band.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/hammer-curl-with-resistance-band/"
+  },
+  {
+    "name": "Arm Blaster Hammer Curl",
+    "slug": "arm-blaster-hammer-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/08/Arm-Blaster-Hammer-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/08/Arm-Blaster-Hammer-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/08/Arm-Blaster-Hammer-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/arm-blaster-hammer-curl/"
+  },
+  {
+    "name": "Single Dumbbell Spider Hammer Curl",
+    "slug": "single-dumbbell-spider-hammer-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/02/Single-Dumbbell-Spider-Hammer-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Single-Dumbbell-Spider-Hammer-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Single-Dumbbell-Spider-Hammer-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/single-dumbbell-spider-hammer-curl/"
+  },
+  {
+    "name": "Seated Zottman Curl",
+    "slug": "seated-zottman-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "lower_back",
+      "forearms",
+      "biceps",
+      "chest",
+      "back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "athletic_performance",
+      "strength",
+      "endurance",
+      "hypertrophy"
+    ],
+    "description": "The seated Zottman curl is a variation of the dumbbell curl exercise that targets the biceps brachii, brachialis, and forearms. The seated position helps stabilize your body and isolate the muscles being worked on. This exercise targets both the biceps during the supination phase and the forearm muscles (especially the brachioradialis) during the pronation phase, providing a morecomprehensive arm workout. Seated Position:Begin by sitting on a bench or chair with your back straight and feet flat ",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2023/10/Seated-Zottman-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Brachioradialis-and-bicep-and-brachialis.jpg",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/biceps-anatomy-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2023/10/Seated-Zottman-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/zottman-curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2023/10/Seated-Zottman-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/seated-zottman-curl/"
+  },
+  {
+    "name": "Cable Kneeling Biceps Curl",
+    "slug": "cable-kneeling-biceps-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/12/Cable-Kneeling-Biceps-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/12/Cable-Kneeling-Biceps-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/12/Cable-Kneeling-Biceps-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/cable-kneeling-biceps-curl/"
+  },
+  {
+    "name": "Double Arm Dumbbell Curl",
+    "slug": "double-arm-dumbbell-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/04/Double-Arm-Dumbbell-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/biceps-anatomy-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/04/Double-Arm-Dumbbell-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/04/Double-Arm-Dumbbell-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/double-arm-dumbbell-curl/"
+  },
+  {
+    "name": "One Arm Cable Curl",
+    "slug": "one-arm-cable-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "biceps",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "hypertrophy"
+    ],
+    "description": "The One Arm Cable Curl is aunilateral isolation exercisethat targets the biceps brachii with continuous resistance from a cable machine. By using a cable machine with a single handle attachment, it delivers smooth resistance both during the concentric (lifting) and eccentric (lowering) phases. This makes it especially effective for focused bicep work and correcting muscle imbalances. (for example,if one bicep is bigger than another) Begin by attaching a single-handled cable attachment to the low",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/02/One-Arm-Cable-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/biceps-anatomy-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/One-Arm-Cable-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/One-Arm-Cable-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [
+        "Usingtoo much weight, which reduces control and increases joint strain."
+      ],
+      "commonMistakes": [
+        "Keep yourelbow fixednear your rib cage; do not let it drift forward.",
+        "Avoid swinging or using body momentum to lift the weight."
+      ],
+      "tips": [
+        "Maintain aneutral wrist positionfor smooth cable movement.",
+        "Focus oncontrolled eccentric loweringto maximize muscle engagement.",
+        "Adjust the pulley height to maintain acomfortable resistance angle.",
+        "Allowing theshoulder to roll forwardor the elbow to move away from the body.",
+        "Jerking or swingingthe torso to assist the lift.",
+        "Failing tofully extend the armat the bottom of the rep, reducing range of motion."
+      ],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/one-arm-cable-curl/"
+  },
+  {
+    "name": "Prone Incline Barbell Curl",
+    "slug": "prone-incline-barbell-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/04/Prone-Incline-Biceps-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/biceps-anatomy-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Prone-Incline-Biceps-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Prone-Incline-Biceps-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/prone-incline-biceps-curl/"
+  },
+  {
+    "name": "Lever Biceps Curl",
+    "slug": "lever-biceps-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/06/Lever-Biceps-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Lever-Biceps-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Lever-Biceps-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/lever-biceps-curl/"
+  },
+  {
+    "name": "Single Arm Reverse Grip Cable Bicep Curl",
+    "slug": "single-arm-reverse-grip-cable-bicep-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/06/Single-Arm-Reverse-Grip-Cable-Bicep-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/06/Single-Arm-Reverse-Grip-Cable-Bicep-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/06/Single-Arm-Reverse-Grip-Cable-Bicep-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/single-arm-reverse-grip-cable-bicep-curl/"
+  },
+  {
+    "name": "Z-Bar Curl",
+    "slug": "z-bar-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/02/Z-Bar-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/biceps-anatomy-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Z-Bar-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Z-Bar-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/z-bar-curl/"
+  },
+  {
+    "name": "Dumbbell Preacher Curl",
+    "slug": "dumbbell-preacher-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "biceps",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "mobility",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Preacher-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/05/dumbbell-preacher-curl-muscles-worked-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Preacher-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Preacher-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/dumbbell-preacher-curl/"
+  },
+  {
+    "name": "Waiter Curl",
+    "slug": "waiter-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "forearms",
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "endurance"
+    ],
+    "description": "TheWaiter Curlis anisolation exercisethat targets thebiceps brachii,brachialis, andforearms. It’s named for the way the dumbbell is held—similar to carrying a tray—allowing for aneutral wrist positionthat reduces forearm strain and keeps tension focused on the biceps throughout the lift. This variation is effective for improvingbiceps peak,forearm stability, andgrip strength, making it a great accessory exercise for arm training.",
+    "instructions": [
+      "Grip Setup: Keep your elbows close to your torso and your palms facing upward, supporting the dumbbell from underneath.",
+      "Curl the Dumbbell: Bend your elbows to lift the dumbbell toward your chest while keeping your wrists stable.",
+      "Squeeze at the Top: Pause for 1–2 seconds, contracting the biceps fully.",
+      "Lower Under Control: Slowly return the dumbbell to the starting position without letting it drop.",
+      "Repeat: Perform the desired number of repetitions while maintaining strict form."
+    ],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2023/09/waiter-curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/biceps-anatomy-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2023/09/waiter-curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2023/09/waiter-curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [
+        "Maintain upright posture—avoid leaning back.",
+        "Grip the dumbbell securelyto avoid shifting or wobbling.",
+        "Avoid wrist flexion—keep wrists neutral for safety."
+      ],
+      "tips": [
+        "Keep elbows tuckedto prevent shoulder involvement.",
+        "Move slowlyto increase muscle activation and time under tension.",
+        "Using too much weight, leading to swinging or poor control.",
+        "Letting elbows flare out, reducing biceps isolation.",
+        "Rushing repsinstead of controlling the movement.",
+        "Overextending at the bottom, placing stress on the elbow joint.",
+        "Tilting the dumbbell, which shifts load unevenly."
+      ],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/waiter-curl/"
+  },
+  {
+    "name": "Overhead Cable Curl",
+    "slug": "overhead-cable-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/04/overhead-cable-curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/biceps-anatomy-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/overhead-cable-curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/overhead-cable-curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/overhead-cable-curl/"
+  },
+  {
+    "name": "Barbell Curl",
+    "slug": "barbell-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/barbell-curl-grip-600x262.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/biceps-anatomy-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/barbell-curl/"
+  },
+  {
+    "name": "Band Biceps Curl",
+    "slug": "band-biceps-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/02/Band-Biceps-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Band-Biceps-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Band-Biceps-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/band-biceps-curl/"
+  },
+  {
+    "name": "EZ Bar Preacher Curl",
+    "slug": "ez-bar-preacher-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/02/Z-Bar-Preacher-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/biceps-anatomy-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Z-Bar-Preacher-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Z-Bar-Preacher-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/z-bar-preacher-curl/"
+  },
+  {
+    "name": "Close Grip Z-Bar Curl",
+    "slug": "close-grip-z-bar-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/06/Close-Grip-Z-Bar-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Close-Grip-Z-Bar-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Close-Grip-Z-Bar-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/close-grip-z-bar-curl/"
+  },
+  {
+    "name": "High Cable Single Arm Bicep Curl",
+    "slug": "high-cable-single-arm-bicep-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/04/High-Cable-Single-Arm-Bicep-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/biceps-anatomy-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/High-Cable-Single-Arm-Bicep-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/High-Cable-Single-Arm-Bicep-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/high-cable-single-arm-bicep-curl/"
+  },
+  {
+    "name": "Dumbbell Scott Curl",
+    "slug": "dumbbell-scott-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/06/dumbbell-scot-curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/dumbbell-scot-curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/dumbbell-scot-curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/dumbbell-scott-curl/"
+  },
+  {
+    "name": "Cable Incline Biceps Curl",
+    "slug": "cable-incline-biceps-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/12/Cable-Incline-Biceps-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/12/Cable-Incline-Biceps-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/12/Cable-Incline-Biceps-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/cable-incline-biceps-curl/"
+  },
+  {
+    "name": "One Arm Chin-Up",
+    "slug": "one-arm-chin-up",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/01/One-Arm-Chin-Up.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/01/One-Arm-Chin-Up.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/01/One-Arm-Chin-Up.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/one-arm-chin-up/"
+  },
+  {
+    "name": "Elbow Flexion",
+    "slug": "elbow-flexion",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2023/06/elbow-flexion.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2023/06/elbow-flexion.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2023/06/elbow-flexion.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/elbow-flexion/"
+  },
+  {
+    "name": "Cable Two Arm Curl on Incline Bench",
+    "slug": "cable-two-arm-curl-on-incline-bench",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/02/Cable-Two-Arm-Curl-on-Incline-Bench.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Cable-Two-Arm-Curl-on-Incline-Bench.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Cable-Two-Arm-Curl-on-Incline-Bench.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/cable-two-arm-curl-on-incline-bench/"
+  },
+  {
+    "name": "Cable Pulldown Biceps Curl",
+    "slug": "cable-pulldown-biceps-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/02/Cable-Pulldown-Bicep-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Cable-Pulldown-Bicep-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Cable-Pulldown-Bicep-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/cable-pulldown-biceps-curl/"
+  },
+  {
+    "name": "Dumbbell Reverse Curl",
+    "slug": "dumbbell-reverse-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/04/dumbbell-reverse-curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Brachioradialis-and-bicep-and-brachialis.jpg",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/biceps-anatomy-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/dumbbell-reverse-curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/dumbbell-reverse-curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/dumbbell-reverse-curl/"
+  },
+  {
+    "name": "Cable Single Arm Hammer Curl",
+    "slug": "cable-single-arm-hammer-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "forearms",
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "athletic_performance",
+      "strength",
+      "rehabilitation",
+      "hypertrophy"
+    ],
+    "description": "The Cable Single Arm Hammer Curl is an effectiveunilateral arm isolation exercisedesigned to target the brachialis, biceps brachii, and brachioradialis muscles through a neutral grip. Utilizing a cable machine ensures consistent resistance throughout the movement, which enhances muscle growth and minimizes the likelihood of using momentum to complete the exercise. How to Perform Cable Single Arm Hammer Curl (Step-by-Step Guide): How to Perform Cable Single Arm Hammer Curl (Step-by-Step Guide): S",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2025/07/cable-single-arm-hammer-curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Brachioradialis-and-bicep-and-brachialis.jpg",
+        "https://fitnessprogramer.com/wp-content/uploads/2025/07/hummer-curl-muscles-worked-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2025/07/cable-single-arm-hammer-curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2025/07/cable-single-arm-hammer-curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [
+        "Do not swing or rotate the torso—stay upright and controlled."
+      ],
+      "tips": [
+        "Keep your elbow tightto your torso throughout the movement.",
+        "Use a neutral gripwith your thumb pointing up to emphasize the brachialis.",
+        "Exhale as you curl, inhale as you return to the bottom.",
+        "Focus on time under tension, especially during the lowering phase.",
+        "Using momentumor leaning back to lift the weight.",
+        "Letting the elbow drift forward, shifting tension away from the target muscles.",
+        "Rotating the wrist, which changes the movement pattern and reduces effectiveness.",
+        "Skipping the eccentric phase, missing out on strength and hypertrophy benefits.",
+        "Gripping too loosely, which decreases forearm engagement."
+      ],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/cable-single-arm-hammer-curl/"
+  },
+  {
+    "name": "Lever Preacher Curl",
+    "slug": "lever-preacher-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "lower_back",
+      "forearms",
+      "biceps",
+      "chest",
+      "back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "rehabilitation",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/04/Lever-Preacher-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/biceps-anatomy-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Lever-Preacher-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Lever-Preacher-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/lever-preacher-curl/"
+  },
+  {
+    "name": "Barbell Curl On Arm Blaster",
+    "slug": "barbell-curl-on-arm-blaster",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/08/Barbell-Curl-On-Arm-Blaster.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/08/Barbell-Curl-On-Arm-Blaster.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/08/Barbell-Curl-On-Arm-Blaster.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/barbell-curl-on-arm-blaster/"
+  },
+  {
+    "name": "Lying Cable Curl",
+    "slug": "lying-cable-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "biceps",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/04/lying-cable-curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/biceps-anatomy-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/lying-cable-curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/lying-cable-curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/lying-cable-curl/"
+  },
+  {
+    "name": "Close Grip Barbell Curl",
+    "slug": "close-grip-barbell-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/07/close-grip-barbell-curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/07/close-grip-barbell-curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/07/close-grip-barbell-curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/close-grip-barbell-curl/"
+  },
+  {
+    "name": "Barbell Alternate Biceps Curl",
+    "slug": "barbell-alternate-biceps-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/02/Barbell-Alternate-Biceps-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Barbell-Alternate-Biceps-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Barbell-Alternate-Biceps-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/barbell-alternate-biceps-curl/"
+  },
+  {
+    "name": "Standing One Arm Chest Stretch",
+    "slug": "standing-one-arm-chest-stretch",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "flexibility",
+    "movementPattern": "push",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/08/Standing-one-arm-chest-stretch.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/08/Standing-one-arm-chest-stretch.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/08/Standing-one-arm-chest-stretch.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "flexibility"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/standing-one-arm-chest-stretch/"
+  },
+  {
+    "name": "Standing Barbell Concentration Curl",
+    "slug": "standing-barbell-concentration-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "core",
+      "lower_back",
+      "biceps",
+      "chest",
+      "back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "hypertrophy"
+    ],
+    "description": "The Standing Barbell Concentration Curl is astrength training exercisethat primarily targets the brachialis and biceps brachii muscles of the arms. This is a challenging variation of the concentration curl, but instead of using dumbbells, barbells are used. Despite the engagement of the lower back and core, the primary focus remains on isolating and targeting the arm muscles. This can be an effective way to add variety to your arm training routine and potentially stimulate muscle growth. Begin b",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2023/10/Standing-Barbell-Concentration-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2023/10/Standing-Barbell-Concentration-Curl-muscles-worked-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2023/10/Standing-Barbell-Concentration-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Concentration-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Seated-close-grip-concentration-curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Biceps-Leg-Concentration-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Cable-Concentration-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2023/10/Standing-Barbell-Concentration-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [
+        "Use a moderate weightto maintain strict form and avoid recruiting other muscles.",
+        "Keep the wrist neutral—avoid bending it backward or forward.",
+        "Overextending at the bottom: Avoid locking out completely to keep tension on the muscle."
+      ],
+      "tips": [
+        "Eliminate body swayby keeping your torso fixed throughout the lift.",
+        "Breathe outas you curl the bar andinhaleas you lower.",
+        "Focus on muscle squeezerather than just moving the weight.",
+        "Using momentum: Swinging the bar reduces bicep isolation.",
+        "Flaring the elbow: Keep the elbow tucked to the side to maintain alignment.",
+        "Going too heavy: Excessive weight compromises control and form."
+      ],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/standing-barbell-concentration-curl/"
+  },
+  {
+    "name": "Chin-Up",
+    "slug": "chin-up",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/03/Chin-Up.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/muscle-worked-in-the-pull-up-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/Chin-Up.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/Chin-Up.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/chin-up/"
+  },
+  {
+    "name": "Seated Alternating Dumbbell Curl",
+    "slug": "seated-alternating-dumbbell-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/06/Seated-dumbbell-alternating-curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/06/Seated-dumbbell-alternating-curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/06/Seated-dumbbell-alternating-curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/seated-alternating-dumbbell-curl/"
+  },
+  {
+    "name": "Seated Hammer Curl",
+    "slug": "seated-hammer-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/04/Seated-Hammer-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/biceps-anatomy-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Seated-Hammer-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Seated-Hammer-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/seated-hammer-curl/"
+  },
+  {
+    "name": "One Arm Biceps Curl",
+    "slug": "one-arm-biceps-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/04/One-Arm-Biceps-Curl-1.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/04/One-Arm-Biceps-Curl-1.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/04/One-Arm-Biceps-Curl-1.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/one-arm-biceps-curl/"
+  },
+  {
+    "name": "Standing Reverse Shoulder Stretch",
+    "slug": "standing-reverse-shoulder-stretch",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "flexibility",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "mobility",
+      "rehabilitation",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/04/Standing-Reverse-Shoulder-Stretch.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/arm-circle-musle-worked-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Standing-Reverse-Shoulder-Stretch.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Standing-Reverse-Shoulder-Stretch.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "flexibility"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/standing-reverse-shoulder-stretch/"
+  },
+  {
+    "name": "Concentration Curl",
+    "slug": "concentration-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/02/Concentration-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/biceps-anatomy-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Concentration-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Concentration-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [
+        "Keep your elbow stationary throughout the exercise to maximize bicep activation.",
+        "Focus on squeezing your bicep at the top of the movement to fully contract the muscle.",
+        "Keep your upper arm pressed against your thigh to prevent swinging and cheating.",
+        "Use a controlled and slow movement, rather than jerking the weight up and down.",
+        "Exhale as you curl the weight up, and inhale as you lower it down."
+      ],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/concentration-curl/"
+  },
+  {
+    "name": "Cable Concentration Curl",
+    "slug": "cable-concentration-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/04/Cable-Concentration-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/biceps-anatomy-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Cable-Concentration-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Cable-Concentration-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/cable-concentration-curl/"
+  },
+  {
+    "name": "One Arm Cable Bicep Curl",
+    "slug": "one-arm-cable-bicep-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/06/One-Arm-Cable-Bicep-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/06/One-Arm-Cable-Bicep-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/06/One-Arm-Cable-Bicep-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/one-arm-cable-bicep-curl/"
+  },
+  {
+    "name": "Biceps Curl Machine",
+    "slug": "biceps-curl-machine",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/09/Bicep-Curl-Machine.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/09/Bicep-Curl-Machine.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/09/Bicep-Curl-Machine.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/bicep-curl-machine/"
+  },
+  {
+    "name": "Dumbbell Preacher Hammer (Scott) Curl",
+    "slug": "dumbbell-preacher-hammer-scott-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/02/Dumbbell-Preacher-Hammer-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Dumbbell-Preacher-Hammer-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Dumbbell-Preacher-Hammer-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/dumbbell-preacher-hammer-curl/"
+  },
+  {
+    "name": "Flexor Incline Dumbbell Curls",
+    "slug": "flexor-incline-dumbbell-curls",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/02/Flexor-Incline-Dumbbell-Curls.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Flexor-Incline-Dumbbell-Curls.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Flexor-Incline-Dumbbell-Curls.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/flexor-incline-dumbbell-curls/"
+  },
+  {
+    "name": "Single Arm Cable Preacher Curl",
+    "slug": "single-arm-cable-preacher-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "biceps",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/04/cable-preacher-curls.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/biceps-anatomy-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/cable-preacher-curls.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/cable-preacher-curls.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/cable-preacher-curl/"
+  },
+  {
+    "name": "Seated Incline Dumbbell Curl",
+    "slug": "seated-incline-dumbbell-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "biceps",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "mobility",
+      "rehabilitation",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/02/Seated-Incline-Dumbbell-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/biceps-anatomy-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Seated-Incline-Dumbbell-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Seated-Incline-Dumbbell-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/seated-incline-dumbbell-curl/"
+  },
+  {
+    "name": "Barbell Drag Curl",
+    "slug": "barbell-drag-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/12/Barbell-Drag-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/12/Barbell-Drag-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/12/Barbell-Drag-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/barbell-drag-curl/"
+  },
+  {
+    "name": "Reverse Grip EZ-Bar Curl",
+    "slug": "reverse-grip-ez-bar-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/08/Reverse-Grip-EZ-Bar-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Brachioradialis-and-bicep-and-brachialis.jpg",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/reverse-curl-muscle-worked-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/08/Reverse-Grip-EZ-Bar-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/08/Reverse-Grip-EZ-Bar-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/reverse-grip-ez-bar-curl/"
+  },
+  {
+    "name": "Cable Reverse Grip EZ-bar Biceps Curl",
+    "slug": "cable-reverse-grip-ez-bar-biceps-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/02/Cable-Reverse-Grip-EZ-bar-Biceps-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Cable-Reverse-Grip-EZ-bar-Biceps-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Cable-Reverse-Grip-EZ-bar-Biceps-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/cable-reverse-grip-ez-bar-biceps-curl/"
+  },
+  {
+    "name": "Cable Curl",
+    "slug": "cable-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/02/cable-curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/biceps-anatomy-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/cable-curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/cable-curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/cable-curl/"
+  },
+  {
+    "name": "Dumbbell Scott Hammer Curl",
+    "slug": "dumbbell-scott-hammer-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "mobility",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/08/Dumbbell-Scott-Hammer-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/biceps-anatomy-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/08/Dumbbell-Scott-Hammer-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/08/Dumbbell-Scott-Hammer-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/dumbbell-scott-hammer-curl/"
+  },
+  {
+    "name": "Water Bottle Hammer Curl",
+    "slug": "water-bottle-hammer-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/06/Water-Bottle-Hammer-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/06/Water-Bottle-Hammer-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/06/Water-Bottle-Hammer-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/water-bottle-hammer-curl/"
+  },
+  {
+    "name": "Biceps Leg Concentration Curl",
+    "slug": "biceps-leg-concentration-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "strength",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/04/Biceps-Leg-Concentration-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/biceps-anatomy-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Biceps-Leg-Concentration-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Biceps-Leg-Concentration-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/biceps-leg-concentration-curl/"
+  },
+  {
+    "name": "Brachialis Pull-up",
+    "slug": "brachialis-pull-up",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "strength",
+      "rehabilitation",
+      "hypertrophy"
+    ],
+    "description": "This variation shortens the range of motion in the pull-up, targeting the brachialis in the initial elbow flexion phase. You only pull yourself up until the bar reaches the top of your head. It’s important to note that while these variations can emphasize the brachialis more, all pull-up exercises will engage multiple muscles in your back and arms, including the biceps. Narrow Grip:Grab the pull-up bar with your hands positioned closer together than shoulder-width apart. This shifts some of the ",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/04/Brachialis-Pull-up.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Brachialis-Pull-up.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Brachialis-Pull-up.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [
+        "Focus on Form:Whatever the change, prioritize proper form to avoid injury."
+      ],
+      "tips": [
+        "Progression:If you’re new to pull-ups, start with assisted variations or negatives (slowly lowering yourself down) before attempting full narrow grip or half pull-ups.",
+        "Incorporate Other Exercises:For well-rounded arm development, consider including other exercises that target the brachialis alongside pull-up variations, such as concentration curls."
+      ],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/brachialis-pull-up/"
+  },
+  {
+    "name": "Two Dumbbell Preacher Curl",
+    "slug": "two-dumbbell-preacher-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/02/Two-dumbbell-preacher-curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Two-dumbbell-preacher-curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Two-dumbbell-preacher-curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/two-dumbbell-preacher-curl/"
+  },
+  {
+    "name": "Chin Up Around the Bar",
+    "slug": "chin-up-around-the-bar",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/02/Chin-Up-Around-the-Bar.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Chin-Up-Around-the-Bar.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Chin-Up-Around-the-Bar.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/chin-up-around-the-bar/"
+  },
+  {
+    "name": "Dumbbell Alternate Preacher Curl",
+    "slug": "dumbbell-alternate-preacher-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/02/Dumbbell-Alternate-Preacher-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Dumbbell-Alternate-Preacher-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Dumbbell-Alternate-Preacher-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/dumbbell-alternate-preacher-curl/"
+  },
+  {
+    "name": "Lying High Bench Barbell Curl",
+    "slug": "lying-high-bench-barbell-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/04/Lying-High-Bench-Barbell-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/biceps-anatomy-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/04/Lying-High-Bench-Barbell-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/04/Lying-High-Bench-Barbell-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/lying-high-bench-barbell-curl/"
+  },
+  {
+    "name": "One-Arm Biceps Curl With Resistance Band",
+    "slug": "one-arm-biceps-curl-with-resistance-band",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/05/One-Arm-Biceps-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/05/One-Arm-Biceps-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/05/One-Arm-Biceps-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "biceps",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/one-arm-biceps-curl-with-resistance-band/"
+  }
+]

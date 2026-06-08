@@ -1,0 +1,2907 @@
+[
+  {
+    "name": "Hand Gripper",
+    "slug": "hand-gripper",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/01/Hand-Gripper.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/01/Hand-Gripper.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/01/Hand-Gripper.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "forearm",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/hand-gripper/"
+  },
+  {
+    "name": "Dumbbell Finger Curl",
+    "slug": "dumbbell-finger-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/09/Dumbbell-Finger-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/09/Dumbbell-Finger-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/09/Dumbbell-Finger-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "forearm",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/dumbbell-finger-curl/"
+  },
+  {
+    "name": "Wrist Rotations",
+    "slug": "wrist-rotations",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "flexibility",
+    "movementPattern": "rotation",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "mobility",
+      "rehabilitation",
+      "hypertrophy"
+    ],
+    "description": "Wrist rotationsarea circular movement of the wrist joint, usually performed without resistance. It’s a simple, low-impact mobility exercise used to maintain or improve the range of motion in the wrist joint. It is commonly included inwarm-upsfor weight training, calisthenics routines, or rehabilitation protocols to prevent overuse injuries and support healthy movement patterns. Stand or sit upright, keeping your shoulders relaxed. Stand or sit upright, keeping your shoulders relaxed. Extend both",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2025/07/wrist-rotations.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/forearms-muscle-worked-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2025/07/wrist-rotations.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2025/07/wrist-rotations.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [
+        "Keep the motion smooth, avoiding jerky or rushed circles.",
+        "Relax your fingersto avoid unnecessary tension."
+      ],
+      "tips": [
+        "Move only the wrists, not the forearms or shoulders.",
+        "Focus on full circular range, not just flicking back and forth.",
+        "Include in warm-upsbefore strength or hand-based exercises.",
+        "Moving the elbows or arms, instead of isolating the wrists.",
+        "Rotating too fast, which reduces the effectiveness of joint priming.",
+        "Forgetting both directions, limiting mobility and muscle balance.",
+        "Tensing the forearms, creating fatigue or discomfort.",
+        "Neglecting to include in warm-ups, especially before wrist-loading exercises."
+      ],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "forearm",
+      "beginner",
+      "flexibility"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/wrist-rotations/"
+  },
+  {
+    "name": "Dumbbell Seated Neutral Wrist Curl",
+    "slug": "dumbbell-seated-neutral-wrist-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/06/Dumbbell-Seated-Neutral-Wrist-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Dumbbell-Seated-Neutral-Wrist-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Dumbbell-Seated-Neutral-Wrist-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "forearm",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/dumbbell-seated-neutral-wrist-curl/"
+  },
+  {
+    "name": "Reverse Wrist Stretch",
+    "slug": "reverse-wrist-stretch",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "flexibility",
+    "movementPattern": "push",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2023/03/reverse-Wrist-Stretch.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2023/03/reverse-Wrist-Stretch.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2023/03/reverse-Wrist-Stretch.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "forearm",
+      "beginner",
+      "flexibility"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/reverse-wrist-stretch/"
+  },
+  {
+    "name": "Hammer Curl with Resistance Band",
+    "slug": "hammer-curl-with-resistance-band",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/07/Hammer-Curl-with-Resistance-Band.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/07/Hammer-Curl-with-Resistance-Band.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/07/Hammer-Curl-with-Resistance-Band.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "forearm",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/hammer-curl-with-resistance-band/"
+  },
+  {
+    "name": "Seated Barbell Finger Curl",
+    "slug": "seated-barbell-finger-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "forearms",
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "athletic_performance",
+      "strength",
+      "rehabilitation",
+      "endurance",
+      "hypertrophy",
+      "mobility"
+    ],
+    "description": "The barbell finger curl is a wrist and finger flexion exercise performed by letting the barbell roll down the fingers and curling it back up using the hand and finger muscles. In the seated version, you rest your forearms on your thighs with palms facing up, allowing for a controlled, isolated contraction of the flexor digitorum muscles. This exercise, which is frequently used to increasegrip strength, is especially beneficial for weightlifters, rock climbers and athletes who want to strengthen ",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2025/07/seated-barbell-finger-curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/11/superficial-layer-of-forearm-muscles-600x362.jpg"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2025/07/seated-barbell-finger-curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2025/07/seated-barbell-finger-curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [
+        "Using excessive weight, which can strain the fingers and limit range of motion."
+      ],
+      "commonMistakes": [
+        "Use a light to moderate weightto avoid overloading delicate finger joints."
+      ],
+      "tips": [
+        "Keep your forearms flatand stable against your thighs throughout the movement.",
+        "Move slowlythrough the entire range of motion—no jerking.",
+        "Squeeze hard at the topfor maximum muscle activation.",
+        "Breathe consistently, exhaling as you curl and inhaling as you release.",
+        "Lifting the forearms off the thighs, reducing isolation.",
+        "Performing fast or jerky reps, decreasing muscle control.",
+        "Not allowing the bar to roll fully, which limits the effectiveness of the stretch phase.",
+        "Neglecting the squeeze at the top, which minimizes muscular engagement."
+      ],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "forearm",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/seated-barbell-finger-curl/"
+  },
+  {
+    "name": "Single Dumbbell Spider Hammer Curl",
+    "slug": "single-dumbbell-spider-hammer-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/02/Single-Dumbbell-Spider-Hammer-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Single-Dumbbell-Spider-Hammer-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Single-Dumbbell-Spider-Hammer-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "forearm",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/single-dumbbell-spider-hammer-curl/"
+  },
+  {
+    "name": "Seated Zottman Curl",
+    "slug": "seated-zottman-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "lower_back",
+      "forearms",
+      "biceps",
+      "chest",
+      "back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "athletic_performance",
+      "strength",
+      "endurance",
+      "hypertrophy"
+    ],
+    "description": "The seated Zottman curl is a variation of the dumbbell curl exercise that targets the biceps brachii, brachialis, and forearms. The seated position helps stabilize your body and isolate the muscles being worked on. This exercise targets both the biceps during the supination phase and the forearm muscles (especially the brachioradialis) during the pronation phase, providing a morecomprehensive arm workout. Seated Position:Begin by sitting on a bench or chair with your back straight and feet flat ",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2023/10/Seated-Zottman-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Brachioradialis-and-bicep-and-brachialis.jpg",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/biceps-anatomy-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2023/10/Seated-Zottman-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/zottman-curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2023/10/Seated-Zottman-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "forearm",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/seated-zottman-curl/"
+  },
+  {
+    "name": "Single Arm Reverse Grip Cable Bicep Curl",
+    "slug": "single-arm-reverse-grip-cable-bicep-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/06/Single-Arm-Reverse-Grip-Cable-Bicep-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/06/Single-Arm-Reverse-Grip-Cable-Bicep-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/06/Single-Arm-Reverse-Grip-Cable-Bicep-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "forearm",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/single-arm-reverse-grip-cable-bicep-curl/"
+  },
+  {
+    "name": "Weighted Neutral Wrist Curl",
+    "slug": "weighted-neutral-wrist-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "lower_back",
+      "forearms",
+      "chest",
+      "back",
+      "abs"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "athletic_performance",
+      "strength",
+      "rehabilitation",
+      "endurance",
+      "hypertrophy"
+    ],
+    "description": "This exercise involvesholding a weight plate upright with a neutral grip—thumb up, pinky down—while seated, and curling it using the wrist. It strengthens thewrist flexorsandbrachioradialis, enhancing grip endurance and wrist stability. Hold a weight plate vertically(rim grip) in one hand using a neutral grip—thumb facing up. Hold a weight plate vertically(rim grip) in one hand using a neutral grip—thumb facing up. Rest your forearm on your thigh, allowing the wrist to hang just beyond the knee.",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/06/Weighted-Wrist-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/11/superficial-layer-of-forearm-muscles-600x362.jpg"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Weighted-Wrist-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Weighted-Wrist-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [
+        "Avoid leaning forward or shrugging, which can compromise form."
+      ],
+      "tips": [
+        "Keep your forearm firmly plantedon your thigh to prevent shoulder and elbow involvement.",
+        "Use a full range of motion, allowing your wrist to flex and extend naturally.",
+        "Grip the plate tightlyfor added finger and forearm activation.",
+        "Keep movements slow and deliberate—focus on tension, not speed.",
+        "Using too heavy a plate, which reduces control and limits range.",
+        "Lifting the elbow off your thigh, shifting focus away from the wrist.",
+        "Curling from the elbow, not isolating the wrist movement.",
+        "Letting the plate tilt, which reduces muscle tension and control.",
+        "Neglecting the eccentric phase, losing a key part of the movement."
+      ],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "forearm",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/weighted-neutral-wrist-curl/"
+  },
+  {
+    "name": "Behind The Back Barbell Wrist Curl",
+    "slug": "behind-the-back-barbell-wrist-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/06/Behind-The-Back-Barbell-Wrist-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Behind-The-Back-Barbell-Wrist-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Behind-The-Back-Barbell-Wrist-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "forearm",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/behind-the-back-barbell-wrist-curl/"
+  },
+  {
+    "name": "Reverse Wrist Curl",
+    "slug": "reverse-wrist-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/02/Reverse-Wrist-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/forearms-muscle-worked-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Reverse-Wrist-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Reverse-Wrist-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "forearm",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/reverse-wrist-curl/"
+  },
+  {
+    "name": "Dumbbell Reverse Curl",
+    "slug": "dumbbell-reverse-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/04/dumbbell-reverse-curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Brachioradialis-and-bicep-and-brachialis.jpg",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/biceps-anatomy-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/dumbbell-reverse-curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/dumbbell-reverse-curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "forearm",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/dumbbell-reverse-curl/"
+  },
+  {
+    "name": "Cable Single Arm Hammer Curl",
+    "slug": "cable-single-arm-hammer-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "forearms",
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "athletic_performance",
+      "strength",
+      "rehabilitation",
+      "hypertrophy"
+    ],
+    "description": "The Cable Single Arm Hammer Curl is an effectiveunilateral arm isolation exercisedesigned to target the brachialis, biceps brachii, and brachioradialis muscles through a neutral grip. Utilizing a cable machine ensures consistent resistance throughout the movement, which enhances muscle growth and minimizes the likelihood of using momentum to complete the exercise. How to Perform Cable Single Arm Hammer Curl (Step-by-Step Guide): How to Perform Cable Single Arm Hammer Curl (Step-by-Step Guide): S",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2025/07/cable-single-arm-hammer-curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Brachioradialis-and-bicep-and-brachialis.jpg",
+        "https://fitnessprogramer.com/wp-content/uploads/2025/07/hummer-curl-muscles-worked-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2025/07/cable-single-arm-hammer-curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2025/07/cable-single-arm-hammer-curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [
+        "Do not swing or rotate the torso—stay upright and controlled."
+      ],
+      "tips": [
+        "Keep your elbow tightto your torso throughout the movement.",
+        "Use a neutral gripwith your thumb pointing up to emphasize the brachialis.",
+        "Exhale as you curl, inhale as you return to the bottom.",
+        "Focus on time under tension, especially during the lowering phase.",
+        "Using momentumor leaning back to lift the weight.",
+        "Letting the elbow drift forward, shifting tension away from the target muscles.",
+        "Rotating the wrist, which changes the movement pattern and reduces effectiveness.",
+        "Skipping the eccentric phase, missing out on strength and hypertrophy benefits.",
+        "Gripping too loosely, which decreases forearm engagement."
+      ],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "forearm",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/cable-single-arm-hammer-curl/"
+  },
+  {
+    "name": "Barbell Reverse Wrist Curl",
+    "slug": "barbell-reverse-wrist-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/06/Barbell-Reverse-Wrist-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Barbell-Reverse-Wrist-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Barbell-Reverse-Wrist-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "forearm",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/barbell-reverse-wrist-curl/"
+  },
+  {
+    "name": "Cable One-Arm Wrist Curl On Floor",
+    "slug": "cable-one-arm-wrist-curl-on-floor",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/09/Cable-One-Arm-Wrist-Curl-On-Floor.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/09/Cable-One-Arm-Wrist-Curl-On-Floor.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/09/Cable-One-Arm-Wrist-Curl-On-Floor.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "forearm",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/cable-one-arm-wrist-curl-on-floor/"
+  },
+  {
+    "name": "Standing One Arm Chest Stretch",
+    "slug": "standing-one-arm-chest-stretch",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "flexibility",
+    "movementPattern": "push",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/08/Standing-one-arm-chest-stretch.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/08/Standing-one-arm-chest-stretch.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/08/Standing-one-arm-chest-stretch.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "forearm",
+      "beginner",
+      "flexibility"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/standing-one-arm-chest-stretch/"
+  },
+  {
+    "name": "Wrist Stretch",
+    "slug": "wrist-stretch",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "flexibility",
+    "movementPattern": "push",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2023/03/Wrist-Stretch.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2023/03/Wrist-Stretch.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2023/03/Wrist-Stretch.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "forearm",
+      "beginner",
+      "flexibility"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/wrist-stretch/"
+  },
+  {
+    "name": "Seated Hammer Curl",
+    "slug": "seated-hammer-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/04/Seated-Hammer-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/biceps-anatomy-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Seated-Hammer-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Seated-Hammer-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "forearm",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/seated-hammer-curl/"
+  },
+  {
+    "name": "Dynamic Wrist Stretches",
+    "slug": "dynamic-wrist-stretches",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "flexibility",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "athletic_performance",
+      "strength",
+      "rehabilitation",
+      "hypertrophy",
+      "mobility"
+    ],
+    "description": "Dynamic wrist stretching involvescontinuous, flowing movementsthat alternate between stretching the forearm flexors (palm side) and extensors (back of forearm). Unlike static holds, this technique increases circulation, improvesjoint mobility, and actively warms up the tissue, making it ideal for pre-workout preparation or injury prevention.",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/06/Wrist-Circles-Stretch.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/forearms-muscle-worked-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Wrist-Circles-Stretch.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Wrist-Circles-Stretch.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "forearm",
+      "beginner",
+      "flexibility"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/wrist-circles-stretch/"
+  },
+  {
+    "name": "Dumbbell Preacher Hammer (Scott) Curl",
+    "slug": "dumbbell-preacher-hammer-scott-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/02/Dumbbell-Preacher-Hammer-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Dumbbell-Preacher-Hammer-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Dumbbell-Preacher-Hammer-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "forearm",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/dumbbell-preacher-hammer-curl/"
+  },
+  {
+    "name": "Wrist Ulnar Deviator And Extensor Stretch",
+    "slug": "wrist-ulnar-deviator-and-extensor-stretch",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "flexibility",
+    "movementPattern": "push",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2023/03/Wrist-Ulnar-Deviator-And-Extensor-Stretch.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2023/03/Wrist-Ulnar-Deviator-And-Extensor-Stretch.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2023/03/Wrist-Ulnar-Deviator-And-Extensor-Stretch.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "forearm",
+      "beginner",
+      "flexibility"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/wrist-ulnar-deviator-and-extensor-stretch/"
+  },
+  {
+    "name": "Dumbbell Wrist Curl",
+    "slug": "dumbbell-wrist-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/06/Dumbbell-Wrist-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Dumbbell-Wrist-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Dumbbell-Wrist-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "forearm",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/dumbbell-wrist-curl/"
+  },
+  {
+    "name": "Barbell Finger Curl",
+    "slug": "barbell-finger-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/09/Barbell-Finger-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/09/Barbell-Finger-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/09/Barbell-Finger-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "forearm",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/barbell-finger-curl/"
+  },
+  {
+    "name": "Reverse Grip EZ-Bar Curl",
+    "slug": "reverse-grip-ez-bar-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/08/Reverse-Grip-EZ-Bar-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Brachioradialis-and-bicep-and-brachialis.jpg",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/reverse-curl-muscle-worked-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/08/Reverse-Grip-EZ-Bar-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/08/Reverse-Grip-EZ-Bar-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "forearm",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/reverse-grip-ez-bar-curl/"
+  },
+  {
+    "name": "Cable Reverse Grip EZ-bar Biceps Curl",
+    "slug": "cable-reverse-grip-ez-bar-biceps-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/02/Cable-Reverse-Grip-EZ-bar-Biceps-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Cable-Reverse-Grip-EZ-bar-Biceps-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Cable-Reverse-Grip-EZ-bar-Biceps-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "forearm",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/cable-reverse-grip-ez-bar-biceps-curl/"
+  },
+  {
+    "name": "Wrist Roller",
+    "slug": "wrist-roller",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "forearms",
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/08/wrist-roller.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/reverse-curl-muscle-worked-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/08/wrist-roller.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/08/wrist-roller.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [
+        "Avoid using momentum or swinging your arms to move the weight, as this can lead to injury or decreased effectiveness."
+      ],
+      "tips": [
+        "Start with a light weight and gradually increase the resistance as you get stronger.",
+        "Use proper form, keeping your elbows close to your body and using only your wrists to move the weight up and down the rope.",
+        "Try different variations of wrist roller exercises, such as using different weights, changing the speed of the movement, or incorporating isometric holds at the top of the movement."
+      ],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "forearm",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/wrist-roller/"
+  },
+  {
+    "name": "Wrist Curl",
+    "slug": "wrist-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/02/barbell-Wrist-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/forearms-muscle-worked-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/barbell-Wrist-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/barbell-Wrist-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "forearm",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/wrist-curl/"
+  },
+  {
+    "name": "Dumbbell Scott Hammer Curl",
+    "slug": "dumbbell-scott-hammer-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "mobility",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/08/Dumbbell-Scott-Hammer-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/biceps-anatomy-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/08/Dumbbell-Scott-Hammer-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/08/Dumbbell-Scott-Hammer-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "forearm",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/dumbbell-scott-hammer-curl/"
+  },
+  {
+    "name": "Water Bottle Hammer Curl",
+    "slug": "water-bottle-hammer-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/06/Water-Bottle-Hammer-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/06/Water-Bottle-Hammer-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/06/Water-Bottle-Hammer-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "forearm",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/water-bottle-hammer-curl/"
+  },
+  {
+    "name": "Barbell Reverse Wrist Curl Over a Bench",
+    "slug": "barbell-reverse-wrist-curl-over-a-bench",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/06/Barbell-Reverse-Wrist-Curl-Over-a-Bench.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/06/Barbell-Reverse-Wrist-Curl-Over-a-Bench.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/06/Barbell-Reverse-Wrist-Curl-Over-a-Bench.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "forearm",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/barbell-reverse-wrist-curl-over-a-bench/"
+  },
+  {
+    "name": "Barbell Reverse Curl",
+    "slug": "barbell-reverse-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "mobility",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Reverse-Curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/reverse-curl-muscle-worked-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Reverse-Curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Reverse-Curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "forearm",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/barbell-reverse-curl/"
+  }
+]

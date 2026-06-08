@@ -1,0 +1,2347 @@
+[
+  {
+    "name": "Lever Neck Right Side Flexion (plate loaded)",
+    "slug": "lever-neck-right-side-flexion-plate-loaded",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/02/Lever-Neck-Right-Side-Flexion-plate-loaded.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Lever-Neck-Right-Side-Flexion-plate-loaded.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Lever-Neck-Right-Side-Flexion-plate-loaded.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "neck",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/lever-neck-right-side-flexion-plate-loaded/"
+  },
+  {
+    "name": "Weighted Lying Neck Flexion (Neck Harness)",
+    "slug": "weighted-lying-neck-flexion-neck-harness",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "athletic_performance",
+      "strength",
+      "rehabilitation",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [
+      "Place the neck harness on your head, ensuring it is centered.",
+      "Let your head hang slightly back in a neutral position.",
+      "Execute the Movement:Flex your neck forward, bringing your chin toward your chest in a slow and controlled motion.Pause briefly at the top of the movement to fully contract the neck muscles.Slowly return your head to the starting position, resisting the weight as you lower.",
+      "Flex your neck forward, bringing your chin toward your chest in a slow and controlled motion.",
+      "Pause briefly at the top of the movement to fully contract the neck muscles.",
+      "Slowly return your head to the starting position, resisting the weight as you lower.",
+      "Repetitions:Perform2–4 sets of 8–15 repetitionsdepending on your fitness level and goals.",
+      "Perform2–4 sets of 8–15 repetitionsdepending on your fitness level and goals."
+    ],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/08/Weighted-Lying-Neck-Flexion.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Neck-Stretch-muscle-worked.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/08/Weighted-Lying-Neck-Flexion.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/08/Weighted-Lying-Neck-Flexion.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [
+        "Check Alignment:Keep your neck and spine aligned throughout the exercise to prevent strain."
+      ],
+      "commonMistakes": [
+        "Start Light:Always begin with a manageable weight to master the movement and avoid unnecessary strain.",
+        "Use Controlled Movements:Avoid jerking your head; focus on slow, deliberate motions to fully engage the muscles."
+      ],
+      "tips": [
+        "Rest and Recover:Like any muscle group, your neck needs adequate recovery between sessions."
+      ],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "neck",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/weighted-lying-neck-flexion/"
+  },
+  {
+    "name": "Bhujangasana | Cobra Abdominal Stretch",
+    "slug": "bhujangasana-cobra-abdominal-stretch",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "flexibility",
+    "movementPattern": "push",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "strength",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/06/abdominal-stretch.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/abdominal-stretch.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/abdominal-stretch.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "neck",
+      "beginner",
+      "flexibility"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/cobra-abdominal-stretch/"
+  },
+  {
+    "name": "Chin Tuck",
+    "slug": "chin-tuck",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "mobility",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/06/Chin-Tuck.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Neck-Stretch-muscle-worked.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Chin-Tuck.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Chin-Tuck.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "neck",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/chin-tuck/"
+  },
+  {
+    "name": "Neck Rotation Stretch",
+    "slug": "neck-rotation-stretch",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "flexibility",
+    "movementPattern": "rotation",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "Neck rotation is the movement where you turn your head from side to side, with your chin remaining level. It can be helpful for reducing neck pain, stiffness, and tightness, and can also improve your range of motion. Active rotation:This refers to the voluntary turning of the head without external assistance. Passive Rotation:This involves a healthcare professional or therapist gently mobilizing the head to achieve rotation. Passive rotations are often used in physical therapy settings to improv",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/07/Rotating-Neck-Stretch.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Neck-Stretch-muscle-worked.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/07/Rotating-Neck-Stretch.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/07/Rotating-Neck-Stretch.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "neck",
+      "beginner",
+      "flexibility"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/neck-rotation-stretch/"
+  },
+  {
+    "name": "Neck Flexion Stretch",
+    "slug": "neck-flexion-stretch",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "flexibility",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "mobility",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/07/Neck-Flexion-Stretch.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Neck-Stretch-muscle-worked.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/07/Neck-Flexion-Stretch-360x360.png"
+      ],
+      "videos": [],
+      "gifs": [],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "neck",
+      "beginner",
+      "flexibility"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/neck-flexion-stretch/"
+  },
+  {
+    "name": "Weighted Lateral Neck Flexion",
+    "slug": "weighted-lateral-neck-flexion",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "traps",
+      "lower_back",
+      "shoulders",
+      "chest",
+      "back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "isometric",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "athletic_performance",
+      "strength",
+      "rehabilitation",
+      "hypertrophy",
+      "mobility"
+    ],
+    "description": "Weighted Lateral Neck Flexion on an incline bench is an exercise that targets the lateral muscles of the neck, specifically the sternocleidomastoid and scalene muscles. Thanks to its strong neck muscles, it makes the neck much more versatile, increasing the range of motion, relaxing the neck and making it strong against injuries. This exercise is particularly beneficial for athletes involved in sports that require strong neck muscles, such as football, rugby, wrestle, MMA, or other combative spo",
+    "instructions": [
+      "Securely strap the head harness to your head and attach a weight plate to it.",
+      "Lie on your side on an incline bench with your head extending off the end.",
+      "Lower the weight plate suspended by the head harness over the floor.",
+      "Lower your head until you feel a mild stretch in the opposite side of your neck.",
+      "Exhale as you slowly and carefully lift the weight plate by laterally flexing your neck.",
+      "Hold the position for a count of one or two.",
+      "Inhale as you slowly and carefully lower the weight plate to the starting position.",
+      "Repeat the exercise for the prescribed number of repetitions.",
+      "Repeat on the opposite side."
+    ],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/02/Lying-Weighted-Lateral-Neck-Flexion.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Sternocleidomastoid-600x525.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Neck-Stretch-muscle-worked.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Lying-Weighted-Lateral-Neck-Flexion.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Lying-Weighted-Lateral-Neck-Flexion.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [
+        "Do not laterally flex your neck beyond feeling a mild stretch.",
+        "Use light weights to avoid straining your neck."
+      ],
+      "tips": [
+        "Keep the movement slow and under full control.",
+        "Ensure the weight plate does not touch the floor during the exercise.",
+        "Instead of lying on your arm, you can place your hand on the floor off the end of the bench.",
+        "If you don’t have a head harness, you can hold a small weight plate on the side of your head. Use a towel for comfort."
+      ],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "neck",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/lying-weighted-lateral-neck-flexion/"
+  },
+  {
+    "name": "Side Neck Stretch",
+    "slug": "side-neck-stretch",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "flexibility",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "mobility",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/06/Side-Neck-Stretch.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Neck-Stretch-muscle-worked.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Side-Neck-Stretch.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Side-Neck-Stretch.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "neck",
+      "beginner",
+      "flexibility"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/side-neck-stretch/"
+  },
+  {
+    "name": "Cable Seated Neck Flexion with head harness",
+    "slug": "cable-seated-neck-flexion-with-head-harness",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/02/Cable-Seated-Neck-Flexion-with-head-harness.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Cable-Seated-Neck-Flexion-with-head-harness.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Cable-Seated-Neck-Flexion-with-head-harness.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "neck",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/cable-seated-neck-flexion-with-head-harness/"
+  },
+  {
+    "name": "Lying Weighted Neck Extension",
+    "slug": "lying-weighted-neck-extension",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/02/Lying-Weighted-Neck-Extension.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Lying-Weighted-Neck-Extension.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Lying-Weighted-Neck-Extension.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "neck",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/lying-weighted-neck-extension/"
+  },
+  {
+    "name": "Neck Extension Stretch",
+    "slug": "neck-extension-stretch",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "flexibility",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "mobility",
+      "hypertrophy"
+    ],
+    "description": "The neck extension stretch is a simple and effective exercise for stretching the muscles at the front of the neck and improving neck flexibility. Stretching and strengthening your neck muscles allows you to look up comfortably, making everyday activities easier. Slowly tilt your head back, looking upwards. Imagine a gentle stretch along the back of your neck. Hold for a few seconds, then slowly return to the starting position. Neck extension exercises should be performed within a comfortable and",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/07/Neck-Extension-Stretching.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Neck-Stretch-muscle-worked.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/07/Neck-Extension-Stretching-360x360.png"
+      ],
+      "videos": [],
+      "gifs": [],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "neck",
+      "beginner",
+      "flexibility"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/neck-extension-stretch/"
+  },
+  {
+    "name": "Lever Neck Extension (plate loaded)",
+    "slug": "lever-neck-extension-plate-loaded",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/02/Lever-Neck-Extension-plate-loaded.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Lever-Neck-Extension-plate-loaded.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Lever-Neck-Extension-plate-loaded.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "neck",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/lever-neck-extension-plate-loaded/"
+  },
+  {
+    "name": "Weighted Neck Harness Extension",
+    "slug": "weighted-neck-harness-extension",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/02/Weighted-Neck-Harness-Extension.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Weighted-Neck-Harness-Extension.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Weighted-Neck-Harness-Extension.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "neck",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/weighted-neck-harness-extension/"
+  },
+  {
+    "name": "Sphinx Stretch",
+    "slug": "sphinx-stretch",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "flexibility",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "mobility",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/05/Sphinx-Stretch.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/05/Sphinx-pose-muscle-worked-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/05/Sphinx-Stretch.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/05/Sphinx-Stretch.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "neck",
+      "beginner",
+      "flexibility"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/sphinx-stretch/"
+  },
+  {
+    "name": "Kneeling Neck Stretch",
+    "slug": "kneeling-neck-stretch",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "flexibility",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/02/Kneeling-Neck-Stretch.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Neck-Stretch-muscle-worked.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Kneeling-Neck-Stretch.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Kneeling-Neck-Stretch.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "neck",
+      "beginner",
+      "flexibility"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/kneeling-neck-stretch/"
+  },
+  {
+    "name": "Fish Pose",
+    "slug": "fish-pose",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "flexibility",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "Fish Pose is a powerful chest-opening yoga pose that stretches the spine, neck, shoulders, and chest while promoting deep breathing and relaxation. The Sanskrit name Matsyasana comes from “Matsya,” meaning fish, and “Asana,” meaning pose. It is commonly practiced in Hatha, Vinyasa, and restorative yoga routines to counteract poor posture, open the lungs, and relieve tension. Start in a Reclined Position:Lie on your back with legs extended and arms resting beside your body. Lie on your back with ",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/02/Fish-Pose-Matsyasana.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/01/trx-chest-fly-muscles-worked-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Fish-Pose-Matsyasana.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Fish-Pose-Matsyasana.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [
+        "Engage your coreto prevent excessive lower back strain.",
+        "Straining the neck– Keep weight evenly distributed across the forearms, not the head."
+      ],
+      "commonMistakes": [
+        "Do not force your head backward—let it drop naturally, maintaining comfort in the neck.",
+        "Overarching the lower back– Avoid excessive compression by engaging your core."
+      ],
+      "tips": [
+        "Keep your legs activeby pointing your toes or pressing them gently into the mat.",
+        "Breathe deeplyto enhance the stretch and improve lung expansion.",
+        "Modify with propsif you have neck or back discomfort.",
+        "Holding the breath– Maintain deep, steady breathing to enhance relaxation.",
+        "Collapsing the shoulders– Actively lift the chest to maximize the heart-opening benefits."
+      ],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "neck",
+      "beginner",
+      "flexibility"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/fish-pose/"
+  },
+  {
+    "name": "Side Push Neck Stretch",
+    "slug": "side-push-neck-stretch",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "flexibility",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "mobility",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/06/Side-Push-Neck-Stretch.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Neck-Stretch-muscle-worked.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Side-Push-Neck-Stretch.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Side-Push-Neck-Stretch.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "neck",
+      "beginner",
+      "flexibility"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/side-push-neck-stretch/"
+  },
+  {
+    "name": "Weighted Lying Neck Extension (Neck Harness)",
+    "slug": "weighted-lying-neck-extension-neck-harness",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "athletic_performance",
+      "strength",
+      "mobility",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [
+      "Allow your head to hang forward slightly, letting the weight create a natural stretch in the back of your neck.",
+      "Keep your body still, with your hands gripping the sides of the bench for stability.",
+      "Perform the Movement:Slowlyextend your neck upward, lifting your head and the attached weight.Continue the motion until your head is in line with your upper back (avoid overextending).Pause briefly at the top to contract the neck muscles fully.",
+      "Slowlyextend your neck upward, lifting your head and the attached weight.",
+      "Continue the motion until your head is in line with your upper back (avoid overextending).",
+      "Pause briefly at the top to contract the neck muscles fully.",
+      "Lower your head back to the starting position in a slow, controlled manner, resisting the pull of the weight.",
+      "Repetitions and Sets:Perform8–15 repetitionsper set.Complete2–4 sets, adjusting based on your fitness level and goals.",
+      "Perform8–15 repetitionsper set.",
+      "Complete2–4 sets, adjusting based on your fitness level and goals."
+    ],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/08/Weighted-Lying-Neck-Extension.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Neck-Stretch-muscle-worked.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/08/Weighted-Lying-Neck-Extension.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/08/Weighted-Lying-Neck-Extension.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [
+        "Engage Your Core:This will help maintain a neutral spine and prevent strain.",
+        "Start Light:Begin with minimal weight to focus on technique before increasing resistance. Begin with a light weight and gradually increase the load as your neck becomes stronger. Starting with too much weight can compromise form and lead to injury."
+      ],
+      "commonMistakes": [
+        "Keep Your Body Stable:Only your neck should move; avoid any jerking or swinging motions."
+      ],
+      "tips": [
+        "Breathe:Exhale as you lift your head and inhale as you lower it."
+      ],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "neck",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/weighted-lying-neck-extension/"
+  },
+  {
+    "name": "Cable Seated Neck Extension with head harness",
+    "slug": "cable-seated-neck-extension-with-head-harness",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/02/Cable-Seated-Neck-Extension-with-head-harness.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Cable-Seated-Neck-Extension-with-head-harness.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Cable-Seated-Neck-Extension-with-head-harness.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "neck",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/cable-seated-neck-extension-with-head-harness/"
+  },
+  {
+    "name": "Gittleson Shrug",
+    "slug": "gittleson-shrug",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "traps",
+      "lower_back",
+      "shoulders",
+      "chest",
+      "back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "advanced",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "hypertrophy"
+    ],
+    "description": "The Gittleson shrug is an advanced variation of the dumbbell shrug designed to specifically target and build the trapezius muscles. The Gittleson shrug emphasizes the contraction of the upper trapezius muscle by isolating the muscle and working it in a one-way fashion. This exercise, with its unilateral focus, can be a valuable addition to a comprehensive training program, especially for individuals looking to address muscle imbalances and target specific areas of the trapezius. Sit on a bench o",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/01/Dumbbell-Seated-Gittleson-Shrug.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/07/Overhead-Shrug-Muscles-Worked--300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/01/Dumbbell-Seated-Gittleson-Shrug.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/01/Dumbbell-Seated-Gittleson-Shrug.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 90,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 7,
+        "max": 9
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [
+        "Use a weight that allows for proper form and control.",
+        "Allow your loaded side shoulder to drop down as far as possible. This puts a stretch on your left upper trap and, because of the way you’re leaning, it also puts an intense isometric contraction in your right upper trap. Although it seems like a one-way exercise, an isometric contraction occurs on the other side as one side moves.",
+        "Stop the exercise if there is any pain or discomfort."
+      ],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 6.0
+    },
+    "tags": [
+      "neck",
+      "advanced",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/gittleson-shrug/"
+  },
+  {
+    "name": "Diagonal Neck Stretch",
+    "slug": "diagonal-neck-stretch",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "flexibility",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "The diagonal neck stretch is a neck exercise that helps increase flexibility and range of motion in the neck muscles. It targets the scalene muscles and other lateral neck musculature, which play a crucial role in neck flexion, rotation, and side bending. Regularly performing diagonal neck stretches can significantly improve flexibility and reduce neck discomfort. Consider incorporating them into your daily routine, particularly if you have desk jobs or engage in activities that strain your neck",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/07/Diagonal-Neck-Stretch.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Neck-Stretch-muscle-worked.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/07/Diagonal-Neck-Stretch-360x360.png"
+      ],
+      "videos": [],
+      "gifs": [],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [
+        "It’s crucial to avoid excessive pressure or forceful movements.",
+        "Avoid breath holding."
+      ],
+      "tips": [
+        "If you experience any pain during the stretch, discontinue immediately and consult a healthcare professional."
+      ],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "neck",
+      "beginner",
+      "flexibility"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/diagonal-neck-stretch/"
+  },
+  {
+    "name": "Front and Back Neck Stretch",
+    "slug": "front-and-back-neck-stretch",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "flexibility",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "mobility",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/06/Front-and-Back-Neck-Stretch.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Neck-Stretch-muscle-worked.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Front-and-Back-Neck-Stretch.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Front-and-Back-Neck-Stretch.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "neck",
+      "beginner",
+      "flexibility"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/front-and-back-neck-stretch/"
+  },
+  {
+    "name": "Prone Cervical Extension",
+    "slug": "prone-cervical-extension",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/02/Prone-Cervical-Extension.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Prone-Cervical-Extension.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Prone-Cervical-Extension.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "neck",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/prone-cervical-extension/"
+  },
+  {
+    "name": "Lying Weighted Neck Flexion",
+    "slug": "lying-weighted-neck-flexion",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/02/Lying-Weighted-Neck-Flexion.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Lying-Weighted-Neck-Flexion.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Lying-Weighted-Neck-Flexion.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "neck",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/lying-weighted-neck-flexion/"
+  },
+  {
+    "name": "Floor Hyperextension",
+    "slug": "floor-hyperextension",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/04/Floor-Hyperextension-1.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/cat-cow-pose-muscle-worked-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Floor-Hyperextension-1.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Floor-Hyperextension-1.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "neck",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/floor-hyperextension/"
+  },
+  {
+    "name": "Superman",
+    "slug": "superman",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/02/Superman-exercise.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Superman-exercise-muscles-worked-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Superman-exercise.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Superman-exercise.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "neck",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/superman/"
+  }
+]

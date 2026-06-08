@@ -1,0 +1,4556 @@
+[
+  {
+    "name": "Serratus Wall Slide With Foam Roller",
+    "slug": "serratus-wall-slide-with-foam-roller",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/02/Serratus-Wall-Slide-With-Foam-Roller.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Serratus-Wall-Slide-With-Foam-Roller.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Serratus-Wall-Slide-With-Foam-Roller.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/serratus-wall-slide-with-foam-roller/"
+  },
+  {
+    "name": "Smith Machine Shrug",
+    "slug": "smith-machine-shrug",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/10/smith-machine-shrug.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/10/smith-machine-shrug.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/10/smith-machine-shrug.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/smith-machine-shrug/"
+  },
+  {
+    "name": "Dip Shrugs (Serratus Shrugs)",
+    "slug": "dip-shrugs-serratus-shrugs",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/02/Dip-Shrugs.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Dip-Shrugs.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Dip-Shrugs.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/dip-shrugs-serratus-shrugs/"
+  },
+  {
+    "name": "Dumbbell Incline T-Raise",
+    "slug": "dumbbell-incline-t-raise",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "mobility",
+      "rehabilitation",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/09/Dumbbell-Incline-T-Raise.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Rear-Lateral-Dumbbell-Raise-musle-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/09/Dumbbell-Incline-T-Raise.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/09/Dumbbell-Incline-T-Raise.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/dumbbell-incline-t-raise/"
+  },
+  {
+    "name": "Prone Incline Shrug",
+    "slug": "prone-incline-shrug",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/04/Dumbbell-Decline-Shrug.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/shrug-muscles-worked-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Dumbbell-Decline-Shrug.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Dumbbell-Decline-Shrug.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/prone-incline-shrug/"
+  },
+  {
+    "name": "Lever Shrug",
+    "slug": "lever-shrug",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/04/Lever-Shrug.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/shrug-muscles-worked-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Lever-Shrug.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Lever-Shrug.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/lever-shrug/"
+  },
+  {
+    "name": "Push-Up Plus",
+    "slug": "push-up-plus",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "athletic_performance",
+      "strength",
+      "rehabilitation",
+      "hypertrophy"
+    ],
+    "description": "The Push-Up Plus is a push-up variation that emphasizes scapula protraction at the peak of the movement. This enhanced range of motion specifically targets the serratus anterior, situated on the sides of your rib cage. Exercise is widely utilized in physical therapy, athletic training, and general fitness routines to enhance shoulder stability and prevent injuries.",
+    "instructions": [
+      "Begin in a high plank position, with your hands placed shoulder-width apart and directly under your shoulders.",
+      "Keep your body in a straight line from head to heels, engaging your core and glutes.",
+      "Lowering Phase:Slowly lower your chest towards the floor by bending your elbows.Maintain a controlled motion, keeping your elbows at a 45-degree angle to your torso.",
+      "Slowly lower your chest towards the floor by bending your elbows.",
+      "Maintain a controlled motion, keeping your elbows at a 45-degree angle to your torso.",
+      "Pushing Up:Push yourself back up to the starting plank position.",
+      "Push yourself back up to the starting plank position.",
+      "Scapular Protraction:Once at the top, extend your arms slightly further by rounding your upper back and pushing your shoulder blades away from each other.Hold for a second to feel the engagement in your serratus anterior.",
+      "Once at the top, extend your arms slightly further by rounding your upper back and pushing your shoulder blades away from each other.",
+      "Hold for a second to feel the engagement in your serratus anterior.",
+      "Reset:Return to the neutral plank position and repeat.",
+      "Return to the neutral plank position and repeat."
+    ],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/06/Push-Up-Plus.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/push-ups-muscles-worked-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Push-Up-Plus.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Push-Up-Plus.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [
+        "Sagging Hips: This compromises the integrity of your plank and increases the risk of lower back strain."
+      ],
+      "commonMistakes": [
+        "Maintain Alignment: Avoid letting your hips sag or pike up during the movement."
+      ],
+      "tips": [
+        "Controlled Movement: Focus on a slow and controlled tempo to maximize muscle activation.",
+        "Engage Your Core: Keep your core tight to prevent excessive arching in your lower back.",
+        "Breathing: Exhale as you push up and protract your scapula; inhale as you lower down.",
+        "Skipping the Protraction: Failing to add the scapular protraction negates the primary benefit of the exercise.",
+        "Elbow Flare: Allowing your elbows to flare out excessively can stress the shoulders."
+      ],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/push-up-plus/"
+  },
+  {
+    "name": "One-Arm Dumbbell Upright Row",
+    "slug": "one-arm-dumbbell-upright-row",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/12/One-Arm-Dumbbell-Upright-Row.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/12/One-Arm-Dumbbell-Upright-Row.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/12/One-Arm-Dumbbell-Upright-Row.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/one-arm-dumbbell-upright-row/"
+  },
+  {
+    "name": "Lever Gripless Shrug",
+    "slug": "lever-gripless-shrug",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/06/Lever-Gripless-Shrug.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/barbell-shrug-muscle-worked-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Lever-Gripless-Shrug.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Lever-Gripless-Shrug.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/lever-gripless-shrug/"
+  },
+  {
+    "name": "Band Pull-Apart",
+    "slug": "band-pull-apart",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/06/Band-pull-apart.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Rear-Lateral-Dumbbell-Raise-musle-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Band-pull-apart.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Band-pull-apart.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/band-pull-apart/"
+  },
+  {
+    "name": "Bodyweight Military Press",
+    "slug": "bodyweight-military-press",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "athletic_performance",
+      "strength",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/04/Bodyweight-Military-Press.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/shoulder-press-muscle-worked-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Bodyweight-Military-Press.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Bodyweight-Military-Press.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/bodyweight-military-press/"
+  },
+  {
+    "name": "Barbell Rear Delt Raise",
+    "slug": "barbell-rear-delt-raise",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/04/Barbell-Rear-Delt-Raise.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Rear-Lateral-Dumbbell-Raise-musle-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Barbell-Rear-Delt-Raise.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Barbell-Rear-Delt-Raise.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/barbell-rear-delt-raise/"
+  },
+  {
+    "name": "Bent Over Reverse Cable Fly",
+    "slug": "bent-over-reverse-cable-fly",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/04/bent-over-reverse-cable-fly.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Rear-Lateral-Dumbbell-Raise-musle-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/bent-over-reverse-cable-fly.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/bent-over-reverse-cable-fly.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/bent-over-reverse-cable-fly/"
+  },
+  {
+    "name": "Incline Dumbbell Y-Raise",
+    "slug": "incline-dumbbell-y-raise",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/10/Incline-Dumbbell-Y-Raise.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Rear-Lateral-Dumbbell-Raise-musle-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/10/Incline-Dumbbell-Y-Raise.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/10/Incline-Dumbbell-Y-Raise.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/incline-dumbbell-y-raise/"
+  },
+  {
+    "name": "Scapula Dips",
+    "slug": "scapula-dips",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/09/Scapula-Dips.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/09/Scapula-Dips.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/09/Scapula-Dips.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/scapula-dips/"
+  },
+  {
+    "name": "Scapula Pull-up",
+    "slug": "scapula-pull-up",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/01/Scapula-Pull-up.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/01/Scapula-Pull-up.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/01/Scapula-Pull-up.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/scapula-pull-up/"
+  },
+  {
+    "name": "Half Kneeling High Cable Row Rope",
+    "slug": "half-kneeling-high-cable-row-rope",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/04/Half-Kneeling-High-Cable-Row-Rope.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/muscle-worked-in-the-face-pull-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Half-Kneeling-High-Cable-Row-Rope.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Half-Kneeling-High-Cable-Row-Rope.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/half-kneeling-high-cable-row-rope/"
+  },
+  {
+    "name": "Dumbbell Shrug",
+    "slug": "dumbbell-shrug",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/04/Dumbbell-Shrug.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/barbell-shrug-muscle-worked-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Dumbbell-Shrug.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Dumbbell-Shrug.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/dumbbell-shrug/"
+  },
+  {
+    "name": "Behind The Back Barbell Shrug",
+    "slug": "behind-the-back-barbell-shrug",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2023/03/Behind-The-Back-Barbell-Shrug-Reverse-Barbell-Shrug.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2023/03/Behind-The-Back-Barbell-Shrug-Reverse-Barbell-Shrug.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2023/03/Behind-The-Back-Barbell-Shrug-Reverse-Barbell-Shrug.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/behind-the-back-barbell-shrug/"
+  },
+  {
+    "name": "Cable Y Raise",
+    "slug": "cable-y-raise",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/12/cable-y-raise.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/12/cable-y-raise.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/12/cable-y-raise.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/cable-y-raise/"
+  },
+  {
+    "name": "Dumbbell Incline Shrug",
+    "slug": "dumbbell-incline-shrug",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/04/Dumbbell-Incline-Shrug.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/shrug-muscles-worked-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Dumbbell-Incline-Shrug.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Dumbbell-Incline-Shrug.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/dumbbell-incline-shrug/"
+  },
+  {
+    "name": "Single Arm Upright Row | Gymstick",
+    "slug": "single-arm-upright-row-gymstick",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/05/Standing-Single-Arm-Upright-Row.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/05/Standing-Single-Arm-Upright-Row.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/05/Standing-Single-Arm-Upright-Row.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/single-arm-upright-row-gymstick/"
+  },
+  {
+    "name": "Seated Scapular Retraction Exercise",
+    "slug": "seated-scapular-retraction-exercise",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "mobility",
+      "endurance"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/02/Seated-Scapular-Retraction-Exercise.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/SCAPULAR-RETRACTION-muscle.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Seated-Scapular-Retraction-Exercise.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Seated-Scapular-Retraction-Exercise.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/seated-scapular-retraction-exercise/"
+  },
+  {
+    "name": "Resistance Band Pull Apart",
+    "slug": "resistance-band-pull-apart",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/12/Resistance-Band-Pull-Apart.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/12/Resistance-Band-Pull-Apart.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/12/Resistance-Band-Pull-Apart.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/resistance-band-pull-apart/"
+  },
+  {
+    "name": "Bent-Over Barbell Reverse Raise",
+    "slug": "bent-over-barbell-reverse-raise",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "mobility",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/04/Bent-Over-Barbell-Reverse-Raise.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Bent-Over-Barbell-Reverse-Raise-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Bent-Over-Barbell-Reverse-Raise.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Bent-Over-Barbell-Reverse-Raise.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/bent-over-barbell-reverse-raise/"
+  },
+  {
+    "name": "Foam Roller Upper Back",
+    "slug": "foam-roller-upper-back",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/02/Foam-Roller-Upper-Back.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Foam-Roller-Upper-Back.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Foam-Roller-Upper-Back.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/foam-roller-upper-back/"
+  },
+  {
+    "name": "Face Pull With Resistance Band",
+    "slug": "face-pull-with-resistance-band",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/05/Face-pull.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/05/Face-pull.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/05/Face-pull.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/face-pull-with-resistance-band/"
+  },
+  {
+    "name": "Cable Rear Delt Fly",
+    "slug": "cable-rear-delt-fly",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/02/cable-rear-delt-fly.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Rear-Lateral-Dumbbell-Raise-musle-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/cable-rear-delt-fly.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/cable-rear-delt-fly.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/cable-rear-delt-fly/"
+  },
+  {
+    "name": "Cable Shrug",
+    "slug": "cable-shrug",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/04/Cable-Shrug.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/shrug-muscles-worked-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Cable-Shrug.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Cable-Shrug.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/cable-shrug/"
+  },
+  {
+    "name": "Incline Dumbbell Reverse Fly",
+    "slug": "incline-dumbbell-reverse-fly",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Reverse-Fly.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Rear-Lateral-Dumbbell-Raise-musle-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Reverse-Fly.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Reverse-Fly.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/dumbbell-reverse-fly/"
+  },
+  {
+    "name": "Cable Upright Row",
+    "slug": "cable-upright-row",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/02/Cable-Upright-Row.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/barbell-upright-row-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Cable-Upright-Row.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Cable-Upright-Row.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/cable-upright/"
+  },
+  {
+    "name": "Dumbbell Upright Row",
+    "slug": "dumbbell-upright-row",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/04/Dumbbell-Upright-Row.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/barbell-upright-row-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Dumbbell-Upright-Row.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Dumbbell-Upright-Row.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/dumbbell-upright-row/"
+  },
+  {
+    "name": "Rear Delt Fly Machine",
+    "slug": "rear-delt-fly-machine",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/02/Rear-Delt-Machine-Flys.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Rear-Lateral-Dumbbell-Raise-musle-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Rear-Delt-Machine-Flys.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Rear-Delt-Machine-Flys.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/rear-delt-machine-fly/"
+  },
+  {
+    "name": "Swimming",
+    "slug": "swimming",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "mobility",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/05/Swimming.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/05/Swimming-muscle-worked-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/05/Swimming.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/05/Swimming.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/swimming/"
+  },
+  {
+    "name": "Wide Grip Barbell Bent Over Row Plus",
+    "slug": "wide-grip-barbell-bent-over-row-plus",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2023/02/Wide-Grip-Barbell-Bent-Over-Row-Plus.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2023/02/Wide-Grip-Barbell-Bent-Over-Row-Plus.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2023/02/Wide-Grip-Barbell-Bent-Over-Row-Plus.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/wide-grip-barbell-bent-over-row-plus/"
+  },
+  {
+    "name": "Wide Grip Alternate Barbell Bent Over Row Plus",
+    "slug": "wide-grip-alternate-barbell-bent-over-row-plus",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2023/02/Wide-Grip-Alternate-Barbell-Bent-Over-Row-Plus.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2023/02/Wide-Grip-Alternate-Barbell-Bent-Over-Row-Plus.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2023/02/Wide-Grip-Alternate-Barbell-Bent-Over-Row-Plus.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/wide-grip-alternate-barbell-bent-over-row-plus/"
+  },
+  {
+    "name": "Gittleson Shrug",
+    "slug": "gittleson-shrug",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "traps",
+      "lower_back",
+      "shoulders",
+      "chest",
+      "back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "advanced",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "hypertrophy"
+    ],
+    "description": "The Gittleson shrug is an advanced variation of the dumbbell shrug designed to specifically target and build the trapezius muscles. The Gittleson shrug emphasizes the contraction of the upper trapezius muscle by isolating the muscle and working it in a one-way fashion. This exercise, with its unilateral focus, can be a valuable addition to a comprehensive training program, especially for individuals looking to address muscle imbalances and target specific areas of the trapezius. Sit on a bench o",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/01/Dumbbell-Seated-Gittleson-Shrug.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/07/Overhead-Shrug-Muscles-Worked--300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/01/Dumbbell-Seated-Gittleson-Shrug.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/01/Dumbbell-Seated-Gittleson-Shrug.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 90,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 7,
+        "max": 9
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [
+        "Use a weight that allows for proper form and control.",
+        "Allow your loaded side shoulder to drop down as far as possible. This puts a stretch on your left upper trap and, because of the way you’re leaning, it also puts an intense isometric contraction in your right upper trap. Although it seems like a one-way exercise, an isometric contraction occurs on the other side as one side moves.",
+        "Stop the exercise if there is any pain or discomfort."
+      ],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 6.0
+    },
+    "tags": [
+      "trapezius",
+      "advanced",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/gittleson-shrug/"
+  },
+  {
+    "name": "Elbow Reverse Push-Up",
+    "slug": "elbow-reverse-push-up",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/08/Elbow-Reverse-Push-Up.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/08/Elbow-Reverse-Push-Up.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/08/Elbow-Reverse-Push-Up.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/elbow-reverse-push-up/"
+  },
+  {
+    "name": "Cross Cable Face Pull",
+    "slug": "cross-cable-face-pull",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/04/Cross-Cable-Face-Pull.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/muscle-worked-in-the-face-pull-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/04/Cross-Cable-Face-Pull.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/04/Cross-Cable-Face-Pull.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/cross-cable-face-pull/"
+  },
+  {
+    "name": "Seated Ballerina Exercise",
+    "slug": "seated-ballerina-exercise",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "mobility",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/02/Seated-Ballerina.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/SCAPULAR-RETRACTION-muscle.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Seated-Ballerina.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Seated-Ballerina.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/seated-ballerina-exercise/"
+  },
+  {
+    "name": "Barbell Shrug",
+    "slug": "barbell-shrug",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Shrug.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/barbell-shrug-muscle-worked-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Shrug.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Shrug.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/barbell-shrug/"
+  },
+  {
+    "name": "Barbell Upright Row",
+    "slug": "barbell-upright-row",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/02/barbell-uprightrow.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/barbell-upright-row-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/barbell-uprightrow.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/barbell-uprightrow.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/barbell-upright-row/"
+  },
+  {
+    "name": "Scapular Protraction and Retraction",
+    "slug": "scapular-protraction-and-retraction",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/10/Scapular-Protraction-and-Retraction.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/10/Scapular-Protraction-and-Retraction.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/10/Scapular-Protraction-and-Retraction.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/scapular-protraction-and-retraction/"
+  },
+  {
+    "name": "Dumbbell Raise",
+    "slug": "dumbbell-raise",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/04/Dumbbell-Raise.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/barbell-upright-row-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Dumbbell-Raise.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Dumbbell-Raise.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/dumbbell-raise/"
+  },
+  {
+    "name": "Overhead Shrug",
+    "slug": "overhead-shrug",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/07/overhead-shrug.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/07/Overhead-Shrug-Muscles-Worked--300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/07/overhead-shrug.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/07/overhead-shrug.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/overhead-shrug/"
+  },
+  {
+    "name": "Face Pull",
+    "slug": "face-pull",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "The face pull is a pulling exercise that targets the rear deltoids, trapezius, and rhomboids. Often performed using a cable machine or resistance bands, this movement is ideal for beginners and advanced athletes alike. Set Up:Attach a rope handle to a cable machine or use resistance bands at chest or eye level. Grip:Hold the handles with an overhand grip, palms facing down. Position:Stand tall with feet shoulder-width apart, engaging your core.",
+    "instructions": [
+      "Pull the rope toward your face, elbows flaring outward.",
+      "Squeeze your shoulder blades together at the peak of the movement.",
+      "Slowly return to the starting position."
+    ],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/02/Face-Pull.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/muscle-worked-in-the-face-pull-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Face-Pull.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Face-Pull.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [
+        "Overarching the Lower Back:Keep your core tight to prevent unnecessary strain on your spine.",
+        "Keep your core tight to prevent unnecessary strain on your spine."
+      ],
+      "commonMistakes": [
+        "Focus on Form: Pull the rope or band towards your face while keeping your elbows high and flaring outward. Avoid shrugging your shoulders."
+      ],
+      "tips": [
+        "Controlled Tempo: Perform the movement slowly, focusing on the squeeze in your upper back and rear delts at the end of the pull.",
+        "Choose the Right Resistance: Use a moderate weight to ensure proper activation of the target muscles without compromising form.",
+        "Using Excessive Weight:Heavy resistance can compromise form and reduce the exercise’s effectiveness.",
+        "Heavy resistance can compromise form and reduce the exercise’s effectiveness.",
+        "Dropping Elbows Too Low:Elbows should stay at shoulder height to properly target the rear deltoids and traps.",
+        "Elbows should stay at shoulder height to properly target the rear deltoids and traps.",
+        "Rushing Through Reps:Performing the exercise too quickly can decrease muscle activation.",
+        "Performing the exercise too quickly can decrease muscle activation.",
+        "Neglecting Shoulder Blade Movement:The goal is to squeeze your shoulder blades together at the peak for maximum effectiveness.",
+        "The goal is to squeeze your shoulder blades together at the peak for maximum effectiveness."
+      ],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/face-pull/"
+  },
+  {
+    "name": "Ez Bar Upright Row",
+    "slug": "ez-bar-upright-row",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Upright-Row.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/barbell-upright-row-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Upright-Row.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Upright-Row.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/ez-bar-upright-row/"
+  },
+  {
+    "name": "Resistance Band Bent Over Rear Delt Fly",
+    "slug": "resistance-band-bent-over-rear-delt-fly",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2023/01/Resistance-Band-Bent-Over-Rear-Delt-Fly.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2023/01/Resistance-Band-Bent-Over-Rear-Delt-Fly.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2023/01/Resistance-Band-Bent-Over-Rear-Delt-Fly.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/resistance-band-bent-over-rear-delt-fly/"
+  },
+  {
+    "name": "Bent Over Lateral Raise",
+    "slug": "bent-over-lateral-raise",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/02/Bent-Over-Lateral-Raise.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Rear-Lateral-Dumbbell-Raise-musle-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Bent-Over-Lateral-Raise.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Bent-Over-Lateral-Raise.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/bent-over-lateral-raise/"
+  },
+  {
+    "name": "Foam Roller Rhomboids",
+    "slug": "foam-roller-rhomboids",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/02/Roll-Rhomboids.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Roll-Rhomboids.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Roll-Rhomboids.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/foam-roller-rhomboids/"
+  },
+  {
+    "name": "Bent Over Rear Delt Fly | Gymstick",
+    "slug": "bent-over-rear-delt-fly-gymstick",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/05/Bent-Over-Rear-Delt-Fly-Gymstick.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/05/Bent-Over-Rear-Delt-Fly-Gymstick.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/05/Bent-Over-Rear-Delt-Fly-Gymstick.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/bent-over-rear-delt-fly-gymstick/"
+  },
+  {
+    "name": "Kneeling High Pulley Row",
+    "slug": "kneeling-high-pulley-row",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/09/Kneeling-High-Pulley-Row.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/09/Kneeling-High-Pulley-Row.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/09/Kneeling-High-Pulley-Row.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "trapezius",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/kneeling-high-pulley-row/"
+  }
+]

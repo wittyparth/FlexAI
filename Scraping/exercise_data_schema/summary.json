@@ -1,0 +1,21 @@
+{
+  "total_exercises": 1678,
+  "by_difficulty": {
+    "beginner": 1577,
+    "advanced": 65,
+    "intermediate": 36
+  },
+  "by_type": {
+    "calisthenics": 1345,
+    "flexibility": 217,
+    "cardio": 30,
+    "plyometric": 85,
+    "strength": 1
+  },
+  "by_muscle_group": {},
+  "equipment_coverage": {
+    "bodyweight": 1677,
+    "barbell": 1,
+    "machine": 1
+  }
+}

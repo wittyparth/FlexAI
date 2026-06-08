@@ -1,0 +1,5177 @@
+[
+  {
+    "name": "Deadlift",
+    "slug": "deadlift",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "athletic_performance",
+      "strength",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Deadlift.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/deadlift-muscle-worked-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Deadlift.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Deadlift-form.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Deadlift.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/deadlift/"
+  },
+  {
+    "name": "Hindu Push-ups",
+    "slug": "hindu-push-ups",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "mobility",
+      "strength",
+      "endurance",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [
+      "Descent (Dive Bomber Phase):Shift your weight forward, lowering your upper body toward the ground while keeping your arms straight.Continue moving forward until your chest almost touches the ground. Your hips will be low, and your back will be arched, resembling an upward-facing dog yoga pose.As you descend, make sure to look upward and forward, allowing your head to come up and your back to arch deeply.",
+      "Shift your weight forward, lowering your upper body toward the ground while keeping your arms straight.",
+      "Continue moving forward until your chest almost touches the ground. Your hips will be low, and your back will be arched, resembling an upward-facing dog yoga pose.",
+      "As you descend, make sure to look upward and forward, allowing your head to come up and your back to arch deeply.",
+      "Ascent:From the downward-facing dog position, push your hips back and upward, moving them toward the ceiling. Your head should look back between your legs.As your hips rise, bend your elbows and lower your chest back to the starting position.Continue this motion until you return to the downward dog position.",
+      "From the downward-facing dog position, push your hips back and upward, moving them toward the ceiling. Your head should look back between your legs.",
+      "As your hips rise, bend your elbows and lower your chest back to the starting position.",
+      "Continue this motion until you return to the downward dog position.",
+      "Repeat: Repeat the sequence for the desired number of repetitions, maintaining a smooth and controlled flow between the different positions."
+    ],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/02/Pike-to-Cobra.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/COBRA-ABDOMINAL-STRETCH-worked-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Pike-to-Cobra.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Pike-to-Cobra.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/hindu-push-ups/"
+  },
+  {
+    "name": "Dumbbell Single Leg Deadlift",
+    "slug": "dumbbell-single-leg-deadlift",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/09/Dumbbell-Single-Leg-Deadlift.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/09/Dumbbell-Single-Leg-Deadlift.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/09/Dumbbell-Single-Leg-Deadlift.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/dumbbell-single-leg-deadlift/"
+  },
+  {
+    "name": "Dumbbell Good Morning",
+    "slug": "dumbbell-good-morning",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "abs",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "flexibility",
+    "movementPattern": "hinge",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "mobility",
+      "rehabilitation",
+      "hypertrophy"
+    ],
+    "description": "TheDumbbell Good Morningis astrength training exercisethat targets the muscles of thelower back, hamstrings, andglutes. It’s an effective compound exercise that helps improvestrength,stability, andposture. While you can perform this exercise using a single dumbbell, you also have the option of using alternative weighted objects such as a barbell, kettlebell, or weight plate. Hold a dumbbell horizontally across your upper back, not on the neck, gripping each end with both hands. Hold a dumbbell h",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2023/10/Dumbbell-Good-Morning.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/muscle-worked-in-the-good-morning-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2023/10/Dumbbell-Good-Morning.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2023/10/Dumbbell-Good-Morning.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [
+        "Rounding the lower back, which increases injury risk.",
+        "Letting the knees lock out, which limits mobility and can cause strain."
+      ],
+      "commonMistakes": [],
+      "tips": [
+        "Keep a flat backthroughout the movement to protect your spine.",
+        "Engage your coreto stabilize the torso and prevent rounding.",
+        "Use a slight bend in the kneesto keep tension in the hamstrings.",
+        "Move slowly and with controlto focus on muscle activation.",
+        "Start with a light weightto master the hip hinge movement pattern.",
+        "Tilting the head upward, which disrupts spinal alignment.",
+        "Holding the dumbbell on the neck, which puts pressure on cervical spine.",
+        "Bending at the waist instead of the hips, reducing posterior chain activation."
+      ],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "flexibility"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/dumbbell-good-morning/"
+  },
+  {
+    "name": "Seated Toe Touches",
+    "slug": "seated-toe-touches",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/06/Seated-Toe-Touches.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/05/Hyperextension-muscle-worked-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Seated-Toe-Touches.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Seated-Toe-Touches.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/seated-toe-touches/"
+  },
+  {
+    "name": "Cable Pull Through",
+    "slug": "cable-pull-through",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/06/Cable-Pull-Through.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Cable-Pull-Through.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Cable-Pull-Through.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/cable-pull-through/"
+  },
+  {
+    "name": "PVC Hip Hinge",
+    "slug": "pvc-hip-hinge",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "lower_back",
+      "chest",
+      "back",
+      "abs",
+      "hamstrings"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "flexibility",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "mobility",
+      "rehabilitation"
+    ],
+    "description": "The PVC hip hinge is aform and mobility exercisethat helps individuals understand the correct way to hinge at the hips while keeping the spine neutral. It involves holding a PVC pipe along the spine to give tactile feedback and ensure the head, upper back, and tailbone remain in alignment throughout the movement. This drill is essential for mastering movements like deadlifts, RDLs, and kettlebell swings, and helps prevent injury by improving awareness of posture and control. Stand with feet hip-",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2025/07/Pvc-Hip-Hinge.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2025/07/PVC-Hip-Hinge-Muscles-Worked-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2025/07/Pvc-Hip-Hinge.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2025/07/Pvc-Hip-Hinge.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [
+        "Maintain all three contact pointson the PVC throughout the movement.",
+        "Bend only at the hips, not at the waist or spine.",
+        "Keep your chest up and shoulders backas you hinge.",
+        "Shift your weight into your heels, not your toes.",
+        "Move slowly and with controlto reinforce proper technique.",
+        "Losing contact with the PVCat the lower back or head.",
+        "Bending the spine, rather than hinging at the hips.",
+        "Allowing the knees to bend excessively, turning the hinge into a squat.",
+        "Pushing the hips downward instead of backward.",
+        "Rushing the movement, which reduces the effectiveness of the drill."
+      ],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "flexibility"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/pvc-hip-hinge/"
+  },
+  {
+    "name": "Romanian Deadlift",
+    "slug": "romanian-deadlift",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "athletic_performance",
+      "strength",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Romanian-Deadlift.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-romanian-deadlift-1-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Romanian-Deadlift.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Romanian-Deadlift.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/romanian-deadlift/"
+  },
+  {
+    "name": "Bow Pose",
+    "slug": "bow-pose",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/02/Bow-Yoga-Pose.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Bow-Yoga-Pose.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Bow-Yoga-Pose.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/bow-pose/"
+  },
+  {
+    "name": "Single Leg Reverse Hyperextension | Gymstick",
+    "slug": "single-leg-reverse-hyperextension-gymstick",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/05/Single-Leg-Reverse-Hyperextension.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/05/Single-Leg-Reverse-Hyperextension.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/05/Single-Leg-Reverse-Hyperextension.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/single-leg-reverse-hyperextension-gymstick/"
+  },
+  {
+    "name": "Cat Cow Pose",
+    "slug": "cat-cow-pose",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/02/cat-cow.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/cat-cow-pose-muscle-worked-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/cat-cow.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/cat-cow.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/cat-cow-pose/"
+  },
+  {
+    "name": "Barbell Pendlay Row",
+    "slug": "barbell-pendlay-row",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [
+      "The Row: Pull the barbell up towards your lower chest or upper abdomen while keeping your elbows close to your body. Squeeze your shoulder blades together at the top of the movement to engage your back muscles fully.",
+      "Lower the Barbell: Lower the barbell back down to the floor with control, ensuring it makes contact with the ground before starting the next repetition. This brief touch on the ground differentiates the Pendlay Row from other rowing variations, where the weight remains off the floor between repetitions.",
+      "Repeat: Perform the desired number of repetitions."
+    ],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/07/Barbell-Pendlay-Row.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/05/Barbell-bent-over-row-muscles-worked-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/07/Barbell-Pendlay-Row.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/07/Barbell-Pendlay-Row.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [
+        "Keep your back flat throughout the movement, avoiding any rounding or arching of the spine."
+      ],
+      "tips": [
+        "Focus on pulling the weight explosively from the floor to your chest, emphasizing a controlled and quick lift."
+      ],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/barbell-pendlay-row/"
+  },
+  {
+    "name": "Barbell Single Leg Deadlift",
+    "slug": "barbell-single-leg-deadlift",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/09/Barbell-Single-Leg-Deadlift.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/09/Barbell-Single-Leg-Deadlift.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/09/Barbell-Single-Leg-Deadlift.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/barbell-single-leg-deadlift/"
+  },
+  {
+    "name": "Dumbbell Jefferson Curl",
+    "slug": "dumbbell-jefferson-curl",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "core",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "flexibility",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "mobility",
+      "rehabilitation",
+      "hypertrophy"
+    ],
+    "description": "The dumbbell Jefferson curl is an exercise that aims to increase both flexibility and spinal strength. It involves standing on a platform and slowly bending your spine forward with a weight (dumbbell, kettlebell, barbell). It’s particularly used in sports like gymnastics and weightlifting to strengthen the muscles that support the spine and improve range of motion. Setup:Stand on a small platform or step to allow for a greater range of motion. Hold a light dumbbell in each hand with arms extende",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2025/08/Dumbbell-jefferson-curl.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2025/08/Dumbbell-Jefferson-Curl-Muscles-Worked-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2025/08/Dumbbell-jefferson-curl.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2025/08/Dumbbell-jefferson-curl.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [
+        "Maintain control throughout; never “drop” into the bottom position.",
+        "Going Too Heavy Too Soon:Overloading increases injury risk and reduces mobility benefits.",
+        "Locking Knees:Can reduce hamstring activation and increase strain on the joints."
+      ],
+      "commonMistakes": [],
+      "tips": [
+        "Start with very light dumbbells, progressing gradually as mobility and control improve.",
+        "Keep knees straight but not locked to maximize hamstring engagement.",
+        "Move slowly, treating the exercise as both strength and mobility training.",
+        "Rushing the Movement:The exercise must be performed slowly to train spinal segmentation."
+      ],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "flexibility"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/dumbbell-jefferson-curl/"
+  },
+  {
+    "name": "Smith Machine Good Morning",
+    "slug": "smith-machine-good-morning",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/06/Smith-Machine-Good-Morning.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/muscle-worked-in-the-good-morning-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Smith-Machine-Good-Morning.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Smith-Machine-Good-Morning.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [
+        "Avoid using excessive weight, especially if you’re new to the exercise."
+      ],
+      "tips": [
+        "Start with a light weight to get used to the movement and to ensure proper form.",
+        "Focus on the hinge at the hips, keeping your back straight.",
+        "Consult a healthcare professional if you have any pre-existing conditions or concerns about performing this exercise."
+      ],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/smith-machine-good-morning/"
+  },
+  {
+    "name": "Stiff Leg Deadlift",
+    "slug": "stiff-leg-deadlift",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/01/Stiff-Leg-Deadlift.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/01/Stiff-Leg-Deadlift.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/01/Stiff-Leg-Deadlift.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/stiff-leg-deadlift/"
+  },
+  {
+    "name": "Landmine T-Bar Row",
+    "slug": "landmine-t-bar-row",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/04/t-bar-rows.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/t-bar-rows.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/t-bar-rows.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/landmine-t-bar-row/"
+  },
+  {
+    "name": "Glute Ham Raise",
+    "slug": "glute-ham-raise",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2023/07/Glute-Ham-Raise.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2023/07/Glute-Ham-Raise.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2023/07/Glute-Ham-Raise.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/glute-ham-raise/"
+  },
+  {
+    "name": "Dhanurasana | Rocking Bow Pose",
+    "slug": "dhanurasana-rocking-bow-pose",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/05/Dhanurasana-Rocking-Bow-Pose.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/05/Dhanurasana-Rocking-Bow-Pose.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/05/Dhanurasana-Rocking-Bow-Pose.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/dhanurasana-rocking-bow-pose/"
+  },
+  {
+    "name": "Kettlebell Deadlift",
+    "slug": "kettlebell-deadlift",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "athletic_performance",
+      "strength",
+      "endurance",
+      "hypertrophy",
+      "mobility"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/06/kettlebell-deadlift.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-romanian-deadlift-1-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/kettlebell-deadlift.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/kettlebell-deadlift.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [
+        "Maintain a neutral spine throughout the movement. Avoid rounding or arching your back to prevent injury."
+      ],
+      "tips": [
+        "Keep the kettlebell close to your body at all times to reduce stress on the lower back.",
+        "Focus on using your hips, glutes, and hamstrings to lift the kettlebell, rather than relying on your lower back or arms.",
+        "Breathe out as you lift the kettlebell and breathe in as you lower it back down."
+      ],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/kettlebell-deadlift/"
+  },
+  {
+    "name": "Flat Bench Hyperextension",
+    "slug": "flat-bench-hyperextension",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/04/Flat-Bench-Hyperextension.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/05/Hyperextension-muscle-worked-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Flat-Bench-Hyperextension.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Flat-Bench-Hyperextension.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/flat-bench-hyperextension/"
+  },
+  {
+    "name": "Rolling Like a Ball",
+    "slug": "rolling-like-a-ball",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/07/Rolling-Like-a-Ball-crab.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/07/Rolling-Like-a-Ball-crab.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/07/Rolling-Like-a-Ball-crab.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/rolling-like-a-ball/"
+  },
+  {
+    "name": "Good Morning",
+    "slug": "good-morning",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "hinge",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Good-Morning.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/muscle-worked-in-the-good-morning-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Good-Morning.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Good-Morning.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/good-morning/"
+  },
+  {
+    "name": "Dumbbell Deadlift",
+    "slug": "dumbbell-deadlift",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "athletic_performance",
+      "strength",
+      "hypertrophy"
+    ],
+    "description": "The dumbbell deadlift is a compound exercise, working the lower back, glutes, hamstrings, and quadriceps. It’s like the barbell deadlift but uses dumbbells. It’s great for athletes, powerlifters, and those aiming to boost fitness. Setup:Stand with your feet hip-width apart. Place a dumbbell on each side of your feet.The dumbbells should be positioned parallel to your feet, so the handles are perpendicular to your body. Stand with your feet hip-width apart. Place a dumbbell on each side of your f",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2023/09/dumbbell-deadlifts.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2023/09/Dumbbell-Deadlift-muscles-worked-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2023/09/dumbbell-deadlifts.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2023/09/dumbbell-deadlifts.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [
+        "Avoid jerky or fast movements; focus on controlled and smooth lifting and lowering."
+      ],
+      "tips": [
+        "Start with a light weight to practice proper form, and gradually increase the weight as you become more comfortable and stronger.",
+        "Engage your core muscles to stabilize your spine throughout the exercise.",
+        "Keep your head in a neutral position, looking forward or slightly upward.",
+        "If you have any pre-existing back or lower-body issues, consult a fitness professional or medical expert before attempting this exercise."
+      ],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/dumbbell-deadlift/"
+  },
+  {
+    "name": "Reverse Hyperextension Machine",
+    "slug": "reverse-hyperextension-machine",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "mobility",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/06/Reverse-Hyperextension-Machine.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Glute-bridge-muscle-worked-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Reverse-Hyperextension-Machine.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Reverse-Hyperextension-Machine.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/reverse-hyperextension-machine/"
+  },
+  {
+    "name": "T-Bar Row",
+    "slug": "t-bar-row",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/04/t-bar-rows.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/T-bar-row-muscles-worked-1-300x300.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/T-Bar-Row-Muscles-Worked-Benefits-1113x1200.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/t-bar-rows.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/T-Bar-Row.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Lever-T-bar-Row.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/08/Lever-Reverse-T-Bar-Row.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/One-Arm-Barbell-Row-.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Bent-Over-Row.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Reverse-Grip-Barbell-Row.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Incline-Barbell-Row.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Smith-Machine-Bent-Over-Row.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/t-bar-rows.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [
+        "Keep your back straight throughout the exercise to prevent injury and maximize muscle activation."
+      ],
+      "commonMistakes": [
+        "Avoid using momentum to lift the weight. Focus on using your back muscles to pull the weight towards your chest."
+      ],
+      "tips": [
+        "Use a weight that is challenging but allows you to maintain proper form and technique.",
+        "Breathe in as you lower the weight and breathe out as you lift the weight.",
+        "Mix up your grip to target different areas of your back. You can use an overhand grip, underhand grip, or a neutral grip."
+      ],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/t-bar-row/"
+  },
+  {
+    "name": "Dumbbell Sumo Deadlift",
+    "slug": "dumbbell-sumo-deadlift",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "traps",
+      "glutes",
+      "quadriceps",
+      "lower_back",
+      "forearms",
+      "chest",
+      "back",
+      "abs",
+      "hamstrings"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "The dumbbell sumo deadlift is a variation of the traditional sumo deadlift exercise that incorporates dumbbells as resistance instead of a barbell. The “sumo” stance refers to the wide stance used in this exercise, with the feet positioned wider than shoulder. The dumbbell sumo deadlift can be an effective addition to your lower body and overall strength training routine, but it’s essential to perform it correctly to get the most benefit and minimize the risk of injury. Here’s how to perform a d",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2023/09/dumbbell-sumo-deadlift.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-romanian-deadlift-1-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2023/09/dumbbell-sumo-deadlift.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2023/09/dumbbell-sumo-deadlift.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [
+        "Keep the dumbbell close to your body throughout the lift to minimize strain on your lower back."
+      ],
+      "commonMistakes": [
+        "Maintain a neutral spine and avoid rounding or arching your back."
+      ],
+      "tips": [
+        "Start with a light weight to ensure proper form and gradually increase the weight as you become more comfortable with the movement.",
+        "Push through your heels when lifting and lowering the weight to engage your hamstrings and glutes effectively.",
+        "Don’t rush the movement; focus on control and proper technique."
+      ],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/dumbbell-sumo-deadlift/"
+  },
+  {
+    "name": "Arm Leg Raises",
+    "slug": "arm-leg-raises",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "core",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/02/arm-leg-raise.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/arm-leg-raise-muscle-worked-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/arm-leg-raise.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/arm-leg-raise.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/arm-leg-raises/"
+  },
+  {
+    "name": "Kneeling Back Rotation",
+    "slug": "kneeling-back-rotation",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "rotation",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/02/Kneeling-Back-Rotation-Stretch.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Kneeling-Back-Rotation-Stretch.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Kneeling-Back-Rotation-Stretch.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/kneeling-back-rotation/"
+  },
+  {
+    "name": "Seated Back Extension",
+    "slug": "seated-back-extension",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/06/seated-back-extension.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/seated-back-extension.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/seated-back-extension.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/seated-back-extension/"
+  },
+  {
+    "name": "Kettlebell Figure 8",
+    "slug": "kettlebell-figure-8",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/09/Kettlebell-Figure-8.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/09/Kettlebell-Figure-8.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/09/Kettlebell-Figure-8.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/kettlebell-figure-8/"
+  },
+  {
+    "name": "Dumbbell Romanian Deadlift",
+    "slug": "dumbbell-romanian-deadlift",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Romanian-Deadlift.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-romanian-deadlift-1-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Romanian-Deadlift.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Romanian-Deadlift.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/dumbbell-romanian-deadlift/"
+  },
+  {
+    "name": "Sphinx Stretch",
+    "slug": "sphinx-stretch",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "flexibility",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "mobility",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/05/Sphinx-Stretch.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/05/Sphinx-pose-muscle-worked-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/05/Sphinx-Stretch.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/05/Sphinx-Stretch.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "flexibility"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/sphinx-stretch/"
+  },
+  {
+    "name": "Sumo Deadlift",
+    "slug": "sumo-deadlift",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "athletic_performance",
+      "strength",
+      "rehabilitation",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/04/Barbell-Sumo-Deadlift.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-romanian-deadlift-1-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Barbell-Sumo-Deadlift.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Barbell-Sumo-Deadlift.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/sumo-deadlift/"
+  },
+  {
+    "name": "Kettlebell Single Leg Deadlift",
+    "slug": "kettlebell-single-leg-deadlift",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "mobility",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/05/Kettlebell-Single-Leg-Deadlift.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-romanian-deadlift-1-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/05/Kettlebell-Single-Leg-Deadlift.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/05/Kettlebell-Single-Leg-Deadlift.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/kettlebell-single-leg-deadlift/"
+  },
+  {
+    "name": "Foam Roller Back Stretch",
+    "slug": "foam-roller-back-stretch",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "flexibility",
+    "movementPattern": "push",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/02/Roll-Upper-Back.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Roll-Upper-Back.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Roll-Upper-Back.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "flexibility"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/foam-roller-back-stretch/"
+  },
+  {
+    "name": "Barbell Bent Over Row",
+    "slug": "barbell-bent-over-row",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Bent-Over-Row.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/05/erector-spinae-muscle-600x283.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/05/Barbell-bent-over-row-muscles-worked-300x300.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/05/Bent-Over-Row-muscles-worked-1196x1200.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Bent-Over-Row.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/05/bent-over-form.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Reverse-Grip-Barbell-Row.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Incline-Barbell-Row.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Smith-Machine-Bent-Over-Row.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Bent-Over-Dumbbell-Row.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Incline-Reverse-Grip-Dumbbell-Row.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/07/Barbell-Pendlay-Row.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Row.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Lever-T-bar-Row.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/08/Lever-Reverse-T-Bar-Row.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/One-Arm-Barbell-Row-.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Bent-Over-Row.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [
+        "Avoid rounding your back during the exercise, as this can lead to injury. Keep your back straight and engage your core for stability.",
+        "Do not use momentum to lift the weight; focus on using your back and arm muscles to perform the rowing movement."
+      ],
+      "tips": [
+        "Keep your head in a neutral position, looking slightly forward, to maintain proper spinal alignment.",
+        "You can use a weightlifting belt for extra support if needed, especially when lifting heavy loads."
+      ],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/barbell-bent-over-row/"
+  },
+  {
+    "name": "Dumbbell Pull Through",
+    "slug": "dumbbell-pull-through",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/10/Dumbbell-Pull-Through.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/10/Dumbbell-Pull-Through.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/10/Dumbbell-Pull-Through.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/dumbbell-pull-through/"
+  },
+  {
+    "name": "Frog Reverse Hyperextension",
+    "slug": "frog-reverse-hyperextension",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/09/Reverse-Hyperextensions.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/09/Reverse-Hyperextensions.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/09/Reverse-Hyperextensions.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/reverse-hyperextensions/"
+  },
+  {
+    "name": "Swimming",
+    "slug": "swimming",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "mobility",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/05/Swimming.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/05/Swimming-muscle-worked-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/05/Swimming.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/05/Swimming.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/swimming/"
+  },
+  {
+    "name": "Supine Spinal Twist",
+    "slug": "supine-spinal-twist",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "rotation",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/12/Supine-Spinal-Twist.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/12/Supine-Spinal-Twist.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/12/Supine-Spinal-Twist.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/supine-spinal-twist/"
+  },
+  {
+    "name": "Seated Hamstring Stretch",
+    "slug": "seated-hamstring-stretch",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "flexibility",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "mobility",
+      "rehabilitation",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/05/Seated-Hamstring-Stretch.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/05/Upavistha-Konasana-muscle-worked-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/05/Seated-Hamstring-Stretch.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/05/Seated-Hamstring-Stretch.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "flexibility"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/seated-hamstring-stretch/"
+  },
+  {
+    "name": "Twisting Hyperextension",
+    "slug": "twisting-hyperextension",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "rotation",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/08/Twisting-Hyperextension.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/08/Twisting-Hyperextension.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/08/Twisting-Hyperextension.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/twisting-hyperextension/"
+  },
+  {
+    "name": "Weighted Back Extension",
+    "slug": "weighted-back-extension",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/06/Weighted-Back-Extension.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/05/Hyperextension-muscle-worked-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Weighted-Back-Extension.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Weighted-Back-Extension.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/weighted-back-extension/"
+  },
+  {
+    "name": "Standing Toe Touches",
+    "slug": "standing-toe-touches",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/04/Standing-Toe-Touches.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/04/Standing-Toe-Touches.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/04/Standing-Toe-Touches.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/standing-toe-touches/"
+  },
+  {
+    "name": "Swing | Gymstick",
+    "slug": "swing-gymstick",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "hinge",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/05/Swing-Gymstick.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/05/Swing-Gymstick.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/05/Swing-Gymstick.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/swing-gymstick/"
+  },
+  {
+    "name": "Bird Dog",
+    "slug": "bird-dog",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/07/Bird-Dog.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/07/Bird-Dog.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/07/Bird-Dog.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/bird-dog/"
+  },
+  {
+    "name": "Lying Upper Body Rotation",
+    "slug": "lying-upper-body-rotation",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "rotation",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/02/Lying-Upper-Body-Rotation.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Lying-Upper-Body-Rotation.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/02/Lying-Upper-Body-Rotation.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/lying-upper-body-rotation/"
+  },
+  {
+    "name": "Dumbbell Straight Leg Deadlift",
+    "slug": "dumbbell-straight-leg-deadlift",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/04/Dumbbell-Straight-Leg-Deadlift.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-romanian-deadlift-1-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Dumbbell-Straight-Leg-Deadlift.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Dumbbell-Straight-Leg-Deadlift.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/dumbbell-straight-leg-deadlift/"
+  },
+  {
+    "name": "Hyperextension",
+    "slug": "hyperextension",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/02/hyperextension.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/05/Hyperextension-muscle-worked-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/hyperextension.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/hyperextension.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/hyperextension/"
+  },
+  {
+    "name": "Good Morning With Resistance Band",
+    "slug": "good-morning-with-resistance-band",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "hinge",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/07/Good-Morning-With-Resistance-Band.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/07/Good-Morning-With-Resistance-Band.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/07/Good-Morning-With-Resistance-Band.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/good-morning-with-resistance-band/"
+  },
+  {
+    "name": "Bent Over Dumbbell Row",
+    "slug": "bent-over-dumbbell-row",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "shoulders",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "athletic_performance",
+      "strength",
+      "hypertrophy"
+    ],
+    "description": "The bent over dumbbell row is a strength-training exercise that primarily targets the latissimus dorsi (lats) while also engaging the rhomboids, trapezius, and biceps. As a compound pulling movement, it develops upper and mid-back strength, improves posture, and enhances pulling power for both athletic and everyday tasks.",
+    "instructions": [
+      "Hip Hinge:Push your hips back and lean your torso forward to about a 45-degree angle. Keep your back flat and core engaged.",
+      "Rowing Movement:Pull the dumbbells toward your ribcage by driving your elbows straight back, keeping them close to your body.",
+      "Squeeze and Hold:At the top of the movement, squeeze your shoulder blades together for a brief pause.",
+      "Controlled Lowering:Slowly lower the dumbbells back to the starting position, maintaining form and control.",
+      "Repeat:Perform 8–12 repetitions per set."
+    ],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/02/Bent-Over-Dumbbell-Row.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/05/erector-spinae-muscle-600x283.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/05/bent-over-dumbbell-row-muscles-worked.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Bent-Over-Dumbbell-Row.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/05/how-to-do-bent-over-dumbbell-row-form-correct-technique.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Bent-Over-Row.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Incline-Reverse-Grip-Dumbbell-Row.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Reverse-Grip-Barbell-Row.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/One-Arm-Barbell-Row-.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Incline-Barbell-Row.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Smith-Machine-Bent-Over-Row.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Dumbbell-Row.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Lever-T-bar-Row.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/08/Lever-Reverse-T-Bar-Row.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Bent-Over-Dumbbell-Row.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [
+        "Engage your core to prevent lower-back strain.",
+        "Flaring Elbows Too Wide:Reduces lat activation and can cause shoulder strain."
+      ],
+      "commonMistakes": [
+        "Keep your back flat and avoid rounding your shoulders."
+      ],
+      "tips": [
+        "Move the dumbbells in a smooth, controlled manner without jerking.",
+        "Lead the pull with your elbows, not your hands.",
+        "Rounding the Back:Places unnecessary stress on the spine and reduces effectiveness.",
+        "Using Too Much Weight:Leads to poor form and reliance on momentum rather than muscle engagement."
+      ],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/bent-over-dumbbell-row/"
+  },
+  {
+    "name": "Kneeling T-spine Rotation",
+    "slug": "kneeling-t-spine-rotation",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "rotation",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2022/08/Kneeling-T-spine-Rotation.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2022/08/Kneeling-T-spine-Rotation.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2022/08/Kneeling-T-spine-Rotation.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/kneeling-t-spine-rotation/"
+  },
+  {
+    "name": "Floor Hyperextension",
+    "slug": "floor-hyperextension",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/04/Floor-Hyperextension-1.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/cat-cow-pose-muscle-worked-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Floor-Hyperextension-1.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/04/Floor-Hyperextension-1.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/floor-hyperextension/"
+  },
+  {
+    "name": "Superman",
+    "slug": "superman",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/02/Superman-exercise.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Superman-exercise-muscles-worked-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Superman-exercise.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/02/Superman-exercise.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/superman/"
+  },
+  {
+    "name": "Seated Cable Rope Row",
+    "slug": "seated-cable-rope-row",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [
+      "chest",
+      "back",
+      "lower_back"
+    ],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "pull",
+    "exerciseClass": "compound",
+    "trainingGoals": [
+      "strength",
+      "rehabilitation",
+      "hypertrophy"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2021/06/Seated-Cable-Rope-Row.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/05/SEATED-ROW-MACHINE-muscle-worked-300x300.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Seated-Cable-Rope-Row.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2021/06/Seated-Cable-Rope-Row.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/seated-cable-rope-row/"
+  },
+  {
+    "name": "Side Plank Rotation",
+    "slug": "side-plank-rotation",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "rotation",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2023/01/Side-Plank-Rotation.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2023/01/Side-Plank-Rotation.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2023/01/Side-Plank-Rotation.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/side-plank-rotation/"
+  },
+  {
+    "name": "Push-up With Rotation",
+    "slug": "push-up-with-rotation",
+    "primaryMuscleGroups": [],
+    "secondaryMuscleGroups": [],
+    "equipment": [
+      "bodyweight"
+    ],
+    "difficulty": "beginner",
+    "exerciseType": "calisthenics",
+    "movementPattern": "push",
+    "exerciseClass": "isolation",
+    "trainingGoals": [
+      "general_fitness"
+    ],
+    "description": "",
+    "instructions": [],
+    "media": {
+      "thumbnail": "https://fitnessprogramer.com/wp-content/uploads/2023/01/push-up-with-rotation.gif",
+      "images": [
+        "https://fitnessprogramer.com/wp-content/uploads/2021/03/logo.png"
+      ],
+      "videos": [],
+      "gifs": [
+        "https://fitnessprogramer.com/wp-content/uploads/2023/01/push-up-with-rotation.gif",
+        "https://fitnessprogramer.com/wp-content/uploads/2023/01/push-up-with-rotation.gif"
+      ],
+      "youtubeId": ""
+    },
+    "metrics": {
+      "averageRating": 0,
+      "totalRatings": 0,
+      "popularityScore": 0,
+      "usageCount": 0,
+      "completionRate": 0,
+      "averageDuration": 0
+    },
+    "defaultSets": 3,
+    "defaultReps": {
+      "min": 8,
+      "max": 12,
+      "target": 10
+    },
+    "defaultRestTime": 60,
+    "intensityGuidance": {
+      "rpe": {
+        "min": 6,
+        "max": 8
+      },
+      "tempo": "3-0-1-0",
+      "restRecommendation": {
+        "strength": 180,
+        "hypertrophy": 60,
+        "endurance": 30
+      }
+    },
+    "safety": {
+      "warnings": [],
+      "commonMistakes": [],
+      "tips": [],
+      "contraindications": [],
+      "requiredSkills": []
+    },
+    "variations": [],
+    "progression": {
+      "prerequisiteExercises": [],
+      "nextLevelExercises": []
+    },
+    "calories": {
+      "perMinute": 3,
+      "baseRate": 60,
+      "met": 4.0
+    },
+    "tags": [
+      "erector-spinae",
+      "beginner",
+      "calisthenics"
+    ],
+    "isActive": true,
+    "isFeatured": false,
+    "source": "imported",
+    "_sourceUrl": "https://fitnessprogramer.com/exercise/push-up-with-rotation/"
+  }
+]

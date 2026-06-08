@@ -71,14 +71,6 @@ export function HelpSupportScreen({ navigation }: any) {
                             </Card>
                         </View>
                     </View>
-                                <View style={[styles.contactIcon, { backgroundColor: '#10B98115' }]}>
-                                    <Ionicons name="call" size={26} color="#10B981" />
-                                </View>
-                                <Text style={[styles.contactLabel, { color: colors.foreground }]}>Call</Text>
-                                <Text style={[styles.contactDesc, { color: colors.mutedForeground }]}>9am-6pm</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
 
                     {/* FAQ */}
                     <View style={styles.section}>

@@ -21,10 +21,12 @@ import Animated, {
 } from 'react-native-reanimated';
 import { Ionicons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
-import { typography, borderRadius, spacing } from '../../constants';
+import { borderRadius, spacing } from '../../constants';
 
 interface BadgeProps {
     text?: string;
+    /** @deprecated use text */
+    label?: string;
     variant?: 'primary' | 'success' | 'warning' | 'error' | 'muted' | 'info';
     size?: 'xs' | 'sm' | 'md';
     /** Ionicons icon shown left of text */
@@ -39,6 +41,7 @@ interface BadgeProps {
 
 export function Badge({
     text,
+    label,
     variant = 'primary',
     size = 'sm',
     icon,
@@ -48,6 +51,7 @@ export function Badge({
     style,
 }: BadgeProps) {
     const colors = useColors();
+    const resolvedText = text ?? label;
 
     const getVariantStyles = () => {
         const opacity = outline ? '00' : '33';
@@ -94,7 +98,7 @@ export function Badge({
     const pulseStyle = useAnimatedStyle(() => ({ transform: [{ scale: pulseScale.value }] }));
 
     // xs = pure notification dot (no text)
-    if (size === 'xs' || !text) {
+    if (size === 'xs' || !resolvedText) {
         return (
             <Animated.View
                 style={[
@@ -132,7 +136,7 @@ export function Badge({
                 <View style={[styles.dot, { backgroundColor: v.color, width: sz.dotSize, height: sz.dotSize, borderRadius: sz.dotSize / 2 }]} />
             )}
             <Text style={[styles.text, { color: v.color, fontSize: sz.fontSize }]}>
-                {text}
+                {resolvedText}
             </Text>
         </Animated.View>
     );
@@ -154,13 +158,5 @@ const styles = StyleSheet.create({
     text: {
         fontWeight: '600' as const,
         letterSpacing: 0.1,
-    },
-});
-        marginRight: spacing[2],
-    },
-    text: {
-        ...typography.caption,
-        fontWeight: '600',
-        textTransform: 'uppercase',
     },
 });

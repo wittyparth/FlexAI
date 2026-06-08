@@ -633,7 +633,7 @@ export function WorkoutDetailScreen({ route, navigation }: any) {
 
                 {/* View Insights CTA */}
                 <ListItem
-                    icon="chart-line"
+                    icon="stats-chart"
                     iconLibrary="MaterialCommunityIcons"
                     title="View Session Insights"
                     subtitle="Performance analysis & recommendations"

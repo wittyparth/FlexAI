@@ -31,6 +31,10 @@ export interface StatCardProps {
     value: string | number;
     /** Unit suffix (e.g., 'kg', 'min') */
     unit?: string;
+    /** @deprecated use unit */
+    suffix?: string;
+    /** @deprecated use iconColor/iconBackground */
+    type?: 'primary' | 'success' | 'warning' | 'error' | 'info' | 'muted';
     /** Trend percentage (+5, -3, etc.) */
     trend?: number;
     /** Custom trend text instead of percentage */
@@ -83,6 +87,8 @@ export function StatCard({
     label,
     value,
     unit,
+    suffix,
+    type,
     trend,
     trendText,
     gradient = false,
@@ -93,8 +99,19 @@ export function StatCard({
 }: StatCardProps) {
     const colors = useColors();
 
-    const finalIconBg   = iconBackground || (colors.primary.main + '20');
-    const finalIconColor = iconColor     || colors.primary.main;
+    const typeColorMap = {
+        primary: colors.primary.main,
+        success: colors.success,
+        warning: colors.warning,
+        error: colors.error,
+        info: colors.info,
+        muted: colors.mutedForeground,
+    } as const;
+
+    const typeColor = type ? typeColorMap[type] : undefined;
+    const finalIconBg = iconBackground || ((typeColor || colors.primary.main) + '20');
+    const finalIconColor = iconColor || typeColor || colors.primary.main;
+    const finalUnit = unit ?? suffix;
 
     const sizeStyles = {
         sm: { iconSize: 16, iconContainer: 32, valueSize: 18, labelSize: 10 },
@@ -139,7 +156,7 @@ export function StatCard({
                         ) : (
                             <Text style={[styles.value, { color: gradient ? '#FFFFFF' : colors.foreground, fontSize: sz.valueSize }]} numberOfLines={1}>{value}</Text>
                         )}
-                        {unit && <Text style={[styles.unit, { color: gradient ? 'rgba(255,255,255,0.6)' : colors.mutedForeground, fontSize: sz.valueSize * 0.5 }]}>{unit}</Text>}
+                        {finalUnit && <Text style={[styles.unit, { color: gradient ? 'rgba(255,255,255,0.6)' : colors.mutedForeground, fontSize: sz.valueSize * 0.5 }]}>{finalUnit}</Text>}
                     </View>
                 </View>
             ) : (
@@ -155,7 +172,7 @@ export function StatCard({
                         ) : (
                             <Text style={[styles.value, { color: gradient ? '#FFFFFF' : colors.foreground, fontSize: sz.valueSize }]} numberOfLines={1}>{value}</Text>
                         )}
-                        {unit && <Text style={[styles.unit, { color: gradient ? 'rgba(255,255,255,0.7)' : colors.mutedForeground, fontSize: sz.valueSize * 0.5 }]}>{unit}</Text>}
+                        {finalUnit && <Text style={[styles.unit, { color: gradient ? 'rgba(255,255,255,0.7)' : colors.mutedForeground, fontSize: sz.valueSize * 0.5 }]}>{finalUnit}</Text>}
                     </View>
 
                     {(trend !== undefined || trendText) && (

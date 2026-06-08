@@ -523,7 +523,10 @@ export const useWorkoutStore = create<WorkoutStore>()(
 
       syncCurrentWorkout: async () => {
         const { sessionPhase } = get();
-        if (sessionPhase.phase !== 'active') return;
+        if (sessionPhase.phase !== 'active') {
+          await get().syncWorkout();
+          return;
+        }
         try {
           const workout = (await workoutApi.getWorkoutById(sessionPhase.workoutId)).data as unknown as Workout;
           const { exercises, sets } = normalizeWorkout(workout);

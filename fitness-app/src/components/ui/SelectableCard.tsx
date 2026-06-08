@@ -150,52 +150,6 @@ export function SelectableCard({
     </AnimatedPressable>
   );
 }
-              },
-            ]}
-          >
-            {iconComponent || (
-              <Ionicons
-                name={icon!}
-                size={28}
-                color={selected ? '#FFFFFF' : colors.primary.main}
-              />
-            )}
-          </View>
-        )}
-
-        {/* Text Container */}
-        <View style={styles.textContainer}>
-          <Text
-            style={[
-              styles.title,
-              { color: selected ? colors.primary.main : colors.foreground },
-            ]}
-          >
-            {title}
-          </Text>
-          {description && (
-            <Text style={[styles.description, { color: colors.mutedForeground }]}>
-              {description}
-            </Text>
-          )}
-        </View>
-
-        {/* Radio Circle */}
-        <View
-          style={[
-            styles.radioCircle,
-            {
-              borderColor: selected ? colors.primary.main : colors.border,
-              backgroundColor: selected ? colors.primary.main : 'transparent',
-            },
-          ]}
-        >
-          {selected && <View style={styles.radioInner} />}
-        </View>
-      </View>
-    </TouchableOpacity>
-  );
-}
 
 const styles = StyleSheet.create({
   card: {

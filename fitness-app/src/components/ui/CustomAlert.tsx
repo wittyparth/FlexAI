@@ -4,10 +4,30 @@ import { BlurView } from 'expo-blur';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 
+export type AlertType = 'default' | 'success' | 'warning' | 'error' | 'info';
+
+export interface AlertButton {
+  text: string;
+  style?: 'default' | 'cancel' | 'destructive';
+  onPress?: () => void;
+}
+
+export interface AppModalConfig {
+  title: string;
+  message?: string;
+  type?: AlertType;
+  buttons?: AlertButton[];
+  children?: React.ReactNode;
+}
+
 interface CustomAlertProps {
   visible: boolean;
   title: string;
-  message: string;
+  message?: string;
+  type?: AlertType;
+  buttons?: AlertButton[];
+  onDismiss?: () => void;
+  children?: React.ReactNode;
   primaryActionLabel?: string;
   secondaryActionLabel?: string;
   danger?: boolean; // if true, primary button is red
@@ -20,6 +40,10 @@ export function CustomAlert({
   visible,
   title,
   message,
+  type = 'default',
+  buttons,
+  onDismiss,
+  children,
   primaryActionLabel = 'Confirm',
   secondaryActionLabel = 'Cancel',
   danger = false,
@@ -29,38 +53,47 @@ export function CustomAlert({
 }: CustomAlertProps) {
   const colors = useColors();
 
+  const secondaryBtn = buttons?.find((b) => b.style === 'cancel') || buttons?.[0];
+  const primaryBtn = buttons?.find((b) => b.style !== 'cancel') || buttons?.[1];
+  const computedDanger = danger || type === 'error' || primaryBtn?.style === 'destructive';
+  const finalSecondaryLabel = secondaryBtn?.text || secondaryActionLabel;
+  const finalPrimaryLabel = primaryBtn?.text || primaryActionLabel;
+  const finalSecondaryPress = secondaryBtn?.onPress || onSecondaryPress;
+  const finalPrimaryPress = primaryBtn?.onPress || onPrimaryPress;
+
   return (
-    <Modal visible={visible} transparent animationType="fade">
+    <Modal visible={visible} transparent animationType="fade" onRequestClose={onDismiss}>
       <BlurView intensity={20} tint="dark" style={styles.overlay}>
         <View style={[styles.dialog, { backgroundColor: colors.card, borderColor: colors.border }]}>
           <Text style={[styles.title, { color: colors.foreground }]}>{title}</Text>
-          <Text style={[styles.message, { color: colors.mutedForeground }]}>{message}</Text>
+          {!!message && <Text style={[styles.message, { color: colors.mutedForeground }]}>{message}</Text>}
+          {children}
           
           <View style={styles.actions}>
-            {onSecondaryPress && (
+            {finalSecondaryPress && (
               <TouchableOpacity
                 style={[styles.btn, styles.secondaryBtn, { backgroundColor: colors.muted }]}
-                onPress={onSecondaryPress}
+                onPress={finalSecondaryPress}
                 disabled={isLoading}
               >
-                <Text style={[styles.btnText, { color: colors.foreground }]}>{secondaryActionLabel}</Text>
+                <Text style={[styles.btnText, { color: colors.foreground }]}>{finalSecondaryLabel}</Text>
               </TouchableOpacity>
             )}
             
-            {onPrimaryPress && (
+            {finalPrimaryPress && (
               <TouchableOpacity
                 style={[
                   styles.btn,
                   styles.primaryBtn,
-                  { backgroundColor: danger ? '#EF4444' : colors.primary.main }
+                  { backgroundColor: computedDanger ? '#EF4444' : colors.primary.main }
                 ]}
-                onPress={onPrimaryPress}
+                onPress={finalPrimaryPress}
                 disabled={isLoading}
               >
                 {isLoading ? (
                   <ActivityIndicator color="#FFFFFF" />
                 ) : (
-                  <Text style={[styles.btnText, { color: '#FFFFFF' }]}>{primaryActionLabel}</Text>
+                  <Text style={[styles.btnText, { color: '#FFFFFF' }]}>{finalPrimaryLabel}</Text>
                 )}
               </TouchableOpacity>
             )}

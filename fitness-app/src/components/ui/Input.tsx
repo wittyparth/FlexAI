@@ -226,8 +226,8 @@ export function Input({
                         style={[
                             styles.input,
                             { color: colors.text.primary },
-                            leftAdornment && styles.inputWithLeftAdornment,
-                            (rightAdornment || isPassword) && styles.inputWithRightAdornment,
+                            !!leftAdornment && styles.inputWithLeftAdornment,
+                            !!(rightAdornment || isPassword) && styles.inputWithRightAdornment,
                             label && !isFloating && { paddingTop: 4 },
                         ]}
                         placeholderTextColor={label ? 'transparent' : colors.text.tertiary}

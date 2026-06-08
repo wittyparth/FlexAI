@@ -19,19 +19,21 @@ import Animated, {
     useAnimatedStyle,
     withTiming,
 } from 'react-native-reanimated';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useColors } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 
 type IoniconName = keyof typeof Ionicons.glyphMap;
+type MaterialIconName = keyof typeof MaterialCommunityIcons.glyphMap;
 
 export interface ListItemProps {
     /** Primary label */
-    title: string;
+    title: string | number;
     /** Secondary text below title */
     subtitle?: string;
     /** Left Ionicons icon name */
-    icon?: IoniconName;
+    icon?: IoniconName | MaterialIconName;
+    iconLibrary?: 'Ionicons' | 'MaterialCommunityIcons';
     /** Tint color for the icon container background */
     iconTint?: string;
     /** Icon color (defaults to icon tint or primary) */
@@ -60,6 +62,7 @@ export function ListItem({
     title,
     subtitle,
     icon,
+    iconLibrary = 'Ionicons',
     iconTint,
     iconColor,
     leftElement,
@@ -95,7 +98,11 @@ export function ListItem({
     const leftContent = leftElement ?? (
         icon ? (
             <View style={[styles.iconContainer, { backgroundColor: iconBg }]}>
-                <Ionicons name={icon} size={18} color={finalIconColor} />
+                {iconLibrary === 'MaterialCommunityIcons' ? (
+                    <MaterialCommunityIcons name={icon as MaterialIconName} size={18} color={finalIconColor} />
+                ) : (
+                    <Ionicons name={icon as IoniconName} size={18} color={finalIconColor} />
+                )}
             </View>
         ) : null
     );

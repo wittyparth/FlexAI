@@ -37,6 +37,15 @@ router.get('/', (_req: Request, res: Response) => {
   });
 });
 
+// API-prefixed health check (kept in sync with /health)
+router.get('/health', (_req: Request, res: Response) => {
+  res.status(200).json({
+    status: 'ok',
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+  });
+});
+
 // Mount routes
 router.use('/auth', authRoutes);
 router.use('/users', userRoutes);

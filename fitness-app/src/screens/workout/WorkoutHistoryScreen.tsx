@@ -7,6 +7,7 @@ import {
     ActivityIndicator,
     RefreshControl
 } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useColors, useWorkouts } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';

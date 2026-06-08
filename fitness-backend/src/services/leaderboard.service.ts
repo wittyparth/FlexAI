@@ -11,6 +11,7 @@ export class LeaderboardService {
    * Update a user's score in the leaderboard
    */
   async updateUserScore(userId: number, type: 'strength' | 'volume' | 'consistency' | 'weekly', score: number) {
+    if (!redis) return;
     const key = `leaderboard:${type}`;
     // Store in Redis Sorted Set
     await redis.zadd(key, score, userId.toString());
@@ -20,6 +21,7 @@ export class LeaderboardService {
    * Get global leaderboard
    */
   async getGlobalLeaderboard(type: 'strength' | 'volume' | 'consistency' | 'weekly', limit: number = 50) {
+    if (!redis) return [];
     const key = `leaderboard:${type}`;
     
     // Get top users (ID and score)

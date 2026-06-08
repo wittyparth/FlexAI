@@ -22,10 +22,8 @@ import { RestTimerOverlay } from '../../components/active-workout/RestTimerOverl
 import { TimerSettingsModal } from '../../components/active-workout/TimerSettingsModal';
 import { MuscleHighlighterCard } from '../../components/muscles/MuscleHighlighterCard';
 import { useWorkoutStore, selectActiveWorkoutId, selectWorkoutName, selectTimerPrefs } from '../../store/workoutStore';
-import { useFlowGuard } from '../../hooks/useFlowGuard';
 
 export function ActiveWorkoutScreen({ navigation, route }: any) {
-  useFlowGuard('workout_active'); // redirect back if no active session
   const colors = useColors();
   const insets = useSafeAreaInsets();
   const scrollRef = useRef<ScrollView>(null);
@@ -176,11 +174,31 @@ export function ActiveWorkoutScreen({ navigation, route }: any) {
     exercises,
   ]);
 
-  // ─── Navigate away if no active workout ───
+  // ─── Bootstrap active workout state from backend before redirecting away ───
   useEffect(() => {
-    if (!activeWorkoutId) {
-      navigation.canGoBack() ? navigation.goBack() : navigation.navigate('WorkoutHub');
+    let isCancelled = false;
+
+    if (activeWorkoutId) {
+      return;
     }
+
+    setIsSyncingWorkout(true);
+    useWorkoutStore
+      .getState()
+      .syncCurrentWorkout()
+      .finally(() => {
+        if (isCancelled) return;
+
+        setIsSyncingWorkout(false);
+        const latest = useWorkoutStore.getState();
+        if (latest.sessionPhase.phase !== 'active') {
+          navigation.canGoBack() ? navigation.goBack() : navigation.navigate('WorkoutHub');
+        }
+      });
+
+    return () => {
+      isCancelled = true;
+    };
   }, [activeWorkoutId, navigation]);
 
   // ─── Rest timer auto-skip ───
@@ -296,6 +314,15 @@ export function ActiveWorkoutScreen({ navigation, route }: any) {
 
   // ─── Empty state ───
   if (!activeWorkoutId) {
+    if (isSyncingWorkout) {
+      return (
+        <View style={[styles.container, { backgroundColor: colors.background, justifyContent: 'center', alignItems: 'center' }]}>
+          <ActivityIndicator size="large" color={colors.primary.main} />
+          <Text style={[styles.emptyText, { color: colors.mutedForeground, marginTop: 12 }]}>Restoring active workout...</Text>
+        </View>
+      );
+    }
+
     return (
       <View style={[styles.container, { backgroundColor: colors.background, justifyContent: 'center', alignItems: 'center' }]}>
         <MaterialCommunityIcons name="dumbbell" size={48} color={colors.mutedForeground} />

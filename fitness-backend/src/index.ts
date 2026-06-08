@@ -21,9 +21,13 @@ async function bootstrap() {
     await prisma.$connect();
     logger.info('✅ Database connected');
 
-    // Test Redis connection
-    await redis.connect();
-    logger.info('✅ Redis connected');
+    // Test Redis connection (optional)
+    if (env.REDIS_ENABLED && redis) {
+      await redis.connect();
+      logger.info('✅ Redis connected');
+    } else {
+      logger.warn('⚠️ Redis is disabled. Continuing without Redis-backed features.');
+    }
 
     // Create Express app
     const app = createApp();
@@ -48,9 +52,11 @@ async function bootstrap() {
         await prisma.$disconnect();
         logger.info('Database disconnected');
 
-        // Close Redis connection
-        await redis.quit();
-        logger.info('Redis disconnected');
+        // Close Redis connection (if enabled)
+        if (env.REDIS_ENABLED && redis) {
+          await redis.quit();
+          logger.info('Redis disconnected');
+        }
 
         process.exit(0);
       });

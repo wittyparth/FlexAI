@@ -22,6 +22,7 @@ import {
 } from '../../hooks';
 import { fontFamilies } from '../../theme/typography';
 import { WorkoutHeatmap } from '../../components/WorkoutHeatmap';
+import { useWorkoutStore } from '../../store/workoutStore';
 
 type ActiveWorkoutBannerData = {
     id: number;
@@ -386,9 +387,11 @@ export function HomeScreen({ navigation }: any) {
                             <ActiveWorkoutBanner
                                 workout={activeWorkout}
                                 onPress={() => {
-                                    getTabNav().navigate('WorkoutTab', {
-                                        screen: 'ActiveWorkout',
-                                        params: { workoutId: activeWorkout.id },
+                                    useWorkoutStore.getState().syncCurrentWorkout().finally(() => {
+                                        getTabNav().navigate('WorkoutTab', {
+                                            screen: 'ActiveWorkout',
+                                            params: { workoutId: activeWorkout.id },
+                                        });
                                     });
                                 }}
                             />

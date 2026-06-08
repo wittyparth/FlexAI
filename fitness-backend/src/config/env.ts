@@ -18,6 +18,10 @@ const envSchema = z.object({
   REDIS_PORT: z.string().default('6379').transform(Number),
   REDIS_PASSWORD: z.string().optional(),
   REDIS_URL: z.string().optional(),
+  REDIS_ENABLED: z
+    .string()
+    .default('true')
+    .transform((value) => !['false', '0', 'off', 'no'].includes(value.toLowerCase())),
   UPSTASH_REDIS_REST_URL: z.string().optional(),
   UPSTASH_REDIS_REST_TOKEN: z.string().optional(),
   

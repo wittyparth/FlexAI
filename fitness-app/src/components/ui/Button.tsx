@@ -37,7 +37,9 @@ import { SHADOWS_LIGHT as SHADOWS } from '../../constants/shadows';
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 interface ButtonProps {
-    title: string;
+    title?: string;
+    /** @deprecated use title */
+    label?: string;
     onPress: () => void;
     variant?: 'primary' | 'secondary' | 'tertiary' | 'destructive' | 'ghost' | 'outlined';
     size?: 'default' | 'small' | 'large' | 'sm' | 'md' | 'lg';
@@ -64,6 +66,7 @@ interface ButtonProps {
 
 export function Button({
     title,
+    label,
     onPress,
     variant = 'primary',
     size = 'default',
@@ -82,6 +85,7 @@ export function Button({
 }: ButtonProps) {
     const colors = useColors();
     const isDisabled = disabled || loading;
+    const resolvedTitle = title ?? label ?? '';
 
     // Map aliases to core variants
     const activeVariant = (variant === 'ghost' || variant === 'outlined') ? 'tertiary' : variant;
@@ -166,7 +170,7 @@ export function Button({
                             ]}
                             numberOfLines={1}
                         >
-                            {title}
+                            {resolvedTitle}
                         </Text>
                         {subtitle && (
                             <Text style={[styles.subtitleText, { color: textColor + 'B3' }]} numberOfLines={1}>
